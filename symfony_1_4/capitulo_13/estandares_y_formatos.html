@@ -1,0 +1,286 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>13.2. Estándares y formatos (Symfony 1.4, la guía definitiva)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="cultura_del_usuario.html" />
+        <link rel="next" href="informacion_textual_en_la_base_de_datos.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="13.2. Estándares y formatos (Symfony 1.4, la guía definitiva)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page symfony_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Symfony 1.4, la guía definitiva</a></li>
+  <li><a href="../capitulo_13.html">Capítulo 13. Internacionalización y localización</a></li>
+  <li class="current"><span>13.2.. Estándares y formatos</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="estandares_y_formatos"><span>13.2.</span> Estándares y formatos</h1>
+    
+
+<p>Las partes internas de una aplicación web no deben preocuparse por las diferencias culturales entre países. Las bases de datos por ejemplo almacenan las fechas y cantidades siguiendo estándares internacionales. Pero cuando los datos se envían o se reciben del usuario, es necesario realizar una conversión. Los usuarios normales no entienden lo que es un timestamp y prefieren llamar a su idioma en su propio idioma (por ejemplo <em>"Français"</em> en vez de <em>"French"</em>). Así que se debe aprovechar la posibilidad de realizar estas conversiones de forma automática en función de la cultura del usuario.</p>
+
+<h3 id="mostrando_datos_segun_la_cultura_del_usuario">13.2.1. Mostrando datos según la cultura del usuario</h3>
+
+<p>Una vez que se define la cultura del usuario, los <em>helpers</em> que dependen de la cultura muestran automáticamente los datos de forma correcta. El <em>helper</em> <code>format_number()</code> por ejemplo, muestra un número en un formato familiar para el usuario, en función de su cultura, tal y como muestra el listado 13-3.</p>
+
+<p><strong>Listado 13-3 - Mostrando un número según la cultura del usuario</strong></p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">&lt;?php</span> use_helper<span class="br0">&#40;</span><span class="st_h">'Number'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+&nbsp;
+<span class="kw2">&lt;?php</span> <span class="re0">$sf_user</span><span class="sy0">-&gt;</span><span class="me1">setCulture</span><span class="br0">&#40;</span><span class="st_h">'en_US'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> format_number<span class="br0">&#40;</span><span class="nu19">12000.10</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+ =&gt; '12,000.10'
+&nbsp;
+<span class="kw2">&lt;?php</span> <span class="re0">$sf_user</span><span class="sy0">-&gt;</span><span class="me1">setCulture</span><span class="br0">&#40;</span><span class="st_h">'fr_FR'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> format_number<span class="br0">&#40;</span><span class="nu19">12000.10</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+ =&gt; '12 000,10'</pre>
+</div>
+
+<p>No es necesario indicar a los <em>helpers</em> la cultura de forma explícita. Los <em>helpers</em> la buscan automáticamente en el objeto sesión. El listado 13-4 muestra todos los <em>helpers</em> que tienen en cuenta la cultura para mostrar sus datos.</p>
+
+<p><strong>Listado 13-4 - <em>Helpers</em> dependientes de la cultura</strong></p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">&lt;?php</span> use_helper<span class="br0">&#40;</span><span class="st_h">'Date'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+&nbsp;
+<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> format_date<span class="br0">&#40;</span><span class="kw3">time</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+ =&gt; '9/14/10'
+&nbsp;
+<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> format_datetime<span class="br0">&#40;</span><span class="kw3">time</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+ =&gt; 'September 14, 2010 6:11:07 PM CEST'
+&nbsp;
+<span class="kw2">&lt;?php</span> use_helper<span class="br0">&#40;</span><span class="st_h">'Number'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+&nbsp;
+<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> format_number<span class="br0">&#40;</span><span class="nu19">12000.10</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+ =&gt; '12,000.10'
+&nbsp;
+<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> format_currency<span class="br0">&#40;</span><span class="nu0">1350</span><span class="sy0">,</span> <span class="st_h">'USD'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+ =&gt; '$1,350.00'
+&nbsp;
+<span class="kw2">&lt;?php</span> use_helper<span class="br0">&#40;</span><span class="st_h">'I18N'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+&nbsp;
+<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> format_country<span class="br0">&#40;</span><span class="st_h">'US'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+ =&gt; 'United States'
+&nbsp;
+<span class="kw2">&lt;?php</span> format_language<span class="br0">&#40;</span><span class="st_h">'en'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+ =&gt; 'English'
+&nbsp;
+<span class="kw2">&lt;?php</span> use_helper<span class="br0">&#40;</span><span class="st_h">'Form'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+&nbsp;
+<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> input_date_tag<span class="br0">&#40;</span><span class="st_h">'fecha_nacimiento'</span><span class="sy0">,</span> <span class="kw3">mktime</span><span class="br0">&#40;</span><span class="nu0">0</span><span class="sy0">,</span> <span class="nu0">0</span><span class="sy0">,</span> <span class="nu0">0</span><span class="sy0">,</span> <span class="nu0">9</span><span class="sy0">,</span> <span class="nu0">14</span><span class="sy0">,</span> <span class="nu0">2010</span><span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+ =&gt; input type=&quot;text&quot; name=&quot;fecha_nacimiento&quot; id=&quot;fecha_nacimiento&quot; value=&quot;9/14/10&quot; size=&quot;11&quot; /&gt;
+&nbsp;
+<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> select_country_tag<span class="br0">&#40;</span><span class="st_h">'pais'</span><span class="sy0">,</span> <span class="st_h">'US'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+ =&gt; &lt;select name=&quot;pais&quot; id=&quot;pais&quot;&gt;&lt;option value=&quot;AF&quot;&gt;Afghanistan&lt;/option&gt;
+      ...
+      &lt;option value=&quot;GB&quot;&gt;United Kingdom&lt;/option&gt;
+      &lt;option value=&quot;US&quot; selected=&quot;selected&quot;&gt;United States&lt;/option&gt;
+      &lt;option value=&quot;UM&quot;&gt;United States Minor Outlying Islands&lt;/option&gt;
+      &lt;option value=&quot;UY&quot;&gt;Uruguay&lt;/option&gt;
+      ...
+    &lt;/select&gt;</pre>
+</div>
+
+<p>Los <em>helpers</em> de fechas aceptan un parámetro opcional para indicar su formato, de modo que se pueda mostrar una fecha independiente de la cultura del usuario, pero no debería utilizarse en las aplicaciones con soporte de i18n.</p>
+
+<h3 id="obteniendo_informacion_en_una_aplicacion_localizada">13.2.2. Obteniendo información en una aplicación localizada</h3>
+
+<p>Si es necesario obtener información del usuario, se debería obligar al usuario, si es posible, a introducir datos que ya estén internacionalizados. Esta técnica evita tener que adivinar el formato en el que ha introducido el usuario sus datos. Por ejemplo, es complicado que un usuario introduzca una cantidad monetaria con la separación de los miles.</p>
+
+<p>Se pueden restringir las posibilidades del usuario ocultando los datos realmente enviados al servidor (como por ejemplo mediante <code>select_country_tag()</code>) o separando las partes de un dato complejo en varias partes individuales sencillas.</p>
+
+<p>No obstante, para datos como fechas esta técnica no siempre es posible. Los usuarios están acostumbrados a introducir las fechas en el formato propio de su país, por lo que se deben convertir a un formato internacional. Para ello se puede utilizar la clase <code>sfI18N</code>. El listado 13-5 muestra cómo utilizar esta clase.</p>
+
+<p><strong>Listado 13-5 - Obteniendo una fecha a partir de un formato propio del usuario en una acción</strong></p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$fecha</span><span class="sy0">=</span> <span class="re0">$peticion</span><span class="sy0">-&gt;</span><span class="me1">getParameter</span><span class="br0">&#40;</span><span class="st_h">'fecha_nacimiento'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$cultura_usuario</span> <span class="sy0">=</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getUser</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">getCulture</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="co1">// Obtener un timestamp</span>
+<span class="re0">$timestamp</span> <span class="sy0">=</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getContext</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">getI18N</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">getTimestampForCulture</span><span class="br0">&#40;</span><span class="re0">$fecha</span><span class="sy0">,</span> <span class="re0">$cultura_usuario</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="co1">// Obtener las partes de una fecha</span>
+<span class="kw3">list</span><span class="br0">&#40;</span><span class="re0">$dia</span><span class="sy0">,</span> <span class="re0">$mes</span><span class="sy0">,</span> <span class="re0">$ano</span><span class="br0">&#41;</span> <span class="sy0">=</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getContext</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">getI18N</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">getDateForCulture</span><span class="br0">&#40;</span><span class="re0">$fecha</span><span class="sy0">,</span> <span class="re0">$cultura_usuario</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="cultura_del_usuario.html">&larr; Anterior <span>13.1. Cultura del usuario</span></a>
+            
+            <a class="span5 next" href="informacion_textual_en_la_base_de_datos.html">Siguiente &rarr; <span>13.3. Información textual en la base de datos</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Estándares y formatos (Symfony 1.4, la guía definitiva%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Symfony 1.4, la guía definitiva : Estándares y formatos']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción a Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Explorando el interior de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Ejecutar aplicaciones Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Introducción a la creación de páginas</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Configurar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> El Controlador</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> La Vista</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> El modelo (Doctrine)</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Enlaces y sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Emails</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Uso de la cache</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_13.html">
+            <span>Capítulo 13.</span> Internacionalización y localización
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="cultura_del_usuario.html">
+            <span>13.1.</span> Cultura del usuario
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="estandares_y_formatos.html">
+            <span>13.2.</span> Estándares y formatos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="informacion_textual_en_la_base_de_datos.html">
+            <span>13.3.</span> Información textual en la base de datos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="traduccion_de_la_interfaz.html">
+            <span>13.4.</span> Traducción de la interfaz
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="resumen.html">
+            <span>13.5.</span> Resumen
+        </a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Pruebas unitarias y funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Herramientas para la administración de aplicaciones</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> Personalizar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> Rendimiento</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Configuración avanzada</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

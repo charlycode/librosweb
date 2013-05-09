@@ -1,0 +1,351 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>4.3. Las hojas de estilo, imágenes y archivos JavaScript (El tutorial Jobeet)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="el_layout.html" />
+        <link rel="next" href="la_portada_del_modulo_de_las_ofertas_de_trabajo.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="4.3. Las hojas de estilo, imágenes y archivos JavaScript (El tutorial Jobeet)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page jobeet_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">El tutorial Jobeet</a></li>
+  <li><a href="../capitulo_4.html">Capítulo 4. El controlador y la vista</a></li>
+  <li class="current"><span>4.3.. Las hojas de estilo, imágenes y archivos JavaScript</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="las_hojas_de_estilo_imagenes_y_archivos_javascript"><span>4.3.</span> Las hojas de estilo, imágenes y archivos JavaScript</h1>
+    
+
+<p>Como este tutorial no trata sobre el diseño web, hemos preparado todos los archivos que utilizan las páginas de Jobeet: descarga el <a href="http://www.symfony-project.org/get/jobeet/images.zip">archivo ZIP con todas las imágenes</a> y descomprímelo en el directorio <code>web/images/</code>, descarga el <a href="http://www.symfony-project.org/get/jobeet/css.zip">archivo ZIP con todas las hojas de estilos CSS</a> y descomprímelo en el directorio <code>web/css/</code>.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> En el layout también hemos incluido un favicon. Si quieres, puedes <a href="http://www.symfony-project.org/images/jobeet/favicon.ico">descargar el favicon de Jobeet</a> y guardarlo en el directorio <code>web/</code>.</p></div>
+
+<div class="figure" id="figure_4_4">
+    <img src="../../img/jobeet_1_4/f0404.png" alt="El módulo job con el layout y las imágenes y hojas de estilos" />
+
+    <p class="caption"><strong>Figura 4.4</strong> El módulo job con el layout y las imágenes y hojas de estilos</p>
+</div>
+
+
+<div class="admonition note"><p><strong class="title">Nota</strong> La tarea <code>generate:project</code> crea por defecto tres directorios para guardar los archivos relacionados con la web: <code>web/images/</code> para las imágenes, <code>web/css/</code> para las hojas de estilos y <code>web/js/</code> para los archivos de JavaScript. Se trata de otra de las convenciones que sigue Symfony, pero si lo deseas, puedes guardar tus archivos en cualquier otro directorio dentro del directorio <code>web/</code>.</p></div>
+
+<p>Si has investigado el código HTML de las páginas del módulo <code>job</code>, habrás visto que aunque el archivo <code>main.css</code> no se incluye en el layout, está presente en todas las páginas. ¿Cómo es posible que se incluya un archivo CSS que no se encuentra en el layout?</p>
+
+<p>La respuesta es que la hoja de estilos se ha incluido mediante la llamada a la función <code>include_stylesheets()</code> que se realiza dentro de la sección <code>&lt;head&gt;</code> del layout. La función <code>include_stylesheets()</code> se conoce con el nombre de <strong>helper</strong>. Un helper es una función de Symfony a la que se le pueden pasar parámetros y que devuelve código HTML. Los helpers se utilizan casi siempre para mejorar la productividad en el desarrollo, ya que suelen generar fragmentos de código que se utilizan habitualmente en las plantillas. El helper <code>include_stylesheets()</code> genera las etiquetas <code>&lt;link&gt;</code> necesarias para enlazar las hojas de estilo. Pero, ¿cómo sabe el helper los archivos CSS que tiene que incluir?</p>
+
+<p>La capa de la vista se puede configurar mediante el archivo de configuración <code>view.yml</code> de la aplicación. A continuación se muestra el archivo que genera por defecto la tarea <code>generate:app</code>:</p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co1"># apps/frontend/config/view.yml</span><span class="co4">
+default</span>:<span class="co4">
+  http_metas</span>:<span class="co3">
+    content-type</span><span class="sy2">: </span> text/html
+<span class="co4">
+  metas</span><span class="sy2">:
+</span>    <span class="co1">#title:        symfony project</span>
+    <span class="co1">#description:  symfony project</span>
+    <span class="co1">#keywords:     symfony, project</span>
+    <span class="co1">#language:     en</span>
+    <span class="co1">#robots:       index, follow</span>
+<span class="co3">
+  stylesheets</span><span class="sy2">: </span>   <span class="br0">&#91;</span>main.css<span class="br0">&#93;</span>
+<span class="co3">
+  javascripts</span><span class="sy2">: </span>   <span class="br0">&#91;</span><span class="br0">&#93;</span>
+<span class="co3">
+  has_layout</span><span class="sy2">: </span>    on<span class="co3">
+  layout</span><span class="sy2">: </span>        layout</pre>
+</div>
+
+<p>El archivo <code>view.yml</code> se emplea para configurar las opciones por defecto (<code>default</code>) de todas las plantillas de la aplicación. La opción <code>stylesheets</code> por ejemplo define un array que contiene el nombre de las hojas de estilo que se incluyen en cada página de la aplicación (esta información es la que utiliza el helper <code>include_stylesheets()</code> para incluir los archivos CSS en las páginas).</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> En el archivo <code>view.yml</code> por defecto, la referencia de la hoja de estilos es <code>main.css</code> y no <code>/css/main.css</code>. En realidad, las dos referencias anteriores son equivalentes, ya que Symfony añade automáticamente el prefijo <code>/css</code> a las rutas relativas.</p></div>
+
+<p>Si se indican varios archivos, Symfony los incluye en el mismo orden en el que se han indicado:</p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co3">stylesheets</span><span class="sy2">: </span>   <span class="br0">&#91;</span>main.css, jobs.css, job.css<span class="br0">&#93;</span></pre>
+</div>
+
+<p>También es posible añadir el atributo <code>media</code> para cada archivo y también se puede omitir el sufijo <code>.css</code>:</p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co3">stylesheets</span><span class="sy2">: </span>   <span class="br0">&#91;</span>main.css, jobs.css, job.css, print<span class="sy2">: </span><span class="br0">&#123;</span> media<span class="sy2">: </span>print <span class="br0">&#125;</span><span class="br0">&#93;</span></pre>
+</div>
+
+<p>La configuración anterior se convierte en el siguiente código HTML:</p>
+
+<div class="code php">
+<pre class="php"><span class="sy0">&lt;</span><span class="kw3">link</span> rel<span class="sy0">=</span><span class="st0">&quot;stylesheet&quot;</span> type<span class="sy0">=</span><span class="st0">&quot;text/css&quot;</span> media<span class="sy0">=</span><span class="st0">&quot;screen&quot;</span> href<span class="sy0">=</span><span class="st0">&quot;/css/main.css&quot;</span> <span class="sy0">/&gt;</span>
+<span class="sy0">&lt;</span><span class="kw3">link</span> rel<span class="sy0">=</span><span class="st0">&quot;stylesheet&quot;</span> type<span class="sy0">=</span><span class="st0">&quot;text/css&quot;</span> media<span class="sy0">=</span><span class="st0">&quot;screen&quot;</span> href<span class="sy0">=</span><span class="st0">&quot;/css/jobs.css&quot;</span> <span class="sy0">/&gt;</span>
+<span class="sy0">&lt;</span><span class="kw3">link</span> rel<span class="sy0">=</span><span class="st0">&quot;stylesheet&quot;</span> type<span class="sy0">=</span><span class="st0">&quot;text/css&quot;</span> media<span class="sy0">=</span><span class="st0">&quot;screen&quot;</span> href<span class="sy0">=</span><span class="st0">&quot;/css/job.css&quot;</span> <span class="sy0">/&gt;</span>
+<span class="sy0">&lt;</span><span class="kw3">link</span> rel<span class="sy0">=</span><span class="st0">&quot;stylesheet&quot;</span> type<span class="sy0">=</span><span class="st0">&quot;text/css&quot;</span> media<span class="sy0">=</span><span class="st0">&quot;print&quot;</span> href<span class="sy0">=</span><span class="st0">&quot;/css/print.css&quot;</span> <span class="sy0">/&gt;</span></pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> El archivo de configuración <code>view.yml</code> también establece el layout por defecto que utilizan las páginas de la aplicación. Inicialmente su nombre es <code>layout</code>, por lo que Symfony decora todas las páginas con el archivo <code>layout.php</code>. También es posible deshabilitar la decoración de las páginas indicando un valor <code>false</code> en la opción <code>has_layout</code>.</p></div>
+
+<p>Aunque la configuración actual funciona correctamente, el archivo <code>jobs.css</code> sólo es necesario en la portada del sitio y el archivo <code>job.css</code> sólo debe incluirse en la página que muestra cada oferta de trabajo. Cada módulo de la aplicación puede definir su propio archivo de configuración <code>view.yml</code>, por lo que modifica el archivo <code>view.yml</code> de la aplicación para que sólo incluya el archivo <code>main.css</code>:</p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co1"># apps/frontend/config/view.yml</span><span class="co3">
+stylesheets</span><span class="sy2">: </span>   <span class="br0">&#91;</span>main.css<span class="br0">&#93;</span></pre>
+</div>
+
+<p>Para modificar la parte de la vista del módulo <code>job</code>, crea un nuevo archivo <code>view.yml</code> en el directorio <code>apps/frontend/modules/job/config/</code> y añade el siguiente contenido:</p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co1"># apps/frontend/modules/job/config/view.yml</span><span class="co4">
+indexSuccess</span>:<span class="co3">
+  stylesheets</span><span class="sy2">: </span><span class="br0">&#91;</span>jobs.css<span class="br0">&#93;</span>
+<span class="co4">
+showSuccess</span>:<span class="co3">
+  stylesheets</span><span class="sy2">: </span><span class="br0">&#91;</span>job.css<span class="br0">&#93;</span></pre>
+</div>
+
+<p>Como se verá más adelante, <code>indexSuccess</code> y <code>showSuccess</code> son los nombres de las plantillas asociadas con las acciones <code>index</code> y <code>show</code>. El archivo <code>view.yml</code> del módulo utiliza estos nombres para crear las secciones que modifican el aspecto de cada acción. En cada sección se pueden establecer las mismas opciones que se encuentran en la sección <code>default</code> del archivo <code>view.yml</code> de la aplicación. Cuando no se define el valor de alguna opción en el archivo <code>view.yml</code> del módulo, Symfony lo toma directamente del archivo <code>view.yml</code> de la aplicación. Si quieres establecer una misma opción para todas las acciones del módulo, debes hacerlo bajo una sección especial llamada <code>all</code>.</p>
+
+<div class="admonition sidebar"><p><strong class="title">Cómo funcionan los archivos de configuración en Symfony</strong> En la mayoría de archivos de configuración de Symfony, se puede establecer la misma opción en diferentes niveles:</p>
+
+<ul>
+<li>La configuración por defecto, que se encuentra en los propios archivos del framework</li>
+<li>La configuración global del proyecto, que se encuentra en <code>config/</code></li>
+<li>La configuración local de la aplicación, que se encuentra en <code>apps/[nombre_de_aplicacion]/config/</code></li>
+<li>La configuración local del módulo, que se encuentra en <code>apps/[nombre_de_aplicacion]/modules/[nombre_de_modulo]/config/</code></li>
+</ul>
+
+<p>Cuando se ejecuta la aplicación, el sistema de configuración de Symfony junta todos los valores de todas las opciones de todos los archivos de configuración y los guarda en la cache para mejorar el rendimiento.</p></div>
+
+<p>Como regla general, cualquier opción que se puede configurar en un archivo de configuración también se puede configurar mediante código PHP. En el ejemplo anterior, en vez de crear un archivo <code>view.yml</code> para el módulo <code>job</code>, se podría utilizar el helper <code>use_stylesheet()</code> para incluir una hoja de estilos directamente desde la plantilla:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">&lt;?php</span> use_stylesheet<span class="br0">&#40;</span><span class="st_h">'main.css'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span></pre>
+</div>
+
+<p>Este helper también se puede utilizar en el layout para incluir una hoja de estilos específica en todas las páginas de la aplicación.</p>
+
+<p>Elegir un método u otro para configurar la parte de la vista es una cuestión de preferencias personales. Realizar la configuración con un archivo <code>view.yml</code> permite definir opciones para todas las acciones del módulo, algo que no es posible desde una plantilla, pero la configuración es bastante estática. Por otra parte, realizar la configuración con el helper <code>use_stylesheet()</code> es más flexible y además permite disponer en el mismo lugar del código HTML y de la definición de los archivos CSS. Jobeet va a hacer uso del helper <code>use_stylesheet()</code>, por lo que puedes borrar el archivo <code>view.yml</code> que acabamos de crear y puedes actualizar las plantillas con las llamadas al helper <code>use_stylesheet()</code>:</p>
+
+<div class="code php">
+<pre class="php">&lt;!-- apps/frontend/modules/job/templates/indexSuccess.php --&gt;
+<span class="kw2">&lt;?php</span> use_stylesheet<span class="br0">&#40;</span><span class="st_h">'jobs.css'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+&nbsp;
+&lt;!-- apps/frontend/modules/job/templates/showSuccess.php --&gt;
+<span class="kw2">&lt;?php</span> use_stylesheet<span class="br0">&#40;</span><span class="st_h">'job.css'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span></pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> De la misma forma, la configuración de los archivos JavaScript se realiza mediante la opción <code>javascripts</code> del archivo de configuración <code>view.yml</code> o mediante llamadas al helper <code>use_javascript()</code> desde una plantilla.</p></div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="el_layout.html">&larr; Anterior <span>4.2. El layout</span></a>
+            
+            <a class="span5 next" href="la_portada_del_modulo_de_las_ofertas_de_trabajo.html">Siguiente &rarr; <span>4.4. La portada del módulo de las ofertas de trabajo</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Las hojas de estilo, imágenes y archivos JavaScript (El tutorial Jobeet%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'El tutorial Jobeet : Las hojas de estilo, imágenes y archivos JavaScript']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Comenzando el proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> El proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> El modelo de datos</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_4.html">
+            <span>Capítulo 4.</span> El controlador y la vista
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="la_arquitectura_mvc.html">
+            <span>4.1.</span> La arquitectura MVC
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_layout.html">
+            <span>4.2.</span> El layout
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="las_hojas_de_estilo_imagenes_y_archivos_javascript.html">
+            <span>4.3.</span> Las hojas de estilo, imágenes y archivos JavaScript
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="la_portada_del_modulo_de_las_ofertas_de_trabajo.html">
+            <span>4.4.</span> La portada del módulo de las ofertas de trabajo
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="la_plantilla_de_la_pagina_de_una_oferta_de_trabajo.html">
+            <span>4.5.</span> La plantilla de la página de una oferta de trabajo
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="slots.html">
+            <span>4.6.</span> Slots
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="la_accion_de_la_pagina_de_una_oferta_de_trabajo.html">
+            <span>4.7.</span> La acción de la página de una oferta de trabajo
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="la_peticion_y_la_respuesta.html">
+            <span>4.8.</span> La petición y la respuesta
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="nos_vemos_manana.html">
+            <span>4.9.</span> Nos vemos mañana
+        </a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> El sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Profundizando en el modelo</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Trabajando con la página de cada categoría</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Pruebas unitarias</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Pruebas funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Probando los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> El generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> El usuario</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> El día de descanso</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Canales Atom</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Servicios web</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> El buscador</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>20</span> <a href="../capitulo_20.html"> Plugins</a>
+    </li>
+    <li class="level-1">
+        <span>21</span> <a href="../capitulo_21.html"> El día del diseño</a>
+    </li>
+    <li class="level-1">
+        <span>22</span> <a href="../capitulo_22.html"> La cache</a>
+    </li>
+    <li class="level-1">
+        <span>23</span> <a href="../capitulo_23.html"> Pasando a producción</a>
+    </li>
+    <li class="level-1">
+        <span>24</span> <a href="../capitulo_24.html"> Un repaso a Symfony</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

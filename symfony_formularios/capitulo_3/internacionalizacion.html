@@ -1,0 +1,187 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>3.5. Internacionalización (Los formularios de Symfony 1.4)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="personalizando_el_diseno.html" />
+        <link rel="next" href="trabajando_con_el_programador.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="3.5. Internacionalización (Los formularios de Symfony 1.4)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page symfony_formularios">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Los formularios de Symfony 1.4</a></li>
+  <li><a href="../capitulo_3.html">Capítulo 3. Formularios para diseñadores web</a></li>
+  <li class="current"><span>3.5.. Internacionalización</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="internacionalizacion"><span>3.5.</span> Internacionalización</h1>
+    
+
+<p>Todos los elementos del formulario, desde los títulos hasta los mensajes de error, utilizan de forma automática el sistema de internacionalización de Symfony. Por lo tanto, el diseñador web no tiene que añadir nada especial a las plantillas para poder internacionalizar los formularios, incluso aunque establezca el título de los campos con el método <code>renderLabel()</code>. La traducción de todos los textos se realiza de forma automática. El capítulo 9 incluye información mucho más detallada de la internacionalización de los formularios.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="personalizando_el_diseno.html">&larr; Anterior <span>3.4. Personalizando el diseño</span></a>
+            
+            <a class="span5 next" href="trabajando_con_el_programador.html">Siguiente &rarr; <span>3.6. Trabajando con el programador</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Internacionalización (Los formularios de Symfony 1.4%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Los formularios de Symfony 1.4 : Internacionalización']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Creación de formularios</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Validación de formularios</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_3.html">
+            <span>Capítulo 3.</span> Formularios para diseñadores web
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="antes_de_comenzar.html">
+            <span>3.1.</span> Antes de comenzar
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="la_plantilla_del_prototipo.html">
+            <span>3.2.</span> La plantilla del prototipo
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="personalizando_la_plantilla_del_prototipo.html">
+            <span>3.3.</span> Personalizando la plantilla del prototipo
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="personalizando_el_diseno.html">
+            <span>3.4.</span> Personalizando el diseño
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="internacionalizacion.html">
+            <span>3.5.</span> Internacionalización
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="trabajando_con_el_programador.html">
+            <span>3.6.</span> Trabajando con el programador
+        </a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Integración con Propel</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Integrando Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Referencia de Widgets</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Validadores</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

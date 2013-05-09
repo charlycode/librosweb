@@ -1,0 +1,179 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>Capítulo 5. Frameworks (CSS avanzado)</title>
+        <link href="../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="capitulo_4/propiedad_content.html" />
+        <link rel="next" href="capitulo_5/el_framework_yui.html" />
+        <link rel="start" href="index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Capítulo 5. Frameworks (CSS avanzado)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page css_avanzado">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../index.html">Inicio</a></li>
+  <li><a href="index.html">CSS avanzado</a></li>
+  <li class="current"><span>Capítulo 5.. Frameworks</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="capitulo_5"><span>Capítulo 5.</span> Frameworks</h1>
+    <p>Los <em>frameworks</em> se utilizan en el ámbito de la programación de aplicaciones desde hace décadas. Recientemente han comenzado a utilizarse para programar y diseñar aplicaciones web, por lo que ya existen decenas de <em>frameworks</em> para CSS.</p>
+
+<p>Genéricamente, un <em>framework</em> es un conjunto de herramientas, librerías, convenciones y buenas prácticas que pretenden encapsular las tareas repetitivas en módulos genéricos fácilmente reutilizables.</p>
+
+<p>De la misma forma, un <em>framework</em> CSS es un conjunto de herramientas, hojas de estilos y buenas prácticas que permiten al diseñador web olvidarse de las tareas repetitivas para centrarse en los elementos únicos de cada diseño en los que puede aportar valor.</p>
+
+<p>¿Qué aporta a un diseñador descubrir en cada diseño que debe neutralizar los estilos por defecto que aplican los navegadores? ¿Qué aporta un diseñador que se dedica continuamente a resolver los mismos problemas que se producen al crear <em>layouts</em> complejos? ¿Por qué el diseñador se dedica a tareas y problemas que han sido resueltos satisfactoriamente hace mucho tiempo?</p>
+
+<p>Los <em>frameworks</em> CSS más completos incluyen utilidades para que el diseñador no tenga que trabajar en ningún aspecto genérico del diseño web. Por este motivo, es habitual que los mejores <em>frameworks</em> CSS incluyan herramientas para:</p>
+
+<ul>
+<li>Neutralizar los estilos por defecto que aplican los navegadores. Se trata de la habitual hoja de estilos <em>reset.css</em> que todos los diseñadores profesionales utilizan.</li>
+<li>Manejar correctamente el texto, de forma que todos los contenidos se vean exactamente igual en todos los navegadores y que sean adaptables para mejorar su accesibilidad y permitir su acceso en cualquier medio y/o dispositivo.</li>
+<li>Crear cualquier estructura compleja o <em>layout</em> de forma sencilla, con la seguridad de que funciona correctamente en cualquier versión de cualquier navegador.</li>
+</ul>
+
+<p>Actualmente existen decenas de <em>frameworks</em> CSS, tal y como se recoge en la página <em><a href="http://en.wikipedia.org/wiki/List_of_CSS_frameworks">List of CSS frameworks</a></em> de la Wikipedia. En las siguientes secciones se explica detalladamente el <em>framework</em> YUI creado por Yahoo!</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="capitulo_4/propiedad_content.html">&larr; Anterior <span>4.7. Propiedad content</span></a>
+            
+            <a class="span5 next" href="capitulo_5/el_framework_yui.html">Siguiente &rarr; <span>5.1. El framework YUI</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Frameworks (CSS avanzado%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'CSS avanzado : Frameworks']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="capitulo_1.html"> Técnicas imprescindibles</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="capitulo_2.html"> Buenas prácticas</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="capitulo_3.html"> Selectores</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="capitulo_4.html"> Propiedades avanzadas</a>
+    </li>
+    <li class="level-1 active">
+        <a href="capitulo_5.html">
+            <span>Capítulo 5.</span> Frameworks
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="capitulo_5/el_framework_yui.html">
+            <span>5.1.</span> El framework YUI
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="capitulo_5/primeros_pasos_con_el_framework_yui.html">
+            <span>5.2.</span> Primeros pasos con el framework YUI
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="capitulo_5/inicializando_estilos_con_el_framework_yui.html">
+            <span>5.3.</span> Inicializando estilos con el framework YUI
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="capitulo_5/texto_con_el_framework_yui.html">
+            <span>5.4.</span> Texto con el framework YUI
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="capitulo_5/layouts_con_el_framework_yui.html">
+            <span>5.5.</span> Layouts con el framework YUI
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="capitulo_5/otros_frameworks.html">
+            <span>5.6.</span> Otros frameworks
+        </a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="capitulo_6.html"> Técnicas avanzadas</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

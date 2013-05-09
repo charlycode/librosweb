@@ -1,0 +1,423 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>11.5. La estrategia de envío (Symfony 1.4, la guía definitiva)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="configuracion.html" />
+        <link rel="next" href="_el_transporte_de_email.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="11.5. La estrategia de envío (Symfony 1.4, la guía definitiva)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page symfony_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Symfony 1.4, la guía definitiva</a></li>
+  <li><a href="../capitulo_11.html">Capítulo 11. Emails</a></li>
+  <li class="current"><span>11.5.. La estrategia de envío</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="la_estrategia_de_envio"><span>11.5.</span> La estrategia de envío</h1>
+    
+
+<p>La estrategia o mecanismo de envío es una de las características más útiles de 
+la integración de Swift Mailer con symfony. La estrategia de envío permite 
+indicar a symfony la forma en la que se envían los mensajes y se puede 
+configurar mediante la opción <code>delivery_strategy</code> del archivo de 
+configuración <code>factories.yml</code>. La estrategia modifica el comportamiento del 
+método <code>sfMailer::send()</code>. Por defecto se dispone de cuatro 
+estrategias diferentes, que cubren todas las necesidades habituales:</p>
+
+<ul>
+<li><code>realtime</code>:       los mensajes se envían en tiempo real.</li>
+<li><code>single_address</code>: los mensajes se envían a la dirección de correo electrónico indicada.</li>
+<li><code>spool</code>:          los mensajes se guardan en una cola de envío.</li>
+<li><code>none</code>:           los mensajes no se envían y simplemente se ignoran.</li>
+</ul>
+
+<h3 id="la_estrategia_realtime">11.5.1. La estrategia <code>realtime</code></h3>
+
+<p>La estrategia <code>realtime</code> es la que se utiliza por defecto y la más sencilla de 
+configurar porque no se debe hacer nada especial.</p>
+
+<p>Los emails se envían mediante el transporte configurado en la sección 
+<code>transport</code> del archivo de configuración <code>factories.yml</code> (la siguiente sección 
+explica cómo configurar un transporte para email).</p>
+
+<h3 id="la_estrategia_single_address">11.5.2. La estrategia <code>single_address</code></h3>
+
+<p>Utilizando la estrategia <code>single_address</code>, todos los mensajes se envían a una 
+dirección de correo electrónico configurada en la opción <code>delivery_address</code>.</p>
+
+<p>Esta estrategia es muy útil en el entorno de desarrollo para no enviar los 
+emails a los usuarios reales pero al mismo tiempo permitir que el programador 
+pueda comprobar con su lector de correo el aspecto y contenido de los emails 
+enviados.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Si quieres comprobar las direcciones <code>para</code>, <code>cc</code> y <code>bcc</code> originales, están 
+disponibles en las cabeceras <code>X-Swift-To</code>, <code>X-Swift-Cc</code> y <code>X-Swift-Bcc</code> 
+respectivamente.</p></div>
+
+<p>Los emails se envían mediante el mismo transporte que utiliza la estrategia 
+<code>realtime</code>.</p>
+
+<h3 id="la_estrategia_spool">11.5.3. La estrategia <code>spool</code></h3>
+
+<p>La estrategia <code>spool</code> hace que todos los mensajes se almacenen en una cola.</p>
+
+<p>Esta es la mejor estrategia para el entorno de producción, ya que las 
+peticiones web no tienen que esperar a que se envíen los emails.</p>
+
+<p>La clase <code>spool</code> se configura mediante la opción <code>spool_class</code>. Symfony 
+incluye por defecto tres clases de este tipo:</p>
+
+<ul>
+<li><code>Swift_FileSpool</code>: los mensajes se guardan en el sistema de archivos.</li>
+<li><code>Swift_DoctrineSpool</code>: los mensajes se guardan en un modelo de Doctrine.</li>
+<li><code>Swift_PropelSpool</code>: los mensajes se guardan en un modelo de Propel.</li>
+</ul>
+
+<p>Cuando se instancia la clase, se pasa como argumento de su constructor la 
+opción <code>spool_arguments</code>. A continuación se indican las opciones disponibles 
+para los tipos de colas incluidos por defecto:</p>
+
+<ul>
+<li><code>Swift_FileSpool</code>:
+
+<ul>
+<li>La ruta absoluta del directorio de la cola (los mensajes se guardan en 
+este directorio)</li>
+</ul></li>
+<li><code>Swift_DoctrineSpool</code>:
+
+<ul>
+<li>El modelo de Doctrine en el que se guardan los mensajes (por defecto es 
+<code>MailMessage</code>)</li>
+<li>El nombre de la columna utilizada para guardar el mensaje (por defecto 
+es <code>message</code>)</li>
+<li>El método que se invoca para obtener los mensajes a enviar (opcional). 
+Como argumento de este método se le pasan las opciones de la cola.</li>
+</ul></li>
+<li><code>Swift_PropelSpool</code>:
+
+<ul>
+<li>El modelo de Propel en el que se guardan los mensajes (por defecto es 
+<code>MailMessage</code>)</li>
+<li>El nombre de la columna utilizada para guardar el mensaje (por defecto 
+es <code>message</code>)</li>
+<li>El método que se invoca para obtener los mensajes a enviar (opcional). 
+Como argumento de este método se le pasan las opciones de la cola.</li>
+</ul></li>
+</ul>
+
+<p>Seguidamente se muestra la configuración típica de una cola de Doctrine:</p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co1"># Configuración del esquema en schema.yml</span><span class="co4">
+MailMessage</span>:<span class="co3">
+ actAs</span><span class="sy2">: </span><span class="br0">&#123;</span> Timestampable<span class="sy2">: </span>~ <span class="br0">&#125;</span><span class="co4">
+ columns</span>:<span class="co3">
+   message</span><span class="sy2">: </span><span class="br0">&#123;</span> type<span class="sy2">: </span>clob, notnull<span class="sy2">: </span>true <span class="br0">&#125;</span></pre>
+</div>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co1"># configuración en factories.yml</span><span class="co4">
+mailer</span>:<span class="co3">
+  class</span><span class="sy2">: </span>sfMailer<span class="co4">
+  param</span>:<span class="co3">
+    delivery_strategy</span><span class="sy2">: </span>spool<span class="co3">
+    spool_class</span><span class="sy2">: </span>      Swift_DoctrineSpool<span class="co3">
+    spool_arguments</span><span class="sy2">: </span>  <span class="br0">&#91;</span> MailMessage, message, getSpooledMessages <span class="br0">&#93;</span></pre>
+</div>
+
+<p>Y la misma configuración de antes para una cola de Propel:</p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co1"># Configuración del esquema en schema.yml</span><span class="co4">
+mail_message</span>:<span class="co3">
+  message</span><span class="sy2">: </span>   <span class="br0">&#123;</span> type<span class="sy2">: </span>clob, required<span class="sy2">: </span>true <span class="br0">&#125;</span><span class="co3">
+  created_at</span><span class="sy2">: </span>~</pre>
+</div>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co1"># configuración en factories.yml</span><span class="co4">
+dev</span>:<span class="co4">
+  mailer</span>:<span class="co4">
+    param</span>:<span class="co3">
+      delivery_strategy</span><span class="sy2">: </span>spool<span class="co3">
+      spool_class</span><span class="sy2">: </span>      Swift_PropelSpool<span class="co3">
+      spool_arguments</span><span class="sy2">: </span>  <span class="br0">&#91;</span> MailMessage, message, getSpooledMessages <span class="br0">&#93;</span></pre>
+</div>
+
+<p>Para enviar todos los mensajes almacenados en la cola, puedes emplear la tarea 
+<code>project:send-emails</code> (esta tarea es completamente independiente del tipo de 
+cola y de sus opciones):</p>
+
+<div class="code cli">
+<pre class="cli">$ php symfony project:send-emails</pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> La tarea <code>project:send-emails</code> requiere como argumentos el nombre de una 
+aplicación y un entorno.</p></div>
+
+<p>Cuando se utiliza la tarea <code>project:send-emails</code>, los mensajes se envían con 
+el mismo transporte utilizado por la estrategia <code>realtime</code>.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> La tarea <code>project:send-emails</code> se puede ejecutar en cualquier máquina, no 
+necesariamente en la misma en la que se creó el mensaje. Esto es así porque 
+todo se guarda en el objeto del mensaje, incluso los archivos adjuntos.</p></div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> El funcionamiento interno de las colas es muy sencillo. Los emails se envían 
+sin controlar los errores que se pueden producir, es decir, como si hubieran 
+sido enviados con la estrategia <code>realtime</code>. Obviamente puedes extender las 
+clases de las colas para incluir tu propia lógica de gestión de errores.</p></div>
+
+<p>La tarea <code>project:send-emails</code> admite opcionalmente las siguientes dos opciones:</p>
+
+<ul>
+<li><code>message-limit</code>: limita el número de mensajes que se envían.</li>
+<li><code>time-limit</code>: limita (en segundos) el tiempo empleado en enviar los mensajes.</li>
+</ul>
+
+<p>Las dos opciones también se pueden combinar:</p>
+
+<div class="code cli">
+<pre class="cli">$ php symfony project:send-emails --message-limit=10 --time-limit=20</pre>
+</div>
+
+<p>El comando anterior deja de enviar mensajes cuando se envían 10 mensajes o
+cuando transcurren 20 segundos.</p>
+
+<p>Aun cuando hagas uso de la estrategia <code>spool</code>, puede que tengas que enviar un 
+mensaje de forma inmediata sin almacenarlo en la cola de mensajes. Para ello, 
+puedes hacer uso de un método especial del mailer llamado 
+<code>sendNextImmediately()</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getMailer</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">sendNextImmediately</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">send</span><span class="br0">&#40;</span><span class="re0">$mensaje</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>En el ejemplo anterior, el <code>$mensaje</code> no se guardará en la cola y se enviará 
+inmediatamente. Como su propio nombre indica, el método 
+<code>sendNextImmediately()</code> solamente afecta al siguiente mensaje que se envía.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> El método <code>sendNextImmediately()</code> no produce ningún efecto especial cuando la 
+estrategia de envío no es <code>spool</code>.</p></div>
+
+<h3 id="la_estrategia_none">11.5.4. La estrategia <code>none</code></h3>
+
+<p>Esta estrategia es muy útil en el entorno de desarrollo para no enviar emails 
+a ningún usuario real. Los mensajes están disponibles en la barra de 
+depuración web (más adelante se explica la sección del mailer en la barra de 
+depuración web).</p>
+
+<p>También se trata de la mejor estrategia para el entorno de pruebas, donde el 
+objeto <code>sfTesterMailer</code> permite la introspección de los mensajes sin tener que 
+enviarlos realmente (como se explica más adelante en la sección de pruebas).</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="configuracion.html">&larr; Anterior <span>11.4. Configuración</span></a>
+            
+            <a class="span5 next" href="_el_transporte_de_email.html">Siguiente &rarr; <span>11.6.  El transporte de email</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'La estrategia de envío (Symfony 1.4, la guía definitiva%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Symfony 1.4, la guía definitiva : La estrategia de envío']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción a Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Explorando el interior de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Ejecutar aplicaciones Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Introducción a la creación de páginas</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Configurar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> El Controlador</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> La Vista</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> El modelo (Doctrine)</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Enlaces y sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Formularios</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_11.html">
+            <span>Capítulo 11.</span> Emails
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="introduccion.html">
+            <span>11.1.</span> Introducción
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="enviando_emails_desde_una_accion.html">
+            <span>11.2.</span> Enviando emails desde una acción
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="_utilizando_la_vista_de_symfony.html">
+            <span>11.3.</span>  Utilizando la vista de symfony
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="configuracion.html">
+            <span>11.4.</span> Configuración
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="la_estrategia_de_envio.html">
+            <span>11.5.</span> La estrategia de envío
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="_el_transporte_de_email.html">
+            <span>11.6.</span>  El transporte de email
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="enviando_un_email_desde_una_tarea.html">
+            <span>11.7.</span> Enviando un email desde una tarea
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="depurando.html">
+            <span>11.8.</span> Depurando
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="pruebas.html">
+            <span>11.9.</span> Pruebas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="mensajes_de_correo_electronico_como_clases.html">
+            <span>11.10.</span> Mensajes de correo electrónico como clases
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="recetas.html">
+            <span>11.11.</span> Recetas
+        </a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Uso de la cache</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Pruebas unitarias y funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Herramientas para la administración de aplicaciones</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> Personalizar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> Rendimiento</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Configuración avanzada</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

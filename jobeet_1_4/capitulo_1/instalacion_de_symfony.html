@@ -1,0 +1,331 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>1.7. Instalación de Symfony (El tutorial Jobeet)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="prerrequisitos.html" />
+        <link rel="next" href="preparar_el_proyecto.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="1.7. Instalación de Symfony (El tutorial Jobeet)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page jobeet_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">El tutorial Jobeet</a></li>
+  <li><a href="../capitulo_1.html">Capítulo 1. Comenzando el proyecto</a></li>
+  <li class="current"><span>1.7.. Instalación de Symfony</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="instalacion_de_symfony"><span>1.7.</span> Instalación de Symfony</h1>
+    
+
+<p>En primer lugar, crea un directorio donde vamos a guardar todos los archivos relacionados con el proyecto Jobeet:</p>
+
+<div class="code cli">
+<pre class="cli">$ mkdir -p /home/sfprojects/jobeet
+$ cd /home/sfprojects/jobeet</pre>
+</div>
+
+<p>En Windows utiliza los siguientes comandos:</p>
+
+<div class="code cli">
+<pre class="cli">c:\&gt; mkdir c:\development\sfprojects\jobeet
+c:\&gt; cd c:\development\sfprojects\jobeet</pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Recomendamos a los usuarios de Windows que ejecuten Symfony y creen su proyecto en una ruta que no tenga espacios en blanco. Por tanto, evita directorios como <code>Documents and Settings</code> y <code>Mis Documentos</code>.</p></div>
+
+<p>Crea un directorio para guardar los archivos de las librerías del framework Symfony:</p>
+
+<div class="code cli">
+<pre class="cli">$ mkdir -p lib/vendor</pre>
+</div>
+
+<p>El sitio web oficial de Symfony dispone de una <a href="http://www.symfony-project.org/installation">página de instalación</a> que muestra todas las versiones de Symfony disponibles y compara sus características. Como este tutorial se ha escrito para Symfony 1.2, accede a la <a href="http://www.symfony-project.org/installation/1_2">página de instalación de Symfony 1.2</a>.</p>
+
+<p>Dentro de la sección <em>"Source Download"</em> encontrarás el archivo comprimido en formato <code>.tgz</code> o en formato <code>.zip</code>. Descarga el archivo, guárdalo en el directorio <code>lib/vendor</code> recién creado y descomprímelo:</p>
+
+<div class="code cli">
+<pre class="cli">$ cd lib/vendor
+$ tar zxpf symfony-1.2.2.tgz
+$ mv symfony-1.2.2 symfony
+$ rm symfony-1.2.2.tgz</pre>
+</div>
+
+<p>Si utilizas Windows puedes descomprimir el archivo ZIP directamente desde el explorador de archivos. Después de cambiar el nombre del directorio a <code>symfony</code>, deberías tener el siguiente directorio <code>c:\development\sfprojects\jobeet\lib\vendor\symfony</code>.</p>
+
+<p>Como la configuración de PHP varía mucho de una distribución a otra, es necesario comprobar que la configuración actual de PHP cumple con los requisitos mínimos exigidos por Symfony. Para realizar esta comprobación puedes utilizar un script específico que incluye Symfony:</p>
+
+<div class="code cli">
+<pre class="cli">$ cd ../..
+$ php lib/vendor/symfony/data/bin/check_configuration.php</pre>
+</div>
+
+<p>Si se produce cualquier error, el script anterior muestra mensajes de ayuda para solucionarlos. También es recomendable que ejecutes el script de comprobación desde un navegador, ya que la configuración de PHP puede ser diferente. Copia el script en el directorio raíz del servidor y accede a ese archivo desde el navegador. No te olvides de borrar el archivo que acabas de copiar después de realizar la comprobación:</p>
+
+<div class="code cli">
+<pre class="cli">$ rm web/check_configuration.php</pre>
+</div>
+
+<div class="figure" id="figure_1_1">
+    <img src="../../img/jobeet_1_4/f0101.png" alt="Comprobando la configuración" />
+
+    <p class="caption"><strong>Figura 1.1</strong> Comprobando la configuración</p>
+</div>
+
+
+<p>Si el script anterior no muestra ningún mensaje de error, comprueba que has instalado Symfony correctamente utilizando la línea de comandos para mostrar la versión de Symfony que se ha instalado (en el siguiente comando la letra <code>V</code> se escribe en mayúscula):</p>
+
+<div class="code cli">
+<pre class="cli">$ cd ../..
+$ php lib/vendor/symfony/data/bin/symfony -V</pre>
+</div>
+
+<p>En Windows:</p>
+
+<div class="code cli">
+<pre class="cli">c:\&gt; cd ..\..
+c:\&gt; php lib\vendor\symfony\data\bin\symfony -V</pre>
+</div>
+
+<p>Si sientes curiosidad por los comandos que incluye esta utilidad de la línea de comandos, puedes ejecutarla sin opciones (simplemente escribiendo <code>symfony</code>) para que muestre todos los comandos disponibles:</p>
+
+<div class="code cli">
+<pre class="cli">$ php lib/vendor/symfony/data/bin/symfony</pre>
+</div>
+
+<p>En Windows:</p>
+
+<div class="code cli">
+<pre class="cli">c:\&gt; php lib\vendor\symfony\data\bin\symfony</pre>
+</div>
+
+<p>La línea de comandos es imprescindible para los programadores, ya que proporciona muchas utilidades que mejoran la productividad al realizar tareas tan comunes como limpiar la cache, generar código de forma automática, etc.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="prerrequisitos.html">&larr; Anterior <span>1.6. Prerrequisitos</span></a>
+            
+            <a class="span5 next" href="preparar_el_proyecto.html">Siguiente &rarr; <span>1.8. Preparar el proyecto</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Instalación de Symfony (El tutorial Jobeet%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'El tutorial Jobeet : Instalación de Symfony']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1 ">
+        <a href="../capitulo_1.html">
+            <span>Capítulo 1.</span> Comenzando el proyecto
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_desafio.html">
+            <span>1.2.</span> El desafío
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="este_tutorial_es_diferente.html">
+            <span>1.3.</span> Este tutorial es diferente
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_proyecto.html">
+            <span>1.4.</span> El proyecto
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="que_haremos_hoy.html">
+            <span>1.5.</span> ¿Que haremos hoy?
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="prerrequisitos.html">
+            <span>1.6.</span> Prerrequisitos
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="instalacion_de_symfony.html">
+            <span>1.7.</span> Instalación de Symfony
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="preparar_el_proyecto.html">
+            <span>1.8.</span> Preparar el proyecto
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="los_entornos.html">
+            <span>1.9.</span> Los entornos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="configurar_mal_el_servidor_web.html">
+            <span>1.10.</span> Configurar mal el servidor web
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="configurar_correctamente_el_servidor_web.html">
+            <span>1.11.</span> Configurar correctamente el servidor web
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="subversion.html">
+            <span>1.12.</span> Subversion
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="nos_vemos_manana.html">
+            <span>1.13.</span> Nos vemos mañana
+        </a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> El proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> El modelo de datos</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> El controlador y la vista</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> El sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Profundizando en el modelo</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Trabajando con la página de cada categoría</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Pruebas unitarias</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Pruebas funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Probando los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> El generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> El usuario</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> El día de descanso</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Canales Atom</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Servicios web</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> El buscador</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>20</span> <a href="../capitulo_20.html"> Plugins</a>
+    </li>
+    <li class="level-1">
+        <span>21</span> <a href="../capitulo_21.html"> El día del diseño</a>
+    </li>
+    <li class="level-1">
+        <span>22</span> <a href="../capitulo_22.html"> La cache</a>
+    </li>
+    <li class="level-1">
+        <span>23</span> <a href="../capitulo_23.html"> Pasando a producción</a>
+    </li>
+    <li class="level-1">
+        <span>24</span> <a href="../capitulo_24.html"> Un repaso a Symfony</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

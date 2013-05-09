@@ -1,0 +1,238 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>10.3. DOCTYPE (Introducción a XHTML)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="metadatos.html" />
+        <link rel="next" href="../capitulo_11.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="10.3. DOCTYPE (Introducción a XHTML)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page xhtml">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Introducción a XHTML</a></li>
+  <li><a href="../capitulo_10.html">Capítulo 10. Metainformación</a></li>
+  <li class="current"><span>10.3. DOCTYPE</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="doctype"><span>10.3.</span> DOCTYPE</h1>
+    
+
+<p>El estándar XHTML deriva de XML, por lo que comparte con el muchas de sus normas y sintaxis. Uno de los conceptos fundamentales de XML es la utilización del DTD o <em>Document Type Definition</em> (<em>"Definición del Tipo de Documento"</em>).</p>
+
+<p>Un DTD es un documento que recoge el conjunto de normas y restricciones que deben cumplir los documentos de un determinado tipo. Si por ejemplo se define un DTD para los documentos relacionados con libros, se puede fijar como norma que cada libro tenga un título y sólo uno, que tenga uno o más autores, que la información sobre el número de páginas pueda ser opcional, etc.</p>
+
+<p>El conjunto de normas, obligaciones y restricciones que se deben seguir al crear un documento de un determinado tipo, se recogen en su correspondiente DTD. El estándar XHTML define el DTD que deben seguir las páginas y documentos XHTML. En este documento se definen las etiquetas que se pueden utilizar, los atributos de cada etiqueta y el tipo de valores que puede tener cada atributo.</p>
+
+<p>En realidad, la versión 1.0 del estándar de XHTML define tres DTD diferentes. Para indicar el DTD utilizado al crear una determinada página, se emplea una etiqueta especial llamada <code>doctype</code>. La etiqueta <code>doctype</code> es el único elemento que se incluye fuera de la etiqueta <code>&lt;html&gt;</code> de la página. De hecho, la declaración del <code>doctype</code> es lo primero que se debe incluir en una página web, antes incluso que la etiqueta <code>&lt;html&gt;</code>.</p>
+
+<p>Como se verá más adelante, para que una página XHTML sea correcta y válida es imprescindible que incluya el correspondiente <code>doctype</code> que indica el DTD utilizado. A continuación se muestran los tres DTD que se pueden utilizar al crear páginas XHTML:</p>
+
+<p><strong>XHTML 1.0 Estricto</strong></p>
+
+<div class="code html">
+<pre class="html5"><span class="sc0">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Strict//EN&quot; </span>
+<span class="sc0">    &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd&quot;&gt;</span></pre>
+</div>
+
+<p>Se trata de la variante con las normas más estrictas y las restricciones más severas. Las páginas web que incluyan este <code>doctype</code>, no pueden utilizar atributos relacionados con el aspecto de los contenidos, por lo que requiere una separación total de código HTML y estilos CSS.</p>
+
+<p><strong>XHTML 1.0 Transitorio</strong></p>
+
+<div class="code html">
+<pre class="html5"><span class="sc0">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot;</span>
+<span class="sc0">    &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;</span></pre>
+</div>
+
+<p>Se trata de una variante menos estricta que la anterior, ya que permite el uso de algunos atributos HTML relacionados con el aspecto de los elementos.</p>
+
+<p><strong>XHTML 1.0 Frameset</strong></p>
+
+<div class="code html">
+<pre class="html5"><span class="sc0">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Frameset//EN&quot; </span>
+<span class="sc0">    &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd&quot;&gt;</span></pre>
+</div>
+
+<p>Esta última variante la utilizan las páginas que están formadas por <em>frames</em>, una práctica completamente desaconsejada y que hoy en día sólo utilizan los sitios web obsoletos.</p>
+
+<p>Si no tienes claro el DTD que más te conviene, deberías utilizar el XHTML 1.0 transitorio, ya que es más fácil crear páginas web válidas. Si tienes conocimientos avanzados de XHTML, puedes utilizar XHTML 1.0 estricto.</p>
+
+<p>Por otra parte, además del <code>DOCTYPE</code> apropiado, también es necesario que las páginas web indiquen el <code>namespace</code> asociado. Un <code>namespace</code> en un documento XML permite diferenciar las etiquetas y atributos que pertenecen a cada lenguaje.</p>
+
+<p>Si en un mismo documento se mezclan etiquetas de dos o más lenguajes derivados de XML (XHTML y SVG por ejemplo) y que tienen el mismo nombre, no se podría determinar a qué lenguaje pertenece cada etiqueta y por tanto, no se podría interpretar esa etiqueta o ese atributo. Los <code>namespaces</code> se indican mediante una URL.</p>
+
+<p>El <code>namespace</code> que utilizan todas las páginas XHTML (independientemente de la versión y del <code>DOCTYPE</code>) es <code>http://www.w3.org/1999/xhtml</code> y se indica de la siguiente manera:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">html</span> xmlns<span class="sy0">=</span><span class="st0">&quot;http://www.w3.org/1999/xhtml&quot;</span>&gt;</span>
+...
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">html</span>&gt;</span></pre>
+</div>
+
+<p>De esta forma, es habitual que las páginas XHTML comiencen con el siguiente código:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc0">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot;</span>
+<span class="sc0">    &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;</span>
+<span class="sc2">&lt;<span class="kw2">html</span> xmlns<span class="sy0">=</span><span class="st0">&quot;http://www.w3.org/1999/xhtml&quot;</span> <span class="kw3">lang</span><span class="sy0">=</span><span class="st0">&quot;es&quot;</span> xml:<span class="kw3">lang</span><span class="sy0">=</span><span class="st0">&quot;es&quot;</span>&gt;</span></pre>
+</div>
+
+<p>Aunque el código anterior es mucho más complicado que una simple etiqueta <code>&lt;html&gt;</code>, es imprescindible para que las páginas XHTML creadas sean correctas y superen satisfactoriamente el proceso de validación que se muestra en los capítulos siguientes.</p>
+
+<p>Afortunadamente, si utilizas un editor avanzado como Dreamweaver para crear las páginas, todo el código anterior se incluye de forma automática. Si creas las páginas a mano, sólo tienes que copiar y pegar ese código en cada nueva página.</p>
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="metadatos.html">&larr; Anterior <span>10.2. Metadatos</span></a>
+            
+            <a class="span5 next" href="../capitulo_11.html">Siguiente &rarr; <span>Capítulo 11. Otras etiquetas importantes</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'DOCTYPE (Introducción a XHTML%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a XHTML : DOCTYPE']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Características básicas</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Texto</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Enlaces</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Listas</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Imágenes y objetos</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Tablas</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Estructura y layout</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_10.html">
+            <span>Capítulo 10.</span> Metainformación
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="estructura_de_la_cabecera.html">
+            <span>10.1.</span> Estructura de la cabecera
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="metadatos.html">
+            <span>10.2.</span> Metadatos
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="doctype.html">
+            <span>10.3.</span> DOCTYPE
+        </a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Otras etiquetas importantes</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Accesibilidad</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Validación</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Fragmentos de código</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

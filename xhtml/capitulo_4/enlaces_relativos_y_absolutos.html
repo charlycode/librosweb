@@ -1,0 +1,519 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>4.2. Enlaces relativos y absolutos (Introducción a XHTML)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="url.html" />
+        <link rel="next" href="enlaces_basicos.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="4.2. Enlaces relativos y absolutos (Introducción a XHTML)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page xhtml">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Introducción a XHTML</a></li>
+  <li><a href="../capitulo_4.html">Capítulo 4. Enlaces</a></li>
+  <li class="current"><span>4.2. Enlaces relativos y absolutos</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="enlaces_relativos_y_absolutos"><span>4.2.</span> Enlaces relativos y absolutos</h1>
+    
+
+<p>Las páginas web habituales suelen contener decenas de enlaces de diferentes tipos. La siguiente imagen muestra algunos de los tipos de enlaces de la página principal del sitio web www.thinkvitamin.com:</p>
+
+<div class="figure" id="figure_4_1">
+    <img src="../../img/xhtml/ejemplo_tipos_enlaces.gif" alt="Ejemplo de diferentes tipos de enlaces en la página 456BereaStreet.com" />
+
+    <p class="caption"><strong>Figura 4.1</strong> Ejemplo de diferentes tipos de enlaces en la página 456BereaStreet.com</p>
+</div>
+
+
+<p>En esa página, cuando se pincha sobre algunos enlaces, el navegador abandona el sitio web para acceder a páginas que se encuentran en otros sitios. Estos enlaces se conocen como "enlaces externos". Sin embargo, la mayoría de enlaces de un sitio web apuntan a páginas del propio sitio web, por lo que se denominan "enlaces internos".</p>
+
+<p>Además de internos/externos, la otra característica que diferencia a los enlaces (y por tanto, también a las URL) es si el enlace es absoluto o relativo. Las <strong>URL absolutas</strong> incluyen todas las partes de la URL (protocolo, servidor y ruta) por lo que no se necesita más información para obtener el recurso enlazado.</p>
+
+<p>Las <strong>URL relativas</strong> prescinden de algunas partes de las URL para hacerlas más breves. Como se trata de URL incompletas, es necesario disponer de información adicional para obtener el recurso enlazado. En concreto, para que una URL relativa sea útil es imprescindible conocer la URL del origen del enlace.</p>
+
+<p>Las URL relativas se construyen a partir de las URL absolutas y prescinden de la parte del protocolo, del nombre del servidor e incluso de parte o toda la ruta del recurso enlazado. Aunque las URL relativas pueden ser difíciles de entender para los que comienzan con HTML, son tan útiles que todos los sitios web las utilizan.</p>
+
+<p>Imagina que dispones de una página publicada en http://www.ejemplo.com/ruta1/ruta2/pagina1.html y quieres incluir en ella un enlace a otra página que se encuentra en http://www.ejemplo.com/ruta1/ruta2/pagina2.html. Como las URL identifican de forma única a los recursos de Internet y proporcionan la información necesaria para llegar hasta ellos, el enlace debería utilizar la URL completa de la segunda página.</p>
+
+<p>Las URL completas también se llaman URL absolutas, ya que el navegador no necesita disponer de información adicional para localizar el recurso enlazado. Si se utilizan siempre las URL absolutas, los enlaces están completamente definidos.</p>
+
+<p>Sin embargo, escribir siempre las URL completas es bastante aburrido, cuesta mucho tiempo y hace imposible cambiar la ubicación de los contenidos de un sitio web. Por ese motivo, casi todos los sitios web de Internet utilizan URL relativas siempre que es posible.</p>
+
+<p>Una URL relativa es una versión abreviada de una URL absoluta. Su objetivo es eliminar todas las partes de la URL absoluta que se pueden <em>adivinar</em> a partir de la información de contexto de la página web. En otras palabras, las URL relativas aprovechan la <em>inteligencia</em> de los navegadores para crear URL incompletas que los navegadores pueden completar deduciendo la información que falta.</p>
+
+<p>Considerando de nuevo el ejemplo anterior, la URL a la que se quiere enlazar utiliza el mismo protocolo y se encuentra en el mismo servidor que la página origen, por lo que la URL relativa puede prescindir de esas partes:</p>
+
+<div class="code html">
+<pre class="html5">URL absoluta: http://www.ejemplo.com/ruta1/ruta2/pagina2.html
+URL relativa: /ruta1/ruta2/pagina2.html</pre>
+</div>
+
+<p>En el ejemplo anterior, las dos URL son equivalentes porque cuando no se indica el protocolo y el servidor de una URL, los navegadores suponen que son los mismos que los de la página origen. Por lo tanto, cuando el navegador encuentra la URL <code>/ruta1/ruta2/pagina2.html</code>, realiza el siguiente proceso:</p>
+
+<ol>
+<li>La URL no es absoluta, por lo que se debe determinar la URL absoluta a partir de la URL relativa para poder cargar el recurso enlazado.</li>
+<li>A la URL relativa le falta el protocolo y el servidor, por lo que se supone que son los mismos que los de la página origen (<code>http://</code> y <code>www.ejemplo.com</code>).</li>
+<li>Se añaden las partes que faltan a la URL relativa para obtener la URL absoluta: <code>http://</code> + <code>www.ejemplo.com</code> + <code>/ruta1/ruta2/pagina2.html</code> = http://www.ejemplo.com/ruta1/ruta2/pagina2.html.</li>
+</ol>
+
+<p>Aunque el ejemplo mostrado es el caso más sencillo de URL relativa, existen otros casos más avanzados en los que se prescinde de parte o toda la ruta del recurso que se enlaza. A continuación se muestran los cuatro tipos diferentes de URL relativas:</p>
+
+<p>1) <strong>El origen y el destino del enlace se encuentran en el mismo directorio</strong></p>
+
+<p>Si desde una página web se quiere enlazar un recurso que se encuentra en el mismo directorio del servidor, la URL relativa puede prescindir de todas las partes de la URL absoluta salvo el nombre del recurso enlazado.</p>
+
+<div class="table" id="table_4_3">
+
+    <table>
+<thead>
+<tr>
+  <th>Elemento</th>
+  <th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Página origen</td>
+  <td><code>http://www.ejemplo.com/ruta1/ruta2/ruta3/pagina1.html</code></td>
+</tr>
+<tr>
+  <td>Página enlazada</td>
+  <td>Página web llamada <code>pagina2.html</code> y que se encuentra en el mismo directorio</td>
+</tr>
+<tr>
+  <td>URL absoluta</td>
+  <td><code>http://www.ejemplo.com/ruta1/ruta2/ruta3/pagina2.html</code></td>
+</tr>
+<tr>
+  <td>URL relativa</td>
+  <td><code>pagina2.html</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+<p>Cuando el navegador encuentra una URL relativa que sólo consiste en el nombre de un recurso, supone que el protocolo, servidor y directorio del recurso enlazado son los mismos que los del origen del enlace.</p>
+
+<p>2) <strong>El destino del enlace se encuentra cerca de su origen y en un nivel superior</strong></p>
+
+<p>En este caso, el recurso que se enlaza no está en el mismo directorio que el origen del enlace pero sí que está <em>cerca</em> y en algún directorio superior. La URL relativa debe indicar de alguna manera que es necesario <em>subir</em> un nivel en la jerarquía de directorios para llegar hasta el recurso.</p>
+
+<p>Para indicar al navegador que debe subir un nivel, se incluyen dos puntos y una barra (<code>../</code>) en la ruta del recurso enlazado. De esta forma, cada vez que aparece <code>../</code> en una URL relativa, significa que se debe subir un nivel.</p>
+
+<div class="table" id="table_4_4">
+
+    <table>
+<thead>
+<tr>
+  <th>Elemento</th>
+  <th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Página origen</td>
+  <td><code>http://www.ejemplo.com/ruta1/ruta2/ruta3/pagina1.html</code></td>
+</tr>
+<tr>
+  <td>Página enlazada</td>
+  <td>Página web llamada <code>pagina2.html</code> y que se encuentra en el directorio superior llamado <code>ruta2</code></td>
+</tr>
+<tr>
+  <td>URL absoluta</td>
+  <td><code>http://www.ejemplo.com/ruta1/ruta2/pagina2.html</code></td>
+</tr>
+<tr>
+  <td>URL relativa</td>
+  <td><code>../pagina2.html</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+<p>Cuando el navegador encuentra la URL relativa <code>../pagina2.html</code>, sabe que para encontrar el recurso enlazado (<code>pagina2.html</code>) tiene que subir un nivel desde el lugar en el que se encuentra esa URL relativa. La página que incluye esa URL se encuentra en el directorio <code>ruta1/ruta2/ruta3</code>, por lo que subir un nivel equivale entrar en el directorio <code>ruta1/ruta2</code>.</p>
+
+<p>De la misma forma, si el destino se encuentra un par de niveles por encima, se debe incluir <code>../</code> dos veces seguidas:</p>
+
+<div class="table" id="table_4_5">
+
+    <table>
+<thead>
+<tr>
+  <th>Elemento</th>
+  <th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Página origen</td>
+  <td><code>http://www.ejemplo.com/ruta1/ruta2/ruta3/pagina1.html</code></td>
+</tr>
+<tr>
+  <td>Página enlazada</td>
+  <td>Página web llamada <code>pagina2.html</code> y que se encuentra en el directorio superior llamado <code>ruta1</code></td>
+</tr>
+<tr>
+  <td>URL absoluta</td>
+  <td><code>http://www.ejemplo.com/ruta1/pagina2.html</code></td>
+</tr>
+<tr>
+  <td>URL relativa</td>
+  <td><code>../../pagina2.html</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+<p>Además de subir niveles, también se puede entrar en otros directorios para obtener los recursos:</p>
+
+<div class="table" id="table_4_6">
+
+    <table>
+<thead>
+<tr>
+  <th>Elemento</th>
+  <th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Página origen</td>
+  <td><code>http://www.ejemplo.com/ruta1/ruta2/ruta3/pagina1.html</code></td>
+</tr>
+<tr>
+  <td>Página enlazada</td>
+  <td>Página web llamada <code>pagina2.html</code> y que se encuentra en un directorio llamado <code>ruta4</code> que se encuentra en la raíz del servidor</td>
+</tr>
+<tr>
+  <td>URL absoluta</td>
+  <td><code>http://www.ejemplo.com/ruta4/pagina2.html</code></td>
+</tr>
+<tr>
+  <td>URL relativa</td>
+  <td><code>../../../ruta4/pagina2.html</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+<p>Si se intentan subir más niveles de los que es posible, el navegador ignora todos los <code>../</code> sobrantes. Si la página que tiene el enlace es http://www.ejemplo.com/ruta1/ruta2/ruta3/pagina1.html y la URL relativa que se incluye es <code>../../../../../pagina2.html</code>, el navegador realmente la interpreta como <code>../../../pagina2.html</code>.</p>
+
+<p>Como el objetivo de las URL relativas es crear URL más cortas y sencillas que las URL absolutas, este método sólo se puede utilizar cuando el origen y el destino se encuentran cerca, porque de otro modo la URL relativa se complica demasiado.</p>
+
+<p>3) <strong>El destino del enlace se encuentra cerca de su origen y en un nivel inferior</strong></p>
+
+<p>Este caso es muy similar al anterior, pero más sencillo. Si el recurso enlazado se encuentra en algún directorio inferior al que se encuentra el origen, sólo es necesario indicar el nombre de los directorios a los que debe entrar el navegador.</p>
+
+<div class="table" id="table_4_7">
+
+    <table>
+<thead>
+<tr>
+  <th>Elemento</th>
+  <th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Página origen</td>
+  <td><code>http://www.ejemplo.com/ruta1/ruta2/ruta3/pagina1.html</code></td>
+</tr>
+<tr>
+  <td>Página enlazada</td>
+  <td>Página web llamada <code>pagina2.html</code> y que se encuentra en un directorio inferior llamado <code>ruta4</code></td>
+</tr>
+<tr>
+  <td>URL absoluta</td>
+  <td><code>http://www.ejemplo.com/ruta1/ruta2/ruta3/ruta4/pagina2.html</code></td>
+</tr>
+<tr>
+  <td>URL relativa</td>
+  <td><code>ruta4/pagina2.html</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+<p>De la misma forma, se pueden indicar varios directorios seguidos para que el navegador descienda jerárquicamente por la estructura de directorios:</p>
+
+<div class="table" id="table_4_8">
+
+    <table>
+<thead>
+<tr>
+  <th>Elemento</th>
+  <th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Página origen</td>
+  <td><code>http://www.ejemplo.com/ruta1/ruta2/ruta3/pagina1.html</code></td>
+</tr>
+<tr>
+  <td>Página enlazada</td>
+  <td>Página web llamada <code>pagina2.html</code> y que se encuentra en un directorio inferior llamado <code>ruta6</code> que está dentro del directorio <code>ruta5</code> y que a su vez está dentro del directorio <code>ruta4</code></td>
+</tr>
+<tr>
+  <td>URL absoluta</td>
+  <td><code>http://www.ejemplo.com/ruta1/ruta2/ruta3/ruta4/ruta5/ruta6/pagina2.html</code></td>
+</tr>
+<tr>
+  <td>URL relativa</td>
+  <td><code>ruta4/ruta5/ruta6/pagina2.html</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+<p>4) <strong>El origen y el destino del enlace se encuentran muy alejados</strong></p>
+
+<p>Cuando el origen y el destino de un enlace se encuentran muy alejados (pero en el mismo servidor) las URL relativas se pueden complicar en exceso. Aunque es posible utilizar <code>../</code> para subir por la jerarquía de directorios y se puede entrar en cualquier directorio indicando su nombre, las URL relativas que se obtienen son demasiado largas y complicadas.</p>
+
+<p>En estos casos, lo más sencillo es indicar la ruta completa hasta el recurso enlazado comenzando desde la raíz del servidor web. Por lo tanto, estas URL relativas sólo omiten el protocolo y el nombre del servidor.</p>
+
+<div class="table" id="table_4_9">
+
+    <table>
+<thead>
+<tr>
+  <th>Elemento</th>
+  <th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Página origen</td>
+  <td><code>http://www.ejemplo.com/ruta1/ruta2/ruta3/pagina1.html</code></td>
+</tr>
+<tr>
+  <td>Página enlazada</td>
+  <td>Página web llamada <code>pagina2.html</code> y que se guarda en un directorio llamado <code>ruta7</code> que se encuentra en la raíz del servidor</td>
+</tr>
+<tr>
+  <td>URL absoluta</td>
+  <td><code>http://www.ejemplo.com/ruta7/pagina2.html</code></td>
+</tr>
+<tr>
+  <td>URL relativa</td>
+  <td><code>/ruta7/pagina2.html</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+<p>Cuando la URL relativa comienza por <code>/</code>, el navegador considera que es la ruta completa comenzando desde la raíz del servidor, por lo que sólo le añade el protocolo y el nombre del servidor origen.</p>
+
+<p>A continuación se resumen los cuatro posibles casos de URL relativas y el procedimiento que sigue el navegador para convertirlas en URL absolutas:</p>
+
+<div class="table" id="table_4_10">
+
+    <table>
+<thead>
+<tr>
+  <th>Si la URL relativa...</th>
+  <th>El navegador la transforma en URL absoluta...</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>...sólo consiste en el nombre de un recurso</td>
+  <td>...añadiendo el protocolo, servidor y ruta completa del origen del enlace</td>
+</tr>
+<tr>
+  <td>...comienza por <code>../</code></td>
+  <td>...añadiendo el protocolo y servidor del origen del enlace, subiendo un nivel en la jerarquía de directorios y añadiendo el resto de la ruta incluida en la URL relativa</td>
+</tr>
+<tr>
+  <td>...comienza por <code>/</code></td>
+  <td>...añadiendo el protocolo y servidor del origen del enlace</td>
+</tr>
+<tr>
+  <td>En cualquier otro caso</td>
+  <td>...añadiendo el protocolo, servidor y ruta completa del origen del enlace, a la que se añade la ruta incluida en la URL relativa</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="url.html">&larr; Anterior <span>4.1. URL</span></a>
+            
+            <a class="span5 next" href="enlaces_basicos.html">Siguiente &rarr; <span>4.3. Enlaces básicos</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Enlaces relativos y absolutos (Introducción a XHTML%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a XHTML : Enlaces relativos y absolutos']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Características básicas</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Texto</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_4.html">
+            <span>Capítulo 4.</span> Enlaces
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="url.html">
+            <span>4.1.</span> URL
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="enlaces_relativos_y_absolutos.html">
+            <span>4.2.</span> Enlaces relativos y absolutos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="enlaces_basicos.html">
+            <span>4.3.</span> Enlaces básicos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="enlaces_avanzados.html">
+            <span>4.4.</span> Enlaces avanzados
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="otros_tipos_de_enlaces.html">
+            <span>4.5.</span> Otros tipos de enlaces
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejemplos_de_enlaces_habituales.html">
+            <span>4.6.</span> Ejemplos de enlaces habituales
+        </a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Listas</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Imágenes y objetos</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Tablas</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Estructura y layout</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Metainformación</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Otras etiquetas importantes</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Accesibilidad</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Validación</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Fragmentos de código</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

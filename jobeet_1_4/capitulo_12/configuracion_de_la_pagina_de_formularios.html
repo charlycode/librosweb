@@ -1,0 +1,426 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>12.9. Configuración de la página de formularios (El tutorial Jobeet)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="configuracion_de_la_pagina_list.html" />
+        <link rel="next" href="configuracion_de_los_filtros.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="12.9. Configuración de la página de formularios (El tutorial Jobeet)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page jobeet_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">El tutorial Jobeet</a></li>
+  <li><a href="../capitulo_12.html">Capítulo 12. El generador de la parte de administración</a></li>
+  <li class="current"><span>12.9.. Configuración de la página de formularios</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="configuracion_de_la_pagina_de_formularios"><span>12.9.</span> Configuración de la página de formularios</h1>
+    
+
+<p>La configuración de las páginas de los formularios se realiza en tres secciones: <code>form</code>, <code>edit</code> y <code>new</code>. Todas tienen las mismas opciones de configuración y la sección <code>form</code> sólo existe por si no existen las secciones <code>edit</code> y <code>new</code>.</p>
+
+<h3 id="la_opcion_display">12.9.1. La opción display</h3>
+
+<p>Al igual que en el listado, si quieres modificar el orden en el que se muestran los campos, puedes utilizar la opción <code>display</code>. No obstante, como el formulario que se muestra está definido en una clase, no intentes quitar un campo porque podrían producirse errores de validación inesperados.</p>
+
+<p>La opción <code>display</code> de las páginas de formularios también se puede utilizar para agrupar los campos:</p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co1"># apps/backend/modules/job/config/generator.yml</span><span class="co4">
+config</span>:<span class="co4">
+  form</span>:<span class="co4">
+    display</span>:<span class="co3">
+      Content</span><span class="sy2">: </span><span class="br0">&#91;</span>category_id, type, company, logo, url, position, location, description, how_to_apply, is_public, email<span class="br0">&#93;</span><span class="co3">
+      Admin</span><span class="sy2">: </span>  <span class="br0">&#91;</span>_generated_token, is_activated, expires_at<span class="br0">&#93;</span></pre>
+</div>
+
+<p>La configuración anterior define dos grupos (<code>Content</code> y <code>Admin</code>), cada uno de los cuales contiene un subconjunto de campos de formulario.</p>
+
+<div class="figure" id="figure_12_13">
+    <img src="../../img/jobeet_1_4/f1212.png" alt="Agrupación de campos" />
+
+    <p class="caption"><strong>Figura 12.13</strong> Agrupación de campos</p>
+</div>
+
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Las columnas del grupo <code>Admin</code> todavía no se muestran en el navegador porque han sido eliminadas en la definición del formulario. Estas columnas aparecerán en algunas secciones cuando definamos una clase propia para el formulario <code>job</code> de la aplicación de administración.</p></div>
+
+<p>El generador de la parte de administración incluye soporte para las relaciones muchos-a-muchos entre tablas de la base de datos. En el formulario para categorías, se muestra un cuadro de texto para el nombre, otro para el <em>slug</em> y una lista desplegable para los afiliados relacionados. Como no tiene sentido modificar esta relación en esta página, vamos a eliminarla:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// lib/form/JobeetCategoryForm.class.php</span>
+<span class="kw2">class</span> JobeetCategoryForm <span class="kw2">extends</span> BaseJobeetCategoryForm
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> configure<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="kw3">unset</span><span class="br0">&#40;</span><span class="re0">$this</span><span class="br0">&#91;</span><span class="st_h">'jobeet_category_affiliate_list'</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<h3 id="columnas_virtuales">12.9.2. Columnas virtuales</h3>
+
+<p>En la opción <code>display</code> del formulario, el nombre del campo <code>_generated_token</code> comienza por un guión bajo (<code>_</code>). Esto significa que la forma en la que se muestra por pantalla este campo se controla mediante un elemento parcial llamado <code>_generated_token.php</code>.</p>
+
+<p>Crea este elemento parcial con el siguiente contenido:</p>
+
+<div class="code php">
+<pre class="php">// apps/backend/modules/job/templates/_generated_token.php
+&lt;div class=&quot;sf_admin_form_row&quot;&gt;
+  &lt;label&gt;Token&lt;/label&gt;
+  <span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$form</span><span class="sy0">-&gt;</span><span class="me1">getObject</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">getToken</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+&lt;/div&gt;</pre>
+</div>
+
+<p>En este elemento parcial se puede acceder al formulario actual mediante la variable <code>$form</code> y el objeto relacionado se puede obtener mediante el método <code>getObject()</code>.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Si quieres utilizar un componente en vez de un elemento parcial para mostrar ese campo, puedes prefijar el nombre del campo con el símbolo <code>~</code></p></div>
+
+<h3 id="la_opcion_class">12.9.3. La opción class</h3>
+
+<p>Como este formulario lo van a utilizar los administradores, hemos mostrado más información que la que incluye el formulario que utilizan los usuarios normales. Sin embargo, por el momento el formulario no muestra parte de la información porque se ha eliminado en la clase <code>JobeetJobForm</code>.</p>
+
+<p>Para utilizar diferentes formularios en la aplicación <code>frontend</code> y en la aplicación <code>backend</code>, tenemos que crear dos clases para ese formulario. Vamos a crear una clase <code>BackendJobeetJobForm</code> que herede de la clase <code>JobeetJobForm</code>. Como no vamos a tener los mismos campos ocultos, tenemos que refactorizar un poco la clase <code>JobeetJobForm</code> para mover la instrucción <code>unset()</code> a un método que sea redefinido en la clase <code>BackendJobeetJobForm</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// lib/form/JobeetJobForm.class.php</span>
+<span class="kw2">class</span> JobeetJobForm <span class="kw2">extends</span> BaseJobeetJobForm
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> configure<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">removeFields</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">validatorSchema</span><span class="br0">&#91;</span><span class="st_h">'email'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="kw2">new</span> sfValidatorAnd<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span>
+      <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">validatorSchema</span><span class="br0">&#91;</span><span class="st_h">'email'</span><span class="br0">&#93;</span><span class="sy0">,</span>
+      <span class="kw2">new</span> sfValidatorEmail<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+    <span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="co1">// ...</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="kw2">protected</span> <span class="kw2">function</span> removeFields<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="kw3">unset</span><span class="br0">&#40;</span>
+      <span class="re0">$this</span><span class="br0">&#91;</span><span class="st_h">'created_at'</span><span class="br0">&#93;</span><span class="sy0">,</span> <span class="re0">$this</span><span class="br0">&#91;</span><span class="st_h">'updated_at'</span><span class="br0">&#93;</span><span class="sy0">,</span>
+      <span class="re0">$this</span><span class="br0">&#91;</span><span class="st_h">'expires_at'</span><span class="br0">&#93;</span><span class="sy0">,</span> <span class="re0">$this</span><span class="br0">&#91;</span><span class="st_h">'is_activated'</span><span class="br0">&#93;</span><span class="sy0">,</span>
+      <span class="re0">$this</span><span class="br0">&#91;</span><span class="st_h">'token'</span><span class="br0">&#93;</span>
+    <span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<div class="code php">
+<pre class="php"><span class="co1">// lib/form/BackendJobeetJobForm.class.php</span>
+<span class="kw2">class</span> BackendJobeetJobForm <span class="kw2">extends</span> JobeetJobForm
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> configure<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    parent<span class="sy0">::</span><span class="me2">configure</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="kw2">protected</span> <span class="kw2">function</span> removeFields<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="kw3">unset</span><span class="br0">&#40;</span>
+      <span class="re0">$this</span><span class="br0">&#91;</span><span class="st_h">'created_at'</span><span class="br0">&#93;</span><span class="sy0">,</span> <span class="re0">$this</span><span class="br0">&#91;</span><span class="st_h">'updated_at'</span><span class="br0">&#93;</span><span class="sy0">,</span>
+      <span class="re0">$this</span><span class="br0">&#91;</span><span class="st_h">'token'</span><span class="br0">&#93;</span>
+    <span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>La opción <code>class</code> permite redefinir la clase de formulario utilizada por el generador de la parte de administración:</p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co1"># apps/backend/modules/job/config/generator.yml</span><span class="co4">
+config</span>:<span class="co4">
+  form</span>:<span class="co3">
+    class</span><span class="sy2">: </span>BackendJobeetJobForm</pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Como acabamos de añadir una nueva clase, no te olvides de borrar la cache.</p></div>
+
+<p>El formulario <code>edit</code> todavía tiene un pequeño inconveniente. El logotipo que se ha subido no se muestra en ninguna parte y tampoco se puede eliminar. El widget <code>sfWidgetFormInputFileEditable</code> añade estas opciones de modificación a cualquier campo simple que permita adjuntar archivos:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// lib/form/BackendJobeetJobForm.class.php</span>
+<span class="kw2">class</span> BackendJobeetJobForm <span class="kw2">extends</span> JobeetJobForm
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> configure<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    parent<span class="sy0">::</span><span class="me2">configure</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">widgetSchema</span><span class="br0">&#91;</span><span class="st_h">'logo'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="kw2">new</span> sfWidgetFormInputFileEditable<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span>
+      <span class="st_h">'label'</span>     <span class="sy0">=&gt;</span> <span class="st_h">'Company logo'</span><span class="sy0">,</span>
+      <span class="st_h">'file_src'</span>  <span class="sy0">=&gt;</span> <span class="st_h">'/uploads/jobs/'</span><span class="sy0">.</span><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getObject</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">getLogo</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+      <span class="st_h">'is_image'</span>  <span class="sy0">=&gt;</span> <span class="kw4">true</span><span class="sy0">,</span>
+      <span class="st_h">'edit_mode'</span> <span class="sy0">=&gt;</span> <span class="sy0">!</span><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">isNew</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+      <span class="st_h">'template'</span>  <span class="sy0">=&gt;</span> <span class="st_h">'&lt;div&gt;%file%&lt;br /&gt;%input%&lt;br /&gt;%delete% %delete_label%&lt;/div&gt;'</span><span class="sy0">,</span>
+    <span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">validatorSchema</span><span class="br0">&#91;</span><span class="st_h">'logo_delete'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="kw2">new</span> sfValidatorPass<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="co1">// ...</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>El widget <code>sfWidgetFormInputFileEditable</code> utiliza diversas opciones para configurar sus características y la forma en la que se muestra:</p>
+
+<ul>
+<li><code>file_src</code>:    la ruta web del archivo subido</li>
+<li><code>is_image</code>:    si vale <code>true</code>, el archivo se muestra como una imagen</li>
+<li><code>edit_mode</code>:   indica si el formulario se encuentra o no en el modo de edición</li>
+<li><code>with_delete</code>: indica si se muestra el <em>checkbox</em> que permite borrar el archivo</li>
+<li><code>template</code>:    define la plantilla utilizada para mostrar el widget</li>
+</ul>
+
+<div class="figure" id="figure_12_14">
+    <img src="../../img/jobeet_1_4/f1213.png" alt="Subiendo un archivo" />
+
+    <p class="caption"><strong>Figura 12.14</strong> Subiendo un archivo</p>
+</div>
+
+
+<div class="admonition note"><p><strong class="title">Nota</strong> El aspecto del generador de la parte de administración se puede configurar fácilmente porque las plantillas generadas incluyen muchos atributos <code>class</code> e <code>id</code>. El campo <code>logo</code> por ejemplo se puede modificar utilizando la clase <code>sf_admin_form_field_logo</code>. Cada campo también tiene un atributo <code>class</code> dependiente del tipo de campo, como por ejemplo <code>sf_admin_text</code> o <code>sf_admin_boolean</code>.</p></div>
+
+<p>La opción <code>edit_mode</code> utiliza el método <code>sfPropel::isNew()</code>, que devuelve <code>true</code> si el objeto del formulario es nuevo y <code>false</code> en cualquier otro caso. Este método es muy útil cuando tienes diferentes widgets y validadores dependiendo del estado del objeto incluido.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="configuracion_de_la_pagina_list.html">&larr; Anterior <span>12.8. Configuración de la página list</span></a>
+            
+            <a class="span5 next" href="configuracion_de_los_filtros.html">Siguiente &rarr; <span>12.10. Configuración de los filtros</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Configuración de la página de formularios (El tutorial Jobeet%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'El tutorial Jobeet : Configuración de la página de formularios']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Comenzando el proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> El proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> El modelo de datos</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> El controlador y la vista</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> El sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Profundizando en el modelo</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Trabajando con la página de cada categoría</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Pruebas unitarias</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Pruebas funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Probando los formularios</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_12.html">
+            <span>Capítulo 12.</span> El generador de la parte de administración
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="creando_la_aplicacion_backend.html">
+            <span>12.1.</span> Creando la aplicación backend
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="los_modulos_de_la_aplicacion_backend.html">
+            <span>12.2.</span> Los módulos de la aplicación backend
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_aspecto_de_la_aplicacion_backend.html">
+            <span>12.3.</span> El aspecto de la aplicación backend
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="la_cache_de_symfony.html">
+            <span>12.4.</span> La cache de Symfony
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="la_configuracion_de_la_aplicacion_backend.html">
+            <span>12.5.</span> La configuración de la aplicación backend
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="configuracion_del_titulo.html">
+            <span>12.6.</span> Configuración del título
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="configuracion_de_los_campos.html">
+            <span>12.7.</span> Configuración de los campos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="configuracion_de_la_pagina_list.html">
+            <span>12.8.</span> Configuración de la página list
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="configuracion_de_la_pagina_de_formularios.html">
+            <span>12.9.</span> Configuración de la página de formularios
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="configuracion_de_los_filtros.html">
+            <span>12.10.</span> Configuración de los filtros
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="modificando_las_acciones.html">
+            <span>12.11.</span> Modificando las acciones
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="personalizando_las_plantillas.html">
+            <span>12.12.</span> Personalizando las plantillas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="configuracion_final.html">
+            <span>12.13.</span> Configuración final
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="nos_vemos_manana.html">
+            <span>12.14.</span> Nos vemos mañana
+        </a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> El usuario</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> El día de descanso</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Canales Atom</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Servicios web</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> El buscador</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>20</span> <a href="../capitulo_20.html"> Plugins</a>
+    </li>
+    <li class="level-1">
+        <span>21</span> <a href="../capitulo_21.html"> El día del diseño</a>
+    </li>
+    <li class="level-1">
+        <span>22</span> <a href="../capitulo_22.html"> La cache</a>
+    </li>
+    <li class="level-1">
+        <span>23</span> <a href="../capitulo_23.html"> Pasando a producción</a>
+    </li>
+    <li class="level-1">
+        <span>24</span> <a href="../capitulo_24.html"> Un repaso a Symfony</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

@@ -1,0 +1,357 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>6.7. Mostrando las categorías en la portada (El tutorial Jobeet)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="refactorizando.html" />
+        <link rel="next" href="limitando_los_resultados.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="6.7. Mostrando las categorías en la portada (El tutorial Jobeet)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page jobeet_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">El tutorial Jobeet</a></li>
+  <li><a href="../capitulo_6.html">Capítulo 6. Profundizando en el modelo</a></li>
+  <li class="current"><span>6.7.. Mostrando las categorías en la portada</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="mostrando_las_categorias_en_la_portada"><span>6.7.</span> Mostrando las categorías en la portada</h1>
+    
+
+<p>Otro de los requerimientos que establecimos durante el segundo día era: <em>"las ofertas se agrupan por categoría y se ordenan por fecha de publicación (primero se muestran los trabajos más recientes)"</em>.</p>
+
+<p>Hasta ahora no hemos tenido en cuenta la categoría de cada oferta de trabajo, aunque los requerimientos de la aplicación indican que la portada muestra las ofertas de trabajo agrupadas por categoría. En primer lugar debemos obtener todas las categorías que tienen al menos una oferta de trabajo activa.</p>
+
+<p>Abre la clase <code>JobeetCategoryPeer</code> y añade el siguiente método llamado <code>getWithJobs()</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// lib/model/JobeetCategoryPeer.php</span>
+<span class="kw2">class</span> JobeetCategoryPeer <span class="kw2">extends</span> BaseJobeetCategoryPeer
+<span class="br0">&#123;</span>
+  static <span class="kw2">public</span> <span class="kw2">function</span> getWithJobs<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$criteria</span> <span class="sy0">=</span> <span class="kw2">new</span> Criteria<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$criteria</span><span class="sy0">-&gt;</span><span class="me1">addJoin</span><span class="br0">&#40;</span><span class="kw2">self</span><span class="sy0">::</span><span class="me2">ID</span><span class="sy0">,</span> JobeetJobPeer<span class="sy0">::</span><span class="me2">CATEGORY_ID</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$criteria</span><span class="sy0">-&gt;</span><span class="me1">add</span><span class="br0">&#40;</span>JobeetJobPeer<span class="sy0">::</span><span class="me2">EXPIRES_AT</span><span class="sy0">,</span> <span class="kw3">time</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span> Criteria<span class="sy0">::</span><span class="me2">GREATER_THAN</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$criteria</span><span class="sy0">-&gt;</span><span class="me1">setDistinct</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="kw1">return</span> <span class="kw2">self</span><span class="sy0">::</span><span class="me2">doSelect</span><span class="br0">&#40;</span><span class="re0">$criteria</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>El método <code>Criteria::addJoin()</code> añade una condición de tipo <code>JOIN</code> en la sentencia SQL generada. Por defecto la condición <code>JOIN</code> se añade a la condición <code>WHERE</code>. Si quieres modificar el tipo de <code>JOIN</code>, utiliza uno de los siguientes valores como tercer argumento:<code>Criteria::LEFT_JOIN</code>, <code>Criteria::RIGHT_JOIN</code> y <code>Criteria::INNER_JOIN</code>.</p>
+
+<p>Ahora actualiza la acción <code>index</code> para que utilice el nuevo método:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// apps/frontend/modules/job/actions/actions.class.php</span>
+<span class="kw2">public</span> <span class="kw2">function</span> executeIndex<span class="br0">&#40;</span>sfWebRequest <span class="re0">$request</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">categories</span> <span class="sy0">=</span> JobeetCategoryPeer<span class="sy0">::</span><span class="me2">getWithJobs</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>En la plantilla asociada a la acción ahora tenemos que iterar por todas las categorías para mostrar sus ofertas de trabajo activas:</p>
+
+<div class="code php">
+<pre class="php">// apps/frontend/modules/job/templates/indexSuccess.php
+<span class="kw2">&lt;?php</span> use_stylesheet<span class="br0">&#40;</span><span class="st_h">'jobs.css'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+&nbsp;
+&lt;div id=&quot;jobs&quot;&gt;
+  <span class="kw2">&lt;?php</span> <span class="kw1">foreach</span> <span class="br0">&#40;</span><span class="re0">$categories</span> <span class="kw1">as</span> <span class="re0">$category</span><span class="br0">&#41;</span><span class="sy0">:</span> <span class="sy1">?&gt;</span>
+    &lt;div class=&quot;category_<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> Jobeet<span class="sy0">::</span><span class="me2">slugify</span><span class="br0">&#40;</span><span class="re0">$category</span><span class="sy0">-&gt;</span><span class="me1">getName</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>&quot;&gt;
+      &lt;div class=&quot;category&quot;&gt;
+        &lt;div class=&quot;feed&quot;&gt;
+          &lt;a href=&quot;&quot;&gt;Feed&lt;/a&gt;
+        &lt;/div&gt;
+        &lt;h1&gt;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$category</span> <span class="sy1">?&gt;</span>&lt;/h1&gt;
+      &lt;/div&gt;
+&nbsp;
+      &lt;table class=&quot;jobs&quot;&gt;
+        <span class="kw2">&lt;?php</span> <span class="kw1">foreach</span> <span class="br0">&#40;</span><span class="re0">$category</span><span class="sy0">-&gt;</span><span class="me1">getActiveJobs</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="kw1">as</span> <span class="re0">$i</span> <span class="sy0">=&gt;</span> <span class="re0">$job</span><span class="br0">&#41;</span><span class="sy0">:</span> <span class="sy1">?&gt;</span>
+          &lt;tr class=&quot;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="kw3">fmod</span><span class="br0">&#40;</span><span class="re0">$i</span><span class="sy0">,</span> <span class="nu0">2</span><span class="br0">&#41;</span> ? <span class="st_h">'even'</span> <span class="sy0">:</span> <span class="st_h">'odd'</span> <span class="sy1">?&gt;</span>&quot;&gt;
+            &lt;td class=&quot;location&quot;&gt;
+              <span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$job</span><span class="sy0">-&gt;</span><span class="me1">getLocation</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+            &lt;/td&gt;
+            &lt;td class=&quot;position&quot;&gt;
+              <span class="kw2">&lt;?php</span> <span class="kw1">echo</span> link_to<span class="br0">&#40;</span><span class="re0">$job</span><span class="sy0">-&gt;</span><span class="me1">getPosition</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="st_h">'job_show_user'</span><span class="sy0">,</span> <span class="re0">$job</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+            &lt;/td&gt;
+            &lt;td class=&quot;company&quot;&gt;
+              <span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$job</span><span class="sy0">-&gt;</span><span class="me1">getCompany</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+            &lt;/td&gt;
+          &lt;/tr&gt;
+        <span class="kw2">&lt;?php</span> <span class="kw1">endforeach</span><span class="sy0">;</span> <span class="sy1">?&gt;</span>
+      &lt;/table&gt;
+    &lt;/div&gt;
+  <span class="kw2">&lt;?php</span> <span class="kw1">endforeach</span><span class="sy0">;</span> <span class="sy1">?&gt;</span>
+&lt;/div&gt;</pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> La plantilla anterior utiliza <code>echo $category</code> para mostrar el nombre de la categoría. ¿Te parece extraño? Teniendo en cuenta que <code>$category</code> es un objeto, ¿cómo es posible que <code>echo</code> muestre mágicamente el nombre de la categoría? La respuesta se encuentra en el tutorial del día 3, donde definimos métodos mágicos <code>__toString()</code> en todas las clases del modelo.</p></div>
+
+<p>Para que la plantilla anterior funcione correctamente, debemos añadir el método <code>getActiveJobs()</code> en la clase <code>JobeetCategory</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// lib/model/JobeetCategory.php</span>
+<span class="kw2">public</span> <span class="kw2">function</span> getActiveJobs<span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="re0">$criteria</span> <span class="sy0">=</span> <span class="kw2">new</span> Criteria<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="re0">$criteria</span><span class="sy0">-&gt;</span><span class="me1">add</span><span class="br0">&#40;</span>JobeetJobPeer<span class="sy0">::</span><span class="me2">CATEGORY_ID</span><span class="sy0">,</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getId</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+  <span class="kw1">return</span> JobeetJobPeer<span class="sy0">::</span><span class="me2">getActiveJobs</span><span class="br0">&#40;</span><span class="re0">$criteria</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>En la llamada al método <code>add()</code>, hemos omitido el tecer argumento porque <code>Criteria::EQUAL</code> es el valor por defecto.</p>
+
+<p>El método <code>JobeetCategory::getActiveJobs()</code> utiliza a su vez el método <code>JobeetJobPeer::getActiveJobs()</code> para obtener las ofertas de trabajo activas para la categoría indicada.</p>
+
+<p>Cuando se invoca el método <code>JobeetJobPeer::getActiveJobs()</code>, queremos hacer la condición más restrictiva pasándole una categoría. En lugar de pasar el objeto de la categoría actual, hemos decidido pasarle un objeto de tipo <code>Criteria</code>, ya que es la mejor forma de encapsular una condición genérica.</p>
+
+<p>Por tanto, el método <code>getActiveJobs()</code> tiene que que tenerlo en cuenta y debe fusionar el objeto <code>Criteria</code> que se le pasa y su propio <code>Criteria</code>. Como <code>Criteria</code> es un objeto, el código resultante es muy sencillo:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// lib/model/JobeetJobPeer.php</span>
+static <span class="kw2">public</span> <span class="kw2">function</span> getActiveJobs<span class="br0">&#40;</span>Criteria <span class="re0">$criteria</span> <span class="sy0">=</span> <span class="kw4">null</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="kw1">if</span> <span class="br0">&#40;</span><span class="kw3">is_null</span><span class="br0">&#40;</span><span class="re0">$criteria</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$criteria</span> <span class="sy0">=</span> <span class="kw2">new</span> Criteria<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="re0">$criteria</span><span class="sy0">-&gt;</span><span class="me1">add</span><span class="br0">&#40;</span>JobeetJobPeer<span class="sy0">::</span><span class="me2">EXPIRES_AT</span><span class="sy0">,</span> <span class="kw3">time</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span> Criteria<span class="sy0">::</span><span class="me2">GREATER_THAN</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="re0">$criteria</span><span class="sy0">-&gt;</span><span class="me1">addDescendingOrderByColumn</span><span class="br0">&#40;</span><span class="kw2">self</span><span class="sy0">::</span><span class="me2">EXPIRES_AT</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+  <span class="kw1">return</span> <span class="kw2">self</span><span class="sy0">::</span><span class="me2">doSelect</span><span class="br0">&#40;</span><span class="re0">$criteria</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="refactorizando.html">&larr; Anterior <span>6.6. Refactorizando</span></a>
+            
+            <a class="span5 next" href="limitando_los_resultados.html">Siguiente &rarr; <span>6.8. Limitando los resultados</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Mostrando las categorías en la portada (El tutorial Jobeet%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'El tutorial Jobeet : Mostrando las categorías en la portada']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Comenzando el proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> El proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> El modelo de datos</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> El controlador y la vista</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> El sistema de enrutamiento</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_6.html">
+            <span>Capítulo 6.</span> Profundizando en el modelo
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_objeto_criteria_de_propel.html">
+            <span>6.1.</span> El objeto Criteria de Propel
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="depurando_las_sentencias_sql_generadas_por_propel.html">
+            <span>6.2.</span> Depurando las sentencias SQL generadas por Propel
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="serializando_objetos.html">
+            <span>6.3.</span> Serializando objetos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="profundizando_en_los_archivos_de_datos.html">
+            <span>6.4.</span> Profundizando en los archivos de datos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="personalizando_la_configuracion.html">
+            <span>6.5.</span> Personalizando la configuración
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="refactorizando.html">
+            <span>6.6.</span> Refactorizando
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="mostrando_las_categorias_en_la_portada.html">
+            <span>6.7.</span> Mostrando las categorías en la portada
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="limitando_los_resultados.html">
+            <span>6.8.</span> Limitando los resultados
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="archivos_de_datos_dinamicos.html">
+            <span>6.9.</span> Archivos de datos dinámicos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="restringiendo_el_acceso_a_la_pagina_de_una_oferta_de_trabajo.html">
+            <span>6.10.</span> Restringiendo el acceso a la página de una oferta de trabajo
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="enlazando_a_la_pagina_de_la_categoria.html">
+            <span>6.11.</span> Enlazando a la página de la categoría
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="nos_vemos_manana.html">
+            <span>6.12.</span> Nos vemos mañana
+        </a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Trabajando con la página de cada categoría</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Pruebas unitarias</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Pruebas funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Probando los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> El generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> El usuario</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> El día de descanso</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Canales Atom</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Servicios web</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> El buscador</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>20</span> <a href="../capitulo_20.html"> Plugins</a>
+    </li>
+    <li class="level-1">
+        <span>21</span> <a href="../capitulo_21.html"> El día del diseño</a>
+    </li>
+    <li class="level-1">
+        <span>22</span> <a href="../capitulo_22.html"> La cache</a>
+    </li>
+    <li class="level-1">
+        <span>23</span> <a href="../capitulo_23.html"> Pasando a producción</a>
+    </li>
+    <li class="level-1">
+        <span>24</span> <a href="../capitulo_24.html"> Un repaso a Symfony</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

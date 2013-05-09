@@ -1,0 +1,413 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>7.2. Atributos de Git (Pro Git, el libro oficial de Git)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="configuracion_de_git.html" />
+        <link rel="next" href="puntos_de_enganche_git.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="7.2. Atributos de Git (Pro Git, el libro oficial de Git)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page pro_git">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Pro Git, el libro oficial de Git</a></li>
+  <li><a href="../capitulo_7.html">Capítulo 7. Personalizando Git</a></li>
+  <li class="current"><span>7.2.. Atributos de Git</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="atributos_de_git"><span>7.2.</span> Atributos de Git</h1>
+    
+
+<p>Algunos de los ajustes que hemos vistos, pueden ser especificados para un camino (path) concreto, de tal forma que Git los aplicará unicamente para una carpeta o para un grupo de archivos determinado. Estos ajustes específicos relacionados con un camino, se denominan atributos en Git. Y se pueden fijar, bien mediante un archivo <code>.gitattribute</code> en uno de los directorios de tu proyecto (normalmente en la raiz del proyecto), o bien mediante el archivo <code>git/info/attributes</code> en el caso de no querer guardar el archivo de atributos dentro de tu proyecto.</p>
+
+<p>Por medio de los atributos, puedes hacer cosas tales como indicar diferentes estrategias de fusión para archivos o carpetas concretas de tu proyecto, decirle a Git cómo comparar archivos no textuales, o indicar a Git que filtre ciertos contenidos antes de guardarlos o de extraerlos del repositorio Git. En esta sección, aprenderas acerca de algunos atributos que puedes asignar a ciertas rutas (<em>paths</em>) dentro de tu proyecto Git, viendo algunos ejemplos de cómo utilizar sus funcionalidades de manera práctica.</p>
+
+<h3 id="archivos_binarios">7.2.1. Archivos binarios</h3>
+
+<p>Un buen truco donde utilizar los atributos Git es para indicarle cuales de los archivos son binarios, (en los casos en que Git no podría llegar a determinarlo por sí mismo), dandole a Git instruciones especiales sobre cómo tratar estos archivos. Por ejemplo, algunos archivos de texto se generan automáticamente y no tiene sentido compararlos; mientras que algunos archivos binarios sí que pueden ser comparados — vamos a ver cómo indicar a Git cual es cual —.</p>
+
+<h4 id="identificando_archivos_binarios">7.2.1.1. Identificando archivos binarios</h4>
+
+<p>Algunos archivos aparentan ser textuales, pero a efectos prácticos merece más la pena tratarlos como binarios. Por ejemplo, los proyectos Xcode en un Mac contienen un archivo terminado en <code>.pbxproj</code>. Este archivo es básicamente una base de datos JSON (datos javascript en formato de texto plano), escrita directamente por el IDE para almacenar aspectos tales como tus ajustes de compilación. Aunque técnicamente es un archivo de texto, porque su contenido son caracteres ASCII. Realmente nunca lo tratarás como tal, porque en realidad es una base de datos ligera — y no puedes fusionar sus contenidos si dos personas lo cambian, porque las comparaciones no son de utilidad —. Estos son archivos destinados a ser tratados de forma automatizada. Y es preferible tratarlos como si fueran archivos binarios.</p>
+
+<p>Para indicar a Git que trate todos los archivos <code>pbxproj</code> como binarios, puedes añadir esta línea a tu archivo <code>.gitattriutes</code>:</p>
+
+<div class="code code">
+<pre class="code">*.pbxproj -crlf -diff</pre>
+</div>
+
+<p>A partir de ahora, Git no intentará convertir ni corregir problemas CRLF en los finales de línea; ni intentará hacer comparaciones ni mostar diferencias de este archivo cuando lances comandos <code>git show</code> o <code>git diff</code> en tu proyecto. A partir de la versión 1.6 de Git, puedes utilizar una macro en lugar de las dos opciones <code>-crlf -diff</code>:</p>
+
+<div class="code code">
+<pre class="code">*.pbxproj binary</pre>
+</div>
+
+<h4 id="comparando_archivos_binarios">7.2.1.2. Comparando archivos binarios</h4>
+
+<p>A partir de la versión 1.6, puedes utilizar los atributos Git para comparar archivos binarios. Se consigue diciendole a Git la forma de convertir los datos binarios en texto, consiguiendo así que puedan ser comparado con la herramienta habitual de comparación textual.</p>
+
+<p>Esta es una funcionalidad muy util, pero bastante desconocida. Por lo que la ilustraré con unos ejemplos. En el primero de ellos, utilizarás esta técnica para resolver uno de los problemas más engorrosos conocidos por la humanidad: el control de versiones en documentos Word. Todo el mundo conoce el hecho de que Word es el editor más horroroso de cuantos hay; pero, desgraciadamente, todo el mundo lo usa. Si deseas controlar versiones en documentos Word, puedes añadirlos a un repositorio Git e ir realizando confirmaciones de cambio (<em>commit</em>) cada vez. Pero, ¿qué ganas con ello?. Si lanzas un comando 'git diff', lo único que verás será algo tal como:</p>
+
+<div class="code code">
+<pre class="code">$ git diff 
+diff --git a/chapter1.doc b/chapter1.doc
+index 88839c4..4afcb7c 100644
+Binary files a/chapter1.doc and b/chapter1.doc differ</pre>
+</div>
+
+<p>No puedes comparar directamente dos versiones, a no ser que extraigas ambas y las compares manualmente, ¿no?. Pero resulta que puedes hacerlo bastante mejor utilizando los atributos Git. Poniendo lo siguiente en tu archivo '.gitattributes':</p>
+
+<div class="code code">
+<pre class="code">*.doc diff=word</pre>
+</div>
+
+<p>Así decimos a Git que sobre cualquier archivo coincidente con el patrón indicado, (<code>.doc</code>), ha de utilizar el filtro <em>"word"</em> cuando intentente hacer una comparación con él. ¿Qué es el filtro <em>"word"</em>? Tienes que configurarlo tú mismo. Por ejemplo, puedes configurar Git para que utilice el programa <code>strings</code> para convertir los documentos Word en archivos de texto planos, archivos sobre los que poder realizar comparaciones sin problemas:</p>
+
+<div class="code code">
+<pre class="code">$ git config diff.word.textconv strings</pre>
+</div>
+
+<p>A partir de ahora, Git sabe que si intenta realizar una comparación entre dos momentos determinados (<em>snapshots</em>), y si cualquiera de los archivos a comparar termina en <code>.doc</code>, tiene que pasar antes esos archivos por el filtro <em>"word"</em>, es decir, por el programa <code>strings</code>. Esto prepara versiones texto de los archivos Word, antes de intentar compararlos.</p>
+
+<p>Un ejemplo. He puesto el capítulo 1 de este libro en Git, le he añadido algo de texto a un párrafo y he guardado el documento. Tras lo cual he lanzando el comando <code>git diff</code> para ver lo que ha cambiado:</p>
+
+<div class="code code">
+<pre class="code">$ git diff
+diff --git a/chapter1.doc b/chapter1.doc
+index c1c8a0a..b93c9e4 100644
+--- a/chapter1.doc
++++ b/chapter1.doc
+@@ -8,7 +8,8 @@ re going to cover Version Control Systems (VCS) and Git basics
+ re going to cover how to get it and set it up for the first time if you don
+ t already have it on your system.
+ In Chapter Two we will go over basic Git usage - how to use Git for the 80% 
+-s going on, modify stuff and contribute changes. If the book spontaneously 
++s going on, modify stuff and contribute changes. If the book spontaneously 
++Let's see if this works.</pre>
+</div>
+
+<p>Git me indica correctamente que he añadido la frase <em>"Let's see if this works"</em>. No es perfecto, — añade bastante basura aleatoria al final —, pero realmente funciona. Si pudieras encontrar o escribir un conversor suficientemente bueno de-Word-a-texto-plano, esta solución sería terriblemente efectiva. Sin embargo, ya que 'strings' está disponible para la mayor parte de los sistemas Mac y Linux, es buena idea probar primero con él para trabajar con formatos binarios.</p>
+
+<p>Otro problema donde puede ser util esta técnica, es en la comparación de imágenes. Un camino puede ser pasar los archivos JPEG a través de un filtro para extraer su información EXIF — los metadatos que se graban dentro de la mayoria de formatos gráficos —. Si te descargas e instalas el programa <code>exiftool</code>, puedes utilizarlo para convertir tus imagenes a textos (metadatos), de tal forma que diff podrá al menos mostrarte algo útil de cualquier cambio que se produzca:</p>
+
+<div class="code code">
+<pre class="code">$ echo '*.png diff=exif' &gt;&gt; .gitattributes
+$ git config diff.exif.textconv exiftool</pre>
+</div>
+
+<p>Si sustituyes alguna de las imagenes en tu proyecto, y lanzas el comando <code>git diff</code> obtendrás algo como:</p>
+
+<div class="code code">
+<pre class="code">diff --git a/image.png b/image.png
+index 88839c4..4afcb7c 100644
+--- a/image.png
++++ b/image.png
+@@ -1,12 +1,12 @@
+ ExifTool Version Number         : 7.74
+-File Size                       : 70 kB
+-File Modification Date/Time     : 2009:04:21 07:02:45-07:00
++File Size                       : 94 kB
++File Modification Date/Time     : 2009:04:21 07:02:43-07:00
+ File Type                       : PNG
+ MIME Type                       : image/png
+-Image Width                     : 1058
+-Image Height                    : 889
++Image Width                     : 1056
++Image Height                    : 827
+ Bit Depth                       : 8
+ Color Type                      : RGB with Alpha</pre>
+</div>
+
+<p>Aquí se vé claramente que ha cambiado el tamaño del archivo y las dimensiones de la imagen.</p>
+
+<h3 id="expansion_de_palabras_clave">7.2.2. Expansión de palabras clave</h3>
+
+<p>Algunos usuarios de sistemas SVN o CVS, echan de menos el disponer de expansiones de palabras clave al estilo de las que dichos sistemas tienen. El principal problema para hacerlo en Git reside en la imposibilidad de modificar los ficheros con información relativa a la confirmación de cambios (<em>commit</em>). Debido a que Git calcula sus sumas de comprobación antes de las confirmaciones. De todas formas, es posible inyectar textos en un archivo cuando lo extraemos del repositorio (<em>checkout</em>) y quitarlos de nuevo antes de devolverlo al repositorio (<em>commit</em>). Los atributos Git admiten dos maneras de realizarlo.</p>
+
+<p>La primera, es inyectando automáticamente la suma de comprobación SHA-1 de un gran objeto binario (<em>blob</em>) en un campo <code>$Id$</code> dentro del archivo. Si colocas este attributo en un archivo o conjunto de archivos, Git lo sustituirá por la suma de comprobación SHA-1 la próxima vez que lo/s extraiga/s. Es importante destacar que no se trata de la suma SHA de la confirmación de cambios (<em>commit</em>), sino del propio objeto binario (<em>blob</em>):</p>
+
+<div class="code code">
+<pre class="code">$ echo '*.txt ident' &gt;&gt; .gitattributes
+$ echo '$Id$' &gt; test.txt</pre>
+</div>
+
+<p>La próxima vez que extraigas el archivo, Git le habrá inyectado el SHA del objeto binario (<em>blob</em>):</p>
+
+<div class="code code">
+<pre class="code">$ rm text.txt
+$ git checkout -- text.txt
+$ cat test.txt 
+$Id: 42812b7653c7b88933f8a9d6cad0ca16714b9bb3 $</pre>
+</div>
+
+<p>Pero esto tiene un uso bastante limitado. Si has utilizado alguna vez las sustituciones de CVS o de Subversion, sabrás que pueden incluir una marca de fecha, — la suma de comprobación SHA no es igual de util, ya que, por ser bastante aleatoria, es imposible deducir si una suma SHA es anterior o posterior a otra —.</p>
+
+<p>Auque resulta que también puedes escribir tus propios filtros para realizar sustituciones en los archivos al guardar o recuperar (<em>commit/checkout</em>). Esos son los filtros <em>"clean"</em> y <em>"smudge"</em>. En el archivo <code>.gitattibutes</code>, puedes indicar filtros para carpetas o archivos determinados y luego preparar tus propios scripts para procesarlos justo antes de confirmar cambios en ellos (<em>"clean"</em>, ver Figura 7-2), o justo antes de recuperarlos (<em>"smudge"</em>, ver Figura 7-3). Estos filtros pueden utilizarse para realizar todo tipo de acciones útiles.</p>
+
+<div class="figure" id="figure_7_2">
+    <img src="../../img/pro_git/18333fig0702.png" alt="&quot;El filtro <code>smudge</code> se usa al extraer (*checkout*)&quot;" />
+
+    <p class="caption"><strong>Figura 7.2</strong> &quot;El filtro <code>smudge</code> se usa al extraer (*checkout*)&quot;</p>
+</div>
+
+
+<div class="figure" id="figure_7_3">
+    <img src="../../img/pro_git/18333fig0703.png" alt="&quot;El filtro <code>clean</code> se usa al almacenar (*staged*)&quot;" />
+
+    <p class="caption"><strong>Figura 7.3</strong> &quot;El filtro <code>clean</code> se usa al almacenar (*staged*)&quot;</p>
+</div>
+
+
+<p>El mensaje de confirmación para esta funcionalidad nos da un ejemplo simple: el de pasar todo tu código fuente C por el programa <code>indent</code> antes de almacenarlo. Puedes hacerlo poniendo los atributos adecuados en tu archivo <code>.gitattributes</code>, para filtrar los archivos <code>*.c</code> a través de <code>indent</code>:</p>
+
+<div class="code code">
+<pre class="code">*.c     filter=indent</pre>
+</div>
+
+<p>E indicando después que el filtro <code>indent</code> actuará al manchar (<em>smudge</em>) y al limpiar (<em>clean</em>):</p>
+
+<div class="code code">
+<pre class="code">$ git config --global filter.indent.clean indent
+$ git config --global filter.indent.smudge cat</pre>
+</div>
+
+<p>En este ejemplo, cuando confirmes cambios (<em>commit</em>) en archivos con extensión <code>*.c</code>, Git los pasará previamente a través del programa <code>indent</code> antes de confirmarlos, y los pasará a través del programa <code>cat</code> antes de extraerlos de vuelta al disco. El programa <code>cat</code> es básicamente transparente: de él salen los mismos datos que entran. El efecto final de esta combinación es el de filtrar todo el código fuente C a través de <code>indent</code> antes de confirmar cambios en él.</p>
+
+<p>Otro ejemplo interesante es el de poder conseguir una expansión de la clave <code>$Date$</code> del estilo de RCS. Para hacerlo, necesitas un pequeño script que coja el nombre de un archivo, localice la fecha de la última confirmación de cambios en el proyecto, e inserte dicha información en el archivo. Este podria ser un pequeño script Ruby para hacerlo:</p>
+
+<div class="code code">
+<pre class="code">#! /usr/bin/env ruby
+data = STDIN.read
+last_date = `git log --pretty=format:&quot;%ad&quot; -1`
+puts data.gsub('$Date$', '$Date: ' + last_date.to_s + '$')</pre>
+</div>
+
+<p>Simplemente, utiliza el comando <code>git log</code> para obtener la fecha de la última confirmación de cambios, y  sustituye con ella todas las cadenas <code>$Date$</code> que encuentre en el flujo de entrada stdin; imprimiendo luego los resultados. Debería de ser sencillo de implementarlo en cualquier otro lenguaje que domines. Puedes llamar <code>expand_date</code> a este archivo y ponerlo en el path de ejecución. Tras ello, has de poner un filtro en Git (podemos llamarle <code>dater</code>), e indicarle que use el filtro <code>expand_date</code> para manchar (<em>smudge</em>) los archivos al extraerlos (<em>checkout</em>). Puedes utilizar una expresión Perl para limpiarlos (<em>clean</em>) al almacenarlos (<em>commit</em>):</p>
+
+<div class="code code">
+<pre class="code">$ git config filter.dater.smudge expand_date
+$ git config filter.dater.clean 'perl -pe &quot;s/\\\$Date[^\\\$]*\\\$/\\\$Date\\\$/&quot;'</pre>
+</div>
+
+<p>Esta expresión Perl extrae cualquier cosa que vea dentro de una cadena <code>$Date$</code>, para devolverla a como era en un principio. Una vez preparado el filtro, puedes comprobar su funcionamiento preparando un archivo que contenga la clave <code>$Date$</code> e indicando a Git cual es el atributo para reconocer ese tipo de archivo:</p>
+
+<div class="code code">
+<pre class="code">$ echo '# $Date$' &gt; date_test.txt
+$ echo 'date*.txt filter=dater' &gt;&gt; .gitattributes</pre>
+</div>
+
+<p>Al confirmar cambios (<em>commit</em>) y luego extraer (<em>checkout</em>) el archivo de vuelta, verás la clave sutituida:</p>
+
+<div class="code code">
+<pre class="code">$ git add date_test.txt .gitattributes
+$ git commit -m &quot;Testing date expansion in Git&quot;
+$ rm date_test.txt
+$ git checkout date_test.txt
+$ cat date_test.txt
+# $Date: Tue Apr 21 07:26:52 2009 -0700$</pre>
+</div>
+
+<p>Esta es una muestra de lo poderosa que puede resultar esta técnica para aplicaciones personalizadas. No obstante, debes de ser cuidadoso, ya que el archivo <code>.gitattibutes</code> se almacena y se transmite junto con el proyecto; pero no así el propio filtro, (en este caso, <code>dater</code>), sin el cual no puede funcionar. Cuando diseñes este tipo de filtros, han de estar pensados para que el proyecto continue funcionando correctamente incluso cuando fallen.</p>
+
+<h3 id="exportacion_del_repositorio">7.2.3. Exportación del repositorio</h3>
+
+<p>Los atributos de Git permiten realizar algunas cosas interesantes cuando exportas un archivo de tu proyecto.</p>
+
+<h4 id="export_ignore">7.2.3.1. export-ignore</h4>
+
+<p>Puedes indicar a Git que ignore y no exporte ciertos archivos o carpetas cuando genera un archivo de almacenamiento. Cuando tienes alguna carpeta o archivo que no deseas incluir en tus registros, pero quieras tener controlado en tu proyecto, puedes marcarlos a través del atributo <code>export-ignore</code>.</p>
+
+<p>Por ejemplo, digamos que tienes algunos archivos de pruebas en la carpeta <code>test/</code>, y que no tiene sentido incluirlos en los archivos comprimidos (<em>tarball</em>) al exportar tu proyecto. Puedes añadir la siguiente línea al archivo de atributos de Git:</p>
+
+<div class="code code">
+<pre class="code">test/ export-ignore</pre>
+</div>
+
+<p>A partir de ese momento, cada vez que lances el comando <code>git archive</code> para crear un archivo comprimido de tu proyecto, esa carpeta no se incluirá en él.</p>
+
+<h4 id="export_subst">7.2.3.2. export-subst</h4>
+
+<p>Otra cosa que puedes realizar sobre tus archivos es algún tipo de sustitución simple de claves. Git te permite poner la cadena <code>$Format:$</code> en cualquier archivo, con cualquiera de las claves de formateo de <code>--pretty=format</code> que vimos en el <a class="internal" href="../capitulo_2.html#capitulo2">capítulo 2</a>. Por ejemplo, si deseas incluir un archivo llamado <code>LAST COMMIT</code> en tu proyecto, y poner en él automáticamente la fecha de la última confirmación de cambios cada vez que lances el comando <code>git archive</code>:</p>
+
+<div class="code code">
+<pre class="code">$ echo 'Last commit date: $Format:%cd$' &gt; LAST_COMMIT
+$ echo &quot;LAST_COMMIT export-subst&quot; &gt;&gt; .gitattributes
+$ git add LAST_COMMIT .gitattributes
+$ git commit -am 'adding LAST_COMMIT file for archives'</pre>
+</div>
+
+<p>Cuando lances la orden <code>git archive</code>, lo que la gente verá en ese archivo cuando lo abra será:</p>
+
+<div class="code code">
+<pre class="code">$ cat LAST_COMMIT
+Last commit date: $Format:Tue Apr 21 08:38:48 2009 -0700$</pre>
+</div>
+
+<h3 id="estrategias_de_fusion">7.2.4. Estrategias de fusión</h3>
+
+<p>También puedes utilizar los atributos Git para indicar distintas estrategias de fusión para archivos específicos de tu proyecto. Una opción muy util es la que nos permite indicar a Git que no intente fusionar ciertos archivos concretos cuando tengan conflictos, manteniendo en su lugar tus archivos sobre los de cualquier otro.</p>
+
+<p>Puede ser interesante si una rama de tu proyecto es divergente o esta especializada, pero deseas seguir siendo capaz de fusionar cambios de vuelta desde ella, e ignorar ciertos archivos. Digamos que tienes un archivo de datos denominado <code>database.xml</code>, distinto en las dos ramas, y que deseas fusionar en la otra rama sin perturbarlo. Puedes ajustar un atributo tal como:</p>
+
+<div class="code code">
+<pre class="code">database.xml merge=ours</pre>
+</div>
+
+<p>Al fusionar con otra rama, en lugar de tener conflictos de fusión con el archivo database.xml, obtendrás algo como:</p>
+
+<div class="code code">
+<pre class="code">$ git merge topic
+Auto-merging database.xml
+Merge made by recursive.</pre>
+</div>
+
+<p>Y el archivo database.xml permanecerá inalterado en cualquier que fuera la versión que tú tenias originalmente.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="configuracion_de_git.html">&larr; Anterior <span>7.1. Configuración de Git</span></a>
+            
+            <a class="span5 next" href="puntos_de_enganche_git.html">Siguiente &rarr; <span>7.3. Puntos de enganche Git</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Atributos de Git (Pro Git, el libro oficial de Git%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Pro Git, el libro oficial de Git : Atributos de Git']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Empezando</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Fundamentos de Git</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Trabajando con ramas en Git</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Git en un servidor</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Git en entornos distribuidos</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Las herramientas de Git</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_7.html">
+            <span>Capítulo 7.</span> Personalizando Git
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="configuracion_de_git.html">
+            <span>7.1.</span> Configuración de Git
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="atributos_de_git.html">
+            <span>7.2.</span> Atributos de Git
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="puntos_de_enganche_git.html">
+            <span>7.3.</span> Puntos de enganche Git
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="un_ejemplo_de_implantacion_de_una_determinada_politica_en_git.html">
+            <span>7.4.</span> Un ejemplo de implantación de una determinada política en Git
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="resumen.html">
+            <span>7.5.</span> Resumen
+        </a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Git y otros sistemas</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Funcionamiento interno de Git</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

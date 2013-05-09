@@ -1,0 +1,268 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>5.4. Posicionamiento relativo (Introducción a CSS)</title>
+        <link href="../main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="posicionamiento_normal.html" />
+        <link rel="next" href="posicionamiento_absoluto.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="5.4. Posicionamiento relativo (Introducción a CSS)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page css">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Introducción a CSS</a></li>
+  <li><a href="../capitulo_5.html">Capítulo 5. Posicionamiento y visualización</a></li>
+  <li class="current"><span>5.4.. Posicionamiento relativo</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="posicionamiento_relativo"><span>5.4.</span> Posicionamiento relativo</h1>
+    
+
+<p>El estándar CSS considera que el posicionamiento relativo es un caso particular del posicionamiento normal, aunque en la práctica presenta muchas diferencias.</p>
+
+<p>El posicionamiento relativo desplaza una caja respecto de su posición original establecida mediante el posicionamiento normal. El desplazamiento de la caja se controla con las propiedades <code>top</code>, <code>right</code>, <code>bottom</code> y <code>left</code>.</p>
+
+<p>El valor de la propiedad <code>top</code> se interpreta como el desplazamiento entre el borde superior de la caja en su posición final y el borde superior de la misma caja en su posición original.</p>
+
+<p>De la misma forma, el valor de las propiedades <code>left</code>, <code>right</code> y <code>bottom</code> indica respectivamente el desplazamiento entre el borde izquierdo/derecho/inferior de la caja en su posición final y el borde izquierdo/derecho/inferior de la caja original.</p>
+
+<p>Por tanto, la propiedad <code>top</code> se emplea para mover las cajas de forma descendente, la propiedad <code>bottom</code> mueve las cajas de forma ascendente, la propiedad <code>left</code> se utiliza para desplazar las cajas hacia la derecha y la propiedad <code>right</code> mueve las cajas hacia la izquierda. Este comportamiento parece poco intuitivo y es causa de errores cuando se empiezan a diseñar páginas con CSS. Si se utilizan valores negativos en las propiedades <code>top</code>, <code>right</code>, <code>bottom</code> y <code>left</code>, su efecto es justamente el inverso.</p>
+
+<p>El desplazamiento relativo de una caja no afecta al resto de cajas adyacentes, que se muestran en la misma posición que si la caja desplazada no se hubiera movido de su posición original.</p>
+
+<div class="figure" id="figure_5_4">
+    <img src="../../img/css/f0504.gif" alt="Ejemplo de posicionamiento relativo de un elemento" />
+
+    <p class="caption"><strong>Figura 5.4</strong> Ejemplo de posicionamiento relativo de un elemento</p>
+</div>
+
+
+<p>En la imagen anterior, la caja 2 se ha desplazado lateralmente hacia la derecha y verticalmente de forma descendente. Como el resto de cajas de la página no modifican su posición, se producen solapamientos entre los contenidos de las cajas.</p>
+
+<p>Las cajas desplazadas de forma relativa no modifican su tamaño, por lo que los valores de las propiedades <code>left</code> y <code>right</code> siempre cumplen que <code>left = -right</code>.</p>
+
+<p>Si tanto <code>left</code> como <code>right</code> tienen un valor de <code>auto</code> (que es su valor por defecto) la caja no se mueve de su posición original. Si sólo el valor de <code>left</code> es <code>auto</code>, su valor real es <code>-right</code>. Igualmente, si sólo el valor de <code>right</code> es <code>auto</code>, su valor real es <code>-left</code>.</p>
+
+<p>Si tanto <code>left</code> como <code>right</code> tienen valores distintos de <code>auto</code>, uno de los dos valores se tiene que ignorar porque son mutuamente excluyentes. Para determinar la propiedad que se tiene en cuenta, se considera el valor de la propiedad <code>direction</code>.</p>
+
+<p>La propiedad <code>direction</code> permite establecer la dirección del texto de un contenido. Si el valor de <code>direction</code> es <code>ltr</code>, el texto se muestra de izquierda a derecha, que es el método de escritura habitual en la mayoría de países. Si el valor de <code>direction</code> es <code>rtl</code>, el método de escritura es de derecha a izquierda, como el utilizado por los idiomas árabe y hebreo.</p>
+
+<p>Si el valor de <code>direction</code> es <code>ltr</code>, y las propiedades <code>left</code> y <code>right</code> tienen valores distintos de <code>auto</code>, se ignora la propiedad <code>right</code> y sólo se tiene en cuenta el valor de la propiedad <code>left</code>. De la misma forma, si el valor de <code>direction</code> es <code>rtl</code>, se ignora el valor de <code>left</code> y sólo se tiene en cuenta el valor de <code>right</code>.</p>
+
+<p>El siguiente ejemplo muestra tres imágenes posicionadas de forma normal:</p>
+
+<div class="figure" id="figure_5_5">
+    <img src="../../img/css/f0505.gif" alt="Elementos posicionados de forma normal" />
+
+    <p class="caption"><strong>Figura 5.5</strong> Elementos posicionados de forma normal</p>
+</div>
+
+
+<p>Aplicando el posicionamiento relativo, se desplaza la primera imagen de forma descendente:</p>
+
+<div class="code css">
+<pre class="css">img<span class="re1">.desplazada</span> <span class="br0">&#123;</span>
+  <span class="kw1">position</span><span class="sy0">:</span> <span class="kw2">relative</span><span class="sy0">;</span>
+  <span class="kw1">top</span><span class="sy0">:</span> <span class="re3">8em</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+&lt;img class<span class="sy0">=</span><span class="st0">&quot;desplazada&quot;</span> src<span class="sy0">=</span><span class="st0">&quot;imagenes/imagen.png&quot;</span> alt<span class="sy0">=</span><span class="st0">&quot;Imagen genérica&quot;</span> /<span class="sy0">&gt;</span>
+&lt;img src<span class="sy0">=</span><span class="st0">&quot;imagenes/imagen.png&quot;</span> alt<span class="sy0">=</span><span class="st0">&quot;Imagen genérica&quot;</span> /<span class="sy0">&gt;</span>
+&lt;img src<span class="sy0">=</span><span class="st0">&quot;imagenes/imagen.png&quot;</span> alt<span class="sy0">=</span><span class="st0">&quot;Imagen genérica&quot;</span> /<span class="sy0">&gt;</span></pre>
+</div>
+
+<p>El aspecto que muestran ahora las imágenes es el siguiente:</p>
+
+<div class="figure" id="figure_5_6">
+    <img src="../../img/css/f0506.gif" alt="Elemento posicionado de forma relativa" />
+
+    <p class="caption"><strong>Figura 5.6</strong> Elemento posicionado de forma relativa</p>
+</div>
+
+
+<p>El resto de imágenes no varían su posición y por tanto no ocupan el hueco dejado por la primera imagen, ya que el posicionamiento relativo no influye en el resto de elementos de la página. El principal problema de posicionar elementos de forma relativa es que se pueden producir solapamientos con otros elementos de la página.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="posicionamiento_normal.html">&larr; Anterior <span>5.3. Posicionamiento normal</span></a>
+            
+            <a class="span5 next" href="posicionamiento_absoluto.html">Siguiente &rarr; <span>5.5. Posicionamiento absoluto</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Posicionamiento relativo (Introducción a CSS%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a CSS : Posicionamiento relativo']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Selectores</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Unidades de medida y colores</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Modelo de cajas</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_5.html">
+            <span>Capítulo 5.</span> Posicionamiento y visualización
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="tipos_de_elementos.html">
+            <span>5.1.</span> Tipos de elementos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="posicionamiento.html">
+            <span>5.2.</span> Posicionamiento
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="posicionamiento_normal.html">
+            <span>5.3.</span> Posicionamiento normal
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="posicionamiento_relativo.html">
+            <span>5.4.</span> Posicionamiento relativo
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="posicionamiento_absoluto.html">
+            <span>5.5.</span> Posicionamiento absoluto
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="posicionamiento_fijo.html">
+            <span>5.6.</span> Posicionamiento fijo
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="posicionamiento_flotante.html">
+            <span>5.7.</span> Posicionamiento flotante
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="visualizacion.html">
+            <span>5.8.</span> Visualización
+        </a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Texto</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Enlaces</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Imágenes</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Listas</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Tablas</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Layout</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Otros</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Recursos útiles</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Ejercicios</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

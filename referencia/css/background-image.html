@@ -1,0 +1,204 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>background-image (Referencia de CSS 2.1)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="background-image (Referencia de CSS 2.1)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page referencia_css">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="index.html">Referencia de CSS 2.1</a></li>
+  <li class="current"><span>background-image</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="background_image">background-image</h1>
+    <div class="table" id="table_5_1">
+
+    <table class="table property css" summary="Definición de la propiedad background-image de CSS"> 
+<tr><th>Definición</th><td>Establece la imagen de fondo de un elemento</td></tr><tr><th>Valores <br/> permitidos</th><td>Uno y sólo uno de los siguientes valores:<ul><li>URL</li><li>none</li><li><a href="el-valor-inherit.html">inherit</a></li></ul></td></tr><tr><th>Valor inicial</th><td>none</td></tr><tr><th>Se aplica a</th><td>Todos los elementos</td></tr><tr><th>Válida en</th><td><a href="medios.html">medios visuales</a></td></tr><tr><th>Se hereda</th><td>no</td></tr><tr class="nobottom"><th>Definición en<br/>el estándar</th><td><a href="http://www.w3.org/TR/CSS21/colors.html#propdef-background-image">http://www.w3.org/TR/CSS21/colors.html#propdef-background-image</a></td></tr>
+</table>
+</div>
+
+
+<h2 id="ejemplos_de_uso">Ejemplos de uso</h2>
+
+<p>La propiedad <code>background-image</code> se emplea para establecer la imagen de fondo de cada elemento. La imagen se muestra en la zona que ocupan el contenido y el <a href="padding.html">relleno</a> del elemento, justo hasta su <a href="border.html">borde</a>.</p>
+
+<p>Para indicar la imagen que se muestra como fondo de un elemento, se utiliza una URL. Los navegadores no restringen el tipo de URL que se pueden utilizar, por lo que pueden ser URL externas/internas y URL relativas/absolutas.</p>
+
+<p>La URL de la imagen que se quiere mostrar se incluye dentro de los paréntesis de la palabra <code>url()</code>. De forma opcional, el valor de la URL se puede encerrar entre comillas simples o entre comillas dobles.</p>
+
+<div class="code css">
+<pre class="css">div <span class="br0">&#123;</span>
+  <span class="kw1">background-image</span><span class="sy0">:</span> <span class="kw2">url</span><span class="br0">&#40;</span><span class="co2">http://www.librosweb.es/website/css/images/logo.gif</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+h1<span class="sy0">,</span> h2<span class="sy0">,</span> h3 <span class="br0">&#123;</span>
+  <span class="kw1">background-image</span><span class="sy0">:</span> <span class="kw2">url</span><span class="br0">&#40;</span><span class="st0">&quot;imagenes/fondo.png&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+ul li <span class="br0">&#123;</span>
+  <span class="kw1">background-image</span><span class="sy0">:</span> <span class="kw2">url</span><span class="br0">&#40;</span><span class="st0">'../comun/imagenes/icono.gif'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Si la imagen de fondo es más grande que el sitio disponible para mostrarla, el navegador sólo muestra la parte visible que resulta de colocar la esquina superior izquierda de la imagen en la esquina superior izquierda del espacio que ocupa el elemento:</p>
+
+<div class="example">
+<div class="leftHalf">
+  div { background-image: url("images/imagen.png"); }
+  <div class="box" style="width: 144px; height: 50px; background-image: url(../../img/referencia_css/imagen.png);"></div>
+</div>
+<div class="rightHalf">
+  Imagen original <br/>
+  <img src="../../img/referencia_css/imagen.png" />
+</div>
+<div class="clear"></div>
+</div>
+
+<p>Por el contrario, si la imagen es más pequeña que el sitio disponible, el navegador repite la misma imagen en todas las direcciones hasta cubrir completamente el espacio que ocupa el elemento:</p>
+
+<div class="example">
+<div class="leftHalf">
+  div { background-image: url("images/imagen_pequena.png"); }
+  <div class="box" style="width: 200px; height: 150px; background-image: url(../../img/referencia_css/imagen_pequena.png);"></div>
+</div>
+<div class="rightHalf">
+  Imagen original <br/>
+  <img src="../../img/referencia_css/imagen_pequena.png" />
+</div>
+<div class="clear"></div>
+</div>
+
+<p>Sobre un mismo elemento se puede establecer de forma simultánea una imagen de fondo y un <a href="background-color/index.html">color de fondo</a>. Este comportamiento es habitual en algunos elementos, como por ejemplo el fondo de la propia página web.</p>
+
+<p>Si un mismo elemento tiene definida una imagen y un color de fondo, la imagen tiene prioridad. El color de fondo se muestra en las zonas transparentes de la imagen y en las zonas que no están cubiertas por la imagen.</p>
+
+<p>Se recomienda establecer un color de fondo siempre que se utilice una imagen de fondo. Como las imágenes se indican mediante URL y el navegador las tiene que descargar, es posible que se produzcan errores y la descarga de la imagen no se pueda realizar.</p>
+
+<p>Por lo tanto, si se establece un color de fondo junto con la imagen de fondo y se produce un error que impide mostrar la imagen, el navegador mostrará el color de fondo establecido. Por este motivo, el color de fondo debe ser similar a la imagen utilizada.</p>
+
+<p>El estándar CSS no permite modificar el tamaño con el que se muestra la imagen de fondo. Sin embargo, es posible modificar opciones como si la imagen se repite o no (<a href="background-repeat.html">background-repeat</a>), si la imagen permanece fija o no (<a href="background-attachment.html">background-attachment</a>) y modificar su posición por defecto (<a href="background-position.html">background-position</a>).</p>
+
+<p>Por último, no se pueden establecer dos o más imágenes diferentes sobre un mismo elemento. Si se quieren mostrar dos imágenes diferentes como fondo de una página web, se puede establecer la primera imagen sobre el selector <code>html</code> y la segunda imagen sobre el selector <code>body</code>:</p>
+
+<div class="code css">
+<pre class="css">html <span class="br0">&#123;</span>
+  <span class="kw1">background-image</span><span class="sy0">:</span> <span class="kw2">url</span><span class="br0">&#40;</span><span class="st0">&quot;imagenes/primera_imagen.png&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+body <span class="br0">&#123;</span>
+  <span class="kw1">background-image</span><span class="sy0">:</span> <span class="kw2">url</span><span class="br0">&#40;</span><span class="st0">&quot;imagenes/segunda_imagen.png&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Para que este último ejemplo sea realmente útil, es imprescindible utilizar al menos la propiedad <a href="background-repeat.html">background-repeat</a>.</p>
+
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'background-image (Referencia de CSS 2.1%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Referencia de CSS 2.1 : background-image']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Propiedades relacionadas</span></h3>
+
+
+                                <ul class="toc">
+                    <li class="">
+                <a href="background-attachment.html">background-attachment</a>
+            </li>
+                    <li class="">
+                <a href="background-color.html">background-color</a>
+            </li>
+                    <li class="active">
+                <a href="background-image.html">background-image</a>
+            </li>
+                    <li class="">
+                <a href="background-position.html">background-position</a>
+            </li>
+                    <li class="">
+                <a href="background-repeat.html">background-repeat</a>
+            </li>
+                    <li class="">
+                <a href="background.html">background</a>
+            </li>
+                </ul>
+                                            
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

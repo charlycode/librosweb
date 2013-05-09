@@ -1,0 +1,249 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>direction (Referencia de CSS 2.1)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="direction (Referencia de CSS 2.1)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page referencia_css">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="index.html">Referencia de CSS 2.1</a></li>
+  <li class="current"><span>direction</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="direction">direction</h1>
+    <div class="table" id="table_42_1">
+
+    <table class="table property css" summary="Definición de la propiedad direction de CSS"> 
+<tr><th>Definición</th><td>Indica la dirección en la que se muestra el texto y su valor también lo utilizan otras propiedades CSS</td></tr><tr><th>Valores <br/> permitidos</th><td>Uno y sólo uno de los siguientes valores:<ul><li>ltr</li><li>rtl</li><li><a href="el-valor-inherit.html">inherit</a></li></ul></td></tr><tr><th>Valor inicial</th><td>ltr</td></tr><tr><th>Se aplica a</th><td>Todos los elementos</td></tr><tr><th>Válida en</th><td><a href="medios.html">medios visuales</a></td></tr><tr><th>Se hereda</th><td>si</td></tr><tr class="nobottom"><th>Definición en<br/>el estándar</th><td><a href="http://www.w3.org/TR/CSS21/visuren.html#propdef-direction">http://www.w3.org/TR/CSS21/visuren.html#propdef-direction</a></td></tr>
+</table>
+</div>
+
+
+<h2 id="ejemplos_de_uso">Ejemplos de uso</h2>
+
+<p>Algunos idiomas como el árabe y el hebreo, muestran los caracteres de sus textos desde la derecha hacia la izquierda, al contrario que la mayoría de idiomas. Por este motivo, las páginas que contienen algún texto escrito en esos idiomas muestran el texto en dos direcciones diferentes. Este comportamiento se denomina <em>bidireccionalidad</em>, aunque se suele abreviar como <em>"bidi"</em>.</p>
+
+<p>El estándar Unicode define un algoritmo muy complejo para determinar el sentido correcto de cada bloque de texto. Además de tener en cuenta el propio contenido del texto, el algoritmo permite controlar y modificar la dirección del texto de forma explícita.</p>
+
+<p>CSS 2.1 utiliza ese mismo algoritmo para mostrar el texto bidireccional. Además, define las propiedades <code>direction</code> y <a href="unicode-bidi.html">unicode-bidi</a> para establecer el comportamiento del algoritmo en cada elemento de la página. Por tanto, los navegadores aplican en primer lugar el algoritmo de Unicode a cada párrafo de la página y después tienen en cuenta el valor de la propiedad <code>direction</code> para cada elemento.</p>
+
+<p>La propiedad <code>direction</code> define dos valores para establecer la dirección del texto de un elemento:
+  * <code>ltr</code>, muestra el texto escrito de izquierda a derecha y es el que utilizan los navegadores por defecto.
+  * <code>rtl</code>, muestra el texto escrito de derecha a izquierda.</p>
+
+<p>A continuación se muestran dos párrafos de texto iguales pero con diferente valor en su propiedad <code>direction</code>:</p>
+
+<div class="example">
+<p style="direction: ltr;"><strong>direction: ltr</strong> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec dignissim. Pellentesque id pede vitae pede ultricies gravida. Sed vulputate. Vestibulum quis ipsum. Aenean nec quam. Sed ultrices tempor massa. Praesent tempor enim id metus. Vivamus augue. Nam risus. Morbi auctor. Phasellus dapibus urna sed ligula.</p>
+<p style="direction: rtl;"><strong>direction: rtl</strong> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec dignissim. Pellentesque id pede vitae pede ultricies gravida. Sed vulputate. Vestibulum quis ipsum. Aenean nec quam. Sed ultrices tempor massa. Praesent tempor enim id metus. Vivamus augue. Nam risus. Morbi auctor. Phasellus dapibus urna sed ligula.</p>
+</div>
+
+<p>Cuando el texto del elemento está justificado, las diferencias entre los dos valores de la propiedad <code>direction</code> son más evidentes:</p>
+
+<div class="example">
+<p style="direction: ltr; text-align: justify"><strong>direction: ltr</strong> ¡Lorem ipsum dolor sit amet, consectetuer adipiscing elit!. Donec dignissim. Pellentesque id pede vitae pede ultricies gravida. Sed vulputate. Vestibulum quis ipsum. Aenean nec quam. Sed ultrices tempor massa. Praesent tempor enim id metus. Vivamus augue. Nam risus. Morbi auctor. Phasellus dapibus urna sed ligula.</p>
+<p style="direction: rtl; text-align: justify"><strong>direction: rtl</strong> ¡Lorem ipsum dolor sit amet, consectetuer adipiscing elit!. Donec dignissim. Pellentesque id pede vitae pede ultricies gravida. Sed vulputate. Vestibulum quis ipsum. Aenean nec quam. Sed ultrices tempor massa. Praesent tempor enim id metus. Vivamus augue. Nam risus. Morbi auctor. Phasellus dapibus urna sed ligula.</p>
+</div>
+
+<p>Además de la dirección del texto y la posición de la última línea de un elemento con su texto justificado (<code>text-align: justify</code>), el valor de la propiedad <code>direction</code> también determina la dirección de las columnas de las tablas y la dirección del desbordamiento horizontal (propiedad <a href="overflow.html">overflow</a>) .</p>
+
+<p>El siguiente ejemplo muestra dos tablas cuyo código HTML es exactamente el mismo pero que se muestran de forma diferente porque su elemento contenedor utiliza valores diferentes en la propiedad <code>direction</code>:</p>
+
+<div class="example">
+<div style="direction: ltr;"><strong>direction: ltr</strong>
+<div class="table" id="table_42_2">
+
+    <table summary="Descripción de la tabla y su contenido">
+<caption>Título de la tabla</caption>
+<thead>
+  <tr>
+    <th scope="col"></th>
+    <th scope="col">Cabecera columna 1</th>
+    <th scope="col">Cabecera columna 2</th>
+  </tr>
+</thead>
+
+<tfoot>
+  <tr>    
+    <th scope="col"></th>
+    <th scope="col">Cabecera columna 1</th>
+    <th scope="col">Cabecera columna 2</th>
+  </tr>
+</tfoot>
+
+<tbody>
+  <tr>
+    <th scope="row">Cabecera fila 1</th>
+    <td>Valor 1-1</td>
+    <td>Valor 1-2</td>
+  </tr>
+  <tr>
+    <th scope="row">Cabecera fila 2</th>
+    <td>Valor 2-1</td>
+    <td>Valor 2-2</td>
+  </tr>
+</tbody>
+
+</table>
+</div>
+
+</div>
+<div style="direction: rtl;"><strong>direction: rtl</strong>
+<div class="table" id="table_42_3">
+
+    <table summary="Descripción de la tabla y su contenido">
+<caption>Título de la tabla</caption>
+<thead>
+  <tr>
+    <th scope="col"></th>
+    <th scope="col">Cabecera columna 1</th>
+    <th scope="col">Cabecera columna 2</th>
+  </tr>
+</thead>
+
+<tfoot>
+  <tr>
+    <th scope="col"></th>
+    <th scope="col">Cabecera columna 1</th>
+    <th scope="col">Cabecera columna 2</th>
+  </tr>
+</tfoot>
+
+<tbody>
+  <tr>
+    <th scope="row">Cabecera fila 1</th>
+    <td>Valor 1-1</td>
+    <td>Valor 1-2</td>
+  </tr>
+  <tr>
+    <th scope="row">Cabecera fila 2</th>
+    <td>Valor 2-1</td>
+    <td>Valor 2-2</td>
+  </tr>
+</tbody>
+
+</table>
+</div>
+
+</div>
+</div>
+
+<p>Cuando se establece la propiedad <code>direction</code> en las columnas de una tabla, sus celdas no heredan el valor. En cualquier otro elemento de la página, el valor de <code>direction</code> se hereda correctamente.</p>
+
+<p>Por último, los navegadores que no soportan el texto bidireccional, ignoran el valor de esta propiedad así como el de la propiedad <a href="unicode-bidi.html">unicode-bidi</a>.</p>
+
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'direction (Referencia de CSS 2.1%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Referencia de CSS 2.1 : direction']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Propiedades relacionadas</span></h3>
+
+
+                                        <ul class="toc">
+                    <li class="active">
+                <a href="direction.html">direction</a>
+            </li>
+                    <li class="">
+                <a href="line-height.html">line-height</a>
+            </li>
+                    <li class="">
+                <a href="text-align.html">text-align</a>
+            </li>
+                    <li class="">
+                <a href="text-decoration.html">text-decoration</a>
+            </li>
+                    <li class="">
+                <a href="text-indent.html">text-indent</a>
+            </li>
+                    <li class="">
+                <a href="text-transform.html">text-transform</a>
+            </li>
+                    <li class="">
+                <a href="unicode-bidi.html">unicode-bidi</a>
+            </li>
+                    <li class="">
+                <a href="word-spacing.html">word-spacing</a>
+            </li>
+                </ul>
+                                    
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

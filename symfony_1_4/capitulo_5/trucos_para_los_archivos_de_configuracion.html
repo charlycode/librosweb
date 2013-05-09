@@ -1,0 +1,302 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>5.6. Trucos para los archivos de configuración (Symfony 1.4, la guía definitiva)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="accediendo_a_la_configuracion_desde_la_aplicacion.html" />
+        <link rel="next" href="resumen.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="5.6. Trucos para los archivos de configuración (Symfony 1.4, la guía definitiva)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page symfony_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Symfony 1.4, la guía definitiva</a></li>
+  <li><a href="../capitulo_5.html">Capítulo 5. Configurar Symfony</a></li>
+  <li class="current"><span>5.6.. Trucos para los archivos de configuración</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="trucos_para_los_archivos_de_configuracion"><span>5.6.</span> Trucos para los archivos de configuración</h1>
+    
+
+<p>Antes de empezar a crear los primeros archivos YAML, existen algunos trucos muy útiles que es conveniente aprender. Estos trucos permiten evitar la duplicidad de la configuración y permiten personalizar el formato YAML.</p>
+
+<h3 id="uso_de_constantes_en_los_archivos_de_configuracion_yaml">5.6.1. Uso de constantes en los archivos de configuración YAML</h3>
+
+<p>Algunas opciones de configuración dependen del valor de otras opciones. Para evitar escribir 2 veces el mismo valor, Symfony permite definir constantes dentro de los archivos YAML. Si el manejador de los archivos se encuentra con un nombre de opción todo en mayúsculas y encerrado entre los símbolos <code>%</code> y <code>%</code>, lo reemplaza por el valor que tenga en ese momento. El listado 5-20 muestra un ejemplo.</p>
+
+<p><strong>Listado 5-20 - Uso de constantes en los archivos YAML, ejemplo extraído del archivo <code>autoload.yml</code></strong></p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co4">autoload</span>:<span class="co4">
+  symfony</span>:<span class="co3">
+    name</span><span class="sy2">: </span>          symfony<span class="co3">
+    path</span><span class="sy2">: </span>          <span class="co2">%SF_SYMFONY_LIB_DIR%</span><span class="co3">
+    recursive</span><span class="sy2">: </span>     true<span class="co3">
+    exclude</span><span class="sy2">: </span>       <span class="br0">&#91;</span>vendor<span class="br0">&#93;</span></pre>
+</div>
+
+<p>El valor de la opción <code>path</code> es el que devuelve en ese momento la llamada a <code>sfConfig::get('sf_symfony_lib_dir')</code>. Si un archivo de configuración depende de otro archivo, es necesario que el archivo del que se depende sea procesado antes (en el código de Symfony se puede observar el orden en el que se procesan los archivos de configuración). El archivo <code>app.yml</code> es uno de los últimos que se procesan, por lo que sus opciones pueden depender de las opciones de otros archivos de configuración.</p>
+
+<p>Todas las constantes disponibles se describen en la <a href="http://www.symfony-project.org/reference/1_4/en/">guía de referencia de Symfony</a>.</p>
+
+<h3 id="uso_de_programacion_en_los_archivos_de_configuracion">5.6.2. Uso de programación en los archivos de configuración</h3>
+
+<p>Puede ocurrir que los archivos de configuración dependan de parámetros externos (como por ejemplo una base de datos u otro archivo de configuración). Para poder procesar este tipo de casos, Symfony procesa los archivos de configuración como si fueran archivos de PHP antes de procesarlos como archivos de tipo YAML. De esta forma, como se muestra en el listado 5-21, es posible incluir código PHP dentro de un archivo YAML:</p>
+
+<p><strong>Listado 5-21 - Los archivos YAML puede contener código PHP</strong></p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co4">all</span>:<span class="co4">
+  traduccion</span>:<span class="co3">
+    formato</span><span class="sy2">: </span> &lt;?php echo <span class="br0">&#40;</span>sfConfig::get<span class="br0">&#40;</span>'sf_i18n'<span class="br0">&#41;</span> <span class="co1">#### true ? 'xliff' : null).&quot;\n&quot; ?&gt;</span></pre>
+</div>
+
+<p>El único inconveniente es que la configuración se procesa al principio de la ejecución de la petición del usuario, por lo que no están disponibles ninguno de los métodos y funciones de Symfony.</p>
+
+<p>Además, como la instrucción <code>echo</code> no añade ningún retorno de carro por defecto, es necesario añadirlo explícitamente mediante <code>\n</code> o mediante el uso del <em>helper</em> <code>echoln</code> para cumplir con el formato YAML:</p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co3">all</span><span class="sy2">: </span><span class="co4">
+  traduccion</span>:<span class="co3">
+    formato</span><span class="sy2">: </span> &lt;?php echoln<span class="br0">&#40;</span>sfConfig::get<span class="br0">&#40;</span>'sf_i18n'<span class="br0">&#41;</span> == true ? 'xliff' <span class="sy2">: </span>'<span class="kw1">none</span>'<span class="br0">&#41;</span> ?&gt;</pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Recuerda que en el entorno de producción, se utiliza una cache para la configuración, por lo que los archivos de configuración solamente se procesan (y en este caso, se ejecuta su código PHP) una vez después de borrar la cache.</p></div>
+
+<h3 id="utilizar_tu_propio_archivo_yaml">5.6.3. Utilizar tu propio archivo YAML</h3>
+
+<p>La clase <code>sfYaml</code> permite procesar de forma sencilla cualquier archivo en formato YAML. Se trata de un procesador  <em>parser</em>) de archivos YAML que los convierte en arrays asociativos de PHP. El listado 5-22 muestra un archivo YAML de ejemplo y el listado 5-23 muestra como transformarlo en código PHP:</p>
+
+<p><strong>Listado 5-22 - Archivo de prueba llamado <code>prueba.yml</code></strong></p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co4">casa</span>:<span class="co4">
+  familia</span>:<span class="co3">
+    apellido</span><span class="sy2">: </span>     García<span class="co3">
+    padres</span><span class="sy2">: </span>       <span class="br0">&#91;</span>Antonio, María<span class="br0">&#93;</span><span class="co3">
+    hijos</span><span class="sy2">: </span>        <span class="br0">&#91;</span>Jose, Manuel, Carmen<span class="br0">&#93;</span><span class="co4">
+  direccion</span>:<span class="co3">
+    numero</span><span class="sy2">: </span>       <span class="nu0">34</span><span class="co3">
+    calle</span><span class="sy2">: </span>        Gran Vía<span class="co3">
+    ciudad</span><span class="sy2">: </span>       Cualquiera<span class="co3">
+    codigopostal</span><span class="sy2">: </span> <span class="nu0">12345</span></pre>
+</div>
+
+<p><strong>Listado 5-23 - Uso de la clase <code>sfYaml</code> para transformar el archivo YAML en un array asociativo</strong></p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$prueba</span> <span class="sy0">=</span> sfYaml<span class="sy0">::</span><span class="me2">load</span><span class="br0">&#40;</span><span class="st_h">'/ruta/a/prueba.yml'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="kw3">print_r</span><span class="br0">&#40;</span><span class="re0">$prueba</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="kw3">Array</span><span class="br0">&#40;</span>
+      <span class="br0">&#91;</span>casa<span class="br0">&#93;</span> <span class="sy0">=&gt;</span> <span class="kw3">Array</span><span class="br0">&#40;</span>
+        <span class="br0">&#91;</span>familia<span class="br0">&#93;</span> <span class="sy0">=&gt;</span> <span class="kw3">Array</span><span class="br0">&#40;</span>
+          <span class="br0">&#91;</span>apellido<span class="br0">&#93;</span> <span class="sy0">=&gt;</span> García
+          <span class="br0">&#91;</span>padres<span class="br0">&#93;</span> <span class="sy0">=&gt;</span> <span class="kw3">Array</span><span class="br0">&#40;</span>
+            <span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span> <span class="sy0">=&gt;</span> Antonio
+            <span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span> <span class="sy0">=&gt;</span> María
+          <span class="br0">&#41;</span>
+          <span class="br0">&#91;</span>hijos<span class="br0">&#93;</span> <span class="sy0">=&gt;</span> <span class="kw3">Array</span><span class="br0">&#40;</span>
+            <span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span> <span class="sy0">=&gt;</span> Jose
+            <span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span> <span class="sy0">=&gt;</span> Manuel
+            <span class="br0">&#91;</span><span class="nu0">2</span><span class="br0">&#93;</span> <span class="sy0">=&gt;</span> Carmen
+          <span class="br0">&#41;</span>
+        <span class="br0">&#41;</span>
+        <span class="br0">&#91;</span>direccion<span class="br0">&#93;</span> <span class="sy0">=&gt;</span> <span class="kw3">Array</span><span class="br0">&#40;</span>
+          <span class="br0">&#91;</span>numero<span class="br0">&#93;</span> <span class="sy0">=&gt;</span> <span class="nu0">34</span>
+          <span class="br0">&#91;</span>calle<span class="br0">&#93;</span> <span class="sy0">=&gt;</span> Gran Vía
+          <span class="br0">&#91;</span>ciudad<span class="br0">&#93;</span> <span class="sy0">=&gt;</span> Cualquiera
+          <span class="br0">&#91;</span>codigopostal<span class="br0">&#93;</span> <span class="sy0">=&gt;</span> <span class="nu0">12345</span>
+        <span class="br0">&#41;</span>
+      <span class="br0">&#41;</span>
+    <span class="br0">&#41;</span></pre>
+</div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="accediendo_a_la_configuracion_desde_la_aplicacion.html">&larr; Anterior <span>5.5. Accediendo a la configuración desde la aplicación</span></a>
+            
+            <a class="span5 next" href="resumen.html">Siguiente &rarr; <span>5.7. Resumen</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Trucos para los archivos de configuración (Symfony 1.4, la guía definitiva%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Symfony 1.4, la guía definitiva : Trucos para los archivos de configuración']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción a Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Explorando el interior de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Ejecutar aplicaciones Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Introducción a la creación de páginas</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_5.html">
+            <span>Capítulo 5.</span> Configurar Symfony
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_sistema_de_configuracion.html">
+            <span>5.1.</span> El sistema de configuración
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="un_vistazo_general_a_los_archivos_de_configuracion.html">
+            <span>5.2.</span> Un vistazo general a los archivos de configuración
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="entornos.html">
+            <span>5.3.</span> Entornos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="la_cache_de_configuracion.html">
+            <span>5.4.</span> La cache de configuración
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="accediendo_a_la_configuracion_desde_la_aplicacion.html">
+            <span>5.5.</span> Accediendo a la configuración desde la aplicación
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="trucos_para_los_archivos_de_configuracion.html">
+            <span>5.6.</span> Trucos para los archivos de configuración
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="resumen.html">
+            <span>5.7.</span> Resumen
+        </a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> El Controlador</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> La Vista</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> El modelo (Doctrine)</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Enlaces y sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Emails</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Uso de la cache</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Pruebas unitarias y funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Herramientas para la administración de aplicaciones</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> Personalizar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> Rendimiento</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Configuración avanzada</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

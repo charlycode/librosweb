@@ -1,0 +1,362 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>12.4. Buenas prácticas en las aplicaciones Facebook (Más con Symfony)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="facebook_connect.html" />
+        <link rel="next" href="proximos_pasos.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="12.4. Buenas prácticas en las aplicaciones Facebook (Más con Symfony)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page mas_con_symfony">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Más con Symfony</a></li>
+  <li><a href="../capitulo_12.html">Capítulo 12. Desarrollando aplicaciones Facebook</a></li>
+  <li class="current"><span>12.4.. Buenas prácticas en las aplicaciones Facebook</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="buenas_practicas_en_las_aplicaciones_facebook"><span>12.4.</span> Buenas prácticas en las aplicaciones Facebook</h1>
+    
+
+<p>Las secciones anteriores han explicado cómo el plugin <code>sfFacebookConnectPlugin</code>
+se integra perfectamente con <code>sfGuardPlugin</code> y cómo permite crear aplicaciones
+<em>agnósticas</em> que pueden convertirse en aplicaciones FBML, de tipo <code>&lt;iframe&gt;</code> o
+de tipo <em>Facebook Connect</em>. No obstante, para crear una aplicación real más
+compleja y que utilice características avanzadas de Facebook es necesario seguir
+algunos de los siguientes consejos para aprovechar también las funcionalidades
+de Symfony.</p>
+
+<h3 id="utilizando_los_entornos_de_symfony_para_probar_diferentes_servidores_facebook_connect">12.4.1. Utilizando los entornos de Symfony para probar diferentes servidores Facebook Connect</h3>
+
+<p>Depurar rápidamente las aplicaciones y facilitar sus pruebas es uno de los
+principios de Symfony. Desarrollar aplicaciones Facebook puede dificultar
+seriamente estas opciones, ya que muchas características requieren una conexión
+a Internet para comunicarse con el servidor de Facebook y un puerto 80 abierto
+para intercambiar las cookies de autenticación. Además, existe la limitación de
+que las aplicaciones que utilizan Facebook Connect sólo pueden conectarse a un
+servidor.</p>
+
+<p>Esta última limitación es un gran problema si la aplicación se desarrolla en una
+máquina, se prueba en otra, se pone en pre-producción en una tercer máquina y
+por último se sube a producción en otra máquina. Con Symfony la forma habitual
+de proceder en este caso sería crear una aplicación para cada servidor y crear
+un entorno para cada máquina. Realizar todo esto en Symfony es tan sencillo como
+hacer una copia del archivo <code>frontend_dev.php</code> en otro archivo llamado
+<code>frontend_preprod.php</code> y modificarlo para indicar que el nuevo entorno se llama
+<code>preprod</code> (de <em>pre-producción</em>) y no <code>dev</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$configuration</span> <span class="sy0">=</span> ProjectConfiguration<span class="sy0">::</span><span class="me2">getApplicationConfiguration</span><span class="br0">&#40;</span><span class="st_h">'frontend'</span><span class="sy0">,</span> <span class="st_h">'preprod'</span><span class="sy0">,</span> <span class="kw4">true</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>A continuación, modifica el archivo <code>app.yml</code> para configurar aplicaciones
+Facebook diferentes en función de cada entorno:</p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co4">prod</span>:<span class="co4">
+  facebook</span>:<span class="co3">
+    api_key</span><span class="sy2">: </span>xxx<span class="co3">
+    api_secret</span><span class="sy2">: </span>xxx<span class="co3">
+    api_id</span><span class="sy2">: </span>xxx
+<span class="co4">
+dev</span>:<span class="co4">
+  facebook</span>:<span class="co3">
+    api_key</span><span class="sy2">: </span>xxx<span class="co3">
+    api_secret</span><span class="sy2">: </span>xxx<span class="co3">
+    api_id</span><span class="sy2">: </span>xxx
+<span class="co4">
+preprod</span>:<span class="co4">
+  facebook</span>:<span class="co3">
+    api_key</span><span class="sy2">: </span>xxx<span class="co3">
+    api_secret</span><span class="sy2">: </span>xxx<span class="co3">
+    api_id</span><span class="sy2">: </span>xxx</pre>
+</div>
+
+<p>Ahora la aplicación ya se puede probar en cada uno de os diferentes servidores
+utilizando como punto de entrada el correspondiente archivo <code>frontend_xxx.php</code>.</p>
+
+<h3 id="depurando_fbml_con_los_mensajes_de_log_de_symfony">12.4.2. Depurando FBML con los mensajes de log de Symfony</h3>
+
+<p>La estrategia de cambiar el layout permite desarrollar y probar aplicaciones
+FBML fuera del sitio web de Facebook. Sin embargo, las pruebas finales sobre
+Facebook pueden mostrar mensajes de error inesperados y difíciles de comprender.
+En efecto, el principal problema de mostrar FBML directamente en Facebook es
+que los errores de tipo 500 se interceptan y reemplazan por unos mensajes de
+error estándar poco útiles. Además, la barra de depuración web de Symfony
+tampoco se muestra dentro del <em>frame</em> de Facebook. Afortunadamente, todos estos
+problemas se pueden solucionar gracias a los mensajes de log de Symfony. El
+plugin <code>sfFacebookConnectPlugin</code> crea mensajes de log para todas las acciones
+importantes, y es muy sencillo añadir nuevos mensajes de log desde cualquier
+lugar de la aplicación:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw1">if</span> <span class="br0">&#40;</span>sfConfig<span class="sy0">::</span><span class="me2">get</span><span class="br0">&#40;</span><span class="st_h">'sf_logging_enabled'</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  sfContext<span class="sy0">::</span><span class="me2">getInstance</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">getLogger</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">info</span><span class="br0">&#40;</span><span class="re0">$message</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<h3 id="utilizar_un_proxy_para_evitar_las_redirecciones_erroneas_de_facebook">12.4.3. Utilizar un proxy para evitar las redirecciones erróneas de Facebook</h3>
+
+<p>Uno de los errores más peculiares de Facebook es que una vez que <em>Facebook
+Connect</em> se ha configurado en la aplicación, el servidor de <em>Facebook Connect</em>
+se considera la página de inicio de la aplicación. Aunque esta página de inicio
+se puede configurar, siempre debe pertenecer al mismo dominio del host de
+<em>Facebook Connect</em>. Así que no queda otro remedio que configurar la portada de
+la aplicación a una acción simple de Symfony que redirija a la URL adecuada.
+El siguiente ejemplo muestra el código para redirigir a una aplicación de
+Facebook:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">public</span> <span class="kw2">function</span> executeRedirect<span class="br0">&#40;</span>sfWebRequest <span class="re0">$request</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+&nbsp;
+  <span class="kw1">return</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">redirect</span><span class="br0">&#40;</span><span class="st_h">'http://apps.facebook.com'</span><span class="sy0">.</span>sfConfig<span class="sy0">::</span><span class="me2">get</span><span class="br0">&#40;</span><span class="st_h">'app_facebook_app_url'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<h3 id="utilizar_el_helper_fb_url_for_en_las_aplicaciones_facebook">12.4.4. Utilizar el helper <code>fb_url_for()</code> en las aplicaciones Facebook</h3>
+
+<p>El enrutamiento es uno de los mayores problemas de que las aplicaciones sean
+<em>agnósticas</em> y puedan funcionar como FBML dentro de Facebook o como XFBML
+dentro de un <code>&lt;iframe&gt;</code>:</p>
+
+<ul>
+<li>Si se trata de una aplicación FBML, los enlaces internos de la aplicación
+tienen que apuntar a <code>/app-name/ruta-symfony</code></li>
+<li>Si se trata de una aplicación con <code>&lt;iframe&gt;</code>, es importante pasar la
+información de la sesión de Facebook de una página a otra.</li>
+</ul>
+
+<p>El plugin <code>sfFacebookConnectPlugin</code> incluye un <em>helper</em> especial llamado
+<code>fb_url_for()</code> y que se encarga de los dos casos.</p>
+
+<h3 id="redirigiendo_dentro_de_una_aplicacion_fbml">12.4.5. Redirigiendo dentro de una aplicación FBML</h3>
+
+<p>Los programadores de Symfony están acostumbrados a redirigir al usuario a una
+nueva página tras una operación exitosa, de forma que se evite repetir esa misma
+operación. Sin embargo, en las aplicaciones FBML las redirecciones no funcionan
+tal y como se espera. En su lugar, es necesario utilizar una etiqueta especial
+llamada <code>&lt;fb:redirect&gt;</code> y que ordena a Facebook realizar la redirección. Para
+que la aplicación funcione correctamente en cualquier caso (etiqueta FBML o
+redirección normal de Symfony) la clase <code>sfFacebook</code> incluye una función especial
+para redirecciones que se puede utilizar por ejemplo al guardar una acción:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw1">if</span> <span class="br0">&#40;</span><span class="re0">$form</span><span class="sy0">-&gt;</span><span class="me1">isValid</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="re0">$form</span><span class="sy0">-&gt;</span><span class="me1">save</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+  <span class="kw1">return</span> sfFacebook<span class="sy0">::</span><span class="me2">redirect</span><span class="br0">&#40;</span><span class="re0">$url</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<h3 id="relacionando_los_usuarios_existentes_con_sus_cuentas_de_facebook">12.4.6. Relacionando los usuarios existentes con sus cuentas de Facebook</h3>
+
+<p>Uno de los objetivos de <em>Facebook Connect</em> es facilitar el proceso de registro
+de los nuevos usuarios. De todos modos, otro de sus usos más interesantes es
+el de relacionar los usuarios ya existentes en el sitio web con sus respectivas
+cuentas de Facebook, ya sea para obtener más información de los usuarios o
+para comunicarse a través de su Facebook. Esto se puede conseguir de dos formas:</p>
+
+<ul>
+<li>Obligar a los usuarios de tipo <code>sfGuard</code> existentes a que pulsen el botón
+<em>"Connect with Facebook"</em>. La acción <code>sfFacebookConnectAuth/signIn</code> no crea
+nuevos usuarios de tipo <code>sfGuard</code> si detecta que ese usuario ya existe, pero
+si que crea cualquier nuevo usuario conectado a través de <em>Facebook Connect</em>.
+Tan simple como eso.</li>
+<li>Utilizar el sistema de reconocimiento de emails de Facebook. Cuando un usuario
+utiliza <em>Facebook Connect</em> en un sitio web, Facebook puede proporcionar un
+hash especial de sus emails, que se puede comparar con los hash de emails
+existentes en la base de datos, de forma que se puedan reconocer las cuentas
+de Facebook pertenecientes a los usuarios que ya estaban creados. No obstante,
+por razones de seguridad, Facebook sólo proporciona estos <em>hashes</em> si el
+usuario se ha registrado previamente utilizando su API. Por tanto, resulta
+imprescindible registrar de forma habitual los emails de todos los nuevos
+usuarios de forma que puedan ser reconocidos más adelante. Esto es precisamente
+lo que hace la tarea <code>registerUsers</code>, que ha sido portada a Symfony 1.2 por
+Damien Alexandre. Esta tarea se debería ejecutar cada noche para registrar
+todos los nuevos usuarios. También se puede realizar el registro justo
+después de crear un usuario, mediante el método <code>registerUsers()</code> de
+<code>sfFacebookConnect</code>:</li>
+</ul>
+
+<div class="code php">
+<pre class="php">sfFacebookConnect<span class="sy0">::</span><span class="me2">registerUsers</span><span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="re0">$sfGuardUser</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="facebook_connect.html">&larr; Anterior <span>12.3. Facebook Connect</span></a>
+            
+            <a class="span5 next" href="proximos_pasos.html">Siguiente &rarr; <span>12.5. Próximos pasos</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Buenas prácticas en las aplicaciones Facebook (Más con Symfony%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Más con Symfony : Buenas prácticas en las aplicaciones Facebook']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Enrutamiento avanzado</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Mejora tu productividad</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Emails</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Widgets y validadores propios</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Formularios avanzados</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Mejorando la barra de depuración web</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Uso avanzado de Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Utilizando la herencia de tablas de Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Funcionamiento interno de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Windows y Symfony</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_12.html">
+            <span>Capítulo 12.</span> Desarrollando aplicaciones Facebook
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="desarrollando_aplicaciones_facebook.html">
+            <span>12.1.</span> Desarrollando aplicaciones Facebook
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="creando_un_primer_proyecto_con_sffacebookconnectplugin.html">
+            <span>12.2.</span> Creando un primer proyecto con <code>sfFacebookConnectPlugin</code>
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="facebook_connect.html">
+            <span>12.3.</span> Facebook Connect
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="buenas_practicas_en_las_aplicaciones_facebook.html">
+            <span>12.4.</span> Buenas prácticas en las aplicaciones Facebook
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="proximos_pasos.html">
+            <span>12.5.</span> Próximos pasos
+        </a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Descubriendo el poder de la línea de comandos</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Jugando con la cache de configuración de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Trabajando con la comunidad Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>A</span> <a href="../apendice_a.html"> Código JavaScript de sfWidgetFormGMapAddress</a>
+    </li>
+    <li class="level-1">
+        <span>B</span> <a href="../apendice_b.html"> Ejemplo de instalador propio</a>
+    </li>
+    <li class="level-1">
+        <span>C</span> <a href="../apendice_c.html"> Licencia</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

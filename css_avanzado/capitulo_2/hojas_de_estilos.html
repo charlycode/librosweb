@@ -1,0 +1,401 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>2.5. Hojas de estilos (CSS avanzado)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="depuracion.html" />
+        <link rel="next" href="rendimiento.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="2.5. Hojas de estilos (CSS avanzado)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page css_avanzado">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">CSS avanzado</a></li>
+  <li><a href="../capitulo_2.html">Capítulo 2. Buenas prácticas</a></li>
+  <li class="current"><span>2.5.. Hojas de estilos</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="hojas_de_estilos"><span>2.5.</span> Hojas de estilos</h1>
+    
+
+<p>Las hojas de estilos reales de los sitios web profesionales suelen contener cientos de reglas y ocupan miles de líneas. Por este motivo, es imprescindible seguir unas buenas prácticas al crear las hojas de estilos para mejorar la producitivdad y reducir los posibles errores. A continuación se muestran algunas de las recomendaciones más útiles para crear hojas de estilos profesionales.</p>
+
+<h3 id="llaves">2.5.1. Llaves</h3>
+
+<p>Uno de los elementos básicos que los diseñadores web deben acordar es el tipo de llaves que se utilizan para encerrar la declaración de cada regla CSS. Aunque se utilizan muchos modelos diferentes, a continuación se muestran los más populares.</p>
+
+<p>Llave de apertura en la misma línea del selector y llave de cierre en una nueva línea para separar unas reglas de otras:</p>
+
+<div class="code css">
+<pre class="css">selector <span class="br0">&#123;</span>
+  propiedad1<span class="sy0">:</span> valor1<span class="sy0">;</span>
+  propiedad2<span class="sy0">:</span> valor2<span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Una variante del modelo anterior consiste en mostrar cada llave en su propia línea, para separar aún más el selector de su declaración. Este modelo lo utilizan normalmente los programadores web:</p>
+
+<div class="code css">
+<pre class="css">selector
+<span class="br0">&#123;</span>
+  propiedad1<span class="sy0">:</span> valor1<span class="sy0">;</span>
+  propiedad2<span class="sy0">:</span> valor2<span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Por último, existe un modelo compacto que no crea nuevas líneas para las llaves. Aunque es mucho más compacto, normalmente es más difícil de leer:</p>
+
+<div class="code css">
+<pre class="css">selector <span class="br0">&#123;</span>
+  propiedad1<span class="sy0">:</span> valor1<span class="sy0">;</span>
+  propiedad2<span class="sy0">:</span> valor2<span class="sy0">;</span> <span class="br0">&#125;</span></pre>
+</div>
+
+<h3 id="tabulaciones">2.5.2. Tabulaciones</h3>
+
+<p>Tabular el código facilita significativamente su lectura, por lo que tabular las propiedades CSS es una de las mejores prácticas de los diseñadores web profesionales. Como conocen la mayoría de programadores, no es recomendable insertar tabuladores en el código, sino que se deben emplear 2 o 4 espacios en blanco.</p>
+
+<div class="code css">
+<pre class="css"><span class="coMULTI">/* Propiedades sin tabular */</span>
+selector <span class="br0">&#123;</span>
+propiedad1<span class="sy0">:</span> valor1<span class="sy0">;</span>
+propiedad2<span class="sy0">:</span> valor2<span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+<span class="coMULTI">/* Propiedades tabuladas con 2 espacios */</span>
+selector <span class="br0">&#123;</span>
+  propiedad1<span class="sy0">:</span> valor1<span class="sy0">;</span>
+  propiedad2<span class="sy0">:</span> valor2<span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Extendiendo la práctica de tabular las propiedades, algunos diseñadores recomiendan tabular también las reglas CSS relacionadas. El siguiente ejemplo muestra tres reglas CSS relacionadas entre sí:</p>
+
+<div class="code css">
+<pre class="css">ul <span class="br0">&#123;</span>
+  <span class="kw1">margin</span><span class="sy0">:</span> <span class="re3">1em</span> <span class="nu0">0</span><span class="sy0">;</span>
+  <span class="kw1">padding</span><span class="sy0">:</span> <span class="nu0">0</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+ul li <span class="br0">&#123;</span>
+  <span class="kw1">list-style-type</span><span class="sy0">:</span> <span class="kw2">square</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+ul li ul <span class="br0">&#123;</span>
+  <span class="kw1">font-style</span><span class="sy0">:</span> <span class="kw2">italic</span><span class="sy0">;</span>
+  <span class="kw1">list-style-type</span><span class="sy0">:</span> <span class="kw2">disc</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>La recomendación consiste en tabular las reglas CSS que están relacionadas porque sus selectores están anidados. Por tanto, la regla cuyo selector es <code>ul li</code> debería estar tabulada respecto de la regla <code>ul</code> y de la misma forma la regla cuyo selector es <code>ul li ul</code> debería estar tabulada respecto de <code>ul li</code>:</p>
+
+<div class="code css">
+<pre class="css">ul <span class="br0">&#123;</span>
+  <span class="kw1">margin</span><span class="sy0">:</span> <span class="re3">1em</span> <span class="nu0">0</span><span class="sy0">;</span>
+  <span class="kw1">padding</span><span class="sy0">:</span> <span class="nu0">0</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+  ul li <span class="br0">&#123;</span>
+    <span class="kw1">list-style-type</span><span class="sy0">:</span> <span class="kw2">square</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+    ul li ul <span class="br0">&#123;</span>
+      <span class="kw1">font-style</span><span class="sy0">:</span> <span class="kw2">italic</span><span class="sy0">;</span>
+      <span class="kw1">list-style-type</span><span class="sy0">:</span> <span class="kw2">disc</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span></pre>
+</div>
+
+<h3 id="propiedades">2.5.3. Propiedades</h3>
+
+<p>Cuando se establece la misma propiedad en varios selectores diferentes pero relacionados, se recomienda escribir las reglas CSS en una única línea, para facilitar su lectura:</p>
+
+<div class="code css">
+<pre class="css"><span class="re0">#contenedor</span> <span class="re0">#principal</span> h1 <span class="br0">&#123;</span> <span class="kw1">font-size</span><span class="sy0">:</span> <span class="re3">2em</span><span class="sy0">;</span>   <span class="br0">&#125;</span>
+<span class="re0">#contenedor</span> <span class="re0">#principal</span> h2 <span class="br0">&#123;</span> <span class="kw1">font-size</span><span class="sy0">:</span> <span class="re3">1.8em</span><span class="sy0">;</span> <span class="br0">&#125;</span>
+<span class="re0">#contenedor</span> <span class="re0">#principal</span> h3 <span class="br0">&#123;</span> <span class="kw1">font-size</span><span class="sy0">:</span> <span class="re3">1.6em</span><span class="sy0">;</span> <span class="br0">&#125;</span></pre>
+</div>
+
+<p>Cuando en el caso anterior las propiedades y/o selectores no ocupan el mismo sitio, se pueden utilizar espacios en blanco para crear una estructura similar a las columnas de una tabla:</p>
+
+<div class="code css">
+<pre class="css">h1                  <span class="br0">&#123;</span> <span class="kw1">color</span><span class="sy0">:</span> <span class="re0">#000</span><span class="sy0">;</span>                      <span class="kw1">text-align</span><span class="sy0">:</span> <span class="kw2">center</span><span class="sy0">;</span>  <span class="br0">&#125;</span>
+<span class="re0">#principal</span> h2       <span class="br0">&#123;</span> <span class="kw1">color</span><span class="sy0">:</span> <span class="re0">#C0C0C0</span><span class="sy0">;</span> <span class="kw1">font-size</span><span class="sy0">:</span> <span class="re3">1.8em</span><span class="sy0">;</span>                      <span class="br0">&#125;</span>
+<span class="re0">#lateral</span> blockquote <span class="br0">&#123;</span>                 <span class="kw1">font-size</span><span class="sy0">:</span> <span class="re3">0.9em</span><span class="sy0">;</span> <span class="kw1">text-align</span><span class="sy0">:</span> <span class="kw2">justify</span><span class="sy0">;</span> <span class="br0">&#125;</span></pre>
+</div>
+
+<p>Respecto al orden en el que se indican las propiedades en la declaración, algunos diseñadores recomiendan agruparlas por su funcionalidad:</p>
+
+<div class="code css">
+<pre class="css">selector <span class="br0">&#123;</span>
+  <span class="kw1">position</span><span class="sy0">:</span> <span class="kw2">absolute</span><span class="sy0">;</span>  <span class="coMULTI">/* propiedades de posicionamiento */</span>
+  <span class="kw1">right</span><span class="sy0">:</span> <span class="nu0">0</span><span class="sy0">;</span>
+  <span class="kw1">bottom</span><span class="sy0">:</span> <span class="re3">10px</span><span class="sy0">;</span>
+&nbsp;
+  <span class="kw1">width</span><span class="sy0">:</span> <span class="re3">300px</span><span class="sy0">;</span>        <span class="coMULTI">/* propiedades de tamaño */</span>
+  <span class="kw1">height</span><span class="sy0">:</span> <span class="re3">250px</span><span class="sy0">;</span>
+&nbsp;
+  <span class="kw1">color</span><span class="sy0">:</span> <span class="re0">#000</span><span class="sy0">;</span>        <span class="coMULTI">/* propiedades tipográficas */</span>
+  <span class="kw1">font-size</span><span class="sy0">:</span> <span class="re3">2em</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Otros diseñadores recomiendan ordenar alfabéticamente las propipedades para facilitar su búsqueda y evitar duplicidades:</p>
+
+<div class="code css">
+<pre class="css">selector <span class="br0">&#123;</span>
+  <span class="kw1">bottom</span><span class="sy0">:</span> <span class="re3">10px</span><span class="sy0">;</span>
+  <span class="kw1">color</span><span class="sy0">:</span> <span class="re0">#000</span><span class="sy0">;</span>
+  <span class="kw1">font-size</span><span class="sy0">:</span> <span class="re3">2em</span><span class="sy0">;</span>
+  <span class="kw1">height</span><span class="sy0">:</span> <span class="re3">250px</span><span class="sy0">;</span>
+  <span class="kw1">position</span><span class="sy0">:</span> <span class="kw2">absolute</span><span class="sy0">;</span>
+  <span class="kw1">right</span><span class="sy0">:</span> <span class="nu0">0</span><span class="sy0">;</span>
+  <span class="kw1">width</span><span class="sy0">:</span> <span class="re3">300px</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<h3 id="selectores">2.5.4. Selectores</h3>
+
+<p>Los selectores deben ser descriptivos para facilitar la lectura de la hoja de estilos, por lo que hay que poner especial cuidado en elegir el nombre de los atributos <code>id</code> y <code>class</code>. Además, aunque aumenta el tamaño total de la hoja de estilos, se recomienda utilizar selectores lo más específicos posible para facilitar el mantenimiento de la hoja de estilos:</p>
+
+<div class="code css">
+<pre class="css">p<span class="re1">.especial</span> <span class="br0">&#123;</span> ... <span class="br0">&#125;</span>                         <span class="coMULTI">/* poco específico */</span>
+<span class="re0">#contenedor</span> <span class="re0">#principal</span> p<span class="re1">.especial</span> <span class="br0">&#123;</span> ... <span class="br0">&#125;</span>  <span class="coMULTI">/* muy específico */</span></pre>
+</div>
+
+<p>Por otra parte, cuando una regla CSS tiene varios selectores largos, es mejor colocar cada selector en su propia línea:</p>
+
+<div class="code css">
+<pre class="css"><span class="re0">#contenedor</span> h1<span class="sy0">,</span>
+<span class="re0">#contenedor</span> <span class="re0">#principal</span> h2<span class="sy0">,</span>
+<span class="re0">#contenedor</span> <span class="re0">#lateral</span> blockquote <span class="br0">&#123;</span>
+  <span class="kw1">color</span><span class="sy0">:</span> <span class="re0">#000</span><span class="sy0">;</span>
+  <span class="kw1">font-family</span><span class="sy0">:</span> arial<span class="sy0">,</span> <span class="kw2">sans-serif</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<h3 id="organizacion">2.5.5. Organización</h3>
+
+<p>Cuando una hoja de estilos tiene cientos de reglas, es recomendable organizarla en secciones para facilitar su mantenimiento. Aunque existen muchas posibles organizaciones, en general se utilizan las siguientes secciones:</p>
+
+<ul>
+<li>Estilos básicos (estilos de <code>&lt;body&gt;</code>, tipo de letra por defecto, márgenes de <code>&lt;ul&gt;</code>, <code>&lt;ol&gt;</code> y <code>&lt;li&gt;</code>, estilos de los enlaces, etc.)</li>
+<li>Estilos de la estructura o <em>layout</em> (anchura, altura y posición de la cabecera, pie de página, zonas de contenidos, menús de navegación, etc.)</li>
+<li>Estilos del menú de navegación</li>
+<li>Estilos de cada una de las zonas (elementos de la cabecera, titulares y texto de la zona de contenidos, enlaces, listas e imágenes de las zonas laterales, etc.)</li>
+</ul>
+
+<p>Si la hoja de estilos tiene muchas secciones, algunos diseñadores incluyen un índice o tabla de contenidos al principio del todo. En la <a href="http://www.mozilla.org/css/base/content.css">hoja de estilos del sitio web mozilla.org</a> utilizan la siguiente tabla de contenidos:</p>
+
+<div class="code css">
+<pre class="css"><span class="coMULTI">/* TOC:
+   Random HTML Styles
+     Forms
+   General Structure
+   Navigation
+   Quotations
+   Comments and Other Asides
+   Emphasis
+   Computers - General
+   Code
+   Examples and Figures
+   Q and A (FAQ)
+   Tables
+   Headers
+   Meta
+   Specific to Products Pages
+*/</span></pre>
+</div>
+
+<p>Otra recomendación relacionada con la organización de las hojas de estilos es la de utilizar siempre los mismos nombres para los mismos elementos. Si observas las hojas de estilos de los diseñadores profesionales, verás que siempre llaman <code>#cabecera</code> o <code>#header</code> o <code>#hd</code> a la cabecera de la página, <code>#contenidos</code> o <code>#principal</code> a la zona principal de contenidos y así sucesivamente.</p>
+
+<p>Algunos de los atributos <code>id</code> más utilizados en los diseños web son: <code>cabecera</code>, <code>cuerpo</code>, <code>pie</code>, <code>contenidos</code>, <code>principal</code>, <code>secundario</code>, <code>lateral</code>, <code>buscador</code>, <code>contacto</code>, <code>logo</code>.</p>
+
+<h3 id="comentarios">2.5.6. Comentarios</h3>
+
+<p>Separar las secciones de la hoja de estilos y otros bloques importantes es mucho más fácil cuando se incluyen comentarios. Por este motivo se han definido decenas de tipos diferentes de comentarios separadores.</p>
+
+<p>El modelo básico sólo añade un comentario destacado para el inicio de cada sección importante:</p>
+
+<div class="code css">
+<pre class="css"><span class="coMULTI">/* ---------------------------------------*/</span>
+<span class="coMULTI">/* ----------&gt;&gt;&gt; CONTENEDOR &lt;&lt;&lt;-----------*/</span>
+<span class="coMULTI">/* ---------------------------------------*/</span></pre>
+</div>
+
+<p>Otros diseñadores emplean diferentes comentarios para indicar el comienzo de las secciones y el de las partes importantes dentro de una sección:</p>
+
+<div class="code css">
+<pre class="css"><span class="coMULTI">/*  -------------------------------------------------------------
+  CABECERA
+  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */</span>
+&nbsp;
+<span class="coMULTI">/*  Logotipo
+  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */</span>
+&nbsp;
+<span class="coMULTI">/*  Buscador
+  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */</span></pre>
+</div>
+
+<p>Combinando los comentarios y la tabulación de reglas, la estructura de la hoja de estilos está completamente ordenada:</p>
+
+<div class="code css">
+<pre class="css"><span class="coMULTI">/*  -------------------------------------------------------------
+  CABECERA
+  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */</span>
+<span class="re0">#cabecera</span> <span class="br0">&#123;</span>
+  ...
+<span class="br0">&#125;</span>
+&nbsp;
+  <span class="coMULTI">/*  Logotipo
+    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */</span>
+  <span class="re0">#cabecera</span> <span class="re0">#logo</span> <span class="br0">&#123;</span>
+    ...
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="coMULTI">/*  Buscador
+    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */</span>
+  <span class="re0">#cabecera</span> <span class="re0">#buscador</span> <span class="br0">&#123;</span>
+    ...
+  <span class="br0">&#125;</span></pre>
+</div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="depuracion.html">&larr; Anterior <span>2.4. Depuración</span></a>
+            
+            <a class="span5 next" href="rendimiento.html">Siguiente &rarr; <span>2.6. Rendimiento</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Hojas de estilos (CSS avanzado%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'CSS avanzado : Hojas de estilos']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Técnicas imprescindibles</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_2.html">
+            <span>Capítulo 2.</span> Buenas prácticas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="comprobar_el_diseno_en_varios_navegadores.html">
+            <span>2.2.</span> Comprobar el diseño en varios navegadores
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="mejora_progresiva.html">
+            <span>2.3.</span> Mejora progresiva
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="depuracion.html">
+            <span>2.4.</span> Depuración
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="hojas_de_estilos.html">
+            <span>2.5.</span> Hojas de estilos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="rendimiento.html">
+            <span>2.6.</span> Rendimiento
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="recursos_imprescindibles.html">
+            <span>2.7.</span> Recursos imprescindibles
+        </a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Selectores</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Propiedades avanzadas</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Frameworks</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Técnicas avanzadas</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

@@ -1,0 +1,343 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>11.14. Ejercicio 14 (Introducción a JavaScript)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="ejercicio_13.html" />
+        <link rel="next" href="ejercicio_15.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="11.14. Ejercicio 14 (Introducción a JavaScript)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page javascript">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Introducción a JavaScript</a></li>
+  <li><a href="../capitulo_11.html">Capítulo 11. Ejercicios resueltos</a></li>
+  <li class="current"><span>11.14. Ejercicio 14</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="ejercicio_14"><span>11.14.</span> Ejercicio 14</h1>
+    
+
+<p>Si se utilizan manejadores de eventos como atributos de XHTML, la solución podría ser la siguiente:</p>
+
+<div class="code javascript">
+<pre class="javascript">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot; &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;
+&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
+&lt;head&gt;
+&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=iso-8859-1&quot; /&gt;
+&lt;title&gt;Ejercicio 14 - DOM básico y atributos XHTML&lt;/title&gt;
+&nbsp;
+<span class="sy0">&lt;</span>script type<span class="sy0">=</span><span class="st0">&quot;text/javascript&quot;</span><span class="sy0">&gt;</span>
+<span class="kw1">function</span> muestraOculta<span class="br0">&#40;</span>id<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="kw1">var</span> elemento <span class="sy0">=</span> document.<span class="me1">getElementById</span><span class="br0">&#40;</span><span class="st0">'contenidos_'</span><span class="sy0">+</span>id<span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="kw1">var</span> enlace <span class="sy0">=</span> document.<span class="me1">getElementById</span><span class="br0">&#40;</span><span class="st0">'enlace_'</span><span class="sy0">+</span>id<span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+  <span class="kw1">if</span><span class="br0">&#40;</span>elemento.<span class="me1">style</span>.<span class="me1">display</span> <span class="sy0">==</span> <span class="st0">&quot;&quot;</span> <span class="sy0">||</span> elemento.<span class="me1">style</span>.<span class="me1">display</span> <span class="sy0">==</span> <span class="st0">&quot;block&quot;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    elemento.<span class="me1">style</span>.<span class="me1">display</span> <span class="sy0">=</span> <span class="st0">&quot;none&quot;</span><span class="sy0">;</span>
+    enlace.<span class="me1">innerHTML</span> <span class="sy0">=</span> <span class="st0">'Mostrar contenidos'</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+  <span class="kw1">else</span> <span class="br0">&#123;</span>
+    elemento.<span class="me1">style</span>.<span class="me1">display</span> <span class="sy0">=</span> <span class="st0">&quot;block&quot;</span><span class="sy0">;</span>
+    enlace.<span class="me1">innerHTML</span> <span class="sy0">=</span> <span class="st0">'Ocultar contenidos'</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span>
+<span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&lt;/head&gt;
+&nbsp;
+&lt;body&gt;
+&nbsp;
+&lt;p id=&quot;contenidos_1&quot;&gt;[1] Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed mattis enim vitae orci. Phasellus libero. Maecenas nisl arcu, consequat congue, commodo nec, commodo ultricies, turpis. Quisque sapien nunc, posuere vitae, rutrum et, luctus at, pede. Pellentesque massa ante, ornare id, aliquam vitae, ultrices porttitor, pede. Nullam sit amet nisl elementum elit convallis malesuada. Phasellus magna sem, semper quis, faucibus ut, rhoncus non, mi. Duis pellentesque, felis eu adipiscing ullamcorper, odio urna consequat arcu, at posuere ante quam non dolor. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Duis scelerisque.&lt;/p&gt;
+&lt;a id=&quot;enlace_1&quot; href=&quot;#&quot; onclick=&quot;muestraOculta('1'); return false;&quot;&gt;Ocultar contenidos&lt;/a&gt;
+&nbsp;
+&lt;br/&gt;
+&nbsp;
+&lt;p id=&quot;contenidos_2&quot;&gt;[2] Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed mattis enim vitae orci. Phasellus libero. Maecenas nisl arcu, consequat congue, commodo nec, commodo ultricies, turpis. Quisque sapien nunc, posuere vitae, rutrum et, luctus at, pede. Pellentesque massa ante, ornare id, aliquam vitae, ultrices porttitor, pede. Nullam sit amet nisl elementum elit convallis malesuada. Phasellus magna sem, semper quis, faucibus ut, rhoncus non, mi. Duis pellentesque, felis eu adipiscing ullamcorper, odio urna consequat arcu, at posuere ante quam non dolor. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Duis scelerisque.&lt;/p&gt;
+&lt;a id=&quot;enlace_2&quot; href=&quot;#&quot; onclick=&quot;muestraOculta('2'); return false;&quot;&gt;Ocultar contenidos&lt;/a&gt;
+&nbsp;
+&lt;br/&gt;
+&lt;p id=&quot;contenidos_3&quot;&gt;[3] Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed mattis enim vitae orci. Phasellus libero. Maecenas nisl arcu, consequat congue, commodo nec, commodo ultricies, turpis. Quisque sapien nunc, posuere vitae, rutrum et, luctus at, pede. Pellentesque massa ante, ornare id, aliquam vitae, ultrices porttitor, pede. Nullam sit amet nisl elementum elit convallis malesuada. Phasellus magna sem, semper quis, faucibus ut, rhoncus non, mi. Duis pellentesque, felis eu adipiscing ullamcorper, odio urna consequat arcu, at posuere ante quam non dolor. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Duis scelerisque.&lt;/p&gt;
+&lt;a id=&quot;enlace_3&quot; href=&quot;#&quot; onclick=&quot;muestraOculta('3'); return false;&quot;&gt;Ocultar contenidos&lt;/a&gt;
+&nbsp;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+</div>
+
+<p><a href="../../ejercicios/javascript/soluciones/ejercicio14/ejercicio14.html">Descargar solución completa</a></p>
+
+<p>También es posible solucionar el ejercicio utilizando manejadores de eventos <em>semánticos</em>:</p>
+
+<div class="code javascript">
+<pre class="javascript">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot; &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;
+&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
+&lt;head&gt;
+&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=iso-8859-1&quot; /&gt;
+&lt;title&gt;Ejercicio 14 - DOM básico y atributos XHTML&lt;/title&gt;
+&nbsp;
+<span class="sy0">&lt;</span>script type<span class="sy0">=</span><span class="st0">&quot;text/javascript&quot;</span><span class="sy0">&gt;</span>
+window.<span class="me1">onload</span> <span class="sy0">=</span> <span class="kw1">function</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="kw1">var</span> enlaces <span class="sy0">=</span> document.<span class="me1">getElementsByTagName</span><span class="br0">&#40;</span><span class="st0">'a'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="kw1">for</span><span class="br0">&#40;</span>i <span class="kw1">in</span> enlaces<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    enlaces<span class="br0">&#91;</span>i<span class="br0">&#93;</span>.<span class="me1">onclick</span> <span class="sy0">=</span> muestraOculta<span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+<span class="kw1">function</span> muestraOculta<span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="kw1">var</span> idEnlace <span class="sy0">=</span> <span class="kw1">this</span>.<span class="me1">id</span><span class="sy0">;</span>
+  <span class="kw1">var</span> trozos <span class="sy0">=</span> idEnlace.<span class="me1">split</span><span class="br0">&#40;</span><span class="st0">'_'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="kw1">var</span> numero <span class="sy0">=</span> trozos<span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span><span class="sy0">;</span>
+  <span class="kw1">var</span> parrafo <span class="sy0">=</span> document.<span class="me1">getElementById</span><span class="br0">&#40;</span><span class="st0">'contenidos_'</span> <span class="sy0">+</span> numero<span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+  <span class="kw1">switch</span><span class="br0">&#40;</span>parrafo.<span class="me1">style</span>.<span class="me1">display</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="kw1">case</span> <span class="st0">'none'</span><span class="sy0">:</span>
+      parrafo.<span class="me1">style</span>.<span class="me1">display</span> <span class="sy0">=</span> <span class="st0">'block'</span><span class="sy0">;</span>
+      <span class="kw1">this</span>.<span class="me1">innerHTML</span> <span class="sy0">=</span> <span class="st0">'Ocultar contenidos'</span><span class="sy0">;</span>
+      <span class="kw1">break</span><span class="sy0">;</span>
+    <span class="kw1">case</span> <span class="st0">'block'</span><span class="sy0">:</span>
+    <span class="kw1">case</span> <span class="st0">''</span><span class="sy0">:</span>
+      parrafo.<span class="me1">style</span>.<span class="me1">display</span> <span class="sy0">=</span> <span class="st0">'none'</span><span class="sy0">;</span>
+      <span class="kw1">this</span>.<span class="me1">innerHTML</span> <span class="sy0">=</span> <span class="st0">'Mostrar contenidos'</span><span class="sy0">;</span>
+      <span class="kw1">break</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span>
+<span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&lt;/head&gt;
+&nbsp;
+&lt;body&gt;
+&nbsp;
+&lt;p id=&quot;contenidos_1&quot;&gt;[1] Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed mattis enim vitae orci. Phasellus libero. Maecenas nisl arcu, consequat congue, commodo nec, commodo ultricies, turpis. Quisque sapien nunc, posuere vitae, rutrum et, luctus at, pede. Pellentesque massa ante, ornare id, aliquam vitae, ultrices porttitor, pede. Nullam sit amet nisl elementum elit convallis malesuada. Phasellus magna sem, semper quis, faucibus ut, rhoncus non, mi. Duis pellentesque, felis eu adipiscing ullamcorper, odio urna consequat arcu, at posuere ante quam non dolor. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Duis scelerisque.&lt;/p&gt;
+&lt;a id=&quot;enlace_1&quot; href=&quot;#&quot;&gt;Ocultar contenidos&lt;/a&gt;
+&nbsp;
+&lt;br/&gt;
+&nbsp;
+&lt;p id=&quot;contenidos_2&quot;&gt;[2] Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed mattis enim vitae orci. Phasellus libero. Maecenas nisl arcu, consequat congue, commodo nec, commodo ultricies, turpis. Quisque sapien nunc, posuere vitae, rutrum et, luctus at, pede. Pellentesque massa ante, ornare id, aliquam vitae, ultrices porttitor, pede. Nullam sit amet nisl elementum elit convallis malesuada. Phasellus magna sem, semper quis, faucibus ut, rhoncus non, mi. Duis pellentesque, felis eu adipiscing ullamcorper, odio urna consequat arcu, at posuere ante quam non dolor. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Duis scelerisque.&lt;/p&gt;
+&lt;a id=&quot;enlace_2&quot; href=&quot;#&quot;&gt;Ocultar contenidos&lt;/a&gt;
+&nbsp;
+&lt;br/&gt;
+&lt;p id=&quot;contenidos_3&quot;&gt;[3] Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed mattis enim vitae orci. Phasellus libero. Maecenas nisl arcu, consequat congue, commodo nec, commodo ultricies, turpis. Quisque sapien nunc, posuere vitae, rutrum et, luctus at, pede. Pellentesque massa ante, ornare id, aliquam vitae, ultrices porttitor, pede. Nullam sit amet nisl elementum elit convallis malesuada. Phasellus magna sem, semper quis, faucibus ut, rhoncus non, mi. Duis pellentesque, felis eu adipiscing ullamcorper, odio urna consequat arcu, at posuere ante quam non dolor. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Duis scelerisque.&lt;/p&gt;
+&lt;a id=&quot;enlace_3&quot; href=&quot;#&quot;&gt;Ocultar contenidos&lt;/a&gt;
+&nbsp;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+</div>
+
+<p><a href="../../ejercicios/javascript/soluciones/ejercicio14/ejercicio14_alternativo.html">Descargar solución completa</a></p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="ejercicio_13.html">&larr; Anterior <span>11.13. Ejercicio 13</span></a>
+            
+            <a class="span5 next" href="ejercicio_15.html">Siguiente &rarr; <span>11.15. Ejercicio 15</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Ejercicio 14 (Introducción a JavaScript%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a JavaScript : Ejercicio 14']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> El primer script</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Programación básica</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Programación avanzada</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> DOM</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Eventos</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Otras utilidades</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Detección y corrección de errores</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Recursos útiles</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_11.html">
+            <span>Capítulo 11.</span> Ejercicios resueltos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_2.html">
+            <span>11.2.</span> Ejercicio 2
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_3.html">
+            <span>11.3.</span> Ejercicio 3
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_4.html">
+            <span>11.4.</span> Ejercicio 4
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_5.html">
+            <span>11.5.</span> Ejercicio 5
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_6.html">
+            <span>11.6.</span> Ejercicio 6
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_7.html">
+            <span>11.7.</span> Ejercicio 7
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_8.html">
+            <span>11.8.</span> Ejercicio 8
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_9.html">
+            <span>11.9.</span> Ejercicio 9
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_10.html">
+            <span>11.10.</span> Ejercicio 10
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_11.html">
+            <span>11.11.</span> Ejercicio 11
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_12.html">
+            <span>11.12.</span> Ejercicio 12
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_13.html">
+            <span>11.13.</span> Ejercicio 13
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="ejercicio_14.html">
+            <span>11.14.</span> Ejercicio 14
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_15.html">
+            <span>11.15.</span> Ejercicio 15
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_16.html">
+            <span>11.16.</span> Ejercicio 16
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_17.html">
+            <span>11.17.</span> Ejercicio 17
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_18.html">
+            <span>11.18.</span> Ejercicio 18
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_19.html">
+            <span>11.19.</span> Ejercicio 19
+        </a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

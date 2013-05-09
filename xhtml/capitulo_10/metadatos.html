@@ -1,0 +1,248 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>10.2. Metadatos (Introducción a XHTML)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="estructura_de_la_cabecera.html" />
+        <link rel="next" href="doctype.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="10.2. Metadatos (Introducción a XHTML)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page xhtml">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Introducción a XHTML</a></li>
+  <li><a href="../capitulo_10.html">Capítulo 10. Metainformación</a></li>
+  <li class="current"><span>10.2. Metadatos</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="metadatos"><span>10.2.</span> Metadatos</h1>
+    
+
+<p>Una de las partes más importantes de la metainformación de la página son los metadatos, que permiten incluir cualquier información relevante sobre la propia página.</p>
+
+<p>La especificación oficial de HTML no define la lista de metadatos que se pueden incluir, por lo que las páginas tienen libertad absoluta para definir los metadatos que consideren adecuados. La etiqueta empleada para la definición de los metadatos es <code>&lt;meta&gt;</code>.</p>
+
+<table class="property" summary="Definición y propiedades de la etiqueta meta de XHTML"><thead><tr>  <th scope="row">Etiqueta</th>  <td><strong class="title"><span>&lt;</span>meta<span>&gt;</span></strong></td></tr></thead><tbody><tr>  <th scope="row">Atributos comunes</th>  <td><a href="../capitulo_2/etiquetas_y_atributos.html#atributos_para_internacionalizacion">internacionalización</a></td></tr><tr>  <th scope="row">Atributos propios</th>  <td><ul><li><p><code>name = "texto"</code> - El nombre de la propiedad que se define (no existe una lista oficial de propiedades)</p></li><li><p><code>content = "texto"</code> - El valor de la propiedad definida (no existe una lista de valores permitidos)</p></li><li><p><code>http-equiv = "texto"</code> - En ocasiones, reemplaza al atributo “name” y lo emplean los servidores para adaptar sus respuestas al documento</p></li><li><p><code>scheme = "texto"</code> - Indica el esquema que se debe emplear para interpretar el valor de la propiedad</p></li></ul></td></tr><tr>  <th scope="row">Tipo de elemento</th>  <td>-</td></tr><tr>  <th scope="row">Descripción</th>  <td>Permite definir el valor de los metadatos que forman la metainformación del documento</td></tr></tbody></table>
+
+<p>Los metadatos habituales utilizan solamente los atributos <code>name</code> y <code>content</code> para definir el nombre y el valor del metadato:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">meta</span> <span class="kw3">name</span><span class="sy0">=</span><span class="st0">&quot;autor&quot;</span> <span class="kw3">content</span><span class="sy0">=</span><span class="st0">&quot;Juan Pérez&quot;</span> <span class="sy0">/</span>&gt;</span></pre>
+</div>
+
+<p>No obstante, algunas etiquetas <code>&lt;meta&gt;</code> muy utilizadas hacen uso del atributo <code>http-equiv</code>. Este atributo se utiliza para indicar que el valor establecido por este metadato puede ser utilizado por el servidor al entregar la página al navegador del usuario. El siguiente metadato indica al servidor que el contenido de la página es código HTML y su codificación de caracteres es UTF-8:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">meta</span> <span class="kw3">http-equiv</span><span class="sy0">=</span><span class="st0">&quot;Content-Type&quot;</span> <span class="kw3">content</span><span class="sy0">=</span><span class="st0">&quot;text/html; charset=UTF-8&quot;</span> <span class="sy0">/</span>&gt;</span></pre>
+</div>
+
+<p>El atributo <code>scheme</code> no suele utilizarse, aunque permite proporcionar información de contexto para que el navegador interprete correctamente el valor del metadato. En el siguiente ejemplo, el atributo <code>scheme</code> indica al navegador que el valor del metadato hace referencia al código ISBN:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">meta</span> <span class="kw3">scheme</span><span class="sy0">=</span><span class="st0">&quot;ISBN&quot;</span> <span class="kw3">name</span><span class="sy0">=</span><span class="st0">&quot;identificador&quot;</span> <span class="kw3">content</span><span class="sy0">=</span><span class="st0">&quot;789-1392349610&quot;</span>&gt;</span></pre>
+</div>
+
+<p>Aunque no existe una lista oficial con los metadatos que se pueden definir, algunos de ellos se utilizan en tantas páginas que se han convertido prácticamente en un estándar. A continuación se muestran los metadatos más utilizados:</p>
+
+<p>Definir el autor del documento:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">meta</span> <span class="kw3">name</span><span class="sy0">=</span><span class="st0">&quot;author&quot;</span> <span class="kw3">content</span><span class="sy0">=</span><span class="st0">&quot;Juan Pérez&quot;</span> <span class="sy0">/</span>&gt;</span></pre>
+</div>
+
+<p>Definir el programa con el que se ha creado el documento:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">meta</span> <span class="kw3">name</span><span class="sy0">=</span><span class="st0">&quot;generator&quot;</span> <span class="kw3">content</span><span class="sy0">=</span><span class="st0">&quot;WordPress 2.8.4&quot;</span> <span class="sy0">/</span>&gt;</span></pre>
+</div>
+
+<p>Definir la codificación de caracteres del documento:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">meta</span> <span class="kw3">http-equiv</span><span class="sy0">=</span><span class="st0">&quot;Content-Type&quot;</span> <span class="kw3">content</span><span class="sy0">=</span><span class="st0">&quot;text/html; charset=UTF-8&quot;</span> <span class="sy0">/</span>&gt;</span>
+&nbsp;
+<span class="sc2">&lt;<span class="kw2">meta</span> <span class="kw3">http-equiv</span><span class="sy0">=</span><span class="st0">&quot;Content-Type&quot;</span> <span class="kw3">content</span><span class="sy0">=</span><span class="st0">&quot;text/html; charset=ISO-8859-1&quot;</span> <span class="sy0">/</span>&gt;</span></pre>
+</div>
+
+<p>Definir el copyright del documento:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">meta</span> <span class="kw3">name</span><span class="sy0">=</span><span class="st0">&quot;copyright&quot;</span> <span class="kw3">content</span><span class="sy0">=</span><span class="st0">&quot;librosweb.es&quot;</span> <span class="sy0">/</span>&gt;</span></pre>
+</div>
+
+<p>Definir el comportamiento de los buscadores:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">meta</span> <span class="kw3">name</span><span class="sy0">=</span><span class="st0">&quot;robots&quot;</span> <span class="kw3">content</span><span class="sy0">=</span><span class="st0">&quot;index, follow&quot;</span> <span class="sy0">/</span>&gt;</span></pre>
+</div>
+
+<p>Definir las palabras clave que definen el contenido del documento:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">meta</span> <span class="kw3">name</span><span class="sy0">=</span><span class="st0">&quot;keywords&quot;</span> <span class="kw3">content</span><span class="sy0">=</span><span class="st0">&quot;diseño, css, hojas de estilos, web, html&quot;</span> <span class="sy0">/</span>&gt;</span></pre>
+</div>
+
+<p>Definir una breve descripción del sitio:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">meta</span> <span class="kw3">name</span><span class="sy0">=</span><span class="st0">&quot;description&quot;</span> <span class="kw3">content</span><span class="sy0">=</span><span class="st0">&quot;Artículos sobre diseño web, usabilidad y accesibilidad&quot;</span> <span class="sy0">/</span>&gt;</span></pre>
+</div>
+
+<p>La etiqueta que define la codificación de los caracteres (<code>http-equiv="Content-Type"</code>) se emplea prácticamente en todas las páginas y las etiquetas que definen la descripción (<code>description</code>) y las palabras clave (<code>keywords</code>) también son muy utilizadas.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="estructura_de_la_cabecera.html">&larr; Anterior <span>10.1. Estructura de la cabecera</span></a>
+            
+            <a class="span5 next" href="doctype.html">Siguiente &rarr; <span>10.3. DOCTYPE</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Metadatos (Introducción a XHTML%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a XHTML : Metadatos']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Características básicas</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Texto</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Enlaces</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Listas</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Imágenes y objetos</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Tablas</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Estructura y layout</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_10.html">
+            <span>Capítulo 10.</span> Metainformación
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="estructura_de_la_cabecera.html">
+            <span>10.1.</span> Estructura de la cabecera
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="metadatos.html">
+            <span>10.2.</span> Metadatos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="doctype.html">
+            <span>10.3.</span> DOCTYPE
+        </a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Otras etiquetas importantes</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Accesibilidad</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Validación</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Fragmentos de código</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

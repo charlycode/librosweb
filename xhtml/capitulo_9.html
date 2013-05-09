@@ -1,0 +1,238 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>Capítulo 9. Estructura y layout (Introducción a XHTML)</title>
+        <link href="../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="capitulo_8/otros_elementos_de_formulario.html" />
+        <link rel="next" href="capitulo_10.html" />
+        <link rel="start" href="index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Capítulo 9. Estructura y layout (Introducción a XHTML)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page xhtml">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../index.html">Inicio</a></li>
+  <li><a href="index.html">Introducción a XHTML</a></li>
+  <li class="current"><span>Capítulo 9. Estructura y layout</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="capitulo_9"><span>Capítulo 9.</span> Estructura y layout</h1>
+    <p>Los capítulos anteriores muestran las decenas de etiquetas XHTML disponibles para marcar y estructurar cada elemento individual de las páginas web: tablas, listas, enlaces, párrafos, imágenes, etc. Aunque combinando esas etiquetas es posible crear cualquier página web, no es posible hacer que las páginas muestren estructuras complejas.</p>
+
+<p>La mayoría de páginas HTML disponen de estructuras complejas formadas por varias columnas de contenidos y otro tipo de divisiones. Utilizando exclusivamente HTML no es posible crear estas estructuras complejas, ya que es imprescindible emplear las hojas de estilos CSS.</p>
+
+<p>No obstante, los estilos de CSS necesitan la ayuda de HTML/XHTML para crear los diseños más avanzados. En concreto, el código HTML se encarga de agrupar los elementos de la página en diferentes divisiones en función de su finalidad: la zona de la cabecera de la página, la zona de contenidos, una zona lateral para el menú y otras secciones menores, la zona del pie de página, etc.</p>
+
+<p>La siguiente imagen muestra algunas de las zonas definidas en la página principal del sitio www.alistapart.com:</p>
+
+<div class="figure" id="figure_9_1">
+    <img src="../img/xhtml/f0901.gif" alt="Ejemplo de página compleja estructurada con etiquetas div" />
+
+    <p class="caption"><strong>Figura 9.1</strong> Ejemplo de página compleja estructurada con etiquetas div</p>
+</div>
+
+
+<p>Para agrupar los elementos que forman cada zona o división de la página se utiliza la etiqueta <code>&lt;div&gt;</code>:</p>
+
+<table class="property" summary="Definición y propiedades de la etiqueta div de XHTML"><thead><tr>  <th scope="row">Etiqueta</th>  <td><strong class="title"><span>&lt;</span>div<span>&gt;</span></strong></td></tr></thead><tbody><tr>  <th scope="row">Atributos comunes</th>  <td><a href="capitulo_2/etiquetas_y_atributos.html#atributos_basicos">básicos</a>, <a href="capitulo_2/etiquetas_y_atributos.html#atributos_para_internacionalizacion">internacionalización</a> y <a href="capitulo_2/etiquetas_y_atributos.html#atributos_de_eventos">eventos</a></td></tr><tr>  <th scope="row">Atributos propios</th>  <td>-</td></tr><tr>  <th scope="row">Tipo de elemento</th>  <td>Bloque</td></tr><tr>  <th scope="row">Descripción</th>  <td>Agrupa elementos de bloque</td></tr></tbody></table>
+
+<p>El nombre de la etiqueta <code>div</code> tiene su origen en la palabra <em>división</em>, ya que esta etiqueta define zonas o divisiones dentro de una página HTML. En cualquier caso, casi todos los diseñadores web utilizan la palabra <em>"capa"</em> para referirse a una "división". Aunque se trata de un error grave (las capas se crean mediante una propiedad de CSS llamada <code>z-index</code>) es preferible seguir llamando <em>"capas"</em> a las zonas definidas con la etiqueta <code>&lt;div&gt;</code> para poder entenderse con el resto de diseñadores.</p>
+
+<p>Las páginas web complejas que están bien diseñadas utilizan decenas de etiquetas <code>&lt;div&gt;</code>. Con mucha diferencia, los atributos más utilizados con esta etiqueta son <code>id</code> (para identificar la capa de forma única) y <code>class</code> (para aplicar a la capa estilos CSS).</p>
+
+<p>No se va a profundizar en el proceso de diseñar una página web mediante <code>&lt;div&gt;</code>, ya que no es posible diseñar una página web compleja utilizando elementos <code>&lt;div&gt;</code> sin utilizar hojas de estilos CSS.</p>
+
+<p>Por último, si observas el código HTML de algunas páginas web complejas, verás que la mayoría utilizan los mismos nombres para identificar sus divisiones. Los nombres más comunes, y sus equivalentes en inglés, se muestran a continuación:</p>
+
+<ul>
+<li><code>contenedor</code> (<code>wrapper</code>) suele encerrar la mayor parte de los contenidos de la página y se emplea para definir las características básicas de la página: su anchura, sus bordes, imágenes laterales, si se centra o no respecto de la ventana del navegador, etc.</li>
+<li><code>cabecera</code> (<code>header</code>) que incluye todos los elementos invariantes de la parte superior de la página (logotipo, imagen o banner, cuadro de búsqueda superior, etc.)</li>
+<li><code>contenido</code> (<code>content</code>) engloba el contenido principal del sitio (la zona de noticias, la zona de artículos, la zona de productos, etc. dependiendo del tipo de sitio web)</li>
+<li><code>menu</code> (<code>menu</code>) se emplea para agrupar todos los elementos del menú lateral de navegación de la página</li>
+<li><code>pie</code> (<code>footer</code>) que incluye todos los elementos invariantes de la parte inferior de la página (aviso de copyright, política de privacidad, términos de uso, etc.)</li>
+<li><code>lateral</code> (<code>sidebar</code>) se emplea para agrupar los elementos de las columnas laterales y secundarias de la página.</li>
+</ul>
+
+<p>De esta forma, el esqueleto de una página HTML compleja suele ser similar al siguiente:</p>
+
+<div class="code html">
+<pre class="html5">...
+<span class="sc2">&lt;<span class="kw2">div</span> <span class="kw3">id</span><span class="sy0">=</span><span class="st0">&quot;contenedor&quot;</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">div</span> <span class="kw3">id</span><span class="sy0">=</span><span class="st0">&quot;cabecera&quot;</span>&gt;</span>
+    ...
+  <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">div</span>&gt;</span>
+&nbsp;
+  <span class="sc2">&lt;<span class="kw2">div</span> <span class="kw3">id</span><span class="sy0">=</span><span class="st0">&quot;contenido&quot;</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">div</span> <span class="kw3">id</span><span class="sy0">=</span><span class="st0">&quot;menu&quot;</span>&gt;</span>
+      ..
+    <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">div</span>&gt;</span>
+    ...
+  <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">div</span>&gt;</span>
+&nbsp;
+  <span class="sc2">&lt;<span class="kw2">div</span> <span class="kw3">id</span><span class="sy0">=</span><span class="st0">&quot;pie&quot;</span>&gt;</span>
+    ...
+  <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">div</span>&gt;</span>
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">div</span>&gt;</span>
+...</pre>
+</div>
+
+<p>El equivalente para las páginas en inglés sería el siguiente:</p>
+
+<div class="code html">
+<pre class="html5">...
+<span class="sc2">&lt;<span class="kw2">div</span> <span class="kw3">id</span><span class="sy0">=</span><span class="st0">&quot;wrapper&quot;</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">div</span> <span class="kw3">id</span><span class="sy0">=</span><span class="st0">&quot;header&quot;</span>&gt;</span>
+    ...
+  <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">div</span>&gt;</span>
+&nbsp;
+  <span class="sc2">&lt;<span class="kw2">div</span> <span class="kw3">id</span><span class="sy0">=</span><span class="st0">&quot;content&quot;</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">div</span> <span class="kw3">id</span><span class="sy0">=</span><span class="st0">&quot;menu&quot;</span>&gt;</span>
+      ..
+    <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">div</span>&gt;</span>
+    ...
+  <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">div</span>&gt;</span>
+&nbsp;
+  <span class="sc2">&lt;<span class="kw2">div</span> <span class="kw3">id</span><span class="sy0">=</span><span class="st0">&quot;footer&quot;</span>&gt;</span>
+    ...
+  <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">div</span>&gt;</span>
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">div</span>&gt;</span></pre>
+</div>
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="capitulo_8/otros_elementos_de_formulario.html">&larr; Anterior <span>8.4. Otros elementos de formulario</span></a>
+            
+            <a class="span5 next" href="capitulo_10.html">Siguiente &rarr; <span>Capítulo 10. Metainformación</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Estructura y layout (Introducción a XHTML%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a XHTML : Estructura y layout']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="capitulo_2.html"> Características básicas</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="capitulo_3.html"> Texto</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="capitulo_4.html"> Enlaces</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="capitulo_5.html"> Listas</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="capitulo_6.html"> Imágenes y objetos</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="capitulo_7.html"> Tablas</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="capitulo_8.html"> Formularios</a>
+    </li>
+    <li class="level-1 active">
+        <a href="capitulo_9.html">
+            <span>Capítulo 9.</span> Estructura y layout
+        </a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="capitulo_10.html"> Metainformación</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="capitulo_11.html"> Otras etiquetas importantes</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="capitulo_12.html"> Accesibilidad</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="capitulo_13.html"> Validación</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="capitulo_14.html"> Fragmentos de código</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="capitulo_15.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

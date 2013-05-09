@@ -1,0 +1,274 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>17.3. Integrando componentes de otros frameworks (Symfony 1.4, la guía definitiva)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="factorias.html" />
+        <link rel="next" href="plugins.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="17.3. Integrando componentes de otros frameworks (Symfony 1.4, la guía definitiva)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page symfony_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Symfony 1.4, la guía definitiva</a></li>
+  <li><a href="../capitulo_17.html">Capítulo 17. Personalizar Symfony</a></li>
+  <li class="current"><span>17.3.. Integrando componentes de otros frameworks</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="integrando_componentes_de_otros_frameworks"><span>17.3.</span> Integrando componentes de otros frameworks</h1>
+    
+
+<p>Si se requiere utilizar una clase externa y no se copia esa clase en algún directorio <code>lib/</code> de Symfony, la clase se encontrará en algún directorio en el que Symfony no la puede encontrar. En este caso, si se utiliza esta clase en el código, es necesario incluir manualmente una instrucción <code>require</code>, a menos que se utilicen las propiedades de Symfony para enlazar y permitir la carga automática de otros componentes externos.</p>
+
+<p>Symfony de momento no proporciona utilidades y herramientas para resolver cualquier tipo de problema. Si se necesita un generador de archivos PDF, una API para interactuar con los mapas de Google o una implementación en PHP del motor de búsqueda Lucene, es necesario hacer uso de algunas librerías del framework de Zend (http://framework.zend.com/). Si se quieren manipular imágenes directamente con PHP, conectarse con una cuenta POP3 para obtener los emails o diseñar una interfaz para la consola de comandos, seguramente se utilizarán los eZcomponents (http://ez.no/ezcomponents). Afortunadamente, si se utilizan las opciones correctas, se pueden utilizar directamente en Symfony todos los componentes de estas librerías externas.</p>
+
+<p>Lo primero que hay que hacer es declarar la ruta al directorio raíz de cada librería en el archivo <code>app.yml</code>, a menos que las librerías se hayan instalado mediante PEAR.</p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co4">all</span>:<span class="co3">
+  zend_lib_dir</span><span class="sy2">: </span>  /usr/local/zend/library/<span class="co3">
+  ez_lib_dir</span><span class="sy2">: </span>    /usr/local/ezcomponents/<span class="co3">
+  swift_lib_dir</span><span class="sy2">: </span> /usr/local/swiftmailer/</pre>
+</div>
+
+<p>A continuación, se extiende el mecanismo de carga automática de clases de PHP indicando que librería se debe utilizar cuando falle la carga automática de Symfony. Para ello, se registran las clases que se cargan de forma automática en la clase de configuración de la aplicación (el capítulo 19 lo explica en detalle) tal y como se muestra en el listado 17-9.</p>
+
+<p><strong>Listado 17-9 - Extendiendo el mecanismode carga automática de clases para permitir el uso de componentes externos, en <code>apps/frontend/config/ApplicationConfiguration.class.php</code></strong></p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">class</span> frontendConfiguration <span class="kw2">extends</span> sfApplicationConfiguration
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> initialize<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    parent<span class="sy0">::</span><span class="me2">initialize</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span> <span class="co1">// primero la carga automática de Symfony</span>
+&nbsp;
+    <span class="co1">// Integrando el Zend Framework</span>
+    <span class="kw1">if</span> <span class="br0">&#40;</span><span class="re0">$sf_zend_lib_dir</span> <span class="sy0">=</span> sfConfig<span class="sy0">::</span><span class="me2">get</span><span class="br0">&#40;</span><span class="st_h">'app_zend_lib_dir'</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="kw3">set_include_path</span><span class="br0">&#40;</span><span class="re0">$sf_zend_lib_dir</span><span class="sy0">.</span>PATH_SEPARATOR<span class="sy0">.</span><span class="kw3">get_include_path</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+      <span class="kw1">require_once</span><span class="br0">&#40;</span><span class="re0">$sf_zend_lib_dir</span><span class="sy0">.</span><span class="st_h">'/Zend/Loader.php'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+      <span class="kw3">spl_autoload_register</span><span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'Zend_Loader'</span><span class="sy0">,</span> <span class="st_h">'Zend_Loader'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="co1">// Integrando eZ Components</span>
+    <span class="kw1">if</span> <span class="br0">&#40;</span><span class="re0">$sf_ez_lib_dir</span> <span class="sy0">=</span> sfConfig<span class="sy0">::</span><span class="me2">get</span><span class="br0">&#40;</span><span class="st_h">'app_ez_lib_dir'</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="kw3">set_include_path</span><span class="br0">&#40;</span><span class="re0">$sf_ez_lib_dir</span><span class="sy0">.</span>PATH_SEPARATOR<span class="sy0">.</span><span class="kw3">get_include_path</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+      <span class="kw1">require_once</span><span class="br0">&#40;</span><span class="re0">$sf_ez_lib_dir</span><span class="sy0">.</span><span class="st_h">'/Base/base.php'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+      <span class="kw3">spl_autoload_register</span><span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'ezcBase'</span><span class="sy0">,</span> <span class="st_h">'autoload'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="co1">// Integrando Swift Mailer</span>
+    <span class="kw1">if</span> <span class="br0">&#40;</span><span class="re0">$sf_swift_lib_dir</span> <span class="sy0">=</span> sfConfig<span class="sy0">::</span><span class="me2">get</span><span class="br0">&#40;</span><span class="st_h">'app_swift_lib_dir'</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="kw3">set_include_path</span><span class="br0">&#40;</span><span class="re0">$sf_swift_lib_dir</span><span class="sy0">.</span>PATH_SEPARATOR<span class="sy0">.</span><span class="kw3">get_include_path</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+      <span class="kw1">require_once</span><span class="br0">&#40;</span><span class="re0">$sf_swift_lib_dir</span><span class="sy0">.</span><span class="st_h">'/Swift/ClassLoader.php'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+      <span class="kw3">spl_autoload_register</span><span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'Swift_ClassLoader'</span><span class="sy0">,</span> <span class="st_h">'load'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>A continuación se describe lo que sucede cuando se crea un nuevo objeto de una clase que no ha sido cargada:</p>
+
+<ol>
+<li>La función de Symfony encargada de la carga automática de clases busca la clase en las rutas especificadas en el archivo <code>autoload.yml</code>.</li>
+<li>Si no se encuentra ninguna clase, se invocan uno a uno los métodos registrados con <code>spl_autoload_register()</code> hasta que uno de ellos devuelva el valor <code>true</code>. Por lo tanto, se invocan los métodos <code>Zend_Loader::autoload()</code>, <code>ezcBase::autoload()</code> y <code>Swift_ClassLoader::load()</code> hasta que alguno de ellos encuentre la clase.</li>
+<li>Si todos los métodos anteriores devuelven <code>false</code>, PHP genera un error.</li>
+</ol>
+
+<p>De esta forma, los componentes de otros frameworks pueden aprovecharse también del mecanismo de carga automática de clases, por lo que es incluso más sencillo que utilizarlos dentro de los frameworks originales. El siguiente código muestra por ejemplo cómo utilizar el componente <code>Zend_Search</code> (que implementa el motor de búsqueda Lucene en PHP) desde el propio framework Zend:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw1">require_once</span> <span class="st_h">'Zend/Search/Lucene.php'</span><span class="sy0">;</span>
+<span class="re0">$doc</span> <span class="sy0">=</span> <span class="kw2">new</span> Zend_Search_Lucene_Document<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$doc</span><span class="sy0">-&gt;</span><span class="me1">addField</span><span class="br0">&#40;</span>Zend_Search_Lucene_Field<span class="sy0">::</span><span class="me2">Text</span><span class="br0">&#40;</span><span class="st_h">'url'</span><span class="sy0">,</span> <span class="re0">$docUrl</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="co1">// ...</span></pre>
+</div>
+
+<p>Utilizando Symfony y la carga automática de clases, es mucho más fácil utilizar este componente. De hecho, no es necesario utilizar ningún <code>require</code> y por tanto no tienes que preocuparte de las rutas de los archivos y de las clases:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$doc</span> <span class="sy0">=</span> <span class="kw2">new</span> Zend_Search_Lucene_Document<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span> <span class="co1">// The class is autoloaded</span>
+<span class="re0">$doc</span><span class="sy0">-&gt;</span><span class="me1">addField</span><span class="br0">&#40;</span>Zend_Search_Lucene_Field<span class="sy0">::</span><span class="me2">Text</span><span class="br0">&#40;</span><span class="st_h">'url'</span><span class="sy0">,</span> <span class="re0">$docUrl</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="co1">// ...</span></pre>
+</div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="factorias.html">&larr; Anterior <span>17.2. Factorías</span></a>
+            
+            <a class="span5 next" href="plugins.html">Siguiente &rarr; <span>17.4. Plugins</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Integrando componentes de otros frameworks (Symfony 1.4, la guía definitiva%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Symfony 1.4, la guía definitiva : Integrando componentes de otros frameworks']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción a Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Explorando el interior de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Ejecutar aplicaciones Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Introducción a la creación de páginas</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Configurar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> El Controlador</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> La Vista</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> El modelo (Doctrine)</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Enlaces y sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Emails</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Uso de la cache</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Pruebas unitarias y funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Herramientas para la administración de aplicaciones</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_17.html">
+            <span>Capítulo 17.</span> Personalizar Symfony
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="eventos.html">
+            <span>17.1.</span> Eventos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="factorias.html">
+            <span>17.2.</span> Factorías
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="integrando_componentes_de_otros_frameworks.html">
+            <span>17.3.</span> Integrando componentes de otros frameworks
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="plugins.html">
+            <span>17.4.</span> Plugins
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="resumen.html">
+            <span>17.5.</span> Resumen
+        </a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> Rendimiento</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Configuración avanzada</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

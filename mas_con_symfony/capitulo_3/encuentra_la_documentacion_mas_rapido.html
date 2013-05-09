@@ -1,0 +1,310 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>3.3. Encuentra la documentación más rápido (Más con Symfony)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="programa_mas_rapido.html" />
+        <link rel="next" href="depura_mas_rapido.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="3.3. Encuentra la documentación más rápido (Más con Symfony)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page mas_con_symfony">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Más con Symfony</a></li>
+  <li><a href="../capitulo_3.html">Capítulo 3. Mejora tu productividad</a></li>
+  <li class="current"><span>3.3.. Encuentra la documentación más rápido</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="encuentra_la_documentacion_mas_rapido"><span>3.3.</span> Encuentra la documentación más rápido</h1>
+    
+
+<p>Como Symfony es un framework grande y con muchas características, no siempre
+resulta fácil acordarse de todas sus opciones de configuración o de todas las
+clases y métodos disponibles. Como se explicó anteriormente, utilizar un IDE
+puede facilitar tu trabajo mediante el autocompletado. A continuación se explica
+cómo sacar partido a las herramientas existentes para encontrar las respuestas
+lo más rápido posible.</p>
+
+<h3 id="api_online">3.3.1. API online</h3>
+
+<p>La forma más rápida de encontrar documentación sobre una clase o método consiste
+en navegar la <a href="http://www.symfony-project.org/api/1_3/">API</a> online de Symfony.</p>
+
+<p>Más interesante todavía es el buscador que incluye la propia API, ya que permite
+encontrar rápidamente cualquier clase o método escribiendo sólo unos pocos
+caracteres. En la página de la API, introduce algunas letras en el cuadro de
+búsqueda para que aparezca una caja con sugerencias útiles actualizadas en
+tiempo real.</p>
+
+<p>Se puede buscar escribiendo el principio del nombre de una clase:</p>
+
+<div class="figure" id="figure_3_1">
+    <img src="../../img/mas_con_symfony/api_search_1.png" alt="Búsqueda de la API" title="Búsqueda de la API" />
+
+    <p class="caption"><strong>Figura 3.1</strong> Búsqueda de la API</p>
+</div>
+
+
+<p>o el principio del nombre de un método:</p>
+
+<div class="figure" id="figure_3_2">
+    <img src="../../img/mas_con_symfony/api_search_2.png" alt="Búsqueda de la API" title="Búsqueda de la API" />
+
+    <p class="caption"><strong>Figura 3.2</strong> Búsqueda de la API</p>
+</div>
+
+
+<p>o el nombre de una clase seguido por <code>::</code> para mostrar el listado de todos sus
+métodos:</p>
+
+<div class="figure" id="figure_3_3">
+    <img src="../../img/mas_con_symfony/api_search_3.png" alt="Búsqueda de la API" title="Búsqueda de la API" />
+
+    <p class="caption"><strong>Figura 3.3</strong> Búsqueda de la API</p>
+</div>
+
+
+<p>o el nobre de un método para refinar aún más las posibilidades:</p>
+
+<div class="figure" id="figure_3_4">
+    <img src="../../img/mas_con_symfony/api_search_4.png" alt="Búsqueda de la API" title="Búsqueda de la API" />
+
+    <p class="caption"><strong>Figura 3.4</strong> Búsqueda de la API</p>
+</div>
+
+
+<p>Si quieres ver todas las clases de un paquete, escribe el nombre del paquete
+y envía tu petición.</p>
+
+<p>Incluso puedes integrar el buscador de la API de Symfony en tu propio navegador.
+De esta forma, no es necesario que visites el sitio web de Symfony cuando quieras
+hacer una búsqueda. Esto es posible porque el sitio dispone de soporte nativo
+de <a href="http://www.opensearch.org/">OpenSearch</a> para la API de Symfony.</p>
+
+<p>Si utilizas Firefox, los buscadores de la API de Symfony aparecen automáticamente
+en el menú de búsqueda del navegador. También puedes pinchar sobre el enlace
+<em>"API OpenSearch"</em> incluido en la documentación de la API para añadir ese
+buscador en tu navegador de forma permanente.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> El blog oficial publicó hace tiempo un un <em>screencast</em> que muestra cómo se
+integra el buscador de la API de Symfony con Firefox:
+<a href="http://www.symfony-project.org/blog/2009/02/24/opensearch-support-for-the-symfony-api">ver screencast</a>.</p></div>
+
+<h3 id="cheat_sheets_o_chuletas">3.3.2. <em>Cheat Sheets</em> o chuletas</h3>
+
+<p>Si quieres resúmenes sobre las partes más importantes del framework, puedes
+descargar un montón de <em><a href="http://trac.symfony-project.org/wiki/CheatSheets">cheat sheets</a></em>:</p>
+
+<ul>
+<li><a href="http://andreiabohner.files.wordpress.com/2007/03/cheatsheetsymfony001_enus.pdf">Estructura de directorios y CLI</a></li>
+<li><a href="http://andreiabohner.files.wordpress.com/2007/08/sfviewfirstpartrefcard.pdf">Vista</a></li>
+<li><a href="http://andreiabohner.files.wordpress.com/2007/08/sfviewsecondpartrefcard.pdf">Vista: elementos parciales, componentes, slots y slots de componentes</a></li>
+<li><a href="http://trac.symfony-project.com/attachment/wiki/LimeTestingFramework/lime-cheat.pdf?format=raw">Pruebas unitarias y funcionales con Lime</a></li>
+<li><a href="http://andreiabohner.files.wordpress.com/2007/08/sform_enus.pdf">ORM</a></li>
+<li><a href="http://andreiabohner.files.wordpress.com/2007/08/sfmodelfirstpartrefcard.pdf">Propel</a></li>
+<li><a href="http://andreiabohner.files.wordpress.com/2007/09/sfmodelsecondpartrefcard.pdf">Esquemas de Propel</a></li>
+<li><a href="http://www.phpdoctrine.org/Doctrine-Cheat-Sheet.pdf">Doctrine</a></li>
+</ul>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Algunas de estas <em>cheat sheets</em> no han sido actualizadas para Symfony 1.3.</p></div>
+
+<h3 id="documentacion_offline">3.3.3. Documentación <em>offline</em></h3>
+
+<p>La guía de referencia de Symfony es la mejor forma de responder a las preguntas
+relativas a las opciones de configuración. Se trata de un libro imprescindible
+cuando desarrollas aplicaciones Symfony. Este libro es la forma más rápida de
+encontrar cualquier opción de configuración disponible gracias a su detallado
+índice de contenidos, su índice alfabético, las referencias cruzadas en cada
+capítulo, las tablas, etc.</p>
+
+<p>Puedes <a href="http://www.symfony-project.org/reference/1_3/en/">leer esta guía</a> en
+Internet, puedes <a href="http://books.sensiolabs.com/book/the-symfony-1-3-reference-guide">comprar una versión impresa</a>
+e incluso descargar su <a href="http://www.symfony-project.org/get/pdf/reference-1.3-en.pdf">versión en PDF</a>.</p>
+
+<h3 id="herramientas_online">3.3.4. Herramientas <em>online</em></h3>
+
+<p>Como se ha mostrado al inicio de este capítulo, Symfony incluye muchas
+herramientas útiles para que empieces a crear tu aplicación lo antes posible.
+Por eso, en poco tiempo habrás acabado tu proyecto y será el momento de
+pasarlo a producción.</p>
+
+<p>Para comprobar si tu sitio está listo para pasarlo a producción, puedes hacer
+uso de las siguiente <a href="http://symfony-check.org/">lista de comprobación</a>.
+Este sitio web muestra las comprobaciones esenciales que debes realizar antes
+de pasar el sitio a producción.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="programa_mas_rapido.html">&larr; Anterior <span>3.2. Programa más rápido</span></a>
+            
+            <a class="span5 next" href="depura_mas_rapido.html">Siguiente &rarr; <span>3.4. Depura más rápido</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Encuentra la documentación más rápido (Más con Symfony%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Más con Symfony : Encuentra la documentación más rápido']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Enrutamiento avanzado</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_3.html">
+            <span>Capítulo 3.</span> Mejora tu productividad
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="instalador-propio.html">
+            <span>3.1.</span> Empieza más rápido: personalizando la creación de proyectos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="programa_mas_rapido.html">
+            <span>3.2.</span> Programa más rápido
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="encuentra_la_documentacion_mas_rapido.html">
+            <span>3.3.</span> Encuentra la documentación más rápido
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="depura_mas_rapido.html">
+            <span>3.4.</span> Depura más rápido
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="crea_pruebas_mas_rapido.html">
+            <span>3.5.</span> Crea pruebas más rápido
+        </a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Emails</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Widgets y validadores propios</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Formularios avanzados</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Mejorando la barra de depuración web</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Uso avanzado de Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Utilizando la herencia de tablas de Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Funcionamiento interno de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Windows y Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Desarrollando aplicaciones Facebook</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Descubriendo el poder de la línea de comandos</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Jugando con la cache de configuración de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Trabajando con la comunidad Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>A</span> <a href="../apendice_a.html"> Código JavaScript de sfWidgetFormGMapAddress</a>
+    </li>
+    <li class="level-1">
+        <span>B</span> <a href="../apendice_b.html"> Ejemplo de instalador propio</a>
+    </li>
+    <li class="level-1">
+        <span>C</span> <a href="../apendice_c.html"> Licencia</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

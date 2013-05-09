@@ -1,0 +1,362 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>3.6. Probando la aplicación en el navegador (El tutorial Jobeet)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="los_datos_iniciales.html" />
+        <link rel="next" href="nos_vemos_manana.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="3.6. Probando la aplicación en el navegador (El tutorial Jobeet)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page jobeet_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">El tutorial Jobeet</a></li>
+  <li><a href="../capitulo_3.html">Capítulo 3. El modelo de datos</a></li>
+  <li class="current"><span>3.6.. Probando la aplicación en el navegador</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="probando_la_aplicacion_en_el_navegador"><span>3.6.</span> Probando la aplicación en el navegador</h1>
+    
+
+<p>Hasta el momento hemos utilizado mucho la línea de comandos, pero eso no es nada emocionante, sobre todo para un proyecto web. No obstante, gracias a la línea de comandos ya tenemos todo lo que necesitamos para crear páginas web que interactúen con la base de datos.</p>
+
+<p>A continuación se va a crear un listado de las ofertas de trabajo, se va a modificar una oferta existente y se va a borrar otra oferta de trabajo. Como se explicó en la lección del primer día, los proyectos Symfony se componen de aplicaciones. A su vez, cada aplicación está dividida en <strong>módulos</strong>. Un módulo es un conjunto autosuficiente de código PHP que representa una característica de la aplicación (como por ejemplo, el módulo de la API) o un conjunto de operaciones que el usuario puede realizar sobre un objeto del modelo (como por ejemplo el módulo de las ofertas de trabajo).</p>
+
+<p>Symfony es capaz de generar automáticamente un módulo que permite realizar las operaciones básicas sobre los datos de un objeto del modelo:</p>
+
+<div class="code cli">
+<pre class="cli">$ php symfony propel:generate-module --with-show --non-verbose-templates frontend job JobeetJob</pre>
+</div>
+
+<p>La tarea <code>propel:generate-module</code> anterior genera un módulo llamado <code>job</code> en la aplicación <code>frontend</code> y basado en el modelo <code>JobeetJob</code>. Después de ejecutar la tarea <code>propel:generate-module</code>, se han creado varios archivos y directorios dentro del directorio <code>apps/frontend/modules/job/</code>:</p>
+
+<div class="table" id="table_3_1">
+
+    <table>
+<thead>
+<tr>
+  <th>Directorio</th>
+  <th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>actions/</code></td>
+  <td>Las acciones del módulo</td>
+</tr>
+<tr>
+  <td><code>templates/</code></td>
+  <td>Las plantillas del módulo</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+<p>El archivo <code>actions/actions.class.php</code> define todas las acciones disponibles en el módulo <code>job</code>:</p>
+
+<div class="table" id="table_3_2">
+
+    <table>
+<thead>
+<tr>
+  <th>Nombre de la acción</th>
+  <th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>index</code></td>
+  <td>Muestra un listado con los registros de la base de datos</td>
+</tr>
+<tr>
+  <td><code>show</code></td>
+  <td>Muestra los campos y valores de un registro específico</td>
+</tr>
+<tr>
+  <td><code>new</code></td>
+  <td>Muestra un formulario para insertar un nuevo registro en la base de datos</td>
+</tr>
+<tr>
+  <td><code>create</code></td>
+  <td>Inserta un nuevo registro en la base de datos</td>
+</tr>
+<tr>
+  <td><code>edit</code></td>
+  <td>Muestra un formulario para modificar un registro existente en la base de datos</td>
+</tr>
+<tr>
+  <td><code>update</code></td>
+  <td>Actualiza los datos de un registro a partir de la información enviada por el usuario</td>
+</tr>
+<tr>
+  <td><code>delete</code></td>
+  <td>Elimina un registro de la base de datos</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+<p>Ahora ya puedes probar el módulo <code>job</code> accediendo a la siguiente URL en tu navegador:</p>
+
+<div class="code code">
+<pre class="code">http://jobeet.localhost/frontend_dev.php/job</pre>
+</div>
+
+<div class="figure" id="figure_3_2">
+    <img src="../../img/jobeet_1_4/f0302.png" alt="Módulo job" />
+
+    <p class="caption"><strong>Figura 3.2</strong> Módulo job</p>
+</div>
+
+
+<p>Si intentas modificar los datos de una oferta de trabajo, verás que Symfony muestra una excepción, ya que no se ha indicado cuál es la representación en forma de texto de los objetos de tipo categoría. La representación textual de un objeto PHP se establece con el método mágico <code>__toString()</code>. Añade el siguiente código en la clase <code>JobeetCategory</code> del modelo para establecer su representación textual:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// lib/model/JobeetCategory.php</span>
+<span class="kw2">class</span> JobeetCategory <span class="kw2">extends</span> BaseJobeetCategory
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> __toString<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="kw1">return</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getName</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Ahora, cuando Symfony necesite mostrar la representación en forma de texto de una categoría, se invoca el método <code>__toString()</code>, que devuelve directamente el nombre de la categoría. Como seguramente vamos a necesitar la representación textual de todas las clases del modelo, es una buena idea definir ahora el método <code>__toString()</code> en el resto de las clases del modelo:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// lib/model/JobeetJob.php</span>
+<span class="kw2">class</span> JobeetJob <span class="kw2">extends</span> BaseJobeetJob
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> __toString<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="kw1">return</span> <span class="kw3">sprintf</span><span class="br0">&#40;</span><span class="st_h">'%s at %s (%s)'</span><span class="sy0">,</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getPosition</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getCompany</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getLocation</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<div class="code php">
+<pre class="php"><span class="co1">// lib/model/JobeetAffiliate.php</span>
+<span class="kw2">class</span> JobeetAffiliate <span class="kw2">extends</span> BaseJobeetAffiliate
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> __toString<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="kw1">return</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getUrl</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Ahora ya puedes modificar cualquier dato de las ofertas de trabajo. Prueba a dejar un campo en blanco o intenta introducir una fecha incorrecta. En efecto, Symfony ha generado automáticamente unas reglas de validación básicas a partir de la información del esquema de datos.</p>
+
+<div class="figure" id="figure_3_3">
+    <img src="../../img/jobeet_1_4/f0303.png" alt="Validación de datos" />
+
+    <p class="caption"><strong>Figura 3.3</strong> Validación de datos</p>
+</div>
+
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="los_datos_iniciales.html">&larr; Anterior <span>3.5. Los datos iniciales</span></a>
+            
+            <a class="span5 next" href="nos_vemos_manana.html">Siguiente &rarr; <span>3.7. Nos vemos mañana</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Probando la aplicación en el navegador (El tutorial Jobeet%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'El tutorial Jobeet : Probando la aplicación en el navegador']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Comenzando el proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> El proyecto</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_3.html">
+            <span>Capítulo 3.</span> El modelo de datos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_modelo_relacional.html">
+            <span>3.1.</span> El modelo relacional
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_esquema.html">
+            <span>3.2.</span> El esquema
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="la_base_de_datos.html">
+            <span>3.3.</span> La base de datos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_orm.html">
+            <span>3.4.</span> El ORM
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="los_datos_iniciales.html">
+            <span>3.5.</span> Los datos iniciales
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="probando_la_aplicacion_en_el_navegador.html">
+            <span>3.6.</span> Probando la aplicación en el navegador
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="nos_vemos_manana.html">
+            <span>3.7.</span> Nos vemos mañana
+        </a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> El controlador y la vista</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> El sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Profundizando en el modelo</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Trabajando con la página de cada categoría</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Pruebas unitarias</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Pruebas funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Probando los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> El generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> El usuario</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> El día de descanso</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Canales Atom</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Servicios web</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> El buscador</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>20</span> <a href="../capitulo_20.html"> Plugins</a>
+    </li>
+    <li class="level-1">
+        <span>21</span> <a href="../capitulo_21.html"> El día del diseño</a>
+    </li>
+    <li class="level-1">
+        <span>22</span> <a href="../capitulo_22.html"> La cache</a>
+    </li>
+    <li class="level-1">
+        <span>23</span> <a href="../capitulo_23.html"> Pasando a producción</a>
+    </li>
+    <li class="level-1">
+        <span>24</span> <a href="../capitulo_24.html"> Un repaso a Symfony</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

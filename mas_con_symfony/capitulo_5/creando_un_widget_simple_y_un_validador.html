@@ -1,0 +1,317 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>5.2. Creando un widget simple y un validador (Más con Symfony)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="como_funciona_un_widget_y_un_validador.html" />
+        <link rel="next" href="el_widget_de_direcciones_con_google_maps.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="5.2. Creando un widget simple y un validador (Más con Symfony)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page mas_con_symfony">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Más con Symfony</a></li>
+  <li><a href="../capitulo_5.html">Capítulo 5. Widgets y validadores propios</a></li>
+  <li class="current"><span>5.2.. Creando un widget simple y un validador</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="creando_un_widget_simple_y_un_validador"><span>5.2.</span> Creando un widget simple y un validador</h1>
+    
+
+<p>Esta sección explica cómo crear un widget simple. Llamaremos a este widget
+<em>"Trilean"</em>, ya que se trata de un valor <em>booleano</em> con tres opciones, que se
+muestran en una lista desplegable: <code>No</code>, <code>Yes</code> y <code>Null</code>.</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">class</span> sfWidgetFormTrilean <span class="kw2">extends</span> sfWidgetForm
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> configure<span class="br0">&#40;</span><span class="re0">$options</span> <span class="sy0">=</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="re0">$attributes</span> <span class="sy0">=</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+&nbsp;
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">addOption</span><span class="br0">&#40;</span><span class="st_h">'choices'</span><span class="sy0">,</span> <span class="kw3">array</span><span class="br0">&#40;</span>
+      <span class="nu0">0</span> <span class="sy0">=&gt;</span> <span class="st_h">'No'</span><span class="sy0">,</span>
+      <span class="nu0">1</span> <span class="sy0">=&gt;</span> <span class="st_h">'Yes'</span><span class="sy0">,</span>
+      <span class="st_h">'null'</span> <span class="sy0">=&gt;</span> <span class="st_h">'Null'</span>
+    <span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="kw2">public</span> <span class="kw2">function</span> render<span class="br0">&#40;</span><span class="re0">$name</span><span class="sy0">,</span> <span class="re0">$value</span> <span class="sy0">=</span> <span class="kw4">null</span><span class="sy0">,</span> <span class="re0">$attributes</span> <span class="sy0">=</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="re0">$errors</span> <span class="sy0">=</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$value</span> <span class="sy0">=</span> <span class="re0">$value</span> <span class="sy0">===</span> <span class="kw4">null</span> ? <span class="st_h">'null'</span> <span class="sy0">:</span> <span class="re0">$value</span><span class="sy0">;</span>
+&nbsp;
+    <span class="re0">$options</span> <span class="sy0">=</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="kw1">foreach</span> <span class="br0">&#40;</span><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getOption</span><span class="br0">&#40;</span><span class="st_h">'choices'</span><span class="br0">&#41;</span> <span class="kw1">as</span> <span class="re0">$key</span> <span class="sy0">=&gt;</span> <span class="re0">$option</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="re0">$attributes</span> <span class="sy0">=</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'value'</span> <span class="sy0">=&gt;</span> <span class="kw2">self</span><span class="sy0">::</span><span class="me2">escapeOnce</span><span class="br0">&#40;</span><span class="re0">$key</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+      <span class="kw1">if</span> <span class="br0">&#40;</span><span class="re0">$key</span> <span class="sy0">==</span> <span class="re0">$value</span><span class="br0">&#41;</span>
+      <span class="br0">&#123;</span>
+        <span class="re0">$attributes</span><span class="br0">&#91;</span><span class="st_h">'selected'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="st_h">'selected'</span><span class="sy0">;</span>
+      <span class="br0">&#125;</span>
+&nbsp;
+      <span class="re0">$options</span><span class="br0">&#91;</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">renderContentTag</span><span class="br0">&#40;</span>
+        <span class="st_h">'option'</span><span class="sy0">,</span>
+        <span class="kw2">self</span><span class="sy0">::</span><span class="me2">escapeOnce</span><span class="br0">&#40;</span><span class="re0">$option</span><span class="br0">&#41;</span><span class="sy0">,</span>
+        <span class="re0">$attributes</span>
+      <span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="kw1">return</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">renderContentTag</span><span class="br0">&#40;</span>
+      <span class="st_h">'select'</span><span class="sy0">,</span>
+      <span class="st0">&quot;<span class="es1">\n</span>&quot;</span><span class="sy0">.</span><span class="kw3">implode</span><span class="br0">&#40;</span><span class="st0">&quot;<span class="es1">\n</span>&quot;</span><span class="sy0">,</span> <span class="re0">$options</span><span class="br0">&#41;</span><span class="sy0">.</span><span class="st0">&quot;<span class="es1">\n</span>&quot;</span><span class="sy0">,</span>
+      <span class="kw3">array_merge</span><span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'name'</span> <span class="sy0">=&gt;</span> <span class="re0">$name</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="re0">$attributes</span>
+    <span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>El método <code>configure()</code> define la lista de valores mediante la opción <code>choices</code>.
+Este array se puede redefinir por ejemplo para modificar el título asociado a
+cada valor. No existe un límite en el número de opciones que puede definir un
+widget. No obstante, la clase base de los widgets declara una serie de opciones
+estándar que funcionan como opciones reservadas <em>de facto</em>:</p>
+
+<ul>
+<li><code>id_format</code>: el formato del identificador, cuyo valor por defecto es '%s'</li>
+<li><code>is_hidden</code>: valor <em>booleano</em> que indica si el widget es un campo oculto
+(utilizado por <code>sfForm::renderHiddenFields()</code> para mostrar a la vez todos
+los campos ocultos)</li>
+<li><code>needs_multipart</code>: valor <em>booleano</em> que indica si la etiqueta del formulario
+debe incluir la opción <code>multipart</code> (necesaria cuando se suben archivos)</li>
+<li><code>default</code>: el valor por defecto que se utiliza al mostrar el widget a menos
+que no se proporcione otro valor</li>
+<li><code>label</code>: el título por defecto del widget</li>
+</ul>
+
+<p>El método <code>render()</code> genera el código HTML de la lista desplegable. En realidad,
+el método invoca la función interna <code>renderContentTag()</code> para facilitar la
+creación de las etiquetas HTML.</p>
+
+<p>El widget ya está terminado, por lo que a continuación se crea su validador:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">class</span> sfValidatorTrilean <span class="kw2">extends</span> sfValidatorBase
+<span class="br0">&#123;</span>
+  <span class="kw2">protected</span> <span class="kw2">function</span> configure<span class="br0">&#40;</span><span class="re0">$options</span> <span class="sy0">=</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="re0">$messages</span> <span class="sy0">=</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">addOption</span><span class="br0">&#40;</span><span class="st_h">'true_values'</span><span class="sy0">,</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'true'</span><span class="sy0">,</span> <span class="st_h">'t'</span><span class="sy0">,</span> <span class="st_h">'yes'</span><span class="sy0">,</span> <span class="st_h">'y'</span><span class="sy0">,</span> <span class="st_h">'on'</span><span class="sy0">,</span> <span class="st_h">'1'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">addOption</span><span class="br0">&#40;</span><span class="st_h">'false_values'</span><span class="sy0">,</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'false'</span><span class="sy0">,</span> <span class="st_h">'f'</span><span class="sy0">,</span> <span class="st_h">'no'</span><span class="sy0">,</span> <span class="st_h">'n'</span><span class="sy0">,</span> <span class="st_h">'off'</span><span class="sy0">,</span> <span class="st_h">'0'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">addOption</span><span class="br0">&#40;</span><span class="st_h">'null_values'</span><span class="sy0">,</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'null'</span><span class="sy0">,</span> <span class="kw4">null</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="kw2">protected</span> <span class="kw2">function</span> doClean<span class="br0">&#40;</span><span class="re0">$value</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="kw1">if</span> <span class="br0">&#40;</span><span class="kw3">in_array</span><span class="br0">&#40;</span><span class="re0">$value</span><span class="sy0">,</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getOption</span><span class="br0">&#40;</span><span class="st_h">'true_values'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="kw1">return</span> <span class="kw4">true</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="kw1">if</span> <span class="br0">&#40;</span><span class="kw3">in_array</span><span class="br0">&#40;</span><span class="re0">$value</span><span class="sy0">,</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getOption</span><span class="br0">&#40;</span><span class="st_h">'false_values'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="kw1">return</span> <span class="kw4">false</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="kw1">if</span> <span class="br0">&#40;</span><span class="kw3">in_array</span><span class="br0">&#40;</span><span class="re0">$value</span><span class="sy0">,</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getOption</span><span class="br0">&#40;</span><span class="st_h">'null_values'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="kw1">return</span> <span class="kw4">null</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="kw1">throw</span> <span class="kw2">new</span> sfValidatorError<span class="br0">&#40;</span><span class="re0">$this</span><span class="sy0">,</span> <span class="st_h">'invalid'</span><span class="sy0">,</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'value'</span> <span class="sy0">=&gt;</span> <span class="re0">$value</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="kw2">public</span> <span class="kw2">function</span> isEmpty<span class="br0">&#40;</span><span class="re0">$value</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="kw1">return</span> <span class="kw4">false</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>El validador <code>sfValidatorTrilean</code> define tres opciones en su método <code>configure()</code>.
+Cada opción es un conjunto de valores válidos. Como se definen mediante opciones,
+el programador puede personalizar los valores de acuerdo a sus necesidades.</p>
+
+<p>El método <code>doClean()</code> comprueba si el valor se encuentra dentro de los valores
+definidos como válidos y devuelve el valor <em>limpio</em>. Si el valor no coincide con
+ninguno de los permitidos, se lanza una excepción de tipo <code>sfValidatorError</code>,
+que es el error de validació estándar en el framework de formularios.</p>
+
+<p>El último método llamado <code>isEmpty()</code> se redefine porque por defecto devuelve
+<code>true</code> si el valor es <code>null</code>. Como el widget creado permite el uso de <code>null</code>
+como valor válido, el método siempre debe devolver <code>false</code>.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Si el método <code>isEmpty()</code> devuelve <code>true</code>, no se ejecuta el método <code>doClean()</code>.</p></div>
+
+<p>Aunque este widget era muy sencillo, ha servido para introducir algunas
+características básicas muy importantes que se necesitarán más adelante. La
+siguiente sección crea un widget más complejo formado por varios campos y que
+también hace uso de JavaScript.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="como_funciona_un_widget_y_un_validador.html">&larr; Anterior <span>5.1. Cómo funciona un widget y un validador</span></a>
+            
+            <a class="span5 next" href="el_widget_de_direcciones_con_google_maps.html">Siguiente &rarr; <span>5.3. El widget de direcciones con Google Maps</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Creando un widget simple y un validador (Más con Symfony%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Más con Symfony : Creando un widget simple y un validador']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Enrutamiento avanzado</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Mejora tu productividad</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Emails</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_5.html">
+            <span>Capítulo 5.</span> Widgets y validadores propios
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="como_funciona_un_widget_y_un_validador.html">
+            <span>5.1.</span> Cómo funciona un widget y un validador
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="creando_un_widget_simple_y_un_validador.html">
+            <span>5.2.</span> Creando un widget simple y un validador
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_widget_de_direcciones_con_google_maps.html">
+            <span>5.3.</span> El widget de direcciones con Google Maps
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="conclusiones.html">
+            <span>5.4.</span> Conclusiones
+        </a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Formularios avanzados</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Mejorando la barra de depuración web</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Uso avanzado de Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Utilizando la herencia de tablas de Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Funcionamiento interno de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Windows y Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Desarrollando aplicaciones Facebook</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Descubriendo el poder de la línea de comandos</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Jugando con la cache de configuración de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Trabajando con la comunidad Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>A</span> <a href="../apendice_a.html"> Código JavaScript de sfWidgetFormGMapAddress</a>
+    </li>
+    <li class="level-1">
+        <span>B</span> <a href="../apendice_b.html"> Ejemplo de instalador propio</a>
+    </li>
+    <li class="level-1">
+        <span>C</span> <a href="../apendice_c.html"> Licencia</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

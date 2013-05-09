@@ -1,0 +1,677 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>Capítulo 3. JavaScript avanzado (Introducción a AJAX)</title>
+        <link href="../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="capitulo_2/funciones_y_propiedades_basicas_de_javascript.html" />
+        <link rel="next" href="capitulo_3/clases.html" />
+        <link rel="start" href="index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Capítulo 3. JavaScript avanzado (Introducción a AJAX)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page ajax">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../index.html">Inicio</a></li>
+  <li><a href="index.html">Introducción a AJAX</a></li>
+  <li class="current"><span>Capítulo 3. JavaScript avanzado</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="capitulo_3"><span>Capítulo 3.</span> JavaScript avanzado</h1>
+    <h2 id="objetos">3.1. Objetos</h2>
+
+
+<p>Al igual que sucede con otros lenguajes de programación, los objetos se emplean en JavaScript para organizar el código fuente de una forma más clara y para encapsular métodos y funciones comunes. La forma más sencilla de crear un objeto es mediante la palabra reservada <code>new</code> seguida del nombre de la clase que se quiere instanciar:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> elObjeto <span class="sy0">=</span> <span class="kw1">new</span> <span class="kw4">Object</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="kw1">var</span> laCadena <span class="sy0">=</span> <span class="kw1">new</span> <span class="kw4">String</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>El objeto <code>laCadena</code> creado mediante el objeto nativo <code>String</code> permite almacenar una cadena de texto y aprovechar todas las herramientas y utilidades que proporciona JavaScript para su manejo. Por otra parte, la variable <code>elObjeto</code> almacena un objeto genérico de JavaScript, al que se pueden añadir propiedades y métodos propios para definir su comportamiento.</p>
+
+<h3 id="definicion_de_un_objeto">3.1.1. Definición de un objeto</h3>
+
+<p>Técnicamente, un objeto de JavaScript es un array asociativo formado por las propiedades y los métodos del objeto. Así, la forma más directa para definir las propiedades y métodos de un objeto es mediante la <em>notación de puntos</em> de los arrays asociativos.</p>
+
+<p>Un array asociativo es aquel en el que cada elemento no está asociado a su posición numérica dentro del array, sino que está asociado a otro valor específico. Los valores de los arrays <em>normales</em> se asocian a índices que siempre son numéricos. Los valores de los arrays asociativos se asocian a claves que siempre son cadenas de texto.</p>
+
+<p>La forma tradicional de definir los arrays asociativos es mediante la clase <code>Array</code>:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> elArray <span class="sy0">=</span> <span class="kw1">new</span> <span class="kw4">Array</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+elArray<span class="br0">&#91;</span><span class="st0">'primero'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="nu0">1</span><span class="sy0">;</span>
+elArray<span class="br0">&#91;</span><span class="st0">'segundo'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="nu0">2</span><span class="sy0">;</span>
+&nbsp;
+alert<span class="br0">&#40;</span>elArray<span class="br0">&#91;</span><span class="st0">'primero'</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+alert<span class="br0">&#40;</span>elArray<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>El primer <code>alert()</code> muestra el valor <code>1</code> correspondiente al valor asociado con la clave <code>primero</code>. El segundo <code>alert()</code> muestra <code>undefined</code>, ya que como no se trata de un array <em>normal</em>, sus elementos no se pueden acceder mediante su posición numérica.</p>
+
+<p>Afortunadamente, existen métodos alternativos abreviados para crear array asociativos. El ejemplo anterior se puede rehacer de la siguiente forma:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> elArray <span class="sy0">=</span> <span class="kw1">new</span> <span class="kw4">Array</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+elArray.<span class="me1">primero</span> <span class="sy0">=</span> <span class="nu0">1</span><span class="sy0">;</span>
+elArray.<span class="me1">segundo</span> <span class="sy0">=</span> <span class="nu0">2</span><span class="sy0">;</span>
+&nbsp;
+alert<span class="br0">&#40;</span>elArray<span class="br0">&#91;</span><span class="st0">'primero'</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+alert<span class="br0">&#40;</span>elArray.<span class="me1">primero</span><span class="br0">&#41;</span><span class="sy0">;</span>
+alert<span class="br0">&#40;</span>elArray<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>El método seguido en el ejemplo anterior para crear el array asociativo se denomina <em>"notación de puntos"</em>. Para acceder y/o establecer cada valor, se indica el nombre del array seguido de un punto y seguido del nombre de cada clave. De forma genérica, la notación de puntos tiene el siguiente formato:</p>
+
+<div class="code javascript">
+<pre class="javascript">nombreArray.<span class="me1">nombreClave</span> <span class="sy0">=</span> valor<span class="sy0">;</span></pre>
+</div>
+
+<p>Para acceder a un determinado valor, también se puede utilizar la notación de puntos en vez de la tradicional notación de los arrays, de forma que las dos instrucciones siguientes son equivalentes:</p>
+
+<div class="code javascript">
+<pre class="javascript">elArray<span class="br0">&#91;</span><span class="st0">'primero'</span><span class="br0">&#93;</span><span class="sy0">;</span>
+elArray.<span class="me1">primero</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Más adelante se muestra otra forma aún más abreviada y directa de establecer el valor tanto de los arrays <em>"normales"</em> como de los arrays asociativos.</p>
+
+<h4 id="propiedades">3.1.1.1. Propiedades</h4>
+
+<p>Como los objetos son en realidad arrays asociativos que almacenan sus propiedades y métodos, la forma más directa para definir esas propiedades y métodos es la notación de puntos:</p>
+
+<div class="code javascript">
+<pre class="javascript">elObjeto.<span class="me1">id</span> <span class="sy0">=</span> <span class="st0">&quot;10&quot;</span><span class="sy0">;</span>
+elObjeto.<span class="me1">nombre</span> <span class="sy0">=</span> <span class="st0">&quot;Objeto de prueba&quot;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Al contrario de lo que sucede en otros lenguajes orientados a objetos, como por ejemplo Java, para asignar el valor de una propiedad no es necesario que la clase tenga definida previamente esa propiedad.</p>
+
+<p>También es posible utilizar la notación tradicional de los arrays para definir el valor de las propiedades:</p>
+
+<div class="code javascript">
+<pre class="javascript">elObjeto<span class="br0">&#91;</span><span class="st0">'id'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="st0">&quot;10&quot;</span><span class="sy0">;</span>
+elObjeto<span class="br0">&#91;</span><span class="st0">'nombre'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="st0">&quot;Objeto de prueba&quot;</span><span class="sy0">;</span></pre>
+</div>
+
+<h4 id="metodos">3.1.1.2. Métodos</h4>
+
+<p>Además de las propiedades, los métodos de los objetos también se pueden definir mediante la notación de puntos:</p>
+
+<div class="code javascript">
+<pre class="javascript">elObjeto.<span class="me1">muestraId</span> <span class="sy0">=</span> <span class="kw1">function</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  alert<span class="br0">&#40;</span><span class="st0">&quot;El ID del objeto es &quot;</span> <span class="sy0">+</span> <span class="kw1">this</span>.<span class="me1">id</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Los métodos se definen asignando funciones al objeto. Si la función no está definida previamente, es posible crear una función anónima para asignarla al nuevo método del objeto, tal y como muestra el ejemplo anterior.</p>
+
+<p>Uno de los aspectos más importantes del ejemplo anterior es el uso de la palabra reservada <code>this</code>. La palabra <code>this</code> se suele utilizar habitualmente dentro de los métodos de un objeto y siempre hace referencia al objeto que está llamado a ese método.</p>
+
+<p>De esta forma, en el ejemplo anterior:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> elObjeto <span class="sy0">=</span> <span class="kw1">new</span> <span class="kw4">Object</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+elObjeto.<span class="me1">id</span> <span class="sy0">=</span> <span class="st0">&quot;10&quot;</span><span class="sy0">;</span>
+elObjeto.<span class="me1">muestraId</span> <span class="sy0">=</span> <span class="kw1">function</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  alert<span class="br0">&#40;</span><span class="st0">&quot;El ID del objeto es &quot;</span> <span class="sy0">+</span> <span class="kw1">this</span>.<span class="me1">id</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Dentro del método, <code>this</code> apunta al objeto que llama a ese método. En este caso, <code>this</code> hace referencia a <code>elObjeto</code>. Por tanto, la instrucción del método <code>muestraId</code> es equivalente a indicar:</p>
+
+<div class="code javascript">
+<pre class="javascript">alert<span class="br0">&#40;</span><span class="st0">&quot;El ID del objeto es &quot;</span> <span class="sy0">+</span> elObjeto.<span class="me1">id</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>El uso de <code>this</code> es imprescindible para crear aplicaciones reales. El motivo es que nunca se puede suponer el nombre que tendrá la variable (el objeto) que incluye ese método. Como los programadores pueden elegir libremente el nombre de cada objeto, no hay forma de asegurar que la siguiente instrucción funcione siempre correctamente:</p>
+
+<div class="code javascript">
+<pre class="javascript">alert<span class="br0">&#40;</span><span class="st0">&quot;El ID del objeto es &quot;</span> <span class="sy0">+</span> elObjeto.<span class="me1">id</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Si el objeto se llamara <code>otroObjeto</code>, el código anterior no funcionaría correctamente. Sin embargo, utilizando la palabra reservada <code>this</code>, el método funciona siempre bien independientemente del nombre del objeto.</p>
+
+<p>Además, la palabra <code>this</code> se debe utilizar siempre que se quiera acceder a una propiedad de un objeto, ya que en otro caso, no se está accediendo correctamente a la propiedad:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> elObjeto <span class="sy0">=</span> <span class="kw1">new</span> <span class="kw4">Object</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+elObjeto.<span class="me1">id</span> <span class="sy0">=</span> <span class="st0">&quot;10&quot;</span><span class="sy0">;</span>
+elObjeto.<span class="me1">muestraId</span> <span class="sy0">=</span> <span class="kw1">function</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  alert<span class="br0">&#40;</span><span class="st0">&quot;El ID del objeto es &quot;</span><span class="sy0">+</span> id<span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Si se ejecuta el ejemplo anterior, se muestra el error <code>"id is not defined"</code>  <em>la variable id no está definida</em>).</p>
+
+<p>Además de las funciones anónimas, también es posible asignar a los métodos de un objeto funciones definidas con anterioridad:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">function</span> obtieneId<span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="kw1">return</span> <span class="kw1">this</span>.<span class="me1">id</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+elObjeto.<span class="me1">obtieneId</span> <span class="sy0">=</span> obtieneId<span class="sy0">;</span></pre>
+</div>
+
+<p>Para asignar una función externa al método de un objeto, sólo se debe indicar el nombre de la función externa sin paréntesis. Si se utilizaran los paréntesis:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">function</span> obtieneId<span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="kw1">return</span> <span class="kw1">this</span>.<span class="me1">id</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+elObjeto.<span class="me1">obtieneId</span> <span class="sy0">=</span> obtieneId<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>En el ejemplo anterior, se ejecuta la función <code>obtieneId()</code> y el resultado de la ejecución se asigna a la propiedad <code>obtieneId</code> del objeto. Así, el objeto no tendría un método llamado <code>obtieneId</code>, sino una propiedad con ese nombre y con un valor igual al resultado devuelto por la función externa.</p>
+
+<p>Por otra parte, no es obligatorio que el método del objeto se llame igual que la función externa, aunque es posible que así sea.</p>
+
+<p>A continuación se muestra un objeto completo formado por varias propiedades y métodos y creado con la notación de puntos:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> elObjeto <span class="sy0">=</span> <span class="kw1">new</span> <span class="kw4">Object</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+elObjeto.<span class="me1">id</span> <span class="sy0">=</span> <span class="st0">&quot;10&quot;</span><span class="sy0">;</span>
+elObjeto.<span class="me1">nombre</span> <span class="sy0">=</span> <span class="st0">&quot;Objeto de prueba&quot;</span><span class="sy0">;</span>
+elObjeto.<span class="me1">muestraId</span> <span class="sy0">=</span> <span class="kw1">function</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  alert<span class="br0">&#40;</span><span class="st0">&quot;El ID del objeto es &quot;</span><span class="sy0">+</span> <span class="kw1">this</span>.<span class="me1">id</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+elObjeto.<span class="me1">muestraNombre</span> <span class="sy0">=</span> <span class="kw1">function</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  alert<span class="br0">&#40;</span><span class="kw1">this</span>.<span class="me1">nombre</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Siguiendo este mismo procedimiento, es posible crear objetos complejos que contengan otros objetos:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> Aplicacion <span class="sy0">=</span> <span class="kw1">new</span> <span class="kw4">Object</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+Aplicacion.<span class="me1">Modulos</span> <span class="sy0">=</span> <span class="kw1">new</span> <span class="kw4">Array</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+Aplicacion.<span class="me1">Modulos</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="kw1">new</span> <span class="kw4">Object</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+Aplicacion.<span class="me1">Modulos</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>.<span class="me1">titulo</span> <span class="sy0">=</span> <span class="st0">&quot;Lector RSS&quot;</span><span class="sy0">;</span>
+&nbsp;
+<span class="kw1">var</span> inicial <span class="sy0">=</span> <span class="kw1">new</span> <span class="kw4">Object</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+inicial.<span class="me1">estado</span> <span class="sy0">=</span> <span class="nu0">1</span><span class="sy0">;</span>
+inicial.<span class="me1">publico</span> <span class="sy0">=</span> <span class="nu0">0</span><span class="sy0">;</span>
+inicial.<span class="me1">nombre</span> <span class="sy0">=</span> <span class="st0">&quot;Modulo_RSS&quot;</span><span class="sy0">;</span>
+inicial.<span class="me1">datos</span> <span class="sy0">=</span> <span class="kw1">new</span> <span class="kw4">Object</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+Aplicacion.<span class="me1">Modulos</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>.<span class="me1">objetoInicial</span> <span class="sy0">=</span> inicial<span class="sy0">;</span></pre>
+</div>
+
+<p>En el ejemplo anterior, se define un objeto principal llamado <code>Aplicacion</code> que a su vez contiene varios objetos. La propiedad <code>Modulos</code> de la aplicación es un array en el que cada elemento es un objeto que representa a un módulo. A su vez, cada objeto <code>Modulo</code> tiene una propiedad llamada <code>titulo</code> y otra llamada <code>objetoInicial</code> que también es un objeto con las propiedades y valores iniciales del módulo.</p>
+
+<p>La notación tradicional de JavaScript puede llegar a ser tediosa cuando se desarrollan aplicaciones complejas con objetos que contienen otros muchos objetos y arrays. Por este motivo, JavaScript define un método alternativo de notación llamado JSON  (<em>JavaScript Object Notation</em>) y que se verá más adelante.</p>
+
+<h4 id="metodos_apply_y_call">3.1.1.3. Métodos apply() y call()</h4>
+
+<p>JavaScript define un par de métodos denominados <code>apply()</code> y <code>call()</code> que son muy útiles para las funciones. Ambos métodos permiten ejecutar una función como si fuera un método de otro objeto. La única diferencia entre los dos métodos es la forma en la que se pasan los argumentos a la función.</p>
+
+<p>El siguiente ejemplo muestra cómo utilizar el método <code>call()</code> para ejecutar una función como si fuera un método del objeto <code>elObjeto</code>:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">function</span> miFuncion<span class="br0">&#40;</span>x<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="kw1">return</span> <span class="kw1">this</span>.<span class="me1">numero</span> <span class="sy0">+</span> x<span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+<span class="kw1">var</span> elObjeto <span class="sy0">=</span> <span class="kw1">new</span> <span class="kw4">Object</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+elObjeto.<span class="me1">numero</span> <span class="sy0">=</span> <span class="nu0">5</span><span class="sy0">;</span>
+&nbsp;
+<span class="kw1">var</span> resultado <span class="sy0">=</span> miFuncion.<span class="me1">call</span><span class="br0">&#40;</span>elObjeto<span class="sy0">,</span> <span class="nu0">4</span><span class="br0">&#41;</span><span class="sy0">;</span>
+alert<span class="br0">&#40;</span>resultado<span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>El primer parámetro del método <code>call()</code> es el objeto sobre el que se va a ejecutar la función. Como la función se trata como si fuera un método del objeto, la palabra reservada <code>this</code> hace referencia al objeto indicado en la llamada a <code>call()</code>. De esta forma, si en la función se utiliza <code>this.numero</code>, en realidad se está obteniendo el valor de la propiedad <code>numero</code> del objeto.</p>
+
+<p>El resto de parámetros del método <code>call()</code> son los parámetros que se pasan a la función. En este caso, solamente es necesario un parámetro, que es el número que se sumará a la propiedad <code>numero</code> del objeto.</p>
+
+<p>El método <code>apply()</code> es idéntico al método <code>call()</code>, salvo que en este caso los parámetros se pasan como un array:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">function</span> miFuncion<span class="br0">&#40;</span>x<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="kw1">return</span> <span class="kw1">this</span>.<span class="me1">numero</span> <span class="sy0">+</span> x<span class="sy0">;</span>
+<span class="br0">&#125;</span>
+<span class="kw1">var</span> elObjeto <span class="sy0">=</span> <span class="kw1">new</span> <span class="kw4">Object</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+elObjeto.<span class="me1">numero</span> <span class="sy0">=</span> <span class="nu0">5</span><span class="sy0">;</span>
+&nbsp;
+<span class="kw1">var</span> resultado <span class="sy0">=</span> miFuncion.<span class="me1">apply</span><span class="br0">&#40;</span>elObjeto<span class="sy0">,</span> <span class="br0">&#91;</span><span class="nu0">4</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+alert<span class="br0">&#40;</span>resultado<span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<h3 id="notacion_json">3.1.2. Notación JSON</h3>
+
+<p>JSON  (<em>JavaScript Object Notation</em>) es un formato sencillo para el intercambio de información. El formato JSON permite representar estructuras de datos (arrays) y objetos (arrays asociativos) en forma de texto. La notación de objetos mediante JSON es una de las características principales de JavaScript y es un mecanismo definido en los fundamentos básicos del lenguaje.</p>
+
+<p>En los últimos años, JSON se ha convertido en una alternativa al formato XML, ya que es más fácil de leer y escribir, además de ser mucho más conciso. No obstante, XML es superior técnicamente porque es un lenguaje de marcado, mientras que JSON es simplemente un formato para intercambiar datos.</p>
+
+<p>La especificación completa de JSON se puede consultar en <a href="http://tools.ietf.org/html/rfc4627">RFC 4627</a> y su tipo MIME oficial es <code>application/json</code>.</p>
+
+<p>Como ya se sabe, la notación tradicional de los arrays es tediosa cuando existen muchos elementos:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> modulos <span class="sy0">=</span> <span class="kw1">new</span> <span class="kw4">Array</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+modulos<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="st0">&quot;Lector RSS&quot;</span><span class="sy0">;</span>
+modulos<span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="st0">&quot;Gestor email&quot;</span><span class="sy0">;</span>
+modulos<span class="br0">&#91;</span><span class="nu0">2</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="st0">&quot;Agenda&quot;</span><span class="sy0">;</span>
+modulos<span class="br0">&#91;</span><span class="nu0">3</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="st0">&quot;Buscador&quot;</span><span class="sy0">;</span>
+modulos<span class="br0">&#91;</span><span class="nu0">4</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="st0">&quot;Enlaces&quot;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Para crear un array normal mediante JSON, se indican sus valores separados por comas y encerrados entre corchetes. Por lo tanto, el ejemplo anterior se puede reescribir de la siguiente manera utilizando la notación JSON:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> modulos <span class="sy0">=</span> <span class="br0">&#91;</span><span class="st0">&quot;Lector RSS&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Gestor email&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Agenda&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Buscador&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Enlaces&quot;</span><span class="br0">&#93;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Por su parte, la notación tradicional de los arrays asociativos es igual de tediosa que la de los arrays normales:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> modulos <span class="sy0">=</span> <span class="kw1">new</span> <span class="kw4">Array</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+modulos.<span class="me1">titulos</span> <span class="sy0">=</span> <span class="kw1">new</span> <span class="kw4">Array</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+modulos.<span class="me1">titulos</span><span class="br0">&#91;</span><span class="st0">'rss'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="st0">&quot;Lector RSS&quot;</span><span class="sy0">;</span>
+modulos.<span class="me1">titulos</span><span class="br0">&#91;</span><span class="st0">'email'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="st0">&quot;Gestor de email&quot;</span><span class="sy0">;</span>
+modulos.<span class="me1">titulos</span><span class="br0">&#91;</span><span class="st0">'agenda'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="st0">&quot;Agenda&quot;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>En este caso, se puede utilizar la notación de puntos para abreviar ligeramente su definición:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> modulos <span class="sy0">=</span> <span class="kw1">new</span> <span class="kw4">Array</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+modulos.<span class="me1">titulos</span> <span class="sy0">=</span> <span class="kw1">new</span> <span class="kw4">Array</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+modulos.<span class="me1">titulos</span>.<span class="me1">rss</span> <span class="sy0">=</span> <span class="st0">&quot;Lector RSS&quot;</span><span class="sy0">;</span>
+modulos.<span class="me1">titulos</span>.<span class="me1">email</span> <span class="sy0">=</span> <span class="st0">&quot;Gestor de email&quot;</span><span class="sy0">;</span>
+modulos.<span class="me1">titulos</span>.<span class="me1">agenda</span> <span class="sy0">=</span> <span class="st0">&quot;Agenda&quot;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>En cualquier caso, la notación JSON permite definir los arrays asociativos de una forma mucho más concisa. De hecho, el ejemplo anterior se puede reescribir de la siguiente manera utilizando la notación JSON:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> modulos <span class="sy0">=</span> <span class="kw1">new</span> <span class="kw4">Array</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+modulos.<span class="me1">titulos</span> <span class="sy0">=</span> <span class="br0">&#123;</span>rss<span class="sy0">:</span> <span class="st0">&quot;Lector RSS&quot;</span><span class="sy0">,</span> email<span class="sy0">:</span> <span class="st0">&quot;Gestor de email&quot;</span><span class="sy0">,</span> agenda<span class="sy0">:</span> <span class="st0">&quot;Agenda&quot;</span><span class="br0">&#125;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>La notación JSON para los arrays asociativos se compone de tres partes:</p>
+
+<ol>
+<li>Los contenidos del array asociativo se encierran entre llaves (<code>{</code> y <code>}</code>)</li>
+<li>Los elementos del array se separan mediante una coma (<code>,</code>)</li>
+<li>La clave y el valor de cada elemento se separan mediante dos puntos (<code>:</code>)</li>
+</ol>
+
+<p>Si la clave no contiene espacios en blanco, es posible prescindir de las comillas que encierran sus contenidos. Sin embargo, las comillas son obligatorias cuando las claves pueden contener espacios en blanco:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> titulosModulos <span class="sy0">=</span> <span class="br0">&#123;</span><span class="st0">&quot;Lector RSS&quot;</span><span class="sy0">:</span> <span class="st0">&quot;rss&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Gestor de email&quot;</span><span class="sy0">:</span> <span class="st0">&quot;email&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Agenda&quot;</span><span class="sy0">:</span> <span class="st0">&quot;agenda&quot;</span><span class="br0">&#125;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Como JavaScript ignora los espacios en blanco sobrantes, es posible reordenar las claves y valores para que se muestren más claramente en el código fuente de la aplicación. El ejemplo anterior se puede rehacer de la siguiente manera añadiendo nuevas líneas para separar los elementos y añadiendo espacios en blanco para tabular las claves y para alinear los valores:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> titulos <span class="sy0">=</span> <span class="br0">&#123;</span>
+  rss<span class="sy0">:</span>    <span class="st0">&quot;Lector RSS&quot;</span><span class="sy0">,</span> 
+  email<span class="sy0">:</span>  <span class="st0">&quot;Gestor de email&quot;</span><span class="sy0">,</span> 
+  agenda<span class="sy0">:</span> <span class="st0">&quot;Agenda&quot;</span>
+<span class="br0">&#125;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Combinando la notación de los arrays simples y asociativos, es posible construir objetos muy complejos de forma sencilla. Con la notación tradicional, un objeto complejo se puede crear de la siguiente manera:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> modulo <span class="sy0">=</span> <span class="kw1">new</span> <span class="kw4">Object</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+modulo.<span class="me1">titulo</span> <span class="sy0">=</span> <span class="st0">&quot;Lector RSS&quot;</span><span class="sy0">;</span>
+modulo.<span class="me1">objetoInicial</span> <span class="sy0">=</span> <span class="kw1">new</span> <span class="kw4">Object</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+modulo.<span class="me1">objetoInicial</span>.<span class="me1">estado</span> <span class="sy0">=</span> <span class="nu0">1</span><span class="sy0">;</span>
+modulo.<span class="me1">objetoInicial</span>.<span class="me1">publico</span> <span class="sy0">=</span> <span class="nu0">0</span><span class="sy0">;</span>
+modulo.<span class="me1">objetoInicial</span>.<span class="me1">nombre</span> <span class="sy0">=</span> <span class="st0">&quot;Modulo_RSS&quot;</span><span class="sy0">;</span>
+modulo.<span class="me1">objetoInicial</span>.<span class="me1">datos</span> <span class="sy0">=</span> <span class="kw1">new</span> <span class="kw4">Object</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Utilizando JSON, es posible reescribir el ejemplo anterior de forma mucho más concisa:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> modulo <span class="sy0">=</span> <span class="br0">&#123;</span>
+  titulo <span class="sy0">:</span> <span class="st0">&quot;Lector RSS&quot;</span><span class="sy0">,</span>
+  objetoInicial <span class="sy0">:</span> <span class="br0">&#123;</span> estado <span class="sy0">:</span> <span class="nu0">1</span><span class="sy0">,</span> publico <span class="sy0">:</span> <span class="nu0">0</span><span class="sy0">,</span> nombre <span class="sy0">:</span> <span class="st0">&quot;Modulo RSS&quot;</span><span class="sy0">,</span> datos <span class="sy0">:</span> <span class="br0">&#123;</span><span class="br0">&#125;</span> <span class="br0">&#125;</span>
+<span class="br0">&#125;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Los objetos se pueden definir en forma de pares clave/valor separados por comas y encerrados entre llaves. Para crear objetos vacíos, se utilizan un par de llaves sin contenido en su interior <code>{}</code>.</p>
+
+<p>A continuación se muestra la notación JSON genérica para crear arrays y objetos:</p>
+
+<p><strong>Arrays</strong></p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> array <span class="sy0">=</span> <span class="br0">&#91;</span>valor1<span class="sy0">,</span> valor2<span class="sy0">,</span> valor3<span class="sy0">,</span> ...<span class="sy0">,</span> valorN<span class="br0">&#93;</span><span class="sy0">;</span></pre>
+</div>
+
+<p><strong>Objetos</strong></p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> objeto <span class="sy0">=</span> <span class="br0">&#123;</span> clave1<span class="sy0">:</span> valor1<span class="sy0">,</span> clave2<span class="sy0">:</span> valor2<span class="sy0">,</span> clave3<span class="sy0">:</span> valor3<span class="sy0">,</span> ...<span class="sy0">,</span> claveN<span class="sy0">:</span> valorN <span class="br0">&#125;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>La notación abreviada se puede combinar para crear arrays de objetos, objetos con arrays, objetos con objetos y arrays, etc. A continuación se muestran algunos ejemplos de aplicaciones web reales que crean objetos mediante esta notación.</p>
+
+<p><strong>Ejemplo extraído del código fuente de Blinksale.com</strong></p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> Invoice <span class="sy0">=</span> Class.<span class="me1">create</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+Invoice.<span class="kw1">prototype</span> <span class="sy0">=</span> <span class="br0">&#123;</span>
+  initialize<span class="sy0">:</span> <span class="kw1">function</span><span class="br0">&#40;</span>line_html<span class="sy0">,</span> currency_symbol<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="kw1">this</span>.<span class="me1">line_html</span> <span class="sy0">=</span> line_html<span class="sy0">;</span>
+    <span class="kw1">this</span>.<span class="me1">currency_symbol</span> <span class="sy0">=</span> currency_symbol<span class="sy0">;</span>
+    <span class="kw1">this</span>.<span class="me1">line_index</span> <span class="sy0">=</span> <span class="nu0">1</span><span class="sy0">;</span>
+    <span class="kw1">this</span>.<span class="me1">update</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span><span class="sy0">,</span>
+&nbsp;
+  kinds<span class="sy0">:</span> <span class="br0">&#91;</span><span class="st0">'Service'</span><span class="sy0">,</span><span class="st0">'Hours'</span><span class="sy0">,</span><span class="st0">'Days'</span><span class="sy0">,</span><span class="st0">'Product'</span><span class="br0">&#93;</span><span class="sy0">,</span>
+&nbsp;
+  change_kind<span class="sy0">:</span> <span class="kw1">function</span><span class="br0">&#40;</span>i<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="kw1">if</span><span class="br0">&#40;</span>$F<span class="br0">&#40;</span><span class="st0">'lines_'</span><span class="sy0">+</span>i<span class="sy0">+</span><span class="st0">'_kind'</span><span class="br0">&#41;</span><span class="sy0">==</span><span class="st0">'Hours'</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+      $<span class="br0">&#40;</span><span class="st0">'lines_'</span><span class="sy0">+</span>i<span class="sy0">+</span><span class="st0">'_unit_price'</span><span class="br0">&#41;</span>.<span class="me1">value</span> <span class="sy0">=</span> $F<span class="br0">&#40;</span><span class="st0">'default_hourly_rate'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+      <span class="kw1">this</span>.<span class="me1">update</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+  <span class="br0">&#125;</span><span class="sy0">,</span>
+&nbsp;
+  focus_num<span class="sy0">:</span> <span class="kw1">function</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    $<span class="br0">&#40;</span><span class="st0">'invoice_number'</span><span class="br0">&#41;</span>.<span class="me1">focus</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span><span class="sy0">,</span>
+&nbsp;
+  use_freight<span class="sy0">:</span> <span class="kw1">function</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="kw1">return</span> $<span class="br0">&#40;</span><span class="st0">'invoice_use_freight'</span><span class="br0">&#41;</span>.<span class="me1">checked</span>
+  <span class="br0">&#125;</span><span class="sy0">,</span>
+&nbsp;
+  freight<span class="sy0">:</span> <span class="kw1">function</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="kw1">return</span> <span class="kw1">this</span>.<span class="me1">use_freight</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="sy0">?</span> <span class="kw4">Number</span><span class="br0">&#40;</span>noCommas<span class="br0">&#40;</span>$<span class="br0">&#40;</span><span class="st0">'invoice_freight'</span><span class="br0">&#41;</span>.<span class="me1">value</span><span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="sy0">:</span> <span class="nu0">0</span> <span class="sy0">;</span>
+  <span class="br0">&#125;</span><span class="sy0">,</span>
+  ...
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p><strong>Ejemplo extraído del código fuente de Gmail.com</strong></p>
+
+<div class="code javascript">
+<pre class="javascript">pf.<span class="kw1">prototype</span> <span class="sy0">=</span> <span class="br0">&#123;</span>
+  Ed<span class="sy0">:</span><span class="kw1">function</span><span class="br0">&#40;</span>a<span class="br0">&#41;</span><span class="br0">&#123;</span><span class="kw1">this</span>.<span class="me1">hm</span><span class="sy0">=</span>a<span class="br0">&#125;</span><span class="sy0">,</span>
+  dh<span class="sy0">:</span><span class="kw1">function</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#123;</span><span class="kw1">if</span><span class="br0">&#40;</span><span class="kw1">this</span>.<span class="me1">eb</span>.<span class="me1">Th</span><span class="sy0">&gt;</span><span class="nu0">0</span><span class="br0">&#41;</span> <span class="br0">&#123;</span><span class="kw1">var</span> a<span class="sy0">=</span><span class="kw4">Math</span>.<span class="me1">random</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">*</span><span class="nu0">100</span><span class="sy0">;</span> <span class="kw1">return</span> a<span class="sy0">&lt;</span><span class="kw1">this</span>.<span class="me1">eb</span>.<span class="me1">Th</span><span class="br0">&#125;</span> <span class="kw1">return</span> <span class="kw2">false</span> <span class="br0">&#125;</span><span class="sy0">,</span>
+  Sg<span class="sy0">:</span><span class="kw1">function</span><span class="br0">&#40;</span>a<span class="sy0">,</span>b<span class="sy0">,</span>c<span class="br0">&#41;</span><span class="br0">&#123;</span> <span class="kw1">this</span>.<span class="me1">Vd</span><span class="sy0">=</span><span class="nu0">2</span><span class="sy0">;</span> <span class="kw1">this</span>.<span class="me1">kb</span><span class="sy0">=</span>Ic<span class="br0">&#40;</span>a<span class="sy0">,</span><span class="kw2">true</span><span class="br0">&#41;</span><span class="sy0">;</span> <span class="kw1">this</span>.<span class="me1">Pc</span><span class="sy0">=</span>b<span class="sy0">;</span> <span class="kw1">this</span>.<span class="me1">Vl</span><span class="sy0">=</span>c<span class="sy0">;</span> <span class="kw1">this</span>.<span class="me1">Be</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#125;</span><span class="sy0">,</span>
+  ne<span class="sy0">:</span><span class="kw1">function</span><span class="br0">&#40;</span>a<span class="sy0">,</span>b<span class="sy0">,</span>c<span class="br0">&#41;</span><span class="br0">&#123;</span> <span class="kw1">this</span>.<span class="me1">Vd</span><span class="sy0">=</span><span class="nu0">2</span><span class="sy0">;</span> <span class="kw1">this</span>.<span class="me1">kb</span><span class="sy0">=</span>Ic<span class="br0">&#40;</span>a<span class="sy0">,</span><span class="kw2">true</span><span class="br0">&#41;</span><span class="sy0">;</span> <span class="kw1">this</span>.<span class="me1">Pc</span><span class="sy0">=</span><span class="kw2">null</span><span class="sy0">;</span> <span class="kw1">this</span>.<span class="me1">Vl</span><span class="sy0">=</span>b<span class="sy0">;</span> <span class="kw1">if</span><span class="br0">&#40;</span>c<span class="br0">&#41;</span><span class="br0">&#123;</span><span class="kw1">this</span>.<span class="me1">vm</span><span class="sy0">=</span><span class="kw2">false</span><span class="br0">&#125;</span> <span class="kw1">this</span>.<span class="me1">Be</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#125;</span><span class="sy0">,</span>
+  ...
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p><strong>Ejemplo extraído del código fuente de la librería prototype.js</strong></p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> Prototype <span class="sy0">=</span> <span class="br0">&#123;</span>
+  Version<span class="sy0">:</span> <span class="st0">'1.6.0.2'</span><span class="sy0">,</span>
+&nbsp;
+  ScriptFragment<span class="sy0">:</span> <span class="st0">'&lt;script[^&gt;]*&gt;([<span class="es0">\\</span>S<span class="es0">\\</span>s]*?)&lt;<span class="es0">\/</span>script&gt;'</span><span class="sy0">,</span>
+  JSONFilter<span class="sy0">:</span> <span class="co2">/^\/\*-secure-([\s\S]*)\*\/\s*$/</span><span class="sy0">,</span>
+&nbsp;
+  emptyFunction<span class="sy0">:</span> <span class="kw1">function</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span> <span class="br0">&#125;</span><span class="sy0">,</span>
+  K<span class="sy0">:</span> <span class="kw1">function</span><span class="br0">&#40;</span>x<span class="br0">&#41;</span> <span class="br0">&#123;</span> <span class="kw1">return</span> x <span class="br0">&#125;</span>
+<span class="br0">&#125;</span><span class="sy0">;</span></pre>
+</div>
+
+<p><strong>Ejemplo extraído del código fuente de Netvibes.com</strong></p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> App <span class="sy0">=</span> <span class="kw1">new</span> <span class="kw4">Object</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+App.<span class="me1">mode</span> <span class="sy0">=</span> <span class="st0">'userPage'</span><span class="sy0">;</span>
+App.<span class="me1">lang</span> <span class="sy0">=</span> <span class="st0">'es'</span><span class="sy0">;</span>
+App.<span class="me1">Modules</span> <span class="sy0">=</span> <span class="kw1">new</span> <span class="kw4">Object</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+App.<span class="me1">Modules</span>.<span class="me1">RssReaderInfos</span> <span class="sy0">=</span> <span class="br0">&#123;</span>
+  infos<span class="sy0">:</span> App.<span class="me1">Loc</span>.<span class="me1">defaultRssReader_infos</span><span class="sy0">,</span>
+  defaultObj<span class="sy0">:</span> <span class="br0">&#123;</span>status<span class="sy0">:</span><span class="nu0">1</span><span class="sy0">,</span> share<span class="sy0">:</span><span class="nu0">0</span><span class="sy0">,</span> title<span class="sy0">:</span><span class="st0">&quot;&quot;</span><span class="sy0">,</span> moduleName<span class="sy0">:</span><span class="st0">&quot;RssReader&quot;</span><span class="sy0">,</span> data<span class="sy0">:</span><span class="br0">&#123;</span><span class="br0">&#125;</span><span class="br0">&#125;</span>
+<span class="br0">&#125;</span>
+App.<span class="me1">Modules</span>.<span class="me1">GmailInfos</span> <span class="sy0">=</span> <span class="br0">&#123;</span>
+  title<span class="sy0">:</span> App.<span class="me1">Loc</span>.<span class="me1">defaultGmail_title</span><span class="sy0">,</span>
+  infos<span class="sy0">:</span> App.<span class="me1">Loc</span>.<span class="me1">defaultGmail_infos</span><span class="sy0">,</span>
+  defaultObj<span class="sy0">:</span><span class="br0">&#123;</span>status<span class="sy0">:</span><span class="nu0">1</span><span class="sy0">,</span> share<span class="sy0">:</span><span class="nu0">0</span><span class="sy0">,</span> title<span class="sy0">:</span>App.<span class="me1">Loc</span>.<span class="me1">defaultGmail_title</span><span class="sy0">,</span> moduleName<span class="sy0">:</span><span class="st0">&quot;Gmail&quot;</span><span class="sy0">,</span> data<span class="sy0">:</span><span class="br0">&#123;</span><span class="br0">&#125;</span><span class="br0">&#125;</span><span class="sy0">,</span>
+  path<span class="sy0">:</span> NV_PATH<span class="sy0">+</span><span class="st0">&quot;modules/gmail/gmail.js?v=5&quot;</span><span class="sy0">,</span>
+  ico<span class="sy0">:</span> NV_PATH<span class="sy0">+</span><span class="st0">&quot;img/gmail.gif&quot;</span>
+<span class="br0">&#125;</span>
+App.<span class="me1">Modules</span>.<span class="me1">WeatherInfos</span> <span class="sy0">=</span> <span class="br0">&#123;</span>
+  title<span class="sy0">:</span> App.<span class="me1">Loc</span>.<span class="me1">defaultWeather_title</span><span class="sy0">,</span>
+  infos<span class="sy0">:</span> App.<span class="me1">Loc</span>.<span class="me1">defaultWeather_infos</span><span class="sy0">,</span>
+  defaultObj<span class="sy0">:</span><span class="br0">&#123;</span>status<span class="sy0">:</span><span class="nu0">1</span><span class="sy0">,</span> share<span class="sy0">:</span><span class="nu0">0</span><span class="sy0">,</span> title<span class="sy0">:</span>App.<span class="me1">Loc</span>.<span class="me1">defaultWeather_title</span><span class="sy0">,</span> moduleName<span class="sy0">:</span><span class="st0">&quot;Weather&quot;</span><span class="sy0">,</span> data<span class="sy0">:</span><span class="br0">&#123;</span>town<span class="sy0">:</span><span class="st0">&quot;FRXX0076&quot;</span><span class="br0">&#125;</span><span class="br0">&#125;</span><span class="sy0">,</span>
+  path<span class="sy0">:</span> NV_PATH<span class="sy0">+</span><span class="st0">&quot;modules/weather/weather.js?v=2&quot;</span><span class="sy0">,</span>
+  ico<span class="sy0">:</span> NV_PATH<span class="sy0">+</span><span class="st0">&quot;img/weather.gif&quot;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p><strong>Ejemplo extraído del código fuente de Writeboard.com</strong></p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="co1">// ############</span>
+<span class="co1">// EXPORT MANAGER</span>
+<span class="co1">// ############</span>
+<span class="kw1">var</span> exportManager <span class="sy0">=</span> <span class="br0">&#123;</span>
+  show<span class="sy0">:</span> <span class="kw1">function</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    $<span class="br0">&#40;</span><span class="st0">'exportButton'</span><span class="br0">&#41;</span>.<span class="me1">src</span> <span class="sy0">=</span> <span class="st0">&quot;/images/b-export-on.gif&quot;</span>
+    showElement<span class="br0">&#40;</span><span class="st0">'download_export'</span><span class="br0">&#41;</span>
+  <span class="br0">&#125;</span><span class="sy0">,</span>
+&nbsp;
+  hide<span class="sy0">:</span> <span class="kw1">function</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    $<span class="br0">&#40;</span><span class="st0">'exportButton'</span><span class="br0">&#41;</span>.<span class="me1">src</span> <span class="sy0">=</span> <span class="st0">&quot;/images/b-export.gif&quot;</span>
+    hideElement<span class="br0">&#40;</span><span class="st0">'download_export'</span><span class="br0">&#41;</span>
+  <span class="br0">&#125;</span><span class="sy0">,</span>
+&nbsp;
+  toggle<span class="sy0">:</span> <span class="kw1">function</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    Element.<span class="me1">visible</span><span class="br0">&#40;</span><span class="st0">'download_export'</span><span class="br0">&#41;</span> <span class="sy0">?</span> <span class="kw1">this</span>.<span class="me1">hide</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="sy0">:</span> <span class="kw1">this</span>.<span class="me1">show</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p><strong>Ejemplo extraído del código fuente del framework Dojo</strong></p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> dojo<span class="sy0">;</span>
+<span class="kw1">if</span><span class="br0">&#40;</span>dj_undef<span class="br0">&#40;</span><span class="st0">&quot;dojo&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#123;</span> dojo <span class="sy0">=</span> <span class="br0">&#123;</span><span class="br0">&#125;</span><span class="sy0">;</span> <span class="br0">&#125;</span>
+&nbsp;
+dojo.<span class="me1">version</span> <span class="sy0">=</span> <span class="br0">&#123;</span>
+  major<span class="sy0">:</span> <span class="nu0">0</span><span class="sy0">,</span> minor<span class="sy0">:</span> <span class="nu0">2</span><span class="sy0">,</span> patch<span class="sy0">:</span> <span class="nu0">2</span><span class="sy0">,</span> flag<span class="sy0">:</span> <span class="st0">&quot;&quot;</span><span class="sy0">,</span>
+  revision<span class="sy0">:</span> <span class="kw4">Number</span><span class="br0">&#40;</span><span class="st0">&quot;$Rev: 2836 $&quot;</span>.<span class="me1">match</span><span class="br0">&#40;</span><span class="co2">/[0-9]+/</span><span class="br0">&#41;</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+  toString<span class="sy0">:</span> <span class="kw1">function</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    with <span class="br0">&#40;</span>dojo.<span class="me1">version</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+      <span class="kw1">return</span> major <span class="sy0">+</span> <span class="st0">&quot;.&quot;</span> <span class="sy0">+</span> minor <span class="sy0">+</span> <span class="st0">&quot;.&quot;</span> <span class="sy0">+</span> patch <span class="sy0">+</span> flag <span class="sy0">+</span> <span class="st0">&quot; (&quot;</span> <span class="sy0">+</span> revision <span class="sy0">+</span> <span class="st0">&quot;)&quot;</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>A partir de los ejemplos anteriores, se deduce que la forma habitual para definir los objetos en JavaScript se basa en el siguiente modelo creado con la notación JSON:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> objeto <span class="sy0">=</span> <span class="br0">&#123;</span>
+  <span class="st0">&quot;propiedad1&quot;</span><span class="sy0">:</span> valor_simple_1<span class="sy0">,</span> 
+  <span class="st0">&quot;propiedad2&quot;</span><span class="sy0">:</span> valor_simple_2<span class="sy0">,</span>
+  <span class="st0">&quot;propiedad3&quot;</span><span class="sy0">:</span> <span class="br0">&#91;</span>array1_valor1<span class="sy0">,</span> array1_valor2<span class="br0">&#93;</span><span class="sy0">,</span> 
+  <span class="st0">&quot;propiedad4&quot;</span><span class="sy0">:</span> <span class="br0">&#123;</span> <span class="st0">&quot;propiedad anidada&quot;</span><span class="sy0">:</span> valor <span class="br0">&#125;</span><span class="sy0">,</span>
+  <span class="st0">&quot;metodo1&quot;</span><span class="sy0">:</span> nombre_funcion_externa<span class="sy0">,</span> 
+  <span class="st0">&quot;metodo2&quot;</span><span class="sy0">:</span> <span class="kw1">function</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span> ... <span class="br0">&#125;</span><span class="sy0">,</span>
+  <span class="st0">&quot;metodo3&quot;</span><span class="sy0">:</span> <span class="kw1">function</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span> ... <span class="br0">&#125;</span><span class="sy0">,</span>
+  <span class="st0">&quot;metodo4&quot;</span><span class="sy0">:</span> <span class="kw1">function</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span> ... <span class="br0">&#125;</span>
+<span class="br0">&#125;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>En un mismo objeto se puede utilizar de forma simultánea la notación tradicional de JavaScript y la notación JSON:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> libro <span class="sy0">=</span> <span class="kw1">new</span> <span class="kw4">Object</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+libro.<span class="me1">numeroPaginas</span> <span class="sy0">=</span> <span class="nu0">150</span><span class="sy0">;</span>
+libro.<span class="me1">autores</span> <span class="sy0">=</span> <span class="br0">&#91;</span> <span class="br0">&#123;</span>id<span class="sy0">:</span> <span class="nu0">50</span><span class="br0">&#125;</span><span class="sy0">,</span> <span class="br0">&#123;</span>id<span class="sy0">:</span> <span class="nu0">67</span><span class="br0">&#125;</span> <span class="br0">&#93;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>El ejemplo anterior se puede reescribir utilizando solamente la notación tradicional:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> libro <span class="sy0">=</span> <span class="br0">&#123;</span> numeroPaginas<span class="sy0">:</span> <span class="nu0">150</span> <span class="br0">&#125;</span><span class="sy0">;</span>
+libro.<span class="me1">autores</span> <span class="sy0">=</span> <span class="kw1">new</span> <span class="kw4">Array</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+libro.<span class="me1">autores</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="kw1">new</span> <span class="kw4">Object</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+libro.<span class="me1">autores</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>.<span class="me1">id</span> <span class="sy0">=</span> <span class="nu0">50</span><span class="sy0">;</span>
+libro.<span class="me1">autores</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="kw1">new</span> <span class="kw4">Object</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+libro.<span class="me1">autores</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span>.<span class="me1">id</span> <span class="sy0">=</span> <span class="nu0">67</span><span class="sy0">;</span></pre>
+</div>
+
+<p>El ejemplo anterior también se puede reescribir utilizando exclusivamente la notación JSON:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> libro <span class="sy0">=</span> <span class="br0">&#123;</span> numeroPaginas<span class="sy0">:</span> <span class="nu0">150</span><span class="sy0">,</span> autores<span class="sy0">:</span> <span class="br0">&#91;</span><span class="br0">&#123;</span>id<span class="sy0">:</span> <span class="nu0">50</span><span class="br0">&#125;</span><span class="sy0">,</span> <span class="br0">&#123;</span>id<span class="sy0">:</span> <span class="nu0">67</span><span class="br0">&#125;</span><span class="br0">&#93;</span> <span class="br0">&#125;</span><span class="sy0">;</span></pre>
+</div>
+
+<p><div class="exercise"><p class="title">Ejercicio 1</p> <p>Definir la estructura de un objeto que almacena una factura. Las facturas están formadas por la información de la propia empresa (nombre de la empresa, dirección, teléfono, NIF), la información del cliente (similar a la de la empresa), una lista de elementos (cada uno de los cuales dispone de descripción, precio, cantidad) y otra información básica de la factura (importe total, tipo de iva, forma de pago).</p>
+
+<p>Una vez definidas las propiedades del objeto, añadir un método que calcule el importe total de la factura y actualice el valor de la propiedad correspondiente. Por último, añadir otro método que muestre por pantalla el importe total de la factura.</p>
+
+<p><a href="http://librosweb.es/ajax/capitulo_14.html">Ver solución</a></p></div></p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="capitulo_2/funciones_y_propiedades_basicas_de_javascript.html">&larr; Anterior <span>2.8. Funciones y propiedades básicas de JavaScript</span></a>
+            
+            <a class="span5 next" href="capitulo_3/clases.html">Siguiente &rarr; <span>3.2. Clases</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'JavaScript avanzado (Introducción a AJAX%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a AJAX : JavaScript avanzado']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="capitulo_1.html"> Introducción a AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="capitulo_2.html"> JavaScript básico</a>
+    </li>
+    <li class="level-1 active">
+        <a href="capitulo_3.html">
+            <span>Capítulo 3.</span> JavaScript avanzado
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="capitulo_3/clases.html">
+            <span>3.2.</span> Clases
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="capitulo_3/otros_conceptos.html">
+            <span>3.3.</span> Otros conceptos
+        </a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="capitulo_4.html"> DOM (Document Object Model)</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="capitulo_5.html"> BOM (Browser Object Model)</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="capitulo_6.html"> Eventos</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="capitulo_7.html"> Primeros pasos con AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="capitulo_8.html"> Técnicas básicas con AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="capitulo_9.html"> Técnicas avanzadas con AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="capitulo_10.html"> Frameworks y librerías</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="capitulo_11.html"> Otras utilidades</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="capitulo_12.html"> Recursos útiles</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="capitulo_13.html"> Bibliografía</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="capitulo_14.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

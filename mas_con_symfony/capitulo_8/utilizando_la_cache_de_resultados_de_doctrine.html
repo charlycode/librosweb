@@ -1,0 +1,424 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>8.2. Utilizando la cache de resultados de Doctrine (Más con Symfony)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="creando_un_comportamiento_de_doctrine.html" />
+        <link rel="next" href="creando_un_hydrator_de_doctrine.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="8.2. Utilizando la cache de resultados de Doctrine (Más con Symfony)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page mas_con_symfony">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Más con Symfony</a></li>
+  <li><a href="../capitulo_8.html">Capítulo 8. Uso avanzado de Doctrine</a></li>
+  <li class="current"><span>8.2.. Utilizando la cache de resultados de Doctrine</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="utilizando_la_cache_de_resultados_de_doctrine"><span>8.2.</span> Utilizando la cache de resultados de Doctrine</h1>
+    
+
+<p>En los sitios web con mucho tráfico es necesario guardar la información en
+caches para aliviar algunos recursos de la CPU. En la última versión de 
+doctrine 1.2 se han añadido muchas mejoras a la cache de resultados para tener
+un mejor control sobre el borrado de las entradas de la cache. Antes no se podía
+especificar la clave asociada con cada entrada de la cache, por lo que no era
+posible identificar correctamente la entrada que se quería borrar.</p>
+
+<p>En esta sección se muestra un ejemplo sencillo de cómo utilizar la cache de 
+resultados para guardar en ella todas las consultas relacionadas con los
+usuarios, así como el uso de eventos para borrar todas las entradas cuya
+información haya sido modificada.</p>
+
+<h3 id="el_esquema">8.2.1. El esquema</h3>
+
+<p>El siguiente esquema es el que se va a utilizar en este ejemplo:</p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co1"># config/doctrine/schema.yml</span><span class="co4">
+User</span>:<span class="co4">
+  columns</span>:<span class="co4">
+    username</span>:<span class="co3">
+      type</span><span class="sy2">: </span>string<span class="br0">&#40;</span><span class="nu0">255</span><span class="br0">&#41;</span><span class="co3">
+      notnull</span><span class="sy2">: </span>true<span class="co3">
+      unique</span><span class="sy2">: </span>true<span class="co4">
+    password</span>:<span class="co3">
+      type</span><span class="sy2">: </span>string<span class="br0">&#40;</span><span class="nu0">255</span><span class="br0">&#41;</span><span class="co3">
+      notnull</span><span class="sy2">: </span>true</pre>
+</div>
+
+<p>A continuación se crean todas las clases con el siguiente comando:</p>
+
+<div class="code cli">
+<pre class="cli">$ php symfony doctrine:build --all</pre>
+</div>
+
+<p>Después de ejecutarla, se habrá generado la siguiente clase llamada <code>User</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// lib/model/doctrine/User.class.php</span>
+<span class="co4">/**
+ * User
+ *
+ * This class has been auto-generated by the Doctrine ORM Framework
+ *
+ * @package    ##PACKAGE##
+ * @subpackage ##SUBPACKAGE##
+ * @author     ##NAME## &lt;##EMAIL##&gt;
+ * @version    SVN: $Id: Builder.php 6508 2009-10-14 06:28:49Z jwage $
+ */</span>
+<span class="kw2">class</span> User <span class="kw2">extends</span> BaseUser
+<span class="br0">&#123;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Más adelante se añadirá el código correspondiente en esta clase, así que no la
+pierdas de vista.</p>
+
+<h3 id="configurando_la_cache_de_resultados">8.2.2. Configurando la cache de resultados</h3>
+
+<p>Antes de utilizar la cache de resultados es necesario configurar el driver de
+la cache que utilizarán las consultas. Esta configuración se realiza mediante
+el atributo <code>ATTR_RESULT_CACHE</code>. En este ejemplo se hace uso del driver APC
+porque es la mejor elección para los entornos de producción. Si no dispones de
+APC, puedes utilizar los drivers <code>Doctrine_Cache_Db</code> o <code>Doctrine_Cache_Array</code>
+para hacer las pruebas.</p>
+
+<p>Este atributo se puede definir en la clase <code>ProjectConfiguration</code>, añadiendo
+un método llamado <code>configureDoctrine()</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// config/ProjectConfiguration.class.php</span>
+&nbsp;
+<span class="co1">// ...</span>
+<span class="kw2">class</span> ProjectConfiguration <span class="kw2">extends</span> sfProjectConfiguration
+<span class="br0">&#123;</span>
+  <span class="co1">// ...</span>
+&nbsp;
+  <span class="kw2">public</span> <span class="kw2">function</span> configureDoctrine<span class="br0">&#40;</span>Doctrine_Manager <span class="re0">$manager</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$manager</span><span class="sy0">-&gt;</span><span class="me1">setAttribute</span><span class="br0">&#40;</span>Doctrine_Core<span class="sy0">::</span><span class="me2">ATTR_RESULT_CACHE</span><span class="sy0">,</span> <span class="kw2">new</span> Doctrine_Cache_Apc<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Una vez configurado el driver de la cache, ya se puede hacer uso de este driver
+para almacenar en la cache el resultado de las búsquedas.</p>
+
+<h3 id="consultas_de_prueba">8.2.3. Consultas de prueba</h3>
+
+<p>Imagina que tu aplicación tiene varias consultas relacionadas con los usuarios
+y que quieres borrarlas de la cache cada vez que se modifica alguna información 
+del usuario.</p>
+
+<p>La siguiente consulta se puede utilizar para mostrar una lista completa de 
+todos los usuarios ordenados alfabéticamente:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$q</span> <span class="sy0">=</span> Doctrine_Core<span class="sy0">::</span><span class="me2">getTable</span><span class="br0">&#40;</span><span class="st_h">'User'</span><span class="br0">&#41;</span>
+    <span class="sy0">-&gt;</span><span class="me1">createQuery</span><span class="br0">&#40;</span><span class="st_h">'u'</span><span class="br0">&#41;</span>
+    <span class="sy0">-&gt;</span><span class="me1">orderBy</span><span class="br0">&#40;</span><span class="st_h">'u.username ASC'</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Para guardar el resultado de esa consulta en la cache, se utiliza el método
+<code>useResultCache()</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$q</span><span class="sy0">-&gt;</span><span class="me1">useResultCache</span><span class="br0">&#40;</span><span class="kw4">true</span><span class="sy0">,</span> <span class="nu0">3600</span><span class="sy0">,</span> <span class="st_h">'users_index'</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> El tercer argumento del método es muy importante, ya que es la clave con la que
+se asociarán los resultados en el driver de la cache. De esta forma es posible
+identificar fácilmente a esa consulta para borrarla más adelante.</p></div>
+
+<p>Cuando se ejecuta el código anterior, se realiza la consulta a la base de datos
+y los resultados se guardan en el driver de la cache bajo la clave <code>users_index</code>.
+Cuando se vuelve a ejecutar el código anterior, los resultados se obtienen
+directamente de la cache en vez de realizar la consulta en la base de datos:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$usuarios</span> <span class="sy0">=</span> <span class="re0">$q</span><span class="sy0">-&gt;</span><span class="me1">execute</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> La cache no sólo ahorra recursos en el servidor de base de datos, sino que 
+también evita todo el procesamiento de los registros, llamado <em>hidratación</em>.
+Doctrine guarda en la cache los registros ya procesados, por lo que también
+se liberan recursos del servidor web.</p></div>
+
+<p>Si ahora se busca en el driver de la cache, se obtiene una entrada llamada
+<code>users_index</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw1">if</span> <span class="br0">&#40;</span><span class="re0">$cacheDriver</span><span class="sy0">-&gt;</span><span class="me1">contains</span><span class="br0">&#40;</span><span class="st_h">'users_index'</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="kw1">echo</span> <span class="st_h">'existe la cache'</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+<span class="kw1">else</span>
+<span class="br0">&#123;</span>
+  <span class="kw1">echo</span> <span class="st_h">'no existe la cache'</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<h3 id="borrando_la_cache">8.2.4. Borrando la cache</h3>
+
+<p>Ahora que la consulta ya se ha guardado en la cache, el siguiente paso consiste
+en aprender a borrar esa cache. El borrado se puede realizar manualmente con
+la API del driver de la cache o se pueden utilizar los eventos para borrar la
+cache automáticamente cuando se inserta o modifica un usuario.</p>
+
+<h4 id="la_api_del_driver_de_la_cache">8.2.4.1. La API del driver de la cache</h4>
+
+<p>Antes de utilizarla en un evento, se va a mostrar el uso manual de la API del
+driver de la cache.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> La instancia del driver de la cache se puede obtener mediante la instancia de
+la clase <code>Doctrine_Manager</code>.</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$cacheDriver</span> <span class="sy0">=</span> <span class="re0">$manager</span><span class="sy0">-&gt;</span><span class="me1">getAttribute</span><span class="br0">&#40;</span>Doctrine_Core<span class="sy0">::</span><span class="me2">ATTR_RESULT_CACHE</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Si no está definida la variable <code>$manager</code>, puedes obtener la instancia
+correspondiente con el siguiente código.</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$manager</span> <span class="sy0">=</span> Doctrine_Manager<span class="sy0">::</span><span class="me2">getInstance</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p></p></div>
+
+<p>Ahora ya se puede hacer uso de la API para borrar las entradas de la cache:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$cacheDriver</span><span class="sy0">-&gt;</span><span class="me1">delete</span><span class="br0">&#40;</span><span class="st_h">'users_index'</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Seguramente la cache contendrá más de una consulta relacionada con los
+usuarios y todas ellas harán uso del mismo prefijo <code>users_</code> así que el método
+<code>delete()</code> no es muy útil en este caso. En su lugar se puede utilizar el método
+<code>deleteByPrefix()</code> para borrar la cache de todas las consultas que contengan el
+prefijo indicado:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$cacheDriver</span><span class="sy0">-&gt;</span><span class="me1">deleteByPrefix</span><span class="br0">&#40;</span><span class="st_h">'users_'</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Si el método <code>deleteByPrefix()</code> no es suficiente, existen otros métodos muy
+útiles para borrar entradas de la cache:</p>
+
+<ul>
+<li><code>deleteBySuffix($sufijo)</code>: borra las entradas de la cache que contengan el
+sufijo indicado.</li>
+<li><code>deleteByRegex($regex)</code>: borra las entradas de la cache cuya clave
+cumpla con la expresión regular indicada.</li>
+<li><code>deleteAll()</code>: borra todas las entradas de la cache.</li>
+</ul>
+
+<h3 id="borrando_con_eventos">8.2.5. Borrando con eventos</h3>
+
+<p>La forma ideal de borrar la cache consiste en que se borre automáticamente
+cada vez que se modifica algún dato del usuario. Para ello, sólo es necesario
+configurar un evento en el método <code>postSave()</code> de la clase del modelo <code>User</code>.</p>
+
+<p>¿Recuerdas la clase <code>User</code> creada anteriormente? Abre la clase con tu editor
+favorito y añade el código del siguiente método <code>postSave()</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// lib/model/doctrine/User.class.php</span>
+&nbsp;
+<span class="kw2">class</span> User <span class="kw2">extends</span> BaseUser
+<span class="br0">&#123;</span>
+  <span class="co1">// ...</span>
+&nbsp;
+  <span class="kw2">public</span> <span class="kw2">function</span> postSave<span class="br0">&#40;</span><span class="re0">$event</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$cacheDriver</span> <span class="sy0">=</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getTable</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">getAttribute</span><span class="br0">&#40;</span>Doctrine_Core<span class="sy0">::</span><span class="me2">ATTR_RESULT_CACHE</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$cacheDriver</span><span class="sy0">-&gt;</span><span class="me1">deleteByPrefix</span><span class="br0">&#40;</span><span class="st_h">'users_'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Ahora, cada vez que se actualiza un usuario y cada vez que se inserta un nuevo
+usuario, se borran de la cache todas las consultas relacionadas con los usuarios:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$user</span> <span class="sy0">=</span> <span class="kw2">new</span> User<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$user</span><span class="sy0">-&gt;</span><span class="me1">username</span> <span class="sy0">=</span> <span class="st_h">'jwage'</span><span class="sy0">;</span>
+<span class="re0">$user</span><span class="sy0">-&gt;</span><span class="me1">password</span> <span class="sy0">=</span> <span class="st_h">'changeme'</span><span class="sy0">;</span>
+<span class="re0">$user</span><span class="sy0">-&gt;</span><span class="me1">save</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Después de ejecutar el código anterior, la próxima vez que se realicen las consultas
+de los usuarios no existirá una cache con los resultados, por lo que se volverán
+a realizar las consultas en la base de datos. En las siguientes consultas,
+volverán a utilizarse las entradas guardadas en la cache.</p>
+
+<p>Aunque el ejemplo mostrado es muy sencillo, es útil para hacerse una idea de 
+cómo se puede utilizar esta característica de Doctrine para tener un control
+muy preciso de la forma en la que se guardan las consultas en la cache.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="creando_un_comportamiento_de_doctrine.html">&larr; Anterior <span>8.1. Creando un comportamiento de Doctrine</span></a>
+            
+            <a class="span5 next" href="creando_un_hydrator_de_doctrine.html">Siguiente &rarr; <span>8.3. Creando un hydrator de Doctrine</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Utilizando la cache de resultados de Doctrine (Más con Symfony%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Más con Symfony : Utilizando la cache de resultados de Doctrine']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Enrutamiento avanzado</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Mejora tu productividad</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Emails</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Widgets y validadores propios</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Formularios avanzados</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Mejorando la barra de depuración web</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_8.html">
+            <span>Capítulo 8.</span> Uso avanzado de Doctrine
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="creando_un_comportamiento_de_doctrine.html">
+            <span>8.1.</span> Creando un comportamiento de Doctrine
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="utilizando_la_cache_de_resultados_de_doctrine.html">
+            <span>8.2.</span> Utilizando la cache de resultados de Doctrine
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="creando_un_hydrator_de_doctrine.html">
+            <span>8.3.</span> Creando un hydrator de Doctrine
+        </a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Utilizando la herencia de tablas de Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Funcionamiento interno de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Windows y Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Desarrollando aplicaciones Facebook</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Descubriendo el poder de la línea de comandos</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Jugando con la cache de configuración de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Trabajando con la comunidad Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>A</span> <a href="../apendice_a.html"> Código JavaScript de sfWidgetFormGMapAddress</a>
+    </li>
+    <li class="level-1">
+        <span>B</span> <a href="../apendice_b.html"> Ejemplo de instalador propio</a>
+    </li>
+    <li class="level-1">
+        <span>C</span> <a href="../apendice_c.html"> Licencia</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

@@ -1,0 +1,290 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>15.1. Automatización de pruebas (Symfony 1.4, la guía definitiva)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="../capitulo_15.html" />
+        <link rel="next" href="pruebas_unitarias.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="15.1. Automatización de pruebas (Symfony 1.4, la guía definitiva)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page symfony_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Symfony 1.4, la guía definitiva</a></li>
+  <li><a href="../capitulo_15.html">Capítulo 15. Pruebas unitarias y funcionales</a></li>
+  <li class="current"><span>15.1.. Automatización de pruebas</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="automatizacion_de_pruebas"><span>15.1.</span> Automatización de pruebas</h1>
+    
+
+<p>Cualquier programador con experiencia en el desarrollo de aplicaciones web conoce de sobra el esfuerzo que supone probar correctamente la aplicación. Crear casos de prueba, ejecutarlos y analizar sus resultados es una tarea tediosa. Además, es habitual que los requisitos de la aplicación varíen constantemente, con el consiguiente aumento del número de versiones de la aplicación y la refactorización continua del código. En este contexto, es muy probable que aparezcan nuevos errores.</p>
+
+<p>Este es el motivo por el que la automatización de pruebas es una recomendación, aunque no una obligación, útil para crear un entorno de desarrollo satisfactorio. Los conjuntos de casos de prueba garantizan que la aplicación hace lo que se supone que debe hacer. Incluso cuando el código interno de la aplicación cambia constantemente, las pruebas automatizadas permiten garantizar que los cambios no introducen incompatibilidades en el funcionamiento de la aplicación. Además, este tipo de pruebas obligan a los programadores a crear pruebas en un formato estandarizado y muy rígido que pueda ser procesado por un framework de pruebas.</p>
+
+<p>En ocasiones, las pruebas automatizadas pueden reemplazar la documentación técnica de la aplicación, ya que ilustran de forma clara el funcionamiento de la aplicación. Un buen conjunto de pruebas muestra la salida que produce la aplicación para una serie de entradas de prueba, por lo que es suficiente para entender el propósito de cada método.</p>
+
+<p>Symfony aplica este principio a su propio código. El código interno del framework se valida mediante pruebas automáticas. Estas pruebas unitarias y funcionales no se incluyen en la distribución estándar de Symfony, pero se pueden descargar directamente desde el repositorio de Subversion y se pueden acceder online en http://trac.symfony-project.org/browser/branches/1.2/test</p>
+
+<h3 id="pruebas_unitarias_y_funcionales">15.1.1. Pruebas unitarias y funcionales</h3>
+
+<p>Las pruebas unitarias aseguran que un único componente de la aplicación produce una salida correcta para una determinada entrada. Este tipo de pruebas validan la forma en la que las funciones y métodos trabajan en cada caso particular. Las pruebas unitarias se encargan de un único caso cada vez, lo que significa que un único método puede necesitar varias pruebas unitarias si su funcionamiento varía en función del contexto.</p>
+
+<p>Las pruebas funcionales no solo validan la transformación de una entrada en una salida, sino que validan una característica completa. Un sistema de cache por ejemplo solamente puede ser validado por una prueba funcional, ya que comprende más de 1 solo paso: la primera vez que se solicita una página, se produce su código; la segunda vez, se obtiene directamente de la cache. De modo que las pruebas funcionales validan procesos y requieren de un escenario. En Symfony, se deberían crear pruebas funcionales para todas las acciones.</p>
+
+<p>Para las interacciones más complejas, estos 2 tipos de pruebas no son suficientes. Las interacciones de Ajax, por ejemplo, requieren de un navegador web que ejecute código JavaScript, por lo que es necesaria una herramienta externa para la automatización de las pruebas. Además, los efectos visuales solamente pueden ser validados por una persona.</p>
+
+<p>Si las pruebas automatizadas van a validar una aplicación compleja, probablemente sea necesario el uso combinado de estos 3 tipos de pruebas. Como recomendación final, es aconsejable crear pruebas sencillas y fáciles de entender.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Las pruebas automatizadas comparan un resultado con la salida esperada para ese método. En otras palabras, evalúan "asertos" (del inglés, <em>"assertions"</em>, que son expresiones del tipo <code>$a == 2</code>. El valor de salida de un aserto es <code>true</code> o <code>false</code>, lo que determina si la prueba tiene éxito o falla. La palabra "aserto" es de uso común en las técnicas de automatización de pruebas.</p></div>
+
+<h3 id="desarrollo_basado_en_pruebas">15.1.2. Desarrollo basado en pruebas</h3>
+
+<p>La metodología conocida como TDD o "desarrollo basado en pruebas"  <em>"test-driven development"</em>) establece que las pruebas se escriben antes que el código de la aplicación. Crear las pruebas antes que el código, ayuda a pensar y centrarse en el funcionamiento de un método antes de programarlo. Se trata de una buena práctica que también recomiendan otras metodologías como XP  <em>"Extreme Programming"</em>). Además, es un hecho innegable que si no se escriben las pruebas antes, se acaba sin escribirlas nunca.</p>
+
+<p>En el siguiente ejemplo se supone que se quiere desarrollar una función elimine los caracteres problemáticos de una cadena de texto. La función elimina todos los espacios en blanco del principio y del final de la cadena; además, reemplaza todos los caracteres que no son alfanuméricos por guiones bajos y transforma todas las mayúsculas en minúsculas. En el desarrollo basado en pruebas, en primer lugar se piensa en todos los posibles casos de funcionamiento de este método y se elabora una serie de entradas de prueba junto con el resultado esperado para cada una, como se muestra en la tabla 15-1.</p>
+
+<p><strong>Tabla 15-1 - Lista de casos de prueba para la función que elimina caracteres problemáticos</strong></p>
+
+<div class="table" id="table_15_1">
+
+    <table>
+<thead>
+<tr>
+  <th>Dato de entrada</th>
+  <th>Resultado esperado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>" valor "</code></td>
+  <td><code>"valor"</code></td>
+</tr>
+<tr>
+  <td><code>"valor otrovalor"</code></td>
+  <td><code>"valor_otrovalor"</code></td>
+</tr>
+<tr>
+  <td><code>"-)valor:..=otrovalor?"</code></td>
+  <td><code>"__valor____otrovalor_"</code></td>
+</tr>
+<tr>
+  <td><code>"OtroValor"</code></td>
+  <td><code>"otrovalor</code>"</td>
+</tr>
+<tr>
+  <td><code>"¡Un valor y otro valor!"</code></td>
+  <td><code>"_un_valor_y_otro_valor_"</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+<p>A continuación, se crearían las pruebas unitarias, se ejecutarían y todas fallarían. Después, se escribe el código necesario para realizar correctamente el primer caso y se vuelven a pasar todas las pruebas. En esta ocasión, la primera prueba no fallaría. Así se seguiría desarrollando el código del método completo hasta que todas las pruebas se pasen correctamente.</p>
+
+<p>Una aplicación desarrollada con la metodología basada en pruebas, acaba teniendo tanto código para pruebas como código para aplicación. Por tanto, las pruebas deberían ser sencillas para no perder el tiempo arreglando los problemas con el código de las pruebas.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Refactorizar el código de un método puede crear errores que antes no existían. Esta es otra razón por la que es una buena idea pasar todas las pruebas creadas antes de instalar una nueva versión de la aplicación en el servidor de producción. Esta técnica se conoce como <em>"regression testing"</em>.</p></div>
+
+<h3 id="el_framework_de_pruebas_lime">15.1.3. El framework de pruebas Lime</h3>
+
+<p>En el ámbito de PHP existen muchos frameworks para crear pruebas unitarias, siendo los más conocidos PhpUnit y SimpleTest. Symfony incluye su propio frameowrk llamado Lime. Se basa en la librería <code>Test::More</code> de Perl y es compatible con TAP, lo que significa que los resultados de las pruebas se muestran con el formato definido en el <em>"Test Anything Protocol"</em>, creado para facilitar la lectura de los resultados de las pruebas.</p>
+
+<p>Lime proporciona el soporte para las pruebas unitarias, es más eficiente que otros frameworks de pruebas de PHP y tiene las siguientes ventajas:</p>
+
+<ul>
+<li>Ejecuta los archivos de prueba en un entorno independiente para evitar interferencias entre las diferentes pruebas. No todos los frameworks de pruebas garantizan un entorno de ejecución "limpio" para cada prueba.</li>
+<li>Las pruebas de Lime son fáciles de leer y sus resultados también lo son. En los sistemas operativos que lo soportan, los resultados de Lime utilizan diferentes colores para mostrar de forma clara la información más importante.</li>
+<li>Symfony utiliza Lime para sus propias pruebas y su "regression testing", por lo que el código fuente de Symfony incluye muchos ejemplos reales de pruebas unitarias y funcionales.</li>
+<li>El núcleo de Lime se valida mediante pruebas unitarias.</li>
+<li>Está escrito con PHP, es muy rápido y está bien diseñado internamente. Consta úicamente de un archivo, llamado <code>lime.php</code>, y no tiene ninguna dependencia.</li>
+</ul>
+
+<p>Las pruebas que se muestran en las secciones siguientes utilizan la sintaxis de Lime, por lo que funcionan directamente en cualquier instalación de Symfony.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Las pruebas unitarias y funcionales no están pensadas para lanzarlas en un servidor de producción. Se trata de herramientas para el programador, por lo que solamente deberían ejecutarse en la máquina de desarrollo del programador y no en un servidor de producción.</p></div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="../capitulo_15.html">&larr; Anterior <span>Capítulo 15. Pruebas unitarias y funcionales</span></a>
+            
+            <a class="span5 next" href="pruebas_unitarias.html">Siguiente &rarr; <span>15.2. Pruebas unitarias</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Automatización de pruebas (Symfony 1.4, la guía definitiva%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Symfony 1.4, la guía definitiva : Automatización de pruebas']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción a Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Explorando el interior de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Ejecutar aplicaciones Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Introducción a la creación de páginas</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Configurar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> El Controlador</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> La Vista</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> El modelo (Doctrine)</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Enlaces y sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Emails</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Uso de la cache</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Generador de la parte de administración</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_15.html">
+            <span>Capítulo 15.</span> Pruebas unitarias y funcionales
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="automatizacion_de_pruebas.html">
+            <span>15.1.</span> Automatización de pruebas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="pruebas_unitarias.html">
+            <span>15.2.</span> Pruebas unitarias
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="pruebas_funcionales.html">
+            <span>15.3.</span> Pruebas funcionales
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="recomendaciones_sobre_el_nombre_de_las_pruebas.html">
+            <span>15.4.</span> Recomendaciones sobre el nombre de las pruebas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="otras_utilidades_para_pruebas.html">
+            <span>15.5.</span> Otras utilidades para pruebas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="resumen.html">
+            <span>15.6.</span> Resumen
+        </a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Herramientas para la administración de aplicaciones</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> Personalizar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> Rendimiento</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Configuración avanzada</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

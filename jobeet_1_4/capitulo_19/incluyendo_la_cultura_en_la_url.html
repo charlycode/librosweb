@@ -1,0 +1,339 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>19.2. Incluyendo la cultura en la URL (El tutorial Jobeet)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="el_usuario.html" />
+        <link rel="next" href="probando_la_cultura.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="19.2. Incluyendo la cultura en la URL (El tutorial Jobeet)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page jobeet_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">El tutorial Jobeet</a></li>
+  <li><a href="../capitulo_19.html">Capítulo 19. Internacionalización y localización</a></li>
+  <li class="current"><span>19.2.. Incluyendo la cultura en la URL</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="incluyendo_la_cultura_en_la_url"><span>19.2.</span> Incluyendo la cultura en la URL</h1>
+    
+
+<p>El sitio web de Jobeet está disponible en inglés y francés. Como una misma URL sólo puede representar un único recurso, debemos incluir la cultura como parte de la URL. Para ello, abre el archivo <code>routing.yml</code> y añade la variable especial <code>:sf_culture</code> en todas las rutas salvo en <code>api_jobs</code> y <code>homepage</code>. En las rutas sencillas, añade <code>/:sf_culture</code> al principio de la URL. En las colecciones de rutas, añade <code>/:sf_culture</code> al principio del valor de la opción <code>prefix_path</code>.</p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co1"># apps/frontend/config/routing.yml</span><span class="co4">
+affiliate</span>:<span class="co3">
+  class</span><span class="sy2">: </span>sfPropelRouteCollection<span class="co4">
+  options</span>:<span class="co3">
+    model</span><span class="sy2">: </span>         JobeetAffiliate<span class="co3">
+    actions</span><span class="sy2">: </span>       <span class="br0">&#91;</span>new, create<span class="br0">&#93;</span><span class="co3">
+    object_actions</span><span class="sy2">: </span><span class="br0">&#123;</span> wait<span class="sy2">: </span>get <span class="br0">&#125;</span><span class="co3">
+    prefix_path</span><span class="sy2">: </span>   /:sf_culture/affiliate
+<span class="co4">
+category</span>:<span class="co3">
+  url</span><span class="sy2">: </span>    /:sf_culture/category/:slug.:sf_format<span class="co3">
+  class</span><span class="sy2">: </span>  sfPropelRoute<span class="co3">
+  param</span><span class="sy2">: </span>  <span class="br0">&#123;</span> module<span class="sy2">: </span>category, action<span class="sy2">: </span>show, sf_format<span class="sy2">: </span>html <span class="br0">&#125;</span><span class="co3">
+  options</span><span class="sy2">: </span><span class="br0">&#123;</span> model<span class="sy2">: </span>JobeetCategory, type<span class="sy2">: </span>object <span class="br0">&#125;</span><span class="co4">
+  requirements</span>:<span class="co3">
+    sf_format</span><span class="sy2">: </span><span class="br0">&#40;</span>?:html|atom<span class="br0">&#41;</span>
+<span class="co4">
+job_search</span>:<span class="co3">
+  url</span><span class="sy2">: </span>  /:sf_culture/search<span class="co3">
+  param</span><span class="sy2">: </span><span class="br0">&#123;</span> module<span class="sy2">: </span>job, action<span class="sy2">: </span>search <span class="br0">&#125;</span>
+<span class="co4">
+job</span>:<span class="co3">
+  class</span><span class="sy2">: </span>sfPropelRouteCollection<span class="co4">
+  options</span>:<span class="co3">
+    model</span><span class="sy2">: </span>         JobeetJob<span class="co3">
+    column</span><span class="sy2">: </span>        token<span class="co3">
+    object_actions</span><span class="sy2">: </span><span class="br0">&#123;</span> publish<span class="sy2">: </span>put, extend<span class="sy2">: </span>put <span class="br0">&#125;</span><span class="co3">
+    prefix_path</span><span class="sy2">: </span>   /:sf_culture/job<span class="co4">
+  requirements</span>:<span class="co3">
+    token</span><span class="sy2">: </span>\w+
+<span class="co4">
+job_show_user</span>:<span class="co3">
+  url</span><span class="sy2">: </span>    /:sf_culture/job/:company_slug/:location_slug/:id/:position_slug<span class="co3">
+  class</span><span class="sy2">: </span>  sfPropelRoute<span class="co4">
+  options</span>:<span class="co3">
+    model</span><span class="sy2">: </span>JobeetJob<span class="co3">
+    type</span><span class="sy2">: </span> object<span class="co3">
+    method_for_criteria</span><span class="sy2">: </span>doSelectActive<span class="co3">
+  param</span><span class="sy2">: </span>  <span class="br0">&#123;</span> module<span class="sy2">: </span>job, action<span class="sy2">: </span>show <span class="br0">&#125;</span><span class="co4">
+  requirements</span>:<span class="co3">
+    id</span><span class="sy2">: </span>       \d+<span class="co3">
+    sf_method</span><span class="sy2">: </span>get</pre>
+</div>
+
+<p>Cuando se incluye la variable <code>sf_culture</code> en una ruta, Symfony utiliza su valor para modificar automáticamente la cultura del usuario.</p>
+
+<p>Como tenemos tantas portadas como idiomas soportados por la aplicación (<code>/en/</code>, <code>/fr/</code>, ...), la portada por defecto (<code>/</code>) debe redirigir al usuario a la portada adecuada en función de su cultura. Sin embargo, si es la primera vez que el usuario entra en Jobeet, el usuario todavía no tiene definida su cultura, por lo que debemos elegir la cultura que mejor se adapte al usuario.</p>
+
+<p>En primer lugar, añade el método <code>isFirstRequest()</code> en la clase <code>myUser</code>. Se trata de un método sencillo que devuelve <code>true</code> sólo para la primera petición realizada en cada sesión de usuario:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// apps/frontend/lib/myUser.class.php</span>
+<span class="kw2">public</span> <span class="kw2">function</span> isFirstRequest<span class="br0">&#40;</span><span class="re0">$boolean</span> <span class="sy0">=</span> <span class="kw4">null</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="kw1">if</span> <span class="br0">&#40;</span><span class="kw3">is_null</span><span class="br0">&#40;</span><span class="re0">$boolean</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="kw1">return</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getAttribute</span><span class="br0">&#40;</span><span class="st_h">'first_request'</span><span class="sy0">,</span> <span class="kw4">true</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+  <span class="kw1">else</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">setAttribute</span><span class="br0">&#40;</span><span class="st_h">'first_request'</span><span class="sy0">,</span> <span class="re0">$boolean</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Añade también una ruta llamada <code>localized_homepage</code>:</p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co1"># apps/frontend/config/routing.yml</span><span class="co4">
+localized_homepage</span>:<span class="co3">
+  url</span><span class="sy2">: </span>  /:sf_culture/<span class="co3">
+  param</span><span class="sy2">: </span><span class="br0">&#123;</span> module<span class="sy2">: </span>job, action<span class="sy2">: </span>index <span class="br0">&#125;</span><span class="co4">
+  requirements</span>:<span class="co3">
+    sf_culture</span><span class="sy2">: </span><span class="br0">&#40;</span>?:fr|en<span class="br0">&#41;</span></pre>
+</div>
+
+<p>A continuación, modifica la acción <code>index</code> del módulo <code>job</code> para incluir la lógica que se encarga de redirigir al usuario a la mejor portada cuando realiza la primera petición de su sesión de usuario:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// apps/frontend/modules/job/actions/actions.class.php</span>
+<span class="kw2">public</span> <span class="kw2">function</span> executeIndex<span class="br0">&#40;</span>sfWebRequest <span class="re0">$request</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="kw1">if</span> <span class="br0">&#40;</span><span class="sy0">!</span><span class="re0">$request</span><span class="sy0">-&gt;</span><span class="me1">getParameter</span><span class="br0">&#40;</span><span class="st_h">'sf_culture'</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="kw1">if</span> <span class="br0">&#40;</span><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getUser</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">isFirstRequest</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="re0">$culture</span> <span class="sy0">=</span> <span class="re0">$request</span><span class="sy0">-&gt;</span><span class="me1">getPreferredCulture</span><span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'en'</span><span class="sy0">,</span> <span class="st_h">'fr'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+      <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getUser</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">setCulture</span><span class="br0">&#40;</span><span class="re0">$culture</span><span class="br0">&#41;</span><span class="sy0">;</span>
+      <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getUser</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">isFirstRequest</span><span class="br0">&#40;</span><span class="kw4">false</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+    <span class="kw1">else</span>
+    <span class="br0">&#123;</span>
+      <span class="re0">$culture</span> <span class="sy0">=</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getUser</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">getCulture</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">redirect</span><span class="br0">&#40;</span><span class="st_h">'@localized_homepage'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">categories</span> <span class="sy0">=</span> JobeetCategoryPeer<span class="sy0">::</span><span class="me2">getWithJobs</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Si no existe la variable <code>sf_culture</code> en la petición, eso significa que el usuario ha entrado en la URL <code>/</code>. Si estamos en ese caso y la sesión es nueva, se utiliza la cultura preferida por el usuario. En otro caso, se sigue utilizando la cultura actual del usuario.</p>
+
+<p>El último paso consiste en redirigir al usuario a la ruta <code>localized_homepage</code>. Si te fijas en el código anterior, en la redirección no hemos incluido el valor de la variable <code>sf_culture</code>, ya que Symfony se encarga de añadirla automáticamente.</p>
+
+<p>Si ahora intentas acceder a la URL <code>/it/</code>, Symfony devuelve un error de tipo <code>404</code> porque hemos restringido los posibles valores de la variable <code>sf_culture</code> a <code>en</code> o <code>fr</code>. Por tanto, añade este requerimiento en todas las rutas que incluyen la cultura:</p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co4">requirements</span>:<span class="co3">
+  sf_culture</span><span class="sy2">: </span><span class="br0">&#40;</span>?:fr|en<span class="br0">&#41;</span></pre>
+</div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="el_usuario.html">&larr; Anterior <span>19.1. El usuario</span></a>
+            
+            <a class="span5 next" href="probando_la_cultura.html">Siguiente &rarr; <span>19.3. Probando la cultura</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Incluyendo la cultura en la URL (El tutorial Jobeet%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'El tutorial Jobeet : Incluyendo la cultura en la URL']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Comenzando el proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> El proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> El modelo de datos</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> El controlador y la vista</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> El sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Profundizando en el modelo</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Trabajando con la página de cada categoría</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Pruebas unitarias</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Pruebas funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Probando los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> El generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> El usuario</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> El día de descanso</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Canales Atom</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Servicios web</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> El buscador</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> AJAX</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_19.html">
+            <span>Capítulo 19.</span> Internacionalización y localización
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_usuario.html">
+            <span>19.1.</span> El usuario
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="incluyendo_la_cultura_en_la_url.html">
+            <span>19.2.</span> Incluyendo la cultura en la URL
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="probando_la_cultura.html">
+            <span>19.3.</span> Probando la cultura
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="cambiando_de_idioma.html">
+            <span>19.4.</span> Cambiando de idioma
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="internacionalizacion.html">
+            <span>19.5.</span> Internacionalización
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="localizacion.html">
+            <span>19.6.</span> Localización
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="nos_vemos_manana.html">
+            <span>19.7.</span> Nos vemos mañana
+        </a>
+    </li>
+    <li class="level-1">
+        <span>20</span> <a href="../capitulo_20.html"> Plugins</a>
+    </li>
+    <li class="level-1">
+        <span>21</span> <a href="../capitulo_21.html"> El día del diseño</a>
+    </li>
+    <li class="level-1">
+        <span>22</span> <a href="../capitulo_22.html"> La cache</a>
+    </li>
+    <li class="level-1">
+        <span>23</span> <a href="../capitulo_23.html"> Pasando a producción</a>
+    </li>
+    <li class="level-1">
+        <span>24</span> <a href="../capitulo_24.html"> Un repaso a Symfony</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

@@ -1,0 +1,388 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>4.9. Git en un alojamiento externo (Pro Git, el libro oficial de Git)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="el_demonio_git.html" />
+        <link rel="next" href="resumen.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="4.9. Git en un alojamiento externo (Pro Git, el libro oficial de Git)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page pro_git">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Pro Git, el libro oficial de Git</a></li>
+  <li><a href="../capitulo_4.html">Capítulo 4. Git en un servidor</a></li>
+  <li class="current"><span>4.9.. Git en un alojamiento externo</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="git_en_un_alojamiento_externo"><span>4.9.</span> Git en un alojamiento externo</h1>
+    
+
+<p>Si no quieres realizar todo el trabajo de preparar tu propio servidor Git, tienes varias opciones para alojar tus proyectos Git en una ubicación externa dedicada. Esta forma de trabajar tiene varias ventajas: un alberge externo suele ser rápido de configurar y sencillo de iniciar proyectos en él; además de no ser necesario preocuparte de su mantenimiento ni de su monitorización. Incluso en el caso de que tengas tu propio servidor interno, puede resultar interesante utilizar también un lugar público; para albergar tu código abierto — normalmente, ahí suele ser más sencillo de localizar por parte de la comunidad —.</p>
+
+<p>Actualmente tienes un gran número de opciones del alojamiento, cada una con sus ventajas y desventajas. Para obtener una lista actualizada, puedes mirar en la página GitHosting del wiki principal de Git:</p>
+
+<div class="code code">
+<pre class="code">http://git.or.cz/gitwiki/GitHosting</pre>
+</div>
+
+<p>Por ser imposible el cubrir todos ellos, y porque da la casualidad de que trabajo en uno de ellos, concretamente, en esta sección veremos cómo crear una cuenta y nuevos proyectos albergados en <code>GitHub</code>. Así podrás hacerte una idea de cómo suelen funcionar estos alberges externos.</p>
+
+<p>GitHub es, de lejos, el mayor sitio de alberge público de proyectos Git de código abierto. Y es también uno de los pocos que ofrece asimismo opciones de alberge privado; de tal forma que puedes tener tanto tus proyectos de código abierto y como los de código comercial cerrado en un mismo emplazamiento. De hecho, nosotros utilizamos también GitHub para colaborar privadamente en este libro.</p>
+
+<h3 id="github">4.9.1. GitHub</h3>
+
+<p>GitHub es ligeramente distinto a otros sitios de alberge, en tanto en cuanto que contempla espacios de nombres para los proyectos. En lugar de estar focalizado en los proyectos, GitHub gira en torno a los usuarios. Esto significa que, cuando alojo mi proyecto <code>grit</code> en GitHub, no lo encontraras bajo <code>github.com/grit</code>, sino bajo <code>github.com/schacon/grit</code>. No existe una versión canónica de ningún proyecto, lo que permite a cualquiera de ellos ser movido facilmente de un usuario a otro en el caso de que el primer autor lo abandone.</p>
+
+<p>GitHub es también una compañia comercial, que cobra por las cuentas que tienen repositorios privados. Pero, para albergar proyectos públicos de código abierto, cualquiera puede crear una cuenta gratuita. Vamos a ver cómo hacerlo.</p>
+
+<h3 id="configurando_una_cuenta_de_usuario">4.9.2. Configurando una cuenta de usuario</h3>
+
+<p>El primer paso es dar de alta una cuenta gratuita. Si visitas la página de Precios e Inicio de Sesión, en <code>http://github.com/plans</code>, y clicas sobre el botón <em>"Registro"</em> (<em>"Sign Up"</em>) de las cuentas gratuitas, verás una página de registro:</p>
+
+<div class="figure" id="figure_4_2">
+    <img src="../../img/pro_git/18333fig0402.png" alt="La página de planes GitHub" />
+
+    <p class="caption"><strong>Figura 4.2</strong> La página de planes GitHub</p>
+</div>
+
+
+<p>En ella, has de elegir un nombre de usuario que esté libre, indicar una cuenta de correo electrónico y poner una contraseña.</p>
+
+<div class="figure" id="figure_4_3">
+    <img src="../../img/pro_git/18333fig0403.png" alt="El formulario de registro en GitHub" />
+
+    <p class="caption"><strong>Figura 4.3</strong> El formulario de registro en GitHub</p>
+</div>
+
+
+<p>Si la tuvieras, es también un buen momento para añadir tu clave pública SSH. Veremos cómo generar una de estas claves, más adelante, en la sección <em>"Ajustes Simples"</em>. Pero, si ya tienes un par de claves SSH, puedes coger el contenido correspondiente a la clave pública y pegarlo en la caja de texto preparada para tal fin. El enlace <em>"explicar claves ssh"</em> (<em>"explain ssh keys"</em>) te llevará a unas detalladas instrucciones de cómo generarlas en la mayor parte de los principales sistemas operativos.</p>
+
+<p>Clicando sobre el botón de <em>"Estoy de acuerdo, registramé"</em> (<em>"I agree, sign me up"</em>), irás al panel de control de tu recién creado usuario.</p>
+
+<div class="figure" id="figure_4_4">
+    <img src="../../img/pro_git/18333fig0404.png" alt="El panel de control del usuario GitHub" />
+
+    <p class="caption"><strong>Figura 4.4</strong> El panel de control del usuario GitHub</p>
+</div>
+
+
+<p>A continuación, puedes crear nuevos repositorios.</p>
+
+<h3 id="creando_un_nuevo_repositorio">4.9.3. Creando un nuevo repositorio</h3>
+
+<p>Puedes empezar clicando sobre el enlace <em>"crear uno nuevo"</em> (<em>"create a new one"</em>), en la zona <em>"Tus repositorios"</em> (<em>Your Repositories</em>) del panel de control. Irás al formulario de Crear un Nuevo Repositório (ver Figura 4-5).</p>
+
+<div class="figure" id="figure_4_5">
+    <img src="../../img/pro_git/18333fig0405.png" alt="Creando un nuevo repositório en GitHub" />
+
+    <p class="caption"><strong>Figura 4.5</strong> Creando un nuevo repositório en GitHub</p>
+</div>
+
+
+<p>Es suficiente con dar un nombre al proyecto, pero también puedes añadirle una descripción. Cuando lo hayas escrito, clica sobre el botón <em>"Crear Repositório"</em> (<em>Create Repository</em>). Y ya tienes un nuevo repositório en GitHub (ver Figura 4-6)</p>
+
+<div class="figure" id="figure_4_6">
+    <img src="../../img/pro_git/18333fig0406.png" alt="Información de cabecera de un proyecto GitHub" />
+
+    <p class="caption"><strong>Figura 4.6</strong> Información de cabecera de un proyecto GitHub</p>
+</div>
+
+
+<p>Como aún no tienes código, GitHub mostrará instrucciones sobre cómo iniciar un nuevo proyecto, cómo enviar (<em>push</em>) un proyecto Git preexistente, o cómo importar un proyecto desde un repositório público Subversion (ver Figura 4-7).</p>
+
+<div class="figure" id="figure_4_7">
+    <img src="../../img/pro_git/18333fig0407.png" alt="Instrucciones para un nuevo repositório" />
+
+    <p class="caption"><strong>Figura 4.7</strong> Instrucciones para un nuevo repositório</p>
+</div>
+
+
+<p>Estas instrucciones son similares a las que ya hemos visto. Para inicializar un proyecto, no siendo aún un proyecto Git, sueles utilizar:</p>
+
+<div class="code code">
+<pre class="code">$ git init
+$ git add .
+$ git commit -m 'initial commit'</pre>
+</div>
+
+<p>Una vez tengas un repositorio local Git, añadele el sitio GitHub como un remoto y envia (<em>push</em>) allí tu rama principal:</p>
+
+<div class="code code">
+<pre class="code">$ git remote add origin git@github.com:testinguser/iphone_project.git
+$ git push origin master</pre>
+</div>
+
+<p>Así, tu proyecto estará alojado en GitHub; y podrás dar su URL a cualquiera con quien desees compartirlo. En este ejemplo, la URL es <code>http://github.com/testinguser/iphone_project</code>. En la página de cabecera de cada uno de tus proyectos, podrás ver dos URLs (ver Figura 4-8).</p>
+
+<div class="figure" id="figure_4_8">
+    <img src="../../img/pro_git/18333fig0408.png" alt="Cabecera de proyecto, con una URL pública y otra URL privada" />
+
+    <p class="caption"><strong>Figura 4.8</strong> Cabecera de proyecto, con una URL pública y otra URL privada</p>
+</div>
+
+
+<p>El enlace <em>"Public Clone URL"</em>, es un enlace público, de solo lectura; a través del cual cualquiera puede clonar el proyecto. Puedes comunicar libremente ese URL o puedes publicarlo en tu sitio web o en cualquier otro médio que desees.</p>
+
+<p>El enlace <em>"Your Clone URL"</em>, es un enlace de lectura/escritura basado en SSH; a través del cual puedes leer y escribir, pero solo si te conectas con la clave SSH privada correspondiente a la clave pública que has cargado para tu usuario. Cuando otros usuarios visiten la página del proyecto, no verán esta segunda URL — solo verán la URL pública —.</p>
+
+<h3 id="importacion_desde_subversion">4.9.4. Importación desde Subversion</h3>
+
+<p>Si tienes un proyecto público Subversion que deseas pasar a Git, GitHub suele poder realizar la importación. All fondo de la página de instrucciones, tienes un enlace <em>"Subversion import"</em>. Si clicas sobre dicho enlace, verás un formulario con información sobre el proceso de importación y un cuadro de texto donde puedes pegar la URL de tu proyecto Subversion (ver Figura 4-9).</p>
+
+<div class="figure" id="figure_4_9">
+    <img src="../../img/pro_git/18333fig0409.png" alt="El interface de importación desde Subversion" />
+
+    <p class="caption"><strong>Figura 4.9</strong> El interface de importación desde Subversion</p>
+</div>
+
+
+<p>Si tu proyecto es muy grande, no-estandar o privado, es muy posible que no se pueda importar. En el <a class="internal" href="../capitulo_7.html#capitulo7">capítulo 7</a>, aprenderás cómo realizar importaciones manuales de proyectos complejos.</p>
+
+<h3 id="anadiendo_colaboradores">4.9.5. Añadiendo colaboradores</h3>
+
+<p>Vamos a añadir al resto del equipo. Si tanto John, como Josie, como Jessica, todos ellos registran sus respectivas cuentas en GitHub. Y deseas darles acceso de escritura a tu repositorio. Puedes incluirlos en tu proyecto como colaboradores. De esta forma, funcionarán los envios (<em>push</em>) desde sus respectivas claves públicas.</p>
+
+<p>Has de hacer clic sobre el botón <em>"edit"</em> en la cabecera del proyecto o en la pestaña Admin de la parte superior del proyecto; yendo así a la página de administración del proyecto GitHub.</p>
+
+<div class="figure" id="figure_4_10">
+    <img src="../../img/pro_git/18333fig0410.png" alt="Página de administración GitHub" />
+
+    <p class="caption"><strong>Figura 4.10</strong> Página de administración GitHub</p>
+</div>
+
+
+<p>Para dar acceso de escritura a otro usuario, clica sobre el enlace <em>"Add another collaborator"</em>. Aparecerá un cuadro de texto, donde podrás teclear un nombre. Según  tecleas, aparecerá un cuadro de ayuda, mostrando posibles nombres de usuario que encajen con lo tecleado. Cuando localices al usuario deseado, clica sobre el botón <em>"Add"</em> para añadirlo como colaborador en tu proyecto (ver Figura 4-11).</p>
+
+<div class="figure" id="figure_4_11">
+    <img src="../../img/pro_git/18333fig0411.png" alt="Añadirendo un colaborador a tu proyecto" />
+
+    <p class="caption"><strong>Figura 4.11</strong> Añadirendo un colaborador a tu proyecto</p>
+</div>
+
+
+<p>Cuando termines de añadir colaboradores, podrás ver a todos ellos en la lista <em>"Repository Collaborators"</em> (ver Figura 4-12).</p>
+
+<div class="figure" id="figure_4_12">
+    <img src="../../img/pro_git/18333fig0412.png" alt="Lista de colaboradores en tu proyecto" />
+
+    <p class="caption"><strong>Figura 4.12</strong> Lista de colaboradores en tu proyecto</p>
+</div>
+
+
+<p>Si deseas revocar el acceso a alguno de ellos, puedes clicar sobre el enlace <em>"revoke"</em>, y sus permisos de envio (<em>push</em>) serán revocados. En proyectos futuros, podras incluir también a tu grupo de colaboradores copiando los permisos desde otro proyecto ya existente.</p>
+
+<h3 id="tu_proyecto">4.9.6. Tu proyecto</h3>
+
+<p>Una vez hayas enviado (<em>push</em>) tu proyecto, o lo hayas importado desde Subversion, tendrás una página principal de proyecto tal como:</p>
+
+<div class="figure" id="figure_4_13">
+    <img src="../../img/pro_git/18333fig0413.png" alt="Una página principal de proyecto GitHub" />
+
+    <p class="caption"><strong>Figura 4.13</strong> Una página principal de proyecto GitHub</p>
+</div>
+
+
+<p>Cuando la gente visite tu proyecto, verá esta página. Tiene pestañas que llevan a distintos aspectos del proyecto. La pestaña <em>"Commits"</em> muestra una lista de confirmaciones de cambio, en orden cronológico inverso, de forma similar a la salida del comando <code>git log</code>. La pestaña <em>"Network"</em> muestra una lista de toda la gente que ha bifurcado (<em>forked</em>) tu proyecto y ha contribuido a él. La pestaña <em>"Downloads"</em> permite cargar binarios del proyecto y enlaza con tarballs o versiones comprimidas de cualquier punto marcado (<em>tagged</em>) en tu proyecto. La pestaña <em>"Wiki"</em> enlaza con un espacio wiki donde puedes escribir documentación o cualquier otra información relevante sobre tu proyecto. La pestaña "Graphs" muestra diversas visualizaciones sobre contribuciones y estadísticas de tu proyecto. La pestaña principal <em>"Source"</em> en la que aterrizas cuando llegas al proyecto, muestra un listado de la carpeta principal; y muestra también el contenido del archivo <code>README</code>, si tienes uno en ella. Esta pestaña muestra también un cuadro con información sobre la última confirmación de cambio (<em>commit</em>) realizada en el proyecto.</p>
+
+<h3 id="bifurcando_proyectos">4.9.7. Bifurcando proyectos</h3>
+
+<p>Si deseas contribuir a un proyecto ya existente, en el que no tengas permisos de envio (<em>push</em>). GitHub recomienda bifurcar el proyecto. Cuando aterrizas en la página de un proyecto que te parece interesante y con el que deseas trastear un poco, puedes clicar sobre el botón <em>"fork"</em> de la cabecera del proyecto; de tal forma que GitHub haga una copia del proyecto a tu cuenta de usuario y puedas así enviar (<em>push</em>) cambios sobre él.</p>
+
+<p>De esta forma, los proyectos no han de preocuparse de añadir usuarios como colaboradores para darles acceso de envio (<em>push</em>). La gente puede bifurcar (<em>fork</em>) un proyecto y enviar (<em>push</em>) sobre su propia copia. El gestor del proyecto principal, puede recuperar (<em>pull</em>) esos cambios añadiendo las copias como remotos y fusionando (<em>merge</em>) el trabajo en ellas contenido.</p>
+
+<p>Para bifurcar un proyecto, visita su página (en el ejemplo, mojombo/chronic) y clica sobre el botón <em>"fork"</em> de su cabecera (ver Figura 4-14)</p>
+
+<div class="figure" id="figure_4_14">
+    <img src="../../img/pro_git/18333fig0414.png" alt="&quot;Obtener una copia sobre la que escribir, clicando sobre el botón &quot;fork&quot; de un repositorio&quot;" />
+
+    <p class="caption"><strong>Figura 4.14</strong> &quot;Obtener una copia sobre la que escribir, clicando sobre el botón &quot;fork&quot; de un repositorio&quot;</p>
+</div>
+
+
+<p>Tras unos segundos, serás redirigido a la página del nuevo proyecto; y en ella se verá que este proyecto es una bifuración (<em>fork</em>) de otro existente (ver Figura 4-15).</p>
+
+<div class="figure" id="figure_4_15">
+    <img src="../../img/pro_git/18333fig0415.png" alt="&quot;Tu bifurcación (*fork*) de un proyecto&quot;" />
+
+    <p class="caption"><strong>Figura 4.15</strong> &quot;Tu bifurcación (*fork*) de un proyecto&quot;</p>
+</div>
+
+
+<h3 id="resumen_de_github">4.9.8. Resumen de GitHub</h3>
+
+<p>Esto es todo lo que vamos a ver aquí sobre GitHub, pero merece la pena destacar lo rápido que puedes hacer todo esto. Puedes crear una cuenta, añadir un nuevo proyecto y contribuir a él en cuestión de minutos. Si tu proyecto es de código abierto, puedes tener también una amplia comunidad de desarrolladores que podrán ver tu proyecto, bifurcarlo (<em>fork</em>) y ayudar contribuyendo a él. Y, por último, comentar que esta puede ser una buena manera de iniciarte y comenzar rápidamente a trabajar con Git.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="el_demonio_git.html">&larr; Anterior <span>4.8. El demonio Git</span></a>
+            
+            <a class="span5 next" href="resumen.html">Siguiente &rarr; <span>4.10. Resumen</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Git en un alojamiento externo (Pro Git, el libro oficial de Git%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Pro Git, el libro oficial de Git : Git en un alojamiento externo']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Empezando</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Fundamentos de Git</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Trabajando con ramas en Git</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_4.html">
+            <span>Capítulo 4.</span> Git en un servidor
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="los_protocolos.html">
+            <span>4.1.</span> Los Protocolos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="poniendo_git_en_un_servidor.html">
+            <span>4.2.</span> Poniendo Git en un Servidor
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="generando_tu_clave_publica_ssh.html">
+            <span>4.3.</span> Generando tu clave pública SSH
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="preparando_el_servidor.html">
+            <span>4.4.</span> Preparando el servidor
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="acceso_publico.html">
+            <span>4.5.</span> Acceso público
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="gitweb.html">
+            <span>4.6.</span> GitWeb
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="gitosis.html">
+            <span>4.7.</span> Gitosis
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_demonio_git.html">
+            <span>4.8.</span> El demonio Git
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="git_en_un_alojamiento_externo.html">
+            <span>4.9.</span> Git en un alojamiento externo
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="resumen.html">
+            <span>4.10.</span> Resumen
+        </a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Git en entornos distribuidos</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Las herramientas de Git</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Personalizando Git</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Git y otros sistemas</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Funcionamiento interno de Git</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

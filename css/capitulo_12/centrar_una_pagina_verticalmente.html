@@ -1,0 +1,286 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>12.2. Centrar una página verticalmente (Introducción a CSS)</title>
+        <link href="../main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="centrar_una_pagina_horizontalmente.html" />
+        <link rel="next" href="estructura_o_layout.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="12.2. Centrar una página verticalmente (Introducción a CSS)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page css">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Introducción a CSS</a></li>
+  <li><a href="../capitulo_12.html">Capítulo 12. Layout</a></li>
+  <li class="current"><span>12.2.. Centrar una página verticalmente</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="centrar_una_pagina_verticalmente"><span>12.2.</span> Centrar una página verticalmente</h1>
+    
+
+<p>Cuando se centra una página web de forma horizontal, sus márgenes laterales se adaptan dinámicamente de forma que la página siempre aparece en el centro de la ventana del navegador, independientemente de la anchura de la ventana. De la misma forma, cuando se centra una página web verticalmente, el objetivo es que sus contenidos aparezcan en el centro de la ventana del navegador y por tanto, que sus márgenes verticales se adapten de forma dinámica en función del tamaño de la ventana del navegador.</p>
+
+<p>Aunque centrar una página web horizontalmente es muy sencillo, centrarla verticalmente es mucho más complicado. Afortunadamente, no es muy común que una página web aparezca centrada de forma vertical. El motivo es que la mayoría de páginas web son más altas que la ventana del navegador, por lo que no es posible centrarlas verticalmente.</p>
+
+<p>A continuación se muestra la forma de centrar una página web respecto de la ventana del navegador, es decir, centrarla tanto horizontalmente como verticalmente.</p>
+
+<p>Siguiendo el mismo razonamiento que el planteado para centrar la página horizontalmente, se podrían utilizar las siguientes reglas CSS para centrar la página respecto de la ventana del navegador:</p>
+
+<div class="code css">
+<pre class="css"><span class="re0">#contenedor</span> <span class="br0">&#123;</span>
+  <span class="kw1">width</span><span class="sy0">:</span> <span class="re3">300px</span><span class="sy0">;</span>
+  <span class="kw1">height</span><span class="sy0">:</span> <span class="re3">250px</span><span class="sy0">;</span>
+  <span class="kw1">margin</span><span class="sy0">:</span> <span class="kw2">auto</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+&lt;body<span class="sy0">&gt;</span>
+  &lt;div id<span class="sy0">=</span><span class="st0">&quot;contenedor&quot;</span><span class="sy0">&gt;</span>
+    &lt;h1<span class="sy0">&gt;</span>Lorem ipsum dolor sit amet&lt;/h1<span class="sy0">&gt;</span>
+    ...
+  &lt;/div<span class="sy0">&gt;</span>
+&lt;/body<span class="sy0">&gt;</span></pre>
+</div>
+
+<p>Si el valor <code>auto</code> se puede utilizar para que los márgenes laterales se adapten dinámicamente, también debería ser posible utilizar el valor <code>auto</code> para los márgenes verticales. Desafortunadamente, la propiedad <code>margin: auto</code> no funciona tal y como se espera para los márgenes verticales y la página no se muestra centrada.</p>
+
+<p>La solución correcta para centrar verticalmente una página web se basa en el posicionamiento absoluto e implica realizar un cálculo matemático sencillo. A continuación se muestra el esquema gráfico de los cuatro pasos necesarios para centrar una página web en la ventana del navegador:</p>
+
+<div class="figure" id="figure_12_7">
+    <img src="../../img/css/f1212.gif" alt="Pasos necesarios para centrar verticalmente una página web" />
+
+    <p class="caption"><strong>Figura 12.7</strong> Pasos necesarios para centrar verticalmente una página web</p>
+</div>
+
+
+<p>En primer lugar, se asigna una altura y una anchura al elemento que encierra todos los contenidos de la página. En la primera figura, los contenidos de la página tienen una anchura llamada <code>width</code> y una altura llamada <code>height</code> que son menores que la anchura y altura de la ventana del navegador. En el siguiente ejemplo, se supone que tanto la anchura como la altura de la página es igual a <code>500px</code>:</p>
+
+<div class="code css">
+<pre class="css"><span class="re0">#contenedor</span> <span class="br0">&#123;</span>
+  <span class="kw1">width</span><span class="sy0">:</span> <span class="re3">500px</span><span class="sy0">;</span>
+  <span class="kw1">height</span><span class="sy0">:</span> <span class="re3">500px</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+&lt;body<span class="sy0">&gt;</span>
+  &lt;div id<span class="sy0">=</span><span class="st0">&quot;contenedor&quot;</span><span class="sy0">&gt;</span>
+    &lt;h1<span class="sy0">&gt;</span>Lorem ipsum dolor sit amet&lt;/h1<span class="sy0">&gt;</span>
+    ...
+  &lt;/div<span class="sy0">&gt;</span>
+&lt;/body<span class="sy0">&gt;</span></pre>
+</div>
+
+<p>A continuación, se posiciona de forma absoluta el elemento <code>contenedor</code> y se asigna un valor de <code>50%</code> tanto a la propiedad <code>top</code> como a la propiedad <code>left</code>. El resultado es que la esquina superior izquierda del elemento <code>contenedor</code> se posiciona en el centro de la ventana del navegador:</p>
+
+<div class="code css">
+<pre class="css"><span class="re0">#contenedor</span> <span class="br0">&#123;</span>
+  <span class="kw1">width</span><span class="sy0">:</span> <span class="re3">500px</span><span class="sy0">;</span>
+  <span class="kw1">height</span><span class="sy0">:</span> <span class="re3">500px</span><span class="sy0">;</span>
+&nbsp;
+  <span class="kw1">position</span><span class="sy0">:</span> <span class="kw2">absolute</span><span class="sy0">;</span>
+  <span class="kw1">top</span><span class="sy0">:</span> <span class="re3">50%</span><span class="sy0">;</span>
+  <span class="kw1">left</span><span class="sy0">:</span> <span class="re3">50%</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Si la página se debe mostrar en el centro de la ventana del navegador, es necesario desplazar hacia arriba y hacia la izquierda los contenidos de la página web. Para determinar el desplazamiento necesario, se realiza un cálculo matemático sencillo. Como se ve en la tercera figura del esquema anterior, el punto central de la página debe desplazarse hasta el centro de la ventana del navegador.</p>
+
+<p>Como se desprende de la imagen anterior, la página web debe moverse hacia arriba una cantidad igual a la mitad de su altura y debe desplazarse hacia la izquierda una cantidad equivalente a la mitad de su anchura. Utilizando las propiedades <code>margin-top</code> y <code>margin-left</code> con valores negativos, la página se desplaza hasta el centro de la ventana del navegador.</p>
+
+<div class="code css">
+<pre class="css"><span class="re0">#contenedor</span> <span class="br0">&#123;</span>
+  <span class="kw1">width</span><span class="sy0">:</span> <span class="re3">500px</span><span class="sy0">;</span>
+  <span class="kw1">height</span><span class="sy0">:</span> <span class="re3">500px</span><span class="sy0">;</span>
+&nbsp;
+  <span class="kw1">position</span><span class="sy0">:</span> <span class="kw2">absolute</span><span class="sy0">;</span>
+  <span class="kw1">top</span><span class="sy0">:</span> <span class="re3">50%</span><span class="sy0">;</span>
+  <span class="kw1">left</span><span class="sy0">:</span> <span class="re3">50%</span><span class="sy0">;</span>
+&nbsp;
+  <span class="kw1">margin-top</span><span class="sy0">:</span> <span class="re3">-250px</span><span class="sy0">;</span>   <span class="coMULTI">/* height/2 = 500px / 2 */</span>
+  <span class="kw1">margin-left</span><span class="sy0">:</span> <span class="re3">-250px</span><span class="sy0">;</span>  <span class="coMULTI">/* width/2 = 500px / 2 */</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Con las reglas CSS anteriores, la página web siempre aparece centrada verticalmente y horizontalmente respecto de la ventana del navegador. El motivo es que la anchura/altura de la página son fijas (propiedades <code>width</code> y <code>height</code>), el desplazamiento necesario para centrarla también es fijo (propiedades <code>margin-top</code> y <code>margin-left</code>) y el desplazamiento hasta el centro de la ventana del navegador se calcula dinámicamente gracias al uso de porcentajes en las propiedades <code>top</code> y <code>left</code>.</p>
+
+<p>Para centrar una página sólo verticalmente, se debe prescindir tanto del posicionamiento horizontal como del desplazamiento horizontal:</p>
+
+<div class="code css">
+<pre class="css"><span class="re0">#contenedor</span> <span class="br0">&#123;</span>
+  <span class="kw1">width</span><span class="sy0">:</span> <span class="re3">500px</span><span class="sy0">;</span>
+  <span class="kw1">height</span><span class="sy0">:</span> <span class="re3">500px</span><span class="sy0">;</span>
+&nbsp;
+  <span class="kw1">position</span><span class="sy0">:</span> <span class="kw2">absolute</span><span class="sy0">;</span>
+  <span class="kw1">top</span><span class="sy0">:</span> <span class="re3">50%</span><span class="sy0">;</span>
+&nbsp;
+  <span class="kw1">margin-top</span><span class="sy0">:</span> <span class="re3">-250px</span><span class="sy0">;</span>   <span class="coMULTI">/* height/2 = 500px / 2 */</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="centrar_una_pagina_horizontalmente.html">&larr; Anterior <span>12.1. Centrar una página horizontalmente</span></a>
+            
+            <a class="span5 next" href="estructura_o_layout.html">Siguiente &rarr; <span>12.3. Estructura o layout</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Centrar una página verticalmente (Introducción a CSS%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a CSS : Centrar una página verticalmente']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Selectores</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Unidades de medida y colores</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Modelo de cajas</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Posicionamiento y visualización</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Texto</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Enlaces</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Imágenes</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Listas</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Tablas</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Formularios</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_12.html">
+            <span>Capítulo 12.</span> Layout
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="centrar_una_pagina_horizontalmente.html">
+            <span>12.1.</span> Centrar una página horizontalmente
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="centrar_una_pagina_verticalmente.html">
+            <span>12.2.</span> Centrar una página verticalmente
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="estructura_o_layout.html">
+            <span>12.3.</span> Estructura o layout
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="alturas_anchuras_maximas_y_minimas.html">
+            <span>12.4.</span> Alturas/anchuras máximas y mínimas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="estilos_avanzados.html">
+            <span>12.5.</span> Estilos avanzados
+        </a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Otros</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Recursos útiles</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Ejercicios</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

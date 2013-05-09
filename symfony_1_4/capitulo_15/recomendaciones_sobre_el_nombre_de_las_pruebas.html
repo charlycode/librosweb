@@ -1,0 +1,265 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>15.4. Recomendaciones sobre el nombre de las pruebas (Symfony 1.4, la guía definitiva)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="pruebas_funcionales.html" />
+        <link rel="next" href="otras_utilidades_para_pruebas.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="15.4. Recomendaciones sobre el nombre de las pruebas (Symfony 1.4, la guía definitiva)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page symfony_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Symfony 1.4, la guía definitiva</a></li>
+  <li><a href="../capitulo_15.html">Capítulo 15. Pruebas unitarias y funcionales</a></li>
+  <li class="current"><span>15.4.. Recomendaciones sobre el nombre de las pruebas</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="recomendaciones_sobre_el_nombre_de_las_pruebas"><span>15.4.</span> Recomendaciones sobre el nombre de las pruebas</h1>
+    
+
+<p>En esta sección se presentan algunas de las buenas prácticas para mantener bien organizadas las pruebas y facilitar su mantenimiento. Los consejos abarcan la organización de los archivos, de las pruebas unitarias y de las pruebas funcionales.</p>
+
+<p>En lo que respecta a la estructura de archivos, los archivos de las pruebas unitarias deberían nombrarse según la clase que se supone que están probando y las pruebas funcionales deberían nombrarse en función del módulo o escenario que se supone que están probando. El listado 15-29 muestra un ejemplo de estas recomendaciones. Como el número de archivos en el directorio <code>test/</code> puede crecer muy rápidamente, si no se siguen estas recomendaciones, es posible que sea muy difícil encontrar el archivo de una prueba determinada.</p>
+
+<p><strong>Listado 15-29 - Ejemplo de recomendaciones sobre el nombre de los archivos</strong></p>
+
+<div class="code code">
+<pre class="code">test/
+      unit/
+        miFuncionTest.php
+        miSegundaFuncionTest.php
+        foo/
+          barTest.php
+      functional/
+        frontend/
+          miModuloActionsTest.php
+          miEscenarioTest.php
+        backend/
+          miOtroEscenarioTest.php</pre>
+</div>
+
+<p>En las pruebas unitarias, una buena práctica consiste en agrupar las pruebas según la función o método y comenzar cada grupo de pruebas con una llamada al método <code>diag()</code>. Los mensajes de cada prueba unitaria deberían mostrar el nombre de la función o método que se prueba, seguido de un verbo y una propiedad, de forma que el resultado que se muestra parezca una frase que describe una propiedad de un objeto. El listado 15-30 muestra un ejemplo.</p>
+
+<p><strong>Listado 15-30 - Ejemplo de recomendaciones para las pruebas unitarias</strong></p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// strtolower()</span>
+<span class="re0">$t</span><span class="sy0">-&gt;</span><span class="me1">diag</span><span class="br0">&#40;</span><span class="st_h">'strtolower()'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$t</span><span class="sy0">-&gt;</span><span class="me1">isa_ok</span><span class="br0">&#40;</span><span class="kw3">strtolower</span><span class="br0">&#40;</span><span class="st_h">'Foo'</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="st_h">'string'</span><span class="sy0">,</span> <span class="st_h">'strtolower() devuelve una cadena de texto'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$t</span><span class="sy0">-&gt;</span><span class="me1">is</span><span class="br0">&#40;</span><span class="kw3">strtolower</span><span class="br0">&#40;</span><span class="st_h">'FOO'</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="st_h">'foo'</span><span class="sy0">,</span> <span class="st_h">'strtolower() transforma la entrada en minúsculas'</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<div class="code cli">
+<pre class="cli"># strtolower()
+ok 1 - strtolower() devuelve una cadena de texto
+ok 2 - strtolower() transforma la entrada en minúsculas</pre>
+</div>
+
+<p>Las pruebas funcionales deberían agruparse por página y deberían comenzar con una petición. El listado 15-31 muestra un ejemplo de esta práctica.</p>
+
+<p><strong>Listado 15-31 - Ejemplo de recomendaciones para las pruebas funcionales</strong></p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$browser</span><span class="sy0">-&gt;</span>
+  <span class="me1">get</span><span class="br0">&#40;</span><span class="st_h">'/foobar/index'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+  <span class="me1">isStatusCode</span><span class="br0">&#40;</span><span class="nu0">200</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+  <span class="me1">isRequestParameter</span><span class="br0">&#40;</span><span class="st_h">'module'</span><span class="sy0">,</span> <span class="st_h">'foobar'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+  <span class="me1">isRequestParameter</span><span class="br0">&#40;</span><span class="st_h">'action'</span><span class="sy0">,</span> <span class="st_h">'index'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+  <span class="me1">checkResponseElement</span><span class="br0">&#40;</span><span class="st_h">'body'</span><span class="sy0">,</span> <span class="st_h">'/foobar/'</span><span class="br0">&#41;</span>
+<span class="sy0">;</span></pre>
+</div>
+
+<div class="code cli">
+<pre class="cli"># get /comment/index
+ok 1 - status code is 200
+ok 2 - request parameter module is foobar
+ok 3 - request parameter action is index
+ok 4 - response selector body matches regex /foobar/</pre>
+</div>
+
+<p>Si se sigue esta recomendación, el resultado de la prueba es lo suficientemente claro como para utilizarlo como documentación técnica del proyecto, ya que puede hacer innecesaria la propia documentación de la aplicación.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="pruebas_funcionales.html">&larr; Anterior <span>15.3. Pruebas funcionales</span></a>
+            
+            <a class="span5 next" href="otras_utilidades_para_pruebas.html">Siguiente &rarr; <span>15.5. Otras utilidades para pruebas</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Recomendaciones sobre el nombre de las pruebas (Symfony 1.4, la guía definitiva%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Symfony 1.4, la guía definitiva : Recomendaciones sobre el nombre de las pruebas']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción a Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Explorando el interior de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Ejecutar aplicaciones Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Introducción a la creación de páginas</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Configurar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> El Controlador</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> La Vista</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> El modelo (Doctrine)</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Enlaces y sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Emails</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Uso de la cache</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Generador de la parte de administración</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_15.html">
+            <span>Capítulo 15.</span> Pruebas unitarias y funcionales
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="automatizacion_de_pruebas.html">
+            <span>15.1.</span> Automatización de pruebas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="pruebas_unitarias.html">
+            <span>15.2.</span> Pruebas unitarias
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="pruebas_funcionales.html">
+            <span>15.3.</span> Pruebas funcionales
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="recomendaciones_sobre_el_nombre_de_las_pruebas.html">
+            <span>15.4.</span> Recomendaciones sobre el nombre de las pruebas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="otras_utilidades_para_pruebas.html">
+            <span>15.5.</span> Otras utilidades para pruebas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="resumen.html">
+            <span>15.6.</span> Resumen
+        </a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Herramientas para la administración de aplicaciones</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> Personalizar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> Rendimiento</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Configuración avanzada</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

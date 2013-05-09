@@ -1,0 +1,357 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>9.2. La clase sfBrowser (El tutorial Jobeet)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="pruebas_funcionales.html" />
+        <link rel="next" href="la_clase_sftestfunctional.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="9.2. La clase sfBrowser (El tutorial Jobeet)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page jobeet_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">El tutorial Jobeet</a></li>
+  <li><a href="../capitulo_9.html">Capítulo 9. Pruebas funcionales</a></li>
+  <li class="current"><span>9.2.. La clase sfBrowser</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="la_clase_sfbrowser"><span>9.2.</span> La clase sfBrowser</h1>
+    
+
+<p>En Symfony, las pruebas funcionales se realizan mediante un navegador especial creado con la clase <a href="http://www.symfony-project.org/api/1_2/sfBrowser">sfBrowser</a>. Esta clase actúa como un navegador completamente adaptado a tu aplicación y conectado directamente a ella, de forma que no necesitas un servidor web. La clase <code>sfBrowser</code> te da acceso a todos los objetos de Symfony antes y después de cada petición, permitiendo la introspección de los objetos para realizar las comprobaciones automáticamente.</p>
+
+<p>La clase <code>sfBrowser</code> incluye métodos que simulan la navegación que se realiza en cualquier navegador tradicional:</p>
+
+<div class="table" id="table_9_1">
+
+    <table>
+<thead>
+<tr>
+  <th>Método</th>
+  <th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>get()</code></td>
+  <td>Obtiene una URL</td>
+</tr>
+<tr>
+  <td><code>post()</code></td>
+  <td>Envía datos a una URL</td>
+</tr>
+<tr>
+  <td><code>call()</code></td>
+  <td>Realiza una llamada a una URL (se utiliza para los métodos <code>PUT</code> y <code>DELETE</code>)</td>
+</tr>
+<tr>
+  <td><code>back()</code></td>
+  <td>Vuelve a la página anterior almacenada en el historial</td>
+</tr>
+<tr>
+  <td><code>forward()</code></td>
+  <td>Va a la página siguiente almacenada en el historial</td>
+</tr>
+<tr>
+  <td><code>reload()</code></td>
+  <td>Recarga la página actual</td>
+</tr>
+<tr>
+  <td><code>click()</code></td>
+  <td>Pulsa sobre un enlace o un botón</td>
+</tr>
+<tr>
+  <td><code>select()</code></td>
+  <td>Selecciona un <em>radiobutton</em> o un <em>checkbox</em></td>
+</tr>
+<tr>
+  <td><code>deselect()</code></td>
+  <td>Deselecciona un <em>radiobutton</em> o un <em>checkbox</em></td>
+</tr>
+<tr>
+  <td><code>restart()</code></td>
+  <td>Reinicia el navegador</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+<p>A continuación se muestran algunos ejemplos de uso de los métodos de <code>sfBrowser</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$browser</span> <span class="sy0">=</span> <span class="kw2">new</span> sfBrowser<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="re0">$browser</span><span class="sy0">-&gt;</span>
+  <span class="me1">get</span><span class="br0">&#40;</span><span class="st_h">'/'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+  <span class="me1">click</span><span class="br0">&#40;</span><span class="st_h">'Design'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+  <span class="me1">get</span><span class="br0">&#40;</span><span class="st_h">'/category/programming?page=2'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+  <span class="me1">get</span><span class="br0">&#40;</span><span class="st_h">'/category/programming'</span><span class="sy0">,</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'page'</span> <span class="sy0">=&gt;</span> <span class="nu0">2</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+  <span class="me1">post</span><span class="br0">&#40;</span><span class="st_h">'search'</span><span class="sy0">,</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'keywords'</span> <span class="sy0">=&gt;</span> <span class="st_h">'php'</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+<span class="sy0">;</span></pre>
+</div>
+
+<p>La clase <code>sfBrowser</code> también incluye métodos para configurar el comportamiento del navegador:</p>
+
+<div class="table" id="table_9_2">
+
+    <table>
+<thead>
+<tr>
+  <th>Método</th>
+  <th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>setHttpHeader()</code></td>
+  <td>Establece el valor de una cabecera HTTP</td>
+</tr>
+<tr>
+  <td><code>setAuth()</code></td>
+  <td>Establece las credenciales de la autenticación básica</td>
+</tr>
+<tr>
+  <td><code>setCookie()</code></td>
+  <td>Establece una cookie</td>
+</tr>
+<tr>
+  <td><code>removeCookie()</code></td>
+  <td>Elimina una cookie</td>
+</tr>
+<tr>
+  <td><code>clearCookies()</code></td>
+  <td>Borra todas las cookies actuales</td>
+</tr>
+<tr>
+  <td><code>followRedirect()</code></td>
+  <td>Sigue una redirección</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="pruebas_funcionales.html">&larr; Anterior <span>9.1. Pruebas funcionales</span></a>
+            
+            <a class="span5 next" href="la_clase_sftestfunctional.html">Siguiente &rarr; <span>9.3. La clase sfTestFunctional</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'La clase sfBrowser (El tutorial Jobeet%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'El tutorial Jobeet : La clase sfBrowser']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Comenzando el proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> El proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> El modelo de datos</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> El controlador y la vista</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> El sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Profundizando en el modelo</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Trabajando con la página de cada categoría</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Pruebas unitarias</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_9.html">
+            <span>Capítulo 9.</span> Pruebas funcionales
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="pruebas_funcionales.html">
+            <span>9.1.</span> Pruebas funcionales
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="la_clase_sfbrowser.html">
+            <span>9.2.</span> La clase sfBrowser
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="la_clase_sftestfunctional.html">
+            <span>9.3.</span> La clase sfTestFunctional
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejecutando_pruebas_funcionales.html">
+            <span>9.4.</span> Ejecutando pruebas funcionales
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="datos_de_prueba.html">
+            <span>9.5.</span> Datos de prueba
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="escribiendo_pruebas_funcionales.html">
+            <span>9.6.</span> Escribiendo pruebas funcionales
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="aprendiendo_con_un_ejemplo.html">
+            <span>9.7.</span> Aprendiendo con un ejemplo
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="depurando_las_pruebas_funcionales.html">
+            <span>9.8.</span> Depurando las pruebas funcionales
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="conjuntos_de_pruebas_funcionales.html">
+            <span>9.9.</span> Conjuntos de pruebas funcionales
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="conjuntos_de_pruebas.html">
+            <span>9.10.</span> Conjuntos de pruebas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="nos_vemos_manana.html">
+            <span>9.11.</span> Nos vemos mañana
+        </a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Probando los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> El generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> El usuario</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> El día de descanso</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Canales Atom</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Servicios web</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> El buscador</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>20</span> <a href="../capitulo_20.html"> Plugins</a>
+    </li>
+    <li class="level-1">
+        <span>21</span> <a href="../capitulo_21.html"> El día del diseño</a>
+    </li>
+    <li class="level-1">
+        <span>22</span> <a href="../capitulo_22.html"> La cache</a>
+    </li>
+    <li class="level-1">
+        <span>23</span> <a href="../capitulo_23.html"> Pasando a producción</a>
+    </li>
+    <li class="level-1">
+        <span>24</span> <a href="../capitulo_24.html"> Un repaso a Symfony</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

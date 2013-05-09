@@ -1,0 +1,272 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>1.4. Elementos de la misma altura (CSS avanzado)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="limpiar_floats.html" />
+        <link rel="next" href="sombras.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="1.4. Elementos de la misma altura (CSS avanzado)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page css_avanzado">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">CSS avanzado</a></li>
+  <li><a href="../capitulo_1.html">Capítulo 1. Técnicas imprescindibles</a></li>
+  <li class="current"><span>1.4.. Elementos de la misma altura</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="elementos_de_la_misma_altura"><span>1.4.</span> Elementos de la misma altura</h1>
+    
+
+<p>Hasta hace unos años, la estructura de las páginas web complejas se creaba mediante tablas HTML. Aunque esta solución presenta muchos inconvenientes, su principal ventaja es que todas las columnas que forman la página son de la misma altura.</p>
+
+<p>Normalmente, cuando se crea la estructura de una página compleja, se desea que todas las columnas que la forman tengan la misma altura. De hecho, cuando algunas o todas las columnas tienen imágenes o colores de fondo, esta característica es imprescindible para obtener un diseño correcto.</p>
+
+<p>Sin embargo, como el contenido de cada columna suele ser variable, no es posible determinar la altura de la columna más alta y por tanto, no es posible hacer que todas las columnas tengan la misma altura directamente con la propiedad <code>height</code>.</p>
+
+<p>Cuando se utiliza una tabla para crear la estructura de la página, este problema no existe porque cada columna de la estructura se corresponde con una celda de datos de la tabla. Sin embargo, cuando se diseña la estructura de la página utilizando sólo CSS, el problema no es tan fácil de solucionar. Afortunadamente, existen varias soluciones para asegurar que dos elementos tengan la misma altura.</p>
+
+<p>La primera solución es la más sencilla y la publicó el diseñador Alex Robinson en su artículo <em><a href="http://www.positioniseverything.net/articles/onetruelayout/equalheight">Equal Height Columns - revisited</a></em>. El truco consiste en añadir un espacio de relleno inferior (<code>padding-bottom</code>) muy grande a todas las columnas y después añadirles un margen inferior negativo (<code>margin-bottom</code>) del mismo tamaño.</p>
+
+<div class="code css">
+<pre class="css"><span class="re0">#contenedor</span> <span class="br0">&#123;</span>
+  <span class="kw1">overflow</span><span class="sy0">:</span> <span class="kw2">hidden</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+<span class="re0">#columna1</span><span class="sy0">,</span> <span class="re0">#columna2</span><span class="sy0">,</span> <span class="re0">#columna3</span> <span class="br0">&#123;</span>
+  <span class="kw1">padding-bottom</span><span class="sy0">:</span> <span class="re3">32767px</span><span class="sy0">;</span>
+  <span class="kw1">margin-bottom</span><span class="sy0">:</span> <span class="re3">-32767px</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>El valor utilizado en el espacio de relleno y en el margen inferior de las columnas debe ser tan grande como la altura esperada para la columna más alta. Para evitar quedarse corto, se recomienda utilizar valores a partir de <code>10.000</code> píxeles.</p>
+
+<p>Los dos principales problemas que presenta esta solución son los siguientes:</p>
+
+<ul>
+<li>Se pueden producir errores al imprimir la página con el navegador Internet Explorer.</li>
+<li>Si se utilizan enlaces de tipo ancla en cualquier columna, al pulsar sobre el enlace las columnas se desplazan de forma ascendente y <em>desaparecen</em> de la página.</li>
+</ul>
+
+<p>Otra solución al problema de los elementos de la misma altura es la que presentó el diseñador Dan Cederholm en su célebre artículo <em><a href="http://www.alistapart.com/articles/fauxcolumns/">Faux Columns</a></em>. Si la solución anterior consitía en <em>engañar</em> al navegador, esta segunda solución se basa en <em>engañar</em> al ojo del usuario.</p>
+
+<p>La solución de las columnas falsas consiste en establecer una imagen de fondo repetida verticalmente en el elemento contenedor. Como el contenedor es tan alto como la columna más alta, su imagen de fondo da la sensación de que todas las columnas son de la misma altura.</p>
+
+<div class="figure" id="figure_1_3">
+    <img src="../../img/css_avanzado/f0103.png" alt="Las columnas parecen de la misma altura porque el elemento contenedor muestra una imagen de fondo repetida verticalmente" />
+
+    <p class="caption"><strong>Figura 1.3</strong> Las columnas parecen de la misma altura porque el elemento contenedor muestra una imagen de fondo repetida verticalmente</p>
+</div>
+
+
+<p>El principal inconveniente de esta técnica es que sólo se puede emplear cuando la estructura de la página es de anchura fija, es decir, cuando su diseño no es líquido y no se adapta a la anchura de la ventana del navegador.</p>
+
+<p>Si el fondo de las columnas es simplemente un color y no una imagen, se puede utilizar una solución alternativa planteada por el diseñador Douglas Livingstone en su técnica <em><a href="http://www.redmelon.net/tstme/3cols2/">Bordered Colors</a></em> y que se basa en el uso de las propiedades <code>border-left</code> y <code>border-right</code> sobre la columna central de la estructura de la página. Una versión alternativa y mejorada de la técnica original se puede encontrar en <em><a href="http://www.positioniseverything.net/ordered-borders-center.html">Ordered Borders Layout</a></em>.</p>
+
+<p>Las dos soluciones planteadas hasta el momento consisten en trucos para engañar a los navegadores y a los usuarios. A continuación se presenta la única solución técnicamente correcta para forzar a que dos elementos muestren la misma altura.</p>
+
+<p>La solución fue propuesta por el diseñador Roger Johansson en su artículo <em><a href="http://www.456bereastreet.com/archive/200405/equal_height_boxes_with_css/">Equal height boxes with CSS</a></em> y se basa en el uso avanzado de la propiedad <code>display</code> de CSS.</p>
+
+<p>En primer lugar, es necesario añadir un elemento adicional (<code>&lt;div id="contenidos"&gt;</code>) en el código HTML de la página:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">div</span> <span class="kw3">id</span><span class="sy0">=</span><span class="st0">&quot;contenedor&quot;</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">div</span> <span class="kw3">id</span><span class="sy0">=</span><span class="st0">&quot;contenidos&quot;</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">div</span> <span class="kw3">id</span><span class="sy0">=</span><span class="st0">&quot;columna1&quot;</span>&gt;&lt;<span class="sy0">/</span><span class="kw2">div</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">div</span> <span class="kw3">id</span><span class="sy0">=</span><span class="st0">&quot;columna2&quot;</span>&gt;&lt;<span class="sy0">/</span><span class="kw2">div</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">div</span> <span class="kw3">id</span><span class="sy0">=</span><span class="st0">&quot;columna3&quot;</span>&gt;&lt;<span class="sy0">/</span><span class="kw2">div</span>&gt;</span>
+  <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">div</span>&gt;</span>
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">div</span>&gt;</span></pre>
+</div>
+
+<p>A continuación, se utiliza la propiedad <code>display</code> de CSS para mostrar los elementos <code>&lt;div&gt;</code> anteriores como si fueran celdas de una tabla de datos:</p>
+
+<div class="code css">
+<pre class="css"><span class="re0">#contenedor</span> <span class="br0">&#123;</span>
+  <span class="kw1">display</span><span class="sy0">:</span> table<span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+<span class="re0">#contenidos</span> <span class="br0">&#123;</span>
+  <span class="kw1">display</span><span class="sy0">:</span> <span class="kw2">table-row</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+<span class="re0">#columna1</span><span class="sy0">,</span> <span class="re0">#columna2</span><span class="sy0">,</span> <span class="re0">#columna3</span> <span class="br0">&#123;</span>
+  <span class="kw1">display</span><span class="sy0">:</span> <span class="kw2">table-cell</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Gracias a la propiedad <code>display</code> de CSS, cualquier elemento se puede comportar como una tabla, una fila de tabla o una celda de tabla, independientemente del tipo de elemento que se trate.</p>
+
+<p>De esta forma, los elementos <code>&lt;div&gt;</code> que forman las columnas de la página en realidad se comportan como celdas de tabla, lo que permite que el navegador las muestre con la misma altura.</p>
+
+<p>El único inconveniente de la solución anterior es que el navegador Internet Explorer 7 y sus versiones anteriores no son capaces de manejar los valores más avanzados de la propiedad <code>display</code>, por lo que en esos navegadores la página no muestra correctamente su estructura.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="limpiar_floats.html">&larr; Anterior <span>1.3. Limpiar floats</span></a>
+            
+            <a class="span5 next" href="sombras.html">Siguiente &rarr; <span>1.5. Sombras</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Elementos de la misma altura (CSS avanzado%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'CSS avanzado : Elementos de la misma altura']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1 ">
+        <a href="../capitulo_1.html">
+            <span>Capítulo 1.</span> Técnicas imprescindibles
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="propiedades_shorthand.html">
+            <span>1.1.</span> Propiedades shorthand
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="la_propiedad_haslayout_de_internet_explorer.html">
+            <span>1.2.</span> La propiedad hasLayout de Internet Explorer
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="limpiar_floats.html">
+            <span>1.3.</span> Limpiar floats
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="elementos_de_la_misma_altura.html">
+            <span>1.4.</span> Elementos de la misma altura
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="sombras.html">
+            <span>1.5.</span> Sombras
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="transparencias.html">
+            <span>1.6.</span> Transparencias
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="sustitucion_de_texto_por_imagenes.html">
+            <span>1.7.</span> Sustitución de texto por imágenes
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="sustitucion_de_texto_por_flash.html">
+            <span>1.8.</span> Sustitución de texto por Flash
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="esquinas_redondeadas.html">
+            <span>1.9.</span> Esquinas redondeadas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="rollovers_y_sprites.html">
+            <span>1.10.</span> Rollovers y sprites
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="texto.html">
+            <span>1.11.</span> Texto
+        </a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Buenas prácticas</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Selectores</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Propiedades avanzadas</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Frameworks</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Técnicas avanzadas</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

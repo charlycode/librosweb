@@ -1,0 +1,359 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>15.15. Ejercicio 15 (Introducción a XHTML)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="ejercicio_14.html" />
+        <link rel="next" href="ejercicio_16.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="15.15. Ejercicio 15 (Introducción a XHTML)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page xhtml">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Introducción a XHTML</a></li>
+  <li><a href="../capitulo_15.html">Capítulo 15. Ejercicios resueltos</a></li>
+  <li class="current"><span>15.15. Ejercicio 15</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="ejercicio_15"><span>15.15.</span> Ejercicio 15</h1>
+    
+
+<div class="code html">
+<pre class="html5"><span class="sc0">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Strict//EN&quot; &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd&quot;&gt;</span>
+<span class="sc2">&lt;<span class="kw2">html</span> xmlns<span class="sy0">=</span><span class="st0">&quot;http://www.w3.org/1999/xhtml&quot;</span> <span class="kw3">lang</span><span class="sy0">=</span><span class="st0">&quot;es&quot;</span> xml:<span class="kw3">lang</span><span class="sy0">=</span><span class="st0">&quot;es&quot;</span>&gt;</span>
+&nbsp;
+<span class="sc2">&lt;<span class="kw2">head</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">meta</span> <span class="kw3">http-equiv</span><span class="sy0">=</span><span class="st0">&quot;Content-Type&quot;</span> <span class="kw3">content</span><span class="sy0">=</span><span class="st0">&quot;text/html; charset=UTF-8&quot;</span> <span class="sy0">/</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">title</span>&gt;</span>Rellena tu CV<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">title</span>&gt;</span>
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">head</span>&gt;</span>
+&nbsp;
+<span class="sc2">&lt;<span class="kw2">body</span>&gt;</span>
+&nbsp;
+<span class="sc2">&lt;<span class="kw2">h3</span>&gt;</span>Rellena tu CV<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">h3</span>&gt;</span>
+&nbsp;
+<span class="sc2">&lt;<span class="kw2">form</span> <span class="kw3">action</span><span class="sy0">=</span><span class="st0">&quot;/php/insertar_cv.php&quot;</span> <span class="kw3">method</span><span class="sy0">=</span><span class="st0">&quot;post&quot;</span> <span class="kw3">enctype</span><span class="sy0">=</span><span class="st0">&quot;multipart/form-data&quot;</span>&gt;</span>
+&nbsp;
+<span class="sc2">&lt;<span class="kw2">fieldset</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">legend</span>&gt;</span>Datos personales<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">legend</span>&gt;</span>
+&nbsp;
+  <span class="sc2">&lt;<span class="kw2">label</span> <span class="kw3">for</span><span class="sy0">=</span><span class="st0">&quot;provincia&quot;</span>&gt;</span>Provincia<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">label</span>&gt;</span> <span class="sc2">&lt;<span class="kw2">br</span><span class="sy0">/</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">select</span> <span class="kw3">id</span><span class="sy0">=</span><span class="st0">&quot;provincia&quot;</span> <span class="kw3">name</span><span class="sy0">=</span><span class="st0">&quot;provincia&quot;</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;&quot;</span> <span class="kw3">selected</span><span class="sy0">=</span><span class="st0">&quot;selected&quot;</span>&gt;</span>- selecciona -<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;01&quot;</span>&gt;</span>Álava/Araba<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;02&quot;</span>&gt;</span>Albacete<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;03&quot;</span>&gt;</span>Alicante/Alacant<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;04&quot;</span>&gt;</span>Almería<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;33&quot;</span>&gt;</span>Asturias<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;05&quot;</span>&gt;</span>Ávila<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;06&quot;</span>&gt;</span>Badajoz<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;07&quot;</span>&gt;</span>Balears (Illes)<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;08&quot;</span>&gt;</span>Barcelona<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;09&quot;</span>&gt;</span>Burgos<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;10&quot;</span>&gt;</span>Cáceres<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;11&quot;</span>&gt;</span>Cádiz<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;39&quot;</span>&gt;</span>Cantabria<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;12&quot;</span>&gt;</span>Castellón/Castelló<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;51&quot;</span>&gt;</span>Ceuta<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;13&quot;</span>&gt;</span>Ciudad Real<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;14&quot;</span>&gt;</span>Córdoba<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;15&quot;</span>&gt;</span>Coruña (A)<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;16&quot;</span>&gt;</span>Cuenca<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;17&quot;</span>&gt;</span>Girona<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;18&quot;</span>&gt;</span>Granada<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;19&quot;</span>&gt;</span>Guadalajara<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;20&quot;</span>&gt;</span>Guipúzcoa/Gipuzkoa<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;21&quot;</span>&gt;</span>Huelva<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;22&quot;</span>&gt;</span>Huesca<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;23&quot;</span>&gt;</span>Jaén<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;24&quot;</span>&gt;</span>León<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;27&quot;</span>&gt;</span>Lugo<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;25&quot;</span>&gt;</span>Lleida<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;28&quot;</span>&gt;</span>Madrid<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;29&quot;</span>&gt;</span>Málaga<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;52&quot;</span>&gt;</span>Melilla<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;30&quot;</span>&gt;</span>Murcia<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;31&quot;</span>&gt;</span>Navarra<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;32&quot;</span>&gt;</span>Ourense<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;34&quot;</span>&gt;</span>Palencia<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;35&quot;</span>&gt;</span>Palmas (Las)<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;36&quot;</span>&gt;</span>Pontevedra<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;26&quot;</span>&gt;</span>Rioja (La)<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;37&quot;</span>&gt;</span>Salamanca<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;38&quot;</span>&gt;</span>Santa Cruz de Tenerife<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;40&quot;</span>&gt;</span>Segovia<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;41&quot;</span>&gt;</span>Sevilla<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;42&quot;</span>&gt;</span>Soria<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;43&quot;</span>&gt;</span>Tarragona<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;44&quot;</span>&gt;</span>Teruel<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;45&quot;</span>&gt;</span>Toledo<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;46&quot;</span>&gt;</span>Valencia/València<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;47&quot;</span>&gt;</span>Valladolid<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;48&quot;</span>&gt;</span>Vizcaya/Bizkaia<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;49&quot;</span>&gt;</span>Zamora<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;50&quot;</span>&gt;</span>Zaragoza<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+  <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">select</span>&gt;</span>
+&nbsp;
+  <span class="sc2">&lt;<span class="kw2">br</span><span class="sy0">/</span>&gt;&lt;<span class="kw2">br</span><span class="sy0">/</span>&gt;</span>
+&nbsp;
+  <span class="sc2">&lt;<span class="kw2">label</span> <span class="kw3">for</span><span class="sy0">=</span><span class="st0">&quot;fecha_dia&quot;</span>&gt;</span>Fecha de nacimiento<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">label</span>&gt;</span> <span class="sc2">&lt;<span class="kw2">br</span><span class="sy0">/</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">input</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text&quot;</span> <span class="kw3">size</span><span class="sy0">=</span><span class="st0">&quot;3&quot;</span> <span class="kw3">maxlength</span><span class="sy0">=</span><span class="st0">&quot;2&quot;</span> <span class="kw3">id</span><span class="sy0">=</span><span class="st0">&quot;fecha_dia&quot;</span> <span class="kw3">name</span><span class="sy0">=</span><span class="st0">&quot;fecha_dia&quot;</span> <span class="sy0">/</span>&gt;</span>
+  de
+  <span class="sc2">&lt;<span class="kw2">select</span> <span class="kw3">id</span><span class="sy0">=</span><span class="st0">&quot;fecha_mes&quot;</span> <span class="kw3">name</span><span class="sy0">=</span><span class="st0">&quot;fecha_mes&quot;</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;1&quot;</span>&gt;</span>Enero<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;2&quot;</span>&gt;</span>Febrero<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;3&quot;</span>&gt;</span>Marzo<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;4&quot;</span>&gt;</span>Abril<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;5&quot;</span>&gt;</span>Mayo<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;6&quot;</span>&gt;</span>Junio<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;7&quot;</span>&gt;</span>Julio<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;8&quot;</span>&gt;</span>Agosto<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;9&quot;</span>&gt;</span>Septiembre<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;10&quot;</span>&gt;</span>Octubre<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;11&quot;</span>&gt;</span>Noviembre<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;12&quot;</span>&gt;</span>Diciembre<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+  <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">select</span>&gt;</span>
+  de
+  <span class="sc2">&lt;<span class="kw2">input</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text&quot;</span> <span class="kw3">size</span><span class="sy0">=</span><span class="st0">&quot;5&quot;</span> <span class="kw3">maxlength</span><span class="sy0">=</span><span class="st0">&quot;4&quot;</span> <span class="kw3">id</span><span class="sy0">=</span><span class="st0">&quot;fecha_ano&quot;</span> <span class="kw3">name</span><span class="sy0">=</span><span class="st0">&quot;fecha_ano&quot;</span> <span class="sy0">/</span>&gt;</span>
+&nbsp;
+  <span class="sc2">&lt;<span class="kw2">br</span><span class="sy0">/</span>&gt;&lt;<span class="kw2">br</span><span class="sy0">/</span>&gt;</span>
+&nbsp;
+  <span class="sc2">&lt;<span class="kw2">label</span> <span class="kw3">for</span><span class="sy0">=</span><span class="st0">&quot;temasDeInteres&quot;</span>&gt;</span>Temas de interés<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">label</span>&gt;</span> <span class="sc2">&lt;<span class="kw2">br</span><span class="sy0">/</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">select</span> <span class="kw3">multiple</span><span class="sy0">=</span><span class="st0">&quot;multiple&quot;</span> <span class="kw3">size</span><span class="sy0">=</span><span class="st0">&quot;5&quot;</span> <span class="kw3">id</span><span class="sy0">=</span><span class="st0">&quot;temasDeInteres&quot;</span> <span class="kw3">name</span><span class="sy0">=</span><span class="st0">&quot;temasDeInteres&quot;</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;3105&quot;</span>&gt;</span>Administración de bases de datos<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;3106&quot;</span>&gt;</span>Análisis y programación<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;3107&quot;</span>&gt;</span>Arquitectura<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;3108&quot;</span>&gt;</span>Calidad<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;3109&quot;</span>&gt;</span>ERP, CRM, Business Intelligence<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;3110&quot;</span>&gt;</span>Gestión de proyectos<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;3111&quot;</span>&gt;</span>Hardware, redes y seguridad<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;3112&quot;</span>&gt;</span>Helpdesk<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;3113&quot;</span>&gt;</span>Sistemas<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;3114&quot;</span>&gt;</span>Telecomunicaciones<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+  <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">select</span>&gt;</span>
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">fieldset</span>&gt;</span>
+&nbsp;
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">form</span>&gt;</span>
+&nbsp;
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">body</span>&gt;</span>
+&nbsp;
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">html</span>&gt;</span></pre>
+</div>
+
+<p><a href="../../ejercicios/xhtml/soluciones/ejercicio15/ejercicio15.html">Descargar solución completa</a></p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="ejercicio_14.html">&larr; Anterior <span>15.14. Ejercicio 14</span></a>
+            
+            <a class="span5 next" href="ejercicio_16.html">Siguiente &rarr; <span>15.16. Ejercicio 16</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Ejercicio 15 (Introducción a XHTML%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a XHTML : Ejercicio 15']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Características básicas</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Texto</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Enlaces</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Listas</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Imágenes y objetos</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Tablas</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Estructura y layout</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Metainformación</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Otras etiquetas importantes</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Accesibilidad</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Validación</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Fragmentos de código</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_15.html">
+            <span>Capítulo 15.</span> Ejercicios resueltos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_2.html">
+            <span>15.2.</span> Ejercicio 2
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_3.html">
+            <span>15.3.</span> Ejercicio 3
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_4.html">
+            <span>15.4.</span> Ejercicio 4
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_5.html">
+            <span>15.5.</span> Ejercicio 5
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_6.html">
+            <span>15.6.</span> Ejercicio 6
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_7.html">
+            <span>15.7.</span> Ejercicio 7
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_8.html">
+            <span>15.8.</span> Ejercicio 8
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_9.html">
+            <span>15.9.</span> Ejercicio 9
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_10.html">
+            <span>15.10.</span> Ejercicio 10
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_11.html">
+            <span>15.11.</span> Ejercicio 11
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_12.html">
+            <span>15.12.</span> Ejercicio 12
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_13.html">
+            <span>15.13.</span> Ejercicio 13
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_14.html">
+            <span>15.14.</span> Ejercicio 14
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="ejercicio_15.html">
+            <span>15.15.</span> Ejercicio 15
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_16.html">
+            <span>15.16.</span> Ejercicio 16
+        </a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

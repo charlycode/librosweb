@@ -1,0 +1,186 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>Capítulo 12. Accesibilidad (Introducción a XHTML)</title>
+        <link href="../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="capitulo_11/otras_etiquetas.html" />
+        <link rel="next" href="capitulo_12/requisitos_del_nivel_a_de_accesibilidad.html" />
+        <link rel="start" href="index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Capítulo 12. Accesibilidad (Introducción a XHTML)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page xhtml">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../index.html">Inicio</a></li>
+  <li><a href="index.html">Introducción a XHTML</a></li>
+  <li class="current"><span>Capítulo 12. Accesibilidad</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="capitulo_12"><span>Capítulo 12.</span> Accesibilidad</h1>
+    <p>El principal objetivo de la accesibilidad web es el de permitir a cualquier usuario, independientemente del tipo de discapacidad que sufra, el acceso a los contenidos del sitio y permitirle la navegación necesaria para realizar las acciones deseadas.</p>
+
+<p>Los sitios web accesibles no solamente facilitan el acceso de sus contenidos a los usuarios discapacitados, sino que también permiten ofrecer la misma funcionalidad con dispositivos muy limitados (dispositivos sin pantalla o con pantallas minúsculas, dispositivos sin teclado ni ratón, etc.).</p>
+
+<p>Las cuatro principales ventajas de diseñar un sitio web completamente accesible son las siguientes:</p>
+
+<ul>
+<li>Los sitios accesibles separan completamente diseño y contenido.</li>
+<li>Un sitio accesible puede ser accedido por multitud de dispositivos diferentes sin necesidad de reescribir el código HTML.</li>
+<li>Los sitios accesibles son los únicos con una audiencia potencial global, ya que permiten el acceso a todos los usuarios y a todos los dispositivos.</li>
+<li>Generalmente, los sitios accesibles son más fáciles de utilizar también para los usuarios sin discapacidades.</li>
+</ul>
+
+<p>La creación de sitios accesibles puede realizarse siguiendo las recomendaciones establecidas por el W3C y que se recogen en el documento <em><a href="http://www.w3.org/WAI/intro/wcag.php">Web Content Accessibility Guidelines</a></em> (WCAG).</p>
+
+<p>La versión <a href="http://www.w3.org/TR/WCAG10/">WCAG 1.0</a> que se utiliza en la actualidad se publicó en 1999, mientras que la versión <a href="http://www.w3.org/TR/WCAG20/">WCAG 2.0</a> se encuentra todavía en borrador y se actualizó por última vez el día 30 de abril de 2008.</p>
+
+<p>Las recomendaciones del WCAG 1.0 están formadas por 65 requisitos que un sitio web debe cumplir para considerarse accesible. Los requerimientos se agrupan en prioridades.</p>
+
+<p>Los requisitos de prioridad 1 son de obligado cumplimiento, los de prioridad 2 son recomendables y los de prioridad 3 son deseables. Si un sitio web cumple con todos los requisitos de prioridad 1, se considera que el sitio es conforme al nivel A de accesibilidad.</p>
+
+<p>El nivel AA de accesibilidad está reservado para los sitios que cumplan todos los requisitos de prioridad 1 y prioridad 2. Finalmente, los sitios que cumplen los 65 requisitos, son conformes al nivel AAA de accesibilidad.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="capitulo_11/otras_etiquetas.html">&larr; Anterior <span>11.5. Otras etiquetas</span></a>
+            
+            <a class="span5 next" href="capitulo_12/requisitos_del_nivel_a_de_accesibilidad.html">Siguiente &rarr; <span>12.1. Requisitos del nivel A de accesibilidad</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Accesibilidad (Introducción a XHTML%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a XHTML : Accesibilidad']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="capitulo_2.html"> Características básicas</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="capitulo_3.html"> Texto</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="capitulo_4.html"> Enlaces</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="capitulo_5.html"> Listas</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="capitulo_6.html"> Imágenes y objetos</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="capitulo_7.html"> Tablas</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="capitulo_8.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="capitulo_9.html"> Estructura y layout</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="capitulo_10.html"> Metainformación</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="capitulo_11.html"> Otras etiquetas importantes</a>
+    </li>
+    <li class="level-1 active">
+        <a href="capitulo_12.html">
+            <span>Capítulo 12.</span> Accesibilidad
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="capitulo_12/requisitos_del_nivel_a_de_accesibilidad.html">
+            <span>12.1.</span> Requisitos del nivel A de accesibilidad
+        </a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="capitulo_13.html"> Validación</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="capitulo_14.html"> Fragmentos de código</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="capitulo_15.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

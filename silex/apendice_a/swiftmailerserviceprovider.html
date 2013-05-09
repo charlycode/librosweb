@@ -1,0 +1,322 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>A.9. SwiftmailerServiceProvider (Silex, el manual oficial)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="sessionserviceprovider.html" />
+        <link rel="next" href="translationserviceprovider.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="A.9. SwiftmailerServiceProvider (Silex, el manual oficial)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page silex">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Silex, el manual oficial</a></li>
+  <li><a href="../apendice_a.html">Apéndice A. Proveedores de servicios de Silex</a></li>
+  <li class="current"><span>A.9.. SwiftmailerServiceProvider</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="swiftmailerserviceprovider"><span>A.9.</span> SwiftmailerServiceProvider</h1>
+    
+
+<p>El proveedor <code>SwiftmailerServiceProvider</code> permite enviar emails utilizando la librería  <a href="http://swiftmailer.org">Swift Mailer</a>.</p>
+
+<p>Los emails se pueden enviar fácilmente mediante el servicio <code>mailer</code>, que a su vez utiliza el protocolo SMTP para enviar los correos electrónicos.</p>
+
+<h3 id="parametros_de_configuracion">A.13.1. Parámetros de configuración</h3>
+
+<p>El proveedor define los siguientes parámetros configurables:</p>
+
+<ul>
+<li><code>swiftmailer.options</code>: array con las opciones que se utilizan para conectar al servidor SMTP a través del cual se envían los emails. Este array contiene las siguientes opciones:
+
+<ul>
+<li><code>host</code>: el <em>hostname</em> del servidor SMTP. Por defecto: <code>localhost</code>.</li>
+<li><code>port</code>: el puerto SMTP. Por defecto se utiliza <code>25</code>.</li>
+<li><code>username</code>: el nombre de usuario para conectar al servidor. Por defecto su valor es una cadena de texto vacía, por lo que no se utiliza ningún nombre.</li>
+<li><code>password</code>: la contraseña para conectar al servidor. Por defecto su valor es una cadena de texto vacía, por lo que no se utiliza ninguna contraseña.</li>
+<li><code>encryption</code>: el tipo de encriptación utilizada en la conexión. Por defecto su valor es <code>null</code>.</li>
+<li><code>auth_mode</code>: el tipo de autenticación realizada durante la conexión. Por defecto vale <code>null</code>.</li>
+</ul></li>
+</ul>
+
+<p>El siguiente código muestra un ejemplo de cómo establecer el valor de todas estas opciones de configuración:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$app</span><span class="br0">&#91;</span><span class="st_h">'swiftmailer.options'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="kw3">array</span><span class="br0">&#40;</span>
+    <span class="st_h">'host'</span> <span class="sy0">=&gt;</span> <span class="st_h">'host'</span><span class="sy0">,</span>
+    <span class="st_h">'port'</span> <span class="sy0">=&gt;</span> <span class="st_h">'25'</span><span class="sy0">,</span>
+    <span class="st_h">'username'</span> <span class="sy0">=&gt;</span> <span class="st_h">'username'</span><span class="sy0">,</span>
+    <span class="st_h">'password'</span> <span class="sy0">=&gt;</span> <span class="st_h">'password'</span><span class="sy0">,</span>
+    <span class="st_h">'encryption'</span> <span class="sy0">=&gt;</span> <span class="kw4">null</span><span class="sy0">,</span>
+    <span class="st_h">'auth_mode'</span> <span class="sy0">=&gt;</span> <span class="kw4">null</span>
+<span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<h3 id="servicios_proporcionados">A.13.2. Servicios proporcionados</h3>
+
+<p>El proveedor proporciona los siguientes servicios:</p>
+
+<ul>
+<li><code>mailer</code>: la instancia de la clase utilizada para enviar los emails. Ejemplo de uso:</li>
+</ul>
+
+<div class="code php">
+<pre class="php"><span class="re0">$message</span> <span class="sy0">=</span> \Swift_Message<span class="sy0">::</span><span class="me2">newInstance</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="co1">// ...</span>
+&nbsp;
+<span class="re0">$app</span><span class="br0">&#91;</span><span class="st_h">'mailer'</span><span class="br0">&#93;</span><span class="sy0">-&gt;</span><span class="me1">send</span><span class="br0">&#40;</span><span class="re0">$message</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<ul>
+<li><code>swiftmailer.transport</code>: el tipo de envío utilizado para los emails. Por defecto se emplea <code>Swift_Transport_EsmtpTransport</code>.</li>
+<li><code>swiftmailer.transport.buffer</code>: la clase que se encarga del <em>buffering</em> durante el envío de los mensajes.</li>
+<li><code>swiftmailer.transport.authhandler</code>: tipo de autenticación utilizada por el servicio de envío de emails. Los tipos soportados son <code>CRAM-MD5</code>, <code>login</code> y <code>plaintext</code>.</li>
+<li><code>swiftmailer.transport.eventdispatcher</code>: es el <em>event dispatcher</em> que utiliza internamente la librería Swiftmailer.</li>
+</ul>
+
+<h3 id="como_se_registra_el_proveedor">A.13.3. Cómo se registra el proveedor</h3>
+
+<p>El siguiente código muestra un ejemplo de cómo registrar este proveedor:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$app</span><span class="sy0">-&gt;</span><span class="me1">register</span><span class="br0">&#40;</span><span class="kw2">new</span> Silex\Provider\SwiftmailerServiceProvider<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> La librería SwiftMailer se incluye cuando descargas Silex en forma de archivo comprimido. Si instalas Silex mediante Composer, debes añadir la siguiente dependencia en el archivo <code>composer.json</code>:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="st0">&quot;require&quot;</span><span class="sy0">:</span> <span class="br0">&#123;</span>
+    <span class="st0">&quot;swiftmailer/swiftmailer&quot;</span><span class="sy0">:</span> <span class="st0">&quot;&gt;=4.1.2,&lt;4.2-dev&quot;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p></p></div>
+
+<h3 id="ejemplos_de_uso">A.13.4. Ejemplos de uso</h3>
+
+<p>El servicio más utilizado de este proveedor es <code>mailer</code>, a través del que se pueden enviar emails utilizando el siguiente código:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$app</span><span class="sy0">-&gt;</span><span class="me1">post</span><span class="br0">&#40;</span><span class="st_h">'/feedback'</span><span class="sy0">,</span> <span class="kw2">function</span> <span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="kw2">use</span> <span class="br0">&#40;</span><span class="re0">$app</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="re0">$request</span> <span class="sy0">=</span> <span class="re0">$app</span><span class="br0">&#91;</span><span class="st_h">'request'</span><span class="br0">&#93;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="re0">$message</span> <span class="sy0">=</span> \Swift_Message<span class="sy0">::</span><span class="me2">newInstance</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+        <span class="sy0">-&gt;</span><span class="me1">setSubject</span><span class="br0">&#40;</span><span class="st_h">'[YourSite] Feedback'</span><span class="br0">&#41;</span>
+        <span class="sy0">-&gt;</span><span class="me1">setFrom</span><span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'noreply@yoursite.com'</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+        <span class="sy0">-&gt;</span><span class="me1">setTo</span><span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'feedback@yoursite.com'</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+        <span class="sy0">-&gt;</span><span class="me1">setBody</span><span class="br0">&#40;</span><span class="re0">$request</span><span class="sy0">-&gt;</span><span class="me1">get</span><span class="br0">&#40;</span><span class="st_h">'message'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="re0">$app</span><span class="br0">&#91;</span><span class="st_h">'mailer'</span><span class="br0">&#93;</span><span class="sy0">-&gt;</span><span class="me1">send</span><span class="br0">&#40;</span><span class="re0">$message</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="kw1">return</span> <span class="kw2">new</span> Response<span class="br0">&#40;</span><span class="st_h">'Thank you for your feedback!'</span><span class="sy0">,</span> <span class="nu0">201</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<h3 id="traits">A.12.5. Traits</h3>
+
+<p>El <em>trait</em> <code>Silex\Application\SwiftmailerTrait</code> definido por este proveedor añade los siguientes atajos:</p>
+
+<ul>
+<li><code>mail</code>: envía un email y se utiliza de la siguiente manera:</li>
+</ul>
+
+<div class="code php">
+<pre class="php"><span class="re0">$app</span><span class="sy0">-&gt;</span><span class="kw3">mail</span><span class="br0">&#40;</span>\Swift_Message<span class="sy0">::</span><span class="me2">newInstance</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+    <span class="sy0">-&gt;</span><span class="me1">setSubject</span><span class="br0">&#40;</span><span class="st_h">'[YourSite] Feedback'</span><span class="br0">&#41;</span>
+    <span class="sy0">-&gt;</span><span class="me1">setFrom</span><span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'noreply@yoursite.com'</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+    <span class="sy0">-&gt;</span><span class="me1">setTo</span><span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'feedback@yoursite.com'</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+    <span class="sy0">-&gt;</span><span class="me1">setBody</span><span class="br0">&#40;</span><span class="re0">$request</span><span class="sy0">-&gt;</span><span class="me1">get</span><span class="br0">&#40;</span><span class="st_h">'message'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="sessionserviceprovider.html">&larr; Anterior <span>A.8. SessionServiceProvider</span></a>
+            
+            <a class="span5 next" href="translationserviceprovider.html">Siguiente &rarr; <span>A.10. TranslationServiceProvider</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'SwiftmailerServiceProvider (Silex, el manual oficial%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Silex, el manual oficial : SwiftmailerServiceProvider']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Primeros pasos</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Middlewares</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Organizando los controladores</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Servicios</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Proveedores</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Tests</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Funcionamiento interno</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Silex y los servidores web</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../apendice_a.html">
+            <span>Apéndice A.</span> Proveedores de servicios de Silex
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="doctrineserviceprovider.html">
+            <span>A.1.</span> DoctrineServiceProvider
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="formserviceprovider.html">
+            <span>A.2.</span> FormServiceProvider
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="httpcacheserviceprovider.html">
+            <span>A.3.</span> HttpCacheServiceProvider
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="monologserviceprovider.html">
+            <span>A.4.</span> MonologServiceProvider
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="securityserviceprovider.html">
+            <span>A.5.</span> SecurityServiceProvider
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="serializerserviceprovider.html">
+            <span>A.6.</span> SerializerServiceProvider
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="servicecontrollerserviceprovider.html">
+            <span>A.7.</span> ServiceControllerServiceProvider
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="sessionserviceprovider.html">
+            <span>A.8.</span> SessionServiceProvider
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="swiftmailerserviceprovider.html">
+            <span>A.9.</span> SwiftmailerServiceProvider
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="translationserviceprovider.html">
+            <span>A.10.</span> TranslationServiceProvider
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="twigserviceprovider.html">
+            <span>A.11.</span> TwigServiceProvider
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="urlgeneratorserviceprovider.html">
+            <span>A.12.</span> UrlGeneratorServiceProvider
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="validatorserviceprovider.html">
+            <span>A.13.</span> ValidatorServiceProvider
+        </a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

@@ -1,0 +1,512 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>3.2. Clases (Introducción a AJAX)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="../capitulo_3.html" />
+        <link rel="next" href="otros_conceptos.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="3.2. Clases (Introducción a AJAX)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page ajax">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Introducción a AJAX</a></li>
+  <li><a href="../capitulo_3.html">Capítulo 3. JavaScript avanzado</a></li>
+  <li class="current"><span>3.2. Clases</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="clases"><span>3.2.</span> Clases</h1>
+    
+
+<p>Los objetos que se han visto hasta ahora son una simple colección de propiedades y métodos que se definen para cada objeto individual. Sin embargo, en la programación orientada a objetos, el concepto fundamental es el de clase.</p>
+
+<p>La forma habitual de trabajo consiste en definir clases a partir de las cuales se crean los objetos con los que trabajan las aplicaciones. Sin embargo, JavaScript no permite crear clases similares a las de lenguajes como Java o C++. De hecho, la palabra <code>class</code> sólo está reservada para su uso en futuras versiones de JavaScript.</p>
+
+<p>A pesar de estas limitaciones, es posible utilizar en JavaScript unos elementos parecidos a las clases y que se denominan <em>pseudoclases</em>. Los conceptos que se utilizan para simular las clases son las funciones constructoras y el <em>prototype</em> de los objetos.</p>
+
+<h3 id="funciones_constructoras">3.2.1. Funciones constructoras</h3>
+
+<p>Al contrario que en los lenguajes orientados a objetos, en JavaScript no existe el concepto de constructor. Por lo tanto, al definir una clase no se incluyen uno o varios constructores. En realidad, JavaScript emula el funcionamiento de los constructores mediante el uso de funciones.</p>
+
+<p>En el siguiente ejemplo, se crea un objeto genérico y un objeto de tipo array:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> elObjeto <span class="sy0">=</span> <span class="kw1">new</span> <span class="kw4">Object</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="kw1">var</span> elArray <span class="sy0">=</span> <span class="kw1">new</span> <span class="kw4">Array</span><span class="br0">&#40;</span><span class="nu0">5</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>En los dos casos, se utiliza la palabra reservada <code>new</code> y el nombre del tipo de objeto que se quiere crear. En realidad, ese nombre es el nombre de una función que se ejecuta para crear el nuevo objeto. Además, como se trata de funciones, es posible incluir parámetros en la creación del objeto.</p>
+
+<p>JavaScript utiliza funciones para simular los constructores de objetos, por lo que estas funciones se denominan <em>"funciones constructoras"</em>. El siguiente ejemplo crea una función llamada <code>Factura</code> que se utiliza para crear objetos que representan una factura.</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">function</span> Factura<span class="br0">&#40;</span>idFactura<span class="sy0">,</span> idCliente<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="kw1">this</span>.<span class="me1">idFactura</span> <span class="sy0">=</span> idFactura<span class="sy0">;</span>
+  <span class="kw1">this</span>.<span class="me1">idCliente</span> <span class="sy0">=</span> idCliente<span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Cuando se crea un objeto es habitual pasar al constructor de la clase una serie de valores para inicializar algunas propiedades. Este concepto también se utiliza en JavaSript, aunque su realización es diferente. En este caso, la función constructora inicializa las propiedades de cada objeto mediante el uso de la palabra reservada <code>this</code>.</p>
+
+<p>La función constructora puede definir todos los parámetros que necesita para construir los nuevos objetos y posteriormente utilizar esos parámetros para la inicialización de las propiedades. En el caso anterior, la factura se inicializa mediante el identificador de factura y el identificador de cliente.</p>
+
+<p>Después de definir la función anterior, es posible crear un objeto de tipo <code>Factura</code> y simular el funcionamiento de un constructor:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> laFactura <span class="sy0">=</span> <span class="kw1">new</span> Factura<span class="br0">&#40;</span><span class="nu0">3</span><span class="sy0">,</span> <span class="nu0">7</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Así, el objeto <code>laFactura</code> es de tipo <code>Factura</code>, con todas sus propiedades y métodos y se puede acceder a ellos utilizando la notación de puntos habitual:</p>
+
+<div class="code javascript">
+<pre class="javascript">alert<span class="br0">&#40;</span><span class="st0">&quot;cliente = &quot;</span> <span class="sy0">+</span> laFactura.<span class="me1">idCliente</span> <span class="sy0">+</span> <span class="st0">&quot;, factura = &quot;</span> <span class="sy0">+</span> laFactura.<span class="me1">idFactura</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Normalmente, las funciones constructoras no devuelven ningún valor y se limitan a definir las propiedades y los métodos del nuevo objeto.</p>
+
+<h3 id="prototype">3.2.2. Prototype</h3>
+
+<p>Las funciones constructoras no solamente pueden establecer las propiedades del objeto, sino que también pueden definir sus métodos. Siguiendo con el ejemplo anterior, se puede crear un objeto completo llamado <code>Factura</code> con sus propiedades y métodos:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">function</span> Factura<span class="br0">&#40;</span>idFactura<span class="sy0">,</span> idCliente<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="kw1">this</span>.<span class="me1">idFactura</span> <span class="sy0">=</span> idFactura<span class="sy0">;</span>
+  <span class="kw1">this</span>.<span class="me1">idCliente</span> <span class="sy0">=</span> idCliente<span class="sy0">;</span>
+&nbsp;
+  <span class="kw1">this</span>.<span class="me1">muestraCliente</span> <span class="sy0">=</span> <span class="kw1">function</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    alert<span class="br0">&#40;</span><span class="kw1">this</span>.<span class="me1">idCliente</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="kw1">this</span>.<span class="me1">muestraId</span> <span class="sy0">=</span> <span class="kw1">function</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    alert<span class="br0">&#40;</span><span class="kw1">this</span>.<span class="me1">idFactura</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Una vez definida la <em>pseudoclase</em> mediante la función constructora, ya es posible crear objetos de ese tipo. En el siguiente ejemplo se crean dos objetos diferentes y se emplean sus métodos:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> laFactura <span class="sy0">=</span> <span class="kw1">new</span> Factura<span class="br0">&#40;</span><span class="nu0">3</span><span class="sy0">,</span> <span class="nu0">7</span><span class="br0">&#41;</span><span class="sy0">;</span>
+laFactura.<span class="me1">muestraCliente</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="kw1">var</span> otraFactura <span class="sy0">=</span> <span class="kw1">new</span> Factura<span class="br0">&#40;</span><span class="nu0">5</span><span class="sy0">,</span> <span class="nu0">4</span><span class="br0">&#41;</span><span class="sy0">;</span>
+otraFactura.<span class="me1">muestraId</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Incluir los métodos de los objetos como funciones dentro de la propia función constructora, es una técnica que funciona correctamente pero que tiene un gran inconveniente que la hace poco aconsejable.</p>
+
+<p>En el ejemplo anterior, las funciones <code>muestraCliente()</code> y <code>muestraId()</code> se crean de nuevo por cada objeto creado. En efecto, con esta técnica, cada vez que se instancia un objeto, se definen tantas nuevas funciones como métodos incluya la función constructora. La penalización en el rendimiento y el consumo excesivo de recursos de esta técnica puede suponer un inconveniente en las aplicaciones profesionales realizadas con JavaScript.</p>
+
+<p>Afortunadamente, JavaScript incluye una propiedad que no está presente en otros lenguajes de programación y que soluciona este inconveniente. La propiedad se conoce con el nombre de <em>prototype</em> y es una de las características más poderosas de JavaScript.</p>
+
+<p>Todos los objetos de JavaScript incluyen una referencia interna a otro objeto llamado <em>prototype</em> o <em>"prototipo"</em>. Cualquier propiedad o método que contenga el objeto prototipo, está presente de forma automática en el objeto original.</p>
+
+<p>Realizando un símil con los lenguajes orientados a objetos, es como si cualquier objeto de JavaScript heredara de forma automática todas las propiedades y métodos de otro objeto llamado prototype. Cada tipo de objeto diferente hereda de un objeto prototype diferente.</p>
+
+<p>En cierto modo, se puede decir que el prototype es el <em>molde</em> con el que se fabrica cada objeto de ese tipo. Si se modifica el molde o se le añaden nuevas características, todos los objetos fabricados con ese molde tendrán esas características.</p>
+
+<p>Normalmente los métodos no varían de un objeto a otro del mismo tipo, por lo que se puede evitar el problema de rendimiento comentado anteriormente añadiendo los métodos al prototipo a partir del cual se crean los objetos.</p>
+
+<p>Si se considera de nuevo la clase <code>Factura</code> del ejemplo anterior:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">function</span> Factura<span class="br0">&#40;</span>idFactura<span class="sy0">,</span> idCliente<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="kw1">this</span>.<span class="me1">idFactura</span> <span class="sy0">=</span> idFactura<span class="sy0">;</span>
+  <span class="kw1">this</span>.<span class="me1">idCliente</span> <span class="sy0">=</span> idCliente<span class="sy0">;</span>
+&nbsp;
+  <span class="kw1">this</span>.<span class="me1">muestraCliente</span> <span class="sy0">=</span> <span class="kw1">function</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    alert<span class="br0">&#40;</span><span class="kw1">this</span>.<span class="me1">idCliente</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="kw1">this</span>.<span class="me1">muestraId</span> <span class="sy0">=</span> <span class="kw1">function</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    alert<span class="br0">&#40;</span><span class="kw1">this</span>.<span class="me1">idFactura</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>La clase anterior que incluye los métodos en la función constructora, se puede reescribir utilizando el objeto prototype:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">function</span> Factura<span class="br0">&#40;</span>idFactura<span class="sy0">,</span> idCliente<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="kw1">this</span>.<span class="me1">idFactura</span> <span class="sy0">=</span> idFactura<span class="sy0">;</span>
+  <span class="kw1">this</span>.<span class="me1">idCliente</span> <span class="sy0">=</span> idCliente<span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+Factura.<span class="kw1">prototype</span>.<span class="me1">muestraCliente</span> <span class="sy0">=</span> <span class="kw1">function</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  alert<span class="br0">&#40;</span><span class="kw1">this</span>.<span class="me1">idCliente</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+Factura.<span class="kw1">prototype</span>.<span class="me1">muestraId</span> <span class="sy0">=</span> <span class="kw1">function</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  alert<span class="br0">&#40;</span><span class="kw1">this</span>.<span class="me1">idFactura</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Para incluir un método en el prototipo de un objeto, se utiliza la propiedad <code>prototype</code> del objeto. En el ejemplo anterior, se han añadido los dos métodos del objeto en su prototipo. De esta forma, todos los objetos creados con esta función constructora incluyen por defecto estos dos métodos. Además, no se crean dos nuevas funciones por cada objeto, sino que se definen únicamente dos funciones para todos los objetos creados.</p>
+
+<p>Evidentemente, en el <code>prototype</code> de un objeto sólo se deben añadir aquellos elementos comunes para todos los objetos. Normalmente se añaden los métodos y las constantes (propiedades cuyo valor no varía durante la ejecución de la aplicación). Las propiedades del objeto permanecen en la función constructora para que cada objeto diferente pueda tener un valor distinto en esas propiedades.</p>
+
+<p>El mayor inconveniente de la propiedad <code>prototype</code> es que se pueden reescribir propiedades y métodos de forma accidental. Si se considera el siguiente ejemplo:</p>
+
+<div class="code javascript">
+<pre class="javascript">Factura.<span class="kw1">prototype</span>.<span class="me1">iva</span> <span class="sy0">=</span> <span class="nu0">16</span><span class="sy0">;</span>
+<span class="kw1">var</span> laFactura <span class="sy0">=</span> <span class="kw1">new</span> Factura<span class="br0">&#40;</span><span class="nu0">3</span><span class="sy0">,</span> <span class="nu0">7</span><span class="br0">&#41;</span><span class="sy0">;</span>   <span class="co1">// laFactura.iva = 16</span>
+&nbsp;
+Factura.<span class="kw1">prototype</span>.<span class="me1">iva</span> <span class="sy0">=</span> <span class="nu0">7</span><span class="sy0">;</span>
+<span class="kw1">var</span> otraFactura <span class="sy0">=</span> <span class="kw1">new</span> Factura<span class="br0">&#40;</span><span class="nu0">5</span><span class="sy0">,</span> <span class="nu0">4</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="co1">// Ahora, laFactura.iva = otraFactura.iva = 7</span></pre>
+</div>
+
+<p>El primer objeto creado de tipo <code>Factura</code> dispone de una propiedad llamada <code>iva</code> cuyo valor es <code>16</code>. Más adelante, se modifica el prototipo del objeto <code>Factura</code> durante la ejecución del programa y se establece un nuevo valor en la propiedad <code>iva</code>.</p>
+
+<p>De esta forma, la propiedad <code>iva</code> del segundo objeto creado vale <code>7</code>. Además, el valor de la propiedad <code>iva</code> del primer objeto ha cambiado y ahora vale <code>7</code> y no <code>16</code>. Aunque la modificación del prototipo en tiempo de ejecución no suele ser una operación que se realice habitualmente, sí que es posible modificarlo de forma accidental.</p>
+
+<p><div class="exercise"><p class="title">Ejercicio 2</p> <p>Modificar el ejercicio anterior del objeto Factura para crear una <em>pseudoclase</em> llamada <code>Factura</code> y que permita crear objetos de ese tipo. Se deben utilizar las funciones constructoras y la propiedad <code>prototype</code>.</p>
+
+<p>Para instanciar la clase, se debe utilizar la instrucción <code>Factura(cliente, elementos)</code>, donde <code>cliente</code> también es una <em>pseudoclase</em> que guarda los datos del cliente y <code>elementos</code> es un array simple que contiene las <em>pseudoclases</em> de todos los elementos que forman la factura.</p>
+
+<p><a href="http://librosweb.es/ajax/capitulo_14/ejercicio_2.html">Ver solución</a></p></div></p>
+
+<p>Una de las posibilidades más interesantes de la propiedad <code>prototype</code> es que también permite añadir y/o modificar las propiedades y métodos de los objetos predefinidos por JavaScript. Por lo tanto, es posible redefinir el comportamiento habitual de algunos métodos de los objetos nativos de JavaScript. Además, se pueden añadir propiedades o métodos completamente nuevos.</p>
+
+<p>Si por ejemplo se considera la clase <code>Array</code>, esta no dispone de un método que indique la posición de un elemento dentro de un array (como la función <code>indexOf()</code> de Java). Modificando el prototipo con el que se construyen los objetos de tipo <code>Array</code>, es posible añadir esta funcionalidad:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw4">Array</span>.<span class="kw1">prototype</span>.<span class="me1">indexOf</span> <span class="sy0">=</span> <span class="kw1">function</span><span class="br0">&#40;</span>objeto<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="kw1">var</span> resultado <span class="sy0">=</span> <span class="sy0">-</span><span class="nu0">1</span><span class="sy0">;</span>
+  <span class="kw1">for</span><span class="br0">&#40;</span><span class="kw1">var</span> i<span class="sy0">=</span><span class="nu0">0</span><span class="sy0">;</span> i<span class="sy0">&lt;</span><span class="kw1">this</span>.<span class="me1">length</span><span class="sy0">;</span> i<span class="sy0">++</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="kw1">if</span><span class="br0">&#40;</span><span class="kw1">this</span><span class="br0">&#91;</span>i<span class="br0">&#93;</span> <span class="sy0">==</span> objeto<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+      resultado <span class="sy0">=</span> i<span class="sy0">;</span>
+      <span class="kw1">break</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+  <span class="br0">&#125;</span>
+  <span class="kw1">return</span> resultado<span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>El código anterior permite que todos los arrays de JavaScript dispongan de un método llamado <code>indexOf</code> que devuelve el índice de la primera posición de un elemento dentro del array o <code>-1</code> si el elemento no se encuentra en el array, tal y como sucede en otros lenguajes de programación.</p>
+
+<p>El funcionamiento del método anterior consiste en recorrer el array actual (obteniendo su número de elementos mediante <code>this.length</code>) y comparar cada elemento del array con el elemento que se quiere encontrar. Cuando se encuentra por primera vez el elemento, se devuelve su posición dentro del array. En otro caso, se devuelve <code>-1</code>.</p>
+
+<p>Como se verá más adelante, existen librerías de JavaScript formadas por un conjunto de utilidades que facilitan la programación de las aplicaciones. Una de las características habituales de estas librerías es el uso de la propiedad <code>prototype</code> para mejorar las funcionalidades básicas de JavaScript.</p>
+
+<p>A continuación se muestra el ejemplo de una librería llamada <em>Prototype</em> que utiliza la propiedad <code>prototype</code> para ampliar las funcionalidades de los arrays de JavaScript:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw4">Object</span>.<span class="me1">extend</span><span class="br0">&#40;</span><span class="kw4">Array</span>.<span class="kw1">prototype</span><span class="sy0">,</span> <span class="br0">&#123;</span>
+  _each<span class="sy0">:</span> <span class="kw1">function</span><span class="br0">&#40;</span>iterator<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="kw1">for</span> <span class="br0">&#40;</span><span class="kw1">var</span> i <span class="sy0">=</span> <span class="nu0">0</span><span class="sy0">;</span> i <span class="sy0">&lt;</span> <span class="kw1">this</span>.<span class="me1">length</span><span class="sy0">;</span> i<span class="sy0">++</span><span class="br0">&#41;</span>
+      iterator<span class="br0">&#40;</span><span class="kw1">this</span><span class="br0">&#91;</span>i<span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span><span class="sy0">,</span>
+  clear<span class="sy0">:</span> <span class="kw1">function</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="kw1">this</span>.<span class="me1">length</span> <span class="sy0">=</span> <span class="nu0">0</span><span class="sy0">;</span>
+    <span class="kw1">return</span> <span class="kw1">this</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span><span class="sy0">,</span>
+  first<span class="sy0">:</span> <span class="kw1">function</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="kw1">return</span> <span class="kw1">this</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span><span class="sy0">,</span>
+  last<span class="sy0">:</span> <span class="kw1">function</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="kw1">return</span> <span class="kw1">this</span><span class="br0">&#91;</span><span class="kw1">this</span>.<span class="me1">length</span> <span class="sy0">-</span> <span class="nu0">1</span><span class="br0">&#93;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span><span class="sy0">,</span>
+  compact<span class="sy0">:</span> <span class="kw1">function</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="kw1">return</span> <span class="kw1">this</span>.<span class="me1">select</span><span class="br0">&#40;</span><span class="kw1">function</span><span class="br0">&#40;</span>value<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+      <span class="kw1">return</span> value <span class="sy0">!=</span> <span class="kw2">undefined</span> <span class="sy0">||</span> value <span class="sy0">!=</span> <span class="kw2">null</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span><span class="sy0">,</span>
+  flatten<span class="sy0">:</span> <span class="kw1">function</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="kw1">return</span> <span class="kw1">this</span>.<span class="me1">inject</span><span class="br0">&#40;</span><span class="br0">&#91;</span><span class="br0">&#93;</span><span class="sy0">,</span> <span class="kw1">function</span><span class="br0">&#40;</span>array<span class="sy0">,</span> value<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+      <span class="kw1">return</span> array.<span class="me1">concat</span><span class="br0">&#40;</span>value.<span class="me1">constructor</span> <span class="sy0">==</span> <span class="kw4">Array</span> <span class="sy0">?</span>
+        value.<span class="me1">flatten</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="sy0">:</span> <span class="br0">&#91;</span>value<span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span><span class="sy0">,</span>
+  without<span class="sy0">:</span> <span class="kw1">function</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="kw1">var</span> values <span class="sy0">=</span> $A<span class="br0">&#40;</span>arguments<span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="kw1">return</span> <span class="kw1">this</span>.<span class="me1">select</span><span class="br0">&#40;</span><span class="kw1">function</span><span class="br0">&#40;</span>value<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+      <span class="kw1">return</span> <span class="sy0">!</span>values.<span class="me1">include</span><span class="br0">&#40;</span>value<span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span><span class="sy0">,</span>
+  indexOf<span class="sy0">:</span> <span class="kw1">function</span><span class="br0">&#40;</span>object<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="kw1">for</span> <span class="br0">&#40;</span><span class="kw1">var</span> i <span class="sy0">=</span> <span class="nu0">0</span><span class="sy0">;</span> i <span class="sy0">&lt;</span> <span class="kw1">this</span>.<span class="me1">length</span><span class="sy0">;</span> i<span class="sy0">++</span><span class="br0">&#41;</span>
+      <span class="kw1">if</span> <span class="br0">&#40;</span><span class="kw1">this</span><span class="br0">&#91;</span>i<span class="br0">&#93;</span> <span class="sy0">==</span> object<span class="br0">&#41;</span> <span class="kw1">return</span> i<span class="sy0">;</span>
+    <span class="kw1">return</span> <span class="sy0">-</span><span class="nu0">1</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span><span class="sy0">,</span>
+  reverse<span class="sy0">:</span> <span class="kw1">function</span><span class="br0">&#40;</span>inline<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="kw1">return</span> <span class="br0">&#40;</span>inline <span class="sy0">!==</span> <span class="kw2">false</span> <span class="sy0">?</span> <span class="kw1">this</span> <span class="sy0">:</span> <span class="kw1">this</span>.<span class="me1">toArray</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>._reverse<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span><span class="sy0">,</span>
+  shift<span class="sy0">:</span> <span class="kw1">function</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="kw1">var</span> result <span class="sy0">=</span> <span class="kw1">this</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="sy0">;</span>
+    <span class="kw1">for</span> <span class="br0">&#40;</span><span class="kw1">var</span> i <span class="sy0">=</span> <span class="nu0">0</span><span class="sy0">;</span> i <span class="sy0">&lt;</span> <span class="kw1">this</span>.<span class="me1">length</span> <span class="sy0">-</span> <span class="nu0">1</span><span class="sy0">;</span> i<span class="sy0">++</span><span class="br0">&#41;</span>
+      <span class="kw1">this</span><span class="br0">&#91;</span>i<span class="br0">&#93;</span> <span class="sy0">=</span> <span class="kw1">this</span><span class="br0">&#91;</span>i <span class="sy0">+</span> <span class="nu0">1</span><span class="br0">&#93;</span><span class="sy0">;</span>
+    <span class="kw1">this</span>.<span class="me1">length</span><span class="sy0">--;</span>
+    <span class="kw1">return</span> result<span class="sy0">;</span>
+  <span class="br0">&#125;</span><span class="sy0">,</span>
+  inspect<span class="sy0">:</span> <span class="kw1">function</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="kw1">return</span> <span class="st0">'['</span> <span class="sy0">+</span> <span class="kw1">this</span>.<span class="me1">map</span><span class="br0">&#40;</span><span class="kw4">Object</span>.<span class="me1">inspect</span><span class="br0">&#41;</span>.<span class="me1">join</span><span class="br0">&#40;</span><span class="st0">', '</span><span class="br0">&#41;</span> <span class="sy0">+</span> <span class="st0">']'</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>El código anterior añade a la clase <code>Array</code> de JavaScript varias utilidades que no disponen los arrays por defecto: obtener (sin extraerlo) el primer o último elemento del array, filtrar sus valores, determinar la posición de un elemento, borrar el array, etc.</p>
+
+<p><div class="exercise"><p class="title">Ejercicio 3</p> <p>Extender el objeto <code>Array</code> para que permita añadir nuevos elementos al final del array:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> array1 <span class="sy0">=</span> <span class="br0">&#91;</span><span class="nu0">0</span><span class="sy0">,</span> <span class="nu0">1</span><span class="sy0">,</span> <span class="nu0">2</span><span class="br0">&#93;</span><span class="sy0">;</span>
+array1.<span class="me1">anadir</span><span class="br0">&#40;</span><span class="nu0">3</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="co1">// array1 = [0, 1, 2, 3]</span></pre>
+</div>
+
+<p>Incluir la opción de controlar si se permiten elementos duplicados o no:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> array1 <span class="sy0">=</span> <span class="br0">&#91;</span><span class="nu0">0</span><span class="sy0">,</span> <span class="nu0">1</span><span class="sy0">,</span> <span class="nu0">2</span><span class="br0">&#93;</span><span class="sy0">;</span>
+&nbsp;
+array1.<span class="me1">anadir</span><span class="br0">&#40;</span><span class="nu0">2</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="co1">// array1 = [0, 1, 2, 2]</span>
+&nbsp;
+array1.<span class="me1">anadir</span><span class="br0">&#40;</span><span class="nu0">2</span><span class="sy0">,</span> <span class="kw2">false</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="co1">// array1 = [0, 1, 2]</span></pre>
+</div>
+
+<p><a href="http://librosweb.es/ajax/capitulo_14/ejercicio_3.html">Ver solución</a></p></div></p>
+
+<p>Cualquier clase nativa de JavaScript puede ser modificada mediante la propiedad <code>prototype</code>, incluso la clase <code>Object</code>. Se puede modificar por ejemplo la clase <code>String</code> para añadir un método que convierta una cadena en un array:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw4">String</span>.<span class="kw1">prototype</span>.<span class="me1">toArray</span> <span class="sy0">=</span> <span class="kw1">function</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="kw1">return</span> <span class="kw1">this</span>.<span class="me1">split</span><span class="br0">&#40;</span><span class="st0">''</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>La función <code>split()</code> divide una cadena de texto según el separador indicado. Si no se indica ningún separador, se divide carácter a carácter. De este modo, la función anterior devuelve un array en el que cada elemento es una letra de la cadena de texto original.</p>
+
+<p>Una función muy común en otros lenguajes de programación y que no dispone JavaScript es la función <code>trim()</code>, que elimina el espacio en blanco que pueda existir al principio y al final de una cadena de texto:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw4">String</span>.<span class="kw1">prototype</span>.<span class="me1">trim</span> <span class="sy0">=</span> <span class="kw1">function</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="kw1">return</span> <span class="kw1">this</span>.<span class="me1">replace</span><span class="br0">&#40;</span><span class="co2">/^\s*|\s*$/g</span><span class="sy0">,</span> <span class="st0">''</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+<span class="kw1">var</span> cadena <span class="sy0">=</span> <span class="st0">&quot;   prueba   de     cadena      &quot;</span><span class="sy0">;</span>
+cadena.<span class="me1">trim</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="co1">// Ahora cadena = &quot;prueba   de     cadena&quot;</span></pre>
+</div>
+
+<p>La función <code>trim()</code> añadida al prototipo de la clase <code>String</code> hace uso de las expresiones regulares para detectar todos los espacios en blanco que puedan existir tanto al principio como al final de la cadena y se sustituyen por una cadena vacía, es decir, se eliminan.</p>
+
+<p>Con este método, es posible definir las funciones asociadas <code>rtrim()</code> y <code>ltrim()</code> que eliminan los espacios en blanco a la derecha (final) de la cadena y a su izquierda (principio).</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw4">String</span>.<span class="kw1">prototype</span>.<span class="me1">rtrim</span> <span class="sy0">=</span> <span class="kw1">function</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="kw1">return</span> <span class="kw1">this</span>.<span class="me1">replace</span><span class="br0">&#40;</span><span class="co2">/\s*$/g</span><span class="sy0">,</span> <span class="st0">''</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+<span class="kw4">String</span>.<span class="kw1">prototype</span>.<span class="me1">ltrim</span> <span class="sy0">=</span> <span class="kw1">function</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="kw1">return</span> <span class="kw1">this</span>.<span class="me1">replace</span><span class="br0">&#40;</span><span class="co2">/^\s*/g</span><span class="sy0">,</span> <span class="st0">''</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+<span class="kw4">String</span>.<span class="kw1">prototype</span>.<span class="me1">trim</span> <span class="sy0">=</span> <span class="kw1">function</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="kw1">return</span> <span class="kw1">this</span>.<span class="me1">ltrim</span><span class="br0">&#40;</span><span class="br0">&#41;</span>.<span class="me1">rtrim</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Otra función muy útil para las cadenas de texto es la de eliminar todas las etiquetas HTML que pueda contener. Cualquier aplicación en la que el usuario pueda introducir información, debe tener especial cuidado con los datos introducidos por el usuario. Mediante JavaScript se puede modificar la clase <code>String</code> para incluir una utilidad que elimine cualquier etiqueta de código HTML de la cadena de texto:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw4">String</span>.<span class="kw1">prototype</span>.<span class="me1">stripTags</span> <span class="sy0">=</span> <span class="kw1">function</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="kw1">return</span> <span class="kw1">this</span>.<span class="me1">replace</span><span class="br0">&#40;</span><span class="co2">/&lt;\/?[^&gt;]+&gt;/gi</span><span class="sy0">,</span> <span class="st0">''</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+<span class="kw1">var</span> cadena <span class="sy0">=</span> <span class="st0">'&lt;html&gt;&lt;head&gt;&lt;meta content=&quot;text/html; charset=UTF-8&quot; http-equiv=&quot;content-type&quot;&gt;&lt;/head&gt;&lt;body&gt;&lt;p&gt;Parrafo de prueba&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;'</span><span class="sy0">;</span>
+cadena.<span class="me1">stripTags</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="co1">// Ahora cadena = &quot;Parrafo de prueba&quot;</span></pre>
+</div>
+
+<p>El ejemplo anterior también hace uso de expresiones regulares complejas para eliminar cualquier trozo de texto que sea similar a una etiqueta HTML, por lo que se buscan patrones como <code>&lt;...&gt;</code> y <code>&lt;/...&gt;</code>.</p>
+
+<p><div class="exercise"><p class="title">Ejercicio 4</p> <p>Extender la clase <code>String</code> para que permita truncar una cadena de texto a un tamaño indicado como parámetro:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> cadena <span class="sy0">=</span> <span class="st0">&quot;hola mundo&quot;</span><span class="sy0">;</span>
+cadena2 <span class="sy0">=</span> cadena.<span class="me1">truncar</span><span class="br0">&#40;</span><span class="nu0">6</span><span class="br0">&#41;</span><span class="sy0">;</span> <span class="co1">// cadena2 = &quot;hola m&quot;</span></pre>
+</div>
+
+<p>Modificar la función anterior para que permita definir el texto que indica que la cadena se ha truncado:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> cadena <span class="sy0">=</span> <span class="st0">&quot;hola mundo&quot;</span><span class="sy0">;</span>
+cadena2 <span class="sy0">=</span> cadena.<span class="me1">truncar</span><span class="br0">&#40;</span><span class="nu0">6</span><span class="sy0">,</span> <span class="st0">'...'</span><span class="br0">&#41;</span><span class="sy0">;</span> <span class="co1">// cadena2 = &quot;hol...&quot;</span></pre>
+</div>
+
+<p><a href="http://librosweb.es/ajax/capitulo_14/ejercicio_4.html">Ver solución</a></p></div></p>
+
+<p><div class="exercise"><p class="title">Ejercicio 5</p> <p>Añadir a la clase Array un método llamado <code>sin()</code> que permita filtrar los elementos del array original y obtenga un nuevo array con todos los valores diferentes al indicado:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> array1 <span class="sy0">=</span> <span class="br0">&#91;</span><span class="nu0">1</span><span class="sy0">,</span> <span class="nu0">2</span><span class="sy0">,</span> <span class="nu0">3</span><span class="sy0">,</span> <span class="nu0">4</span><span class="sy0">,</span> <span class="nu0">5</span><span class="br0">&#93;</span><span class="sy0">;</span>
+<span class="kw1">var</span> filtrado <span class="sy0">=</span> array1.<span class="me1">sin</span><span class="br0">&#40;</span><span class="nu0">4</span><span class="br0">&#41;</span><span class="sy0">;</span>  <span class="co1">// filtrado = [1, 2, 3, 5]</span></pre>
+</div>
+
+<p><a href="http://librosweb.es/ajax/capitulo_14/ejercicio_5.html">Ver solución</a></p></div></p>
+
+<h3 id="herencia_y_ambito_scope">3.2.3. Herencia y ámbito (scope)</h3>
+
+<p>Los lenguajes orientados a objetos disponen, entre otros, de los conceptos de herencia entre clases y de ámbito  <em>scope</em>) de sus métodos y propiedades (<code>public</code>, <code>private</code>, <code>protected</code>).</p>
+
+<p>Sin embargo, JavaScript no dispone de forma nativa ni de herencia ni de ámbitos. Si se requieren ambos mecanismos, la única opción es simular su funcionamiento mediante clases, funciones y métodos desarrollados a medida.</p>
+
+<p>Algunas técnicas simulan el uso de propiedades privadas prefijando su nombre con un guión bajo, para distinguirlas del resto de propiedades públicas. Para simular la herencia de clases, algunas librerías como Prototype añaden un método a la clase <code>Object</code> llamado <code>extend()</code> y que copia las propiedades de una clase origen en otra clase destino:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw4">Object</span>.<span class="me1">extend</span> <span class="sy0">=</span> <span class="kw1">function</span><span class="br0">&#40;</span>destination<span class="sy0">,</span> source<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="kw1">for</span> <span class="br0">&#40;</span><span class="kw1">var</span> property <span class="kw1">in</span> source<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    destination<span class="br0">&#91;</span>property<span class="br0">&#93;</span> <span class="sy0">=</span> source<span class="br0">&#91;</span>property<span class="br0">&#93;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+  <span class="kw1">return</span> destination<span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="../capitulo_3.html">&larr; Anterior <span>Capítulo 3. JavaScript avanzado</span></a>
+            
+            <a class="span5 next" href="otros_conceptos.html">Siguiente &rarr; <span>3.3. Otros conceptos</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Clases (Introducción a AJAX%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a AJAX : Clases']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción a AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> JavaScript básico</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_3.html">
+            <span>Capítulo 3.</span> JavaScript avanzado
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="clases.html">
+            <span>3.2.</span> Clases
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="otros_conceptos.html">
+            <span>3.3.</span> Otros conceptos
+        </a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> DOM (Document Object Model)</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> BOM (Browser Object Model)</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Eventos</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Primeros pasos con AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Técnicas básicas con AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Técnicas avanzadas con AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Frameworks y librerías</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Otras utilidades</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Recursos útiles</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Bibliografía</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

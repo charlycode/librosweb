@@ -1,0 +1,328 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>3.4. El ORM (El tutorial Jobeet)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="la_base_de_datos.html" />
+        <link rel="next" href="los_datos_iniciales.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="3.4. El ORM (El tutorial Jobeet)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page jobeet_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">El tutorial Jobeet</a></li>
+  <li><a href="../capitulo_3.html">Capítulo 3. El modelo de datos</a></li>
+  <li class="current"><span>3.4.. El ORM</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="el_orm"><span>3.4.</span> El ORM</h1>
+    
+
+<p>Gracias a la descripción de las tablas y columnas de la base de datos en el archivo <code>schema.yml</code>, podemos hacer uso de algunas tareas incluidas en Propel para generar automáticamente las sentencias SQL necesarias para crear todas las tablas de la base de datos:</p>
+
+<div class="code cli">
+<pre class="cli">$ php symfony propel:build-sql</pre>
+</div>
+
+<p>La tarea <code>propel:build-sql</code> genera en el directorio <code>data/sql/</code> las sentencias SQL optimizadas para el sistema gestor de bases de datos que estamos utilizando:</p>
+
+<div class="code code">
+<pre class="code"># fragmento del archivo data/sql/lib.model.schema.sql
+CREATE TABLE `jobeet_category`
+(
+    `id` INTEGER  NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(255)  NOT NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `jobeet_category_U_1` (`name`)
+)Type=InnoDB;</pre>
+</div>
+
+<p>Para crear la estructura de tablas en la base de datos, ejecuta la tarea <code>propel:insert-sql</code>:</p>
+
+<div class="code cli">
+<pre class="cli">$ php symfony propel:insert-sql</pre>
+</div>
+
+<p>Como la tarea anterior borra todas las tablas existentes antes de volver a crearlas, se muestra un mensaje de confirmación que debes aceptar. Si añades la opción <code>--no-confirmation</code> cuando ejecutas la tarea, no se muestra ningún mensaje de confirmación, lo que es útil cuando se incluye esta tarea en un script automático:</p>
+
+<div class="code cli">
+<pre class="cli">$ php symfony propel:insert-sql --no-confirmation</pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Como sucede con cualquier otra herramienta para la línea de comandos, las tareas de Symfony admiten argumentos y opciones. Cada tarea incluye una explicación completa de su uso que se puede mostrar mediante la tarea <code>help</code>:</p>
+
+<div class="code cli">
+<pre class="cli">$ php symfony help propel:insert-sql</pre>
+</div>
+
+<p>Las explicaciones muestran todos los argumentos y opciones de la tarea, los valores iniciales de cada uno de ellos y también algunos ejemplos de uso.</p></div>
+
+<p>El ORM también se encarga de generar automáticamente las clases PHP que relacionan las tablas de la base de datos con los objetos de la aplicación:</p>
+
+<div class="code cli">
+<pre class="cli">$ php symfony propel:build-model</pre>
+</div>
+
+<p>La tarea <code>propel:build-model</code> genera en el directorio <code>lib/model/</code> todos los archivos PHP que se utilizan para interactuar con la base de datos. Si echas un vistazo a los archivos generados automáticamente, verás que Propel crea cuatro clases por cada tabla de la base de datos. Si por ejemplo se considera la tabla <code>jobeet_job</code>:</p>
+
+<ul>
+<li><code>JobeetJob</code>: los objetos de esta clase representan un registro de la tabla <code>jobeet_job</code>. Inicialmente esta clase está completamente vacía.</li>
+<li><code>BaseJobeetJob</code>: la clase de la que hereda <code>JobeetJob</code>. Al contrario que la clase anterior, cada vez que ejecutas la tarea <code>propel:build-model</code>, esta clase se borra y se vuelve a generar. Por tanto, si quieres personalizar las clases del modelo, lo debes hacer en la clase <code>JobeetJob</code>.</li>
+<li><code>JobeetJobPeer</code>: se trata de una clase que define los métodos estáticos utilizados para obtener colecciones de objetos de tipo <code>JobeetJob</code>. Inicialmente esta clase está completamente vacía.</li>
+<li><code>BaseJobeetJobPeer</code>: la clase de la que hereda <code>JobeetJobPeer</code>. Como sucede con la clase <code>BaseJobeetJob</code>, cada vez que ejecutas la tarea <code>propel:build-model</code>, esta clase se borra y se vuelve a generar. Por tanto, si quieres personalizar las clases del modelo, lo debes hacer en la clase <code>JobeetJobPeer</code>.</li>
+</ul>
+
+<p>Una vez creadas las clases PHP, los valores almacenados en las columnas de un registro de la base de datos se pueden obtener y/o manipular gracias a los métodos <code>get*()</code>  y <code>set*()</code> disponibles:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$job</span> <span class="sy0">=</span> <span class="kw2">new</span> JobeetJob<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$job</span><span class="sy0">-&gt;</span><span class="me1">setPosition</span><span class="br0">&#40;</span><span class="st_h">'Web developer'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$job</span><span class="sy0">-&gt;</span><span class="me1">save</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="kw1">echo</span> <span class="re0">$job</span><span class="sy0">-&gt;</span><span class="me1">getPosition</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="re0">$job</span><span class="sy0">-&gt;</span><span class="me1">delete</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>También es posible definir claves externas relacionando objetos entre sí:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$category</span> <span class="sy0">=</span> <span class="kw2">new</span> JobeetCategory<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$category</span><span class="sy0">-&gt;</span><span class="me1">setName</span><span class="br0">&#40;</span><span class="st_h">'Programming'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="re0">$job</span> <span class="sy0">=</span> <span class="kw2">new</span> JobeetJob<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$job</span><span class="sy0">-&gt;</span><span class="me1">setCategory</span><span class="br0">&#40;</span><span class="re0">$category</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Por último, existe una tarea llamada <code>propel:build-all</code> que es un atajo de todas las tareas que hemos utilizado hasta este momento y algunas más. Así que ejecuta esta tarea para que genere de forma consecutiva las sentencias SQL, la base de datos, las clases del modelo, los formularios y los validadores:</p>
+
+<div class="code cli">
+<pre class="cli">$ php symfony propel:build-all --no-confirmation</pre>
+</div>
+
+<p>Los validadores se muestran al final de esta lección y los formularios se explican detalladamente en la lección del día 10.</p>
+
+<p>Como explicaremos más adelante, Symfony dispone de un mecanismo que carga automáticamente las clases PHP, lo que significa que nunca tendrás que utilizar una sentencia <code>require()</code> en tu código. La carga automática de clases es otra de las ayudas que Symfony proporciona a los programadores, aunque tiene una pega: cada vez que añades una clase nueva al proyecto es necesario borrar la cache que utiliza Symfony. Como la tarea <code>propel:build-model</code> acaba de crear muchas clases nuevas, no olvides borrar la cache mediante el comando:</p>
+
+<div class="code cli">
+<pre class="cli">$ php symfony cache:clear</pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> El nombre de las tareas de Symfony se compone de una primera parte llamada <em>namespace</em> y de una segunda parte que es el propio nombre de la tarea. Cada una de las partes se puede abreviar tanto como se quiera siempre que no se produzca una ambigüedad con el nombre del resto de tareas. Por tanto, los siguientes comandos son equivalentes a <code>cache:clear</code>:</p>
+
+<div class="code cli">
+<pre class="cli">$ php symfony cache:cl 
+$ php symfony ca:c</pre>
+</div>
+
+<p>Además, como la tarea <code>cache:clear</code> es la más utilizada de Symfony con mucha diferencia, dispone de un atajo todavía más corto:</p>
+
+<div class="code cli">
+<pre class="cli">$ php symfony cc</pre>
+</div>
+
+<p></p></div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="la_base_de_datos.html">&larr; Anterior <span>3.3. La base de datos</span></a>
+            
+            <a class="span5 next" href="los_datos_iniciales.html">Siguiente &rarr; <span>3.5. Los datos iniciales</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'El ORM (El tutorial Jobeet%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'El tutorial Jobeet : El ORM']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Comenzando el proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> El proyecto</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_3.html">
+            <span>Capítulo 3.</span> El modelo de datos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_modelo_relacional.html">
+            <span>3.1.</span> El modelo relacional
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_esquema.html">
+            <span>3.2.</span> El esquema
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="la_base_de_datos.html">
+            <span>3.3.</span> La base de datos
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="el_orm.html">
+            <span>3.4.</span> El ORM
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="los_datos_iniciales.html">
+            <span>3.5.</span> Los datos iniciales
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="probando_la_aplicacion_en_el_navegador.html">
+            <span>3.6.</span> Probando la aplicación en el navegador
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="nos_vemos_manana.html">
+            <span>3.7.</span> Nos vemos mañana
+        </a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> El controlador y la vista</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> El sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Profundizando en el modelo</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Trabajando con la página de cada categoría</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Pruebas unitarias</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Pruebas funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Probando los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> El generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> El usuario</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> El día de descanso</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Canales Atom</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Servicios web</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> El buscador</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>20</span> <a href="../capitulo_20.html"> Plugins</a>
+    </li>
+    <li class="level-1">
+        <span>21</span> <a href="../capitulo_21.html"> El día del diseño</a>
+    </li>
+    <li class="level-1">
+        <span>22</span> <a href="../capitulo_22.html"> La cache</a>
+    </li>
+    <li class="level-1">
+        <span>23</span> <a href="../capitulo_23.html"> Pasando a producción</a>
+    </li>
+    <li class="level-1">
+        <span>24</span> <a href="../capitulo_24.html"> Un repaso a Symfony</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

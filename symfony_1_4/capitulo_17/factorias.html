@@ -1,0 +1,363 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>17.2. Factorías (Symfony 1.4, la guía definitiva)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="eventos.html" />
+        <link rel="next" href="integrando_componentes_de_otros_frameworks.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="17.2. Factorías (Symfony 1.4, la guía definitiva)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page symfony_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Symfony 1.4, la guía definitiva</a></li>
+  <li><a href="../capitulo_17.html">Capítulo 17. Personalizar Symfony</a></li>
+  <li class="current"><span>17.2.. Factorías</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="factorias"><span>17.2.</span> Factorías</h1>
+    
+
+<p>Una factoría consiste en la definición de una clase que realiza una determinada tarea. Symfony utiliza las factorias en su funcionamiento interno, como por ejemplo para los controladores y para las sesiones. Cuando el framework necesita por ejemplo crear un nuevo objeto para una petición, busca en la definición de la factoría el nombre de la clase que se debe utilizar para esta tarea. Como la definición por defecto de la factoría para las peticiones es <code>sfWebRequest</code>, Symfony crea un objeto de esta clase para tratar con las peticiones. La principal ventaja de utilizar las definiciones de las factorías es que es muy sencillo modificar las características internas de Symfony: simplemente es necesario modificar la definición de la factoría y Symfony utiliza la clase propia indicada en vez de la clase por defecto.</p>
+
+<p>Las definiciones para las factorías se guardan en el archivo de configuración <code>factories.yml</code>. El listado 17-7 muestra el contenido por defecto de ese archivo. Cada definición consta del nombre de una clase y opcionalmente, de una serie de parámetros. Por ejemplo, la factoría para el almacenamiento de la sesión (que se indica bajo la clave <code>storage:</code>) utiliza un parámetro llamado <code>session_name</code> para establecer el nombre de la cookie que se crea para el lado del cliente, de forma que se puedan realizar sesiones persistentes.</p>
+
+<p><strong>Listado 17-7 - Archivo por defecto para las factorias, en <code>frontend/config/factories.yml</code></strong></p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co4">prod</span>:<span class="co4">
+  logger</span>:<span class="co3">
+    class</span><span class="sy2">: </span>  sfNoLogger<span class="co4">
+    param</span>:<span class="co3">
+      level</span><span class="sy2">: </span>  err<span class="co3">
+      loggers</span><span class="sy2">: </span>~
+<span class="co4">
+cli</span>:<span class="co4">
+  controller</span>:<span class="co3">
+    class</span><span class="sy2">: </span>sfConsoleController<span class="co4">
+  request</span>:<span class="co3">
+    class</span><span class="sy2">: </span>sfConsoleRequest<span class="co4">
+  response</span>:<span class="co3">
+    class</span><span class="sy2">: </span>sfConsoleResponse
+<span class="co4">
+test</span>:<span class="co4">
+  storage</span>:<span class="co3">
+    class</span><span class="sy2">: </span>sfSessionTestStorage<span class="co4">
+    param</span>:<span class="co3">
+      session_path</span><span class="sy2">: </span><span class="co2">%SF_TEST_CACHE_DIR%/sessions</span>
+<span class="co4">
+  response</span>:<span class="co3">
+    class</span><span class="sy2">: </span>sfWebResponse<span class="co4">
+    param</span>:<span class="co3">
+      send_http_headers</span><span class="sy2">: </span>false
+<span class="co4">
+all</span>:<span class="co4">
+  routing</span>:<span class="co3">
+    class</span><span class="sy2">: </span>sfPatternRouting<span class="co4">
+    param</span>:<span class="co3">
+      generate_shortest_url</span><span class="sy2">: </span>           true<span class="co3">
+      extra_parameters_as_query_string</span><span class="sy2">: </span>true
+&nbsp;
+<span class="co1">#all:</span>
+<span class="co1">#  controller:</span>
+<span class="co1">#    class: sfFrontWebController</span>
+<span class="co1">#</span>
+<span class="co1">#  request:</span>
+<span class="co1">#    class: sfWebRequest</span>
+<span class="co1">#    param:</span>
+<span class="co1">#      logging:           %SF_LOGGING_ENABLED%</span>
+<span class="co1">#      path_info_array:   SERVER</span>
+<span class="co1">#      path_info_key:     PATH_INFO</span>
+<span class="co1">#      relative_url_root: ~</span>
+<span class="co1">#      formats:</span>
+<span class="co1">#        txt:  text/plain</span>
+<span class="co1">#        js:   [application/javascript, application/x-javascript, text/javascript]</span>
+<span class="co1">#        css:  text/css</span>
+<span class="co1">#        json: [application/json, application/x-json]</span>
+<span class="co1">#        xml:  [text/xml, application/xml, application/x-xml]</span>
+<span class="co1">#        rdf:  application/rdf+xml</span>
+<span class="co1">#        atom: application/atom+xml</span>
+<span class="co1">#</span>
+<span class="co1">#  response:</span>
+<span class="co1">#    class: sfWebResponse</span>
+<span class="co1">#    param:</span>
+<span class="co1">#      logging:           %SF_LOGGING_ENABLED%</span>
+<span class="co1">#      charset:           %SF_CHARSET%</span>
+<span class="co1">#      send_http_headers: true</span>
+<span class="co1">#</span>
+<span class="co1">#  user:</span>
+<span class="co1">#    class: myUser</span>
+<span class="co1">#    param:</span>
+<span class="co1">#      timeout:         1800</span>
+<span class="co1">#      logging:         %SF_LOGGING_ENABLED%</span>
+<span class="co1">#      use_flash:       true</span>
+<span class="co1">#      default_culture: %SF_DEFAULT_CULTURE%</span>
+<span class="co1">#</span>
+<span class="co1">#  storage:</span>
+<span class="co1">#    class: sfSessionStorage</span>
+<span class="co1">#    param:</span>
+<span class="co1">#      session_name: symfony</span>
+<span class="co1">#</span>
+<span class="co1">#  view_cache:</span>
+<span class="co1">#    class: sfFileCache</span>
+<span class="co1">#    param:</span>
+<span class="co1">#      automatic_cleaning_factor: 0</span>
+<span class="co1">#      cache_dir:                 %SF_TEMPLATE_CACHE_DIR%</span>
+<span class="co1">#      lifetime:                  86400</span>
+<span class="co1">#      prefix:                    %SF_APP_DIR%/template</span>
+<span class="co1">#</span>
+<span class="co1">#  i18n:</span>
+<span class="co1">#    class: sfI18N</span>
+<span class="co1">#    param:</span>
+<span class="co1">#      source:               XLIFF</span>
+<span class="co1">#      debug:                off</span>
+<span class="co1">#      untranslated_prefix:  &quot;[T]&quot;</span>
+<span class="co1">#      untranslated_suffix:  &quot;[/T]&quot;</span>
+<span class="co1">#      cache:</span>
+<span class="co1">#        class: sfFileCache</span>
+<span class="co1">#        param:</span>
+<span class="co1">#          automatic_cleaning_factor: 0</span>
+<span class="co1">#          cache_dir:                 %SF_I18N_CACHE_DIR%</span>
+<span class="co1">#          lifetime:                  31556926</span>
+<span class="co1">#          prefix:                    %SF_APP_DIR%/i18n</span>
+<span class="co1">#</span>
+<span class="co1">#  routing:</span>
+<span class="co1">#    class: sfPatternRouting</span>
+<span class="co1">#    param:</span>
+<span class="co1">#      load_configuration:               true</span>
+<span class="co1">#      suffix:                           ''</span>
+<span class="co1">#      default_module:                   default</span>
+<span class="co1">#      default_action:                   index</span>
+<span class="co1">#      debug:                            %SF_DEBUG%</span>
+<span class="co1">#      logging:                          %SF_LOGGING_ENABLED%</span>
+<span class="co1">#      generate_shortest_url:            false</span>
+<span class="co1">#      extra_parameters_as_query_string: false</span>
+<span class="co1">#      cache:</span>
+<span class="co1">#        class: sfFileCache</span>
+<span class="co1">#        param:</span>
+<span class="co1">#          automatic_cleaning_factor: 0</span>
+<span class="co1">#          cache_dir:                 %SF_CONFIG_CACHE_DIR%/routing</span>
+<span class="co1">#          lifetime:                  31556926</span>
+<span class="co1">#          prefix:                    %SF_APP_DIR%/routing</span>
+<span class="co1">#</span>
+<span class="co1">#  logger:</span>
+<span class="co1">#    class: sfAggregateLogger</span>
+<span class="co1">#    param:</span>
+<span class="co1">#      level: debug</span>
+<span class="co1">#      loggers:</span>
+<span class="co1">#        sf_web_debug:</span>
+<span class="co1">#          class: sfWebDebugLogger</span>
+<span class="co1">#          param:</span>
+<span class="co1">#            level: debug</span>
+<span class="co1">#            condition:       %SF_WEB_DEBUG%</span>
+<span class="co1">#            xdebug_logging:  true</span>
+<span class="co1">#            web_debug_class: sfWebDebug</span>
+<span class="co1">#        sf_file_debug:</span>
+<span class="co1">#          class: sfFileLogger</span>
+<span class="co1">#          param:</span>
+<span class="co1">#            level: debug</span>
+<span class="co1">#            file: %SF_LOG_DIR%/%SF_APP%_%SF_ENVIRONMENT%.log</span></pre>
+</div>
+
+<p>La mejor forma de crear una nueva factoría consiste en crear una nueva clase que herede de la clase por defecto y añadirle nuevos métodos. La factoría para las sesiones de usuario se establece a la clase <code>myUser</code> (localizada en <code>frontend/lib</code>) y hereda de la clase <code>sfUser</code>. Se puede utilizar el mismo mecanismo para aprovechar las factorías ya existentes. El listado 17-8 muestra el ejemplo de una factoría para el objeto de la petición.</p>
+
+<p><strong>Listado 17-8 - Redefiniendo factorías</strong></p>
+
+<div class="code php">
+<pre class="php">// Se crea la clase miRequest.class.php en un directorio para
+// el que esté activada la carga automática de clases, por ejemplo
+// frontend/lib/
+<span class="kw2">&lt;?php</span>
+&nbsp;
+<span class="kw2">class</span> miRequest <span class="kw2">extends</span> sfRequest
+<span class="br0">&#123;</span>
+  <span class="co1">// El código de la nueva factoría</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co1"># Se declara en el archivo factories.yml que esta nueva</span>
+<span class="co1"># clase es la factoría para las peticiones</span><span class="co4">
+all</span>:<span class="co4">
+  request</span>:<span class="co3">
+    class</span><span class="sy2">: </span>miRequest</pre>
+</div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="eventos.html">&larr; Anterior <span>17.1. Eventos</span></a>
+            
+            <a class="span5 next" href="integrando_componentes_de_otros_frameworks.html">Siguiente &rarr; <span>17.3. Integrando componentes de otros frameworks</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Factorías (Symfony 1.4, la guía definitiva%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Symfony 1.4, la guía definitiva : Factorías']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción a Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Explorando el interior de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Ejecutar aplicaciones Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Introducción a la creación de páginas</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Configurar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> El Controlador</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> La Vista</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> El modelo (Doctrine)</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Enlaces y sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Emails</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Uso de la cache</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Pruebas unitarias y funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Herramientas para la administración de aplicaciones</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_17.html">
+            <span>Capítulo 17.</span> Personalizar Symfony
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="eventos.html">
+            <span>17.1.</span> Eventos
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="factorias.html">
+            <span>17.2.</span> Factorías
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="integrando_componentes_de_otros_frameworks.html">
+            <span>17.3.</span> Integrando componentes de otros frameworks
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="plugins.html">
+            <span>17.4.</span> Plugins
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="resumen.html">
+            <span>17.5.</span> Resumen
+        </a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> Rendimiento</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Configuración avanzada</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

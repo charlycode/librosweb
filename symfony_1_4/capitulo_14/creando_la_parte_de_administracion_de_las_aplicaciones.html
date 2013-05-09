@@ -1,0 +1,409 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>14.2. Creando la parte de administración de las aplicaciones (Symfony 1.4, la guía definitiva)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="generacion_de_codigo_en_funcion_del_modelo.html" />
+        <link rel="next" href="configuracion_del_generador.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="14.2. Creando la parte de administración de las aplicaciones (Symfony 1.4, la guía definitiva)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page symfony_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Symfony 1.4, la guía definitiva</a></li>
+  <li><a href="../capitulo_14.html">Capítulo 14. Generador de la parte de administración</a></li>
+  <li class="current"><span>14.2.. Creando la parte de administración de las aplicaciones</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="creando_la_parte_de_administracion_de_las_aplicaciones"><span>14.2.</span> Creando la parte de administración de las aplicaciones</h1>
+    
+
+<p>Symfony es capaz de generar módulos más avanzados para la parte de gestión o administración de las aplicaciones, también basados en las definiciones de las clases del modelo del archivo <code>schema.yml</code>. Se puede crear toda la parte de administración de la aplicación mediante módulos generados automáticamente. Los ejemplos de esta sección describen los módulos de administración creados para una aplicación llamada <code>backend</code>. El esqueleto de la aplicación se puede crear mediante la tarea <code>generate:app</code> de Symfony:</p>
+
+<div class="code cli">
+<pre class="cli">$ php symfony generate:app backend</pre>
+</div>
+
+<p>Los módulos de administración interpretan el modelo con la ayuda de un archivo de configuración especial llamado <code>generator.yml</code>, que se puede modificar para extender los componentes generados automáticamente y para controlar el aspecto visual de los módulos. Este tipo de módulos también disponen de los mecanismos habituales descritos en los capítulos anteriores (layout, enrutamiento, configuración propia, carga automática de clases, etc.). Incluso es posible redefinir las acciones y plantillas generadas para incluir características propias, aunque el archivo <code>generator.yml</code> es suficiente para realizar la mayoría de modificaciones, por lo que el código PHP solamente es necesario para las tareas muy específicas.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Aunque las funcionalidades más utilizadas se configuran en el archivo <code>generator.yml</code>, los módulos de administración también se pueden configurar mediante una clase de configuración, como se verá más adelante en este capítulo.</p></div>
+
+<h3 id="iniciando_un_modulo_de_administracion">14.2.1. Iniciando un módulo de administración</h3>
+
+<p>Symfony crea la parte de administración de una aplicación en base a su modelo de datos. Los módulos se generan a partir de objetos Propel o Doctrine:</p>
+
+<div class="code cli">
+<pre class="cli">// Propel
+$ php symfony propel:generate-admin backend BlogArticulo --module=articulo
+&nbsp;
+// Doctrine
+$ php symfony doctrine:generate-admin backend BlogArticulo --module=articulo</pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Los módulos de administración se basan en una arquitectura de tipo REST. La tarea <code>propel:generate-admin</code> añade una ruta apropiada para esa arquitectura en el archivo de configuración <code>routing.yml</code>:</p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co1"># apps/backend/config/routing.yml</span><span class="co4">
+article</span>:<span class="co3">
+  class</span><span class="sy2">: </span>sfPropelRouteCollection<span class="co4">
+  options</span>:<span class="co3">
+    model</span><span class="sy2">: </span>               BlogArticulo<span class="co3">
+    module</span><span class="sy2">: </span>              articulo<span class="co3">
+    with_wildcard_routes</span><span class="sy2">: </span>true</pre>
+</div>
+
+<p>También es posible crear tu propia ruta y pasar su nombre como argumento de la tarea en vez del nombre de la clase del modelo:</p>
+
+<div class="code cli">
+<pre class="cli">$ php symfony propel:generate-admin backend articulo --module=article</pre>
+</div>
+
+<p></p></div>
+
+<p>Después de ejecutar el comando anterior, se crea un módulo llamado <code>articulo</code> en la aplicación <code>backend</code> y basado en la definición de la clase <code>BlogArticulo</code>, que además es accesible desde la dirección:</p>
+
+<div class="code cli">
+<pre class="cli">http://localhost/backend.php/articulo</pre>
+</div>
+
+<p>El aspecto gráfico del módulo generado, que se muestra en las figuras 14-2 y 14-3, es suficientemente avanzado como para utilizarlo en la mayoría de aplicaciones comerciales.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Si el aspecto gráfico de la aplicación no es el que esperabas (no se aplican las hojas de estilos y no se ven las imágenes) ejecuta la tarea <code>plugin:publish-assets</code> para instalar esos archivos web (CSS, imágenes) en el proyecto:</p>
+
+<div class="code cli">
+<pre class="cli">$ php symfony plugin:publish-assets</pre>
+</div>
+
+<p></p></div>
+
+<div class="figure" id="figure_14_2">
+    <img src="../../img/symfony_1_4/f1405.png" alt="Vista &quot;list&quot; del módulo &quot;articulo&quot; en la aplicación &quot;backend&quot;" />
+
+    <p class="caption"><strong>Figura 14.2</strong> Vista &quot;list&quot; del módulo &quot;articulo&quot; en la aplicación &quot;backend&quot;</p>
+</div>
+
+
+<div class="figure" id="figure_14_3">
+    <img src="../../img/symfony_1_4/f1406.png" alt="Vista &quot;edit&quot; del módulo &quot;articulo&quot; en la aplicación &quot;backend&quot;" />
+
+    <p class="caption"><strong>Figura 14.3</strong> Vista &quot;edit&quot; del módulo &quot;articulo&quot; en la aplicación &quot;backend&quot;</p>
+</div>
+
+
+<h3 id="un_vistazo_al_codigo_generado">14.2.2. Un vistazo al código generado</h3>
+
+<p>El código del módulo de administración <code>articulo</code>, que se encuentra en el directorio <code>apps/backend/modules/articulo/</code>, está completamente vacío porque sólo ha sido iniciado. La mejor forma de comprobar el código generado para este módulo es acceder con el navegador a sus páginas y después comprobar los contenidos de la carpeta <code>cache/</code>. El listado 14-2 muestra todas las acciones y plantillas generadas que se encuentran en la cache.</p>
+
+<p><strong>Listado 14-2 - Elementos de administración generados automáticamente, en <code>cache/backend/ENV/modules/autoArticulo/</code></strong></p>
+
+<div class="code code">
+<pre class="code">// Acciones en actions/actions.class.php
+index            // Muestra un listado de todos los registros de la tabla
+filter           // Actualiza los filtros que utiliza la acción list
+new              // Muestra el formulario para crear un nuevo registro
+create           // Crea un nuevo registro
+edit             // Muestra un formulario para modificar la información de un registro
+update           // Actualiza un registro existente
+delete           // Borra un registro
+batch            // Ejecuta una misma acción sobre todos los registros seleccionados
+batchDelete      // Borra de una vez todos los registros seleccionados
+&nbsp;
+// En templates/
+_assets.php
+_filters.php
+_filters_field.php
+_flashes.php
+_form.php
+_form_actions.php
+_form_field.php
+_form_fieldset.php
+_form_footer.php
+_form_header.php
+_list.php
+_list_actions.php
+_list_batch_actions.php
+_list_field_boolean.php
+_list_footer.php
+_list_header.php
+_list_td_actions.php
+_list_td_batch_actions.php
+_list_td_stacked.php
+_list_td_tabular.php
+_list_th_stacked.php
+_list_th_tabular.php
+_pagination.php
+editSuccess.php
+indexSuccess.php
+newSuccess.php</pre>
+</div>
+
+<p>Los módulos de administración generados automáticamente se componen básicamente de tres vistas: <code>list</code>, <code>new</code> y <code>edit</code>. Si observas el código PHP, verás que es un código muy modular, fácil de leer y extensible.</p>
+
+<h3 id="conceptos_basicos_del_archivo_de_configuracion_generatoryml">14.2.3. Conceptos básicos del archivo de configuración <code>generator.yml</code></h3>
+
+<p>Los módulos de administración generados se basan en las opciones del archivo de configuración <code>generator.yml</code>. Las opciones de configuración por defecto para un módulo de administración recién creado llamado <code>articulo</code> se pueden ver en el archivo <code>backend/modules/articulo/config/generator.yml</code>, reproducido en el listado 14-3.</p>
+
+<p><strong>Listado 14-3 - Configuración por defecto para la generación de la administración, en <code>backend/modules/articulo/config/generator.yml</code></strong></p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co4">generator</span>:<span class="co3">
+  class</span><span class="sy2">: </span>sfPropelGenerator<span class="co4">
+  param</span>:<span class="co3">
+    model_class</span><span class="sy2">: </span>          BlogArticulo<span class="co3">
+    theme</span><span class="sy2">: </span>                admin<span class="co3">
+    non_verbose_templates</span><span class="sy2">: </span>true<span class="co3">
+    with_show</span><span class="sy2">: </span>            false<span class="co3">
+    singular</span><span class="sy2">: </span>             BlogArticulo<span class="co3">
+    plural</span><span class="sy2">: </span>               BlogArticulos<span class="co3">
+    route_prefix</span><span class="sy2">: </span>         blog_articulo<span class="co3">
+    with_propel_route</span><span class="sy2">: </span>    <span class="nu0">1</span><span class="co3">
+    actions_base_class</span><span class="sy2">: </span>   sfActions
+<span class="co4">
+    config</span>:<span class="co3">
+      actions</span><span class="sy2">: </span>~<span class="co3">
+      fields</span><span class="sy2">: </span> ~<span class="co3">
+      list</span><span class="sy2">: </span>   ~<span class="co3">
+      filter</span><span class="sy2">: </span> ~<span class="co3">
+      form</span><span class="sy2">: </span>   ~<span class="co3">
+      edit</span><span class="sy2">: </span>   ~<span class="co3">
+      new</span><span class="sy2">: </span>    ~</pre>
+</div>
+
+<p>Esta configuración es suficiente para generar una administración básica. Todas las opciones propias se añaden bajo la clave <code>config</code>. El listado 14-4 muestra un archivo <code>generator.yml</code> típico.</p>
+
+<p><strong>Listado 14-4 - Configuración completa típica para el generador</strong></p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co4">generator</span>:<span class="co3">
+  class</span><span class="sy2">: </span>sfPropelGenerator<span class="co4">
+  param</span>:<span class="co3">
+    model_class</span><span class="sy2">: </span>          BlogArticulo<span class="co3">
+    theme</span><span class="sy2">: </span>                admin<span class="co3">
+    non_verbose_templates</span><span class="sy2">: </span>true<span class="co3">
+    with_show</span><span class="sy2">: </span>            false<span class="co3">
+    singular</span><span class="sy2">: </span>             BlogArticulo<span class="co3">
+    plural</span><span class="sy2">: </span>               BlogArticulos<span class="co3">
+    route_prefix</span><span class="sy2">: </span>         blog_articulo<span class="co3">
+    with_propel_route</span><span class="sy2">: </span>    <span class="nu0">1</span><span class="co3">
+    action_base_class</span><span class="sy2">: </span>    sfActions
+<span class="co4">
+    config</span>:<span class="co4">
+      actions</span>:<span class="co3">
+        _new</span><span class="sy2">: </span><span class="br0">&#123;</span> label<span class="sy2">: </span><span class="st0">&quot;Crear un nuevo articulo&quot;</span> <span class="br0">&#125;</span>
+<span class="co4">
+      fields</span>:<span class="co3">
+        autor_id</span><span class="sy2">: </span>      <span class="br0">&#123;</span> label<span class="sy2">: </span>Autor del artículo <span class="br0">&#125;</span><span class="co3">
+        published_on</span><span class="sy2">: </span>  <span class="br0">&#123;</span> credentials<span class="sy2">: </span>editor <span class="br0">&#125;</span>
+<span class="co4">
+      list</span>:<span class="co3">
+        title</span><span class="sy2">: </span>         Artículos<span class="co3">
+        display</span><span class="sy2">: </span>       <span class="br0">&#91;</span>titulo, autor_id, category_id<span class="br0">&#93;</span><span class="co4">
+        fields</span>:<span class="co3">
+          published_on</span><span class="sy2">: </span><span class="br0">&#123;</span> date_format<span class="sy2">: </span>dd/MM/yy <span class="br0">&#125;</span><span class="co3">
+        layout</span><span class="sy2">: </span>        stacked<span class="co3">
+        params</span><span class="sy2">: </span>        <span class="sy2">|
+</span><span class="co0">          %%publicado%%&lt;strong&gt;%%=title%%&lt;/strong&gt;&lt;br /&gt;&lt;em&gt;by %%blog_autor%%
+          in %%blog_categoria%% (%%created_at%%)&lt;/em&gt;&lt;p&gt;%%contenido%%&lt;/p&gt;</span><span class="co3">
+        max_per_page</span><span class="sy2">: </span>  <span class="nu0">2</span><span class="co3">
+        sort</span><span class="sy2">: </span>          <span class="br0">&#91;</span>titulo, asc<span class="br0">&#93;</span>
+<span class="co4">
+      filter</span>:<span class="co3">
+        display</span><span class="sy2">: </span>       <span class="br0">&#91;</span>title, blog_categoria_id, blog_autor_id, publicado<span class="br0">&#93;</span>
+<span class="co4">
+      form</span>:<span class="co4">
+        display</span>:<span class="co3">
+          &quot;Artículo&quot;</span><span class="sy2">: </span>  <span class="br0">&#91;</span>titulo, blog_categoria_id, contenido<span class="br0">&#93;</span><span class="co3">
+          &quot;Gestión&quot;</span><span class="sy2">: </span>   <span class="br0">&#91;</span>blog_autor_id, publicado, created_at<span class="br0">&#93;</span><span class="co4">
+        fields</span>:<span class="co3">
+          published_at</span><span class="sy2">: </span><span class="br0">&#123;</span> help<span class="sy2">: </span><span class="st0">&quot;Fecha de publicación&quot;</span> <span class="br0">&#125;</span><span class="co3">
+          titulo</span><span class="sy2">: </span>      <span class="br0">&#123;</span> attributes<span class="sy2">: </span><span class="br0">&#123;</span> style<span class="sy2">: </span><span class="st0">&quot;width: 350px&quot;</span> <span class="br0">&#125;</span> <span class="br0">&#125;</span>
+<span class="co4">
+      new</span>:<span class="co3">
+        title</span><span class="sy2">: </span>         Nuevo artículo
+<span class="co4">
+      edit</span>:<span class="co3">
+        title</span><span class="sy2">: </span>         Editando el artículo <span class="st0">&quot;%%titulo%%&quot;</span></pre>
+</div>
+
+<p>La configuración anterior se divide en seis secciones. Cuatro de estas secciones representan las vistas (<code>list</code>, <code>filter</code>, <code>new</code> y <code>edit</code>) y las otras dos secciones son <em>virtuales</em> (<code>fields</code> y <code>form</code>) ya que sólo se utilizan para tareas de configuración.</p>
+
+<p>Las siguientes secciones explican en detalle todas las opciones que se pueden utilizar en este archivo de configuración.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="generacion_de_codigo_en_funcion_del_modelo.html">&larr; Anterior <span>14.1. Generación de código en función del modelo</span></a>
+            
+            <a class="span5 next" href="configuracion_del_generador.html">Siguiente &rarr; <span>14.3. Configuración del generador</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Creando la parte de administración de las aplicaciones (Symfony 1.4, la guía definitiva%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Symfony 1.4, la guía definitiva : Creando la parte de administración de las aplicaciones']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción a Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Explorando el interior de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Ejecutar aplicaciones Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Introducción a la creación de páginas</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Configurar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> El Controlador</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> La Vista</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> El modelo (Doctrine)</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Enlaces y sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Emails</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Uso de la cache</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_14.html">
+            <span>Capítulo 14.</span> Generador de la parte de administración
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="generacion_de_codigo_en_funcion_del_modelo.html">
+            <span>14.1.</span> Generación de código en función del modelo
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="creando_la_parte_de_administracion_de_las_aplicaciones.html">
+            <span>14.2.</span> Creando la parte de administración de las aplicaciones
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="configuracion_del_generador.html">
+            <span>14.3.</span> Configuración del generador
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="modificando_el_aspecto_de_los_modulos_generados.html">
+            <span>14.4.</span> Modificando el aspecto de los módulos generados
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="resumen.html">
+            <span>14.5.</span> Resumen
+        </a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Pruebas unitarias y funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Herramientas para la administración de aplicaciones</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> Personalizar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> Rendimiento</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Configuración avanzada</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

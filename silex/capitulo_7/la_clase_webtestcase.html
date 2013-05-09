@@ -1,0 +1,247 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>7.3. La clase WebTestCase (Silex, el manual oficial)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="phpunit.html" />
+        <link rel="next" href="el_cliente.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="7.3. La clase WebTestCase (Silex, el manual oficial)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page silex">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Silex, el manual oficial</a></li>
+  <li><a href="../capitulo_7.html">Capítulo 7. Tests</a></li>
+  <li class="current"><span>7.3.. La clase WebTestCase</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="la_clase_webtestcase"><span>7.3.</span> La clase WebTestCase</h1>
+    
+
+<p>Symfony2 incluye una clase llamada <code>WebTestCase</code> que facilita mucho la creación de los tests funcionales. La versión de esta clase preparada para Silex se llama <code>Silex\WebTestCase</code> y para utilizarla sólo debes hacer que la clase de tu test herede de ella:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">use</span> Silex\WebTestCase<span class="sy0">;</span>
+&nbsp;
+<span class="kw2">class</span> ContactFormTest <span class="kw2">extends</span> WebTestCase
+<span class="br0">&#123;</span>
+    <span class="co1">// ...</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Para poder crear tests para tu aplicación, debes seguir las recomendaciones sobre cómo crear buen código que se encuentran en el capítulo de <em>Primeros pasos</em>.</p></div>
+
+<p>Las clases que heredan de <code>WebTestCase</code> deben implementar un método llamado <code>createApplication</code> que devuelva el objeto que representa a la aplicación. El siguiente código muestra un ejemplo de cómo hacerlo:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">public</span> <span class="kw2">function</span> createApplication<span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+    <span class="kw1">return</span> <span class="kw1">require</span> __DIR__<span class="sy0">.</span><span class="st_h">'/path/to/app.php'</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Asegúrate de que no utilizas la instrucción <code>require_once</code> de PHP, ya que este método se ejecuta antes de cada test.</p>
+
+<div class="admonition tip"><p><strong class="title">Truco</strong> Por defecto, dentro de un test la aplicación se comporta exactamente igual que si la estuviera accediendo un usuario a través de su navegador. No obstante, cuando se produce un error es más útil que el test acceda directamente a la excepción PHP en vez de la página HTML del error. Para ello, modifica ligeramente la configuración de la aplicación dentro del método <code>createApplication()</code> de la siguiente manera:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">public</span> <span class="kw2">function</span> createApplication<span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+    <span class="re0">$app</span> <span class="sy0">=</span> <span class="kw1">require</span> __DIR__<span class="sy0">.</span><span class="st_h">'/path/to/app.php'</span><span class="sy0">;</span>
+    <span class="re0">$app</span><span class="br0">&#91;</span><span class="st_h">'debug'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="kw4">true</span><span class="sy0">;</span>
+    <span class="re0">$app</span><span class="br0">&#91;</span><span class="st_h">'exception_handler'</span><span class="br0">&#93;</span><span class="sy0">-&gt;</span><span class="me1">disable</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="kw1">return</span> <span class="re0">$app</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p></p></div>
+
+<div class="admonition tip"><p><strong class="title">Truco</strong> Si tu aplicación utiliza sesiones, puedes establecer la opción <code>session.test</code> a <code>true</code> para simular las sesiones dentro del test:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">public</span> <span class="kw2">function</span> createApplication<span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+    <span class="co1">// ...</span>
+&nbsp;
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">app</span><span class="br0">&#91;</span><span class="st_h">'session.test'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="kw4">true</span><span class="sy0">;</span>
+&nbsp;
+    <span class="co1">// ...</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p></p></div>
+
+<p>La clase <code>WebTestCase</code> dispone de un método llamado <code>createClient()</code> para crear el cliente utilizado en el test. Un cliente es como un navegador, ya que permite interactuar con la aplicación. El siguiente código muestra un ejemplo de su funcionamiento:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">public</span> <span class="kw2">function</span> testInitialPage<span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+    <span class="re0">$client</span> <span class="sy0">=</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">createClient</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$crawler</span> <span class="sy0">=</span> <span class="re0">$client</span><span class="sy0">-&gt;</span><span class="me1">request</span><span class="br0">&#40;</span><span class="st_h">'GET'</span><span class="sy0">,</span> <span class="st_h">'/'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">assertTrue</span><span class="br0">&#40;</span><span class="re0">$client</span><span class="sy0">-&gt;</span><span class="me1">getResponse</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">isOk</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">assertCount</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="sy0">,</span> <span class="re0">$crawler</span><span class="sy0">-&gt;</span><span class="me1">filter</span><span class="br0">&#40;</span><span class="st_h">'h1:contains(&quot;Contact us&quot;)'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">assertCount</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="sy0">,</span> <span class="re0">$crawler</span><span class="sy0">-&gt;</span><span class="me1">filter</span><span class="br0">&#40;</span><span class="st_h">'form'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="sy0">...</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>El código anterior introduce varios conceptos importantes, tales como el cliente (clase <code>Client</code>) como el <em>crawler</em> (clase <code>Crawler</code>).</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="phpunit.html">&larr; Anterior <span>7.2. PHPUnit</span></a>
+            
+            <a class="span5 next" href="el_cliente.html">Siguiente &rarr; <span>7.4. El cliente</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'La clase WebTestCase (Silex, el manual oficial%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Silex, el manual oficial : La clase WebTestCase']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Primeros pasos</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Middlewares</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Organizando los controladores</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Servicios</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Proveedores</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_7.html">
+            <span>Capítulo 7.</span> Tests
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="por_que_son_importantes_los_tests.html">
+            <span>7.1.</span> Por qué son importantes los tests
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="phpunit.html">
+            <span>7.2.</span> PHPUnit
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="la_clase_webtestcase.html">
+            <span>7.3.</span> La clase WebTestCase
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_cliente.html">
+            <span>7.4.</span> El cliente
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="_el_crawler.html">
+            <span>7.5.</span>  El crawler
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="configuracion.html">
+            <span>7.6.</span> Configuración
+        </a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Funcionamiento interno</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Silex y los servidores web</a>
+    </li>
+    <li class="level-1">
+        <span>A</span> <a href="../apendice_a.html"> Proveedores de servicios de Silex</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

@@ -1,0 +1,447 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>5.1. El sistema de configuración (Symfony 1.4, la guía definitiva)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="../capitulo_5.html" />
+        <link rel="next" href="un_vistazo_general_a_los_archivos_de_configuracion.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="5.1. El sistema de configuración (Symfony 1.4, la guía definitiva)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page symfony_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Symfony 1.4, la guía definitiva</a></li>
+  <li><a href="../capitulo_5.html">Capítulo 5. Configurar Symfony</a></li>
+  <li class="current"><span>5.1.. El sistema de configuración</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="el_sistema_de_configuracion"><span>5.1.</span> El sistema de configuración</h1>
+    
+
+<p>La mayoría de aplicaciones web comparten una serie de características, independientemente de su finalidad. Por ejemplo, es habitual restringir algunas partes de la aplicación a una serie de usuarios, utilizar un layout común para mostrar todas las páginas, los formularios deben volver a mostrar los datos que ha introducido el usuario después de una validación errónea. El framework define el comportamiento básico de estas características y el programador puede adaptar cada una mediante las opciones de configuración. Esta forma de trabajar ahorra mucho tiempo de desarrollo, ya que muchos cambios importantes no necesitan modificar ni siquiera una línea de código, aunque estos cambios impliquen muchos cambios internos. Además se trata de una forma mucho más eficiente, ya que permite asegurar que toda la configuración se encuentra en un lugar único y fácilmente localizable.</p>
+
+<p>No obstante, este método también tiene dos inconvenientes muy importantes:</p>
+
+<ul>
+<li>Los programadores acaban escribiendo archivos XML complejos y muy largos.</li>
+<li>En una arquitectura basada en PHP, cada petición consumiría mucho más tiempo de proceso.</li>
+</ul>
+
+<p>Considerando todas estas desventajas, Symfony utiliza solamente lo mejor de los archivos de configuración. De hecho, el objetivo del sistema de configuración de Symfony es ser:</p>
+
+<ul>
+<li>Potente: todo lo que puede ser gestionado con archivos de configuración, se gestiona con archivos de configuración.</li>
+<li>Simple: muchas de las características de la configuración no se utilizan habitualmente, por lo que las aplicaciones normales no tienen que tratar con ellas.</li>
+<li>Sencillo: los archivos de configuración son sencillos de leer, de modificar y de crear por parte de los desarrolladores.</li>
+<li>Personalizable: el lenguaje que se utiliza por defecto en los archivos de configuración es YAML, pero se puede cambiar por archivos INI, XML o cualquier otro formato que prefiera el programador.</li>
+<li>Rápido: la aplicación nunca procesa los archivos de configuración, sino que se encarga de ello el sistema de configuración, que compila todos los archivos de configuración en trozos de código PHP que se pueden procesar muy rápidamente.</li>
+</ul>
+
+<h3 id="sintaxis_yaml_y_convenciones_de_symfony">5.1.1. Sintaxis YAML y convenciones de Symfony</h3>
+
+<p>Symfony utiliza por defecto el formato YAML para la configuración, en vez de los tradicionales formatos INI y XML. El formato YAML estructura sus contenidos mediante la tabulación con espacios en blanco y es muy rápido de escribir. El Capítulo 1 ya describe algunas de sus ventajas y las reglas más básicas. No obstante, debes tener en cuenta algunas convenciones al escribir archivos YAML. En esta sección sólo se mencionan las convenciones o normas más importantes, pero el <a href="http://www.symfony-project.org/reference/1_4/en/02-YAML">capítulo 2 de la referencia de Symfony</a> contiene todos los detalles.</p>
+
+<p>En primer lugar, <strong>nunca utilices tabuladores en los archivos YAML</strong>, utiliza en su lugar espacios en blanco. Los sistemas que procesan YAML no son capaces de tratar con los tabuladores, por lo que la tabulación de los archivos se debe crear con espacios en blanco como se muestra en el listado 5-1 (en YAML un tabulador se indica mediante dos espacios en blanco seguidos).</p>
+
+<p>**Listado 5-1 - Los archivos YAML no permiten los tabuladores **</p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co1"># No utilices tabuladores</span><span class="co4">
+all</span>:<span class="co4">
+  -&gt; mail</span>:<span class="co3">
+  -&gt; -&gt; webmaster</span><span class="sy2">: </span> webmaster@ejemplo.com
+&nbsp;
+<span class="co1"># Utiliza espacios en blanco</span><span class="co4">
+all</span>:<span class="co4">
+  mail</span>:<span class="co3">
+    webmaster</span><span class="sy2">: </span>webmaster@ejemplo.com</pre>
+</div>
+
+<p>Si los parámetros son cadenas de texto que contienen espacios en blanco al principio o al final, caracteres especiales como almohadillas (<code>#</code>) y comas (<code>,</code>) o valores como <code>true</code> o <code>false</code>, debes encerrar su valor entre comillas simples para que se interpreten como cadenas de texto, tal y como muestra el listado 5-2.</p>
+
+<p><strong>Listado 5-2 - Las cadenas de texto <em>especiales</em> deben encerrarse entre comillas simples</strong></p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co3">error1</span><span class="sy2">: </span>Este campo es obligatorio
+<span class="co3">
+error2</span><span class="sy2">: </span>'  Este campo es obligatorio  '
+&nbsp;
+<span class="co1"># Las comillas simples que aparecen dentro de las cadenas de</span>
+<span class="co1"># texto, se deben escribir dos veces</span><span class="co3">
+error3</span><span class="sy2">: </span>'Este `campo` es obligatorio'
+<span class="co3">
+error4</span><span class="sy2">: </span>'Para indicar la extensión telefónica, utiliza el símbolo <span class="co1">#' </span>
+&nbsp;
+<span class="co1"># Si no se utilizan las comillas, se interpreta como un valor booleano falso</span><span class="co3">
+i18n</span><span class="sy2">: </span>  'false'</pre>
+</div>
+
+<p>Se pueden escribir cadenas de texto muy largas en varias líneas, además de juntar cadenas escritas en varias líneas. En este último caso, se debe utilizar un carácter especial para indicar que se van a escribir varias líneas (se puede utilizar <code>&gt;</code> o <code>|</code>) y se debe añadir una pequeña tabulación (dos espacios en blanco) a cada línea del grupo de cadenas de texto. El listado 5-3 muestra este caso.</p>
+
+<p><strong>Listado 5-3 - Definir cadenas de texto muy largas y cadenas de texto multi-línea</strong></p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co1"># Las cadenas de texto muy largas se pueden escribir en</span>
+<span class="co1"># varias líneas utilizando el carácter &gt;</span>
+<span class="co1"># Posteriormente, cada nueva línea se transforma en un</span>
+<span class="co1"># espacio en blanco para formar la cadena de texto original.</span>
+<span class="co1"># De esta forma, el archivo YAML es más fácil de leer</span><span class="co3">
+frase_para_recordar</span><span class="sy2">: &gt;
+</span><span class="co0">  Vive como si fueras a morir mañana y
+  aprende como si fueras a vivir para siempre.
+</span>
+<span class="co1"># Si un texto está formado por varias líneas, se utiliza</span>
+<span class="co1"># el carácter | para separar cada nueva línea. Los espacios</span>
+<span class="co1"># en blanco utilizados para tabular las líneas no se tienen</span>
+<span class="co1"># en cuenta.</span><span class="co3">
+direccion</span><span class="sy2">: |
+</span><span class="co0">  Mi calle, número X
+  Nombre de mi ciudad
+  CP XXXXX</span></pre>
+</div>
+
+<p>Los arrays se definen mediante corchetes que encierran a los elementos o mediante la sintaxis expandida que utiliza guiones medios para cada elemento del array, como se muestra en el listado 5-4.</p>
+
+<p><strong>Listado 5-4 - Sintaxis de YAML para incluir arrays</strong></p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co1"># Sintaxis abreviada para los arrays</span><span class="co3">
+idiomas</span><span class="sy2">: </span><span class="br0">&#91;</span> Alemán, Francés, Inglés, Italiano <span class="br0">&#93;</span>
+&nbsp;
+<span class="co1"># Sintaxis expandida para los arrays</span><span class="co4">
+idiomas</span><span class="sy2">:
+</span>  - Alemán
+  - Francés
+  - Inglés
+  - Italiano</pre>
+</div>
+
+<p>Para definir arrays asociativos, se deben encerrar los elementos mediante llaves (<code>{</code> y <code>}</code>) y siempre se debe insertar un espacio en blanco entre la clave y el valor de cada par <code>clave: valor</code> y otro espacio en blanco después de la coma que separa cada elemento del array. También existe una sintaxis expandida que requiere indicar cada par <code>clave: valor</code> en una nueva línea y con una tabulación (es decir, con dos espacios en blanco delante) como se muestra en el listado 5-5.</p>
+
+<p><strong>Listado 5-5 - Sintaxis de YAML para incluir arrays asociativos</strong></p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co1"># Sintaxis incorrecta, falta un espacio después de los 2 puntos y de la coma</span><span class="co3">
+mail</span><span class="sy2">: </span><span class="br0">&#123;</span>webmaster:webmaster@ejemplo.com,contacto:contacto@ejemplo.com<span class="br0">&#125;</span>
+&nbsp;
+<span class="co1"># Sintaxis abreviada correcta para los array asociativos</span><span class="co3">
+mail</span><span class="sy2">: </span><span class="br0">&#123;</span> webmaster<span class="sy2">: </span>webmaster@ejemplo.com, contacto<span class="sy2">: </span>contacto@ejemplo.com <span class="br0">&#125;</span>
+&nbsp;
+<span class="co1"># Sintaxis expandida para los arrays asociativos</span><span class="co4">
+mail</span>:<span class="co3">
+  webmaster</span><span class="sy2">: </span>webmaster@ejemplo.com<span class="co3">
+  contacto</span><span class="sy2">: </span> contacto@ejemplo.com</pre>
+</div>
+
+<p>Para los parámetros booleanos, se utilizan los valores <code>true</code> y <code>false</code>, siempre que estos valores no estén encerrados entre comillas.</p>
+
+<p><strong>Listado 5-6 - Sintaxis de YAML para los valores booleanos</strong></p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co3">valor_verdaderos</span><span class="sy2">: </span>  true<span class="co3">
+valor_falsos</span><span class="sy2">: </span>      false</pre>
+</div>
+
+<p>Es recomendable añadir comentarios (que se definen mediante el carácter <code>#</code>) y todos los espacios en blanco adicionales que hagan falta para hacer más fáciles de leer los archivos YAML, como se muestra en el listado 5-7.</p>
+
+<p><strong>Listado 5-7 - Comentarios en YAML y espacios adicionales para alinear valores</strong></p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co1"># Esta línea es un comentario</span><span class="co4">
+mail</span>:<span class="co3">
+  webmaster</span><span class="sy2">: </span>webmaster@ejemplo.com<span class="co3">
+  contacto</span><span class="sy2">: </span> contacto@ejemplo.com<span class="co3">
+  admin</span><span class="sy2">: </span>    admin@ejemplo.com   <span class="co1"># se añaden espacios en blanco para alinear los valores</span></pre>
+</div>
+
+<p>En algunos archivos de configuración de Symfony, se ven líneas que empiezan por <code>#</code> (y por tanto se consideran comentarios y se ignoran) pero que parecen opciones de configuración correctas. Se trata de una de las convenciones de Symfony: la configuración por defecto, heredada de los archivos YAML del núcleo de Symfony, se repite en forma de líneas comentadas a lo largo de los archivos de configuracion de cada aplicación, con el único objetivo de informar al desarrollador. De esta forma, para modificar esa opción de configuración, solamente es necesario eliminar el carácter de los comentarios y establecer su nuevo valor. El listado 5-8 muestra un ejemplo.</p>
+
+<p><strong>Listado 5-8 - La configuración por defecto se muestra en forma de comentarios</strong></p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co1"># Por defecto la cache está desactivada</span><span class="co4">
+settings</span><span class="sy2">:
+</span><span class="co1"># cache: false</span>
+&nbsp;
+<span class="co1"># Para modificar esta opción, se debe descomentar la línea</span><span class="co4">
+settings</span>:<span class="co3">
+  cache</span><span class="sy2">: </span>true</pre>
+</div>
+
+<p>En ocasiones, Symfony agrupa varias opciones de configuración en categorías. Todas las opciones que pertenecen a una categoría se muestran tabuladas y bajo el nombre de esa categoría. La configuración es más sencilla de leer si se agrupan las listas largas de pares <code>clave: valor</code>. Los nombres de las categorías comienzan siempre con un punto (<code>.</code>) y el listado 5-19 muestra un ejemplo de uso de categorías.</p>
+
+<p><strong>Listado 5-9 - Los nombres de categorías son como los nombres de las clave, pero empiezan con un punto</strong></p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co4">all</span>:<span class="co4">
+  .general</span>:<span class="co3">
+    impuestos</span><span class="sy2">: </span> <span class="nu0">19.6</span>
+<span class="co4">
+mail</span>:<span class="co3">
+  webmaster</span><span class="sy2">: </span>   webmaster@ejemplo.com</pre>
+</div>
+
+<p>En el ejemplo anterior, <code>mail</code> es una clave y <code>general</code> sólo es el nombre de la categoría. En realidad, el archivo YAML se procesa como si no existiera el nombre de la categoría, es decir, como se muestra en el listado 5-10. El parámetro <code>impuestos</code> realmente es descendiente directo de la clave <code>all</code>. No obstante, el uso de nombres de categorías facilita a Symfony el manejo de los arrays que se encuentran bajo la clave <code>all</code>.</p>
+
+<p><strong>Listado 5-10 - Los nombres de categorías solo se utilizan para hacer más fácil de leer los archivos YAML y la aplicación los ignora</strong></p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co4">all</span>:<span class="co3">
+  impuestos</span><span class="sy2">: </span>   <span class="nu0">19.6</span>
+<span class="co4">
+mail</span>:<span class="co3">
+  webmaster</span><span class="sy2">: </span>   webmaster@ejemplo.com</pre>
+</div>
+
+<div class="admonition sidebar"><p><strong class="title">Si no te gusta YAML</strong> YAML solamente es una interfaz para definir las opciones que utiliza el código PHP, por lo que la configuración definida mediante YAML se transforma en código PHP. Si ya has accedido al menos una vez a la aplicación, comprueba la cache de su configuración (por ejemplo en <code>cache/frontend/dev/config/</code>). En ese directorio se encuentran los archivos PHP generados por la configuración YAML. Más adelante se detalla la cache de la configuración.</p>
+
+<p>Lo mejor de todo es que si no quieres utilizar archivos YAML, puedes realizar la misma configuración a mano o mediante otros formatos (XML, INI, etc.) Más adelante en este libro se comentan otras formas alternativas a YAML para realizar la configuración e incluso se muestra como modificar las funciones de Symfony que se encargan de procesar la configuración (en el Capítulo 19). Utilizando estas técnicas, es posible evitar los archivos de configuración e incluso definir tu propio formato de configuración.</p></div>
+
+<h3 id="socorro_los_archivos_yaml_han_roto_la_aplicacion">5.1.2. ¡Socorro, los archivos YAML han roto la aplicación!</h3>
+
+<p>Los archivos YAML se procesan y se transforman en array asociativos y arrays normales de PHP. Después, estos valores transformados son los que se utilizan en la aplicación para modificar el comportamiento de la vista, el modelo y el controlador. Por este motivo, cuando existe un error en un archivo YAML, normalmente no se detecta hasta que se utiliza ese valor específico. Para complicar las cosas, el error o la excepción que se muestra no siempre indica de forma clara que puede tratarse de un error en los archivos YAML de configuración.</p>
+
+<p>Si la aplicación deja de funcionar después de un cambio en la configuración, se debe comprobar que no se ha cometido alguno de los errores típicos de los desarrolladores principiantes con YAML:</p>
+
+<ul>
+<li>No existe un espacio en blanco entre la clave y su valor:</li>
+</ul>
+
+<div class="code yaml">
+<pre class="yaml">clave1:valor1      <span class="co1"># Falta un espacio después del :</span></pre>
+</div>
+
+<ul>
+<li>Alguna clave de una secuencia de valores está mal tabulada:</li>
+</ul>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co4">all</span>:<span class="co3">
+  clave1</span><span class="sy2">: </span> valor1<span class="co3">
+   clave2</span><span class="sy2">: </span>valor2  <span class="co1"># Su tabulación no es igual que los otros miembros de la secuencia</span><span class="co3">
+  clave3</span><span class="sy2">: </span> valor3</pre>
+</div>
+
+<ul>
+<li>Alguna clave o valor contiene caracteres reservados por YAML que no han sido encerrados por las comillas simples:</li>
+</ul>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co3">mensaje</span><span class="sy2">: </span>dile lo siguiente<span class="sy2">: </span>hola    <span class="co1"># :, [, ], { y } están reservados por YAML</span><span class="co3">
+mensaje</span><span class="sy2">: </span>'dile lo siguiente<span class="sy2">: </span>hola'  <span class="co1"># Sintaxis correcta</span></pre>
+</div>
+
+<ul>
+<li>La línea que se modifica está comentada:</li>
+</ul>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co1"># clave: valor     # No se tiene en cuenta porque empieza por #</span></pre>
+</div>
+
+<ul>
+<li>Existen 2 claves iguales con diferentes valores dentro del mismo nivel:</li>
+</ul>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co3">clave1</span><span class="sy2">: </span>valor1<span class="co3">
+clave2</span><span class="sy2">: </span>valor2<span class="co3">
+clave1</span><span class="sy2">: </span>valor3     <span class="co1"># clave1 está definida 2 veces, solo se tiene en cuenta su último valor</span></pre>
+</div>
+
+<ul>
+<li>Todos los valores se consideran cadenas de texto, salvo que se convierta de forma explícita su valor:</li>
+</ul>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co3">ingresos</span><span class="sy2">: </span><span class="nu0">12</span>,<span class="nu0">345</span>   <span class="co1"># El valor es una cadena de texto y no un número, salvo que se convierta</span></pre>
+</div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="../capitulo_5.html">&larr; Anterior <span>Capítulo 5. Configurar Symfony</span></a>
+            
+            <a class="span5 next" href="un_vistazo_general_a_los_archivos_de_configuracion.html">Siguiente &rarr; <span>5.2. Un vistazo general a los archivos de configuración</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'El sistema de configuración (Symfony 1.4, la guía definitiva%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Symfony 1.4, la guía definitiva : El sistema de configuración']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción a Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Explorando el interior de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Ejecutar aplicaciones Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Introducción a la creación de páginas</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_5.html">
+            <span>Capítulo 5.</span> Configurar Symfony
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="el_sistema_de_configuracion.html">
+            <span>5.1.</span> El sistema de configuración
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="un_vistazo_general_a_los_archivos_de_configuracion.html">
+            <span>5.2.</span> Un vistazo general a los archivos de configuración
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="entornos.html">
+            <span>5.3.</span> Entornos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="la_cache_de_configuracion.html">
+            <span>5.4.</span> La cache de configuración
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="accediendo_a_la_configuracion_desde_la_aplicacion.html">
+            <span>5.5.</span> Accediendo a la configuración desde la aplicación
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="trucos_para_los_archivos_de_configuracion.html">
+            <span>5.6.</span> Trucos para los archivos de configuración
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="resumen.html">
+            <span>5.7.</span> Resumen
+        </a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> El Controlador</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> La Vista</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> El modelo (Doctrine)</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Enlaces y sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Emails</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Uso de la cache</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Pruebas unitarias y funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Herramientas para la administración de aplicaciones</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> Personalizar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> Rendimiento</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Configuración avanzada</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

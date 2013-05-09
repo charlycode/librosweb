@@ -1,0 +1,514 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>10.4. Procesando el envío del formulario (Symfony 1.4, la guía definitiva)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="widgets_de_formulario.html" />
+        <link rel="next" href="validadores.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="10.4. Procesando el envío del formulario (Symfony 1.4, la guía definitiva)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page symfony_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Symfony 1.4, la guía definitiva</a></li>
+  <li><a href="../capitulo_10.html">Capítulo 10. Formularios</a></li>
+  <li class="current"><span>10.4.. Procesando el envío del formulario</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="procesando_el_envio_del_formulario"><span>10.4.</span> Procesando el envío del formulario</h1>
+    
+
+<p>Una vez que el usuario rellena un formulario y lo envía, la aplicación web del servidor debe obtener los datos y procesarlos como sea conveniente. La clase <code>sfForm</code> incluye todos los métodos necesarios para hacerlo en unas pocas líneas de código.</p>
+
+<h3 id="procesado_simple_de_formularios">10.4.1. Procesado simple de formularios</h3>
+
+<p>Como los widgets al final siempre generan etiquetas HTML normales, la acción puede obtener sus valores directamente como parámetros de la petición. Siguiendo el ejemplo del formulario de contacto, su acción asociada podría ser la siguiente:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// en modules/mimodulo/actions/actions.class.php</span>
+<span class="kw2">public</span> <span class="kw2">function</span> executeContacto<span class="br0">&#40;</span><span class="re0">$request</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="co1">// Definir el formulario</span>
+  <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">form</span> <span class="sy0">=</span> <span class="kw2">new</span> sfForm<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">form</span><span class="sy0">-&gt;</span><span class="me1">setWidgets</span><span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span>
+    <span class="st_h">'nombre'</span>  <span class="sy0">=&gt;</span> <span class="kw2">new</span> sfWidgetFormInputText<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+    <span class="st_h">'email'</span>   <span class="sy0">=&gt;</span> <span class="kw2">new</span> sfWidgetFormInput<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'default'</span> <span class="sy0">=&gt;</span> <span class="st_h">'yo@ejemplo.com'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+    <span class="st_h">'asunto'</span>  <span class="sy0">=&gt;</span> <span class="kw2">new</span> sfWidgetFormChoice<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'choices'</span> <span class="sy0">=&gt;</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'Asunto A'</span><span class="sy0">,</span> <span class="st_h">'Asunto B'</span><span class="sy0">,</span> <span class="st_h">'Asunto C'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+    <span class="st_h">'mensaje'</span> <span class="sy0">=&gt;</span> <span class="kw2">new</span> sfWidgetFormTextarea<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+  <span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+  <span class="co1">// Procesar la petición</span>
+  <span class="kw1">if</span> <span class="br0">&#40;</span><span class="re0">$request</span><span class="sy0">-&gt;</span><span class="me1">isMethod</span><span class="br0">&#40;</span><span class="st_h">'post'</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="co1">// Procesar los datos del formulario</span>
+    <span class="re0">$nombre</span> <span class="sy0">=</span> <span class="re0">$request</span><span class="sy0">-&gt;</span><span class="me1">getParameter</span><span class="br0">&#40;</span><span class="st_h">'nombre'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="sy0">...</span>
+&nbsp;
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">redirect</span><span class="br0">&#40;</span><span class="st_h">'mimodulo/otraaccion'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Si el método de la petición es <code>GET</code>, la acción devuelve como resultado <code>sfView::SUCCESS</code> y por tanto se muestra la plantilla <code>contactoSuccess</code> con el formulario de contacto. Si el método de la petición es <code>POST</code>, la acción se encarga de procesar los datos del formulario y después redirecciona a otra acción del mismo módulo. Para que el código anterior funcione bien, el atributo <code>action</code> de la etiqueta <code>&lt;form&gt;</code> debe ser igual a la acción que muestra el formulario. Ese es el motivo por lo que en los ejemplos anteriores el atributo <code>action</code> del formulario siempre era <code>mimodulo/contacto</code>:</p>
+
+<div class="code php">
+<pre class="php">// en modules/mimodulo/templates/contactoSuccess.php
+<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$form</span><span class="sy0">-&gt;</span><span class="me1">renderFormTag</span><span class="br0">&#40;</span><span class="st_h">'mimodulo/contacto'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+...</pre>
+</div>
+
+<h3 id="procesado_de_formularios_con_validacion">10.4.2. Procesado de formularios con validación</h3>
+
+<p>Las aplicaciones reales procesan los formularios de forma mucho más avanzada, no simplemente obteniendo los datos enviados por el usuario. Normalmente, el controlador de la aplicación se encarga de:</p>
+
+<ol>
+<li>Comprobar que los datos cumplen una serie de reglas de validación (algunos campos son obligatorios, el email debe tener un formato adecuado, etc.)</li>
+<li>Opcionalmente se pueden transformar los datos para facilitar su procesamiento (eliminar espacios en blanco sobrantes, convertir fechas al formato PHP , etc.)</li>
+<li>Si los datos no son válidos, se vuelve a mostrar el formulario con los mensajes de error apropiados.</li>
+<li>Si los datos son correctos, hacer algo con ellos y redirigir al usuario a otra acción.</li>
+</ol>
+
+<p>Symfony incluye un mecanismo de validación automática que comprueba si los datos enviados por el usuario cumplen una serie de reglas predefinidas. Para ello, primero se define una serie de validadores para cada campo. A continuación, cuando el usuario envía el formulario, sus datos se unen al objeto del formulario, mediante un proceso llamado <em>bind</em>. Por último, se pide al formulario que compruebe si los datos son válidos. El siguiente ejemplo muestra cómo validar que el valor del widget <code>email</code> es realmente una dirección de email y que el campo <code>mensaje</code> tiene una longitud de al menos cuatro caracteres:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// en modules/mimodulo/actions/actions.class.php</span>
+<span class="kw2">public</span> <span class="kw2">function</span> executeContacto<span class="br0">&#40;</span><span class="re0">$request</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="co1">// Definir el formulario</span>
+  <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">form</span> <span class="sy0">=</span> <span class="kw2">new</span> sfForm<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">form</span><span class="sy0">-&gt;</span><span class="me1">setWidgets</span><span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span>
+    <span class="st_h">'nombre'</span>  <span class="sy0">=&gt;</span> <span class="kw2">new</span> sfWidgetFormInputText<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+    <span class="st_h">'email'</span>   <span class="sy0">=&gt;</span> <span class="kw2">new</span> sfWidgetFormInput<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'default'</span> <span class="sy0">=&gt;</span> <span class="st_h">'yo@ejemplo.com'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+    <span class="st_h">'asunto'</span>  <span class="sy0">=&gt;</span> <span class="kw2">new</span> sfWidgetFormChoice<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'choices'</span> <span class="sy0">=&gt;</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'Asunto A'</span><span class="sy0">,</span> <span class="st_h">'Asunto B'</span><span class="sy0">,</span> <span class="st_h">'Asunto C'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+    <span class="st_h">'mensaje'</span> <span class="sy0">=&gt;</span> <span class="kw2">new</span> sfWidgetFormTextarea<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+  <span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+  <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">form</span><span class="sy0">-&gt;</span><span class="me1">setValidators</span><span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span>
+    <span class="st_h">'nombre'</span>  <span class="sy0">=&gt;</span> <span class="kw2">new</span> sfValidatorString<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+    <span class="st_h">'email'</span>   <span class="sy0">=&gt;</span> <span class="kw2">new</span> sfValidatorEmail<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+    <span class="st_h">'asunto'</span>  <span class="sy0">=&gt;</span> <span class="kw2">new</span> sfValidatorString<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+    <span class="st_h">'mensaje'</span> <span class="sy0">=&gt;</span> <span class="kw2">new</span> sfValidatorString<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'min_length'</span> <span class="sy0">=&gt;</span> <span class="nu0">4</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+  <span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+  <span class="co1">// Procesar la petición</span>
+  <span class="kw1">if</span> <span class="br0">&#40;</span><span class="re0">$request</span><span class="sy0">-&gt;</span><span class="me1">isMethod</span><span class="br0">&#40;</span><span class="st_h">'post'</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">form</span><span class="sy0">-&gt;</span><span class="me1">bind</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="kw1">if</span> <span class="br0">&#40;</span><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">form</span><span class="sy0">-&gt;</span><span class="me1">isValid</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="co1">// Procesar los datos del formulario</span>
+&nbsp;
+      <span class="sy0">...</span>
+&nbsp;
+      <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">redirect</span><span class="br0">&#40;</span><span class="st_h">'mimodulo/otraaccion'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>El método <code>setValidators()</code> utiliza una sintaxis similar a la de <code>setWidgets()</code>. Las clases <code>sfValidatorEmail</code> y <code>sfValidatorString</code> son solamente dos de los muchos validadores que incluye Symfony y que se explican más adelante. La clase <code>sfForm</code> también proporciona el método <code>setValidator()</code> para definir los validadores uno a uno.</p>
+
+<p>El método <code>sfForm::bind()</code> se emplea para introducir los datos enviados por el usuario dentro del objeto del formulario. Como se trata de unir los datos y el formulario, este proceso se denomina <em>bind</em>, que significa "unir" en inglés.</p>
+
+<p>A continuación, el método <code>isValid()</code> comprueba si los datos cumplen las reglas de todos los validadores. Si este es el caso, el método <code>isValid()</code> devuelve <code>true</code> y la acción ya puede continuar con el procesado de los datos. Si el formulario no es válido, la acción termina su ejecución y devuelve el valor <code>sfView::SUCCESS</code> que hace que se vuelva a mostrar el formulario. Sin embargo, ahora ya no se muestra el formulario original, sino que se rellenan todos los campos con los datos introducidos por el usuario y se añaden los mensajes de error en aquellos campos que no cumplen las reglas de validación.</p>
+
+<p>{&#123;FALTA&#125;}
+<div class="figure" id="figure_10_2">
+    <img src="../../img/symfony_1_4/http_/www.symfony-project.org/images/forms_book/en/02_01.png" alt="Invalid form" />
+
+    <p class="caption"><strong>Figura 10.2</strong> Invalid form</p>
+</div>
+
+
+<div class="admonition note"><p><strong class="title">Nota</strong> El proceso de validación no se detiene al encontrar el primer error. El método <code>isValid()</code> procesa todos los datos enviados y comprueba todos los validadores de cada campo, para que el usuario no se encuentre con errores de validación cada vez que envía el formulario.</p></div>
+
+<h3 id="utilizando_datos_de_formulario_limpios">10.4.3. Utilizando datos de formulario limpios</h3>
+
+<p>El código de los ejemplos anteriores no especifica qué datos de la petición se unen al formulario. El problema es que la petición contiene muchos más datos que los del formulario. Entre otros, contiene las cabeceras, las cookies y los datos pasados como parámetros <code>GET</code>. Esta información ajena al formulario podría producir problemas en la fase <em>bind</em> del formulario. Por tanto, una buena práctica consiste en pasar al método <code>bind()</code> solamente los datos del formulario.</p>
+
+<p>Afortunadamente, Symfony permite cambiar el nombre de todos los campos del formulario para que sigan la sintaxis de los arrays. Define el formato del nombre de los atributos con el método <code>setNameFormat()</code> dentro de la acción donde se crea el formulario:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// en modules/mimodulo/actions/actions.class.php</span>
+<span class="co1">// Definir el formulario</span>
+<span class="sy0">...</span>
+<span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">form</span><span class="sy0">-&gt;</span><span class="me1">setNameFormat</span><span class="br0">&#40;</span><span class="st_h">'contacto[%s]'</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>De esta forma, todos los campos del formulario generado tienen un nombre <code>contacto[nombre-del-widget]</code> en vez de simplemente <code>nombre-del-widget</code>:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">label</span> <span class="kw3">for</span><span class="sy0">=</span><span class="st0">&quot;contacto_nombre&quot;</span>&gt;</span>Nombre<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">label</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">input</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text&quot;</span> <span class="kw3">name</span><span class="sy0">=</span><span class="st0">&quot;contacto[nombre]&quot;</span> <span class="kw3">id</span><span class="sy0">=</span><span class="st0">&quot;contacto_nombre&quot;</span> <span class="sy0">/</span>&gt;</span>
+...
+<span class="sc2">&lt;<span class="kw2">label</span> <span class="kw3">for</span><span class="sy0">=</span><span class="st0">&quot;contacto_email&quot;</span>&gt;</span>Email<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">label</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">input</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text&quot;</span> <span class="kw3">name</span><span class="sy0">=</span><span class="st0">&quot;contacto[email]&quot;</span> <span class="kw3">id</span><span class="sy0">=</span><span class="st0">&quot;contacto_email&quot;</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;yo@ejemplo.com&quot;</span> <span class="sy0">/</span>&gt;</span>
+...
+<span class="sc2">&lt;<span class="kw2">label</span> <span class="kw3">for</span><span class="sy0">=</span><span class="st0">&quot;contacto_asunto&quot;</span>&gt;</span>Asunto<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">label</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">select</span> <span class="kw3">name</span><span class="sy0">=</span><span class="st0">&quot;contacto[asunto]&quot;</span> <span class="kw3">id</span><span class="sy0">=</span><span class="st0">&quot;contacto_asunto&quot;</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;0&quot;</span>&gt;</span>Asunto A<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;1&quot;</span>&gt;</span>Asunto B<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;2&quot;</span>&gt;</span>Asunto C<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">select</span>&gt;</span>
+...
+<span class="sc2">&lt;<span class="kw2">label</span> <span class="kw3">for</span><span class="sy0">=</span><span class="st0">&quot;contacto_mensaje&quot;</span>&gt;</span>Mensaje<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">label</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">textarea</span> <span class="kw3">rows</span><span class="sy0">=</span><span class="st0">&quot;4&quot;</span> <span class="kw3">cols</span><span class="sy0">=</span><span class="st0">&quot;30&quot;</span> <span class="kw3">name</span><span class="sy0">=</span><span class="st0">&quot;contacto[mensaje]&quot;</span> <span class="kw3">id</span><span class="sy0">=</span><span class="st0">&quot;contacto_mensaje&quot;</span>&gt;&lt;<span class="sy0">/</span><span class="kw2">textarea</span>&gt;</span></pre>
+</div>
+
+<p>Ahora la acción puede obtener todos los datos del formulario mediante el parámetro <code>contacto</code> de la petición. Esta variable será un array con todos los datos introducidos por el usuario:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// en modules/mimodulo/actions/actions.class.php</span>
+<span class="co1">// Procesar la petición</span>
+<span class="kw1">if</span> <span class="br0">&#40;</span><span class="re0">$request</span><span class="sy0">-&gt;</span><span class="me1">isMethod</span><span class="br0">&#40;</span><span class="st_h">'post'</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">form</span><span class="sy0">-&gt;</span><span class="me1">bind</span><span class="br0">&#40;</span><span class="re0">$request</span><span class="sy0">-&gt;</span><span class="me1">getParameter</span><span class="br0">&#40;</span><span class="st_h">'contacto'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="kw1">if</span> <span class="br0">&#40;</span><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">form</span><span class="sy0">-&gt;</span><span class="me1">isValid</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="co1">// Procesar los datos del formulario</span>
+    <span class="re0">$contacto</span> <span class="sy0">=</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">form</span><span class="sy0">-&gt;</span><span class="me1">getValues</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$nombre</span> <span class="sy0">=</span> <span class="re0">$contacto</span><span class="br0">&#91;</span><span class="st_h">'nombre'</span><span class="br0">&#93;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="co1">// Si quieres obtener un valor específico</span>
+    <span class="re0">$nombre</span> <span class="sy0">=</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">form</span><span class="sy0">-&gt;</span><span class="me1">getValue</span><span class="br0">&#40;</span><span class="st_h">'nombre'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="sy0">...</span>
+&nbsp;
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">redirect</span><span class="br0">&#40;</span><span class="st_h">'mimodulo/otraaccion'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Cuando método <code>bind()</code> recibe un array de parámetros, Symfony aplica automáticamente un mecanismo de seguridad que impide al usuario enviar más datos de los que contiene el formulario original. Por tanto, el proceso de validación produce un error si el array <code>contacto</code> contiene información de campos que no se encuentran en el formulario original.</p>
+
+<p>Otra diferencia importante en el código del último ejemplo es que la acción no obtiene los datos directamente de la petición, sino que emplea el objeto del formulario (<code>$form-&gt;getValues()</code>). Los validadores filtran y <em>limpian</em> los datos que se les pasan, por lo que siempre es mejor confiar en los datos del formulario (mediante <code>getValues()</code> o <code>getValue()</code>) en vez de confiar en los datos de la petición. Además, si el widget es complejo (como por ejemplo los widgets de fechas), los datos devueltos por <code>getValues()</code> ya están correctamente formateados:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// Las fechas son widgets complejos formados por varios campos</span>
+<span class="sy0">&lt;</span>label <span class="kw1">for</span><span class="sy0">=</span><span class="st0">&quot;contacto_fecha&quot;</span><span class="sy0">&gt;</span>Fecha de nacimiento<span class="sy0">&lt;/</span>label<span class="sy0">&gt;</span>
+<span class="sy0">&lt;</span>select id<span class="sy0">=</span><span class="st0">&quot;contacto_fecha_month&quot;</span> name<span class="sy0">=</span><span class="st0">&quot;contacto[fecha][month]&quot;</span><span class="sy0">&gt;...&lt;/</span>select<span class="sy0">&gt;</span> <span class="sy0">/</span>
+<span class="sy0">&lt;</span>select id<span class="sy0">=</span><span class="st0">&quot;contacto_fecha_day&quot;</span> name<span class="sy0">=</span><span class="st0">&quot;contacto[fecha][day]&quot;</span><span class="sy0">&gt;...&lt;/</span>select<span class="sy0">&gt;</span> <span class="sy0">/</span>
+<span class="sy0">&lt;</span>select id<span class="sy0">=</span><span class="st0">&quot;contacto_fecha_year&quot;</span> name<span class="sy0">=</span><span class="st0">&quot;contacto[fecha][year]&quot;</span><span class="sy0">&gt;...&lt;/</span>select<span class="sy0">&gt;</span>
+&nbsp;
+<span class="co1">// Para obtener la fecha, se deben procesar los campos en la acción</span>
+<span class="re0">$contacto</span> <span class="sy0">=</span> <span class="re0">$request</span><span class="sy0">-&gt;</span><span class="me1">getParameter</span><span class="br0">&#40;</span><span class="st_h">'contacto'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$mes</span> <span class="sy0">=</span> <span class="re0">$contacto</span><span class="br0">&#91;</span><span class="st_h">'fecha'</span><span class="br0">&#93;</span><span class="br0">&#91;</span><span class="st_h">'month'</span><span class="br0">&#93;</span><span class="sy0">;</span>
+<span class="re0">$dia</span> <span class="sy0">=</span> <span class="re0">$contacto</span><span class="br0">&#91;</span><span class="st_h">'fecha'</span><span class="br0">&#93;</span><span class="br0">&#91;</span><span class="st_h">'day'</span><span class="br0">&#93;</span><span class="sy0">;</span>
+<span class="re0">$ano</span> <span class="sy0">=</span> <span class="re0">$contacto</span><span class="br0">&#91;</span><span class="st_h">'fecha'</span><span class="br0">&#93;</span><span class="br0">&#91;</span><span class="st_h">'year'</span><span class="br0">&#93;</span><span class="sy0">;</span>
+<span class="re0">$fechaNacimiento</span> <span class="sy0">=</span> <span class="kw3">mktime</span><span class="br0">&#40;</span><span class="nu0">0</span><span class="sy0">,</span> <span class="nu0">0</span><span class="sy0">,</span> <span class="nu0">0</span><span class="sy0">,</span> <span class="re0">$mes</span><span class="sy0">,</span> <span class="re0">$dia</span><span class="sy0">,</span> <span class="re0">$ano</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="co1">// Si utilizas el método getValues(), obtienes la fecha directamente</span>
+<span class="re0">$contacto</span> <span class="sy0">=</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">form</span><span class="sy0">-&gt;</span><span class="me1">getValues</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$fechaNacimiento</span> <span class="sy0">=</span> <span class="re0">$contacto</span><span class="br0">&#91;</span><span class="st_h">'fecha'</span><span class="br0">&#93;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Te aconsejamos que siempre utilices esta sintaxis de arrays para nombrar a los campos de tu formulario (mediante <code>setNameFormat()</code>) y que siempre obtengas los datos <em>limpios</em> a través del formulario (mediante <code>getValues()</code>).</p>
+
+<h3 id="modificando_los_mensajes_de_error">10.4.4. Modificando los mensajes de error</h3>
+
+<p>Una de las imágenes anteriores mostraba el formulario con algunos mensajes de error. ¿De dónde han salido estos errores? Como se explicó anteriormente, cada widget está compuesto de cuatro elementos y el mensaje de error es uno de ellos. De hecho, el formateador de tabla que utiliza Symfony por defecto muestra cada campo de la siguiente forma:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">&lt;?php</span> <span class="kw1">if</span> <span class="br0">&#40;</span><span class="re0">$field</span><span class="sy0">-&gt;</span><span class="me1">hasError</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">:</span> <span class="sy1">?&gt;</span>
+&lt;tr&gt;
+  &lt;td colspan=&quot;2&quot;&gt;
+    <span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$field</span><span class="sy0">-&gt;</span><span class="me1">renderError</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>           // Lista de errores
+  &lt;/td&gt;
+&lt;/tr&gt;
+<span class="kw2">&lt;?php</span> <span class="kw1">endif</span><span class="sy0">;</span> <span class="sy1">?&gt;</span>
+&lt;tr&gt;
+  &lt;th&gt;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$field</span><span class="sy0">-&gt;</span><span class="me1">renderLabel</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>&lt;/th&gt;    // Título
+  &lt;td&gt;
+    <span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$field</span><span class="sy0">-&gt;</span><span class="me1">render</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>                // Widget
+    <span class="kw2">&lt;?php</span> <span class="kw1">if</span> <span class="br0">&#40;</span><span class="re0">$field</span><span class="sy0">-&gt;</span><span class="me1">hasHelp</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">:</span> <span class="sy1">?&gt;</span>
+    &lt;br /&gt;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$field</span><span class="sy0">-&gt;</span><span class="me1">renderHelp</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>      // Mensaje de ayuda
+    <span class="kw2">&lt;?php</span> <span class="kw1">endif</span><span class="sy0">;</span> <span class="sy1">?&gt;</span>
+  &lt;/td&gt;
+&lt;/tr&gt;</pre>
+</div>
+
+<p>Haciendo uso de los métodos anteriores puedes modificar el aspecto y la posición de los mensajes de error de cada campo. También puedes mostrar un mensaje de error global en el formulario avisando al usuario de que al menos uno de sus campos no es válido:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">&lt;?php</span> <span class="kw1">if</span> <span class="br0">&#40;</span><span class="re0">$form</span><span class="sy0">-&gt;</span><span class="me1">hasErrors</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">:</span> <span class="sy1">?&gt;</span>
+  El formulario contiene algunos errores que debes solucionar.
+<span class="kw2">&lt;?php</span> <span class="kw1">endif</span><span class="sy0">;</span> <span class="sy1">?&gt;</span></pre>
+</div>
+
+<h3 id="modificando_los_validadores">10.4.5. Modificando los validadores</h3>
+
+<p>Todos los campos del formulario deben tener asociado un validador y además, por defecto todos los campos son obligatorios. Si un campo del formulario es opcional, utiliza la opción <code>required</code> con un valor <code>false</code> en su validador. El siguiente ejemplo muestra cómo hacer obligatorio el campo <code>name</code> y opcional el campo <code>email</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">form</span><span class="sy0">-&gt;</span><span class="me1">setValidators</span><span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span>
+  <span class="st_h">'nombre'</span>  <span class="sy0">=&gt;</span> <span class="kw2">new</span> sfValidatorString<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+  <span class="st_h">'email'</span>   <span class="sy0">=&gt;</span> <span class="kw2">new</span> sfValidatorEmail<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'required'</span> <span class="sy0">=&gt;</span> <span class="kw4">false</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+  <span class="st_h">'asunto'</span>  <span class="sy0">=&gt;</span> <span class="kw2">new</span> sfValidatorString<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+  <span class="st_h">'mensaje'</span> <span class="sy0">=&gt;</span> <span class="kw2">new</span> sfValidatorString<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'min_length'</span> <span class="sy0">=&gt;</span> <span class="nu0">4</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Los campos también pueden tener más de un validador. El campo <code>email</code> podría por ejemplo validarse mediante <code>sfValidatorEmail</code> para comprobar que su formato es adecuado y mediante <code>fValidatorString</code> para asegurar que su longitud es de al menos cuatro caracteres. Para combinar dos validadores, se utiliza el validador <code>sfValidatorAnd</code> y se le pasan como argumentos tanto <code>sfValidatorEmail</code> como <code>sfValidatorString</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">form</span><span class="sy0">-&gt;</span><span class="me1">setValidators</span><span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span>
+  <span class="st_h">'nombre'</span>  <span class="sy0">=&gt;</span> <span class="kw2">new</span> sfValidatorString<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+  <span class="st_h">'email'</span>   <span class="sy0">=&gt;</span> <span class="kw2">new</span> sfValidatorAnd<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span>
+    <span class="kw2">new</span> sfValidatorEmail<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+    <span class="kw2">new</span> sfValidatorString<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'min_length'</span> <span class="sy0">=&gt;</span> <span class="nu0">4</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+  <span class="br0">&#41;</span><span class="sy0">,</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'required'</span> <span class="sy0">=&gt;</span> <span class="kw4">false</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+  <span class="st_h">'asunto'</span>  <span class="sy0">=&gt;</span> <span class="kw2">new</span> sfValidatorString<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+  <span class="st_h">'mensaje'</span> <span class="sy0">=&gt;</span> <span class="kw2">new</span> sfValidatorString<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'min_length'</span> <span class="sy0">=&gt;</span> <span class="nu0">4</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Si se cumplen las condiciones de los dos validadores, el campo <code>email</code> se considera válido. De la misma forma, existe un método llamado <code>sfValidatorOr</code> que permite combinar varios validadores. Si se cumple al menos uno de esos validadores, el campo se declara válido.</p>
+
+<p>Cada validador que no se cumple genera un mensaje de error para el campo. Aunque estos mensajes están escritos en inglés, Symfony utiliza los <em>helpers</em> de internacionalización al mostrarlos por pantalla, por lo que puedes traducirlos fácilmente al idioma que quieras. Otra forma de traducir los mensajes de error es utilizar el tercer parámetro opcional de los validadores, que permite modificar sus mensajes de error. Todos los validadores cuentan con al menos dos mensajes de error: el mensaje <code>required</code> y el mensaje <code>invalid</code>. Algunos validadores definen más mensajes de error, que también se pueden redefinir mediante este tercer parámetro:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// en modules/mimodulo/actions/actions.class.php</span>
+<span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">form</span><span class="sy0">-&gt;</span><span class="me1">setValidators</span><span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span>
+  <span class="st_h">'nombre'</span>  <span class="sy0">=&gt;</span> <span class="kw2">new</span> sfValidatorString<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+  <span class="st_h">'email'</span>   <span class="sy0">=&gt;</span> <span class="kw2">new</span> sfValidatorEmail<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="kw3">array</span><span class="br0">&#40;</span>
+    <span class="st_h">'required'</span>   <span class="sy0">=&gt;</span> <span class="st_h">'Introduce por favor un email'</span><span class="sy0">,</span>
+    <span class="st_h">'invalid'</span>    <span class="sy0">=&gt;</span> <span class="st_h">'Escribe por favor una dirección de email válida (por ej. yo@ejemplo.com)'</span>
+  <span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+  <span class="st_h">'asunto'</span>  <span class="sy0">=&gt;</span> <span class="kw2">new</span> sfValidatorString<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+  <span class="st_h">'mensaje'</span> <span class="sy0">=&gt;</span> <span class="kw2">new</span> sfValidatorString<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'min_length'</span> <span class="sy0">=&gt;</span> <span class="nu0">4</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="kw3">array</span><span class="br0">&#40;</span>
+    <span class="st_h">'required'</span>   <span class="sy0">=&gt;</span> <span class="st_h">'Escribe por favor un mensaje'</span><span class="sy0">,</span>
+    <span class="st_h">'min_length'</span> <span class="sy0">=&gt;</span> <span class="st_h">'Escribe por favor un mensaje más largo (escribe al menos cuatro caracteres)'</span>
+  <span class="br0">&#41;</span><span class="br0">&#41;</span>
+<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Los mensajes de error propios también se muestran por pantalla mediante los <em>helpers</em> de internacionalización, por lo que se pueden traducir fácilmente a cualquier idioma (el Capítulo 13 lo explica en detalle).</p>
+
+<h3 id="aplicando_un_mismo_validador_a_varios_campos">10.4.6. Aplicando un mismo validador a varios campos</h3>
+
+<p>Con todo lo explicado anteriormente no es posible validar que varios campos diferentes cumplen una misma condición. Este caso es muy común por ejemplo en los formularios de registro de usuario, que suelen contender dos campos diferentes de contraseña cuyos valores deben coincidir. Cada contraseña es un campo independiente, pero su validación sólo es posible de forma combinada.</p>
+
+<p>En estos casos se utiliza un validador múltiple en el método <code>setPostValidator()</code>, que es un validador que se ejecuta después de todos los demás validadores y que recibe un array con todos los valores <em>limpios</em>. Si quieres validar los datos originales, debes utilizar el método <code>setPreValidator()</code>.</p>
+
+<p>Un formulario de registro típico tendría el siguiente aspecto:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// en modules/mimodulo/actions/actions.class.php</span>
+<span class="co1">// Definir el formulario</span>
+<span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">form</span> <span class="sy0">=</span> <span class="kw2">new</span> sfForm<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">form</span><span class="sy0">-&gt;</span><span class="me1">setWidgets</span><span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span>
+  <span class="st_h">'login'</span>     <span class="sy0">=&gt;</span> <span class="kw2">new</span> sfWidgetFormInputText<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+  <span class="st_h">'password1'</span> <span class="sy0">=&gt;</span> <span class="kw2">new</span> sfWidgetFormInputText<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+  <span class="st_h">'password2'</span> <span class="sy0">=&gt;</span> <span class="kw2">new</span> sfWidgetFormInputText<span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">form</span><span class="sy0">-&gt;</span><span class="me1">setValidators</span><span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span>
+  <span class="st_h">'login'</span>     <span class="sy0">=&gt;</span> <span class="kw2">new</span> sfValidatorString<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="co1">// login es obligatorio</span>
+  <span class="st_h">'password1'</span> <span class="sy0">=&gt;</span> <span class="kw2">new</span> sfValidatorString<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="co1">// password1 es obligatorio</span>
+  <span class="st_h">'password2'</span> <span class="sy0">=&gt;</span> <span class="kw2">new</span> sfValidatorString<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="co1">// password2 es obligatorio</span>
+<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">form</span><span class="sy0">-&gt;</span><span class="me1">setPostValidators</span><span class="br0">&#40;</span><span class="kw2">new</span> sfValidatorSchemaCompare<span class="br0">&#40;</span><span class="st_h">'password1'</span><span class="sy0">,</span> <span class="st_h">'=='</span><span class="sy0">,</span> <span class="st_h">'password2'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>El validador <code>sfValidatorSchemaCompare</code> es un tipo especial de validador múltiple que recibe todos los valores <em>limpios</em> y puede elegir dos de ellos para compararlos. Si quieres definir más de un post-validador, puedes hacer uso de los métodos <code>sfValidatorAnd</code> y <code>sfValidatorOr</code>.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="widgets_de_formulario.html">&larr; Anterior <span>10.3. Widgets de formulario</span></a>
+            
+            <a class="span5 next" href="validadores.html">Siguiente &rarr; <span>10.5. Validadores</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Procesando el envío del formulario (Symfony 1.4, la guía definitiva%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Symfony 1.4, la guía definitiva : Procesando el envío del formulario']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción a Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Explorando el interior de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Ejecutar aplicaciones Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Introducción a la creación de páginas</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Configurar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> El Controlador</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> La Vista</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> El modelo (Doctrine)</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Enlaces y sistema de enrutamiento</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_10.html">
+            <span>Capítulo 10.</span> Formularios
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="mostrando_un_formulario.html">
+            <span>10.1.</span> Mostrando un formulario
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="modificando_el_aspecto_de_los_formularios.html">
+            <span>10.2.</span> Modificando el aspecto de los formularios
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="widgets_de_formulario.html">
+            <span>10.3.</span> Widgets de formulario
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="procesando_el_envio_del_formulario.html">
+            <span>10.4.</span> Procesando el envío del formulario
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="validadores.html">
+            <span>10.5.</span> Validadores
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="usos_alternativos_de_los_formularios.html">
+            <span>10.6.</span> Usos alternativos de los formularios
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="widget_y_validadores_propios.html">
+            <span>10.7.</span> Widget y validadores propios
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="formularios_basados_en_un_modelo.html">
+            <span>10.8.</span> Formularios basados en un modelo
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="resumen.html">
+            <span>10.9.</span> Resumen
+        </a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Emails</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Uso de la cache</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Pruebas unitarias y funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Herramientas para la administración de aplicaciones</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> Personalizar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> Rendimiento</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Configuración avanzada</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

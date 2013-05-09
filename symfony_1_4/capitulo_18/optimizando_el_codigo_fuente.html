@@ -1,0 +1,237 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>18.6. Optimizando el código fuente (Symfony 1.4, la guía definitiva)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="desactivando_las_caracteristicas_que_no_se_utilizan.html" />
+        <link rel="next" href="resumen.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="18.6. Optimizando el código fuente (Symfony 1.4, la guía definitiva)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page symfony_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Symfony 1.4, la guía definitiva</a></li>
+  <li><a href="../capitulo_18.html">Capítulo 18. Rendimiento</a></li>
+  <li class="current"><span>18.6.. Optimizando el código fuente</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="optimizando_el_codigo_fuente"><span>18.6.</span> Optimizando el código fuente</h1>
+    
+
+<p>También es posible mejorar el rendimiento de la aplicación optimizando el código fuente de la propia aplicación. En esta sección se ofrecen algunos consejos al respecto.</p>
+
+<h3 id="compilacion_del_nucleo_de_symfony">18.6.1. Compilación del núcleo de Symfony</h3>
+
+<p>Cargar diez archivos requieren muchas más operaciones de entrada/salida que cargar un solo archivo grande, sobre todo en discos lentos. Además, cargar un archivo muy grande consume muchos más recursos que cargar un archivo menor, sobre todo si una gran parte del archivo grande contiene información ignorada por PHP, por ejemplo los comentarios.</p>
+
+<p>Por lo tanto, una operación que mejora mucho el rendimiento consiste en juntar una serie de archivos en un solo archivo y eliminar todos sus comentarios. Symfony ya realiza esta optimización y se llama compilación del núcleo de Symfony. Al principio de la primera petición (o después de que se haya borrado la cache) la aplicación Symfony concatena todas las clases del núcleo del framework Symfony (<code>sfActions</code>, <code>sfRequest</code>, <code>sfView</code>, etc.) en un solo archivo, optimiza el tamaño del archivo eliminando los comentarios y los espacios en blanco sobrantes y lo almacena en la cache, en un archivo llamado <code>config_core_compile.yml.php</code>. Las siguientes peticiones solamente cargan este archivo optimizado en lugar de los 30 archivos individuales que lo componen.</p>
+
+<p>Si la aplicación dispone de clases que deben cargarse siempre y sobre todo si son clases grandes con muchos comentarios, puede ser muy beneficioso añadirlas a la compilación del núcleo de Symfony. Para ello, se crea un archivo llamado <code>core_compile.yml</code> en el directorio <code>config/</code> de la aplicación y se listan las clases que se quieren añadir, como se muestra en el listado 18-21.</p>
+
+<p><strong>Listado 18-21 - Añadiendo las clases al archivo de compilación del núcleo de Symfony, en <code>frontend/config/core_compile.yml</code></strong></p>
+
+<div class="code yaml">
+<pre class="yaml">- <span class="co2">%SF_ROOT_DIR%/lib/miClase.class.php</span>
+- <span class="co2">%SF_ROOT_DIR%/apps/frontend/lib/miToolkit.class.php</span>
+- <span class="co2">%SF_ROOT_DIR%/plugins/miPlugin/lib/miPluginCore.class.php</span>
+<span class="sy1">...</span></pre>
+</div>
+
+<h3 id="la_tarea_projectoptimize">18.6.2. La tarea <code>project:optimize</code></h3>
+
+<p>Symfony dispone de otra herramienta de optimización: la tarea <code>project:optimize</code>. Esta herramienta aplica varias estrategias de optimización sobre el código de Symfony y el código de la aplicación, lo que permite acelerar la ejecución de la aplicación.</p>
+
+<div class="code cli">
+<pre class="cli">$ php symfony project:optimize frontend prod</pre>
+</div>
+
+<p>Si quieres conocer a fondo las estrategias de optimización que realiza la tarea, no dudes en consultar su código fuente.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="desactivando_las_caracteristicas_que_no_se_utilizan.html">&larr; Anterior <span>18.5. Desactivando las características que no se utilizan</span></a>
+            
+            <a class="span5 next" href="resumen.html">Siguiente &rarr; <span>18.7. Resumen</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Optimizando el código fuente (Symfony 1.4, la guía definitiva%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Symfony 1.4, la guía definitiva : Optimizando el código fuente']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción a Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Explorando el interior de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Ejecutar aplicaciones Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Introducción a la creación de páginas</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Configurar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> El Controlador</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> La Vista</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> El modelo (Doctrine)</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Enlaces y sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Emails</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Uso de la cache</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Pruebas unitarias y funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Herramientas para la administración de aplicaciones</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> Personalizar Symfony</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_18.html">
+            <span>Capítulo 18.</span> Rendimiento
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="optimizando_el_servidor.html">
+            <span>18.1.</span> Optimizando el servidor
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="optimizando_el_modelo.html">
+            <span>18.2.</span> Optimizando el modelo
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="optimizando_la_vista.html">
+            <span>18.3.</span> Optimizando la vista
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="optimizando_la_cache.html">
+            <span>18.4.</span> Optimizando la cache
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="desactivando_las_caracteristicas_que_no_se_utilizan.html">
+            <span>18.5.</span> Desactivando las características que no se utilizan
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="optimizando_el_codigo_fuente.html">
+            <span>18.6.</span> Optimizando el código fuente
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="resumen.html">
+            <span>18.7.</span> Resumen
+        </a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Configuración avanzada</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

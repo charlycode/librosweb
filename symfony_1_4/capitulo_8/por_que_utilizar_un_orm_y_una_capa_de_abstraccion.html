@@ -1,0 +1,258 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>8.1. ¿Por qué utilizar un ORM y una capa de abstracción? (Symfony 1.4, la guía definitiva)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="../capitulo_8.html" />
+        <link rel="next" href="esquema_de_base_de_datos_de_symfony.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="8.1. ¿Por qué utilizar un ORM y una capa de abstracción? (Symfony 1.4, la guía definitiva)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page symfony_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Symfony 1.4, la guía definitiva</a></li>
+  <li><a href="../capitulo_8.html">Capítulo 8. El modelo (Doctrine)</a></li>
+  <li class="current"><span>8.1.. ¿Por qué utilizar un ORM y una capa de abstracción?</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="por_que_utilizar_un_orm_y_una_capa_de_abstraccion"><span>8.1.</span> ¿Por qué utilizar un ORM y una capa de abstracción?</h1>
+    
+
+<p>Las bases de datos son relacionales. PHP 5 y Symfony están orientados a objetos. Para acceder de forma efectiva a la base de datos desde un contexto orientado a objetos, es necesaria una interfaz que traduzca la lógica de los objetos a la lógica relacional. Como se explicó en el Capítulo 1, esta interfaz se llama ORM  <em>object-relational mapping</em>) o <em>"mapeo de objetos a bases de datos"</em>, y está formada por objetos que permiten acceder a los datos y que contienen en sí mismos el código necesario para hacerlo.</p>
+
+<p>La principal ventaja que aporta el ORM es la reutilización, permitiendo llamar a los métodos de un objeto de datos desde varias partes de la aplicación e incluso desde diferentes aplicaciones. La capa ORM también encapsula la lógica de los datos; como por ejemplo, el cálculo de la puntuación de un usuario de un foro en función de las aportaciones que ha realizado al foro y en función del éxito de esas aportaciones. Cuando una página quiere mostrar esa puntuación de un usuario, simplemente invoca un método del modelo de datos, sin preocuparse de cómo se realiza el cálculo. Si el método de cálculo sufre alguna variación, solo es necesario modificar el método que calcula la puntuación en el modelo, sin necesidad de modificar el resto de la aplicación.</p>
+
+<p>La utilización de objetos en vez de registros y de clases en vez de tablas, tiene otra ventaja: permite añadir métodos accesores en los objetos que no tienen relación directa con una tabla. Si se dispone por ejemplo de una tabla llamada <code>cliente</code> con dos campos llamados <code>nombre</code> y <code>apellidos</code>, puede que se necesite un dato llamado <code>NombreCompleto</code> que incluya y combine el nombre y los apellidos. En el mundo orientado a objetos, es tan fácil como añadir un método accesor a la clase <code>Cliente</code>, como se muestra en el listado 8-1. Desde el punto de vista de la aplicación, no existen diferencias entre los atributos <code>Nombre</code>, <code>Apellidos</code>, <code>NombreCompleto</code> de la clase <code>Cliente</code>. Solo la propia clase es capaz de determinar si un atributo determinado se corresponde con una columna de la base de datos.</p>
+
+<p><strong>Listado 8-1 - Los métodos accesores en la clase del modelo permiten ocultar la estructura real de la tabla de la base de datos</strong></p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">public</span> <span class="kw2">function</span> getNombreCompleto<span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="kw1">return</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getNombre</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">.</span><span class="st_h">' '</span><span class="sy0">.</span><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getApellidos</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Todo el código repetitivo de acceso a los datos y toda la lógica de negocio de los propios datos se puede almacenar en esos objetos. Imagina que se ha definido la clase <code>CarritoCompra</code> en la que se almacenan <code>Productos</code> (que son objetos). Para obtener el precio total del carrito de la compra antes de realizar el pago, se puede crear un método que encapsula el proceso de cálculo, tal y como se muestra en el listado 8-2.</p>
+
+<p><strong>Listado 8-2 - Los métodos accesores ocultan la lógica de los datos</strong></p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">public</span> <span class="kw2">function</span> getTotal<span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="re0">$total</span> <span class="sy0">=</span> <span class="nu0">0</span><span class="sy0">;</span>
+  <span class="kw1">foreach</span> <span class="br0">&#40;</span><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getProductos</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="kw1">as</span> <span class="re0">$producto</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$total</span> <span class="sy0">+=</span> <span class="re0">$producto</span><span class="sy0">-&gt;</span><span class="me1">getPrecio</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="sy0">*</span> <span class="re0">$producto</span><span class="sy0">-&gt;</span><span class="me1">getCantidad</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="kw1">return</span> <span class="re0">$total</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Existe otra consideración importante que hay que tener en cuenta cuando se crean elementos de acceso a los datos: las empresas que crean las bases de datos utilizan variantes diferentes del lenguaje SQL. Si se cambia a otro sistema gestor de bases de datos, es necesario reescribir parte de las consultas SQL que se definieron para el sistema anterior. Si se crean las consultas mediante una sintaxis independiente de la base de datos y un componente externo se encarga de traducirlas al lenguaje SQL concreto de la base de datos, se puede cambiar fácilmente de una base de datos a otra. Este es precisamente el objetivo de las capas de abstracción de bases de datos. Esta capa obliga a utilizar una sintaxis específica para las consultas y a cambio realiza el trabajo sucio de optimizar y adaptar el lenguaje SQL a la base de datos concreta que se está utilizando.</p>
+
+<p>La principal ventaja de la capa de abstracción es la portabilidad, porque hace posible el cambiar la aplicación a otra base de datos, incluso en mitad del desarrollo de un proyecto. Si se debe desarrollar rápidamente un prototipo de una aplicación y el cliente no ha decidido todavía la base de datos que mejor se ajusta a sus necesidades, se puede construir la aplicación utilizando SQLite y cuando el cliente haya tomado la decisión, cambiar fácilmente a MySQL, PostgreSQL o Oracle. Solamente es necesario cambiar una línea en un archivo de configuración y todo funciona correctamente.</p>
+
+<p>Symfony utiliza Propel o Doctrine como ORM y éstos a su vez utilizan PDO  <em>PHP Data Objects</em>) como capa de abstracción de bases de datos. Estos dos componentes externos han sido desarrollados por los equipos de Propel y Doctrine, y están completamente integrados en Symfony, por lo que se pueden considerar una parte más del framework. Su sintaxis y sus convenciones, que se describen en este capítulo, se han adaptado de forma que difieran lo menos posible de las de Symfony.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> En un proyecto Symfony, todas las aplicaciones comparten el mismo modelo. Esa es precisamente la razón de ser de los proyectos: una agrupación de aplicaciones que dependen de un modelo común. Este es el motivo por el que el modelo es independiente de las aplicaciones y los archivos del modelo se guardan en el directorio <code>lib/model/</code> de la raíz del proyecto.</p></div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="../capitulo_8.html">&larr; Anterior <span>Capítulo 8. El modelo (Doctrine)</span></a>
+            
+            <a class="span5 next" href="esquema_de_base_de_datos_de_symfony.html">Siguiente &rarr; <span>8.2. Esquema de base de datos de Symfony</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = '¿Por qué utilizar un ORM y una capa de abstracción? (Symfony 1.4, la guía definitiva%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Symfony 1.4, la guía definitiva : ¿Por qué utilizar un ORM y una capa de abstracción?']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción a Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Explorando el interior de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Ejecutar aplicaciones Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Introducción a la creación de páginas</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Configurar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> El Controlador</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> La Vista</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_8.html">
+            <span>Capítulo 8.</span> El modelo (Doctrine)
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="por_que_utilizar_un_orm_y_una_capa_de_abstraccion.html">
+            <span>8.1.</span> ¿Por qué utilizar un ORM y una capa de abstracción?
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="esquema_de_base_de_datos_de_symfony.html">
+            <span>8.2.</span> Esquema de base de datos de Symfony
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="las_clases_del_modelo.html">
+            <span>8.3.</span> Las clases del modelo
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="acceso_a_los_datos.html">
+            <span>8.4.</span> Acceso a los datos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="conexiones_con_la_base_de_datos.html">
+            <span>8.5.</span> Conexiones con la base de datos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="extender_el_modelo.html">
+            <span>8.6.</span> Extender el modelo
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="sintaxis_extendida_del_esquema.html">
+            <span>8.7.</span> Sintaxis extendida del esquema
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="no_crees_el_modelo_dos_veces.html">
+            <span>8.8.</span> No crees el modelo dos veces
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="resumen.html">
+            <span>8.9.</span> Resumen
+        </a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Enlaces y sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Emails</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Uso de la cache</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Pruebas unitarias y funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Herramientas para la administración de aplicaciones</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> Personalizar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> Rendimiento</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Configuración avanzada</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

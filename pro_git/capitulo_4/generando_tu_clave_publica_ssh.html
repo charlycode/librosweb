@@ -1,0 +1,234 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>4.3. Generando tu clave pública SSH (Pro Git, el libro oficial de Git)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="poniendo_git_en_un_servidor.html" />
+        <link rel="next" href="preparando_el_servidor.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="4.3. Generando tu clave pública SSH (Pro Git, el libro oficial de Git)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page pro_git">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Pro Git, el libro oficial de Git</a></li>
+  <li><a href="../capitulo_4.html">Capítulo 4. Git en un servidor</a></li>
+  <li class="current"><span>4.3.. Generando tu clave pública SSH</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="generando_tu_clave_publica_ssh"><span>4.3.</span> Generando tu clave pública SSH</h1>
+    
+
+<p>Tal y como se ha comentado, muchos servidores Git utilizan la autentificación a través de claves públicas SSH. Y, para ello, cada usuario del sistema ha de generarse una, si es que no la tiene ya. El proceso para hacerlo es similar en casi cualquier sistema operativo.</p>
+
+<p>Ante todo,  asegurarte que no tengas ya una clave. Por defecto, las claves de cualquier usuario SSH se guardan en la carpeta <code>~/.ssh</code> de dicho usuario. Puedes verificar si tienes ya unas claves, simplemente situandote sobre dicha carpeta y viendo su contenido:</p>
+
+<div class="code code">
+<pre class="code">$ cd ~/.ssh
+$ ls
+authorized_keys2  id_dsa       known_hosts
+config            id_dsa.pub</pre>
+</div>
+
+<p>Has de buscar un par de archivos con nombres tales como <code>algo</code> y <code>algo.pub</code>; siendo ese "algo" normalmente <code>id_dsa</code> o <code>id_rsa</code>. El archivo terminado en <code>.pub</code> es tu clave pública, y el otro archivo es tu clave privada. Si no tienes esos archivos (o no tienes ni siquiera la carpeta <code>.ssh</code>), has de crearlos; utilizando un programa llamado <code>ssh-keygen</code>, que viene incluido en el paquete SSH de los sistemas Linux/Mac o en el paquete MSysGit en los sistemas Windows:</p>
+
+<div class="code code">
+<pre class="code">$ ssh-keygen 
+Generating public/private rsa key pair.
+Enter file in which to save the key (/Users/schacon/.ssh/id_rsa): 
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in /Users/schacon/.ssh/id_rsa.
+Your public key has been saved in /Users/schacon/.ssh/id_rsa.pub.
+The key fingerprint is:
+43:c5:5b:5f:b1:f1:50:43:ad:20:a6:92:6a:1f:9a:3a schacon@agadorlaptop.local</pre>
+</div>
+
+<p>Como se vé, este comando primero solicita confirmación de dónde van a a guardarse las claves (<code>.ssh/id_rsa</code>), y luego solicita, dos veces, una contraseña (<em>passphrase</em>), contraseña que puedes dejar en blanco si no deseas tener que teclearla cada vez que uses la clave.</p>
+
+<p>Tras generarla, cada usuario ha de encargarse de enviar su clave pública a quienquiera que administre el servidor Git (en el caso de que este esté configurado con SSH y así lo requiera). Esto se puede realizar simplemente copiando los contenidos del archivo terminado en <code>.pub</code> y enviandoselos por correo electrónico. La clave pública será una serie de números, letras y signos, algo así como esto:</p>
+
+<div class="code code">
+<pre class="code">$ cat ~/.ssh/id_rsa.pub 
+ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAklOUpkDHrfHY17SbrmTIpNLTGK9Tjom/BWDSU
+GPl+nafzlHDTYW7hdI4yZ5ew18JH4JW9jbhUFrviQzM7xlELEVf4h9lFX5QVkbPppSwg0cda3
+Pbv7kOdJ/MTyBlWXFCR+HAo3FXRitBqxiX1nKhXpHAZsMciLq8V6RjsNAQwdsdMFvSlVK/7XA
+t3FaoJoAsncM1Q9x5+3V0Ww68/eIFmb1zuUFljQJKprrX88XypNDvjYNby6vw/Pb0rwert/En
+mZ+AW4OZPnTPI89ZPmVMLuayrD2cE86Z/il8b+gw3r3+1nKatmIkjn2so1d01QraTlMqVSsbx
+NrRFi9wrf+M7Q== schacon@agadorlaptop.local</pre>
+</div>
+
+<p>Para más detalles sobre cómo crear unas claves SSH en variados sistemas operativos, consultar la correspondiente guia en GitHub:  <code>http://github.com/guides/providing-your-ssh-key</code>.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="poniendo_git_en_un_servidor.html">&larr; Anterior <span>4.2. Poniendo Git en un Servidor</span></a>
+            
+            <a class="span5 next" href="preparando_el_servidor.html">Siguiente &rarr; <span>4.4. Preparando el servidor</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Generando tu clave pública SSH (Pro Git, el libro oficial de Git%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Pro Git, el libro oficial de Git : Generando tu clave pública SSH']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Empezando</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Fundamentos de Git</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Trabajando con ramas en Git</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_4.html">
+            <span>Capítulo 4.</span> Git en un servidor
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="los_protocolos.html">
+            <span>4.1.</span> Los Protocolos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="poniendo_git_en_un_servidor.html">
+            <span>4.2.</span> Poniendo Git en un Servidor
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="generando_tu_clave_publica_ssh.html">
+            <span>4.3.</span> Generando tu clave pública SSH
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="preparando_el_servidor.html">
+            <span>4.4.</span> Preparando el servidor
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="acceso_publico.html">
+            <span>4.5.</span> Acceso público
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="gitweb.html">
+            <span>4.6.</span> GitWeb
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="gitosis.html">
+            <span>4.7.</span> Gitosis
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_demonio_git.html">
+            <span>4.8.</span> El demonio Git
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="git_en_un_alojamiento_externo.html">
+            <span>4.9.</span> Git en un alojamiento externo
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="resumen.html">
+            <span>4.10.</span> Resumen
+        </a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Git en entornos distribuidos</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Las herramientas de Git</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Personalizando Git</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Git y otros sistemas</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Funcionamiento interno de Git</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

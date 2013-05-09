@@ -1,0 +1,532 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>16.1. Los afiliados (El tutorial Jobeet)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="../capitulo_16.html" />
+        <link rel="next" href="probando_los_servicios_web.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="16.1. Los afiliados (El tutorial Jobeet)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page jobeet_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">El tutorial Jobeet</a></li>
+  <li><a href="../capitulo_16.html">Capítulo 16. Servicios web</a></li>
+  <li class="current"><span>16.1.. Los afiliados</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="los_afiliados"><span>16.1.</span> Los afiliados</h1>
+    
+
+<p>En los escenarios del tutorial del día 2 establecimos que <em>"un usuario afiliado obtiene la lista de ofertas de trabajo activas"</em>.</p>
+
+<h3 id="los_archivos_de_datos">16.1.1. Los archivos de datos</h3>
+
+<p>A continuación vamos a crear un nuevo archivo de datos para la información de los afiliados:</p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co1"># data/fixtures/030_affiliates.yml</span><span class="co4">
+JobeetAffiliate</span>:<span class="co4">
+  sensio_labs</span>:<span class="co3">
+    url</span><span class="sy2">: </span>      http://www.sensio-labs.com/<span class="co3">
+    email</span><span class="sy2">: </span>    fabien.potencier@example.com<span class="co3">
+    is_active</span><span class="sy2">: </span>true<span class="co3">
+    token</span><span class="sy2">: </span>    sensio_labs<span class="co3">
+    jobeet_category_affiliates</span><span class="sy2">: </span><span class="br0">&#91;</span>programming<span class="br0">&#93;</span>
+<span class="co4">
+  symfony</span>:<span class="co3">
+    url</span><span class="sy2">: </span>      http://www.symfony-project.org/<span class="co3">
+    email</span><span class="sy2">: </span>    fabien.potencier@example.org<span class="co3">
+    is_active</span><span class="sy2">: </span>false<span class="co3">
+    token</span><span class="sy2">: </span>    symfony<span class="co3">
+    jobeet_category_affiliates</span><span class="sy2">: </span><span class="br0">&#91;</span>design, programming<span class="br0">&#93;</span></pre>
+</div>
+
+<p>Cuando se establecen relaciones muchos-a-muchos, crear los registros de la tabla intermedia es tan sencillo como definir un array cuya clave sea el nombre de la tabla intermedia seguido de una letra <code>s</code>. El contenido del array está formado por los nombres de los objetos que se han definido en los archivos de datos. Puedes utilizar objetos definidos en otros archivos de datos, pero con la condición de que los objetos hayan sido definidos antes de utilizarlos (el orden en el que se cargan los archivos YAML es importante).</p>
+
+<p>El archivo de datos anterior ya incluye el valor del token de cada afiliado para que las pruebas sean más fáciles. En cualquier caso, cuando un usuario real solicita una cuenta, el token se debe generar automáticamente:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// lib/model/JobeetAffiliate.php</span>
+<span class="kw2">class</span> JobeetAffiliate <span class="kw2">extends</span> BaseJobeetAffiliate
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> save<span class="br0">&#40;</span>PropelPDO <span class="re0">$con</span> <span class="sy0">=</span> <span class="kw4">null</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="kw1">if</span> <span class="br0">&#40;</span><span class="sy0">!</span><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getToken</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">setToken</span><span class="br0">&#40;</span><span class="kw3">sha1</span><span class="br0">&#40;</span><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getEmail</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">.</span><span class="kw3">rand</span><span class="br0">&#40;</span><span class="nu0">11111</span><span class="sy0">,</span> <span class="nu0">99999</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="kw1">return</span> parent<span class="sy0">::</span><span class="me2">save</span><span class="br0">&#40;</span><span class="re0">$con</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="co1">// ...</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Después de crear el archivo de datos, ya puedes volver a cargar todos los datos de prueba:</p>
+
+<div class="code cli">
+<pre class="cli">$ php symfony propel:data-load</pre>
+</div>
+
+<h3 id="el_servicio_web_de_las_ofertas_de_trabajo">16.1.2. El servicio web de las ofertas de trabajo</h3>
+
+<p>Como ya hemos explicado varias veces, siempre que vayas a añadir alguna nueva funcionalidad a la aplicación, es mejor pensar primero en su URL:</p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co1"># apps/frontend/config/routing.yml</span><span class="co4">
+api_jobs</span>:<span class="co3">
+  url</span><span class="sy2">: </span>    /api/:token/jobs.:sf_format<span class="co3">
+  class</span><span class="sy2">: </span>  sfPropelRoute<span class="co3">
+  param</span><span class="sy2">: </span>  <span class="br0">&#123;</span> module<span class="sy2">: </span>api, action<span class="sy2">: </span>list <span class="br0">&#125;</span><span class="co3">
+  options</span><span class="sy2">: </span><span class="br0">&#123;</span> model<span class="sy2">: </span>JobeetJob, type<span class="sy2">: </span>list, method<span class="sy2">: </span>getForToken <span class="br0">&#125;</span><span class="co4">
+  requirements</span>:<span class="co3">
+    sf_format</span><span class="sy2">: </span><span class="br0">&#40;</span>?:xml|json|yaml<span class="br0">&#41;</span></pre>
+</div>
+
+<p>En la ruta anterior, la variable especial <code>sf_format</code> es el último elemento que forma la URL y sus posibles valores son <code>xml</code>, <code>json</code> o <code>yaml</code>.</p>
+
+<p>El método <code>getForToken()</code> se invoca cuando la acción obtiene la colección de objetos relacionados con la ruta. Como es necesario comprobar que el afiliado se encuentra activado, debemos redefinir el comportamiento por defecto de la ruta:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// lib/model/JobeetJobPeer.php</span>
+<span class="kw2">class</span> JobeetJobPeer <span class="kw2">extends</span> BaseJobeetJobPeer
+<span class="br0">&#123;</span>
+  static <span class="kw2">public</span> <span class="kw2">function</span> getForToken<span class="br0">&#40;</span><span class="kw3">array</span> <span class="re0">$parameters</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$affiliate</span> <span class="sy0">=</span> JobeetAffiliatePeer<span class="sy0">::</span><span class="me2">getByToken</span><span class="br0">&#40;</span><span class="re0">$parameters</span><span class="br0">&#91;</span><span class="st_h">'token'</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="kw1">if</span> <span class="br0">&#40;</span><span class="sy0">!</span><span class="re0">$affiliate</span> <span class="sy0">||</span> <span class="sy0">!</span><span class="re0">$affiliate</span><span class="sy0">-&gt;</span><span class="me1">getIsActive</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="kw1">throw</span> <span class="kw2">new</span> sfError404Exception<span class="br0">&#40;</span><span class="kw3">sprintf</span><span class="br0">&#40;</span><span class="st_h">'Affiliate with token &quot;%s&quot; does not exist or is not activated.'</span><span class="sy0">,</span> <span class="re0">$parameters</span><span class="br0">&#91;</span><span class="st_h">'token'</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="kw1">return</span> <span class="re0">$affiliate</span><span class="sy0">-&gt;</span><span class="me1">getActiveJobs</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="co1">// ...</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Si el token no existe en la base de datos, se lanza una excepción de tipo <code>sfError404Exception</code>. Después, esta clase se convierte automáticamente en una respuesta de error de tipo <code>404</code>. Esta es por tanto la forma más sencilla de generar una página de error <code>404</code> desde una clase del modelo.</p>
+
+<p>El método <code>getForToken()</code> utiliza, a su vez, otros dos nuevos métodos que vamos a crear a continuación.</p>
+
+<p>En primer lugar tenemos que crear el método <code>getByToken()</code> para obtener los datos de un afiliado a partir del token que se indica:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// lib/model/JobeetAffiliatePeer.php</span>
+<span class="kw2">class</span> JobeetAffiliatePeer <span class="kw2">extends</span> BaseJobeetAffiliatePeer
+<span class="br0">&#123;</span>
+  static <span class="kw2">public</span> <span class="kw2">function</span> getByToken<span class="br0">&#40;</span><span class="re0">$token</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$criteria</span> <span class="sy0">=</span> <span class="kw2">new</span> Criteria<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$criteria</span><span class="sy0">-&gt;</span><span class="me1">add</span><span class="br0">&#40;</span><span class="kw2">self</span><span class="sy0">::</span><span class="me2">TOKEN</span><span class="sy0">,</span> <span class="re0">$token</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="kw1">return</span> <span class="kw2">self</span><span class="sy0">::</span><span class="me2">doSelectOne</span><span class="br0">&#40;</span><span class="re0">$criteria</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>En segundo lugar, el método <code>getActiveJobs()</code> devuelve el listado de las actuales ofertas de trabajo activas para las categorías seleccionadas por el afiliado:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// lib/model/JobeetAffiliate.php</span>
+<span class="kw2">class</span> JobeetAffiliate <span class="kw2">extends</span> BaseJobeetAffiliate
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> getActiveJobs<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$cas</span> <span class="sy0">=</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getJobeetCategoryAffiliates</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$categories</span> <span class="sy0">=</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="kw1">foreach</span> <span class="br0">&#40;</span><span class="re0">$cas</span> <span class="kw1">as</span> <span class="re0">$ca</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="re0">$categories</span><span class="br0">&#91;</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="re0">$ca</span><span class="sy0">-&gt;</span><span class="me1">getCategoryId</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="re0">$criteria</span> <span class="sy0">=</span> <span class="kw2">new</span> Criteria<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$criteria</span><span class="sy0">-&gt;</span><span class="me1">add</span><span class="br0">&#40;</span>JobeetJobPeer<span class="sy0">::</span><span class="me2">CATEGORY_ID</span><span class="sy0">,</span> <span class="re0">$categories</span><span class="sy0">,</span> Criteria<span class="sy0">::</span><span class="me2">IN</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    JobeetJobPeer<span class="sy0">::</span><span class="me2">addActiveJobsCriteria</span><span class="br0">&#40;</span><span class="re0">$criteria</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="kw1">return</span> JobeetJobPeer<span class="sy0">::</span><span class="me2">doSelect</span><span class="br0">&#40;</span><span class="re0">$criteria</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="co1">// ...</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>El último paso consiste en crear la acción y las plantillas relacionadas con la API. Para ello, crea un módulo vacío llamado <code>api</code> utilizando la tarea <code>generate:module</code>:</p>
+
+<div class="code cli">
+<pre class="cli">$ php symfony generate:module frontend api</pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Como no vamos a hacer uso de la acción <code>index</code> generada por defecto, la puedes borrar de la clase de las acciones y también puedes borrar su plantilla asociada <code>indexSucess.php</code></p></div>
+
+<h3 id="la_accion">16.1.3. La acción</h3>
+
+<p>La misma acción <code>list</code> que se muestra a continuación se utiliza para todos los formatos en los que se pueden obtener los datos de la API:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// apps/frontend/modules/api/actions/actions.class.php</span>
+<span class="kw2">public</span> <span class="kw2">function</span> executeList<span class="br0">&#40;</span>sfWebRequest <span class="re0">$request</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">jobs</span> <span class="sy0">=</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="kw1">foreach</span> <span class="br0">&#40;</span><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getRoute</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">getObjects</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="kw1">as</span> <span class="re0">$job</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">jobs</span><span class="br0">&#91;</span><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">generateUrl</span><span class="br0">&#40;</span><span class="st_h">'job_show_user'</span><span class="sy0">,</span> <span class="re0">$job</span><span class="sy0">,</span> <span class="kw4">true</span><span class="br0">&#41;</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="re0">$job</span><span class="sy0">-&gt;</span><span class="me1">asArray</span><span class="br0">&#40;</span><span class="re0">$request</span><span class="sy0">-&gt;</span><span class="me1">getHost</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>En vez de pasar un array de objetos <code>JobeetJob</code> a las plantillas, les pasamos simplemente un array de cadenas de texto. Además, como tenemos tres plantillas diferentes para la misma acción, hemos creado un método llamado <code>JobeetJob::asArray()</code> que contiene la lógica que procesa los valores:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// lib/model/JobeetJob.php</span>
+<span class="kw2">class</span> JobeetJob <span class="kw2">extends</span> BaseJobeetJob
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> asArray<span class="br0">&#40;</span><span class="re0">$host</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="kw1">return</span> <span class="kw3">array</span><span class="br0">&#40;</span>
+      <span class="st_h">'category'</span>     <span class="sy0">=&gt;</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getJobeetCategory</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">getName</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+      <span class="st_h">'type'</span>         <span class="sy0">=&gt;</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="kw3">getType</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+      <span class="st_h">'company'</span>      <span class="sy0">=&gt;</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getCompany</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+      <span class="st_h">'logo'</span>         <span class="sy0">=&gt;</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getLogo</span><span class="br0">&#40;</span><span class="br0">&#41;</span> ? <span class="st_h">'http://'</span><span class="sy0">.</span><span class="re0">$host</span><span class="sy0">.</span><span class="st_h">'/uploads/jobs/'</span><span class="sy0">.</span><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getLogo</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="sy0">:</span> <span class="kw4">null</span><span class="sy0">,</span>
+      <span class="st_h">'url'</span>          <span class="sy0">=&gt;</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getUrl</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+      <span class="st_h">'position'</span>     <span class="sy0">=&gt;</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getPosition</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+      <span class="st_h">'location'</span>     <span class="sy0">=&gt;</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getLocation</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+      <span class="st_h">'description'</span>  <span class="sy0">=&gt;</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getDescription</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+      <span class="st_h">'how_to_apply'</span> <span class="sy0">=&gt;</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getHowToApply</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+      <span class="st_h">'expires_at'</span>   <span class="sy0">=&gt;</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getCreatedAt</span><span class="br0">&#40;</span><span class="st_h">'c'</span><span class="br0">&#41;</span><span class="sy0">,</span>
+    <span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="co1">// ...</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<h3 id="el_formato_xml">16.1.4. El formato XML</h3>
+
+<p>Si recuerdas el tutorial de ayer, añadir el soporte del formato <code>xml</code> es tan sencillo como crear una nueva plantilla:</p>
+
+<div class="code php">
+<pre class="php">&lt;!-- apps/frontend/modules/api/templates/listSuccess.xml.php --&gt;
+<span class="sy1">&lt;?</span>xml version<span class="sy0">=</span><span class="st0">&quot;1.0&quot;</span> encoding<span class="sy0">=</span><span class="st0">&quot;utf-8&quot;</span><span class="sy1">?&gt;</span>
+&lt;jobs&gt;
+<span class="kw2">&lt;?php</span> <span class="kw1">foreach</span> <span class="br0">&#40;</span><span class="re0">$jobs</span> <span class="kw1">as</span> <span class="re0">$url</span> <span class="sy0">=&gt;</span> <span class="re0">$job</span><span class="br0">&#41;</span><span class="sy0">:</span> <span class="sy1">?&gt;</span>
+  &lt;job url=&quot;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$url</span> <span class="sy1">?&gt;</span>&quot;&gt;
+<span class="kw2">&lt;?php</span> <span class="kw1">foreach</span> <span class="br0">&#40;</span><span class="re0">$job</span> <span class="kw1">as</span> <span class="re0">$key</span> <span class="sy0">=&gt;</span> <span class="re0">$value</span><span class="br0">&#41;</span><span class="sy0">:</span> <span class="sy1">?&gt;</span>
+    &lt;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$key</span> <span class="sy1">?&gt;</span>&gt;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$value</span> <span class="sy1">?&gt;</span>&lt;/<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$key</span> <span class="sy1">?&gt;</span>&gt;
+<span class="kw2">&lt;?php</span> <span class="kw1">endforeach</span><span class="sy0">;</span> <span class="sy1">?&gt;</span>
+  &lt;/job&gt;
+<span class="kw2">&lt;?php</span> <span class="kw1">endforeach</span><span class="sy0">;</span> <span class="sy1">?&gt;</span>
+&lt;/jobs&gt;</pre>
+</div>
+
+<h3 id="el_formato_json">16.1.5. El formato JSON</h3>
+
+<p>De la misma forma, añadir el soporte del <a href="http://json.org/">formato JSON</a> es muy similar:</p>
+
+<div class="code php">
+<pre class="php">&lt;!-- apps/frontend/modules/api/templates/listSuccess.json.php --&gt;
+[
+<span class="kw2">&lt;?php</span> <span class="re0">$nb</span> <span class="sy0">=</span> <span class="kw3">count</span><span class="br0">&#40;</span><span class="re0">$jobs</span><span class="br0">&#41;</span><span class="sy0">;</span> <span class="re0">$i</span> <span class="sy0">=</span> <span class="nu0">0</span><span class="sy0">;</span> <span class="kw1">foreach</span> <span class="br0">&#40;</span><span class="re0">$jobs</span> <span class="kw1">as</span> <span class="re0">$url</span> <span class="sy0">=&gt;</span> <span class="re0">$job</span><span class="br0">&#41;</span><span class="sy0">:</span> <span class="sy0">++</span><span class="re0">$i</span> <span class="sy1">?&gt;</span>
+{
+  &quot;url&quot;: &quot;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$url</span> <span class="sy1">?&gt;</span>&quot;,
+<span class="kw2">&lt;?php</span> <span class="re0">$nb1</span> <span class="sy0">=</span> <span class="kw3">count</span><span class="br0">&#40;</span><span class="re0">$job</span><span class="br0">&#41;</span><span class="sy0">;</span> <span class="re0">$j</span> <span class="sy0">=</span> <span class="nu0">0</span><span class="sy0">;</span> <span class="kw1">foreach</span> <span class="br0">&#40;</span><span class="re0">$job</span> <span class="kw1">as</span> <span class="re0">$key</span> <span class="sy0">=&gt;</span> <span class="re0">$value</span><span class="br0">&#41;</span><span class="sy0">:</span> <span class="sy0">++</span><span class="re0">$j</span> <span class="sy1">?&gt;</span>
+  &quot;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$key</span> <span class="sy1">?&gt;</span>&quot;: <span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="kw3">json_encode</span><span class="br0">&#40;</span><span class="re0">$value</span><span class="br0">&#41;</span><span class="sy0">.</span><span class="br0">&#40;</span><span class="re0">$nb1</span> <span class="sy0">==</span> <span class="re0">$j</span> ? <span class="st_h">''</span> <span class="sy0">:</span> <span class="st_h">','</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+&nbsp;
+<span class="kw2">&lt;?php</span> <span class="kw1">endforeach</span><span class="sy0">;</span> <span class="sy1">?&gt;</span>
+}<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$nb</span> <span class="sy0">==</span> <span class="re0">$i</span> ? <span class="st_h">''</span> <span class="sy0">:</span> <span class="st_h">','</span> <span class="sy1">?&gt;</span>
+&nbsp;
+<span class="kw2">&lt;?php</span> <span class="kw1">endforeach</span><span class="sy0">;</span> <span class="sy1">?&gt;</span>
+]</pre>
+</div>
+
+<h3 id="el_formato_yaml">16.1.6. El formato YAML</h3>
+
+<p>Cuando el formato que utilizas es uno de los que incluye Symfony por defecto, el framework se encarga de realizar automáticamente algunas tareas como por ejemplo cambiar el <code>Content-Type</code> de la respuesta o deshabilitar el layout.</p>
+
+<p>Como el formato YAML no está incluido entre los formatos que soporta Symfony para la peticiones de los usuarios, debemos modificar el <code>Content-Type</code> de la respuesta y debemos deshabilitar el layout desde la acción:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">class</span> apiActions <span class="kw2">extends</span> sfActions
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> executeList<span class="br0">&#40;</span>sfWebRequest <span class="re0">$request</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">jobs</span> <span class="sy0">=</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="kw1">foreach</span> <span class="br0">&#40;</span><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getRoute</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">getObjects</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="kw1">as</span> <span class="re0">$job</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">jobs</span><span class="br0">&#91;</span><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">generateUrl</span><span class="br0">&#40;</span><span class="st_h">'job_show_user'</span><span class="sy0">,</span> <span class="re0">$job</span><span class="sy0">,</span> <span class="kw4">true</span><span class="br0">&#41;</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="re0">$job</span><span class="sy0">-&gt;</span><span class="me1">asArray</span><span class="br0">&#40;</span><span class="re0">$request</span><span class="sy0">-&gt;</span><span class="me1">getHost</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="kw1">switch</span> <span class="br0">&#40;</span><span class="re0">$request</span><span class="sy0">-&gt;</span><span class="me1">getRequestFormat</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="kw1">case</span> <span class="st_h">'yaml'</span><span class="sy0">:</span>
+        <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">setLayout</span><span class="br0">&#40;</span><span class="kw4">false</span><span class="br0">&#41;</span><span class="sy0">;</span>
+        <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getResponse</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">setContentType</span><span class="br0">&#40;</span><span class="st_h">'text/yaml'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+        <span class="kw1">break</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>En una acción, el método <code>setLayout()</code> modifica el layout utilizado por defecto y también permite deshabilitarlo si utilizas el valor <code>false</code>.</p>
+
+<p>A continuación se muestra la plantilla resultante para el formato YAML:</p>
+
+<div class="code php">
+<pre class="php">&lt;!-- apps/frontend/modules/api/templates/listSuccess.yaml.php --&gt;
+<span class="kw2">&lt;?php</span> <span class="kw1">foreach</span> <span class="br0">&#40;</span><span class="re0">$jobs</span> <span class="kw1">as</span> <span class="re0">$url</span> <span class="sy0">=&gt;</span> <span class="re0">$job</span><span class="br0">&#41;</span><span class="sy0">:</span> <span class="sy1">?&gt;</span>
+-
+  url: <span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$url</span> <span class="sy1">?&gt;</span>
+&nbsp;
+<span class="kw2">&lt;?php</span> <span class="kw1">foreach</span> <span class="br0">&#40;</span><span class="re0">$job</span> <span class="kw1">as</span> <span class="re0">$key</span> <span class="sy0">=&gt;</span> <span class="re0">$value</span><span class="br0">&#41;</span><span class="sy0">:</span> <span class="sy1">?&gt;</span>
+  <span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$key</span> <span class="sy1">?&gt;</span>: <span class="kw2">&lt;?php</span> <span class="kw1">echo</span> sfYaml<span class="sy0">::</span><span class="me2">dump</span><span class="br0">&#40;</span><span class="re0">$value</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+&nbsp;
+<span class="kw2">&lt;?php</span> <span class="kw1">endforeach</span><span class="sy0">;</span> <span class="sy1">?&gt;</span>
+<span class="kw2">&lt;?php</span> <span class="kw1">endforeach</span><span class="sy0">;</span> <span class="sy1">?&gt;</span></pre>
+</div>
+
+<p>Si realizas una llamada a este servicio web con un token inválido, verás una página de error <code>404</code> en formato XML si la petición la realizas en XML y una página de error <code>404</code> en formato JSON si tu petición estaba en el formato JSON. Sin embargo, si se produce un error con una petición en formato YAML, symfony no sabe lo que debe mostrar.</p>
+
+<p>Cada vez que creas un nuevo formato, debes crear una plantilla de error asociada. Esta plantilla se utiliza para las páginas del error <code>404</code> pero también para todas las demás excepciones.</p>
+
+<p>Como las excepciones deben ser diferentes en el entorno de producción y en el de desarrollo, debes crear dos archivos diferentes: <code>config/error/exception.yaml.php</code> para el entorno de desarrollo y <code>config/error/error.yaml.php</code> para el de producción:</p>
+
+<div class="code php">
+<pre class="php">// config/error/exception.yaml.php
+<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> sfYaml<span class="sy0">::</span><span class="me2">dump</span><span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span>
+  <span class="st_h">'error'</span>       <span class="sy0">=&gt;</span> <span class="kw3">array</span><span class="br0">&#40;</span>
+    <span class="st_h">'code'</span>      <span class="sy0">=&gt;</span> <span class="re0">$code</span><span class="sy0">,</span>
+    <span class="st_h">'message'</span>   <span class="sy0">=&gt;</span> <span class="re0">$message</span><span class="sy0">,</span>
+    <span class="st_h">'debug'</span>     <span class="sy0">=&gt;</span> <span class="kw3">array</span><span class="br0">&#40;</span>
+      <span class="st_h">'name'</span>    <span class="sy0">=&gt;</span> <span class="re0">$name</span><span class="sy0">,</span>
+      <span class="st_h">'message'</span> <span class="sy0">=&gt;</span> <span class="re0">$message</span><span class="sy0">,</span>
+      <span class="st_h">'traces'</span>  <span class="sy0">=&gt;</span> <span class="re0">$traces</span><span class="sy0">,</span>
+    <span class="br0">&#41;</span><span class="sy0">,</span>
+<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="nu0">4</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span></pre>
+</div>
+
+<div class="code php">
+<pre class="php">// config/error/error.yaml.php
+<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> sfYaml<span class="sy0">::</span><span class="me2">dump</span><span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span>
+  <span class="st_h">'error'</span>       <span class="sy0">=&gt;</span> <span class="kw3">array</span><span class="br0">&#40;</span>
+    <span class="st_h">'code'</span>      <span class="sy0">=&gt;</span> <span class="re0">$code</span><span class="sy0">,</span>
+    <span class="st_h">'message'</span>   <span class="sy0">=&gt;</span> <span class="re0">$message</span><span class="sy0">,</span>
+<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span></pre>
+</div>
+
+<p>Por último, antes de probar estas páginas no te olvides de crear un layout para el formato YAML:</p>
+
+<div class="code php">
+<pre class="php">// apps/frontend/templates/layout.yaml.php
+<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$sf_content</span> <span class="sy1">?&gt;</span></pre>
+</div>
+
+<div class="figure" id="figure_16_1">
+    <img src="../../img/jobeet_1_4/f1601.png" alt="Página de error 404" />
+
+    <p class="caption"><strong>Figura 16.1</strong> Página de error 404</p>
+</div>
+
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Si quieres redefinir las plantillas que incluye Symfony por defecto para el error <code>404</code> y las excepciones, tan sólo debes crear los archivos correspondientes en el directorio <code>config/error/</code>.</p></div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="../capitulo_16.html">&larr; Anterior <span>Capítulo 16. Servicios web</span></a>
+            
+            <a class="span5 next" href="probando_los_servicios_web.html">Siguiente &rarr; <span>16.2. Probando los servicios web</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Los afiliados (El tutorial Jobeet%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'El tutorial Jobeet : Los afiliados']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Comenzando el proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> El proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> El modelo de datos</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> El controlador y la vista</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> El sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Profundizando en el modelo</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Trabajando con la página de cada categoría</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Pruebas unitarias</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Pruebas funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Probando los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> El generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> El usuario</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> El día de descanso</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Canales Atom</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_16.html">
+            <span>Capítulo 16.</span> Servicios web
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="los_afiliados.html">
+            <span>16.1.</span> Los afiliados
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="probando_los_servicios_web.html">
+            <span>16.2.</span> Probando los servicios web
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_formulario_para_darse_de_alta_como_afiliado.html">
+            <span>16.3.</span> El formulario para darse de alta como afiliado
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="administrando_los_afiliados.html">
+            <span>16.4.</span> Administrando los afiliados
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="enviando_emails.html">
+            <span>16.5.</span> Enviando emails
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="nos_vemos_manana.html">
+            <span>16.6.</span> Nos vemos mañana
+        </a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> El buscador</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>20</span> <a href="../capitulo_20.html"> Plugins</a>
+    </li>
+    <li class="level-1">
+        <span>21</span> <a href="../capitulo_21.html"> El día del diseño</a>
+    </li>
+    <li class="level-1">
+        <span>22</span> <a href="../capitulo_22.html"> La cache</a>
+    </li>
+    <li class="level-1">
+        <span>23</span> <a href="../capitulo_23.html"> Pasando a producción</a>
+    </li>
+    <li class="level-1">
+        <span>24</span> <a href="../capitulo_24.html"> Un repaso a Symfony</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

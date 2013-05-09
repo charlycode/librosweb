@@ -1,0 +1,322 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>4.6. Ejemplos de enlaces habituales (Introducción a XHTML)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="otros_tipos_de_enlaces.html" />
+        <link rel="next" href="../capitulo_5.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="4.6. Ejemplos de enlaces habituales (Introducción a XHTML)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page xhtml">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Introducción a XHTML</a></li>
+  <li><a href="../capitulo_4.html">Capítulo 4. Enlaces</a></li>
+  <li class="current"><span>4.6. Ejemplos de enlaces habituales</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="ejemplos_de_enlaces_habituales"><span>4.6.</span> Ejemplos de enlaces habituales</h1>
+    
+
+<h3 id="enlace_al_inicio_del_sitio_web">4.6.1. Enlace al inicio del sitio web</h3>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">a</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;/&quot;</span>&gt;</span>Inicio<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">a</span>&gt;</span></pre>
+</div>
+
+<p>Al pulsar el enlace anterior desde cualquier página web, se vuelve directamente a la página de inicio, <em>home</em> o página principal del sitio web.</p>
+
+<h3 id="enlace_a_un_email">4.6.2. Enlace a un email</h3>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">a</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;mailto:nombre@direccion.com&quot;</span> <span class="kw3">title</span><span class="sy0">=</span><span class="st0">&quot;Dirección de email para solicitar más información&quot;</span>&gt;</span>
+Solicita más información
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">a</span>&gt;</span></pre>
+</div>
+
+<p>Al pinchar sobre el enlace anterior, se abre automáticamente el programa de correo electrónico del ordenador del usuario y se establece la dirección de envío al valor indicado después de <code>mailto:</code> La sintaxis es la misma que la de un enlace normal, salvo que se cambia el prefijo <code>http://</code> por <code>mailto:</code></p>
+
+<p>La sintaxis de <code>mailto:</code> permite utilizarlo para otros ejemplos más complejos:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc-1">&lt;!-- Envío del correo electrónico a varias direcciones a la vez --&gt;</span>
+<span class="sc2">&lt;<span class="kw2">a</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;mailto:nombre@direccion.com,otro_nombre@direccion.com&quot;</span>&gt;</span>Solicita más información<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">a</span>&gt;</span>
+&nbsp;
+<span class="sc-1">&lt;!-- Añadir un &quot;asunto&quot; inicial al correo electrónico --&gt;</span>
+<span class="sc2">&lt;<span class="kw2">a</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;mailto:nombre@direccion.com?subject=Solicitud de más información&quot;</span>&gt;</span>Solicita más información<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">a</span>&gt;</span>
+&nbsp;
+<span class="sc-1">&lt;!-- Añadir un texto inicial en el cuerpo del correo electrónico --&gt;</span>
+<span class="sc2">&lt;<span class="kw2">a</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;mailto:nombre@direccion.com?body=Estaría interesado en solicitar más información sobre sus productos&quot;</span>&gt;</span>Solicita más información<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">a</span>&gt;</span></pre>
+</div>
+
+<p>Todas las opciones anteriores se pueden combinar entre sí para realizar ejemplos más avanzados. Aunque el uso de <code>mailto:</code> puede parecer una ventaja, su uso está desaconsejado. Si se incluye una dirección de correo electrónico directamente en una página web, es muy probable que en poco tiempo esa dirección de email se encuentre llena de correo electrónico basura o <em>"spam"</em>, ya que existen programas automáticos encargados de rastrear sistemáticamente todas las páginas web de Internet para encontrar direcciones de correo electrónico válidas.</p>
+
+<p>La forma de mostrar las direcciones de correo electrónico en las páginas web consiste en incluir la dirección en una imagen o indicarla de forma que solamente los usuarios puedan entenderlo:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">p</span>&gt;</span>La dirección de correo es <span class="sc2">&lt;<span class="kw2">strong</span>&gt;</span>nombre (arroba) direccion.com<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">strong</span>&gt;&lt;<span class="sy0">/</span><span class="kw2">p</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">p</span>&gt;</span>La dirección de correo es <span class="sc2">&lt;<span class="kw2">strong</span>&gt;</span>nombre_arroba_direccion.com<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">strong</span>&gt;&lt;<span class="sy0">/</span><span class="kw2">p</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">p</span>&gt;</span>La dirección de correo es <span class="sc2">&lt;<span class="kw2">strong</span>&gt;</span>nombreQUITAESTO@direccion.com<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">strong</span>&gt;&lt;<span class="sy0">/</span><span class="kw2">p</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">p</span>&gt;</span>La dirección de correo es <span class="sc2">&lt;<span class="kw2">strong</span>&gt;</span>nombre(ARROBA)direccion.com<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">strong</span>&gt;&lt;<span class="sy0">/</span><span class="kw2">p</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">p</span>&gt;</span>La dirección de correo es <span class="sc2">&lt;<span class="kw2">strong</span>&gt;</span>nombre @ direccion . com<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">strong</span>&gt;&lt;<span class="sy0">/</span><span class="kw2">p</span>&gt;</span></pre>
+</div>
+
+<h3 id="enlace_a_un_archivo_ftp">4.6.3. Enlace a un archivo FTP</h3>
+
+<p>Para enlazar un archivo almacenado en un servidor FTP, la parte del protocolo de la URL debe cambiar de <code>http://</code> a <code>ftp://</code>:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">a</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;ftp://ftp.ejemplo.com/ruta/archivo.zip&quot;</span> <span class="kw3">title</span><span class="sy0">=</span><span class="st0">&quot;Archivo comprimido de los contenidos&quot;</span>&gt;</span>
+Descarga un ZIP con todos los contenidos
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">a</span>&gt;</span></pre>
+</div>
+
+<h3 id="enlazar_varias_hojas_de_estilos_css">4.6.4. Enlazar varias hojas de estilos CSS</h3>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">link</span> <span class="kw3">rel</span><span class="sy0">=</span><span class="st0">&quot;stylesheet&quot;</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text/css&quot;</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;/css/comun.css&quot;</span> <span class="sy0">/</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">link</span> <span class="kw3">rel</span><span class="sy0">=</span><span class="st0">&quot;stylesheet&quot;</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text/css&quot;</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;/css/secciones.css&quot;</span> <span class="sy0">/</span>&gt;</span></pre>
+</div>
+
+<h3 id="enlazar_hojas_de_estilos_css_para_diferentes_medios">4.6.5. Enlazar hojas de estilos CSS para diferentes medios</h3>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">link</span> <span class="kw3">rel</span><span class="sy0">=</span><span class="st0">&quot;stylesheet&quot;</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text/css&quot;</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;/css/comun.css&quot;</span> <span class="kw3">media</span><span class="sy0">=</span><span class="st0">&quot;screen, projection&quot;</span> <span class="sy0">/</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">link</span> <span class="kw3">rel</span><span class="sy0">=</span><span class="st0">&quot;stylesheet&quot;</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text/css&quot;</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;/css/impresora.css&quot;</span> <span class="kw3">media</span><span class="sy0">=</span><span class="st0">&quot;print&quot;</span> <span class="sy0">/</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">link</span> <span class="kw3">rel</span><span class="sy0">=</span><span class="st0">&quot;stylesheet&quot;</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text/css&quot;</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;/css/movil.css&quot;</span> <span class="kw3">media</span><span class="sy0">=</span><span class="st0">&quot;handheld&quot;</span> <span class="sy0">/</span>&gt;</span></pre>
+</div>
+
+<h3 id="enlazar_el_favicon">4.6.6. Enlazar el favicon</h3>
+
+<p>El <em>favicon</em> o icono para favoritos es el pequeño icono que muestran las páginas en varias partes del navegador. Dependiendo del navegador que se utilice, este icono se muestra en la barra de direcciones, en la barra de título del navegador y/o en el menú de favoritos/marcadores.</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">link</span> <span class="kw3">rel</span><span class="sy0">=</span><span class="st0">&quot;shortcut icon&quot;</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;/favicon.ico&quot;</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;image/ico&quot;</span> <span class="sy0">/</span>&gt;</span></pre>
+</div>
+
+<p>Aunque en principio la imagen debería ser de tipo <code>.ICO</code> (formato gráfico de los iconos), algunos navegadores soportan favicons en otros formatos gráficos más habituales (como por ejemplo <code>.PNG</code>).</p>
+
+<h3 id="enlazar_un_archivo_rss">4.6.7. Enlazar un archivo RSS</h3>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">link</span> <span class="kw3">rel</span><span class="sy0">=</span><span class="st0">&quot;alternate&quot;</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;application/rss+xml&quot;</span> <span class="kw3">title</span><span class="sy0">=</span><span class="st0">&quot;Resumen de todos los artículos del blog&quot;</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;/feed.xml&quot;</span> <span class="sy0">/</span>&gt;</span></pre>
+</div>
+
+<h3 id="enlazar_hojas_de_estilos_favicon_y_rss">4.6.8. Enlazar hojas de estilos, favicon y RSS</h3>
+
+<p>En una misma página se pueden incluir varias etiquetas <code>&lt;link&gt;</code>, por lo que es habitual que las páginas enlacen hojas de estilos, favicon y archivos RSS de forma conjunta:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">head</span>&gt;</span>
+...
+<span class="sc2">&lt;<span class="kw2">link</span> <span class="kw3">rel</span><span class="sy0">=</span><span class="st0">&quot;stylesheet&quot;</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text/css&quot;</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;/css/impresora.css&quot;</span> <span class="kw3">media</span><span class="sy0">=</span><span class="st0">&quot;print&quot;</span> <span class="sy0">/</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">link</span> <span class="kw3">rel</span><span class="sy0">=</span><span class="st0">&quot;stylesheet&quot;</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text/css&quot;</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;/css/movil.css&quot;</span> <span class="kw3">media</span><span class="sy0">=</span><span class="st0">&quot;handheld&quot;</span> <span class="sy0">/</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">style</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text/css&quot;</span> <span class="kw3">media</span><span class="sy0">=</span><span class="st0">&quot;screen,projection&quot;</span>&gt;</span>
+  @import '/css/main.css';
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">style</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">link</span> <span class="kw3">rel</span><span class="sy0">=</span><span class="st0">&quot;shortcut icon&quot;</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;/favicon.ico&quot;</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;image/ico&quot;</span> <span class="sy0">/</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">link</span> <span class="kw3">rel</span><span class="sy0">=</span><span class="st0">&quot;alternate&quot;</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;application/rss+xml&quot;</span> <span class="kw3">title</span><span class="sy0">=</span><span class="st0">&quot;Resumen de todos los artículos del blog&quot;</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;/feed.xml&quot;</span> <span class="sy0">/</span>&gt;</span>
+...
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">head</span>&gt;</span></pre>
+</div>
+
+<h3 id="indicar_que_existe_una_version_de_la_pagina_en_otro_idioma">4.6.9. Indicar que existe una versión de la página en otro idioma</h3>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">head</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">title</span>&gt;</span>English tutorial<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">title</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">link</span> <span class="kw3">lang</span><span class="sy0">=</span><span class="st0">&quot;es&quot;</span> xml:<span class="kw3">lang</span><span class="sy0">=</span><span class="st0">&quot;es&quot;</span> <span class="kw3">title</span><span class="sy0">=</span><span class="st0">&quot;El tutorial en español&quot;</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text/html&quot;</span> <span class="kw3">rel</span><span class="sy0">=</span><span class="st0">&quot;alternate&quot;</span> <span class="kw3">hreflang</span><span class="sy0">=</span><span class="st0">&quot;es&quot;</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;http://www.ejemplo.com/tutorial/espanol.html&quot;</span> <span class="sy0">/</span>&gt;</span>
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">head</span>&gt;</span></pre>
+</div>
+
+<h3 id="indicar_que_existe_una_version_de_la_pagina_preparada_para_imprimir">4.6.10. Indicar que existe una versión de la página preparada para imprimir</h3>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">head</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">link</span> <span class="kw3">media</span><span class="sy0">=</span><span class="st0">&quot;print&quot;</span> <span class="kw3">title</span><span class="sy0">=</span><span class="st0">&quot;El tutorial en PDF&quot;</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;application/pdf&quot;</span> <span class="kw3">rel</span><span class="sy0">=</span><span class="st0">&quot;alternate&quot;</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;http://www.ejemplo.com/tutorial/documento.pdf&quot;</span> <span class="sy0">/</span>&gt;</span>
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">head</span>&gt;</span></pre>
+</div>
+
+<h3 id="indicar_que_existe_una_pagina_que_es_indice_de_la_pagina_actual">4.6.11. Indicar que existe una página que es índice de la página actual</h3>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">head</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">title</span>&gt;</span>Tutorial – Capítulo 5<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">title</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">link</span> <span class="kw3">rel</span><span class="sy0">=</span><span class="st0">&quot;start&quot;</span> <span class="kw3">title</span><span class="sy0">=</span><span class="st0">&quot;El índice del tutorial&quot;</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text/html&quot;</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;http://www.ejemplo.com/tutorial/indice.html&quot;</span> <span class="sy0">/</span>&gt;</span>
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">head</span>&gt;</span></pre>
+</div>
+
+<p><div class="exercise"><p class="title">Ejercicio 7</p> <p>Enlazar el favicon en todas las páginas del ejercicio 6 y añadir todos los atributos posibles a los enlaces.</p>
+
+<p><a href="http://librosweb.es/xhtml/capitulo_15/ejercicio_7.html">Ver solución</a></p></div></p>
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="otros_tipos_de_enlaces.html">&larr; Anterior <span>4.5. Otros tipos de enlaces</span></a>
+            
+            <a class="span5 next" href="../capitulo_5.html">Siguiente &rarr; <span>Capítulo 5. Listas</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Ejemplos de enlaces habituales (Introducción a XHTML%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a XHTML : Ejemplos de enlaces habituales']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Características básicas</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Texto</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_4.html">
+            <span>Capítulo 4.</span> Enlaces
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="url.html">
+            <span>4.1.</span> URL
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="enlaces_relativos_y_absolutos.html">
+            <span>4.2.</span> Enlaces relativos y absolutos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="enlaces_basicos.html">
+            <span>4.3.</span> Enlaces básicos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="enlaces_avanzados.html">
+            <span>4.4.</span> Enlaces avanzados
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="otros_tipos_de_enlaces.html">
+            <span>4.5.</span> Otros tipos de enlaces
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="ejemplos_de_enlaces_habituales.html">
+            <span>4.6.</span> Ejemplos de enlaces habituales
+        </a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Listas</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Imágenes y objetos</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Tablas</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Estructura y layout</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Metainformación</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Otras etiquetas importantes</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Accesibilidad</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Validación</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Fragmentos de código</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

@@ -1,0 +1,337 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>7.4. Mecanismo de escape (Symfony 1.4, la guía definitiva)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="configuracion_de_la_vista.html" />
+        <link rel="next" href="resumen.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="7.4. Mecanismo de escape (Symfony 1.4, la guía definitiva)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page symfony_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Symfony 1.4, la guía definitiva</a></li>
+  <li><a href="../capitulo_7.html">Capítulo 7. La Vista</a></li>
+  <li class="current"><span>7.4.. Mecanismo de escape</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="mecanismo_de_escape"><span>7.4.</span> Mecanismo de escape</h1>
+    
+
+<p>Cuando se insertan datos generados dinámicamente en una plantilla, se debe asegurar la integridad de los datos. Por ejemplo, si se utilizan datos obtenidos mediante formularios que pueden rellenar usuarios anónimos, existe un gran riesgo de que los contenidos puedan incluir scripts y otros elementos maliciosos que se encargan de realizar ataques de tipo XSS  <em>cross-site scripting</em>). Por tanto, se debe aplicar un mecanismo de escape a todos los datos mostrados, de forma que ninguna etiqueta HTML pueda ser peligrosa.</p>
+
+<p>Imagina por ejemplo que un usuario rellena un campo de formulario con el siguiente valor:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">script</span>&gt;</span>alert(document.cookie)<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">script</span>&gt;</span></pre>
+</div>
+
+<p>Si se muestran directamente los datos, el navegador ejecuta el código JavaScript introducido por el usuario, que puede llegar a ser mucho más peligroso que el ejemplo anterior que simplemente muestra un mensaje. Por este motivo, se deben aplicar mecanismos de escape a los valores introducidos antes de mostrarlos, para que se transformen en algo como:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc1">&amp;lt;</span>script<span class="sc1">&amp;gt;</span>alert(document.cookie)<span class="sc1">&amp;lt;</span>/script<span class="sc1">&amp;gt;</span></pre>
+</div>
+
+<p>Los datos se pueden escapar manualmente utilizando la función <code>htmlspecialchars()</code> de PHP, pero es un proceso tedioso y muy propenso a cometer errores. En su lugar, Symfony incluye un sistema conocido como <em>mecanismo de escape de los datos</em> que se aplica a todos los datos mostrados mediante las variables de las plantillas. Este mecanismo se encuentra activado por defecto mediante el archivo <code>settings.yml</code> de la aplicación.</p>
+
+<h3 id="activar_el_mecanismo_de_escape">7.4.1. Activar el mecanismo de escape</h3>
+
+<p>El mecanismo de escape de datos se configura de forma global para toda la aplicación en el archivo <code>settings.yml</code>. Su funcionamiento se controla con dos parámetros: la estrategia (<code>escaping_strategy</code>) define la forma en la que las variables están disponibles en la vista y el método (<code>escaping_method</code>) indica la función de escape que se aplica a los datos.</p>
+
+<p>El mecanismo de escape se encuentra activado por defecto porque el valor del parámetro <code>escaping_strategy</code> es <code>true</code>, tal y como muestra el listado 7-38.</p>
+
+<p><strong>Listado 7-38 - Activar el mecanismo de escape, en <code>frontend/config/settings.yml</code></strong></p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co4">all</span>:<span class="co4">
+  .settings</span>:<span class="co3">
+    escaping_strategy</span><span class="sy2">: </span>true<span class="co3">
+    escaping_method</span><span class="sy2">: </span>  ESC_SPECIALCHARS</pre>
+</div>
+
+<p>Esta configuración aplica la función <code>htmlspecialchars()</code> a los datos de todas las variables mostradas. Si se define una variable llamada <code>prueba</code> en la acción con el siguiente contenido:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">prueba</span> <span class="sy0">=</span> <span class="st_h">'&lt;script&gt;alert(document.cookie)&lt;/script&gt;'</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Con el sistema de escape activado, al mostrar esta variable en una plantilla, se mostrarán los siguientes datos:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw1">echo</span> <span class="re0">$prueba</span><span class="sy0">;</span>
+<span class="sy0">=&gt;</span> <span class="sy0">&amp;</span>lt<span class="sy0">;</span>script<span class="sy0">&amp;</span>gt<span class="sy0">;</span>alert<span class="br0">&#40;</span>document<span class="sy0">.</span>cookie<span class="br0">&#41;</span><span class="sy0">&amp;</span>lt<span class="sy0">;/</span>script<span class="sy0">&amp;</span>gt<span class="sy0">;</span></pre>
+</div>
+
+<p>Además, todas las plantillas tienen acceso a una variable llamada <code>$sf_data</code>, que es un objeto contenedor que hace referencia a todas las variables a las que se les ha aplicado el mecanismo de escape. Por lo tanto, se puede acceder al valor de la variable <code>prueba</code> mediante la siguiente instrucción:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw1">echo</span> <span class="re0">$sf_data</span><span class="sy0">-&gt;</span><span class="me1">get</span><span class="br0">&#40;</span><span class="st_h">'prueba'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="sy0">=&gt;</span> <span class="sy0">&amp;</span>lt<span class="sy0">;</span>script<span class="sy0">&amp;</span>gt<span class="sy0">;</span>alert<span class="br0">&#40;</span>document<span class="sy0">.</span>cookie<span class="br0">&#41;</span><span class="sy0">&amp;</span>lt<span class="sy0">;/</span>script<span class="sy0">&amp;</span>gt<span class="sy0">;</span></pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> El objeto <code>$sf_data</code> implementa la interfaz <code>Array</code>, por lo que en vez de utilizar la sintaxis<code>$sf_data-&gt;get('mivariable')</code>, se puede obtener la variable mediante <code>$sf_data['mivariable']</code>. Sin embargo, no se trata realmente de un array, por lo que no se pueden utilizar funciones como por ejemplo <code>print_r()</code>.</p></div>
+
+<p>La variable <code>$sf_data</code> también da acceso a los datos originales o <em>datos en crudo</em> de la variable. Se trata de una opción muy útil por ejemplo cuando la variable contiene código HTML que se quiere incluir directamente en el navegador para que sea interpretado en vez de mostrado (solo se debería utilizar esta opción si se confía plenamente en el contenido de esa variable). Para acceder a los datos originales se puede utilizar el método <code>getRaw()</code>.</p>
+
+<div class="code php">
+<pre class="php"><span class="kw1">echo</span> <span class="re0">$sf_data</span><span class="sy0">-&gt;</span><span class="me1">getRaw</span><span class="br0">&#40;</span><span class="st_h">'prueba'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="sy0">=&gt;</span> <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>alert<span class="br0">&#40;</span>document<span class="sy0">.</span>cookie<span class="br0">&#41;</span><span class="kw2">&lt;/script&gt;</span></pre>
+</div>
+
+<p>Si necesitas que el contenido HTML de una variable no se muestre por pantalla sino que se interprete como código HTML, debes acceder a su valor original con el método anterior.</p>
+
+<p>Cuando el valor de la opción <code>escaping_strategy</code> es <code>false</code>, la variable <code>$sf_data</code> también está disponible, pero en este caso siempre devuelve los datos originales de las variables.</p>
+
+<h3 id="los_helpers_utiles_para_el_mecanismo_de_escape">7.4.2. Los helpers útiles para el mecanismo de escape</h3>
+
+<p>Los <em>helpers</em> utilizados en el mecanismo de escape son funciones que devuelven el valor modificado correspondiente al valor que se les pasa. Se pueden utilizar como valor de la opción <code>escaping_method</code> en el archivo <code>settings.yml</code> o para especificar un método concreto de escape para los datos de una vista. Los <em>helpers</em> disponibles son los siguientes:</p>
+
+<ul>
+<li><code>ESC_RAW</code>: no modifica el valor original.</li>
+<li><code>ESC_SPECIALCHARS</code>: aplica la función <code>htmlspecialchars()</code> de PHP al valor que se le pasa.</li>
+<li><code>ESC_ENTITIES</code>: aplica la función <code>htmlentities()</code> de PHP al valor que se le pasa y utiliza la opción <code>ENT_QUOTES</code> para el estilo de las comillas.</li>
+<li><code>ESC_JS</code>: modifica un valor que corresponde a una cadena de JavaScript que va a ser utilizada como HTML. Se trata de una opción muy útil para escapar valores cuando se emplea JavaScript para modificar de forma dinámica el contenido HTML de la página.</li>
+<li><code>ESC_JS_NO_ENTITIES</code>: modifica un valor que va a ser utilizado en una cadena de JavaScript pero no le añade las entidades HTML correspondientes. Se trata de una opción muy útil para los valores que se van a mostrar en los cuadros de diálogo (por ejemplo para una variable llamada <code>miCadena</code> en la instrucción <code>javascript:alert(miCadena);</code>).</li>
+</ul>
+
+<h3 id="aplicando_el_mecanismo_de_escape_a_los_arrays_y_los_objetos">7.4.3. Aplicando el mecanismo de escape a los arrays y los objetos</h3>
+
+<p>No solo las cadenas de caracteres pueden hacer uso del mecanismo de escape, sino que también se puede aplicar a los arrays y los objetos. El mecanismo de escape se aplica en cascada a todos los arrays u objetos. Si la estrategia empleada es <code>true</code>, el listado 7-39 muestra el mecanismo de escape aplicado en cascada.</p>
+
+<p><strong>Listado 7-39 - El mecanismo de escape se puede aplicar a los arrays y los objetos</strong></p>
+
+<div class="code php">
+<pre class="php">// Definición de la clase
+class miClase
+{
+  public function pruebaCaracterEspecial($valor = '')
+  {
+    return '&lt;'.$valor.'&gt;';
+  }
+}
+&nbsp;
+// En la acción
+$this-&gt;array_prueba = array('&amp;', '&lt;', '&gt;');
+$this-&gt;array_de_arrays = array(array('&amp;'));
+$this-&gt;objeto_prueba = new miClase();
+&nbsp;
+// En la plantilla
+<span class="kw2">&lt;?php</span> <span class="kw1">foreach</span><span class="br0">&#40;</span><span class="re0">$array_prueba</span> <span class="kw1">as</span> <span class="re0">$valor</span><span class="br0">&#41;</span><span class="sy0">:</span> <span class="sy1">?&gt;</span>
+  <span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$valor</span> <span class="sy1">?&gt;</span>
+<span class="kw2">&lt;?php</span> <span class="kw1">endforeach</span><span class="sy0">;</span> <span class="sy1">?&gt;</span>
+ =&gt; &amp;amp; &amp;lt; &amp;gt;
+<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$array_de_arrays</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span> <span class="sy1">?&gt;</span>
+ =&gt; &amp;amp;
+<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$objeto_prueba</span><span class="sy0">-&gt;</span><span class="me1">pruebaCaracterEspecial</span><span class="br0">&#40;</span><span class="st_h">'&amp;'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+ =&gt; &amp;lt;&amp;amp;&amp;gt;</pre>
+</div>
+
+<p>De hecho, el tipo de las variables en la plantilla no es el tipo que le correspondería a la variable original. El mecanismo de escape <em>"decora</em> las variables y las transforma en objetos especiales:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="kw3">get_class</span><span class="br0">&#40;</span><span class="re0">$array_prueba</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+=&gt; sfOutputEscaperArrayDecorator
+<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="kw3">get_class</span><span class="br0">&#40;</span><span class="re0">$objeto_prueba</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+=&gt; sfOutputEscaperObjectDecorator</pre>
+</div>
+
+<p>Esta es la razón por la que algunas funciones PHP habituales (como <code>array_shift()</code>, <code>print_r()</code>, etc.) no funcionan en los arrays a los que se ha aplicado el mecanismo de escape. No obstante, se puede seguir accediendo mediante <code>[]</code>, se pueden recorrer con <code>foreach</code> y proporcionan el dato correcto al utilizar la función <code>count()</code>. Como en las plantillas los datos (casi) siempre se acceden en <em>modo solo lectura</em>, la mayor parte de las veces se accede a los datos mediante los métodos que sí funcionan.</p>
+
+<p>De todas formas, todavía es posible acceder a los datos originales mediante el objeto <code>$sf_data</code>. Además, los métodos de los objetos a los que se aplica el mecanismo de escape se modifican para que acepten un parámetro adicional: el método de escape. Así, se puede utilizar un método de escape diferente cada vez que se accede al valor de una variable en una plantilla, o incluso es posible utilizar el <em>helper</em> <code>ESC_RAW</code> para desactivar el sistema de escape para una variable concreta. El listado 7-40 muestra un ejemplo.</p>
+
+<p><strong>Listado 7-40 - Los métodos de los objetos a los que se aplica el mecanismo de escape aceptan un parámetro adicional</strong></p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$objeto_prueba</span><span class="sy0">-&gt;</span><span class="me1">pruebaCaracterEspecial</span><span class="br0">&#40;</span><span class="st_h">'&amp;'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+=&gt; &amp;lt;&amp;amp;&amp;gt;
+// Las siguientes 3 líneas producen el mismo resultado
+<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$objeto_prueba</span><span class="sy0">-&gt;</span><span class="me1">pruebaCaracterEspecial</span><span class="br0">&#40;</span><span class="st_h">'&amp;'</span><span class="sy0">,</span> ESC_RAW<span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$sf_data</span><span class="sy0">-&gt;</span><span class="me1">getRaw</span><span class="br0">&#40;</span><span class="st_h">'objeto_prueba'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">pruebaCaracterEspecial</span><span class="br0">&#40;</span><span class="st_h">'&amp;'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$sf_data</span><span class="sy0">-&gt;</span><span class="me1">get</span><span class="br0">&#40;</span><span class="st_h">'objeto_prueba'</span><span class="sy0">,</span> ESC_RAW<span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">pruebaCaracterEspecial</span><span class="br0">&#40;</span><span class="st_h">'&amp;'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+=&gt; &lt;&amp;&gt;</pre>
+</div>
+
+<p>Si se incluyen muchos objetos en las plantillas, el truco de añadir un parámetro adicional a los métodos se utiliza mucho, ya que es el método más rápido de obtener los datos originales al ejecutar el método.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Las variables de Symfony también se modifican al activar el mecanismo de escape. Por tanto, las variables <code>$sf_user</code>, <code>$sf_request</code>, <code>$sf_param</code> y <code>$sf_context</code> siguen funcionando, pero sus métodos devuelven sus datos modificados, a no ser que se utilice la opción <code>ESC_RAW</code> como último argumento de las llamadas a los métodos.</p></div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Aunque los ataques de tipo XSS son una de las amenazas más habituales de los sitios web, no son la única. Los ataques CSRF también son muy populares, por lo que Symfony protege sus formularios automáticamente. El Capítulo 10 explica con detalle cómo funciona esta medida de seguridad.</p></div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="configuracion_de_la_vista.html">&larr; Anterior <span>7.3. Configuración de la vista</span></a>
+            
+            <a class="span5 next" href="resumen.html">Siguiente &rarr; <span>7.5. Resumen</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Mecanismo de escape (Symfony 1.4, la guía definitiva%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Symfony 1.4, la guía definitiva : Mecanismo de escape']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción a Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Explorando el interior de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Ejecutar aplicaciones Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Introducción a la creación de páginas</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Configurar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> El Controlador</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_7.html">
+            <span>Capítulo 7.</span> La Vista
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="plantillas.html">
+            <span>7.1.</span> Plantillas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="fragmentos_de_codigo.html">
+            <span>7.2.</span> Fragmentos de código
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="configuracion_de_la_vista.html">
+            <span>7.3.</span> Configuración de la vista
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="mecanismo_de_escape.html">
+            <span>7.4.</span> Mecanismo de escape
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="resumen.html">
+            <span>7.5.</span> Resumen
+        </a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> El modelo (Doctrine)</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Enlaces y sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Emails</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Uso de la cache</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Pruebas unitarias y funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Herramientas para la administración de aplicaciones</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> Personalizar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> Rendimiento</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Configuración avanzada</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

@@ -1,0 +1,244 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>4.5. Acceso público (Pro Git, el libro oficial de Git)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="preparando_el_servidor.html" />
+        <link rel="next" href="gitweb.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="4.5. Acceso público (Pro Git, el libro oficial de Git)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page pro_git">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Pro Git, el libro oficial de Git</a></li>
+  <li><a href="../capitulo_4.html">Capítulo 4. Git en un servidor</a></li>
+  <li class="current"><span>4.5.. Acceso público</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="acceso_publico"><span>4.5.</span> Acceso público</h1>
+    
+
+<p>¿Qué hacer si necesitas acceso anónimo de lectura a tu proyecto? Por ejemplo, si en lugar de albergar un proyecto privado interno, quieres albergar un proyecto de código abierto. O si tienes un grupo de servidores de integración automatizados o servidores de integración continua que cambian muy a menudo, y no quieres estar todo el rato generando claves SSH. Es posible que desees añadirles un simple acceso anónimo de lectura.</p>
+
+<p>La manera más sencilla de hacerlo para pequeños despliegues, es el preparar un servidor web estático cuya raiz de documentos sea la ubicación donde tengas tus repositorios Git; y luego activar el anclaje (<em>hook</em>) <code>post-update</code> que se ha mencionado en la primera parte de este capítulo. Si utilizamos el mismo ejemplo usado anteriormente, suponiendo que tengas los repositorios en la carpeta <code>/opt/git</code>, y que hay un servidor Apache en marcha en tu máquina. Veremos algunas configuraciones básicas de Apache, para que puedas hacerte una idea de lo que puedes necesitar. (Recordar que esto es solo un ejemplo, y que puedes utilizar cualquier otro servidor web).</p>
+
+<p>Lo primero, es activar el anclaje (<em>hook</em>):</p>
+
+<div class="code code">
+<pre class="code">$ cd project.git
+$ mv hooks/post-update.sample hooks/post-update
+$ chmod a+x hooks/post-update</pre>
+</div>
+
+<p>Si utilizas una versión de Git anterior a la 1.6, el comando <code>mv</code> no es necesario, ya que solo recientemente lleva Git los anclajes de ejemplo con el sufijo <code>.sample</code></p>
+
+<p>¿Que hace este anclaje <code>post-update</code>? Pues tiene una pinta tal como:</p>
+
+<div class="code code">
+<pre class="code">$ cat .git/hooks/post-update 
+#!/bin/sh
+exec git-update-server-info</pre>
+</div>
+
+<p>Lo que significa que cada vez que envias (<em>push</em>) algo al servidor vía SSH, Git lanzará este comando y actualizará así los archivos necesarios para el <em>HTTP fetching</em>.</p>
+
+<p>A continuación, has de añadir una entrada <code>VirtualHost</code> al archivo de configuración de Apache, fijando su raiz de documentos a la ubicación donde tengas tus proyectos Git. Aquí, estamos asumiendo que tienes un DNS comodin para redirigir <code>*.gitserver</code> hacia cualquier máquina que estés utilizando para todo esto:</p>
+
+<div class="code code">
+<pre class="code">&lt;VirtualHost *:80&gt;
+    ServerName git.gitserver
+    DocumentRoot /opt/git
+    &lt;Directory /opt/git/&gt;
+        Order allow, deny
+        allow from all
+    &lt;/Directory&gt;
+&lt;/VirtualHost&gt;</pre>
+</div>
+
+<p>Asimismo, has de ajustar el grupo Unix de las carpetas bajo <code>/opt/git</code> a <code>www-data</code>, para que tu servidor web tenga acceso de lectura a los repositorios contenidos en ellas; porque la instancia de Apache que maneja los scripts CGI trabaja bajo dicho usuario:</p>
+
+<div class="code code">
+<pre class="code">$ chgrp -R www-data /opt/git</pre>
+</div>
+
+<p>Una vez reinicies Apache, ya deberias ser capaz de clonar tus repositorios bajo dicha carpeta, simplemente indicando la URL de tu projecto:</p>
+
+<div class="code code">
+<pre class="code">$ git clone http://git.gitserver/project.git</pre>
+</div>
+
+<p>De esta manera, puedes preparar en cuestión de minutos accesos de lectura basados en HTTP a tus proyectos, para grandes cantidades de usuarios. Otra opción simple para habilitar accesos públicos sin autentificar, es arrancar el demonio Git, aunque esto supone demonizar el proceso. (Se verá esta opción en la siguiente sección).</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="preparando_el_servidor.html">&larr; Anterior <span>4.4. Preparando el servidor</span></a>
+            
+            <a class="span5 next" href="gitweb.html">Siguiente &rarr; <span>4.6. GitWeb</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Acceso público (Pro Git, el libro oficial de Git%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Pro Git, el libro oficial de Git : Acceso público']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Empezando</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Fundamentos de Git</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Trabajando con ramas en Git</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_4.html">
+            <span>Capítulo 4.</span> Git en un servidor
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="los_protocolos.html">
+            <span>4.1.</span> Los Protocolos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="poniendo_git_en_un_servidor.html">
+            <span>4.2.</span> Poniendo Git en un Servidor
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="generando_tu_clave_publica_ssh.html">
+            <span>4.3.</span> Generando tu clave pública SSH
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="preparando_el_servidor.html">
+            <span>4.4.</span> Preparando el servidor
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="acceso_publico.html">
+            <span>4.5.</span> Acceso público
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="gitweb.html">
+            <span>4.6.</span> GitWeb
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="gitosis.html">
+            <span>4.7.</span> Gitosis
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_demonio_git.html">
+            <span>4.8.</span> El demonio Git
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="git_en_un_alojamiento_externo.html">
+            <span>4.9.</span> Git en un alojamiento externo
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="resumen.html">
+            <span>4.10.</span> Resumen
+        </a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Git en entornos distribuidos</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Las herramientas de Git</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Personalizando Git</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Git y otros sistemas</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Funcionamiento interno de Git</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

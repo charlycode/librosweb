@@ -1,0 +1,499 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>15.2. Canales Atom (El tutorial Jobeet)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="formatos.html" />
+        <link rel="next" href="nos_vemos_manana.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="15.2. Canales Atom (El tutorial Jobeet)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page jobeet_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">El tutorial Jobeet</a></li>
+  <li><a href="../capitulo_15.html">Capítulo 15. Canales Atom</a></li>
+  <li class="current"><span>15.2.. Canales Atom</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="canales_atom"><span>15.2.</span> Canales Atom</h1>
+    
+
+<h3 id="canal_de_las_ultimas_ofertas_de_trabajo">15.2.1. Canal de las últimas ofertas de trabajo</h3>
+
+<p>Soportar diferentes formatos es tan sencillo como crear diferentes plantillas. Si quieres crear un canal en <a href="http://es.wikipedia.org/wiki/Atom_(formato_de_redifusi%C3%B3n)">formato Atom</a> que incluya las últimas ofertas de trabajo publicadas, crea un plantilla llamada <code>indexSuccess.atom.php</code>:</p>
+
+<div class="code xml">
+<pre class="xml"><span class="sc-1">&lt;!-- apps/frontend/modules/job/templates/indexSuccess.atom.php --&gt;</span>
+<span class="sc3"><span class="re1">&lt;?xml</span> <span class="re0">version</span>=<span class="st0">&quot;1.0&quot;</span> <span class="re0">encoding</span>=<span class="st0">&quot;utf-8&quot;</span><span class="re2">?&gt;</span></span>
+<span class="sc3"><span class="re1">&lt;feed</span> <span class="re0">xmlns</span>=<span class="st0">&quot;http://www.w3.org/2005/Atom&quot;</span><span class="re2">&gt;</span></span>
+  <span class="sc3"><span class="re1">&lt;title<span class="re2">&gt;</span></span></span>Jobeet<span class="sc3"><span class="re1">&lt;/title<span class="re2">&gt;</span></span></span>
+  <span class="sc3"><span class="re1">&lt;subtitle<span class="re2">&gt;</span></span></span>Latest Jobs<span class="sc3"><span class="re1">&lt;/subtitle<span class="re2">&gt;</span></span></span>
+  <span class="sc3"><span class="re1">&lt;link</span> <span class="re0">href</span>=<span class="st0">&quot;&quot;</span> <span class="re0">rel</span>=<span class="st0">&quot;self&quot;</span><span class="re2">/&gt;</span></span>
+  <span class="sc3"><span class="re1">&lt;link</span> <span class="re0">href</span>=<span class="st0">&quot;&quot;</span><span class="re2">/&gt;</span></span>
+  <span class="sc3"><span class="re1">&lt;updated<span class="re2">&gt;</span></span><span class="re1">&lt;/updated<span class="re2">&gt;</span></span></span>
+  <span class="sc3"><span class="re1">&lt;author<span class="re2">&gt;</span></span><span class="re1">&lt;name<span class="re2">&gt;</span></span></span>Jobeet<span class="sc3"><span class="re1">&lt;/name<span class="re2">&gt;</span></span><span class="re1">&lt;/author<span class="re2">&gt;</span></span></span>
+  <span class="sc3"><span class="re1">&lt;id<span class="re2">&gt;</span></span></span>Unique Id<span class="sc3"><span class="re1">&lt;/id<span class="re2">&gt;</span></span></span>
+&nbsp;
+  <span class="sc3"><span class="re1">&lt;entry<span class="re2">&gt;</span></span></span>
+    <span class="sc3"><span class="re1">&lt;title<span class="re2">&gt;</span></span></span>Job title<span class="sc3"><span class="re1">&lt;/title<span class="re2">&gt;</span></span></span>
+    <span class="sc3"><span class="re1">&lt;link</span> <span class="re0">href</span>=<span class="st0">&quot;&quot;</span> <span class="re2">/&gt;</span></span>
+    <span class="sc3"><span class="re1">&lt;id<span class="re2">&gt;</span></span></span>Unique id<span class="sc3"><span class="re1">&lt;/id<span class="re2">&gt;</span></span></span>
+    <span class="sc3"><span class="re1">&lt;updated<span class="re2">&gt;</span></span><span class="re1">&lt;/updated<span class="re2">&gt;</span></span></span>
+    <span class="sc3"><span class="re1">&lt;summary<span class="re2">&gt;</span></span></span>Job description<span class="sc3"><span class="re1">&lt;/summary<span class="re2">&gt;</span></span></span>
+    <span class="sc3"><span class="re1">&lt;author<span class="re2">&gt;</span></span><span class="re1">&lt;name<span class="re2">&gt;</span></span></span>Company<span class="sc3"><span class="re1">&lt;/name<span class="re2">&gt;</span></span><span class="re1">&lt;/author<span class="re2">&gt;</span></span></span>
+  <span class="sc3"><span class="re1">&lt;/entry<span class="re2">&gt;</span></span></span>
+<span class="sc3"><span class="re1">&lt;/feed<span class="re2">&gt;</span></span></span></pre>
+</div>
+
+<div class="admonition sidebar"><p><strong class="title">El nombre de las plantillas</strong> Como <code>html</code> es el formato más utilizado en las aplicaciones web, puedes omitirlo en el nombre de la plantilla. Tanto <code>indexSuccess.php</code> como <code>indexSuccess.html.php</code> son nombres equivalentes y Symfony siempre utiliza el primero que encuentra.</p>
+
+<p>¿Por qué añadimos el sufijo <code>Success</code> al nombre de todas las plantillas? Las acciones de Symfony pueden devolver un valor que indica la plantilla que se debe utilizar. Si la acción no devuelve nada, se considera que es equivalente al siguiente código:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw1">return</span> sfView<span class="sy0">::</span><span class="me2">SUCCESS</span><span class="sy0">;</span> <span class="co1">// == 'Success'</span></pre>
+</div>
+
+<p>Si quieres modificar el sufijo del nombre de la plantilla, simplemente devuelve cualquier otro valor:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw1">return</span> sfView<span class="sy0">::</span><span class="me2">ERROR</span><span class="sy0">;</span> <span class="co1">// == 'Error'</span>
+&nbsp;
+<span class="kw1">return</span> <span class="st_h">'Foo'</span><span class="sy0">;</span></pre>
+</div>
+
+<p>También puedes modificar el nombre de la plantilla utilizando el método <code>setTemplate()</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">setTemplate</span><span class="br0">&#40;</span><span class="st_h">'foo'</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p></p></div>
+
+<p>Symfony modifica el valor del <code>Content-Type</code> de la respuesta en función del formato utilizado y además, deshabilita el layout para cualquier formato que no sea HTML. En el caso del canal Atom, Symfony cambia el valor del <code>Content-Type</code> a <code>application/atom+xml; charset=utf-8</code></p>
+
+<p>A continuación, actualiza en el pie de página del layout de Jobeet el enlace al nuevo canal:</p>
+
+<div class="code php">
+<pre class="php">&lt;!-- apps/frontend/templates/layout.php --&gt;
+&lt;li class=&quot;feed&quot;&gt;
+  &lt;a href=&quot;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> url_for<span class="br0">&#40;</span><span class="st_h">'@job?sf_format=atom'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>&quot;&gt;Full feed&lt;/a&gt;
+&lt;/li&gt;</pre>
+</div>
+
+<p>La URI interna del canal Atom es la misma que la del listado <code>job</code> pero con <code>sf_format</code> añadido en forma de variable.</p>
+
+<p>No te olvides de incluir también la etiqueta <code>&lt;link&gt;</code> de HTML en la cabecera del layout para que los navegadores puedan descubrir automáticamente la presencia de los canales:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc-1">&lt;!-- apps/frontend/templates/layout.php --&gt;</span>
+<span class="sc2">&lt;<span class="kw2">link</span> <span class="kw3">rel</span><span class="sy0">=</span><span class="st0">&quot;alternate&quot;</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;application/atom+xml&quot;</span> <span class="kw3">title</span><span class="sy0">=</span><span class="st0">&quot;Latest Jobs&quot;</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;&lt;?php echo url_for('@job?sf_format=atom', true) ?&gt;</span></span>&quot; /&gt;</pre>
+</div>
+
+<p>En este caso, el atributo <code>href</code> incluye la URL absoluta del canal Atom, porque se ha utilizado el segundo argumento del helper <code>url_for()</code>.</p>
+
+<p>Para crear el canal Atom, en primer lugar reemplaza la cabecera de la plantilla de Atom por el siguiente código:</p>
+
+<div class="code php">
+<pre class="php">&lt;!-- apps/frontend/modules/job/templates/indexSuccess.atom.php --&gt;
+&lt;title&gt;Jobeet&lt;/title&gt;
+&lt;subtitle&gt;Latest Jobs&lt;/subtitle&gt;
+&lt;link href=&quot;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> url_for<span class="br0">&#40;</span><span class="st_h">'@job?sf_format=atom'</span><span class="sy0">,</span> <span class="kw4">true</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>&quot; rel=&quot;self&quot;/&gt;
+&lt;link href=&quot;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> url_for<span class="br0">&#40;</span><span class="st_h">'@homepage'</span><span class="sy0">,</span> <span class="kw4">true</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>&quot;/&gt;
+&lt;updated&gt;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="kw3">gmstrftime</span><span class="br0">&#40;</span><span class="st_h">'%Y-%m-%dT%H:%M:%SZ'</span><span class="sy0">,</span> JobeetJobPeer<span class="sy0">::</span><span class="me2">getLatestPost</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">getCreatedAt</span><span class="br0">&#40;</span><span class="st_h">'U'</span><span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>&lt;/updated&gt;
+&lt;author&gt;
+  &lt;name&gt;Jobeet&lt;/name&gt;
+&lt;/author&gt;
+&lt;id&gt;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="kw3">sha1</span><span class="br0">&#40;</span>url_for<span class="br0">&#40;</span><span class="st_h">'@job?sf_format=atom'</span><span class="sy0">,</span> <span class="kw4">true</span><span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>&lt;/id&gt;</pre>
+</div>
+
+<p>Si te fijas en el código anterior, verás que hemos utilizado la letra <code>U</code> como argumento del método <code>getCreatedAt()</code> para obtener la fecha en forma de timestamp. Si quieres obtener la fecha de la última oferta de trabajo, crea un método llamado <code>getLatestPost()</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// lib/model/JobeetJobPeer.php</span>
+<span class="kw2">class</span> JobeetJobPeer <span class="kw2">extends</span> BaseJobeetJobPeer
+<span class="br0">&#123;</span>
+  static <span class="kw2">public</span> <span class="kw2">function</span> getLatestPost<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$criteria</span> <span class="sy0">=</span> <span class="kw2">new</span> Criteria<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="kw2">self</span><span class="sy0">::</span><span class="me2">addActiveJobsCriteria</span><span class="br0">&#40;</span><span class="re0">$criteria</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="kw1">return</span> JobeetJobPeer<span class="sy0">::</span><span class="me2">doSelectOne</span><span class="br0">&#40;</span><span class="re0">$criteria</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="co1">// ...</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Una vez terminada la cabecera, el cuerpo del canal Atom se puede generar con el siguiente código:</p>
+
+<div class="code php">
+<pre class="php">&lt;!-- apps/frontend/modules/job/templates/indexSuccess.atom.php --&gt;
+<span class="kw2">&lt;?php</span> use_helper<span class="br0">&#40;</span><span class="st_h">'Text'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+<span class="kw2">&lt;?php</span> <span class="kw1">foreach</span> <span class="br0">&#40;</span><span class="re0">$categories</span> <span class="kw1">as</span> <span class="re0">$category</span><span class="br0">&#41;</span><span class="sy0">:</span> <span class="sy1">?&gt;</span>
+  <span class="kw2">&lt;?php</span> <span class="kw1">foreach</span> <span class="br0">&#40;</span><span class="re0">$category</span><span class="sy0">-&gt;</span><span class="me1">getActiveJobs</span><span class="br0">&#40;</span>sfConfig<span class="sy0">::</span><span class="me2">get</span><span class="br0">&#40;</span><span class="st_h">'app_max_jobs_on_homepage'</span><span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="kw1">as</span> <span class="re0">$job</span><span class="br0">&#41;</span><span class="sy0">:</span> <span class="sy1">?&gt;</span>
+    &lt;entry&gt;
+      &lt;title&gt;
+        <span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$job</span><span class="sy0">-&gt;</span><span class="me1">getPosition</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span> (<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$job</span><span class="sy0">-&gt;</span><span class="me1">getLocation</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>)
+      &lt;/title&gt;
+      &lt;link href=&quot;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> url_for<span class="br0">&#40;</span><span class="st_h">'job_show_user'</span><span class="sy0">,</span> <span class="re0">$job</span><span class="sy0">,</span> <span class="kw4">true</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>&quot; /&gt;
+      &lt;id&gt;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="kw3">sha1</span><span class="br0">&#40;</span><span class="re0">$job</span><span class="sy0">-&gt;</span><span class="me1">getId</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>&lt;/id&gt;
+      &lt;updated&gt;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="kw3">gmstrftime</span><span class="br0">&#40;</span><span class="st_h">'%Y-%m-%dT%H:%M:%SZ'</span><span class="sy0">,</span> <span class="re0">$job</span><span class="sy0">-&gt;</span><span class="me1">getCreatedAt</span><span class="br0">&#40;</span><span class="st_h">'U'</span><span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>&lt;/updated&gt;
+      &lt;summary type=&quot;xhtml&quot;&gt;
+       &lt;div xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
+         <span class="kw2">&lt;?php</span> <span class="kw1">if</span> <span class="br0">&#40;</span><span class="re0">$job</span><span class="sy0">-&gt;</span><span class="me1">getLogo</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">:</span> <span class="sy1">?&gt;</span>
+           &lt;div&gt;
+             &lt;a href=&quot;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$job</span><span class="sy0">-&gt;</span><span class="me1">getUrl</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>&quot;&gt;
+               &lt;img src=&quot;http://<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$sf_request</span><span class="sy0">-&gt;</span><span class="me1">getHost</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">.</span><span class="st_h">'/uploads/jobs/'</span><span class="sy0">.</span><span class="re0">$job</span><span class="sy0">-&gt;</span><span class="me1">getLogo</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>&quot;
+                 alt=&quot;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$job</span><span class="sy0">-&gt;</span><span class="me1">getCompany</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span> logo&quot; /&gt;
+             &lt;/a&gt;
+           &lt;/div&gt;
+         <span class="kw2">&lt;?php</span> <span class="kw1">endif</span><span class="sy0">;</span> <span class="sy1">?&gt;</span>
+&nbsp;
+         &lt;div&gt;
+           <span class="kw2">&lt;?php</span> <span class="kw1">echo</span> simple_format_text<span class="br0">&#40;</span><span class="re0">$job</span><span class="sy0">-&gt;</span><span class="me1">getDescription</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+         &lt;/div&gt;
+&nbsp;
+         &lt;h4&gt;How to apply?&lt;/h4&gt;
+&nbsp;
+         &lt;p&gt;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$job</span><span class="sy0">-&gt;</span><span class="me1">getHowToApply</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>&lt;/p&gt;
+       &lt;/div&gt;
+      &lt;/summary&gt;
+      &lt;author&gt;
+        &lt;name&gt;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$job</span><span class="sy0">-&gt;</span><span class="me1">getCompany</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>&lt;/name&gt;
+      &lt;/author&gt;
+    &lt;/entry&gt;
+  <span class="kw2">&lt;?php</span> <span class="kw1">endforeach</span><span class="sy0">;</span> <span class="sy1">?&gt;</span>
+<span class="kw2">&lt;?php</span> <span class="kw1">endforeach</span><span class="sy0">;</span> <span class="sy1">?&gt;</span></pre>
+</div>
+
+<p>El método <code>getHost()</code> del objeto de la petición (<code>$sf_request</code>) devuelve el <em>host</em> o servidor actual, lo que resulta muy útil para crear el enlace absoluto de la imagen del logotipo de la empresa.</p>
+
+<div class="figure" id="figure_15_2">
+    <img src="../../img/jobeet_1_4/f1502.png" alt="Canal Atom tal y como se muestra en el navegador" />
+
+    <p class="caption"><strong>Figura 15.2</strong> Canal Atom tal y como se muestra en el navegador</p>
+</div>
+
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Cuando desarrollas canales RSS o Atom, es mucho más fácil depurarlos si utilizas herramientas de la línea de comandos como <a href="http://curl.haxx.se/">curl</a> o <a href="http://www.gnu.org/software/wget/">wget</a>, ya que te permiten ver directamente el contenido real del canal.</p></div>
+
+<h3 id="canal_de_las_ultimas_ofertas_de_trabajo_de_una_categoria">15.2.2. Canal de las últimas ofertas de trabajo de una categoría</h3>
+
+<p>Uno de los objetivos de Jobeet es ayudar a la gente a encontrar puestos de trabajo muy específicos. Por tanto, es imprescindible que incluyamos canales en cada categoría.</p>
+
+<p>En primer lugar, actualiza la ruta <code>category</code> para añadir el soporte de varios formatos:</p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co1"># apps/frontend/config/routing.yml</span><span class="co4">
+category</span>:<span class="co3">
+  url</span><span class="sy2">: </span>    /category/:slug.:sf_format<span class="co3">
+  class</span><span class="sy2">: </span>  sfPropelRoute<span class="co3">
+  param</span><span class="sy2">: </span>  <span class="br0">&#123;</span> module<span class="sy2">: </span>category, action<span class="sy2">: </span>show, sf_format<span class="sy2">: </span>html <span class="br0">&#125;</span><span class="co3">
+  options</span><span class="sy2">: </span><span class="br0">&#123;</span> model<span class="sy2">: </span>JobeetCategory, type<span class="sy2">: </span>object <span class="br0">&#125;</span><span class="co4">
+  requirements</span>:<span class="co3">
+    sf_format</span><span class="sy2">: </span><span class="br0">&#40;</span>?:html|atom<span class="br0">&#41;</span></pre>
+</div>
+
+<p>Ahora la ruta <code>category</code> ya es capaz de reconocer los formatos <code>html</code> y <code>atom</code>. El siguiente paso consiste en actualizar en la plantilla los enlaces a los canales de cada categoría:</p>
+
+<div class="code php">
+<pre class="php">&lt;!-- apps/frontend/modules/job/templates/indexSuccess.php --&gt;
+&lt;div class=&quot;feed&quot;&gt;
+  &lt;a href=&quot;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> url_for<span class="br0">&#40;</span><span class="st_h">'category'</span><span class="sy0">,</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'sf_subject'</span> <span class="sy0">=&gt;</span> <span class="re0">$category</span><span class="sy0">,</span> <span class="st_h">'sf_format'</span> <span class="sy0">=&gt;</span> <span class="st_h">'atom'</span><span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>&quot;&gt;Feed&lt;/a&gt;
+&lt;/div&gt;</pre>
+</div>
+
+<div class="code php">
+<pre class="php">&lt;!-- apps/frontend/modules/category/templates/showSuccess.php --&gt;
+&lt;div class=&quot;feed&quot;&gt;
+  &lt;a href=&quot;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> url_for<span class="br0">&#40;</span><span class="st_h">'category'</span><span class="sy0">,</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'sf_subject'</span> <span class="sy0">=&gt;</span> <span class="re0">$category</span><span class="sy0">,</span> <span class="st_h">'sf_format'</span> <span class="sy0">=&gt;</span> <span class="st_h">'atom'</span><span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>&quot;&gt;Feed&lt;/a&gt;
+&lt;/div&gt;</pre>
+</div>
+
+<p>Por último, crea una plantilla llamada <code>showSuccess.atom.php</code>. Como esta plantilla también incluye un listado de ofertas de trabajo, vamos a refactorizar el código que genera los elementos del canal Atom mediante un elemento parcial llamado <code>_list.atom.php</code>. Al igual que para el formato <code>html</code>, los elementos parciales son dependientes del formato:</p>
+
+<div class="code php">
+<pre class="php">&lt;!-- apps/frontend/job/templates/_list.atom.php --&gt;
+<span class="kw2">&lt;?php</span> use_helper<span class="br0">&#40;</span><span class="st_h">'Text'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+&nbsp;
+<span class="kw2">&lt;?php</span> <span class="kw1">foreach</span> <span class="br0">&#40;</span><span class="re0">$jobs</span> <span class="kw1">as</span> <span class="re0">$job</span><span class="br0">&#41;</span><span class="sy0">:</span> <span class="sy1">?&gt;</span>
+  &lt;entry&gt;
+    &lt;title&gt;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$job</span><span class="sy0">-&gt;</span><span class="me1">getPosition</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span> (<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$job</span><span class="sy0">-&gt;</span><span class="me1">getLocation</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>)&lt;/title&gt;
+    &lt;link href=&quot;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> url_for<span class="br0">&#40;</span><span class="st_h">'job_show_user'</span><span class="sy0">,</span> <span class="re0">$job</span><span class="sy0">,</span> <span class="kw4">true</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>&quot; /&gt;
+    &lt;id&gt;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="kw3">sha1</span><span class="br0">&#40;</span><span class="re0">$job</span><span class="sy0">-&gt;</span><span class="me1">getId</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>&lt;/id&gt;
+    &lt;updated&gt;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="kw3">gmstrftime</span><span class="br0">&#40;</span><span class="st_h">'%Y-%m-%dT%H:%M:%SZ'</span><span class="sy0">,</span> <span class="re0">$job</span><span class="sy0">-&gt;</span><span class="me1">getCreatedAt</span><span class="br0">&#40;</span><span class="st_h">'U'</span><span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>&lt;/updated&gt;
+    &lt;summary type=&quot;xhtml&quot;&gt;
+     &lt;div xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
+       <span class="kw2">&lt;?php</span> <span class="kw1">if</span> <span class="br0">&#40;</span><span class="re0">$job</span><span class="sy0">-&gt;</span><span class="me1">getLogo</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">:</span> <span class="sy1">?&gt;</span>
+         &lt;div&gt;
+           &lt;a href=&quot;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$job</span><span class="sy0">-&gt;</span><span class="me1">getUrl</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>&quot;&gt;
+             &lt;img src=&quot;http://<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$sf_request</span><span class="sy0">-&gt;</span><span class="me1">getHost</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">.</span><span class="st_h">'/uploads/jobs/'</span><span class="sy0">.</span><span class="re0">$job</span><span class="sy0">-&gt;</span><span class="me1">getLogo</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>&quot; alt=&quot;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$job</span><span class="sy0">-&gt;</span><span class="me1">getCompany</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span> logo&quot; /&gt;
+           &lt;/a&gt;
+         &lt;/div&gt;
+       <span class="kw2">&lt;?php</span> <span class="kw1">endif</span><span class="sy0">;</span> <span class="sy1">?&gt;</span>
+&nbsp;
+       &lt;div&gt;
+         <span class="kw2">&lt;?php</span> <span class="kw1">echo</span> simple_format_text<span class="br0">&#40;</span><span class="re0">$job</span><span class="sy0">-&gt;</span><span class="me1">getDescription</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+       &lt;/div&gt;
+&nbsp;
+       &lt;h4&gt;How to apply?&lt;/h4&gt;
+&nbsp;
+       &lt;p&gt;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$job</span><span class="sy0">-&gt;</span><span class="me1">getHowToApply</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>&lt;/p&gt;
+     &lt;/div&gt;
+    &lt;/summary&gt;
+    &lt;author&gt;
+      &lt;name&gt;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$job</span><span class="sy0">-&gt;</span><span class="me1">getCompany</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>&lt;/name&gt;
+    &lt;/author&gt;
+  &lt;/entry&gt;
+<span class="kw2">&lt;?php</span> <span class="kw1">endforeach</span><span class="sy0">;</span> <span class="sy1">?&gt;</span></pre>
+</div>
+
+<p>Utilizando este elemento parcial <code>_list.atom.php</code> se puede simplificar mucho la plantilla del canal que hemos creado en la sección anterior y que muestra las últimas ofertas de trabajo de todo el sitio:</p>
+
+<div class="code php">
+<pre class="php">&lt;!-- apps/frontend/modules/job/templates/indexSuccess.atom.php --&gt;
+<span class="sy1">&lt;?</span>xml version<span class="sy0">=</span><span class="st0">&quot;1.0&quot;</span> encoding<span class="sy0">=</span><span class="st0">&quot;utf-8&quot;</span><span class="sy1">?&gt;</span>
+&lt;feed xmlns=&quot;http://www.w3.org/2005/Atom&quot;&gt;
+  &lt;title&gt;Jobeet&lt;/title&gt;
+  &lt;subtitle&gt;Latest Jobs&lt;/subtitle&gt;
+  &lt;link href=&quot;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> url_for<span class="br0">&#40;</span><span class="st_h">'@job?sf_format=atom'</span><span class="sy0">,</span> <span class="kw4">true</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>&quot; rel=&quot;self&quot;/&gt;
+  &lt;link href=&quot;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> url_for<span class="br0">&#40;</span><span class="st_h">'@homepage'</span><span class="sy0">,</span> <span class="kw4">true</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>&quot;/&gt;
+  &lt;updated&gt;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="kw3">gmstrftime</span><span class="br0">&#40;</span><span class="st_h">'%Y-%m-%dT%H:%M:%SZ'</span><span class="sy0">,</span> JobeetJobPeer<span class="sy0">::</span><span class="me2">getLatestPost</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">getCreatedAt</span><span class="br0">&#40;</span><span class="st_h">'U'</span><span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>&lt;/updated&gt;
+  &lt;author&gt;
+    &lt;name&gt;Jobeet&lt;/name&gt;
+  &lt;/author&gt;
+  &lt;id&gt;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="kw3">sha1</span><span class="br0">&#40;</span>url_for<span class="br0">&#40;</span><span class="st_h">'@job?sf_format=atom'</span><span class="sy0">,</span> <span class="kw4">true</span><span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>&lt;/id&gt;
+&nbsp;
+<span class="kw2">&lt;?php</span> <span class="kw1">foreach</span> <span class="br0">&#40;</span><span class="re0">$categories</span> <span class="kw1">as</span> <span class="re0">$category</span><span class="br0">&#41;</span><span class="sy0">:</span> <span class="sy1">?&gt;</span>
+  <span class="kw2">&lt;?php</span> include_partial<span class="br0">&#40;</span><span class="st_h">'job/list'</span><span class="sy0">,</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'jobs'</span> <span class="sy0">=&gt;</span> <span class="re0">$category</span><span class="sy0">-&gt;</span><span class="me1">getActiveJobs</span><span class="br0">&#40;</span>sfConfig<span class="sy0">::</span><span class="me2">get</span><span class="br0">&#40;</span><span class="st_h">'app_max_jobs_on_homepage'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+<span class="kw2">&lt;?php</span> <span class="kw1">endforeach</span><span class="sy0">;</span> <span class="sy1">?&gt;</span>
+&lt;/feed&gt;</pre>
+</div>
+
+<p>Por último, crea la plantilla <code>showSuccess.atom.php</code> haciendo uso del elemento parcial <code>_list.atom.php</code>:</p>
+
+<div class="code php">
+<pre class="php">&lt;!-- apps/frontend/modules/category/templates/showSuccess.atom.php --&gt;
+<span class="sy1">&lt;?</span>xml version<span class="sy0">=</span><span class="st0">&quot;1.0&quot;</span> encoding<span class="sy0">=</span><span class="st0">&quot;utf-8&quot;</span><span class="sy1">?&gt;</span>
+&lt;feed xmlns=&quot;http://www.w3.org/2005/Atom&quot;&gt;
+  &lt;title&gt;Jobeet (<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$category</span> <span class="sy1">?&gt;</span>)&lt;/title&gt;
+  &lt;subtitle&gt;Latest Jobs&lt;/subtitle&gt;
+  &lt;link href=&quot;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> url_for<span class="br0">&#40;</span><span class="st_h">'category'</span><span class="sy0">,</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'sf_subject'</span> <span class="sy0">=&gt;</span> <span class="re0">$category</span><span class="sy0">,</span> <span class="st_h">'sf_format'</span> <span class="sy0">=&gt;</span> <span class="st_h">'atom'</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="kw4">true</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>&quot; rel=&quot;self&quot; /&gt;
+  &lt;link href=&quot;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> url_for<span class="br0">&#40;</span><span class="st_h">'category'</span><span class="sy0">,</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'sf_subject'</span> <span class="sy0">=&gt;</span> <span class="re0">$category</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="kw4">true</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>&quot; /&gt;
+  &lt;updated&gt;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="kw3">gmstrftime</span><span class="br0">&#40;</span><span class="st_h">'%Y-%m-%dT%H:%M:%SZ'</span><span class="sy0">,</span> <span class="re0">$category</span><span class="sy0">-&gt;</span><span class="me1">getLatestPost</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">getCreatedAt</span><span class="br0">&#40;</span><span class="st_h">'U'</span><span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>&lt;/updated&gt;
+  &lt;author&gt;
+    &lt;name&gt;Jobeet&lt;/name&gt;
+  &lt;/author&gt;
+  &lt;id&gt;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="kw3">sha1</span><span class="br0">&#40;</span>url_for<span class="br0">&#40;</span><span class="st_h">'category'</span><span class="sy0">,</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'sf_subject'</span> <span class="sy0">=&gt;</span> <span class="re0">$category</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="kw4">true</span><span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>&lt;/id&gt;
+&nbsp;
+  <span class="kw2">&lt;?php</span> include_partial<span class="br0">&#40;</span><span class="st_h">'job/list'</span><span class="sy0">,</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'jobs'</span> <span class="sy0">=&gt;</span> <span class="re0">$pager</span><span class="sy0">-&gt;</span><span class="me1">getResults</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+&lt;/feed&gt;</pre>
+</div>
+
+<p>Al igual que para el canal principal del sitio, tenemos que calcular la fecha de la última oferta de trabajo de cada categoría:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// lib/model/JobeetCategory.php</span>
+<span class="kw2">class</span> JobeetCategory <span class="kw2">extends</span> BaseJobeetCategory
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> getLatestPost<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$jobs</span> <span class="sy0">=</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getActiveJobs</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="kw1">return</span> <span class="re0">$jobs</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="co1">// ...</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<div class="figure" id="figure_15_3">
+    <img src="../../img/jobeet_1_4/f1503.png" alt="Canal Atom de cada categoría" />
+
+    <p class="caption"><strong>Figura 15.3</strong> Canal Atom de cada categoría</p>
+</div>
+
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="formatos.html">&larr; Anterior <span>15.1. Formatos</span></a>
+            
+            <a class="span5 next" href="nos_vemos_manana.html">Siguiente &rarr; <span>15.3. Nos vemos mañana</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Canales Atom (El tutorial Jobeet%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'El tutorial Jobeet : Canales Atom']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Comenzando el proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> El proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> El modelo de datos</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> El controlador y la vista</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> El sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Profundizando en el modelo</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Trabajando con la página de cada categoría</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Pruebas unitarias</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Pruebas funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Probando los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> El generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> El usuario</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> El día de descanso</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_15.html">
+            <span>Capítulo 15.</span> Canales Atom
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="formatos.html">
+            <span>15.1.</span> Formatos
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="canales_atom.html">
+            <span>15.2.</span> Canales Atom
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="nos_vemos_manana.html">
+            <span>15.3.</span> Nos vemos mañana
+        </a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Servicios web</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> El buscador</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>20</span> <a href="../capitulo_20.html"> Plugins</a>
+    </li>
+    <li class="level-1">
+        <span>21</span> <a href="../capitulo_21.html"> El día del diseño</a>
+    </li>
+    <li class="level-1">
+        <span>22</span> <a href="../capitulo_22.html"> La cache</a>
+    </li>
+    <li class="level-1">
+        <span>23</span> <a href="../capitulo_23.html"> Pasando a producción</a>
+    </li>
+    <li class="level-1">
+        <span>24</span> <a href="../capitulo_24.html"> Un repaso a Symfony</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

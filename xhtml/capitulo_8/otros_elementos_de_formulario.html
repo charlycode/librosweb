@@ -1,0 +1,336 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>8.4. Otros elementos de formulario (Introducción a XHTML)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="formularios_avanzados.html" />
+        <link rel="next" href="../capitulo_9.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="8.4. Otros elementos de formulario (Introducción a XHTML)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page xhtml">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Introducción a XHTML</a></li>
+  <li><a href="../capitulo_8.html">Capítulo 8. Formularios</a></li>
+  <li class="current"><span>8.4. Otros elementos de formulario</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="otros_elementos_de_formulario"><span>8.4.</span> Otros elementos de formulario</h1>
+    
+
+<p>La etiqueta <code>&lt;input&gt;</code> permite crear diez tipos diferentes de controles de formulario. Sin embargo, algunas aplicaciones web utilizan otros elementos de formulario que no se pueden crear con <code>&lt;input&gt;</code>. Las listas deplegables y las áreas de texto disponen de sus propias etiquetas (<code>&lt;select&gt;</code> y <code>&lt;textarea&gt;</code> respectivamente).</p>
+
+<p>Las áreas de texto son útiles cuando se debe introducir una gran cantidad de texto, ya que es mucho más cómodo de introducir que en un campo de texto normal:</p>
+
+<div class="figure" id="figure_8_14">
+    <img src="../../img/xhtml/ejemplo_etiqueta_textarea.gif" alt="Ejemplo de uso de la etiqueta textarea" />
+
+    <p class="caption"><strong>Figura 8.14</strong> Ejemplo de uso de la etiqueta textarea</p>
+</div>
+
+
+<p>El código HTML del ejemplo anterior se muestra a continuación:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">form</span> <span class="kw3">action</span><span class="sy0">=</span><span class="st0">&quot;insertar_producto.php&quot;</span> <span class="kw3">method</span><span class="sy0">=</span><span class="st0">&quot;post&quot;</span>&gt;</span>
+&nbsp;
+<span class="sc2">&lt;<span class="kw2">label</span> <span class="kw3">for</span><span class="sy0">=</span><span class="st0">&quot;nombre&quot;</span>&gt;</span>Nombre del producto<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">label</span>&gt;</span> <span class="sc2">&lt;<span class="kw2">br</span><span class="sy0">/</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">input</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text&quot;</span> <span class="kw3">id</span><span class="sy0">=</span><span class="st0">&quot;nombre&quot;</span> <span class="kw3">name</span><span class="sy0">=</span><span class="st0">&quot;nombre&quot;</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;&quot;</span> <span class="sy0">/</span>&gt;</span>
+&nbsp;
+<span class="sc2">&lt;<span class="kw2">label</span> <span class="kw3">for</span><span class="sy0">=</span><span class="st0">&quot;descripcion&quot;</span>&gt;</span>Descripción del producto<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">label</span>&gt;</span> <span class="sc2">&lt;<span class="kw2">br</span><span class="sy0">/</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">textarea</span> <span class="kw3">id</span><span class="sy0">=</span><span class="st0">&quot;descripcion&quot;</span> <span class="kw3">name</span><span class="sy0">=</span><span class="st0">&quot;descripcion&quot;</span> <span class="kw3">cols</span><span class="sy0">=</span><span class="st0">&quot;40&quot;</span> <span class="kw3">rows</span><span class="sy0">=</span><span class="st0">&quot;5&quot;</span>&gt;&lt;<span class="sy0">/</span><span class="kw2">textarea</span>&gt;</span>
+&nbsp;
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">form</span>&gt;</span></pre>
+</div>
+
+<p>La definición formal de la etiqueta <code>&lt;textarea&gt;</code> es:</p>
+
+<table class="property" summary="Definición y propiedades de la etiqueta textarea de XHTML"><thead><tr>  <th scope="row">Etiqueta</th>  <td><strong class="title"><span>&lt;</span>textarea<span>&gt;</span></strong></td></tr></thead><tbody><tr>  <th scope="row">Atributos comunes</th>  <td><a href="../capitulo_2/etiquetas_y_atributos.html#atributos_basicos">básicos</a>, <a href="../capitulo_2/etiquetas_y_atributos.html#atributos_para_internacionalizacion">internacionalización</a>, <a href="../capitulo_2/etiquetas_y_atributos.html#atributos_de_eventos">eventos</a> y <a href="../capitulo_2/etiquetas_y_atributos.html#atributos_de_foco">foco</a></td></tr><tr>  <th scope="row">Atributos propios</th>  <td><ul><li><p><code>rows = "numero"</code> - Número de filas de texto que mostrará el textarea</p></li><li><p><code>cols = "numero"</code> - Número de caracteres que se muestran en cada fila del textarea</p></li><li><p>Otros: name, disabled, readonly, onselect, onchange, onfocus, onblur</p></li></ul></td></tr><tr>  <th scope="row">Tipo de elemento</th>  <td>En línea</td></tr><tr>  <th scope="row">Descripción</th>  <td>Se emplea para incluir un área de texto en un formulario</td></tr></tbody></table>
+
+<p>Los atributos más utilizados en las etiquetas <code>&lt;textarea&gt;</code> son los que controlan su anchura y altura. La anchura del área de texto se controla mediante el atributo <code>cols</code>, que indica las <em>columnas</em> o número de caracteres que se podrán escribir como máximo en cada fila. La altura del área de texto se controla mediante <code>rows</code>, que indica directamente las filas de texto que serán visibles.</p>
+
+<p>El principal inconveniente de los elementos <code>&lt;textarea&gt;</code> es que el lenguaje HTML no permite limitar el número máximo de caracteres que se pueden introducir. Mientras los elementos <code>&lt;input type="text"&gt;</code> disponen del atributo <code>maxlength</code>, las áreas de texto no disponen de un atributo equivalente, por lo que sólo es posible limitar el número de caracteres mediante su programación con JavaScript.</p>
+
+<p>Por otra parte, el otro control disponible para los formularios es el de las listas desplegables:</p>
+
+<div class="figure" id="figure_8_15">
+    <img src="../../img/xhtml/ejemplo_etiqueta_select.gif" alt="Ejemplo de uso de la etiqueta select" />
+
+    <p class="caption"><strong>Figura 8.15</strong> Ejemplo de uso de la etiqueta select</p>
+</div>
+
+
+<p>La imagen anterior muestra los tres tipos de listas desplegables disponibles. El primero es el de las listas más utilizadas que sólo muestran un valor cada vez y sólo permiten seleccionar un valor. El segundo tipo de lista es el que sólo permite seleccionar un valor pero muestra varios a la vez. Por último, el tercer tipo de lista desplegable es aquella que muestra varios valores y permite realizar selecciones múltiples.</p>
+
+<p>El código HTML del ejemplo anterior se muestra a continuación:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">label</span> <span class="kw3">for</span><span class="sy0">=</span><span class="st0">&quot;so&quot;</span>&gt;</span>Sistema operativo<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">label</span>&gt;</span> <span class="sc2">&lt;<span class="kw2">br</span><span class="sy0">/</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">select</span> <span class="kw3">id</span><span class="sy0">=</span><span class="st0">&quot;so&quot;</span> <span class="kw3">name</span><span class="sy0">=</span><span class="st0">&quot;so&quot;</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;&quot;</span> <span class="kw3">selected</span><span class="sy0">=</span><span class="st0">&quot;selected&quot;</span>&gt;</span>- selecciona -<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;windows&quot;</span>&gt;</span>Windows<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;mac&quot;</span>&gt;</span>Mac<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;linux&quot;</span>&gt;</span>Linux<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;otro&quot;</span>&gt;</span>Otro<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">select</span>&gt;</span>
+&nbsp;
+<span class="sc2">&lt;<span class="kw2">label</span> <span class="kw3">for</span><span class="sy0">=</span><span class="st0">&quot;so2&quot;</span>&gt;</span>Sistema operativo<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">label</span>&gt;</span> <span class="sc2">&lt;<span class="kw2">br</span><span class="sy0">/</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">select</span> <span class="kw3">id</span><span class="sy0">=</span><span class="st0">&quot;so2&quot;</span> <span class="kw3">name</span><span class="sy0">=</span><span class="st0">&quot;so2&quot;</span> <span class="kw3">size</span><span class="sy0">=</span><span class="st0">&quot;5&quot;</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;windows&quot;</span> <span class="kw3">selected</span><span class="sy0">=</span><span class="st0">&quot;selected&quot;</span>&gt;</span>Windows<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;mac&quot;</span>&gt;</span>Mac<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;linux&quot;</span>&gt;</span>Linux<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;otro&quot;</span>&gt;</span>Otro<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">select</span>&gt;</span>
+&nbsp;
+<span class="sc2">&lt;<span class="kw2">label</span> <span class="kw3">for</span><span class="sy0">=</span><span class="st0">&quot;so3&quot;</span>&gt;</span>Sistema operativo<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">label</span>&gt;</span> <span class="sc2">&lt;<span class="kw2">br</span><span class="sy0">/</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">select</span> <span class="kw3">id</span><span class="sy0">=</span><span class="st0">&quot;so3&quot;</span> <span class="kw3">name</span><span class="sy0">=</span><span class="st0">&quot;so3&quot;</span> <span class="kw3">size</span><span class="sy0">=</span><span class="st0">&quot;5&quot;</span> <span class="kw3">multiple</span><span class="sy0">=</span><span class="st0">&quot;multiple&quot;</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;windows&quot;</span> <span class="kw3">selected</span><span class="sy0">=</span><span class="st0">&quot;selected&quot;</span>&gt;</span>Windows<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;mac&quot;</span>&gt;</span>Mac<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;linux&quot;</span>&gt;</span>Linux<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;otro&quot;</span>&gt;</span>Otro<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">select</span>&gt;</span></pre>
+</div>
+
+<p>Los tres tipos de listas desplegables se definen con la misma etiqueta <code>&lt;select&gt;</code> y cada elemento de la lista se define mediante la etiqueta <code>&lt;option&gt;</code>:</p>
+
+<table class="property" summary="Definición y propiedades de la etiqueta select de XHTML"><thead><tr>  <th scope="row">Etiqueta</th>  <td><strong class="title"><span>&lt;</span>select<span>&gt;</span></strong></td></tr></thead><tbody><tr>  <th scope="row">Atributos comunes</th>  <td><a href="../capitulo_2/etiquetas_y_atributos.html#atributos_basicos">básicos</a>, <a href="../capitulo_2/etiquetas_y_atributos.html#atributos_para_internacionalizacion">internacionalización</a> y <a href="../capitulo_2/etiquetas_y_atributos.html#atributos_de_eventos">eventos</a></td></tr><tr>  <th scope="row">Atributos propios</th>  <td><ul><li><p><code>size = "numero"</code> - Número de filas que se muestran de la lista (por defecto sólo se muestra una)</p></li><li><p><code>multiple = "multiple"</code> - Si se incluye, se permite seleccionar más de un elemento</p></li><li><p>Otros: name, disabled, onchange, onfocus, onblur</p></li></ul></td></tr><tr>  <th scope="row">Tipo de elemento</th>  <td>En línea</td></tr><tr>  <th scope="row">Descripción</th>  <td>Se emplea para incluir una lista desplegable en un formulario</td></tr></tbody></table>
+
+<table class="property" summary="Definición y propiedades de la etiqueta option de XHTML"><thead><tr>  <th scope="row">Etiqueta</th>  <td><strong class="title"><span>&lt;</span>option<span>&gt;</span></strong></td></tr></thead><tbody><tr>  <th scope="row">Atributos comunes</th>  <td><a href="../capitulo_2/etiquetas_y_atributos.html#atributos_basicos">básicos</a>, <a href="../capitulo_2/etiquetas_y_atributos.html#atributos_para_internacionalizacion">internacionalización</a> y <a href="../capitulo_2/etiquetas_y_atributos.html#atributos_de_eventos">eventos</a></td></tr><tr>  <th scope="row">Atributos propios</th>  <td><ul><li><p><code>selected = "selected"</code> - Indica si el elemento aparece seleccionado por defecto al cargarse la página</p></li><li><p><code>value = "texto"</code> - El valor que se envía al servidor cuando el usuario elige esa opción</p></li><li><p>Otros: label, disabled</p></li></ul></td></tr><tr>  <th scope="row">Tipo de elemento</th>  <td>-</td></tr><tr>  <th scope="row">Descripción</th>  <td>Se emplea para definir cada elemento de una lista desplegable</td></tr></tbody></table>
+
+<p>La inmensa mayoría de listas desplegables que utilizan las aplicaciones web son simples, por lo que el código HTML habitual de las listas desplegables es:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">label</span> <span class="kw3">for</span><span class="sy0">=</span><span class="st0">&quot;so&quot;</span>&gt;</span>Sistema operativo<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">label</span>&gt;</span> <span class="sc2">&lt;<span class="kw2">br</span><span class="sy0">/</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">select</span> <span class="kw3">id</span><span class="sy0">=</span><span class="st0">&quot;so&quot;</span> <span class="kw3">name</span><span class="sy0">=</span><span class="st0">&quot;so&quot;</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;&quot;</span> <span class="kw3">selected</span><span class="sy0">=</span><span class="st0">&quot;selected&quot;</span>&gt;</span>- selecciona -<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;windows&quot;</span>&gt;</span>Windows<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;mac&quot;</span>&gt;</span>Mac<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;linux&quot;</span>&gt;</span>Linux<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;otro&quot;</span>&gt;</span>Otro<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">select</span>&gt;</span></pre>
+</div>
+
+<p>La etiqueta <code>&lt;select&gt;</code> define la lista y encierra todas las opciones que muestra la lista. Cada una de las opciones de la lista se define mediante una etiqueta <code>&lt;option&gt;</code>. El atributo <code>value</code> de cada opción es obligatorio, ya que es el dato que se envía al servidor cuando el usuario envía el formulario. Para seleccionar por defecto una opción al mostrar la lista, se añade el atributo <code>selected</code> a la opción deseada.</p>
+
+<p>Por otra parte, las listas desplegables permiten agrupar sus opciones de forma que el usuario pueda encontrar fácilmente las opciones cuando la lista es muy larga:</p>
+
+<div class="figure" id="figure_8_16">
+    <img src="../../img/xhtml/ejemplo_etiqueta_optgroup.gif" alt="Ejemplo de uso de la etiqueta optgroup" />
+
+    <p class="caption"><strong>Figura 8.16</strong> Ejemplo de uso de la etiqueta optgroup</p>
+</div>
+
+
+<p>El código HTML correspondiente a la imagen anterior se muestra a continuación:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">form</span> <span class="kw3">id</span><span class="sy0">=</span><span class="st0">&quot;formulario&quot;</span> <span class="kw3">method</span><span class="sy0">=</span><span class="st0">&quot;post&quot;</span> <span class="kw3">action</span><span class="sy0">=</span><span class="st0">&quot;&quot;</span>&gt;</span>
+&nbsp;
+<span class="sc2">&lt;<span class="kw2">label</span> <span class="kw3">for</span><span class="sy0">=</span><span class="st0">&quot;programa&quot;</span>&gt;</span>Programa seleccionado<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">label</span>&gt;</span> <span class="sc2">&lt;<span class="kw2">br</span><span class="sy0">/</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">select</span> <span class="kw3">id</span><span class="sy0">=</span><span class="st0">&quot;programa&quot;</span> <span class="kw3">name</span><span class="sy0">=</span><span class="st0">&quot;programa&quot;</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">optgroup</span> <span class="kw3">label</span><span class="sy0">=</span><span class="st0">&quot;Sistemas Operativos&quot;</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;Windows&quot;</span> <span class="kw3">selected</span><span class="sy0">=</span><span class="st0">&quot;selected&quot;</span>&gt;</span>Windows<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;Mac&quot;</span>&gt;</span>Mac<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;Linux&quot;</span>&gt;</span>Linux<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;Other&quot;</span>&gt;</span>Otro<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+  <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">optgroup</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">optgroup</span> <span class="kw3">label</span><span class="sy0">=</span><span class="st0">&quot;Navegadores&quot;</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;Internet Explorer&quot;</span> <span class="kw3">selected</span><span class="sy0">=</span><span class="st0">&quot;selected&quot;</span>&gt;</span>Internet Explorer<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;Firefox&quot;</span>&gt;</span>Firefox<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;Safari&quot;</span>&gt;</span>Safari<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;Opera&quot;</span>&gt;</span>Opera<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">option</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;Other&quot;</span>&gt;</span>Otro<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">option</span>&gt;</span>
+  <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">optgroup</span>&gt;</span>
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">select</span>&gt;</span>
+&nbsp;
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">form</span>&gt;</span></pre>
+</div>
+
+<p>La etiqueta <code>&lt;optgroup&gt;</code> permite agrupar opciones relacionadas dentro de una lista desplegable. Su definición formal se muestra a continuación:</p>
+
+<table class="property" summary="Definición y propiedades de la etiqueta optgroup de XHTML"><thead><tr>  <th scope="row">Etiqueta</th>  <td><strong class="title"><span>&lt;</span>optgroup<span>&gt;</span></strong></td></tr></thead><tbody><tr>  <th scope="row">Atributos comunes</th>  <td><a href="../capitulo_2/etiquetas_y_atributos.html#atributos_basicos">básicos</a>, <a href="../capitulo_2/etiquetas_y_atributos.html#atributos_para_internacionalizacion">internacionalización</a> y <a href="../capitulo_2/etiquetas_y_atributos.html#atributos_de_eventos">eventos</a></td></tr><tr>  <th scope="row">Atributos propios</th>  <td><ul><li><p><code>label = "texto"</code> - Texto que se muestra como título de la agrupación de opciones</p></li><li><p>Otros: disabled, selected</p></li></ul></td></tr><tr>  <th scope="row">Tipo de elemento</th>  <td>-</td></tr><tr>  <th scope="row">Descripción</th>  <td>Se emplea para definir una agrupación lógica de opciones de una lista desplegable</td></tr></tbody></table>
+
+<p>El único atributo que suele utilizarse con la etiqueta <code>&lt;optgroup&gt;</code> es <code>label</code>, que indica el nombre de cada agrupación. Los navegadores muestran de forma destacada el título de cada agrupación, de forma que el usuario pueda localizar más fácilmente la opción deseada.</p>
+
+<p><div class="exercise"><p class="title">Ejercicio 15</p> <p>Determinar el código HTML necesario para crear el formulario que se muestra en la siguiente imagen:</p>
+
+<div class="figure" id="figure_8_17">
+    <img src="../../img/xhtml/e1501.gif" alt="Formulario con controles de tipo lista desplegable" />
+
+    <p class="caption"><strong>Figura 8.17</strong> Formulario con controles de tipo lista desplegable</p>
+</div>
+
+
+<p><a href="http://librosweb.es/xhtml/capitulo_15/ejercicio_15.html">Ver solución</a></p></div></p>
+
+<p><div class="exercise"><p class="title">Ejercicio 16</p> <p>Determinar el código HTML necesario para crear el formulario que se muestra en la siguiente imagen:</p>
+
+<div class="figure" id="figure_8_18">
+    <img src="../../img/xhtml/e1601.gif" alt="Formulario complejo" />
+
+    <p class="caption"><strong>Figura 8.18</strong> Formulario complejo</p>
+</div>
+
+
+<p><a href="http://librosweb.es/xhtml/capitulo_15/ejercicio_16.html">Ver solución</a></p></div></p>
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="formularios_avanzados.html">&larr; Anterior <span>8.3. Formularios avanzados</span></a>
+            
+            <a class="span5 next" href="../capitulo_9.html">Siguiente &rarr; <span>Capítulo 9. Estructura y layout</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Otros elementos de formulario (Introducción a XHTML%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a XHTML : Otros elementos de formulario']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Características básicas</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Texto</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Enlaces</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Listas</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Imágenes y objetos</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Tablas</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_8.html">
+            <span>Capítulo 8.</span> Formularios
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="formularios_basicos.html">
+            <span>8.1.</span> Formularios básicos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="elementos_de_formulario.html">
+            <span>8.2.</span> Elementos de formulario
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="formularios_avanzados.html">
+            <span>8.3.</span> Formularios avanzados
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="otros_elementos_de_formulario.html">
+            <span>8.4.</span> Otros elementos de formulario
+        </a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Estructura y layout</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Metainformación</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Otras etiquetas importantes</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Accesibilidad</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Validación</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Fragmentos de código</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

@@ -1,0 +1,372 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>12.4. Alturas/anchuras máximas y mínimas (Introducción a CSS)</title>
+        <link href="../main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="estructura_o_layout.html" />
+        <link rel="next" href="estilos_avanzados.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="12.4. Alturas/anchuras máximas y mínimas (Introducción a CSS)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page css">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Introducción a CSS</a></li>
+  <li><a href="../capitulo_12.html">Capítulo 12. Layout</a></li>
+  <li class="current"><span>12.4.. Alturas/anchuras máximas y mínimas</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="alturas_anchuras_maximas_y_minimas"><span>12.4.</span> Alturas/anchuras máximas y mínimas</h1>
+    
+
+<p>Cuando se diseña la estructura de una página web, se debe tomar la decisión de optar por un diseño de anchura fija o un diseño cuya anchura se adapta a la anchura de la ventana del navegador.</p>
+
+<p>Sin embargo, la mayoría de las veces sería conveniente una solución intermedia: que la anchura de la página sea variable y se adapte a la anchura de la ventana del navegador, pero respetando ciertos límites. En otras palabras, que la anchura de la página no sea tan pequeña como para que no se puedan mostrar correctamente los contenidos y tampoco sea tan ancha como para que las líneas de texto no puedan leerse cómodamente.</p>
+
+<p>CSS define cuatro propiedades que permiten limitar la anchura y altura mínima y máxima de cualquier elemento de la página. Las propiedades son <code>max-width</code>, <code>min-width</code>, <code>max-height</code> y <code>min-height</code>.</p>
+
+<div class="table" id="table_12_1">
+
+    <table class="table property css" summary="Definición de la propiedad max-width de CSS">
+    <thead>
+        <tr>
+            <th scope="row">Propiedad</th>
+            <td><strong class="title"><strong>max-width</strong></strong></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">Valores</th>
+            <td><a href="../../referencia/css/unidades_de_medida.html">unidad de medida</a> | <a href="../../referencia/css/porcentajes.html">porcentaje</a> | none | <a href="../../referencia/css/el_valor_inherit.html">inherit</a></td>
+        </tr>
+        <tr>
+            <th scope="row">Se aplica a</th>
+            <td>Todos los elementos salvo filas y grupos de filas de tablas</td>
+        </tr>
+        <tr>
+            <th scope="row">Valor inicial</th>
+            <td>none</td>
+        </tr>
+        <tr>
+            <th scope="row">Descripción</th>
+            <td>Permite definir la anchura máxima de un elemento</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+
+<div class="table" id="table_12_2">
+
+    <table class="table property css" summary="Definición de la propiedad min-width de CSS">
+    <thead>
+        <tr>
+            <th scope="row">Propiedad</th>
+            <td><strong class="title"><strong>min-width</strong></strong></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">Valores</th>
+            <td><a href="../../referencia/css/unidades_de_medida.html">unidad de medida</a> | <a href="../../referencia/css/porcentajes.html">porcentaje</a> | <a href="../../referencia/css/el_valor_inherit.html">inherit</a></td>
+        </tr>
+        <tr>
+            <th scope="row">Se aplica a</th>
+            <td>Todos los elementos salvo filas y grupos de filas de tablas</td>
+        </tr>
+        <tr>
+            <th scope="row">Valor inicial</th>
+            <td>0</td>
+        </tr>
+        <tr>
+            <th scope="row">Descripción</th>
+            <td>Permite definir la anchura mínima de un elemento</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+
+<div class="table" id="table_12_3">
+
+    <table class="table property css" summary="Definición de la propiedad max-height de CSS">
+    <thead>
+        <tr>
+            <th scope="row">Propiedad</th>
+            <td><strong class="title"><strong>max-height</strong></strong></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">Valores</th>
+            <td><a href="../../referencia/css/unidades_de_medida.html">unidad de medida</a> | <a href="../../referencia/css/porcentajes.html">porcentaje</a> | none | <a href="../../referencia/css/el_valor_inherit.html">inherit</a></td>
+        </tr>
+        <tr>
+            <th scope="row">Se aplica a</th>
+            <td>Todos los elementos salvo columnas y grupos de columnas de tablas</td>
+        </tr>
+        <tr>
+            <th scope="row">Valor inicial</th>
+            <td>none</td>
+        </tr>
+        <tr>
+            <th scope="row">Descripción</th>
+            <td>Permite definir la altura máxima de un elemento</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+
+<div class="table" id="table_12_4">
+
+    <table class="table property css" summary="Definición de la propiedad min-height de CSS">
+    <thead>
+        <tr>
+            <th scope="row">Propiedad</th>
+            <td><strong class="title"><strong>min-height</strong></strong></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">Valores</th>
+            <td><a href="../../referencia/css/unidades_de_medida.html">unidad de medida</a> | <a href="../../referencia/css/porcentajes.html">porcentaje</a> | <a href="../../referencia/css/el_valor_inherit.html">inherit</a></td>
+        </tr>
+        <tr>
+            <th scope="row">Se aplica a</th>
+            <td>Todos los elementos salvo columnas y grupos de columnas de tablas</td>
+        </tr>
+        <tr>
+            <th scope="row">Valor inicial</th>
+            <td>0</td>
+        </tr>
+        <tr>
+            <th scope="row">Descripción</th>
+            <td>Permite definir la altura mínima de un elemento</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+
+<p>De esta forma, para conseguir un diseño de anchura variable pero controlada, se podrían utilizar reglas CSS como la siguiente:</p>
+
+<div class="code css">
+<pre class="css"><span class="re0">#contenedor</span> <span class="br0">&#123;</span>
+  <span class="kw1">min-width</span><span class="sy0">:</span> <span class="re3">500px</span><span class="sy0">;</span>
+  <span class="kw1">max-width</span><span class="sy0">:</span> <span class="re3">900px</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Las propiedades que definen la altura y anchura máxima y mínima se pueden aplicar a cualquier elemento, aunque solamente suelen utilizarse para estructurar la página. En general, las propiedades más utilizadas son <code>max-width</code> y <code>min-width</code>, ya que no es muy habitual definir alturas máximas y mínimas.</p>
+
+<p>Desafortunadamente, Internet Explorer 6 y las versiones anteriores no soportan ninguna de las cuatro propiedades sobre ningún elemento. Hasta que se incorpore en las nuevas versiones del navegador, es preciso recurrir a trucos que simulen el comportamiento de las propiedades:</p>
+
+<p><code>max-width</code> equivalente para Internet Explorer:</p>
+
+<div class="code css">
+<pre class="css">div <span class="br0">&#123;</span>
+  <span class="kw1">max-width</span><span class="sy0">:</span> <span class="re3">800px</span><span class="sy0">;</span>
+  <span class="kw1">width</span><span class="sy0">:</span> expression<span class="br0">&#40;</span>document<span class="re1">.body</span><span class="re1">.clientWidth</span> <span class="sy0">&gt;</span> <span class="nu0">801</span>? <span class="st0">&quot;800px&quot;</span><span class="sy0">:</span> <span class="st0">&quot;auto&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p><code>min-width</code> equivalente para Internet Explorer:</p>
+
+<div class="code css">
+<pre class="css">div <span class="br0">&#123;</span>
+  <span class="kw1">min-width</span><span class="sy0">:</span><span class="re3">800px</span><span class="sy0">;</span>
+  <span class="kw1">width</span><span class="sy0">:</span> expression<span class="br0">&#40;</span>document<span class="re1">.body</span><span class="re1">.clientWidth</span> &lt; <span class="nu0">801</span>? <span class="st0">&quot;800px&quot;</span><span class="sy0">:</span> <span class="st0">&quot;auto&quot;</span> <span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p><code>max-height</code> equivalente para Internet Explorer:</p>
+
+<div class="code css">
+<pre class="css">div <span class="br0">&#123;</span>
+  <span class="kw1">max-height</span><span class="sy0">:</span> <span class="re3">300px</span><span class="sy0">;</span>
+  <span class="kw1">overflow</span><span class="sy0">:</span> <span class="kw2">hidden</span><span class="sy0">;</span>
+  <span class="kw1">height</span><span class="sy0">:</span> expression<span class="br0">&#40;</span>this<span class="re1">.scrollHeight</span> <span class="sy0">&gt;</span> <span class="nu0">301</span>? <span class="st0">&quot;300px&quot;</span> <span class="sy0">:</span> <span class="st0">&quot;auto&quot;</span> <span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p><code>min-height</code> equivalente para Internet Explorer:</p>
+
+<div class="code css">
+<pre class="css">div <span class="br0">&#123;</span>
+  <span class="kw1">min-height</span><span class="sy0">:</span><span class="re3">300px</span><span class="sy0">;</span>
+  <span class="kw1">overflow</span><span class="sy0">:</span> <span class="kw2">hidden</span><span class="sy0">;</span>
+  <span class="kw1">height</span><span class="sy0">:</span> expression<span class="br0">&#40;</span>this<span class="re1">.scrollHeight</span> &lt; <span class="nu0">301</span>? <span class="st0">&quot;300px&quot;</span> <span class="sy0">:</span> <span class="st0">&quot;auto&quot;</span> <span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Los equivalentes para Internet Explorer han sido extraídos de: http://www.svendtofte.com/code/max_width_in_ie/</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="estructura_o_layout.html">&larr; Anterior <span>12.3. Estructura o layout</span></a>
+            
+            <a class="span5 next" href="estilos_avanzados.html">Siguiente &rarr; <span>12.5. Estilos avanzados</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Alturas/anchuras máximas y mínimas (Introducción a CSS%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a CSS : Alturas/anchuras máximas y mínimas']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Selectores</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Unidades de medida y colores</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Modelo de cajas</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Posicionamiento y visualización</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Texto</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Enlaces</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Imágenes</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Listas</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Tablas</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Formularios</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_12.html">
+            <span>Capítulo 12.</span> Layout
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="centrar_una_pagina_horizontalmente.html">
+            <span>12.1.</span> Centrar una página horizontalmente
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="centrar_una_pagina_verticalmente.html">
+            <span>12.2.</span> Centrar una página verticalmente
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="estructura_o_layout.html">
+            <span>12.3.</span> Estructura o layout
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="alturas_anchuras_maximas_y_minimas.html">
+            <span>12.4.</span> Alturas/anchuras máximas y mínimas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="estilos_avanzados.html">
+            <span>12.5.</span> Estilos avanzados
+        </a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Otros</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Recursos útiles</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Ejercicios</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

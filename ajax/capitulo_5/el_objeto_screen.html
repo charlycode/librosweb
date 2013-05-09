@@ -1,0 +1,232 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>5.6. El objeto screen (Introducción a AJAX)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="el_objeto_navigator.html" />
+        <link rel="next" href="../capitulo_6.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="5.6. El objeto screen (Introducción a AJAX)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page ajax">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Introducción a AJAX</a></li>
+  <li><a href="../capitulo_5.html">Capítulo 5. BOM (Browser Object Model)</a></li>
+  <li class="current"><span>5.6. El objeto screen</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="el_objeto_screen"><span>5.6.</span> El objeto screen</h1>
+    
+
+<p>El objeto <code>screen</code> se utiliza para obtener información sobre la pantalla del usuario. Uno de los datos más importantes que proporciona el objeto <code>screen</code> es la resolución del monitor en el que se están visualizando las páginas. Los diseñadores de páginas web necesitan conocer las resoluciones más utilizadas por los usuarios para adaptar sus diseños a esas resoluciones.</p>
+
+<p>Las siguientes propiedades están disponibles en el objeto <code>screen</code>:</p>
+
+<div class="table" id="table_5_5">
+
+    <table>
+<thead>
+<tr>
+  <th>Propiedad</th>
+  <th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>availHeight</code></td>
+  <td>Altura de pantalla disponible para las ventanas</td>
+</tr>
+<tr>
+  <td><code>availWidth</code></td>
+  <td>Anchura de pantalla disponible para las ventanas</td>
+</tr>
+<tr>
+  <td><code>colorDepth</code></td>
+  <td>Profundidad de color de la pantalla (32 bits normalmente)</td>
+</tr>
+<tr>
+  <td><code>height</code></td>
+  <td>Altura total de la pantalla en píxel</td>
+</tr>
+<tr>
+  <td><code>width</code></td>
+  <td>Anchura total de la pantalla en píxel</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+<p>La altura/anchura de pantalla disponible para las ventanas es menor que la altura/anchura total de la pantalla, ya que se tiene en cuenta el tamaño de los elementos del sistema operativo como por ejemplo la barra de tareas y los bordes de las ventanas del navegador.</p>
+
+<p>Además de la elaboración de estadísticas de los equipos de los usuarios, las propiedades del objeto <code>screen</code> se utilizan por ejemplo para determinar cómo y cuanto se puede redimensionar una ventana y para colocar una ventana centrada en la pantalla del usuario.</p>
+
+<p>El siguiente ejemplo redimensiona una nueva ventana al tamaño máximo posible según la pantalla del usuario:</p>
+
+<div class="code javascript">
+<pre class="javascript">window.<span class="me1">moveTo</span><span class="br0">&#40;</span><span class="nu0">0</span><span class="sy0">,</span> <span class="nu0">0</span><span class="br0">&#41;</span><span class="sy0">;</span>
+window.<span class="me1">resizeTo</span><span class="br0">&#40;</span>screen.<span class="me1">availWidth</span><span class="sy0">,</span> screen.<span class="me1">availHeight</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="el_objeto_navigator.html">&larr; Anterior <span>5.5. El objeto navigator</span></a>
+            
+            <a class="span5 next" href="../capitulo_6.html">Siguiente &rarr; <span>Capítulo 6. Eventos</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'El objeto screen (Introducción a AJAX%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a AJAX : El objeto screen']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción a AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> JavaScript básico</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> JavaScript avanzado</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> DOM (Document Object Model)</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_5.html">
+            <span>Capítulo 5.</span> BOM (Browser Object Model)
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_objeto_window.html">
+            <span>5.2.</span> El objeto window
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_objeto_document.html">
+            <span>5.3.</span> El objeto document
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_objeto_location.html">
+            <span>5.4.</span> El objeto location
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_objeto_navigator.html">
+            <span>5.5.</span> El objeto navigator
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="el_objeto_screen.html">
+            <span>5.6.</span> El objeto screen
+        </a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Eventos</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Primeros pasos con AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Técnicas básicas con AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Técnicas avanzadas con AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Frameworks y librerías</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Otras utilidades</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Recursos útiles</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Bibliografía</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

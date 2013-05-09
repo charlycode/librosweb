@@ -1,0 +1,277 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>7.2. Estilos avanzados (Introducción a CSS)</title>
+        <link href="../main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="../capitulo_7.html" />
+        <link rel="next" href="../capitulo_8.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="7.2. Estilos avanzados (Introducción a CSS)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page css">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Introducción a CSS</a></li>
+  <li><a href="../capitulo_7.html">Capítulo 7. Enlaces</a></li>
+  <li class="current"><span>7.2.. Estilos avanzados</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="estilos_avanzados"><span>7.2.</span> Estilos avanzados</h1>
+    
+
+<h3 id="decoracion_personalizada">7.2.1. Decoración personalizada</h3>
+
+<p>La propiedad <code>text-decoration</code> permite añadir o eliminar el subrayado de los enlaces. Sin embargo, el aspecto del subrayado lo controla automáticamente el navegador, por lo que su color siempre es el mismo que el del texto del enlace y su anchura es proporcional al tamaño de letra.</p>
+
+<p>No obstante, utilizando la propiedad <code>border-bottom</code> es posible añadir cualquier tipo de subrayado para los enlaces de las páginas. El siguiente ejemplo muestra algunos enlaces con el subrayado personalizado:</p>
+
+<div class="figure" id="figure_7_3">
+    <img src="../../img/css/f0703.gif" alt="Enlaces con subrayado personalizado mediante la propiedad border" />
+
+    <p class="caption"><strong>Figura 7.3</strong> Enlaces con subrayado personalizado mediante la propiedad border</p>
+</div>
+
+
+<p>Las reglas CSS definidas en el ejemplo anterior se muestran a continuación:</p>
+
+<div class="code css">
+<pre class="css">a <span class="br0">&#123;</span> <span class="kw1">margin</span><span class="sy0">:</span> <span class="re3">1em</span> <span class="nu0">0</span><span class="sy0">;</span> <span class="kw1">float</span><span class="sy0">:</span> <span class="kw1">left</span><span class="sy0">;</span> <span class="kw1">clear</span><span class="sy0">:</span> <span class="kw1">left</span><span class="sy0">;</span> <span class="kw1">text-decoration</span><span class="sy0">:</span> <span class="kw2">none</span><span class="sy0">;</span><span class="br0">&#125;</span>
+<span class="re1">.simple</span> <span class="br0">&#123;</span><span class="kw1">text-decoration</span><span class="sy0">:</span> <span class="kw2">underline</span><span class="sy0">;</span><span class="br0">&#125;</span>
+<span class="re1">.color</span> <span class="br0">&#123;</span> <span class="kw1">border-bottom</span><span class="sy0">:</span> <span class="kw2">medium</span> <span class="kw2">solid</span> <span class="re0">#CC0000</span><span class="sy0">;</span><span class="br0">&#125;</span>
+<span class="re1">.ancho</span> <span class="br0">&#123;</span><span class="kw1">border-bottom</span><span class="sy0">:</span> <span class="kw2">thick</span> <span class="kw2">solid</span><span class="sy0">;</span><span class="br0">&#125;</span>
+<span class="re1">.separado</span> <span class="br0">&#123;</span><span class="kw1">border-bottom</span><span class="sy0">:</span> <span class="re3">1px</span> <span class="kw2">solid</span><span class="sy0">;</span> <span class="kw1">padding-bottom</span><span class="sy0">:</span> <span class="re3">.6em</span><span class="sy0">;</span><span class="br0">&#125;</span>
+<span class="re1">.discontinuo</span> <span class="br0">&#123;</span><span class="kw1">border-bottom</span><span class="sy0">:</span> <span class="kw2">thin</span> <span class="kw2">dashed</span><span class="sy0">;</span><span class="br0">&#125;</span>
+&nbsp;
+&lt;a class<span class="sy0">=</span><span class="st0">&quot;simple&quot;</span> href<span class="sy0">=</span><span class="st0">&quot;#&quot;</span><span class="sy0">&gt;</span>Enlace con el estilo por defecto&lt;/a<span class="sy0">&gt;</span>
+&nbsp;
+&lt;a class<span class="sy0">=</span><span class="st0">&quot;color&quot;</span> href<span class="sy0">=</span><span class="st0">&quot;#&quot;</span><span class="sy0">&gt;</span>Enlace un subrayado de otro color&lt;/a<span class="sy0">&gt;</span>
+&nbsp;
+&lt;a class<span class="sy0">=</span><span class="st0">&quot;ancho&quot;</span> href<span class="sy0">=</span><span class="st0">&quot;#&quot;</span><span class="sy0">&gt;</span>Enlace con un subrayado muy ancho&lt;/a<span class="sy0">&gt;</span>
+&nbsp;
+&lt;a class<span class="sy0">=</span><span class="st0">&quot;separado&quot;</span> href<span class="sy0">=</span><span class="st0">&quot;#&quot;</span><span class="sy0">&gt;</span>Enlace con un subrayado muy separado&lt;/a<span class="sy0">&gt;</span>
+&nbsp;
+&lt;a class<span class="sy0">=</span><span class="st0">&quot;discontinuo&quot;</span> href<span class="sy0">=</span><span class="st0">&quot;#&quot;</span><span class="sy0">&gt;</span>Enlace con un subrayado discontinuo&lt;/a<span class="sy0">&gt;</span></pre>
+</div>
+
+<h3 id="imagenes_segun_el_tipo_de_enlace">7.2.2. Imágenes según el tipo de enlace</h3>
+
+<p>En ocasiones, puede resultar útil incluir un pequeño icono al lado de un enlace para indicar el tipo de contenido que enlaza, como por ejemplo un archivo comprimido o un documento con formato PDF.</p>
+
+<p>Este tipo de imágenes son puramente decorativas en vez de imágenes de contenido, por lo que se deberían añadir con CSS y no con elementos de tipo <code>&lt;img&gt;</code>. Utilizando la propiedad <code>background</code> (y <code>background-image</code>) se puede personalizar el aspecto de los enlaces para que incluyan un pequeño icono a su lado.</p>
+
+<p>La técnica consiste en mostrar una imagen de fondo sin repetición en el enlace y añadir el <code>padding</code> necesario al texto del enlace para que no se solape con la imagen de fondo.</p>
+
+<p>El siguiente ejemplo personaliza el aspecto de dos enlaces añadiéndoles una imagen de fondo:</p>
+
+<div class="figure" id="figure_7_4">
+    <img src="../../img/css/f0704.gif" alt="Personalizando el aspecto de los enlaces en función de su tipo" />
+
+    <p class="caption"><strong>Figura 7.4</strong> Personalizando el aspecto de los enlaces en función de su tipo</p>
+</div>
+
+
+<p>Las reglas CSS necesarias se muestran a continuación:</p>
+
+<div class="code css">
+<pre class="css">a <span class="br0">&#123;</span> <span class="kw1">margin</span><span class="sy0">:</span> <span class="re3">1em</span> <span class="nu0">0</span><span class="sy0">;</span> <span class="kw1">float</span><span class="sy0">:</span> <span class="kw1">left</span><span class="sy0">;</span> <span class="kw1">clear</span><span class="sy0">:</span> <span class="kw1">left</span><span class="sy0">;</span> <span class="br0">&#125;</span>
+&nbsp;
+<span class="re1">.rss</span> <span class="br0">&#123;</span>
+  <span class="kw1">color</span><span class="sy0">:</span> <span class="re0">#E37529</span><span class="sy0">;</span>
+  <span class="kw1">padding</span><span class="sy0">:</span> <span class="nu0">0</span> <span class="nu0">0</span> <span class="nu0">0</span> <span class="re3">18px</span><span class="sy0">;</span>
+  <span class="kw1">background</span><span class="sy0">:</span> <span class="re0">#FFF</span> <span class="kw2">url</span><span class="br0">&#40;</span><span class="co2">imagenes/rss.gif</span><span class="br0">&#41;</span> <span class="kw2">no-repeat</span> <span class="kw1">left</span> <span class="kw2">center</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+<span class="re1">.pdf</span> <span class="br0">&#123;</span>
+  <span class="kw1">padding</span><span class="sy0">:</span> <span class="nu0">0</span> <span class="nu0">0</span> <span class="nu0">0</span> <span class="re3">22px</span><span class="sy0">;</span>
+  <span class="kw1">background</span><span class="sy0">:</span> <span class="re0">#FFF</span> <span class="kw2">url</span><span class="br0">&#40;</span><span class="co2">imagenes/pdf.png</span><span class="br0">&#41;</span> <span class="kw2">no-repeat</span> <span class="kw1">left</span> <span class="kw2">center</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+&lt;a href<span class="sy0">=</span><span class="st0">&quot;#&quot;</span><span class="sy0">&gt;</span>Enlace con el estilo por defecto&lt;/a<span class="sy0">&gt;</span>
+&nbsp;
+&lt;a class<span class="sy0">=</span><span class="st0">&quot;rss&quot;</span> href<span class="sy0">=</span><span class="st0">&quot;#&quot;</span><span class="sy0">&gt;</span>Enlace a un archivo RSS&lt;/a<span class="sy0">&gt;</span>
+&nbsp;
+&lt;a class<span class="sy0">=</span><span class="st0">&quot;pdf&quot;</span> href<span class="sy0">=</span><span class="st0">&quot;#&quot;</span><span class="sy0">&gt;</span>Enlace a un documento PDF&lt;/a<span class="sy0">&gt;</span></pre>
+</div>
+
+<h3 id="mostrar_los_enlaces_como_si_fueran_botones">7.2.3. Mostrar los enlaces como si fueran botones</h3>
+
+<p>Las propiedades definidas por CSS permiten mostrar los enlaces con el aspecto de un botón, lo que puede ser útil en formularios en los que no se utilizan elementos específicos para crear botones.</p>
+
+<p>El siguiente ejemplo muestra un enlace simple formateado como un botón:</p>
+
+<div class="figure" id="figure_7_5">
+    <img src="../../img/css/f0705.gif" alt="Mostrando un enlace como si fuera un botón" />
+
+    <p class="caption"><strong>Figura 7.5</strong> Mostrando un enlace como si fuera un botón</p>
+</div>
+
+
+<p>Las reglas CSS utilizadas en el ejemplo anterior son las siguientes:</p>
+
+<div class="code css">
+<pre class="css">a <span class="br0">&#123;</span> <span class="kw1">margin</span><span class="sy0">:</span> <span class="re3">1em</span> <span class="nu0">0</span><span class="sy0">;</span> <span class="kw1">float</span><span class="sy0">:</span> <span class="kw1">left</span><span class="sy0">;</span> <span class="kw1">clear</span><span class="sy0">:</span> <span class="kw1">left</span><span class="sy0">;</span> <span class="br0">&#125;</span>
+a<span class="re1">.boton</span> <span class="br0">&#123;</span>
+  <span class="kw1">text-decoration</span><span class="sy0">:</span> <span class="kw2">none</span><span class="sy0">;</span>
+  <span class="kw1">background</span><span class="sy0">:</span> <span class="re0">#EEE</span><span class="sy0">;</span>
+  <span class="kw1">color</span><span class="sy0">:</span> <span class="re0">#222</span><span class="sy0">;</span>
+  <span class="kw1">border</span><span class="sy0">:</span> <span class="re3">1px</span> <span class="kw2">outset</span> <span class="re0">#CCC</span><span class="sy0">;</span>
+  <span class="kw1">padding</span><span class="sy0">:</span> <span class="re3">.1em</span> <span class="re3">.5em</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+a<span class="re1">.boton</span><span class="re2">:hover </span><span class="br0">&#123;</span>
+  <span class="kw1">background</span><span class="sy0">:</span> <span class="re0">#CCB</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+a<span class="re1">.boton</span><span class="re2">:active </span><span class="br0">&#123;</span>
+  <span class="kw1">border</span><span class="sy0">:</span> <span class="re3">1px</span> <span class="kw2">inset</span> <span class="re0">#000</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+&lt;a class<span class="sy0">=</span><span class="st0">&quot;boton&quot;</span> href<span class="sy0">=</span><span class="st0">&quot;#&quot;</span><span class="sy0">&gt;</span>Guardar&lt;/a<span class="sy0">&gt;</span>
+&lt;a class<span class="sy0">=</span><span class="st0">&quot;boton&quot;</span> href<span class="sy0">=</span><span class="st0">&quot;#&quot;</span><span class="sy0">&gt;</span>Enviar&lt;/a<span class="sy0">&gt;</span></pre>
+</div>
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="../capitulo_7.html">&larr; Anterior <span>Capítulo 7. Enlaces</span></a>
+            
+            <a class="span5 next" href="../capitulo_8.html">Siguiente &rarr; <span>Capítulo 8. Imágenes</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Estilos avanzados (Introducción a CSS%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a CSS : Estilos avanzados']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Selectores</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Unidades de medida y colores</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Modelo de cajas</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Posicionamiento y visualización</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Texto</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_7.html">
+            <span>Capítulo 7.</span> Enlaces
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="estilos_avanzados.html">
+            <span>7.2.</span> Estilos avanzados
+        </a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Imágenes</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Listas</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Tablas</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Layout</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Otros</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Recursos útiles</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Ejercicios</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

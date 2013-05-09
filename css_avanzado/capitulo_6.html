@@ -1,0 +1,257 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>Capítulo 6. Técnicas avanzadas (CSS avanzado)</title>
+        <link href="../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="capitulo_5/otros_frameworks.html" />
+        <link rel="next" href="capitulo_6/mapas_de_imagen.html" />
+        <link rel="start" href="index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Capítulo 6. Técnicas avanzadas (CSS avanzado)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page css_avanzado">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../index.html">Inicio</a></li>
+  <li><a href="index.html">CSS avanzado</a></li>
+  <li class="current"><span>Capítulo 6.. Técnicas avanzadas</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="capitulo_6"><span>Capítulo 6.</span> Técnicas avanzadas</h1>
+    <h2 id="imagenes_embebidas">6.1. Imágenes embebidas</h2>
+
+
+<p>Según los estudios realizados por Yahoo! el tiempo de carga de una página media depende en un 80% de la parte del cliente y en un 20% de la parte del servidor. Los navegadores de los usuarios dedican la mayor parte del tiempo a descargar imágenes, archivos JavaScript, hojas de estilos CSS y otros recursos externos.</p>
+
+<p>Por este motivo, las mejoras en la parte del cliente generan muchos más beneficios que las mejoras en la parte del servidor. De todos los elementos de la parte del cliente, las imágenes son normalmente las que más penalizan el rendimiento. Además del peso de cada imagen, el rendimiento se resiente porque cada imagen requiere realizar una petición al servidor. Como los navegadores tienen un límite de conexiones simultáneas con el servidor (entre 2 y 8), la descarga de una página con muchas imágenes se bloquea continuamente.</p>
+
+<p>Como ya se explicó en las secciones anteriores, la solución para mejorar el rendimiento de las imágenes consiste en combinarlas en una imagen grande llamada <em>sprite CSS</em> y utilizar la propiedad <code>background-image</code> en cada elemento HTML.</p>
+
+<p>Además de los <em>sprites CSS</em> existe otra técnica que permite <em>embeber</em> o incluir las imágenes en la propia página HTML u hoja de estilos CSS. La técnica se suele denominar <em>"imágenes embebidas"</em> o <em>"imágenes en línea"</em>.</p>
+
+<p>Normalmente, en las hojas de estilos y páginas HTML sólo se indica la URL de la imagen que debe descargar el navegador. En la técnica de las imágenes embebedidas no se indica la URL, sino que se incluyen directamente los bytes de la imagen, para que el navegador pueda mostrarla de forma inmediata.</p>
+
+<p>Los datos de la imagen se incluyen mediante un <em>esquema</em> especial llamado <code>data:</code>, de la misma forma que las URL se indican mediante el esquema <code>http:</code>, las direcciones de correo electrónico mediante el esquema <code>mailto:</code>, etc. El esquema <code>data:</code> se define en el estándar <a href="http://www.ietf.org/rfc/rfc2397.txt">RFC 2397</a> y su sintaxis es la siguiente:</p>
+
+<div class="code code">
+<pre class="code">data:[&lt;mediatype&gt;][;base64],&lt;data&gt;</pre>
+</div>
+
+<p>El atributo <code>&lt;mediatype&gt;</code> corresponde al tipo de contenido de los bytes que se incluyen. Los tipos de contenido están estandarizados y los que utilizan habitualmente las imágenes son: <code>image/gif</code>, <code>image/jpeg</code> y <code>image/png</code>. Si no se indica el tipo de forma explícita, el navegador supone que es <code>text/plain</code>, es decir, texto normal y corriente.</p>
+
+<p>El valor <code>base64</code> es opcional e indica que los datos de la imagen se han codificado según el formato <code>base64</code>. Si no se indica este valor, el navegador supone que los bytes de la imagen no están codificados.</p>
+
+<p>A continuación se muestra el ejemplo de una imagen HTML (<code>&lt;img&gt;</code>) que no se indica mediante una URL sino que se incluyen sus bytes directamente en la página:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc-1">&lt;!-- Imagen externa que el navegador debe descargar desde el servidor --&gt;</span>
+<span class="sc2">&lt;<span class="kw2">img</span> <span class="kw3">alt</span><span class="sy0">=</span><span class="st0">&quot;Icono de un libro&quot;</span> <span class="kw3">width</span><span class="sy0">=</span><span class="st0">&quot;16&quot;</span> <span class="kw3">height</span><span class="sy0">=</span><span class="st0">&quot;16&quot;</span> <span class="kw3">src</span><span class="sy0">=</span><span class="st0">&quot;/imagenes/icono_libro.png&quot;</span> <span class="sy0">/</span>&gt;</span>
+&nbsp;
+<span class="sc-1">&lt;!-- Imagen embebida que el navegador puede mostrar directamente porque ya dispone de sus bytes --&gt;</span>
+<span class="sc2">&lt;<span class="kw2">img</span> <span class="kw3">alt</span><span class="sy0">=</span><span class="st0">&quot;Icono de un libro&quot;</span> <span class="kw3">width</span><span class="sy0">=</span><span class="st0">&quot;16&quot;</span> <span class="kw3">height</span><span class="sy0">=</span><span class="st0">&quot;16&quot;</span> <span class="kw3">src</span><span class="sy0">=</span><span class="st0">&quot;data:image/png;base64,iV</span>
+<span class="sc2">BORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHd</span>
+<span class="sc2">hcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAHjSURBVDjLdZO/alVBEMZ/5+TemxAbFUUskqAoSOJNp4KC</span>
+<span class="sc2">4AsoPoGFIHY+gA+jiJXaKIiChbETtBYLUbSMRf6Aydndmfks9kRjvHdhGVh2fvN9uzONJK7fe7Ai6algA</span>
+<span class="sc2">3FZCAmQqEF/dnihpK1v7x7dPw0woF64Izg3Xl5s1n9uIe0lQYUFCtjc+sVuEqHBKfpVAXB1vLzQXFtdYP</span>
+<span class="sc2">HkGFUCoahVo1Y/fnie+bkBV27c5R8A0pHxyhKvPn5hY2MHRQAQeyokFGJze4cuZfav3gLNYDTg7Pklzpw</span>
+<span class="sc2">4ijtIQYRwFx6BhdjtCk+erU0CCPfg+/o2o3ZI13WUlLGo58YMg+GIY4dmCWkCAAgPzAspJW5ePFPlV3VI</span>
+<span class="sc2">4uHbz5S5IQfy/yooHngxzFser30iFcNcuAVGw3A0Ilt91IkAsyCXQg5QO0szHEIrogkiguwN2acCoJhjn</span>
+<span class="sc2">ZGKYx4Ujz5WOA2YD1BMU+BBSYVUvNpxkXuIuWgbsOxTHrG3UHIFWIhsgXtQQpTizNBS5jXZQkhkcywZqQ</span>
+<span class="sc2">QlAjdRwiml7wU5xWLaL1AvZa8WIjALzIRZ7YVWDW5CiIj48Z8F2pYLl1ZR0+AuzEX0UX035mxIkLq0dhD</span>
+<span class="sc2">w5vXL97fr5O3rfwQHJhPx4uuH57f2AL8BfPrVlrs6xwsAAAAASUVORK5CYII=&quot;</span> <span class="sy0">/</span>&gt;</span></pre>
+</div>
+
+<p>El atributo <code>src</code> de la imagen del ejemplo anterior utiliza el esquema <code>data:</code> para incluir en la página los bytes de la imagen. El valor <code>image/png</code> indica que los datos corresponden a una imagen en formato <code>PNG</code>. El valor <code>base64</code> indica que los datos incluidos están codificados según el formato base64.</p>
+
+<p>Aunque el ejemplo anterior funciona correctamente, como todos los datos se incluyen en el propio código HTML, el navegador no puede hacer uso de la caché para reutilizarlos posteriormente. El resultado es que el número de peticiones HTTP se reduce drásticamente, pero aumenta significativamente el tamaño de todas las páginas HTML.</p>
+
+<p>El siguiente paso consiste en utilizar las imágenes embebidas en las hojas de estilos CSS, de forma que se mantengan las ventajas del ejemplo anterior y se solucionen todas sus desventajas. Para embeber las imágenes en CSS se sigue la misma estrategia que en HTML, ya que sólo es necesario sustituir la URL por el esquema <code>data:</code>, tal y como muestra el siguiente ejemplo:</p>
+
+<div class="code css">
+<pre class="css"><span class="coMULTI">/* Imagen externa que el navegador debe descargar desde el servidor */</span>
+ul<span class="re0">#menu</span> li <span class="br0">&#123;</span> <span class="kw1">background</span><span class="sy0">:</span> <span class="re0">#FFF</span> <span class="kw2">no-repeat</span> <span class="kw2">center</span> <span class="kw2">center</span> <span class="kw2">url</span><span class="br0">&#40;</span><span class="st0">&quot;/imagenes/icono_libro.png&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span> <span class="br0">&#125;</span>
+&nbsp;
+<span class="coMULTI">/* Imagen embebida que el navegador puede mostrar directamente porque ya dispone de sus bytes */</span>
+ul<span class="re0">#menu</span> li <span class="br0">&#123;</span>
+  <span class="kw1">background</span><span class="sy0">:</span> <span class="re0">#FFF</span> <span class="kw2">no-repeat</span> <span class="kw2">center</span> <span class="kw2">center</span> <span class="kw2">url</span><span class="br0">&#40;</span><span class="st0">&quot;data:image/png;base64,iVBORw0KGgo
+  AAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQW
+  RvYmUgSW1hZ2VSZWFkeXHJZTwAAAHjSURBVDjLdZO/alVBEMZ/5+TemxAbFUUskqAoSOJNp4KC4AsoP
+  oGFIHY+gA+jiJXaKIiChbETtBYLUbSMRf6Aydndmfks9kRjvHdhGVh2fvN9uzONJK7fe7Ai6algA3FZ
+  CAmQqEF/dnihpK1v7x7dPw0woF64Izg3Xl5s1n9uIe0lQYUFCtjc+sVuEqHBKfpVAXB1vLzQXFtdYPH
+  kGFUCoahVo1Y/fnie+bkBV27c5R8A0pHxyhKvPn5hY2MHRQAQeyokFGJze4cuZfav3gLNYDTg7Pklzp
+  w4ijtIQYRwFx6BhdjtCk+erU0CCPfg+/o2o3ZI13WUlLGo58YMg+GIY4dmCWkCAAgPzAspJW5ePFPlV
+  3VI4uHbz5S5IQfy/yooHngxzFser30iFcNcuAVGw3A0Ilt91IkAsyCXQg5QO0szHEIrogkiguwN2acC
+  oJhjnZGKYx4Ujz5WOA2YD1BMU+BBSYVUvNpxkXuIuWgbsOxTHrG3UHIFWIhsgXtQQpTizNBS5jXZQkh
+  kcywZqQQlAjdRwiml7wU5xWLaL1AvZa8WIjALzIRZ7YVWDW5CiIj48Z8F2pYLl1ZR0+AuzEX0UX035m
+  xIkLq0dhDw5vXL97fr5O3rfwQHJhPx4uuH57f2AL8BfPrVlrs6xwsAAAAASUVORK5CYII=&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>La ventaja de utilizar las imágenes embebidas en CSS es que sólo aumenta el tamaño de las hojas de estilos y no el de todas las páginas HTML del sitio. Además, los navegadores guardan en su cache las hojas de estilos completas, por lo que el aumento en su tamaño no penaliza en exceso el rendimiento global de la descarga de páginas.</p>
+
+<p>El proceso de codificación de los bytes de las imágenes según el formato base64 es una tarea más propia de programadores web que de diseñadores web. Si conoces por ejemplo el lenguaje de programación PHP puedes utilizar la siguiente instrucción:</p>
+
+<div class="code code">
+<pre class="code">$bytesCodificados = base64_encode(file_get_contents(&quot;/ruta/hasta/la/imagen.png&quot;));</pre>
+</div>
+
+<p>Si no dispones de conocimientos de programación, puedes utilizar alguna de las herramientas online que codifican directamente los contenidos del archivo indicado:</p>
+
+<ul>
+<li><a href="http://www.motobit.com/util/base64-decoder-encoder.asp">Base64 encoder/decoder</a></li>
+<li><a href="http://www.greywyvern.com/code/php/binary2base64">Binary File to Base64 Encoder / Translator</a></li>
+</ul>
+
+<p>Las principales ventajas de la técnica de las imágenes embebidas son las siguientes:</p>
+
+<ul>
+<li>Reduce drásticamente el número de peticiones HTTP, lo que mejora notablemente el rendimiento.</li>
+<li>Permite guardar una página HTML completa en un único archivo HTML (embebiendo todas sus imágenes en su hoja de estilos o en el propio código HTML).</li>
+<li>Mejora el rendimiento de las peticiones HTTPS en las que las imágenes no se guardan en la cache.</li>
+</ul>
+
+<p>Por contra, sus desventajas son considerables:</p>
+
+<ul>
+<li>El esquema <code>data:</code> sólo funciona en los navegadores modernos que se preocupan de los estándares (Firefox, Safari y Opera). Internet Explorer 6 y 7 no son capaces de procesar el esquema <code>data:</code>. Internet Explorer 8 asegura que permitirá utilizar <code>data:</code>, pero solamente para embeber imágenes en CSS.</li>
+<li>El proceso completo es lento y poco flexible, ya que es necesario codificar las imágenes en base64 y recodificarlas cada vez que se quieren modificar.</li>
+<li>Las imágenes embebidas aumentan considerablemente el tamaño de la hoja de estilos CSS. Además, la codificación base64 también aumenta mucho el tamaño de los datos de la imagen respecto a sus bytes originales.</li>
+<li>Los navegadores limitan el tamaño máximo de los datos que se pueden embeber mediante <code>data:</code>. Algunos navegadores como Opera permiten unos 4.000 bytes de datos, mientras que el navegador Firefox permite hasta 100.000 bytes por cada <code>data:</code>.</li>
+</ul>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="capitulo_5/otros_frameworks.html">&larr; Anterior <span>5.6. Otros frameworks</span></a>
+            
+            <a class="span5 next" href="capitulo_6/mapas_de_imagen.html">Siguiente &rarr; <span>6.2. Mapas de imagen</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Técnicas avanzadas (CSS avanzado%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'CSS avanzado : Técnicas avanzadas']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="capitulo_1.html"> Técnicas imprescindibles</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="capitulo_2.html"> Buenas prácticas</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="capitulo_3.html"> Selectores</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="capitulo_4.html"> Propiedades avanzadas</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="capitulo_5.html"> Frameworks</a>
+    </li>
+    <li class="level-1 active">
+        <a href="capitulo_6.html">
+            <span>Capítulo 6.</span> Técnicas avanzadas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="capitulo_6/mapas_de_imagen.html">
+            <span>6.2.</span> Mapas de imagen
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="capitulo_6/variables_en_las_hojas_de_estilos.html">
+            <span>6.3.</span> Variables en las hojas de estilos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="capitulo_6/estilos_alternativos.html">
+            <span>6.4.</span> Estilos alternativos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="capitulo_6/comentarios_condicionales_filtros_y_hacks.html">
+            <span>6.5.</span> Comentarios condicionales, filtros y hacks
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="capitulo_6/selector_de_navegador.html">
+            <span>6.6.</span> Selector de navegador
+        </a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

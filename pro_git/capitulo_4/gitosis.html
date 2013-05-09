@@ -1,0 +1,377 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>4.7. Gitosis (Pro Git, el libro oficial de Git)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="gitweb.html" />
+        <link rel="next" href="el_demonio_git.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="4.7. Gitosis (Pro Git, el libro oficial de Git)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page pro_git">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Pro Git, el libro oficial de Git</a></li>
+  <li><a href="../capitulo_4.html">Capítulo 4. Git en un servidor</a></li>
+  <li class="current"><span>4.7.. Gitosis</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="gitosis"><span>4.7.</span> Gitosis</h1>
+    
+
+<p>Mantener claves públicas, para todos los usuarios, en el archivo <code>authorized_keys</code>, puede ser una buena solución inicial. Pero, cuanto tengas cientos de usuarios, se hace bastante pesado gestionar así ese proceso. Tienes que iniciar sesión en el servidor cada vez. Y, ademas, no tienes control de acceso — todo el mundo presente en el archivo tiene permisos de lectura y escritura a todos y cada uno de los proyectos —.</p>
+
+<p>En este punto, es posible que desees cambiar a un popular programa llamado Gitosis. Gitosis es básicamente un conjunto de scripts que te ayudarán a gestionar el archivo <code>authorized_keys</code>, así como a implementar algunos controles de acceso simples. Lo interesante de la interfaz de usuario para esta herramienta de gestión de usuarios y de control de accesos, es que, en lugar de un interface web, es un repositorio especial de Git. Preparas la información en ese proyecto especial, y cuando la envias (<em>push</em>), Gitosis reconfigura el servidor en base a ella. ¡Realmente interesante!.</p>
+
+<p>Instalar Gitosis no es precisamente sencillo. Pero tampoco demasiado complicado. Es más sencillo hacerlo si utilizas un servidor Linux — estos ejemplos se han hecho sobre un servidor Ubuntu 8.10 —.</p>
+
+<p>Gitosis necesita de ciertas herramientas Python, por lo que la  primera tarea será instalar el paquete de herramientas Pyton. En Ubuntu viene como el paquete python-stuptools:</p>
+
+<div class="code code">
+<pre class="code">$ apt-get install python-setuptools</pre>
+</div>
+
+<p>A continuación, has de clonar e instalar Gitosis desde el repositorio principal de su proyecto:</p>
+
+<div class="code code">
+<pre class="code">$ git clone git://eagain.net/gitosis.git
+$ cd gitosis
+$ sudo python setup.py install</pre>
+</div>
+
+<p>Esto instala un par de ejecutables, que serán los que Gitosis utilice. Gitosis intentará instalar sus repositorios bajo la carpeta <code>/home/git</code>, lo cual está bien. Pero si, en lugar de en esa, has instalado tus repositorios bajo la carpeta <code>/opt/git</code>. Sin necesidad de reconfigurarlo todo, tan solo has de crear un enlace virtual:</p>
+
+<div class="code code">
+<pre class="code">$ ln -s /opt/git /home/git/repositories</pre>
+</div>
+
+<p>Gitosis manejará tus claves por tí, por lo que tendrás que quitar el archivo actual, añadir de nuevo las claves más tarde, y dejar que Gitosis tome automáticamente el control del archivo <code>authorized_keys</code>. Para empezar, mueve el archivo <code>authorized_keys</code> a otro lado:</p>
+
+<div class="code code">
+<pre class="code">$ mv /home/git/.ssh/authorized_keys /home/git/.ssh/ak.bak</pre>
+</div>
+
+<p>A continuación, restaura el inicio de sesión (shell) para el usuario <code>git</code>, (si es que lo habias cambiado al comando <code>git-shell</code>). Los usuarios no podrán todavia iniciar sesión, pero Gitosis se encargará de ello. Así pues, cambia esta línea en tu archivo <code>/etc/passwd</code>:</p>
+
+<div class="code code">
+<pre class="code">git:x:1000:1000::/home/git:/usr/bin/git-shellgit:x:1000:1000::/home/git:/usr/bin/git-shell</pre>
+</div>
+
+<p>de vuelta a:</p>
+
+<div class="code code">
+<pre class="code">git:x:1000:1000::/home/git:/bin/shgit:x:1000:1000::/home/git:/bin/sh</pre>
+</div>
+
+<p>Y, en este punto, ya podemos inicializar Gitosis. Lo puedes hacer lanzando el comando <code>gitosis-init</code> con tu clave pública personal. Si tu clave pública personal no está en el servidor, la has de copiar a él:</p>
+
+<div class="code code">
+<pre class="code">$ sudo -H -u git gitosis-init &lt; /tmp/id_dsa.pub
+Initialized empty Git repository in /opt/git/gitosis-admin.git/
+Reinitialized existing Git repository in /opt/git/gitosis-admin.git/</pre>
+</div>
+
+<p>Esto habilita al usuario con dicha clave pública para que pueda modificar el repositorio principal de Git, y, con ello, pueda controlar la instalación de Gitosis. A continuanción, has de ajustar manualmente el bit de ejecución en el script <code>post-update</code> de tu nuevo repositorio de contrrol:</p>
+
+<div class="code code">
+<pre class="code">$ sudo chmod 755 /opt/git/gitosis-admin.git/hooks/post-update</pre>
+</div>
+
+<p>Y ya estás preparado para trabajar. Si lo has configurado todo correctamente, puedes intentar conectarte, vía SSH, a tu servidor como el usuario con cuya clave pública has inicializado Gitosis. Y deberás ver algo así como esto:</p>
+
+<div class="code code">
+<pre class="code">$ ssh git@gitserver
+PTY allocation request failed on channel 0
+fatal: unrecognized command 'gitosis-serve schacon@quaternion'
+  Connection to gitserver closed.</pre>
+</div>
+
+<p>Indicandote que Gitosis te ha reconocido, pero te está hechando debido a que no estás intentando lanzar ningún comando Git. Por tanto, intentalo con un comando Git real — por ejemplo, clonar el propio repositorio de control de Gitosis</p>
+
+<div class="code code">
+<pre class="code">a tu ordenador personal-- 
+$ git clone git@gitserver:gitosis-admin.git</pre>
+</div>
+
+<p>Con ello, tendrás una carpeta denominada <code>gitosis-admin</code>, con dos partes principales dentro de ella:</p>
+
+<div class="code code">
+<pre class="code">$ cd gitosis-admin
+$ find .
+./gitosis.conf
+./keydir
+./keydir/scott.pub</pre>
+</div>
+
+<p>El archivo <code>gitosis.conf</code> es el archivo de control que usarás para especificar usuarios, repositorios y permisos. La carpeta <code>keydir</code> es donde almacenarás las claves públicas para los usuarios con acceso a tus repositorios — un archivo por usuario —. El nombre del archivo en la carpeta <code>keydir</code> (<code>scott.pub</code> en el ejemplo), puede ser diferente en tu instalación, (Gitosis lo obtiene a partir de la descripción existente al final de la clave pública que haya sido importada con el script <code>gitosis-init</code>).</p>
+
+<p>Si miras dentro del archivo <code>gitosis.conf</code>, encontrarás únicamente información sobre el proyecto <code>gitosis-admin</code> que acabas de clonar:</p>
+
+<div class="code code">
+<pre class="code">$ cat gitosis.conf 
+[gitosis]</pre>
+</div>
+
+<div class="code group gitosis-admin">
+<pre class="groupgitosis-admin">writable = gitosis-admin
+members = scott</pre>
+</div>
+
+<p>Indicando que el usuario <code>scott</code> — el usuario con cuya clave pública se ha inicializado Gitosis — es el único con acceso al proyecto <code>gitosis-admin</code>.</p>
+
+<p>A partir de ahora, puedes añadir nuevos proyectos. Por ejemplo, puedes añadir una nueva sección denominada <code>mobile</code>, donde poner la lista de los desarrolladores en tu equipo movil y los proyectos donde estos vayan a trabajar. Por ser <code>scott</code> el único usuario que tienes definido por ahora, lo añadirás como el único miembro. Y puedes crear además un proyecto llamado <code>iphone_project</code> para empezar:</p>
+
+<div class="code group mobile">
+<pre class="groupmobile">writable = iphone_project
+members = scott</pre>
+</div>
+
+<p>Cada cambio en el proyecto <code>gitosis-admin</code>, lo has de confirmar (<em>commit</em>) y enviar (<em>push</em>) de vuelta al servidor, para que tenga efecto sobre él:</p>
+
+<div class="code code">
+<pre class="code">$ git commit -am 'add iphone_project and mobile group'
+[master]: created 8962da8: &quot;changed name&quot;
+ 1 files changed, 4 insertions(+), 0 deletions(-)
+$ git push
+Counting objects: 5, done.
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 272 bytes, done.
+Total 3 (delta 1), reused 0 (delta 0)
+To git@gitserver:/opt/git/gitosis-admin.git
+   fb27aec..8962da8  master -&gt; master</pre>
+</div>
+
+<p>Puedes crear tu nuevo proyecto <code>iphone_project</code> simplemente añadiendo tu servidor como un remoto a tu versión local del proyecto de control y enviando (<em>push</em>). Ya no necesitarás crear manualmente repositorios básicos vacios para los nuevos proyectos en el servidor. Gitosis se encargará de hacerlo por tí, en cuanto realices el primer envio (<em>push</em>) de un nuevo proyecto:</p>
+
+<div class="code code">
+<pre class="code">$ git remote add origin git@gitserver:iphone_project.git
+$ git push origin master
+Initialized empty Git repository in /opt/git/iphone_project.git/
+Counting objects: 3, done.
+Writing objects: 100% (3/3), 230 bytes, done.
+Total 3 (delta 0), reused 0 (delta 0)
+To git@gitserver:iphone_project.git
+ * [new branch]      master -&gt; master</pre>
+</div>
+
+<p>Ten en cuenta que no es necesario indicar expresamente un camino (path), — de hecho, si lo haces, no funcionará —. Simplemente, has de poner un punto y el nombre del proyecto, — Gitosis se encargará de encontrarlo —.</p>
+
+<p>Si deseas compartir el proyecto con tus compañeros, tienes que añadir de nuevo sus claves públicas. Pero en lugar de hacerlo manualmente sobre el archivo <code>~/.ssh/authorized_keys</code> de tu servidor, has de hacerlo — un archivo por clave — en la carpeta <code>keydir</code> del proyecto de control. Según pongas los nombres a estos archivos, así tendrás que referirte a los usuarios en el archivo <code>gitosis.conf</code>. Por ejemplo, para añadir las claves públicas de John, Josie y Jessica:</p>
+
+<div class="code code">
+<pre class="code">$ cp /tmp/id_rsa.john.pub keydir/john.pub
+$ cp /tmp/id_rsa.josie.pub keydir/josie.pub
+$ cp /tmp/id_rsa.jessica.pub keydir/jessica.pub</pre>
+</div>
+
+<p>Y para añadirlos al equipo <code>mobile</code>, dándoles permisos de lectura y escritura sobre el proyecto <code>phone_project</code>:</p>
+
+<div class="code group mobile">
+<pre class="groupmobile">writable = iphone_project
+members = scott john josie jessica</pre>
+</div>
+
+<p>Tras confirmar (<em>commit</em>) y enviar (<em>push</em>) estos cambios, los cuatro usuarios podrán acceder a leer y escribir sobre el proyecto.</p>
+
+<p>Gitosis permite también sencillos controles de acceso. Por ejemplo, si quieres que John tenga únicamente acceso de lectura sobre el proyecto, puedes hacer:</p>
+
+<div class="code group mobile">
+<pre class="groupmobile">writable = iphone_project
+members = scott josie jessica</pre>
+</div>
+
+<div class="code group mobile_ro">
+<pre class="groupmobile_ro">readonly = iphone_project
+members = john</pre>
+</div>
+
+<p>Habilitandole así para clonar y recibir actualizaciónes desde el servidor; pero impidiendole enviar de vuelta cambios al proyecto. Puedes crear tantos grupos como desees, para diferentes usuarios y proyectos. También puedes indicar un grupo como miembro de otro (utilizado el prefijo <code>@</code>), para incluir todos sus miembros automáticamente:</p>
+
+<div class="code group mobile_committers">
+<pre class="groupmobile_committers">members = scott josie jessica</pre>
+</div>
+
+<div class="code group mobile">
+<pre class="groupmobile">writable  = iphone_project
+members   = @mobile_committers</pre>
+</div>
+
+<div class="code group mobile_2">
+<pre class="groupmobile_2">writable  = another_iphone_project
+members   = @mobile_committers john</pre>
+</div>
+
+<p>Si tienes problemas, puede ser util añadir <code>loglevel=DEBUG</code> en la sección <code>[gitosis]</code>. Si, por lo que sea, pierdes acceso de envio (<em>push</em>) de nuevos cambios, (por ejemplo, tras haber enviado una configuración problemática); siempre puedes arreglar manualmente ,en el propio servidor, el archivo <code>/home/git/.gitosis.conf</code>, (el archivo del que Gitosis lee su configuración). Un envio (<em>push</em>) de cambios al proyecto, coge el archivo <code>gitosis.conf</code> enviado y sobreescribe con él el del servidor. Si lo editas manualmente, permanecerá como lo dejes; hasta el próximo envio (<em>push</em>) al proyecto <code>gitosis-admin</code>.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="gitweb.html">&larr; Anterior <span>4.6. GitWeb</span></a>
+            
+            <a class="span5 next" href="el_demonio_git.html">Siguiente &rarr; <span>4.8. El demonio Git</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Gitosis (Pro Git, el libro oficial de Git%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Pro Git, el libro oficial de Git : Gitosis']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Empezando</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Fundamentos de Git</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Trabajando con ramas en Git</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_4.html">
+            <span>Capítulo 4.</span> Git en un servidor
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="los_protocolos.html">
+            <span>4.1.</span> Los Protocolos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="poniendo_git_en_un_servidor.html">
+            <span>4.2.</span> Poniendo Git en un Servidor
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="generando_tu_clave_publica_ssh.html">
+            <span>4.3.</span> Generando tu clave pública SSH
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="preparando_el_servidor.html">
+            <span>4.4.</span> Preparando el servidor
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="acceso_publico.html">
+            <span>4.5.</span> Acceso público
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="gitweb.html">
+            <span>4.6.</span> GitWeb
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="gitosis.html">
+            <span>4.7.</span> Gitosis
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_demonio_git.html">
+            <span>4.8.</span> El demonio Git
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="git_en_un_alojamiento_externo.html">
+            <span>4.9.</span> Git en un alojamiento externo
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="resumen.html">
+            <span>4.10.</span> Resumen
+        </a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Git en entornos distribuidos</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Las herramientas de Git</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Personalizando Git</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Git y otros sistemas</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Funcionamiento interno de Git</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

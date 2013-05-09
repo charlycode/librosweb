@@ -1,0 +1,268 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>12.1. Centrar una página horizontalmente (Introducción a CSS)</title>
+        <link href="../main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="../capitulo_12.html" />
+        <link rel="next" href="centrar_una_pagina_verticalmente.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="12.1. Centrar una página horizontalmente (Introducción a CSS)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page css">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Introducción a CSS</a></li>
+  <li><a href="../capitulo_12.html">Capítulo 12. Layout</a></li>
+  <li class="current"><span>12.1.. Centrar una página horizontalmente</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="centrar_una_pagina_horizontalmente"><span>12.1.</span> Centrar una página horizontalmente</h1>
+    
+
+<p>A medida que aumenta el tamaño y la resolución de las pantallas de ordenador, se hace más difícil diseñar páginas que se adapten al tamaño de la ventana del navegador. El principal reto que se presenta con resoluciones superiores a 1024 x 768 píxel, es que las líneas de texto son demasiado largas como para leerlas con comodidad. Por ese motivo, normalmente se opta por diseños con una anchura fija limitada a un valor aceptable para mantener la legibilidad del texto.</p>
+
+<p>Por otra parte, los navegadores alinean por defecto las páginas web a la izquierda de la ventana. Cuando la resolución de la pantalla es muy grande, la mayoría de páginas de anchura fija alineadas a la izquierda parecen muy estrechas y provocan una sensación de vacío.</p>
+
+<p>La solución más sencilla para evitar los grandes espacios en blanco consiste en crear páginas con una anchura fija adecuada y centrar la página horizontalmente respecto de la ventana del navegador. Las siguientes imágenes muestran el aspecto de una página centrada a medida que aumenta la anchura de la ventana del navegador.</p>
+
+<div class="figure" id="figure_12_1">
+    <img src="../../img/css/f1201.gif" alt="Página de anchura fija centrada mediante CSS" />
+
+    <p class="caption"><strong>Figura 12.1</strong> Página de anchura fija centrada mediante CSS</p>
+</div>
+
+
+<div class="figure" id="figure_12_2">
+    <img src="../../img/css/f1202.gif" alt="Página de anchura fija centrada mediante CSS" />
+
+    <p class="caption"><strong>Figura 12.2</strong> Página de anchura fija centrada mediante CSS</p>
+</div>
+
+
+<div class="figure" id="figure_12_3">
+    <img src="../../img/css/f1203.gif" alt="Página de anchura fija centrada mediante CSS" />
+
+    <p class="caption"><strong>Figura 12.3</strong> Página de anchura fija centrada mediante CSS</p>
+</div>
+
+
+<p>Utilizando la propiedad <code>margin</code> de CSS, es muy sencillo centrar una página web horizontalmente. La solución consiste en agrupar todos los contenidos de la página en un elemento <code>&lt;div&gt;</code> y asignarle a ese <code>&lt;div&gt;</code> unos márgenes laterales automáticos. El <code>&lt;div&gt;</code> que encierra los contenidos se suele llamar <code>contenedor</code> (en inglés se denomina <code>wrapper</code> o <code>container</code>):</p>
+
+<div class="code css">
+<pre class="css"><span class="re0">#contenedor</span> <span class="br0">&#123;</span>
+  <span class="kw1">width</span><span class="sy0">:</span> <span class="re3">300px</span><span class="sy0">;</span>
+  <span class="kw1">margin</span><span class="sy0">:</span> <span class="nu0">0</span> <span class="kw2">auto</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+&lt;body<span class="sy0">&gt;</span>
+  &lt;div id<span class="sy0">=</span><span class="st0">&quot;contenedor&quot;</span><span class="sy0">&gt;</span>
+    &lt;h1<span class="sy0">&gt;</span>Lorem ipsum dolor sit amet&lt;/h1<span class="sy0">&gt;</span>
+    ...
+  &lt;/div<span class="sy0">&gt;</span>
+&lt;/body<span class="sy0">&gt;</span></pre>
+</div>
+
+<p>Como se sabe, el valor <code>0 auto</code> significa que los márgenes superior e inferior son iguales a <code>0</code> y los márgenes laterales toman un valor de <code>auto</code>. Cuando se asignan márgenes laterales automáticos a un elemento, los navegadores centran ese elemento respecto de su elemento padre. En este ejemplo, el elemento padre del <code>&lt;div&gt;</code> es la propia página (el elemento <code>&lt;body&gt;</code>), por lo que se consigue centrar el elemento <code>&lt;div&gt;</code> respecto de la ventana del navegador.</p>
+
+<p>Modificando ligeramente el código CSS anterior se puede conseguir un diseño dinámico o <em>líquido</em> (también llamado <em>fluido</em>) que se adapta a la anchura de la ventana del navegador y permanece siempre centrado:</p>
+
+<div class="code css">
+<pre class="css"><span class="re0">#contenedor</span> <span class="br0">&#123;</span>
+  <span class="kw1">width</span><span class="sy0">:</span> <span class="re3">70%</span><span class="sy0">;</span>
+  <span class="kw1">margin</span><span class="sy0">:</span> <span class="nu0">0</span> <span class="kw2">auto</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Estableciendo la anchura del elemento contenedor mediante un porcentaje, su anchura se adapta de forma continua a la anchura de la ventana del navegador. De esta forma, si se reduce la anchura de la ventana del navegador, la página se verá más estrecha y si se maximiza la ventana del navegador, la página se verá más ancha.</p>
+
+<p>Las siguientes imágenes muestran cómo se adapta el diseño dinámico a la anchura de la ventana del navegador, mostrando cada vez más contenidos a medida que se agranda la ventana.</p>
+
+<div class="figure" id="figure_12_4">
+    <img src="../../img/css/f1204.gif" alt="Página de anchura variable centrada mediante CSS" />
+
+    <p class="caption"><strong>Figura 12.4</strong> Página de anchura variable centrada mediante CSS</p>
+</div>
+
+
+<div class="figure" id="figure_12_5">
+    <img src="../../img/css/f1205.gif" alt="Página de anchura variable centrada mediante CSS" />
+
+    <p class="caption"><strong>Figura 12.5</strong> Página de anchura variable centrada mediante CSS</p>
+</div>
+
+
+<div class="figure" id="figure_12_6">
+    <img src="../../img/css/f1206.gif" alt="Página de anchura variable centrada mediante CSS" />
+
+    <p class="caption"><strong>Figura 12.6</strong> Página de anchura variable centrada mediante CSS</p>
+</div>
+
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="../capitulo_12.html">&larr; Anterior <span>Capítulo 12. Layout</span></a>
+            
+            <a class="span5 next" href="centrar_una_pagina_verticalmente.html">Siguiente &rarr; <span>12.2. Centrar una página verticalmente</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Centrar una página horizontalmente (Introducción a CSS%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a CSS : Centrar una página horizontalmente']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Selectores</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Unidades de medida y colores</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Modelo de cajas</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Posicionamiento y visualización</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Texto</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Enlaces</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Imágenes</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Listas</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Tablas</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Formularios</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_12.html">
+            <span>Capítulo 12.</span> Layout
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="centrar_una_pagina_horizontalmente.html">
+            <span>12.1.</span> Centrar una página horizontalmente
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="centrar_una_pagina_verticalmente.html">
+            <span>12.2.</span> Centrar una página verticalmente
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="estructura_o_layout.html">
+            <span>12.3.</span> Estructura o layout
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="alturas_anchuras_maximas_y_minimas.html">
+            <span>12.4.</span> Alturas/anchuras máximas y mínimas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="estilos_avanzados.html">
+            <span>12.5.</span> Estilos avanzados
+        </a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Otros</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Recursos útiles</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Ejercicios</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

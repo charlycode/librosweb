@@ -1,0 +1,349 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>2.7. Funciones (Introducción a AJAX)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="objetos_nativos_de_javascript.html" />
+        <link rel="next" href="funciones_y_propiedades_basicas_de_javascript.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="2.7. Funciones (Introducción a AJAX)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page ajax">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Introducción a AJAX</a></li>
+  <li><a href="../capitulo_2.html">Capítulo 2. JavaScript básico</a></li>
+  <li class="current"><span>2.7. Funciones</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="funciones"><span>2.7.</span> Funciones</h1>
+    
+
+<p>Las funciones de JavaScript no suelen definirse mediante la clase <code>Function</code>, sino que se crean mediante la palabra reservada <code>function</code>:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">function</span> suma<span class="br0">&#40;</span>a<span class="sy0">,</span> b<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="kw1">return</span> a<span class="sy0">+</span>b<span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>No es obligatorio que las funciones tengan una instrucción de tipo <code>return</code> para devolver valores. De hecho, cuando una función no devuelve ningún valor o cuando en la instrucción <code>return</code> no se indica ningún valor, automáticamente se devuelve el valor <code>undefined</code>.</p>
+
+<p>Para llamar a la función en cualquier instrucción, se indica su nombre junto con la lista de parámetros esperados:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> resultado <span class="sy0">=</span> suma<span class="br0">&#40;</span><span class="nu0">2</span><span class="sy0">,</span> <span class="nu0">3</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Los parámetros que se pasan pueden estar definidos mediante operaciones que se evalúan antes de pasarlos a la función:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> resultado <span class="sy0">=</span> suma<span class="br0">&#40;</span><span class="nu0">2</span><span class="sy0">+</span><span class="nu0">1</span><span class="sy0">,</span> <span class="nu0">3</span><span class="sy0">-</span><span class="nu0">4</span><span class="sy0">*</span><span class="nu0">3</span><span class="sy0">+</span><span class="nu0">4</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Como JavaScript no define tipos de variables, no es posible asegurar que los parámetros que se pasan a una función sean los del tipo adecuado para las operaciones que realiza la función.</p>
+
+<p>Si a una función se le pasan más parámetros que los que ha definido, los parámetros sobrantes se ignoran. Si se pasan menos parámetros que los que ha definido la función, al resto de parámetros hasta completar el número correcto se les asigna el valor <code>undefined</code>.</p>
+
+<p>Una función puede contener en su interior otras funciones anidadas:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">function</span> sumaCuadrados<span class="br0">&#40;</span>a<span class="sy0">,</span> b<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="kw1">function</span> cuadrado<span class="br0">&#40;</span>x<span class="br0">&#41;</span> <span class="br0">&#123;</span> <span class="kw1">return</span> x<span class="sy0">*</span>x<span class="sy0">;</span> <span class="br0">&#125;</span>
+  <span class="kw1">return</span> cuadrado<span class="br0">&#40;</span>a<span class="br0">&#41;</span> <span class="sy0">+</span> cuadrado<span class="br0">&#40;</span>b<span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>La función anterior calcula la suma del cuadrado de dos números. Para ello, define en el interior de la función otra función que calcula el cuadrado del número que se le pasa. Para obtener el resultado final, la función <code>sumaCuadrados()</code> hace uso de la función anidada <code>cuadrado()</code>.</p>
+
+<p>Las funciones también se pueden crear mediante lo que se conoce como <em>"function literals"</em> y que consiste en definir la función con una expresión en la que el nombre de la función es opcional. Debido a esta última característica, también se conocen como <em>funciones anónimas</em>. A continuación se muestra una misma función definida mediante el método tradicional y mediante una función anónima:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">function</span> suma<span class="br0">&#40;</span>a<span class="sy0">,</span> b<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="kw1">return</span> a<span class="sy0">+</span>b<span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+<span class="kw1">var</span> miFuncion <span class="sy0">=</span> <span class="kw1">function</span><span class="br0">&#40;</span>a<span class="sy0">,</span> b<span class="br0">&#41;</span> <span class="br0">&#123;</span> <span class="kw1">return</span> a<span class="sy0">+</span>b<span class="sy0">;</span> <span class="br0">&#125;</span></pre>
+</div>
+
+<p>Las funciones anónimas son ideales para los casos en los que se necesita definir funciones sencillas que sólamente se utilizan una vez y para las que no es necesario crear una función tradicional con nombre. Más adelante en el capítulo de JavaScript avanzado se muestra en detalle el uso de funciones anónimas con objetos.</p>
+
+<p>Como se ha comentado, cuando una función recibe menos parámetros de los que necesita, inicializa el valor del resto de parámetros a <code>undefined</code>. De esta forma, puede ser necesario proteger a la aplicación frente a posibles valores incorrectos en sus parámetros. El método habitual es realizar una comprobación sencilla:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">function</span> suma<span class="br0">&#40;</span>a<span class="sy0">,</span> b<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="kw1">if</span><span class="br0">&#40;</span>isNaN<span class="br0">&#40;</span>b<span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    b <span class="sy0">=</span> <span class="nu0">0</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+  <span class="kw1">return</span> a <span class="sy0">+</span> b<span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>La función del ejemplo anterior comprueba que <code>b</code> sea un número para poder realizar correctamente la suma. En caso de que no lo sea (es decir, que sea <code>null</code>, <code>undefined</code> o cualquier valor válido distinto de un número) se le asigna el valor <code>0</code> para que la función pueda devolver un resultado válido.</p>
+
+<p>JavaScript permite prescindir de la comprobación anterior y obtener el mismo resultado mediante el siguiente truco que hace uso del operador <code>OR</code> (<code>||</code>):</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">function</span> suma<span class="br0">&#40;</span>a<span class="sy0">,</span> b<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  b <span class="sy0">=</span> b <span class="sy0">||</span> <span class="nu0">0</span><span class="sy0">;</span>
+  <span class="kw1">return</span> a <span class="sy0">+</span> b<span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>En el ejemplo anterior, si a la función no se le pasa el parámetro <code>b</code>, automáticamente se asigna el valor <code>0</code> a ese parámetro. El truco funciona porque el comportamiento del operador lógico <code>OR</code> (y también el del operador <code>AND</code>) es más complejo de lo que se ha explicado anteriormente.</p>
+
+<p>En realidad, el operador lógico <code>OR</code> funciona de la siguiente manera:
+  - Si el primer operando es <code>true</code> o cualquier otro valor que se puede transformar en <code>true</code>, se devuelve directamente el valor de ese operando.
+  - En otro caso, se evalúa el segundo operando y se devuelve directamente su valor.</p>
+
+<p>Por lo tanto:</p>
+
+<div class="code javascript">
+<pre class="javascript">alert<span class="br0">&#40;</span><span class="kw2">true</span> <span class="sy0">||</span> <span class="kw2">false</span><span class="br0">&#41;</span><span class="sy0">;</span>  <span class="co1">// muestra true</span>
+alert<span class="br0">&#40;</span><span class="nu0">3</span> <span class="sy0">||</span> <span class="kw2">false</span><span class="br0">&#41;</span><span class="sy0">;</span>     <span class="co1">// muestra 3</span>
+alert<span class="br0">&#40;</span><span class="kw2">true</span> <span class="sy0">||</span> <span class="nu0">5</span><span class="br0">&#41;</span><span class="sy0">;</span>      <span class="co1">// muestra true</span>
+alert<span class="br0">&#40;</span><span class="kw2">false</span> <span class="sy0">||</span> <span class="kw2">true</span><span class="br0">&#41;</span><span class="sy0">;</span>  <span class="co1">// muestra true</span>
+alert<span class="br0">&#40;</span><span class="kw2">false</span> <span class="sy0">||</span> <span class="nu0">5</span><span class="br0">&#41;</span><span class="sy0">;</span>     <span class="co1">// muestra 5</span>
+alert<span class="br0">&#40;</span><span class="nu0">3</span> <span class="sy0">||</span> <span class="nu0">5</span><span class="br0">&#41;</span><span class="sy0">;</span>         <span class="co1">// muestra 3</span></pre>
+</div>
+
+<p>De esta forma, si se utilizan las siguientes llamadas a la función:</p>
+
+<div class="code javascript">
+<pre class="javascript">suma<span class="br0">&#40;</span><span class="nu0">3</span><span class="br0">&#41;</span><span class="sy0">;</span>
+suma<span class="br0">&#40;</span><span class="nu0">3</span><span class="sy0">,</span> <span class="kw2">null</span><span class="br0">&#41;</span><span class="sy0">;</span>
+suma<span class="br0">&#40;</span><span class="nu0">3</span><span class="sy0">,</span> <span class="kw2">false</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>En todos los casos anteriores la variable <code>b</code> vale <code>0</code>. Si no se indica un parámetro, su valor es <code>undefined</code>, que se transforma en <code>false</code> y por tanto el resultado de <code>b || 0</code> es <code>0</code>. Si se indica <code>null</code> como valor del parámetro, también se transforma en <code>false</code>, por lo que nuevamente el resultado de <code>b || 0</code> es <code>0</code>. Por último, si se indica directamente el valor <code>false</code> al parámetro, también provoca que el resultado de <code>b || 0</code> sea <code>0</code>. En cualquier otro caso, el parámetro <code>b</code> valdrá lo mismo que se la haya pasado en la llamada a la función.</p>
+
+<p>Como el número de argumentos que se pasan a una función de JavaScript puede ser variable e independiente del número de parámetros incluidos en su definición, JavaScript proporciona una variable especial que contiene todos los parámetros con los que se ha invocado a la función. Se trata de un array que se llama <code>arguments</code> y solamente está definido dentro de cualquier función.</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">function</span> suma<span class="br0">&#40;</span>a<span class="sy0">,</span> b<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  alert<span class="br0">&#40;</span>arguments.<span class="me1">length</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  alert<span class="br0">&#40;</span>arguments<span class="br0">&#91;</span><span class="nu0">2</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="kw1">return</span> a <span class="sy0">+</span> b<span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+suma<span class="br0">&#40;</span><span class="nu0">3</span><span class="sy0">,</span> <span class="nu0">5</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>La propiedad <code>arguments.length</code> devuelve el número de parámetros con los que se ha llamado a la función. En el caso del ejemplo anterior, se mostraría el valor <code>2</code>. Como <code>arguments</code> es un array, se puede acceder directamente a cualquier parámetro mediante la notación tradicional de los arrays. En este caso, el valor <code>arguments[2]</code> devuelve <code>undefined</code>, ya que la función se llama con dos parámetros y por tanto el tercer parámetro no está definido.</p>
+
+<p>El array <code>arguments</code> permite crear funciones con un número variable de argumentos:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">function</span> mayor<span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="kw1">var</span> elMayor <span class="sy0">=</span> arguments<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="sy0">;</span>
+  <span class="kw1">for</span><span class="br0">&#40;</span><span class="kw1">var</span> i<span class="sy0">=</span><span class="nu0">1</span><span class="sy0">;</span> i<span class="sy0">&lt;</span>arguments.<span class="me1">length</span><span class="sy0">;</span> i<span class="sy0">++</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="kw1">if</span><span class="br0">&#40;</span>arguments<span class="br0">&#91;</span>i<span class="br0">&#93;</span> <span class="sy0">&gt;</span> elMayor<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+      elMayor <span class="sy0">=</span> arguments<span class="br0">&#91;</span>i<span class="br0">&#93;</span><span class="sy0">;</span>
+     <span class="br0">&#125;</span>
+  <span class="br0">&#125;</span>
+  <span class="kw1">return</span> elMayor<span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+<span class="kw1">var</span> variable1 <span class="sy0">=</span> mayor<span class="br0">&#40;</span><span class="nu0">1</span><span class="sy0">,</span> <span class="nu0">3</span><span class="sy0">,</span> <span class="nu0">5</span><span class="sy0">,</span> <span class="nu0">8</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="kw1">var</span> variable2 <span class="sy0">=</span> mayor<span class="br0">&#40;</span><span class="nu0">4</span><span class="sy0">,</span> <span class="nu0">6</span><span class="sy0">,</span> <span class="nu0">8</span><span class="sy0">,</span> <span class="nu0">1</span><span class="sy0">,</span> <span class="nu0">2</span><span class="sy0">,</span> <span class="nu0">3</span><span class="sy0">,</span> <span class="nu0">4</span><span class="sy0">,</span> <span class="nu0">5</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Técnicamente, <code>arguments</code> no es un array, sino que es un objeto de tipo <code>Arguments</code>. Sin embargo, por sus propiedades y sus métodos de acceso, se puede considerar como si fuera un array.</p>
+
+<p>Una última propiedad del objeto <code>arguments</code> que no suele utilizarse habitualmente, pero que puede ser necesaria en ocasiones es la propiedad <code>callee</code>. La propiedad <code>callee</code> hace referencia a la función que se está ejecutando. En el siguiente ejemplo se utiliza la propiedad <code>callee</code> para mostrar el código fuente de la función que se está ejecutando:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">function</span> suma<span class="br0">&#40;</span>a<span class="sy0">,</span> b<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  alert<span class="br0">&#40;</span>arguments.<span class="me1">callee</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="kw1">return</span> a <span class="sy0">+</span> b<span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+suma<span class="br0">&#40;</span><span class="nu0">3</span><span class="sy0">,</span> <span class="nu0">5</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>La propiedad <code>callee</code> se puede utilizar para determinar el número de parámetros que espera la función:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">function</span> suma<span class="br0">&#40;</span>a<span class="sy0">,</span> b<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  alert<span class="br0">&#40;</span>arguments.<span class="me1">callee</span>.<span class="me1">length</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  alert<span class="br0">&#40;</span>arguments.<span class="me1">length</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="kw1">return</span> a <span class="sy0">+</span> b<span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+suma<span class="br0">&#40;</span><span class="nu0">3</span><span class="sy0">,</span> <span class="nu0">5</span><span class="sy0">,</span> <span class="nu0">7</span><span class="sy0">,</span> <span class="nu0">9</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>La propiedad <code>arguments.callee.length</code> indica el número de parámetros que se incluyen en la definición de la función, en este caso 2. Como se ha visto anteriormente, la propiedad <code>arguments.length</code> indica el número de parámetros con los que se ha llamado a la función, en este caso 4.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="objetos_nativos_de_javascript.html">&larr; Anterior <span>2.6. Objetos nativos de JavaScript</span></a>
+            
+            <a class="span5 next" href="funciones_y_propiedades_basicas_de_javascript.html">Siguiente &rarr; <span>2.8. Funciones y propiedades básicas de JavaScript</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Funciones (Introducción a AJAX%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a AJAX : Funciones']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción a AJAX</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_2.html">
+            <span>Capítulo 2.</span> JavaScript básico
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="variables.html">
+            <span>2.2.</span> Variables
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="palabras_reservadas.html">
+            <span>2.3.</span> Palabras reservadas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="tipos_de_variables.html">
+            <span>2.4.</span> Tipos de variables
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="operadores.html">
+            <span>2.5.</span> Operadores
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="objetos_nativos_de_javascript.html">
+            <span>2.6.</span> Objetos nativos de JavaScript
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="funciones.html">
+            <span>2.7.</span> Funciones
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="funciones_y_propiedades_basicas_de_javascript.html">
+            <span>2.8.</span> Funciones y propiedades básicas de JavaScript
+        </a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> JavaScript avanzado</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> DOM (Document Object Model)</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> BOM (Browser Object Model)</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Eventos</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Primeros pasos con AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Técnicas básicas con AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Técnicas avanzadas con AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Frameworks y librerías</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Otras utilidades</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Recursos útiles</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Bibliografía</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

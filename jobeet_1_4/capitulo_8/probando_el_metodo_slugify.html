@@ -1,0 +1,337 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>8.5. Probando el método slugify (El tutorial Jobeet)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="ejecutando_pruebas_unitarias.html" />
+        <link rel="next" href="anadiendo_pruebas_para_las_nuevas_caracteristicas.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="8.5. Probando el método slugify (El tutorial Jobeet)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page jobeet_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">El tutorial Jobeet</a></li>
+  <li><a href="../capitulo_8.html">Capítulo 8. Pruebas unitarias</a></li>
+  <li class="current"><span>8.5.. Probando el método slugify</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="probando_el_metodo_slugify"><span>8.5.</span> Probando el método slugify</h1>
+    
+
+<p>Vamos a comenzar a adentrarnos en el mundo de las pruebas unitarias escribiendo pruebas para el método <code>Jobeet::slugify()</code>.</p>
+
+<p>El método <code>slugify()</code> lo creamos en el tutorial del día 5 para <em>limpiar</em> una cadena de texto de forma que su contenido se pueda incluir como parte de una URL. La transformación que se realiza es bastante sencilla, ya que consiste en convertir todos los caracteres que no sean ASCII en un guión medio (<code>-</code>) y pasar la cadena de texto a minúsculas:</p>
+
+<div class="table" id="table_8_3">
+
+    <table>
+<thead>
+<tr>
+  <th>Cadena original</th>
+  <th>Cadena transformada</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Sensio Labs</td>
+  <td><code>sensio-labs</code></td>
+</tr>
+<tr>
+  <td>Paris, France</td>
+  <td><code>paris-france</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+<p>Para probar el método <code>slugify</code>, reemplaza el contenido de la prueba unitaria por el siguiente código:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// test/unit/JobeetTest.php</span>
+<span class="kw1">require_once</span> <span class="kw3">dirname</span><span class="br0">&#40;</span><span class="kw4">__FILE__</span><span class="br0">&#41;</span><span class="sy0">.</span><span class="st_h">'/../bootstrap/unit.php'</span><span class="sy0">;</span>
+&nbsp;
+<span class="re0">$t</span> <span class="sy0">=</span> <span class="kw2">new</span> lime_test<span class="br0">&#40;</span><span class="nu0">6</span><span class="sy0">,</span> <span class="kw2">new</span> lime_output_color<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="re0">$t</span><span class="sy0">-&gt;</span><span class="me1">is</span><span class="br0">&#40;</span>Jobeet<span class="sy0">::</span><span class="me2">slugify</span><span class="br0">&#40;</span><span class="st_h">'Sensio'</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="st_h">'sensio'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$t</span><span class="sy0">-&gt;</span><span class="me1">is</span><span class="br0">&#40;</span>Jobeet<span class="sy0">::</span><span class="me2">slugify</span><span class="br0">&#40;</span><span class="st_h">'sensio labs'</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="st_h">'sensio-labs'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$t</span><span class="sy0">-&gt;</span><span class="me1">is</span><span class="br0">&#40;</span>Jobeet<span class="sy0">::</span><span class="me2">slugify</span><span class="br0">&#40;</span><span class="st_h">'sensio   labs'</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="st_h">'sensio-labs'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$t</span><span class="sy0">-&gt;</span><span class="me1">is</span><span class="br0">&#40;</span>Jobeet<span class="sy0">::</span><span class="me2">slugify</span><span class="br0">&#40;</span><span class="st_h">'paris,france'</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="st_h">'paris-france'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$t</span><span class="sy0">-&gt;</span><span class="me1">is</span><span class="br0">&#40;</span>Jobeet<span class="sy0">::</span><span class="me2">slugify</span><span class="br0">&#40;</span><span class="st_h">'  sensio'</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="st_h">'sensio'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$t</span><span class="sy0">-&gt;</span><span class="me1">is</span><span class="br0">&#40;</span>Jobeet<span class="sy0">::</span><span class="me2">slugify</span><span class="br0">&#40;</span><span class="st_h">'sensio  '</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="st_h">'sensio'</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Si te fijas en las pruebas que acabamos de escribir, verás que cada línea sólo prueba una cosa. Este es uno de los conceptos fundamentales que siempre tienes que tener presente. Prueba una sola cosa cada vez.</p>
+
+<p>Ahora ya puedes volver a ejecutar las pruebas. Si todas las pruebas pasan correctamente, que es lo que esperamos en este ejemplo, verás una barra de color verde. Por el contrario, si alguna prueba falla verás una barra de color rojo indicando que algunas pruebas han fallado y que tienes que arreglarlas (recuerda que los colores no se ven en sistemas operativos tipo Windows).</p>
+
+<div class="figure" id="figure_8_2">
+    <img src="../../img/jobeet_1_4/f0802.png" alt="Pruebas del método slugify" />
+
+    <p class="caption"><strong>Figura 8.2</strong> Pruebas del método slugify</p>
+</div>
+
+
+<p>Si una prueba falla, se muestran mensajes de ayuda con información sobre el motivo por el que ha fallado. Sin embargo, si tienes cientos de pruebas en un archivo, es bastante complicado identificar la característica exacta que ha fallado.</p>
+
+<p>Por ese motivo, todas los métodos de pruebas de <code>lime</code> admiten como último argumento una cadena de texto que se utiliza como descripción de la prueba. Incluir este argumento es muy útil porque te obliga a describir exactamente lo que estás probando. Además, esta descripción puede servir como documentación del comportamiento esperado por el método. Por lo tanto, vamos a añadir algunos mensajes en las pruebas del método <code>slugify</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw1">require_once</span> <span class="kw3">dirname</span><span class="br0">&#40;</span><span class="kw4">__FILE__</span><span class="br0">&#41;</span><span class="sy0">.</span><span class="st_h">'/../bootstrap/unit.php'</span><span class="sy0">;</span>
+&nbsp;
+<span class="re0">$t</span> <span class="sy0">=</span> <span class="kw2">new</span> lime_test<span class="br0">&#40;</span><span class="nu0">6</span><span class="sy0">,</span> <span class="kw2">new</span> lime_output_color<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="re0">$t</span><span class="sy0">-&gt;</span><span class="me1">comment</span><span class="br0">&#40;</span><span class="st_h">'::slugify()'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$t</span><span class="sy0">-&gt;</span><span class="me1">is</span><span class="br0">&#40;</span>Jobeet<span class="sy0">::</span><span class="me2">slugify</span><span class="br0">&#40;</span><span class="st_h">'Sensio'</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="st_h">'sensio'</span><span class="sy0">,</span> <span class="st_h">'::slugify() converts all characters to lower case'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$t</span><span class="sy0">-&gt;</span><span class="me1">is</span><span class="br0">&#40;</span>Jobeet<span class="sy0">::</span><span class="me2">slugify</span><span class="br0">&#40;</span><span class="st_h">'sensio labs'</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="st_h">'sensio-labs'</span><span class="sy0">,</span> <span class="st_h">'::slugify() replaces a white space by a -'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$t</span><span class="sy0">-&gt;</span><span class="me1">is</span><span class="br0">&#40;</span>Jobeet<span class="sy0">::</span><span class="me2">slugify</span><span class="br0">&#40;</span><span class="st_h">'sensio   labs'</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="st_h">'sensio-labs'</span><span class="sy0">,</span> <span class="st_h">'::slugify() replaces several white spaces by a single -'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$t</span><span class="sy0">-&gt;</span><span class="me1">is</span><span class="br0">&#40;</span>Jobeet<span class="sy0">::</span><span class="me2">slugify</span><span class="br0">&#40;</span><span class="st_h">'  sensio'</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="st_h">'sensio'</span><span class="sy0">,</span> <span class="st_h">'::slugify() removes - at the beginning of a string'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$t</span><span class="sy0">-&gt;</span><span class="me1">is</span><span class="br0">&#40;</span>Jobeet<span class="sy0">::</span><span class="me2">slugify</span><span class="br0">&#40;</span><span class="st_h">'sensio  '</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="st_h">'sensio'</span><span class="sy0">,</span> <span class="st_h">'::slugify() removes - at the end of a string'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$t</span><span class="sy0">-&gt;</span><span class="me1">is</span><span class="br0">&#40;</span>Jobeet<span class="sy0">::</span><span class="me2">slugify</span><span class="br0">&#40;</span><span class="st_h">'paris,france'</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="st_h">'paris-france'</span><span class="sy0">,</span> <span class="st_h">'::slugify() replaces non-ASCII characters by a -'</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<div class="figure" id="figure_8_3">
+    <img src="../../img/jobeet_1_4/f0803.png" alt="Pruebas del método slugify con mensajes descriptivos" />
+
+    <p class="caption"><strong>Figura 8.3</strong> Pruebas del método slugify con mensajes descriptivos</p>
+</div>
+
+
+<p>La descripción de cada prueba también es muy útil cuando intentas descubrir qué tienes que probar. Como habrás observado, las descripciones de las pruebas siempre siguen el mismo patrón: son frases que describen cómo se debe comportar el método y siempre empiezan con el nombre del método que se prueba.</p>
+
+<div class="admonition sidebar"><p><strong class="title">Code coverage</strong> Cuando escribes pruebas es muy fácil olvidarse de probar algunas partes del código.</p>
+
+<p>Symfony incluye una tarea llamada <code>test:coverage</code> que te permite comprobar que todo tu código está bien probado. Para comprobar el porcentaje de código que está cubierto por las pruebas (llamado <em>code coverage</em>) indica como primer argumento el nombre de un archivo o directorio con pruebas y como segundo argumento el nombre de un archivo o directorio con código.</p>
+
+<div class="code cli">
+<pre class="cli">$ php symfony test:coverage test/unit/JobeetTest.php lib/Jobeet.class.php</pre>
+</div>
+
+<p>Si quieres ver las líneas de código exactas que no están probadas por tus pruebas, utiliza la opción <code>--detailed</code>:</p>
+
+<div class="code cli">
+<pre class="cli">$ php symfony test:coverage --detailed test/unit/JobeetTest.php lib/Jobeet.class.php</pre>
+</div>
+
+<p>Cuando esta tarea indica que tu código está completamente probado, debes tener en cuenta que sólo significa que todas las líneas de tu código se han probado, pero no significa que se han probado todos los casos extremos que se deberían probar en cada método.</p>
+
+<p>Como la tarea <code>test:coverage</code> hace uso de <code>XDebug</code> para obtener su información, en primer lugar debes instalar y activar <code>XDebug</code>.</p></div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="ejecutando_pruebas_unitarias.html">&larr; Anterior <span>8.4. Ejecutando pruebas unitarias</span></a>
+            
+            <a class="span5 next" href="anadiendo_pruebas_para_las_nuevas_caracteristicas.html">Siguiente &rarr; <span>8.6. Añadiendo pruebas para las nuevas características</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Probando el método slugify (El tutorial Jobeet%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'El tutorial Jobeet : Probando el método slugify']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Comenzando el proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> El proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> El modelo de datos</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> El controlador y la vista</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> El sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Profundizando en el modelo</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Trabajando con la página de cada categoría</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_8.html">
+            <span>Capítulo 8.</span> Pruebas unitarias
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="pruebas_en_symfony.html">
+            <span>8.1.</span> Pruebas en Symfony
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="pruebas_unitarias.html">
+            <span>8.2.</span> Pruebas unitarias
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_framework_de_pruebas_lime.html">
+            <span>8.3.</span> El framework de pruebas lime
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejecutando_pruebas_unitarias.html">
+            <span>8.4.</span> Ejecutando pruebas unitarias
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="probando_el_metodo_slugify.html">
+            <span>8.5.</span> Probando el método slugify
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="anadiendo_pruebas_para_las_nuevas_caracteristicas.html">
+            <span>8.6.</span> Añadiendo pruebas para las nuevas características
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="anadir_pruebas_al_corregir_un_error.html">
+            <span>8.7.</span> Añadir pruebas al corregir un error
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="pruebas_unitarias_para_propel.html">
+            <span>8.8.</span> Pruebas unitarias para Propel
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="conjuntos_de_pruebas_unitarias.html">
+            <span>8.9.</span> Conjuntos de pruebas unitarias
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="nos_vemos_manana.html">
+            <span>8.10.</span> Nos vemos mañana
+        </a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Pruebas funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Probando los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> El generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> El usuario</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> El día de descanso</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Canales Atom</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Servicios web</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> El buscador</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>20</span> <a href="../capitulo_20.html"> Plugins</a>
+    </li>
+    <li class="level-1">
+        <span>21</span> <a href="../capitulo_21.html"> El día del diseño</a>
+    </li>
+    <li class="level-1">
+        <span>22</span> <a href="../capitulo_22.html"> La cache</a>
+    </li>
+    <li class="level-1">
+        <span>23</span> <a href="../capitulo_23.html"> Pasando a producción</a>
+    </li>
+    <li class="level-1">
+        <span>24</span> <a href="../capitulo_24.html"> Un repaso a Symfony</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

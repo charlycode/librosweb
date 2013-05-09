@@ -1,0 +1,348 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>4.1. Propiedad white-space (CSS avanzado)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="../capitulo_4.html" />
+        <link rel="next" href="propiedad_display.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="4.1. Propiedad white-space (CSS avanzado)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page css_avanzado">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">CSS avanzado</a></li>
+  <li><a href="../capitulo_4.html">Capítulo 4. Propiedades avanzadas</a></li>
+  <li class="current"><span>4.1.. Propiedad white-space</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="propiedad_white_space"><span>4.1.</span> Propiedad white-space</h1>
+    
+
+<div class="table" id="table_4_1">
+
+    <table class="table property css" summary="Definición de la propiedad white-space de CSS"> 
+<tr><th>Definición</th><td>Establece el tratamiento de los espacios en blanco</td></tr><tr><th>Valores <br/> permitidos</th><td>Uno y sólo uno de los siguientes valores:<ul><li style="float:left;width:25%;margin-right:5%">normal</li><li style="float:left;width:25%;margin-right:5%">pre</li><li style="float:left;width:25%;margin-right:5%">nowrap</li><li style="float:left;width:25%;margin-right:5%">pre-wrap</li><li style="float:left;width:25%;margin-right:5%">pre-line</li><li style="float:left;width:25%;margin-right:5%">inherit</li></ul></td></tr><tr><th>Valor inicial</th><td>normal</td></tr><tr><th>Se aplica a</th><td>Todos los elementos</td></tr><tr><th>Válida en</th><td>medios visuales</td></tr><tr><th>Se hereda</th><td>si</td></tr><tr class="nobottom"><th>Definición en<br/>el estándar</th><td> http://www.w3.org/TR/CSS21/text.html#propdef-white-space </td></tr>
+</table>
+</div>
+
+
+<p>El tratamiento de los espacios en blanco en el código HTML es una de las características más desconcertantes para los diseñadores web que comienzan a crear páginas. A continuación se muestra cómo visualizan los navegadores dos párrafos de ejemplo:</p>
+
+<div class="example">
+<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed non sem quis tellus vulputate lobortis. Vivamus fermentum, tortor id ornare ultrices, ligula ipsum tincidunt pede, et blandit sem pede suscipit pede. Nulla cursus porta sem. Donec mollis nunc in leo.</p>
+
+<p>Lorem ipsum    dolor    sit amet,   consectetuer adipiscing     elit. 
+Sed non sem   quis tellus vulputate       lobortis. Vivamus fermentum, tortor 
+id ornare    ultrices, ligula ipsum tincidunt       pede, et blandit 
+sem pede suscipit     pede. Nulla cursus    porta sem. Donec mollis nunc in leo.</p>
+</div>
+
+<p>Aunque los dos párrafos anteriores se visualizan de la misma forma, en realidad su código HTML es completamente diferente:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">p</span>&gt;</span>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed non sem quis tellus vulputate lobortis. Vivamus fermentum, tortor id ornare ultrices, ligula ipsum tincidunt pede, et blandit sem pede suscipit pede. Nulla cursus porta sem. Donec mollis nunc in leo.<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">p</span>&gt;</span>
+&nbsp;
+<span class="sc2">&lt;<span class="kw2">p</span>&gt;</span>Lorem ipsum    dolor    sit amet,   consectetuer adipiscing     elit. 
+Sed non sem   quis tellus vulputate       lobortis. Vivamus fermentum, tortor 
+id ornare    ultrices, ligula ipsum tincidunt       pede, et blandit 
+sem pede suscipit     pede. Nulla cursus    porta sem. Donec mollis nunc in leo.<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">p</span>&gt;</span></pre>
+</div>
+
+<p>El segundo párrafo contiene numerosos espacios en blanco y saltos de línea. Sin embargo, como los navegadores eliminan automáticamente todos los espacios en blanco sobrantes, los dos párrafos se ven exactamente igual.</p>
+
+<p>En el estándar HTML un <em>"espacio en blanco"</em> puede ser un salto de línea, un tabulador y un espacio en blanco normal. Los navegadores eliminan de forma automática todos los espacios en blanco sobrantes salvo el espacio en blanco que separa las palabras del texto.</p>
+
+<p>La única excepción de este comportamiento es la etiqueta <code>&lt;pre&gt;</code> de HTML, utilizada para mostrar texto que ya tiene formato (su nombre viene de <em>preformateado</em>) y que por tanto respeta todos los espacios en blanco y todos los saltos de línea:</p>
+
+<div class="example">
+<pre>Lorem ipsum    dolor    sit amet,   consectetuer adipiscing     elit. 
+Sed non sem   quis tellus vulputate       lobortis. Vivamus fermentum, tortor 
+id ornare    ultrices, ligula ipsum tincidunt       pede, et blandit 
+sem pede suscipit     pede. Nulla cursus    porta sem. Donec mollis nunc in leo.</pre>
+</div>
+
+<p>El código HTML del ejemplo anterior es:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">pre</span>&gt;</span>Lorem ipsum    dolor    sit amet,   consectetuer adipiscing     elit. 
+Sed non sem   quis tellus vulputate       lobortis. Vivamus fermentum, tortor 
+id ornare    ultrices, ligula ipsum tincidunt       pede, et blandit 
+sem pede suscipit     pede. Nulla cursus    porta sem. Donec mollis nunc in leo.<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">pre</span>&gt;</span></pre>
+</div>
+
+<p>La propiedad <code>white-space</code> permite variar el comportamiento de los espacios en blanco. El estándar CSS 2.1 define cinco modelos diferentes de tratamiento de espacios en blanco:</p>
+
+<ul>
+<li><code>normal</code>: los espacios en blanco sobrantes y los saltos de línea se eliminan. No obstante, el texto se muestra en tantas líneas como sea necesario para que sus contenidos no se salgan del elemento contenedor.</li>
+<li><code>pre</code>: no se eliminan los espacios en blanco sobrantes y sólo se muestran los saltos de línea incluidos en el texto original. Este comportamiento puede provocar que los contenidos de texto se salgan de su elemento contenedor.</li>
+<li><code>nowrap</code>: se comporta igual que <code>normal</code> en los espacios en blanco, pero no añade saltos de línea en el texto original, por lo que los contenidos se pueden salir de su elemento contenedor.</li>
+<li><code>pre-wrap</code>: se comporta igual que <code>pre</code>, pero se introducen los saltos de línea que sean necesarios para que los contenidos de texto nunca se salgan de su elemento contenedor.</li>
+<li><code>pre-line</code>: se eliminan los espacios en blanco sobrantes, pero se respetan los saltos de línea originales y se crean tantos saltos de línea como sean necesarios para que el contenido de texto no se salga de su elemento contenedor.</li>
+</ul>
+
+<p>Como las explicaciones incluídas en el estándar CSS 2.1 pueden llegar a ser confusas, la siguiente tabla resume el comportamiento de cada valor:</p>
+
+<div class="table" id="table_4_2">
+
+    <table>
+<thead>
+<tr>
+  <th>Valor</th>
+  <th>Respeta espacios en blanco</th>
+  <th>Respeta saltos de línea</th>
+  <th>Ajusta las líneas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>normal</code></td>
+  <td>no</td>
+  <td>no</td>
+  <td>si</td>
+</tr>
+<tr>
+  <td><code>pre</code></td>
+  <td>si</td>
+  <td>si</td>
+  <td>no</td>
+</tr>
+<tr>
+  <td><code>nowrap</code></td>
+  <td>no</td>
+  <td>no</td>
+  <td>no</td>
+</tr>
+<tr>
+  <td><code>pre-wrap</code></td>
+  <td>si</td>
+  <td>si</td>
+  <td>si</td>
+</tr>
+<tr>
+  <td><code>pre-line</code></td>
+  <td>no</td>
+  <td>si</td>
+  <td>si</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+<p>A continuación se muestra el efecto de cada modelo de tratamiento de espacios en blanco sobre un mismo párrafo que contiene espacios en blanco y saltos de línea y que se encuentra dentro de un elemento contenedor de anchura limitada:</p>
+
+<div class="example">
+<div style="width: 50%; border: medium solid #000; padding: .5em; margin: 1em 0">
+<p style="white-space: normal; margin: 0"><strong>[white-space: normal]</strong> Lorem ipsum dolor sit amet,      consectetuer adipiscing elit. 
+Vestibulum     dictum. Class aptent taciti         sociosqu ad litora    torquent per 
+conubia     nostra, per inceptos      hymenaeos.</p>
+</div>
+
+<div style="width: 50%; border: medium solid #000; padding: .5em; margin: 1em 0">
+<p style="white-space: pre; margin: 0"><strong>[white-space: pre]</strong> Lorem ipsum dolor sit amet,      consectetuer adipiscing elit. 
+Vestibulum     dictum. Class aptent taciti         sociosqu ad litora    torquent per 
+conubia     nostra, per inceptos      hymenaeos.</p>
+</div>
+
+<div style="width: 50%; border: medium solid #000; padding: .5em; margin: 1em 0">
+<p style="white-space: pre-wrap; margin: 0"><strong>[white-space: pre-wrap]</strong> Lorem ipsum dolor sit amet,      consectetuer adipiscing elit. 
+Vestibulum     dictum. Class aptent taciti         sociosqu ad litora    torquent per 
+conubia     nostra, per inceptos      hymenaeos.</p>
+</div>
+
+<div style="width: 50%; border: medium solid #000; padding: .5em; margin: 1em 0">
+<p style="white-space: nowrap; margin: 0"><strong>[white-space: nowrap]</strong> Lorem ipsum dolor sit amet,      consectetuer adipiscing elit. 
+Vestibulum     dictum. Class aptent taciti         sociosqu ad litora    torquent per 
+conubia     nostra, per inceptos      hymenaeos.</p>
+</div>
+
+<div style="width: 50%; border: medium solid #000; padding: .5em; margin: 1em 0">
+<p style="white-space: pre-line; margin: 0"><strong>[white-space: pre-line]</strong> Lorem ipsum dolor sit amet,      consectetuer adipiscing elit. 
+Vestibulum     dictum. Class aptent taciti         sociosqu ad litora    torquent per 
+conubia     nostra, per inceptos      hymenaeos.</p>
+</div>
+</div>
+
+<p>Los valores más utilizados son <code>normal</code>, <code>pre</code> y <code>pre-wrap</code>. El valor <code>normal</code> se puede emplear por ejemplo en un elemento <code>&lt;pre&gt;</code> que se quiere mostrar como si fuera un párrafo:</p>
+
+<div class="example">
+<pre>&lt;pre&gt;Lorem ipsum    dolor    sit amet,   consectetuer adipiscing     elit. 
+Sed non sem   quis tellus vulputate       lobortis. Vivamus fermentum, tortor 
+id ornare    ultrices, ligula ipsum tincidunt       pede, et blandit 
+sem pede suscipit     pede. Nulla cursus    porta sem. Donec mollis nunc in leo.&lt;/pre&gt;</pre>
+
+<br/>
+
+<pre style="white-space: normal">&lt;pre style="white-space: normal"&gt;Lorem ipsum    dolor    sit amet,   consectetuer adipiscing     elit. 
+Sed non sem   quis tellus vulputate       lobortis. Vivamus fermentum, tortor 
+id ornare    ultrices, ligula ipsum tincidunt       pede, et blandit 
+sem pede suscipit     pede. Nulla cursus    porta sem. Donec mollis nunc in leo.&lt;/pre&gt;</pre>
+</div>
+
+<p>De la misma forma, el valor <code>pre</code> se puede emplear en un párrafo de texto que se quiere mostrar como si fuera un elemento <code>&lt;pre&gt;</code>:</p>
+
+<div class="example">
+<p>&lt;p&gt;Lorem ipsum    dolor    sit amet,   consectetuer adipiscing     elit. 
+Sed non sem   quis tellus vulputate       lobortis. Vivamus fermentum, tortor 
+id ornare    ultrices, ligula ipsum tincidunt       pede, et blandit 
+sem pede suscipit     pede. Nulla cursus    porta sem. Donec mollis nunc in leo.&lt;/p&gt;</p>
+
+<br/>
+
+<p style="white-space: pre">&lt;p style="white-space: pre"&gt;Lorem ipsum    dolor    sit amet,   consectetuer adipiscing     elit. 
+Sed non sem   quis tellus vulputate       lobortis. Vivamus fermentum, tortor 
+id ornare    ultrices, ligula ipsum tincidunt       pede, et blandit 
+sem pede suscipit     pede. Nulla cursus    porta sem. Donec mollis nunc in leo.&lt;/p&gt;</p>
+</div>
+
+<p>Por último, el valor <code>pre-wrap</code> es muy útil cuando se quiere mostrar un texto de la forma más fiel posible a su formato original (respetando espacios en blanco y saltos de línea) pero sin que el contenido de texto se salga de su elemento contenedor.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="../capitulo_4.html">&larr; Anterior <span>Capítulo 4. Propiedades avanzadas</span></a>
+            
+            <a class="span5 next" href="propiedad_display.html">Siguiente &rarr; <span>4.2. Propiedad display</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Propiedad white-space (CSS avanzado%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'CSS avanzado : Propiedad white-space']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Técnicas imprescindibles</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Buenas prácticas</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Selectores</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_4.html">
+            <span>Capítulo 4.</span> Propiedades avanzadas
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="propiedad_white_space.html">
+            <span>4.1.</span> Propiedad white-space
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="propiedad_display.html">
+            <span>4.2.</span> Propiedad display
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="propiedad_outline.html">
+            <span>4.3.</span> Propiedad outline
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="propiedad_quotes.html">
+            <span>4.4.</span> Propiedad quotes
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="propiedad_counter_reset.html">
+            <span>4.5.</span> Propiedad counter-reset
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="propiedad_counter_increment.html">
+            <span>4.6.</span> Propiedad counter-increment
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="propiedad_content.html">
+            <span>4.7.</span> Propiedad content
+        </a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Frameworks</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Técnicas avanzadas</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

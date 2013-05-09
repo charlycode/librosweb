@@ -1,0 +1,364 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>11.3. Instalando PHP en unos pocos clicks (Más con Symfony)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="comprobaciones_iniciales_servidor_dedicado_en_internet.html" />
+        <link rel="next" href="ejecutando_php_desde_la_linea_de_comandos.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="11.3. Instalando PHP en unos pocos clicks (Más con Symfony)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page mas_con_symfony">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Más con Symfony</a></li>
+  <li><a href="../capitulo_11.html">Capítulo 11. Windows y Symfony</a></li>
+  <li class="current"><span>11.3.. Instalando PHP en unos pocos clicks</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="instalando_php_en_unos_pocos_clicks"><span>11.3.</span> Instalando PHP en unos pocos clicks</h1>
+    
+
+<p>Ahora ya podemos instalar IIS y PHP de una sola vez. Como PHP no forma parte de
+la distribución de Windows Server 2008, en primer lugar debemos instalar el
+<em>Microsoft Web Platform Installer 2.0</em> al que nos referiremos como "Web PI" en
+las siguientes secciones.</p>
+
+<p>Web PI se encarga de instalar todas las dependencias necesarias para ejecutar
+PHP en cualquier sistema Windows/IIS. Por tanto, Web PI instala el servidor
+IIS con los <em>Role Services</em> mínimos para un servidor web y también proporciona
+las opciones imprescindibles para poder ejecutar PHP.</p>
+
+<div class="figure" id="figure_11_5">
+    <img src="../../img/mas_con_symfony/windows_05.png" alt="http://www.microsoft.com/web - Descargar ahora." />
+
+    <p class="caption"><strong>Figura 11.5</strong> http://www.microsoft.com/web - Descargar ahora.</p>
+</div>
+
+
+<p>La instalación del <em>Microsoft Web Platform Installer 2.0</em> incluye un analizador
+de configuración, comprueba los módulos existentes, propone las actualizaciones
+necesarias para los módulos e incluso permite probar extensiones en pruebas del
+<em>Microsoft Web Platform</em>.</p>
+
+<div class="figure" id="figure_11_6">
+    <img src="../../img/mas_con_symfony/windows_06.png" alt="Web PI 2.0 - Primera pantalla." />
+
+    <p class="caption"><strong>Figura 11.6</strong> Web PI 2.0 - Primera pantalla.</p>
+</div>
+
+
+<p>Web PI 2.0 permite instalar PHP con un solo click. La versión seleccionada
+instala la implementación <em>segura para Win32 pero sin hilos</em> de PHP, que es la
+que mejor funciona con IIS 7 y FastCGI. También ofrece la versión más reciente
+(pero probada) de las librerías de PHP, en este caso la 5.2.11. Para seleccionarla,
+pincha en la pestaña <em>"Frameworks and Runtimes"</em> de la izquierda:</p>
+
+<div class="figure" id="figure_11_7">
+    <img src="../../img/mas_con_symfony/windows_07.png" alt="Web PI 2.0 - Pestaña Frameworks and Runtimes." />
+
+    <p class="caption"><strong>Figura 11.7</strong> Web PI 2.0 - Pestaña Frameworks and Runtimes.</p>
+</div>
+
+
+<p>Después de seleccionar PHP, Web PI 2.0 selecciona automáticamente todas las
+dependencias necesarias para servir correctamente las páginas <code>.php</code> del servidor
+web, incluyendo los servicios de roles mínimos de IIS 7.0:</p>
+
+<div class="figure" id="figure_11_8">
+    <img src="../../img/mas_con_symfony/windows_08.png" alt="Web PI 2.0 - Dependencias añadidas automáticamente - 1/3." />
+
+    <p class="caption"><strong>Figura 11.8</strong> Web PI 2.0 - Dependencias añadidas automáticamente - 1/3.</p>
+</div>
+
+
+<div class="figure" id="figure_11_9">
+    <img src="../../img/mas_con_symfony/windows_09.png" alt="Web PI 2.0 - Dependencias añadidas automáticamente - 2/3." />
+
+    <p class="caption"><strong>Figura 11.9</strong> Web PI 2.0 - Dependencias añadidas automáticamente - 2/3.</p>
+</div>
+
+
+<div class="figure" id="figure_11_10">
+    <img src="../../img/mas_con_symfony/windows_10.png" alt="Web PI 2.0 - Dependencias añadidas automáticamente - 3/3." />
+
+    <p class="caption"><strong>Figura 11.10</strong> Web PI 2.0 - Dependencias añadidas automáticamente - 3/3.</p>
+</div>
+
+
+<p>A continuación pulsa sobre <em>Install</em> y después sobre el botón <em>"I Accept"</em> para
+comenzar la instalación de los componentes de IIS. Mientras tanto, se descarga
+el <em><a href="http://windows.php.net">runtime de PHP para Windows</a></em> y se actualizan algunos
+módulos (como por ejemplo el módulo FastCGI IIS 7.0).</p>
+
+<div class="figure" id="figure_11_11">
+    <img src="../../img/mas_con_symfony/windows_11.png" alt="Web PI 2.0 - Los componentes de IIS se instalan mientras se descargan las actualizaciones." />
+
+    <p class="caption"><strong>Figura 11.11</strong> Web PI 2.0 - Los componentes de IIS se instalan mientras se descargan las actualizaciones.</p>
+</div>
+
+
+<p>Por último se ejecuta el programa de instalación de PHP y después de unos minutos
+se muestra el siguiente mensaje:</p>
+
+<div class="figure" id="figure_11_12">
+    <img src="../../img/mas_con_symfony/windows_12.png" alt="Web PI 2.0 - Instalación de PHP completada." />
+
+    <p class="caption"><strong>Figura 11.12</strong> Web PI 2.0 - Instalación de PHP completada.</p>
+</div>
+
+
+<p>Pincha sobre <em>Finish</em> y el Windows Server ya estará escuchando en el puerto 80.
+Compruébalo mediante un navegador:</p>
+
+<div class="figure" id="figure_11_13">
+    <img src="../../img/mas_con_symfony/windows_13.png" alt="Firefox - IIS 7.0 responde en el puerto 80." />
+
+    <p class="caption"><strong>Figura 11.13</strong> Firefox - IIS 7.0 responde en el puerto 80.</p>
+</div>
+
+
+<p>Ahora, para comprobar que PHP se ha instalado correctamente y está disponible
+dentro de IIS, crea un pequeño archivo llamado <code>phpinfo.php</code> y guárdalo en el
+directorio <code>C:\inetpub\wwwroot</code> para que pueda ser accedido en el puerto 80.</p>
+
+<p>Antes de crear este archivo, asegúrate que el explorador de Windows muestra las
+extensiones de los archivos. Para ello, selecciona la opción <em>"Unhide Extensions
+for Known Files Types"</em>.</p>
+
+<div class="figure" id="figure_11_14">
+    <img src="../../img/mas_con_symfony/windows_14.png" alt="Explorador de Windows - Mostrar extensiones para los tipos de archivo conocidos." />
+
+    <p class="caption"><strong>Figura 11.14</strong> Explorador de Windows - Mostrar extensiones para los tipos de archivo conocidos.</p>
+</div>
+
+
+<p>Abre un explorador de Windows, accede al directorio <code>C:\inetpub\wwwroot</code>, pulsa
+el botón derecho del ratón y selecciona <em>"New Text Document"</em>. Cambia su nombre
+por <code>phpinfo.php</code> y añade la instrucción habitual para mostrar la información
+de PHP:</p>
+
+<div class="figure" id="figure_11_15">
+    <img src="../../img/mas_con_symfony/windows_15.png" alt="Explorador de Windows - Crear phpinfo.php." />
+
+    <p class="caption"><strong>Figura 11.15</strong> Explorador de Windows - Crear phpinfo.php.</p>
+</div>
+
+
+<p>A continuación, vuelve al navegador y accede a la URL <code>/phpinfo.php</code>:</p>
+
+<div class="figure" id="figure_11_16">
+    <img src="../../img/mas_con_symfony/windows_16.png" alt="Firefox - phpinfo.php se ejecuta bien" />
+
+    <p class="caption"><strong>Figura 11.16</strong> Firefox - phpinfo.php se ejecuta bien</p>
+</div>
+
+
+<p>Por último, para asegurarte de que Symfony se podrá instalar sin problemas,
+descarga el archivo <a href="http://sf-to.org/1.3/check.php"><code>check_configuration.php</code></a>.</p>
+
+<div class="figure" id="figure_11_17">
+    <img src="../../img/mas_con_symfony/windows_17.png" alt="PHP - Cómo descargar check.php." />
+
+    <p class="caption"><strong>Figura 11.17</strong> PHP - Cómo descargar check.php.</p>
+</div>
+
+
+<p>Copia este archivo en el mismo directorio que <code>phpinfo.php</code> (<code>C:\inetpub\wwwroot</code>)
+y si quieres, cambia su nombre por <code>check_configuration.php</code>.</p>
+
+<div class="figure" id="figure_11_18">
+    <img src="../../img/mas_con_symfony/windows_18.png" alt="PHP - Copiar y renombrar check_configuration.php." />
+
+    <p class="caption"><strong>Figura 11.18</strong> PHP - Copiar y renombrar check_configuration.php.</p>
+</div>
+
+
+<p>Por último, vuelve al navegador y accede a la URL <code>/check_configuration.php</code>:</p>
+
+<div class="figure" id="figure_11_19">
+    <img src="../../img/mas_con_symfony/windows_19.png" alt="Firefox - check_configuration.php se ejecuta bien." />
+
+    <p class="caption"><strong>Figura 11.19</strong> Firefox - check_configuration.php se ejecuta bien.</p>
+</div>
+
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="comprobaciones_iniciales_servidor_dedicado_en_internet.html">&larr; Anterior <span>11.2. Comprobaciones iniciales - Servidor dedicado en Internet</span></a>
+            
+            <a class="span5 next" href="ejecutando_php_desde_la_linea_de_comandos.html">Siguiente &rarr; <span>11.4. Ejecutando PHP desde la línea de comandos</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Instalando PHP en unos pocos clicks (Más con Symfony%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Más con Symfony : Instalando PHP en unos pocos clicks']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Enrutamiento avanzado</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Mejora tu productividad</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Emails</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Widgets y validadores propios</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Formularios avanzados</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Mejorando la barra de depuración web</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Uso avanzado de Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Utilizando la herencia de tablas de Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Funcionamiento interno de Symfony</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_11.html">
+            <span>Capítulo 11.</span> Windows y Symfony
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="introduccion.html">
+            <span>11.1.</span> Introducción
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="comprobaciones_iniciales_servidor_dedicado_en_internet.html">
+            <span>11.2.</span> Comprobaciones iniciales - Servidor dedicado en Internet
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="instalando_php_en_unos_pocos_clicks.html">
+            <span>11.3.</span> Instalando PHP en unos pocos clicks
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejecutando_php_desde_la_linea_de_comandos.html">
+            <span>11.4.</span> Ejecutando PHP desde la línea de comandos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="instalacion_y_uso_del_sandbox_de_symfony.html">
+            <span>11.5.</span> Instalación y uso del sandbox de Symfony
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="creando_un_nuevo_proyecto_symfony.html">
+            <span>11.6.</span> Creando un nuevo proyecto Symfony
+        </a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Desarrollando aplicaciones Facebook</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Descubriendo el poder de la línea de comandos</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Jugando con la cache de configuración de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Trabajando con la comunidad Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>A</span> <a href="../apendice_a.html"> Código JavaScript de sfWidgetFormGMapAddress</a>
+    </li>
+    <li class="level-1">
+        <span>B</span> <a href="../apendice_b.html"> Ejemplo de instalador propio</a>
+    </li>
+    <li class="level-1">
+        <span>C</span> <a href="../apendice_c.html"> Licencia</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

@@ -1,0 +1,260 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>6.7. Fusión de subárboles (Pro Git, el libro oficial de Git)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="submodulos.html" />
+        <link rel="next" href="resumen.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="6.7. Fusión de subárboles (Pro Git, el libro oficial de Git)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page pro_git">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Pro Git, el libro oficial de Git</a></li>
+  <li><a href="../capitulo_6.html">Capítulo 6. Las herramientas de Git</a></li>
+  <li class="current"><span>6.7.. Fusión de subárboles</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="fusion_de_subarboles"><span>6.7.</span> Fusión de subárboles</h1>
+    
+
+<p>Ahora que se han visto las dificultades que se pueden presentar utilizando el sistema de submódulos, es momento de echar un vistazo a una vía alternativa de atacar esa misma problemática. Cuando Git realiza una fusión, suele revisar lo que ha de fusiónar entre sí y, tras ese análisis, elige la estratégia mas adecuada para hacerlo. Si se están fusionando dos ramas, Git suele utilizar la <em>estategia recursiva</em> (<em>recursive strategy</em>). Si se están fusionando más de dos ramas, Git suele escoger la <em>estrategia del pulpo</em> (<em>octopus strategy</em>).</p>
+
+<p>Estas son las estrategias escogidas por defecto, ya que la estrategia recursiva puede manejar complejas fusiones-de-tres-vias — por ejemplo, con más de un antecesor común — pero tan solo puede fusionar dos ramas. La fusión-tipo-pulpo puede manejar multiples ramas, pero es mucho mas cuidadosa para evitar incurrir en complejos conflictos; y es por eso que se utiliza en los intentos de fusionar más de dos ramas.</p>
+
+<p>Pero existen también otras estratégias que se pueden escoger según se necesiten. Una de ellas, la <em>fusión subárbol</em> (<em>subtree merge</em>), es precisamente la más adecuada para tratar con subproyectos. En este caso se va a mostrar cómo se haria el mismo empotramiento del módulo rack tomado como ejemplo anteriormente, pero utilizando fusiones de subarbol en lugar de submódulos.</p>
+
+<p>La idea subyacente tras toda fusión subarborea es la de que se tienen dos proyectos; y uno de ellos está relacionado con una subcarpeta en el otro, y viceversa. Cuando se solicita una fusión subarborea, Git es lo suficientemente inteligente como para imaginarse por si solo que uno de los proyectos es un subárbol del otro y obrar en consecuencia. Es realmente sorprendente.</p>
+
+<p>Se comienza añadiendo la aplicación Rack al proyecto. Se añade como una referencia remota en el propio proyecto, y luego se extrae (<em>checkout</em>) en su propia rama:</p>
+
+<div class="code code">
+<pre class="code">$ git remote add rack_remote git@github.com:schacon/rack.git
+$ git fetch rack_remote
+warning: no common commits
+remote: Counting objects: 3184, done.
+remote: Compressing objects: 100% (1465/1465), done.remote: Compressing objects: 100% (1465/1465), done.
+remote: Total 3184 (delta 1952), reused 2770 (delta 1675)
+Receiving objects: 100% (3184/3184), 677.42 KiB | 4 KiB/s, done.
+Resolving deltas: 100% (1952/1952), done.Resolving deltas: 100% (1952/1952), done.Resolving deltas: 100% (1952/1952), done.
+From git@github.com:schacon/rack
+ * [new branch]      build      -&gt; rack_remote/build
+ * [new branch]      master     -&gt; rack_remote/master
+ * [new branch]      rack-0.4   -&gt; rack_remote/rack-0.4
+ * [new branch]      rack-0.9   -&gt; rack_remote/rack-0.9
+$ git checkout -b rack_branch rack_remote/master
+Branch rack_branch set up to track remote branch refs/remotes/rack_remote/master.
+Switched to a new branch &quot;rack_branch&quot;</pre>
+</div>
+
+<p>En este punto, se tiene la raiz del proyecto Rack en la rama <code>rack_branch</code> y la del propio proyecto padre en la rama <code>master</code>. Si se comprueban una o la otra, se puede observar que ambos proyectos tienen distintas raices:</p>
+
+<div class="code code">
+<pre class="code">$ ls
+AUTHORS        KNOWN-ISSUES   Rakefile      contrib        lib
+COPYING        README         bin           example        test
+$ git checkout master
+Switched to branch &quot;master&quot;
+$ ls
+README</pre>
+</div>
+
+<p>Si se desea situar el proyecto Rack como una subcarpeta del proyecto <code>master</code>. Se ha de lanzar el comando <code>git read-tree</code>. Se verá más en detalle el comando <code>read-tree</code> y sus acompañantes en el capítulo 9. Pero por ahora, basta con saber que este comando se encarga de leer el árbol raiz de una rama en el área de preparación (<em>staging area</em>) y carpeta de trabajo (<em>working directory</em>) actuales. Con ello, se retorna sobre la rama <code>master</code> y se recupera (<em>pull</em>) la rama <code>rack_branch</code> en la subcarpeta <code>rack</code> de la rama <code>master</code> del proyecto principal:</p>
+
+<div class="code code">
+<pre class="code">$ git read-tree --prefix=rack/ -u rack_branch</pre>
+</div>
+
+<p>Cuando se confirman estos cambios, es como si se tuvieran todos los archivos Rack bajo esa carpeta — como si se hubieran copiado desde un archivo comprimido tarball —. Lo que hace interesante este método es la posibilidad que brinda de fusionar cambios de una rama sobre la otra de forma sencilla. De tal forma que, si se actualiza el proyecto Rack, se pueden integrar los cambios aguas arriba simplemente cambiando a esa rama y recuperando:</p>
+
+<div class="code code">
+<pre class="code">$ git checkout rack_branch
+$ git pull</pre>
+</div>
+
+<p>Tras lo cual, es posible fusionar esos cambios de vuelta a la rama <code>master</code>. Utilizando el comando <code>git merge -s subtree</code>, que funciona correctamente; pero fusionando también los historiales entre sí. Un efecto secundario que posiblemente no interese. Para recuperar los cambios y rellenar el mensaje de la confirmación, se pueden emplear las opciones <code>--squash</code> y <code>--no-commit</code>, junto con la opción de estrategia <code>-s subtree</code>:</p>
+
+<div class="code code">
+<pre class="code">$ git checkout master
+$ git merge --squash -s subtree --no-commit rack_branch
+Squash commit -- not updating HEAD
+Automatic merge went well; stopped before committing as requested</pre>
+</div>
+
+<p>Con esto, todos los cambios en el proyecto Rack se encontrarán fusionados y listos para ser confirmados localmente. También es posible hacer el camino contrario: realizar los cambios en la subcarpeta <code>rack</code> de la rama <code>master</code>, para posteriormente fusionarlos en la rama <code>rack_branch</code> y remitirlos a los encargados del mantenimiento o enviarlos aguas arriba.</p>
+
+<p>Para ver las diferencias entre el contenido de la subcarpeta <code>rack</code> y el código en la rama <code>rack_branch</code> — para comprobar si es necesario fusionarlas —, no se puede emplear el comando <code>diff</code> habitual.  En su lugar, se ha de emplear el comando <code>git diff-tree</code> con la rama que se desea comparar:</p>
+
+<div class="code code">
+<pre class="code">$ git diff-tree -p rack_branch</pre>
+</div>
+
+<p>O, otro ejemplo: para comparar el contenido de la subcarpeta <code>rack</code> con la rama <code>master</code> en el servidor:</p>
+
+<div class="code code">
+<pre class="code">$ git diff-tree -p rack_remote/master</pre>
+</div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="submodulos.html">&larr; Anterior <span>6.6. Submódulos</span></a>
+            
+            <a class="span5 next" href="resumen.html">Siguiente &rarr; <span>6.8. Resumen</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Fusión de subárboles (Pro Git, el libro oficial de Git%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Pro Git, el libro oficial de Git : Fusión de subárboles']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Empezando</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Fundamentos de Git</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Trabajando con ramas en Git</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Git en un servidor</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Git en entornos distribuidos</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_6.html">
+            <span>Capítulo 6.</span> Las herramientas de Git
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="seleccion_de_confirmaciones_de_cambios_concretas.html">
+            <span>6.1.</span> Selección de confirmaciones de cambios concretas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="preparacion_interactiva.html">
+            <span>6.2.</span> Preparación interactiva
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="guardado_rapido_provisional.html">
+            <span>6.3.</span> Guardado rápido provisional
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="reescribiendo_la_historia.html">
+            <span>6.4.</span> Reescribiendo la historia
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="depuracion_con_git.html">
+            <span>6.5.</span> Depuración con Git
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="submodulos.html">
+            <span>6.6.</span> Submódulos
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="fusion_de_subarboles.html">
+            <span>6.7.</span> Fusión de subárboles
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="resumen.html">
+            <span>6.8.</span> Resumen
+        </a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Personalizando Git</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Git y otros sistemas</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Funcionamiento interno de Git</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

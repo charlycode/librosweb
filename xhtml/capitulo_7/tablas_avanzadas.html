@@ -1,0 +1,354 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>7.2. Tablas avanzadas (Introducción a XHTML)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="tablas_basicas.html" />
+        <link rel="next" href="../capitulo_8.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="7.2. Tablas avanzadas (Introducción a XHTML)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page xhtml">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Introducción a XHTML</a></li>
+  <li><a href="../capitulo_7.html">Capítulo 7. Tablas</a></li>
+  <li class="current"><span>7.2. Tablas avanzadas</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="tablas_avanzadas"><span>7.2.</span> Tablas avanzadas</h1>
+    
+
+<p>Algunas tablas complejas están formadas por más elementos que filas y celdas de datos. Así, es común que las tablas más avanzadas dispongan de una sección de cabecera, una sección de pie y varias secciones de datos. Además, también es posible agrupar varias columnas de forma lógica para poder aplicar estilos similares a un determinado grupo de columnas.</p>
+
+<p>Un ejemplo clásico de tablas avanzadas es el de las tablas utilizadas en contabilidad, como por ejemplo la tabla que muestra el balance de una empresa:</p>
+
+<div class="figure" id="figure_7_10">
+    <img src="../../img/xhtml/ejemplo_tabla_compleja.png" alt="Ejemplo de tabla compleja correspondiente al balance de una empresa" />
+
+    <p class="caption"><strong>Figura 7.10</strong> Ejemplo de tabla compleja correspondiente al balance de una empresa</p>
+</div>
+
+
+<p>Las partes que componen las tablas complejas se definen mediante las etiquetas <code>&lt;thead&gt;</code>, <code>&lt;tbody&gt;</code> y <code>&lt;tfoot&gt;</code>. La cabecera de la tabla se define con la etiqueta <code>&lt;thead&gt;</code>, el pie de la tabla se define mediante <code>&lt;tfoot&gt;</code> y cada sección de datos se define con una etiqueta <code>&lt;tbody&gt;</code>.</p>
+
+<table class="property" summary="Definición y propiedades de la etiqueta thead, tbody, tfoot de XHTML"><thead><tr>  <th scope="row">Etiquetas</th>  <td><strong class="title"><span>&lt;</span>thead<span>&gt;</span>&nbsp;<span>&lt;</span>tbody<span>&gt;</span>&nbsp;<span>&lt;</span>tfoot<span>&gt;</span>&nbsp;</strong></td></tr></thead><tbody><tr>  <th scope="row">Atributos comunes</th>  <td><a href="../capitulo_2/etiquetas_y_atributos.html#atributos_basicos">básicos</a>, <a href="../capitulo_2/etiquetas_y_atributos.html#atributos_para_internacionalizacion">internacionalización</a> y <a href="../capitulo_2/etiquetas_y_atributos.html#atributos_de_eventos">eventos</a></td></tr><tr>  <th scope="row">Atributos propios</th>  <td>-</td></tr><tr>  <th scope="row">Tipo de elemento</th>  <td>Bloque</td></tr><tr>  <th scope="row">Descripción</th>  <td>Se emplean para agrupar varias filas en una cabecera (thead) un pie (tfoot) o una sección (tbody) de una tabla</td></tr></tbody></table>
+
+<p>Cada tabla puede contener solamente una cabecera y un pie, pero puede incluir un número ilimitado de secciones. Si se define una cabecera y/o un pie, las etiquetas <code>&lt;thead&gt;</code> y/o <code>&lt;tfoot&gt;</code> deben colocarse inmediatamente antes que cualquier etiqueta <code>&lt;tbody&gt;</code>.</p>
+
+<p>La siguiente imagen muestra una tabla avanzada con cabecera, pie y una sección de datos:</p>
+
+<div class="figure" id="figure_7_11">
+    <img src="../../img/xhtml/ejemplo_tabla_avanzada.gif" alt="Ejemplo de tabla avanzada con cabecera, pie y secciones" />
+
+    <p class="caption"><strong>Figura 7.11</strong> Ejemplo de tabla avanzada con cabecera, pie y secciones</p>
+</div>
+
+
+<p>El código HTML necesario para crear la tabla de la imagen anterior hace uso de las etiquetas <code>&lt;thead&gt;</code>, <code>&lt;tbody&gt;</code> y <code>&lt;tfoot&gt;</code>:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">html</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">head</span>&gt;&lt;<span class="kw2">title</span>&gt;</span>Ejemplo de tabla avanzada<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">title</span>&gt;&lt;<span class="sy0">/</span><span class="kw2">head</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">body</span>&gt;</span>
+&nbsp;
+<span class="sc2">&lt;<span class="kw2">h3</span>&gt;</span>Análisis de ventas<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">h3</span>&gt;</span>
+&nbsp;
+<span class="sc2">&lt;<span class="kw2">table</span> <span class="kw3">summary</span><span class="sy0">=</span><span class="st0">&quot;Análisis de ventas anuales&quot;</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">caption</span>&gt;</span>Análisis de ventas anuales<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">caption</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">thead</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">tr</span>&gt;</span>
+      <span class="sc2">&lt;<span class="kw2">th</span> <span class="kw3">rowspan</span><span class="sy0">=</span><span class="st0">&quot;2&quot;</span> <span class="kw3">scope</span><span class="sy0">=</span><span class="st0">&quot;col&quot;</span>&gt;</span>AÑO<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">th</span>&gt;</span>
+      <span class="sc2">&lt;<span class="kw2">th</span> <span class="kw3">colspan</span><span class="sy0">=</span><span class="st0">&quot;4&quot;</span> <span class="kw3">scope</span><span class="sy0">=</span><span class="st0">&quot;col&quot;</span>&gt;</span>Expansión de ventas<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">th</span>&gt;</span>
+    <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">tr</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">tr</span>&gt;</span>
+      <span class="sc2">&lt;<span class="kw2">th</span> <span class="kw3">scope</span><span class="sy0">=</span><span class="st0">&quot;col&quot;</span>&gt;</span>Producto A<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">th</span>&gt;</span>
+      <span class="sc2">&lt;<span class="kw2">th</span> <span class="kw3">scope</span><span class="sy0">=</span><span class="st0">&quot;col&quot;</span>&gt;</span>Producto B<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">th</span>&gt;</span>
+      <span class="sc2">&lt;<span class="kw2">th</span> <span class="kw3">scope</span><span class="sy0">=</span><span class="st0">&quot;col&quot;</span>&gt;</span>Producto C<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">th</span>&gt;</span>
+      <span class="sc2">&lt;<span class="kw2">th</span> <span class="kw3">scope</span><span class="sy0">=</span><span class="st0">&quot;col&quot;</span>&gt;</span>Producto D<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">th</span>&gt;</span>
+    <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">tr</span>&gt;</span>
+  <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">thead</span>&gt;</span>
+&nbsp;
+  <span class="sc2">&lt;<span class="kw2">tfoot</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">tr</span>&gt;</span>
+      <span class="sc2">&lt;<span class="kw2">th</span> <span class="kw3">rowspan</span><span class="sy0">=</span><span class="st0">&quot;2&quot;</span> <span class="kw3">scope</span><span class="sy0">=</span><span class="st0">&quot;col&quot;</span>&gt;</span>AÑO<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">th</span>&gt;</span>
+      <span class="sc2">&lt;<span class="kw2">th</span> <span class="kw3">scope</span><span class="sy0">=</span><span class="st0">&quot;col&quot;</span>&gt;</span>Producto A<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">th</span>&gt;</span>
+      <span class="sc2">&lt;<span class="kw2">th</span> <span class="kw3">scope</span><span class="sy0">=</span><span class="st0">&quot;col&quot;</span>&gt;</span>Producto B<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">th</span>&gt;</span>
+      <span class="sc2">&lt;<span class="kw2">th</span> <span class="kw3">scope</span><span class="sy0">=</span><span class="st0">&quot;col&quot;</span>&gt;</span>Producto C<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">th</span>&gt;</span>
+      <span class="sc2">&lt;<span class="kw2">th</span> <span class="kw3">scope</span><span class="sy0">=</span><span class="st0">&quot;col&quot;</span>&gt;</span>Producto D<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">th</span>&gt;</span>
+    <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">tr</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">tr</span>&gt;</span>
+      <span class="sc2">&lt;<span class="kw2">th</span> <span class="kw3">colspan</span><span class="sy0">=</span><span class="st0">&quot;4&quot;</span> <span class="kw3">scope</span><span class="sy0">=</span><span class="st0">&quot;col&quot;</span>&gt;</span>Expansión de ventas<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">th</span>&gt;</span>
+    <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">tr</span>&gt;</span>
+  <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">tfoot</span>&gt;</span>
+&nbsp;
+  <span class="sc2">&lt;<span class="kw2">tbody</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">tr</span>&gt;</span>
+      <span class="sc2">&lt;<span class="kw2">th</span> <span class="kw3">scope</span><span class="sy0">=</span><span class="st0">&quot;row&quot;</span>&gt;</span>N-3<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">th</span>&gt;&lt;<span class="kw2">td</span>&gt;</span>-<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;&lt;<span class="kw2">td</span>&gt;</span>-<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;&lt;<span class="kw2">td</span>&gt;</span>-<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;&lt;<span class="kw2">td</span>&gt;</span>-<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;</span>
+    <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">tr</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">tr</span>&gt;</span>
+      <span class="sc2">&lt;<span class="kw2">th</span> <span class="kw3">scope</span><span class="sy0">=</span><span class="st0">&quot;row&quot;</span>&gt;</span>N-2<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">th</span>&gt;&lt;<span class="kw2">td</span>&gt;</span>3<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;&lt;<span class="kw2">td</span>&gt;</span>5<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;&lt;<span class="kw2">td</span>&gt;</span>8<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;&lt;<span class="kw2">td</span>&gt;</span>4<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;</span>
+    <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">tr</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">tr</span>&gt;</span>
+      <span class="sc2">&lt;<span class="kw2">th</span> <span class="kw3">scope</span><span class="sy0">=</span><span class="st0">&quot;row&quot;</span>&gt;</span>N-1<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">th</span>&gt;&lt;<span class="kw2">td</span>&gt;</span>4<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;&lt;<span class="kw2">td</span>&gt;</span>4<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;&lt;<span class="kw2">td</span>&gt;</span>7<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;&lt;<span class="kw2">td</span>&gt;</span>3<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;</span>
+    <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">tr</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">tr</span>&gt;</span>
+      <span class="sc2">&lt;<span class="kw2">th</span> <span class="kw3">scope</span><span class="sy0">=</span><span class="st0">&quot;row&quot;</span>&gt;</span>N<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">th</span>&gt;&lt;<span class="kw2">td</span>&gt;</span>5<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;&lt;<span class="kw2">td</span>&gt;</span>7<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;&lt;<span class="kw2">td</span>&gt;</span>6<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;&lt;<span class="kw2">td</span>&gt;</span>2<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;</span>
+    <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">tr</span>&gt;</span>
+  <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">tbody</span>&gt;</span>
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">table</span>&gt;</span>
+&nbsp;
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">body</span>&gt;</span>
+&nbsp;
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">html</span>&gt;</span></pre>
+</div>
+
+<p>Aunque al principio resulta extraño, el elemento <code>&lt;tfoot&gt;</code> siempre se escribe antes que cualquier elemento <code>&lt;tbody&gt;</code> en el código HTML. De hecho, si la etiqueta <code>&lt;tfoot&gt;</code> aparece después de un elemento <code>&lt;tbody&gt;</code>, la página no se considera válida.</p>
+
+<p>La etiqueta <code>&lt;tbody&gt;</code> permite realizar agrupaciones de filas, pero en ocasiones se necesitan agrupar columnas. Aunque su uso no es muy común, HTML define dos etiquetas similares para agrupar columnas: <code>&lt;col&gt;</code> y <code>&lt;colgroup&gt;</code>.</p>
+
+<p>La etiqueta <code>&lt;col&gt;</code> se utiliza para asignar los mismos atributos a varias columnas de forma simultánea. De esta forma, la etiqueta <code>&lt;col&gt;</code> no agrupa columnas, sino que sólo asigna atributos comunes a varias columnas.</p>
+
+<p>La siguiente imagen muestra una tabla que hace uso de la etiqueta <code>&lt;col&gt;</code>:</p>
+
+<div class="figure" id="figure_7_12">
+    <img src="../../img/xhtml/ejemplo_tabla_avanzada_col.gif" alt="Ejemplo de tabla avanzada que usa la etiqueta col" />
+
+    <p class="caption"><strong>Figura 7.12</strong> Ejemplo de tabla avanzada que usa la etiqueta col</p>
+</div>
+
+
+<p>El código HTML necesario para crear la tabla anterior se muestra a continuación:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">table</span> <span class="kw3">summary</span><span class="sy0">=</span><span class="st0">&quot;Análisis de ventas anuales&quot;</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">caption</span>&gt;</span>Análisis de ventas anuales<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">caption</span>&gt;</span>
+&nbsp;
+  <span class="sc2">&lt;<span class="kw2">col</span> <span class="kw3">style</span><span class="sy0">=</span><span class="st0">&quot;width:10%;&quot;</span> <span class="sy0">/</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">col</span> <span class="kw3">style</span><span class="sy0">=</span><span class="st0">&quot;width:30%;&quot;</span> <span class="sy0">/</span>&gt;</span>
+&nbsp;
+  <span class="sc2">&lt;<span class="kw2">thead</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">tr</span>&gt;</span>
+      <span class="sc2">&lt;<span class="kw2">th</span> <span class="kw3">scope</span><span class="sy0">=</span><span class="st0">&quot;col&quot;</span>&gt;</span>AÑO<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">th</span>&gt;</span>
+      <span class="sc2">&lt;<span class="kw2">th</span> <span class="kw3">scope</span><span class="sy0">=</span><span class="st0">&quot;col&quot;</span>&gt;</span>Producto A<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">th</span>&gt;</span>
+      <span class="sc2">&lt;<span class="kw2">th</span> <span class="kw3">scope</span><span class="sy0">=</span><span class="st0">&quot;col&quot;</span>&gt;</span>Producto B<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">th</span>&gt;</span>
+      <span class="sc2">&lt;<span class="kw2">th</span> <span class="kw3">scope</span><span class="sy0">=</span><span class="st0">&quot;col&quot;</span>&gt;</span>Producto C<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">th</span>&gt;</span>
+      <span class="sc2">&lt;<span class="kw2">th</span> <span class="kw3">scope</span><span class="sy0">=</span><span class="st0">&quot;col&quot;</span>&gt;</span>Producto D<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">th</span>&gt;</span>
+    <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">tr</span>&gt;</span>
+  <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">thead</span>&gt;</span>
+&nbsp;
+  <span class="sc2">&lt;<span class="kw2">tbody</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">tr</span>&gt;</span>
+      <span class="sc2">&lt;<span class="kw2">th</span> <span class="kw3">scope</span><span class="sy0">=</span><span class="st0">&quot;row&quot;</span>&gt;</span>N-3<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">th</span>&gt;&lt;<span class="kw2">td</span>&gt;</span>-<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;&lt;<span class="kw2">td</span>&gt;</span>-<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;&lt;<span class="kw2">td</span>&gt;</span>-<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;&lt;<span class="kw2">td</span>&gt;</span>-<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;</span>
+    <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">tr</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">tr</span>&gt;</span>
+      <span class="sc2">&lt;<span class="kw2">th</span> <span class="kw3">scope</span><span class="sy0">=</span><span class="st0">&quot;row&quot;</span>&gt;</span>N-2<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">th</span>&gt;&lt;<span class="kw2">td</span>&gt;</span>3<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;&lt;<span class="kw2">td</span>&gt;</span>5<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;&lt;<span class="kw2">td</span>&gt;</span>8<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;&lt;<span class="kw2">td</span>&gt;</span>4<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;</span>
+    <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">tr</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">tr</span>&gt;</span>
+      <span class="sc2">&lt;<span class="kw2">th</span> <span class="kw3">scope</span><span class="sy0">=</span><span class="st0">&quot;row&quot;</span>&gt;</span>N-1<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">th</span>&gt;&lt;<span class="kw2">td</span>&gt;</span>4<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;&lt;<span class="kw2">td</span>&gt;</span>4<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;&lt;<span class="kw2">td</span>&gt;</span>7<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;&lt;<span class="kw2">td</span>&gt;</span>3<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;</span>
+    <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">tr</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">tr</span>&gt;</span>
+      <span class="sc2">&lt;<span class="kw2">th</span> <span class="kw3">scope</span><span class="sy0">=</span><span class="st0">&quot;row&quot;</span>&gt;</span>N<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">th</span>&gt;&lt;<span class="kw2">td</span>&gt;</span>5<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;&lt;<span class="kw2">td</span>&gt;</span>7<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;&lt;<span class="kw2">td</span>&gt;</span>6<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;&lt;<span class="kw2">td</span>&gt;</span>2<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;</span>
+    <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">tr</span>&gt;</span>
+  <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">tbody</span>&gt;</span>
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">table</span>&gt;</span></pre>
+</div>
+
+<p>Por otra parte, la etiqueta <code>&lt;colgroup&gt;</code> se emplea para agrupar de forma estructural varias columnas de la tabla. La forma habitual de indicar el número de columnas que abarca la agrupación es utilizar el atributo <code>span</code>, que establece el número de columnas de cada agrupación.</p>
+
+<p>La siguiente imagen muestra una tabla avanzada con una agrupación de columnas realizada con la etiqueta <code>&lt;colgroup&gt;</code>:</p>
+
+<div class="figure" id="figure_7_13">
+    <img src="../../img/xhtml/ejemplo_tabla_avanzada_colgroup.gif" alt="Ejemplo de tabla avanzada que usa la etiqueta colgroup" />
+
+    <p class="caption"><strong>Figura 7.13</strong> Ejemplo de tabla avanzada que usa la etiqueta colgroup</p>
+</div>
+
+
+<p>El código HTML necesario para crear la tabla anterior se muestra a continuación:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">table</span> <span class="kw3">summary</span><span class="sy0">=</span><span class="st0">&quot;Análisis de ventas anuales&quot;</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">caption</span>&gt;</span>Análisis de ventas anuales<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">caption</span>&gt;</span>
+&nbsp;
+  <span class="sc2">&lt;<span class="kw2">colgroup</span> <span class="kw3">span</span><span class="sy0">=</span><span class="st0">&quot;1&quot;</span> <span class="kw3">style</span><span class="sy0">=</span><span class="st0">&quot;color:red;&quot;</span> <span class="sy0">/</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">colgroup</span> <span class="kw3">span</span><span class="sy0">=</span><span class="st0">&quot;3&quot;</span> <span class="kw3">style</span><span class="sy0">=</span><span class="st0">&quot;color:blue;&quot;</span> <span class="sy0">/</span>&gt;</span>
+&nbsp;
+  <span class="sc2">&lt;<span class="kw2">thead</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">tr</span>&gt;</span>
+      <span class="sc2">&lt;<span class="kw2">th</span> <span class="kw3">scope</span><span class="sy0">=</span><span class="st0">&quot;col&quot;</span>&gt;</span>AÑO<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">th</span>&gt;</span>
+      <span class="sc2">&lt;<span class="kw2">th</span> <span class="kw3">scope</span><span class="sy0">=</span><span class="st0">&quot;col&quot;</span>&gt;</span>Producto A<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">th</span>&gt;</span>
+      <span class="sc2">&lt;<span class="kw2">th</span> <span class="kw3">scope</span><span class="sy0">=</span><span class="st0">&quot;col&quot;</span>&gt;</span>Producto B<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">th</span>&gt;</span>
+      <span class="sc2">&lt;<span class="kw2">th</span> <span class="kw3">scope</span><span class="sy0">=</span><span class="st0">&quot;col&quot;</span>&gt;</span>Producto C<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">th</span>&gt;</span>
+      <span class="sc2">&lt;<span class="kw2">th</span> <span class="kw3">scope</span><span class="sy0">=</span><span class="st0">&quot;col&quot;</span>&gt;</span>Producto D<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">th</span>&gt;</span>
+    <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">tr</span>&gt;</span>
+  <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">thead</span>&gt;</span>
+&nbsp;
+  <span class="sc2">&lt;<span class="kw2">tbody</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">tr</span>&gt;</span>
+      <span class="sc2">&lt;<span class="kw2">th</span> <span class="kw3">scope</span><span class="sy0">=</span><span class="st0">&quot;row&quot;</span>&gt;</span>N-3<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">th</span>&gt;&lt;<span class="kw2">td</span>&gt;</span>-<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;&lt;<span class="kw2">td</span>&gt;</span>-<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;&lt;<span class="kw2">td</span>&gt;</span>-<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;&lt;<span class="kw2">td</span>&gt;</span>-<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;</span>
+    <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">tr</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">tr</span>&gt;</span>
+      <span class="sc2">&lt;<span class="kw2">th</span> <span class="kw3">scope</span><span class="sy0">=</span><span class="st0">&quot;row&quot;</span>&gt;</span>N-2<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">th</span>&gt;&lt;<span class="kw2">td</span>&gt;</span>3<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;&lt;<span class="kw2">td</span>&gt;</span>5<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;&lt;<span class="kw2">td</span>&gt;</span>8<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;&lt;<span class="kw2">td</span>&gt;</span>4<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;</span>
+    <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">tr</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">tr</span>&gt;</span>
+      <span class="sc2">&lt;<span class="kw2">th</span> <span class="kw3">scope</span><span class="sy0">=</span><span class="st0">&quot;row&quot;</span>&gt;</span>N-1<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">th</span>&gt;&lt;<span class="kw2">td</span>&gt;</span>4<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;&lt;<span class="kw2">td</span>&gt;</span>4<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;&lt;<span class="kw2">td</span>&gt;</span>7<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;&lt;<span class="kw2">td</span>&gt;</span>3<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;</span>
+    <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">tr</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">tr</span>&gt;</span>
+      <span class="sc2">&lt;<span class="kw2">th</span> <span class="kw3">scope</span><span class="sy0">=</span><span class="st0">&quot;row&quot;</span>&gt;</span>N<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">th</span>&gt;&lt;<span class="kw2">td</span>&gt;</span>5<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;&lt;<span class="kw2">td</span>&gt;</span>7<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;&lt;<span class="kw2">td</span>&gt;</span>6<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;&lt;<span class="kw2">td</span>&gt;</span>2<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;</span>
+    <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">tr</span>&gt;</span>
+  <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">tbody</span>&gt;</span>
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">table</span>&gt;</span></pre>
+</div>
+
+<p>El uso de las etiquetas <code>&lt;col&gt;</code> y <code>&lt;colgroup&gt;</code> no está muy extendido, debido a que la mayoría de navegadores no soportan muchas de sus funcionalidades.</p>
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="tablas_basicas.html">&larr; Anterior <span>7.1. Tablas básicas</span></a>
+            
+            <a class="span5 next" href="../capitulo_8.html">Siguiente &rarr; <span>Capítulo 8. Formularios</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Tablas avanzadas (Introducción a XHTML%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a XHTML : Tablas avanzadas']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Características básicas</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Texto</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Enlaces</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Listas</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Imágenes y objetos</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_7.html">
+            <span>Capítulo 7.</span> Tablas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="tablas_basicas.html">
+            <span>7.1.</span> Tablas básicas
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="tablas_avanzadas.html">
+            <span>7.2.</span> Tablas avanzadas
+        </a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Estructura y layout</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Metainformación</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Otras etiquetas importantes</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Accesibilidad</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Validación</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Fragmentos de código</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

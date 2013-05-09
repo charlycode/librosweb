@@ -1,0 +1,380 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>4.1. URL (Introducción a XHTML)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="../capitulo_4.html" />
+        <link rel="next" href="enlaces_relativos_y_absolutos.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="4.1. URL (Introducción a XHTML)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page xhtml">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Introducción a XHTML</a></li>
+  <li><a href="../capitulo_4.html">Capítulo 4. Enlaces</a></li>
+  <li class="current"><span>4.1. URL</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="url"><span>4.1.</span> URL</h1>
+    
+
+<p>Antes de empezar a crear enlaces, es necesario comprender y dominar el concepto de URL. El acrónimo URL (del inglés <em>Uniform Resource Locator</em>) hace referencia al identificador único de cada recurso disponible en Internet. Las URL son esenciales para crear los enlaces, pero también se utilizan en otros elementos HTML como las imágenes y los formularios.</p>
+
+<p>La URL de un recurso tiene dos objetivos principales:</p>
+
+<ul>
+<li>Identificar de forma única a ese recurso</li>
+<li>Permitir localizar de forma eficiente ese recurso</li>
+</ul>
+
+<p>En primer lugar, las URL permiten que cada página HTML publicada en Internet tenga un nombre único que permita diferenciarla de las demás. De esta forma es posible crear enlaces que apunten de forma inequívoca a una determinada página.</p>
+
+<p>Si se accede a la página principal de Google, la dirección que muestra el navegador es:</p>
+
+<div class="code html">
+<pre class="html5">http://www.google.com</pre>
+</div>
+
+<p>La cadena de texto <code>http://www.google.com</code> es la URL completa de la página principal de Google. La URL de las páginas es imprescindible para crear los enlaces, ya que permite distinguir una página de otra.</p>
+
+<p>El segundo objetivo de las URL es el de permitir la localización eficiente de cada recurso de Internet. Para ello es necesario comprender las diferentes partes que forman las URL. Una URL sencilla siempre está formada por las mismas tres partes. Si por ejemplo se considera la siguiente URL:</p>
+
+<div class="code html">
+<pre class="html5">http://www.librosweb.es/xhtml/capitulo4.html</pre>
+</div>
+
+<p>Las partes que componen la URL anterior son:</p>
+
+<ul>
+<li>Protocolo (<code>http://</code>): el mecanismo que debe utilizar el navegador para acceder a ese recurso. Todas las páginas web utilizan <code>http://</code>. Las páginas web <em>seguras</em> (por ejemplo las de los bancos y las de los servicios de email) utilizan <code>https://</code> (se añade una letra <code>s</code>).</li>
+<li>Servidor (<code>www.librosweb.es</code>): simplificando mucho su explicación, se trata del ordenador en el que se encuentra guardada la página que se quiere acceder. Los navegadores son capaces de obtener la dirección de cada servidor a partir de su nombre.</li>
+<li>Ruta (<code>/xhtml/capitulo4.html</code>): <em>camino</em> que se debe seguir, una vez que se ha llegado al servidor, para localizar el recurso específico que se quiere acceder.</li>
+</ul>
+
+<p>Por tanto, las URL no sólo identifican de forma única a cada recurso de Internet, sino que también proporcionan a los navegadores la información necesaria para poder llegar hasta ese recurso.</p>
+
+<p>La mayoría de URL son tan sencillas como la URL mostrada anteriormente. No obstante, existen URL complejas formadas por más partes.</p>
+
+<div class="code html">
+<pre class="html5">http://www.alistapart.com/comments/webstandards2008?page=5#42</pre>
+</div>
+
+<p>Las cinco partes que forman la URL anterior son:</p>
+
+<ul>
+<li>Protocolo (<code>http://</code>)</li>
+<li>Servidor (<code>www.alistapart.com</code>)</li>
+<li>Ruta (<code>/comments/webstandards2008</code>)</li>
+<li>Consulta (<code>?page=5</code>): información adicional necesaria para que el servidor localice correctamente el recurso que se quiere acceder. Siempre comienza con el carácter <code>?</code> y contiene una sucesión de palabras separadas por <code>=</code> y <code>&amp;</code></li>
+<li>Sección (<code>#42</code>): permite que el navegador se posicione automáticamente en una sección de la página web. Siempre comienza con el caracter <code>#</code></li>
+</ul>
+
+<p>Como las URL utilizan los caracteres <code>:</code>, <code>=</code>, <code>&amp;</code> y <code>/</code> para separar sus partes, estos caracteres están reservados y no se pueden utilizar libremente. Además, algunos caracteres no están reservados pero pueden ser problemáticos si se utilizan en la propia URL.</p>
+
+<p>Si es necesario incluir estos caracteres reservados y especiales en una URL, se sustituyen por combinaciones de caracteres seguros. Esta sustitución se denomina <em>codificación</em> de caracteres y el servidor realiza el proceso inverso (<em>decodificación</em>) cuando le llega una URL con los caracteres codificados.</p>
+
+<p>A continuación se muestra la tabla para codificar los caracteres más comunes:</p>
+
+<div class="table" id="table_4_1">
+
+    <table>
+<thead>
+<tr>
+  <th>Carácter original</th>
+  <th>Carácter codificado</th>
+  <th>Carácter original</th>
+  <th>Carácter codificado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>/</code></td>
+  <td><code>%2F</code></td>
+  <td><code>?</code></td>
+  <td><code>%3F</code></td>
+</tr>
+<tr>
+  <td><code>:</code></td>
+  <td><code>%3A</code></td>
+  <td><code>@</code></td>
+  <td><code>%40</code></td>
+</tr>
+<tr>
+  <td><code>=</code></td>
+  <td><code>%3D</code></td>
+  <td><code>&amp;</code></td>
+  <td><code>%26</code></td>
+</tr>
+<tr>
+  <td><code>"</code></td>
+  <td><code>%22</code></td>
+  <td><code>\</code></td>
+  <td><code>%5C</code></td>
+</tr>
+<tr>
+  <td><code>'</code></td>
+  <td><code>%60</code></td>
+  <td><code>~</code></td>
+  <td><code>%7E</code></td>
+</tr>
+<tr>
+  <td><code></code> (espacio en blanco)</td>
+  <td><code>%20</code></td>
+  <td><code>#</code></td>
+  <td><code>%23</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+<p>Por otra parte, aunque desde hace tiempo ya es posible incluir en las URL caracteres de otros idiomas que no sean el inglés, aún no es completamente seguro utilizar estos caracteres en las URL. Si se utilizan letras como <code>ñ</code>, <code>á</code>, <code>é</code> o <code>ç</code>, es posible que algunos navegadores no las interpreten de forma correcta.</p>
+
+<p>La solución consiste en codificar todos los caracteres que no existen en inglés. La siguiente tabla muestra la codificación de los caracteres más utilizados:</p>
+
+<div class="table" id="table_4_2">
+
+    <table>
+<thead>
+<tr>
+  <th>Carácter original</th>
+  <th>Carácter codificado</th>
+  <th>Carácter original</th>
+  <th>Carácter codificado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>ñ</code></td>
+  <td><code>%F1</code></td>
+  <td><code>Ñ</code></td>
+  <td><code>%D1</code></td>
+</tr>
+<tr>
+  <td><code>á</code></td>
+  <td><code>%E1</code></td>
+  <td><code>Á</code></td>
+  <td><code>%C1</code></td>
+</tr>
+<tr>
+  <td><code>é</code></td>
+  <td><code>%E9</code></td>
+  <td><code>É</code></td>
+  <td><code>%C9</code></td>
+</tr>
+<tr>
+  <td><code>í</code></td>
+  <td><code>%ED</code></td>
+  <td><code>Í</code></td>
+  <td><code>%CD</code></td>
+</tr>
+<tr>
+  <td><code>ó</code></td>
+  <td><code>%F3</code></td>
+  <td><code>Ó</code></td>
+  <td><code>%D3</code></td>
+</tr>
+<tr>
+  <td><code>ú</code></td>
+  <td><code>%FA</code></td>
+  <td><code>Ú</code></td>
+  <td><code>%DA</code></td>
+</tr>
+<tr>
+  <td><code>ç</code></td>
+  <td><code>%E7</code></td>
+  <td><code>Ç</code></td>
+  <td><code>%C7</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+<p>Teniendo en cuenta las dos tablas anteriores de codificación de caracteres, es fácil crear las URL correctas sin caracteres problemáticos:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc-1">&lt;!-- URL problemática --&gt;</span>
+http://www.ejemplo.com/estaciones/otoño.html
+&nbsp;
+<span class="sc-1">&lt;!-- URL correcta --&gt;</span>
+http://www.ejemplo.com/estaciones/oto%F1o.html
+&nbsp;
+<span class="sc-1">&lt;!-- URL problemática --&gt;</span>
+http://www.ejemplo.com/ruta/nombre página.html
+&nbsp;
+<span class="sc-1">&lt;!-- URL correcta --&gt;</span>
+http://www.ejemplo.com/ruta/nombre%20p%E1gina.html</pre>
+</div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="../capitulo_4.html">&larr; Anterior <span>Capítulo 4. Enlaces</span></a>
+            
+            <a class="span5 next" href="enlaces_relativos_y_absolutos.html">Siguiente &rarr; <span>4.2. Enlaces relativos y absolutos</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'URL (Introducción a XHTML%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a XHTML : URL']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Características básicas</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Texto</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_4.html">
+            <span>Capítulo 4.</span> Enlaces
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="url.html">
+            <span>4.1.</span> URL
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="enlaces_relativos_y_absolutos.html">
+            <span>4.2.</span> Enlaces relativos y absolutos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="enlaces_basicos.html">
+            <span>4.3.</span> Enlaces básicos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="enlaces_avanzados.html">
+            <span>4.4.</span> Enlaces avanzados
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="otros_tipos_de_enlaces.html">
+            <span>4.5.</span> Otros tipos de enlaces
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejemplos_de_enlaces_habituales.html">
+            <span>4.6.</span> Ejemplos de enlaces habituales
+        </a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Listas</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Imágenes y objetos</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Tablas</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Estructura y layout</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Metainformación</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Otras etiquetas importantes</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Accesibilidad</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Validación</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Fragmentos de código</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

@@ -1,0 +1,302 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>10.2. Estilos avanzados (Introducción a CSS)</title>
+        <link href="../main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="../capitulo_10.html" />
+        <link rel="next" href="../capitulo_11.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="10.2. Estilos avanzados (Introducción a CSS)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page css">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Introducción a CSS</a></li>
+  <li><a href="../capitulo_10.html">Capítulo 10. Tablas</a></li>
+  <li class="current"><span>10.2.. Estilos avanzados</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="estilos_avanzados"><span>10.2.</span> Estilos avanzados</h1>
+    
+
+<p>CSS define otras propiedades específicas para el control del aspecto de las tablas. Una de ellas es el tratamiento que reciben las celdas vacías de una tabla, que se controla mediante la propiedad <code>empty-cells</code>. Esta propiedad sólo se aplica cuando el modelo de bordes de la tabla es de tipo <code>separate</code>.</p>
+
+<div class="table" id="table_10_3">
+
+    <table class="table property css" summary="Definición de la propiedad empty-cells de CSS">
+    <thead>
+        <tr>
+            <th scope="row">Propiedad</th>
+            <td><strong class="title"><strong>empty-cells</strong></strong></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">Valores</th>
+            <td>show | hide | <a href="../../referencia/css/el_valor_inherit.html">inherit</a></td>
+        </tr>
+        <tr>
+            <th scope="row">Se aplica a</th>
+            <td>Celdas de una tabla</td>
+        </tr>
+        <tr>
+            <th scope="row">Valor inicial</th>
+            <td>show</td>
+        </tr>
+        <tr>
+            <th scope="row">Descripción</th>
+            <td>Define el mecanismo utilizado para el tratamiento de las celdas vacías de una tabla</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+
+<p>El valor <code>hide</code> indica que las celdas vacías no se deben mostrar. Una celda vacía es aquella que no tiene ningún contenido, ni siquiera un espacio en blanco o un <code>&amp;nbsp;</code>.</p>
+
+<p>La siguiente imagen muestra las diferencias entre una tabla normal y una tabla con la propiedad <code>empty-cells: hide</code>:</p>
+
+<div class="figure" id="figure_10_4">
+    <img src="../../img/css/f1004.gif" alt="Ejemplo de propiedad empty-cells" />
+
+    <p class="caption"><strong>Figura 10.4</strong> Ejemplo de propiedad empty-cells</p>
+</div>
+
+
+<p>Desafortunadamente, Internet Explorer 6 y las versiones anteriores no interpretan correctamente esta propiedad y muestran el ejemplo anterior de la siguiente manera:</p>
+
+<div class="figure" id="figure_10_5">
+    <img src="../../img/css/f1005.gif" alt="Internet Explorer no soporta la propiedad empty-cells" />
+
+    <p class="caption"><strong>Figura 10.5</strong> Internet Explorer no soporta la propiedad empty-cells</p>
+</div>
+
+
+<p>Por otra parte, el título de las tablas se establece mediante el elemento <code>&lt;caption&gt;</code>, que por defecto se muestra encima de los contenidos de la tabla. La propiedad <code>caption-side</code> permite controlar la posición del título de la tabla.</p>
+
+<div class="table" id="table_10_4">
+
+    <table class="table property css" summary="Definición de la propiedad caption-side de CSS">
+    <thead>
+        <tr>
+            <th scope="row">Propiedad</th>
+            <td><strong class="title"><strong>caption-side</strong></strong></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">Valores</th>
+            <td>top | bottom | <a href="../../referencia/css/el_valor_inherit.html">inherit</a></td>
+        </tr>
+        <tr>
+            <th scope="row">Se aplica a</th>
+            <td>Los elementos caption</td>
+        </tr>
+        <tr>
+            <th scope="row">Valor inicial</th>
+            <td>top</td>
+        </tr>
+        <tr>
+            <th scope="row">Descripción</th>
+            <td>Establece la posición del título de la tabla</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+
+<p>El valor <code>bottom</code> indica que el título de la tabla se debe mostrar debajo de los contenidos de la tabla. Si también se quiere modificar la alineación horizontal del título, debe utilizarse la propiedad <code>text-align</code>.</p>
+
+<p>A continuación se muestra el código HTML y CSS de un ejemplo sencillo de uso de la propiedad <code>caption-side</code>:</p>
+
+<div class="code css">
+<pre class="css"><span class="re1">.especial</span> <span class="br0">&#123;</span>
+  <span class="kw1">caption-side</span><span class="sy0">:</span> <span class="kw1">bottom</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+&lt;table class<span class="sy0">=</span><span class="st0">&quot;especial&quot;</span> summary<span class="sy0">=</span><span class="st0">&quot;Tabla genérica&quot;</span><span class="sy0">&gt;</span>
+  &lt;caption<span class="sy0">&gt;</span>Tabla <span class="nu0">2</span>.- Título especial&lt;/caption<span class="sy0">&gt;</span>
+  &lt;tr<span class="sy0">&gt;</span>
+    &lt;td<span class="sy0">&gt;</span><span class="nu0">1</span>&lt;/td<span class="sy0">&gt;</span>
+    &lt;td<span class="sy0">&gt;</span><span class="nu0">2</span>&lt;/td<span class="sy0">&gt;</span>
+    &lt;td<span class="sy0">&gt;</span><span class="nu0">3</span>&lt;/td<span class="sy0">&gt;</span>
+  &lt;/tr<span class="sy0">&gt;</span>
+  ...
+&lt;/table<span class="sy0">&gt;</span></pre>
+</div>
+
+<p>La siguiente imagen muestra el resultado de visualizar el ejemplo anterior en cualquier navegador:</p>
+
+<div class="figure" id="figure_10_6">
+    <img src="../../img/css/f1007.gif" alt="Ejemplo de propiedad caption-side" />
+
+    <p class="caption"><strong>Figura 10.6</strong> Ejemplo de propiedad caption-side</p>
+</div>
+
+
+<p><div class="exercise"><p class="title">Ejercicio 11</p> <a href="http://librosweb.es/css/capitulo_15/ejercicio_11.html">Ver enunciado</a></div></p>
+
+<p>El resultado final del ejercicio anterior se podría completar añadiendo una pequeña mejora: que el color de las filas varíe cuando el usuario pasa el ratón por encima de cada fila. La <em>pseudo-clase</em> <code>:hover</code> permite añadir fácilmente esta característica:</p>
+
+<div class="figure" id="figure_10_7">
+    <img src="../../img/css/f1013.gif" alt="Pseudo-clase :hover en las filas de una tabla" />
+
+    <p class="caption"><strong>Figura 10.7</strong> Pseudo-clase :hover en las filas de una tabla</p>
+</div>
+
+
+<p>La regla CSS necesaria se muestra a continuación:</p>
+
+<div class="code css">
+<pre class="css">table tr<span class="re2">:hover </span><span class="br0">&#123;</span>
+  <span class="kw1">background</span><span class="sy0">:</span> <span class="re0">#FFFF66</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="../capitulo_10.html">&larr; Anterior <span>Capítulo 10. Tablas</span></a>
+            
+            <a class="span5 next" href="../capitulo_11.html">Siguiente &rarr; <span>Capítulo 11. Formularios</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Estilos avanzados (Introducción a CSS%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a CSS : Estilos avanzados']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Selectores</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Unidades de medida y colores</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Modelo de cajas</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Posicionamiento y visualización</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Texto</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Enlaces</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Imágenes</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Listas</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_10.html">
+            <span>Capítulo 10.</span> Tablas
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="estilos_avanzados.html">
+            <span>10.2.</span> Estilos avanzados
+        </a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Layout</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Otros</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Recursos útiles</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Ejercicios</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

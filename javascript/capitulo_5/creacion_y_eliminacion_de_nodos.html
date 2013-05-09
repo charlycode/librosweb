@@ -1,0 +1,233 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>5.4. Creación y eliminación de nodos (Introducción a JavaScript)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="acceso_directo_a_los_nodos.html" />
+        <link rel="next" href="acceso_directo_a_los_atributos_xhtml.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="5.4. Creación y eliminación de nodos (Introducción a JavaScript)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page javascript">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Introducción a JavaScript</a></li>
+  <li><a href="../capitulo_5.html">Capítulo 5. DOM</a></li>
+  <li class="current"><span>5.4. Creación y eliminación de nodos</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="creacion_y_eliminacion_de_nodos"><span>5.4.</span> Creación y eliminación de nodos</h1>
+    
+
+<p>Acceder a los nodos y a sus propiedades (que se verá más adelante) es sólo una parte de las manipulaciones habituales en las páginas. Las otras operaciones habituales son las de crear y eliminar nodos del árbol DOM, es decir, crear y eliminar <em>"trozos"</em> de la página web.</p>
+
+<h3 id="creacion_de_elementos_xhtml_simples">5.4.1. Creación de elementos XHTML simples</h3>
+
+<p>Como se ha visto, un elemento XHTML sencillo, como por ejemplo un párrafo, genera dos nodos: el primer nodo es de tipo <code>Element</code> y representa la etiqueta <code>&lt;p&gt;</code> y el segundo nodo es de tipo <code>Text</code> y representa el contenido textual de la etiqueta <code>&lt;p&gt;</code>.</p>
+
+<p>Por este motivo, crear y añadir a la página un nuevo elemento XHTML sencillo consta de cuatro pasos diferentes:</p>
+
+<ol>
+<li>Creación de un nodo de tipo <code>Element</code> que represente al elemento.</li>
+<li>Creación de un nodo de tipo <code>Text</code> que represente el contenido del elemento.</li>
+<li>Añadir el nodo <code>Text</code> como nodo hijo del nodo <code>Element</code>.</li>
+<li>Añadir el nodo <code>Element</code> a la página, en forma de nodo hijo del nodo correspondiente al lugar en el que se quiere insertar el elemento.</li>
+</ol>
+
+<p>De este modo, si se quiere añadir un párrafo simple al final de una página XHTML, es necesario incluir el siguiente código JavaScript:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="co1">// Crear nodo de tipo Element</span>
+<span class="kw1">var</span> parrafo <span class="sy0">=</span> document.<span class="me1">createElement</span><span class="br0">&#40;</span><span class="st0">&quot;p&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="co1">// Crear nodo de tipo Text</span>
+<span class="kw1">var</span> contenido <span class="sy0">=</span> document.<span class="me1">createTextNode</span><span class="br0">&#40;</span><span class="st0">&quot;Hola Mundo!&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="co1">// Añadir el nodo Text como hijo del nodo Element</span>
+parrafo.<span class="me1">appendChild</span><span class="br0">&#40;</span>contenido<span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="co1">// Añadir el nodo Element como hijo de la pagina</span>
+document.<span class="me1">body</span>.<span class="me1">appendChild</span><span class="br0">&#40;</span>parrafo<span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>El proceso de creación de nuevos nodos puede llegar a ser tedioso, ya que implica la utilización de tres funciones DOM:</p>
+
+<ul>
+<li><code>createElement(etiqueta)</code>: crea un nodo de tipo <code>Element</code> que representa al elemento XHTML cuya etiqueta se pasa como parámetro.</li>
+<li><code>createTextNode(contenido)</code>: crea un nodo de tipo <code>Text</code> que almacena el contenido textual de los elementos XHTML.</li>
+<li><code>nodoPadre.appendChild(nodoHijo)</code>: añade un nodo como hijo de otro nodo. Se debe utilizar al menos dos veces con los nodos habituales: en primer lugar se añade el nodo <code>Text</code> como hijo del nodo <code>Element</code> y a continuación se añade el nodo <code>Element</code> como hijo de algún nodo de la página.</li>
+</ul>
+
+<h3 id="eliminacion_de_nodos">5.4.2. Eliminación de nodos</h3>
+
+<p>Afortunadamente, eliminar un nodo del árbol DOM de la página es mucho más sencillo que añadirlo. En este caso, solamente es necesario utilizar la función <code>removeChild()</code>:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> parrafo <span class="sy0">=</span> document.<span class="me1">getElementById</span><span class="br0">&#40;</span><span class="st0">&quot;provisional&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+parrafo.<span class="me1">parentNode</span>.<span class="me1">removeChild</span><span class="br0">&#40;</span>parrafo<span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="sy0">&lt;</span>p id<span class="sy0">=</span><span class="st0">&quot;provisional&quot;</span><span class="sy0">&gt;</span>...<span class="sy0">&lt;/</span>p<span class="sy0">&gt;</span></pre>
+</div>
+
+<p>La función <code>removeChild()</code> requiere como parámetro el nodo que se va a eliminar. Además, esta función debe ser invocada desde el elemento padre de ese nodo que se quiere eliminar. La forma más segura y rápida de acceder al nodo padre de un elemento es mediante la propiedad <code>nodoHijo.parentNode</code>.</p>
+
+<p>Así, para eliminar un nodo de una página XHTML se invoca a la función <code>removeChild()</code> desde el valor <code>parentNode</code> del nodo que se quiere eliminar. Cuando se elimina un nodo, también se eliminan automáticamente todos los nodos hijos que tenga, por lo que no es necesario borrar manualmente cada nodo hijo.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="acceso_directo_a_los_nodos.html">&larr; Anterior <span>5.3. Acceso directo a los nodos</span></a>
+            
+            <a class="span5 next" href="acceso_directo_a_los_atributos_xhtml.html">Siguiente &rarr; <span>5.5. Acceso directo a los atributos XHTML</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Creación y eliminación de nodos (Introducción a JavaScript%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a JavaScript : Creación y eliminación de nodos']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> El primer script</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Programación básica</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Programación avanzada</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_5.html">
+            <span>Capítulo 5.</span> DOM
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="arbol_de_nodos.html">
+            <span>5.1.</span> Árbol de nodos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="tipos_de_nodos.html">
+            <span>5.2.</span> Tipos de nodos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="acceso_directo_a_los_nodos.html">
+            <span>5.3.</span> Acceso directo a los nodos
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="creacion_y_eliminacion_de_nodos.html">
+            <span>5.4.</span> Creación y eliminación de nodos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="acceso_directo_a_los_atributos_xhtml.html">
+            <span>5.5.</span> Acceso directo a los atributos XHTML
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicios_sobre_dom.html">
+            <span>5.6.</span> Ejercicios sobre DOM
+        </a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Eventos</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Otras utilidades</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Detección y corrección de errores</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Recursos útiles</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

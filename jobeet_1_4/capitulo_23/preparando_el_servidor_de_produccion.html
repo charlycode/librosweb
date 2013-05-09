@@ -1,0 +1,261 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>23.1. Preparando el servidor de producción (El tutorial Jobeet)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="../capitulo_23.html" />
+        <link rel="next" href="las_librerias_de_symfony.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="23.1. Preparando el servidor de producción (El tutorial Jobeet)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page jobeet_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">El tutorial Jobeet</a></li>
+  <li><a href="../capitulo_23.html">Capítulo 23. Pasando a producción</a></li>
+  <li class="current"><span>23.1.. Preparando el servidor de producción</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="preparando_el_servidor_de_produccion"><span>23.1.</span> Preparando el servidor de producción</h1>
+    
+
+<p>Antes de instalar la aplicación en producción, asegúrate de que el servidor de producción está correctamente configurado. Quizás necesites volver a leer el tutorial del primer día, donde explicamos cómo configurar el servidor web.</p>
+
+<p>En esta sección suponemos que ya tienes un servidor web, una base de datos y PHP 5.2.4 o posterior correctamente instalados.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Si tu servidor web no permite el acceso mediante SSH, puedes saltarte la sección en la que necesitas acceder a la línea de comandos.</p></div>
+
+<h3 id="configuracion_del_servidor">23.1.1. Configuración del servidor</h3>
+
+<p>El primer paso consiste en comprobar que tanto PHP como algunas de sus extensiones están correctamente instaladas y configuradas. Tal y como explicamos durante el primer día, utiliza el script <code>check_configuration.php</code> que incluye Symfony. Como en el servidor web no vamos a instalar Symfony, descarga directamente el script desde la siguiente dirección:</p>
+
+<div class="code code">
+<pre class="code">http://trac.symfony-project.org/browser/branches/1.2/data/bin/check_configuration.php?format=raw</pre>
+</div>
+
+<p>Copia el archivo descargado al directorio raíz de tu servidor web y ejecútalo desde un navegador y desde la línea de comandos:</p>
+
+<div class="code cli">
+<pre class="cli">$ php check_configuration.php</pre>
+</div>
+
+<p>Corrige todos los errores graves que muestre el script hasta que ya no veas ningún error ni en el navegador ni en la línea de comandos.</p>
+
+<h3 id="aceleradores_php">23.1.2. Aceleradores PHP</h3>
+
+<p>En los servidores de producción siempre se intenta conseguir el máximo rendimiento posible. Instalar un <a href="http://en.wikipedia.org/wiki/PHP_accelerator">acelerador de PHP</a> es una de las formas más sencillas y baratas de mejorar el rendimiento.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Según la definición de la Wikipedia: <em>"el funcionamiento de los aceleradores de PHP consiste en guardar en una cache el "bytecode" generado al compilar los scripts de PHP. De esta forma, se evita tener que procesar y compilar el código fuente del script en cada petición"</em></p></div>
+
+<p><a href="http://www.php.net/apc">APC</a> es uno de los aceleradores más populares y uno de los más fáciles de instalar:</p>
+
+<div class="code cli">
+<pre class="cli">$ pecl install APC</pre>
+</div>
+
+<p>Dependiendo del sistema operativo que utilices, es posible que puedas instalarlo incluso mediante el gestor de paquetes del propio sistema operativo.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Te aconsejamos que dediques un tiempo a aprender <a href="http://www.php.net/manual/es/apc.configuration.php">cómo configurar APC</a>.</p></div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="../capitulo_23.html">&larr; Anterior <span>Capítulo 23. Pasando a producción</span></a>
+            
+            <a class="span5 next" href="las_librerias_de_symfony.html">Siguiente &rarr; <span>23.2. Las librerías de Symfony</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Preparando el servidor de producción (El tutorial Jobeet%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'El tutorial Jobeet : Preparando el servidor de producción']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Comenzando el proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> El proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> El modelo de datos</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> El controlador y la vista</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> El sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Profundizando en el modelo</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Trabajando con la página de cada categoría</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Pruebas unitarias</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Pruebas funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Probando los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> El generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> El usuario</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> El día de descanso</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Canales Atom</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Servicios web</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> El buscador</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>20</span> <a href="../capitulo_20.html"> Plugins</a>
+    </li>
+    <li class="level-1">
+        <span>21</span> <a href="../capitulo_21.html"> El día del diseño</a>
+    </li>
+    <li class="level-1">
+        <span>22</span> <a href="../capitulo_22.html"> La cache</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_23.html">
+            <span>Capítulo 23.</span> Pasando a producción
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="preparando_el_servidor_de_produccion.html">
+            <span>23.1.</span> Preparando el servidor de producción
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="las_librerias_de_symfony.html">
+            <span>23.2.</span> Las librerías de Symfony
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ajustando_la_configuracion.html">
+            <span>23.3.</span> Ajustando la configuración
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="modificando_la_estructura_de_directorios.html">
+            <span>23.4.</span> Modificando la estructura de directorios
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="las_factorias.html">
+            <span>23.5.</span> Las factorías
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="instalando_aplicaciones.html">
+            <span>23.6.</span> Instalando aplicaciones
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="nos_vemos_manana.html">
+            <span>23.7.</span> Nos vemos mañana
+        </a>
+    </li>
+    <li class="level-1">
+        <span>24</span> <a href="../capitulo_24.html"> Un repaso a Symfony</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

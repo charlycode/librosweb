@@ -1,0 +1,435 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>13.3. Personalizar el cursor (Introducción a CSS)</title>
+        <link href="../main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="version_para_imprimir.html" />
+        <link rel="next" href="hacks_y_filtros.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="13.3. Personalizar el cursor (Introducción a CSS)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page css">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Introducción a CSS</a></li>
+  <li><a href="../capitulo_13.html">Capítulo 13. Otros</a></li>
+  <li class="current"><span>13.3.. Personalizar el cursor</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="personalizar_el_cursor"><span>13.3.</span> Personalizar el cursor</h1>
+    
+
+<p>CSS no permite modificar los elementos propios del navegador o de la interfaz de usuario del sistema operativo. Sin embargo, el puntero del ratón es una excepción muy importante, ya que se puede modificar mediante la propiedad <code>cursor</code>.</p>
+
+<div class="table" id="table_13_7">
+
+    <table class="table property css" summary="Definición de la propiedad cursor de CSS">
+    <thead>
+        <tr>
+            <th scope="row">Propiedad</th>
+            <td><strong class="title"><strong>cursor</strong></strong></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">Valores</th>
+            <td>( (url ,)* ( auto | crosshair | default | pointer | move | e-resize | ne-resize | nw-resize | n-resize | se-resize | sw-resize | s-resize | w-resize | text | wait | help | progress ) ) | <a href="../../referencia/css/el_valor_inherit.html">inherit</a></td>
+        </tr>
+        <tr>
+            <th scope="row">Se aplica a</th>
+            <td>Todos los elementos</td>
+        </tr>
+        <tr>
+            <th scope="row">Valor inicial</th>
+            <td>auto</td>
+        </tr>
+        <tr>
+            <th scope="row">Descripción</th>
+            <td>Permite personalizar el puntero del ratón</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+
+<p>La propiedad <code>cursor</code> no sólo permite seleccionar un puntero entre los disponibles en el sistema operativo (flecha, mano, reloj de arena, redimensionar, etc.) sino que incluso permite indicar la URL de una imagen que se quiere mostrar como puntero personalizado.</p>
+
+<p>Se pueden indicar varias URL para que CSS intente cargar varias imágenes: si la primera imagen del puntero no se carga o no la soporta el navegador, se pasa a la siguiente imagen y así sucesivamente hasta que se pueda cargar alguna imagen.</p>
+
+<p>El siguiente ejemplo muestra el caso de un puntero definido con varias URL y un valor estándar:</p>
+
+<div class="code css">
+<pre class="css"><span class="re2">:link</span><span class="sy0">,</span> <span class="re2">:visited </span><span class="br0">&#123;</span> <span class="kw1">cursor</span><span class="sy0">:</span> <span class="kw2">url</span><span class="br0">&#40;</span><span class="co2">puntero.svg</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="kw2">url</span><span class="br0">&#40;</span><span class="co2">puntero.cur</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="kw2">pointer</span> <span class="br0">&#125;</span></pre>
+</div>
+
+<p>Si el navegador soporta las imágenes en formato SVG, el puntero del ratón cambia su aspecto por la imagen <code>puntero.svg</code>. Si el navegador no soporta el formato SVG, intenta cargar la siguiente URL que define un puntero en formato <code>.cur</code>. Si no se puede cargar correctamente, se mostraría el valor preestablecido <code>pointer</code>.</p>
+
+<p>Los valores preestablecidos para el puntero se muestran a continuación:</p>
+
+<div class="table" id="table_13_8">
+
+    <table>
+<thead>
+<tr>
+  <th>Puntero</th>
+  <th>Navegadores que lo soportan</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><span class="image">
+    <img src="../../img/css/f1303.gif"  />    
+</span>
+ <code>cursor: default</code></td>
+  <td>Todos</td>
+</tr>
+<tr>
+  <td><span class="image">
+    <img src="../../img/css/f1304.gif"  />    
+</span>
+ <code>cursor: crosshair</code></td>
+  <td>Todos</td>
+</tr>
+<tr>
+  <td><span class="image">
+    <img src="../../img/css/f1305.gif"  />    
+</span>
+ <code>cursor: hand</code></td>
+  <td>Solo Internet Explorer</td>
+</tr>
+<tr>
+  <td><span class="image">
+    <img src="../../img/css/f1306.gif"  />    
+</span>
+ <code>cursor: pointer</code></td>
+  <td>Todos salvo Internet Explorer</td>
+</tr>
+<tr>
+  <td><span class="image">
+    <img src="../../img/css/f1307.gif"  />    
+</span>
+ <code>cursor:pointer; cursor: hand</code></td>
+  <td>Todos</td>
+</tr>
+<tr>
+  <td><span class="image">
+    <img src="../../img/css/f1308.gif"  />    
+</span>
+ <code>cursor: move</code></td>
+  <td>Todos</td>
+</tr>
+<tr>
+  <td><span class="image">
+    <img src="../../img/css/f1309.gif"  />    
+</span>
+ <code>cursor: text</code></td>
+  <td>Todos</td>
+</tr>
+<tr>
+  <td><span class="image">
+    <img src="../../img/css/f1310.gif"  />    
+</span>
+ <code>cursor: wait</code></td>
+  <td>Todos</td>
+</tr>
+<tr>
+  <td><span class="image">
+    <img src="../../img/css/f1311.gif"  />    
+</span>
+ <code>cursor: help</code></td>
+  <td>Todos</td>
+</tr>
+<tr>
+  <td><span class="image">
+    <img src="../../img/css/f1312.gif"  />    
+</span>
+ <code>cursor: n-resize</code></td>
+  <td>Todos</td>
+</tr>
+<tr>
+  <td><span class="image">
+    <img src="../../img/css/f1313.gif"  />    
+</span>
+ <code>cursor: ne-resize</code></td>
+  <td>Todos</td>
+</tr>
+<tr>
+  <td><span class="image">
+    <img src="../../img/css/f1314.gif"  />    
+</span>
+ <code>cursor: e-resize</code></td>
+  <td>Todos</td>
+</tr>
+<tr>
+  <td><span class="image">
+    <img src="../../img/css/f1315.gif"  />    
+</span>
+ <code>cursor: se-resize</code></td>
+  <td>Todos</td>
+</tr>
+<tr>
+  <td><span class="image">
+    <img src="../../img/css/f1316.gif"  />    
+</span>
+ <code>cursor: s-resize</code></td>
+  <td>Todos</td>
+</tr>
+<tr>
+  <td><span class="image">
+    <img src="../../img/css/f1317.gif"  />    
+</span>
+ <code>cursor: sw-resize</code></td>
+  <td>Todos</td>
+</tr>
+<tr>
+  <td><span class="image">
+    <img src="../../img/css/f1318.gif"  />    
+</span>
+ <code>cursor: w-resize</code></td>
+  <td>Todos</td>
+</tr>
+<tr>
+  <td><span class="image">
+    <img src="../../img/css/f1319.gif"  />    
+</span>
+ <code>cursor: nw-resize</code></td>
+  <td>Todos</td>
+</tr>
+<tr>
+  <td><span class="image">
+    <img src="../../img/css/f1320.gif"  />    
+</span>
+ <code>cursor: progress</code></td>
+  <td>Solo Internet Explorer</td>
+</tr>
+<tr>
+  <td><span class="image">
+    <img src="../../img/css/f1321.gif"  />    
+</span>
+ <code>cursor: not-allowed</code></td>
+  <td>Solo Internet Explorer</td>
+</tr>
+<tr>
+  <td><span class="image">
+    <img src="../../img/css/f1322.gif"  />    
+</span>
+ <code>cursor: no-drop</code></td>
+  <td>Solo Internet Explorer</td>
+</tr>
+<tr>
+  <td><span class="image">
+    <img src="../../img/css/f1323.gif"  />    
+</span>
+ <code>cursor: vertical-text</code></td>
+  <td>Solo Internet Explorer</td>
+</tr>
+<tr>
+  <td><span class="image">
+    <img src="../../img/css/f1324.gif"  />    
+</span>
+ <code>cursor: all-scroll</code></td>
+  <td>Solo Internet Explorer</td>
+</tr>
+<tr>
+  <td><span class="image">
+    <img src="../../img/css/f1325.gif"  />    
+</span>
+ <code>cursor: col-resize</code></td>
+  <td>Solo Internet Explorer</td>
+</tr>
+<tr>
+  <td><span class="image">
+    <img src="../../img/css/f1326.gif"  />    
+</span>
+ <code>cursor: row-resize</code></td>
+  <td>Solo Internet Explorer</td>
+</tr>
+<tr>
+  <td><span class="image">
+    <img src="../../img/css/f1327.gif"  />    
+</span>
+ <code>cursor: url(...)</code></td>
+  <td>Solo Internet Explorer</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+<p>El puntero personalizado más utilizado es la opción <code>cursor: pointer</code> y <code>cursor: hand</code> que muestra en el puntero una mano que puede pinchar sobre el elemento. Otro puntero muy utilizado es <code>cursor: move</code> que permite indicar en las aplicaciones web dinámicas los elementos de la página que se pueden mover.</p>
+
+<p>Se puede ver un ejemplo de cada uno de los punteros y la compatibilidad con los diferentes navegadores en la siguiente página: http://www.echoecho.com/csscursors.htm</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="version_para_imprimir.html">&larr; Anterior <span>13.2. Versión para imprimir</span></a>
+            
+            <a class="span5 next" href="hacks_y_filtros.html">Siguiente &rarr; <span>13.4. Hacks y filtros</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Personalizar el cursor (Introducción a CSS%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a CSS : Personalizar el cursor']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Selectores</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Unidades de medida y colores</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Modelo de cajas</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Posicionamiento y visualización</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Texto</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Enlaces</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Imágenes</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Listas</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Tablas</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Layout</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_13.html">
+            <span>Capítulo 13.</span> Otros
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="version_para_imprimir.html">
+            <span>13.2.</span> Versión para imprimir
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="personalizar_el_cursor.html">
+            <span>13.3.</span> Personalizar el cursor
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="hacks_y_filtros.html">
+            <span>13.4.</span> Hacks y filtros
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="prioridad_de_las_declaraciones_css.html">
+            <span>13.5.</span> Prioridad de las declaraciones CSS
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="validador.html">
+            <span>13.6.</span> Validador
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="recomendaciones_generales_sobre_css.html">
+            <span>13.7.</span> Recomendaciones generales sobre CSS
+        </a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Recursos útiles</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Ejercicios</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

@@ -1,0 +1,243 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>8.4. Traducción de Widgets (Los formularios de Symfony 1.4)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="internacionalizacion_de_los_objetos_propel.html" />
+        <link rel="next" href="../capitulo_9.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="8.4. Traducción de Widgets (Los formularios de Symfony 1.4)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page symfony_formularios">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Los formularios de Symfony 1.4</a></li>
+  <li><a href="../capitulo_8.html">Capítulo 8. Internacionalización y localización</a></li>
+  <li class="current"><span>8.4.. Traducción de Widgets</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="traduccion_de_widgets"><span>8.4.</span> Traducción de Widgets</h1>
+    
+
+<p>Los formularios de Symfony incluyen algunos widgets preparados para su internacionalización. De esta forma se pueden adaptar a la cultura establecida por el usuario.</p>
+
+<h3 id="selectores_de_fechas">8.4.1. Selectores de fechas</h3>
+
+<p>Los widgets disponibles para traducir y adaptar las fechas son los siguientes:</p>
+
+<ul>
+<li>El widget <code>sfWidgetFormI18nDate</code> permite introducir fechas (día, mes y año):</li>
+</ul>
+
+<div class="code php">
+<pre class="php"><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">widgetSchema</span><span class="br0">&#91;</span><span class="st_h">'publicado_en'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="kw2">new</span> sfWidgetFormI18nDate<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'culture'</span> <span class="sy0">=&gt;</span> <span class="st_h">'fr'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<ul>
+<li><p>También se puede modificar el formato del mes, gracias a la opción <code>month_format</code> que permite elegir entre tres formatos:</p>
+
+<ul>
+<li><code>name</code>, muestra el nombre del mes (este es el formato por defecto)</li>
+<li><code>short_name</code>, muestra la abreviatura del nombre del mes</li>
+<li><code>number</code>, muestra el número del mes (desde el <code>1</code> hasta el <code>12</code>)</li>
+</ul></li>
+<li><p>El widget <code>sfWidgetFormI18nTime</code> permite introducir valores de tiempo (horas, minutos y segundos):</p></li>
+</ul>
+
+<div class="code php">
+<pre class="php"><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">widgetSchema</span><span class="br0">&#91;</span><span class="st_h">'publicado_en'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="kw2">new</span> sfWidgetFormI18nTime<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'culture'</span> <span class="sy0">=&gt;</span> <span class="st_h">'fr'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<ul>
+<li>El widget <code>sfWidgetFormI18nDateTime</code> permite introducir fechas y horas:</li>
+</ul>
+
+<div class="code php">
+<pre class="php"><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">widgetSchema</span><span class="br0">&#91;</span><span class="st_h">'publicado_en'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="kw2">new</span> sfWidgetFormI18nDateTime<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'culture'</span> <span class="sy0">=&gt;</span> <span class="st_h">'fr'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<h3 id="selector_de_pais">8.4.2. Selector de país</h3>
+
+<p>El widget <code>sfWidgetFormI18nSelectCountry</code> muestra una lista desplegable con el nombre de todos los países. El nombre de los países se muestra en el idioma correspondiente a la cultura del usuario:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">widgetSchema</span><span class="br0">&#91;</span><span class="st_h">'pais'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="kw2">new</span> sfWidgetFormI18nSelectCountry<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'culture'</span> <span class="sy0">=&gt;</span> <span class="st_h">'fr'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Si no se quiere mostrar la lista completa de todos los países del mundo, se pueden restringir sus elementos con la opción <code>countries</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$paises</span> <span class="sy0">=</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'fr'</span><span class="sy0">,</span> <span class="st_h">'en'</span><span class="sy0">,</span> <span class="st_h">'es'</span><span class="sy0">,</span> <span class="st_h">'de'</span><span class="sy0">,</span> <span class="st_h">'nl'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">widgetSchema</span><span class="br0">&#91;</span><span class="st_h">'pais'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="kw2">new</span> sfWidgetFormI18nSelectCountry<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'culture'</span>   <span class="sy0">=&gt;</span> <span class="st_h">'fr'</span><span class="sy0">,</span>
+                                                                      <span class="st_h">'countries'</span> <span class="sy0">=&gt;</span> <span class="re0">$paises</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<h3 id="selector_de_idioma">8.4.3. Selector de idioma</h3>
+
+<p>El widget <code>sfWidgetFormI18nSelectLanguage</code> muestra una lista desplegable con el nombre de varios idiomas del mundo. El nombre de cada idioma se muestra en el idioma correspondiente a la cultura del usuario:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">widgetSchema</span><span class="br0">&#91;</span><span class="st_h">'idioma'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="kw2">new</span> sfWidgetFormI18nSelectLanguage<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'culture'</span> <span class="sy0">=&gt;</span> <span class="st_h">'fr'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Si no se quiere mostrar la lista completa de todos los idiomas del mundo, se pueden restringir sus elementos con la opción <code>languages</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$idiomas</span> <span class="sy0">=</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'fr'</span><span class="sy0">,</span> <span class="st_h">'en'</span><span class="sy0">,</span> <span class="st_h">'es'</span><span class="sy0">,</span> <span class="st_h">'de'</span><span class="sy0">,</span> <span class="st_h">'nl'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">widgetSchema</span><span class="br0">&#91;</span><span class="st_h">'idioma'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="kw2">new</span> sfWidgetFormI18nSelectLanguage<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'culture'</span>   <span class="sy0">=&gt;</span> <span class="st_h">'fr'</span><span class="sy0">,</span>
+                                                                         <span class="st_h">'languages'</span> <span class="sy0">=&gt;</span> <span class="re0">$idiomas</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="internacionalizacion_de_los_objetos_propel.html">&larr; Anterior <span>8.3. Internacionalización de los objetos Propel</span></a>
+            
+            <a class="span5 next" href="../capitulo_9.html">Siguiente &rarr; <span>Capítulo 9. Sin título</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Traducción de Widgets (Los formularios de Symfony 1.4%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Los formularios de Symfony 1.4 : Traducción de Widgets']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Creación de formularios</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Validación de formularios</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Formularios para diseñadores web</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Integración con Propel</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Sin título</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_8.html">
+            <span>Capítulo 8.</span> Internacionalización y localización
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="internacionalizacion_de_formularios.html">
+            <span>8.1.</span> Internacionalización de formularios
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="personalizando_el_objeto_traductor.html">
+            <span>8.2.</span> Personalizando el objeto traductor
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="internacionalizacion_de_los_objetos_propel.html">
+            <span>8.3.</span> Internacionalización de los objetos Propel
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="traduccion_de_widgets.html">
+            <span>8.4.</span> Traducción de Widgets
+        </a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Integrando Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Referencia de Widgets</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Validadores</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

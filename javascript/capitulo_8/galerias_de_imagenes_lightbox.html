@@ -1,0 +1,274 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>8.5. Galerías de imágenes (Lightbox) (Introducción a JavaScript)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="menu_desplegable.html" />
+        <link rel="next" href="../capitulo_9.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="8.5. Galerías de imágenes (Lightbox) (Introducción a JavaScript)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page javascript">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Introducción a JavaScript</a></li>
+  <li><a href="../capitulo_8.html">Capítulo 8. Otras utilidades</a></li>
+  <li class="current"><span>8.5. Galerías de imágenes (Lightbox)</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="galerias_de_imagenes_lightbox"><span>8.5.</span> Galerías de imágenes (Lightbox)</h1>
+    
+
+<p>Muchos sitios web utilizan galerías de imágenes para mostrar sus productos y servicios. Este tipo de galerías muestran una serie de miniaturas de imágenes que se amplían al pinchar sobre cada imagen. Hasta hace poco, la técnica más utilizada para construir una galería consistía en incluir las miniaturas en la página y abrir cada imagen grande en una ventana emergente (o <em>pop-up</em>) o en una nueva página.</p>
+
+<p>El uso de técnicas basadas en JavaScript ha supuesto una revolución en la creación de las galerías de imágenes y ha permitido mejorar la experiencia de navegación del usuario. La técnica se conoce como <em>Lightbox</em> y fue creada originalmente por Lokesh Dhakar. Lightbox es una técnica muy sencilla de utilizar, funciona correctamente en todos los navegadores y permite mantener la semántica del documento (no <em>ensucia</em> la página con código JavaScript).</p>
+
+<p>El código de la versión más reciente se puede descargar gratuitamente en http://www.huddletogether.com/projects/lightbox2/, donde también se puede ver una demostración de las galerías de imágenes construidas con Lightbox.</p>
+
+<p>La descarga incluye el código fuente del script, todos los archivos JavaScript externos necesarios, archivos CSS e imágenes de prueba y una breve pero completa documentación.</p>
+
+<p>A continuación se indican los pasos necesarios para incluir Lightbox en una página web:</p>
+
+<p>1) Enlazar los archivos JavaScript y CSS requeridos:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc-1">&lt;!-- Dependencias --&gt;</span>
+<span class="sc2">&lt;<span class="kw2">link</span> <span class="kw3">rel</span><span class="sy0">=</span><span class="st0">&quot;stylesheet&quot;</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;css/lightbox.css&quot;</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text/css&quot;</span> <span class="kw3">media</span><span class="sy0">=</span><span class="st0">&quot;screen&quot;</span> <span class="sy0">/</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">script</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text/javascript&quot;</span> <span class="kw3">src</span><span class="sy0">=</span><span class="st0">&quot;js/prototype.js&quot;</span>&gt;&lt;<span class="sy0">/</span><span class="kw2">script</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">script</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text/javascript&quot;</span> <span class="kw3">src</span><span class="sy0">=</span><span class="st0">&quot;js/scriptaculous.js?load=effects,builder&quot;</span>&gt;&lt;<span class="sy0">/</span><span class="kw2">script</span>&gt;</span>
+&nbsp;
+<span class="sc-1">&lt;!-- Código fuente --&gt;</span>
+<span class="sc2">&lt;<span class="kw2">script</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text/javascript&quot;</span> <span class="kw3">src</span><span class="sy0">=</span><span class="st0">&quot;js/lightbox.js&quot;</span>&gt;&lt;<span class="sy0">/</span><span class="kw2">script</span>&gt;</span></pre>
+</div>
+
+<p>Lightbox utiliza dos de las librerías más conocidas y utilizadas para realizar aplicaciones JavaScript complejas: Prototype y Scriptaculous. Además de estos dos archivos JavaScript, también es necesario enlazar un archivo de tipo CSS que controla el aspecto de Lightbox y enlaza las imágenes utilizadas.</p>
+
+<p>2) Activar Lightbox:</p>
+
+<p>La página XHTML original contiene un enlace simple que abre una nueva página en la que se puede ver ampliada la imagen original:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">a</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;images/image-1.jpg&quot;</span> <span class="kw3">title</span><span class="sy0">=</span><span class="st0">&quot;Título de la imagen 1&quot;</span>&gt;</span>Imagen 1<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">a</span>&gt;</span></pre>
+</div>
+
+<p>Para activar Lightbox, tan solo es necesario incluir el siguiente atributo <code>rel</code>:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">a</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;images/image-1.jpg&quot;</span> <span class="kw3">rel</span><span class="sy0">=</span><span class="st0">&quot;lightbox&quot;</span> <span class="kw3">title</span><span class="sy0">=</span><span class="st0">&quot;Título de la imagen 1&quot;</span>&gt;</span>Imagen 1<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">a</span>&gt;</span></pre>
+</div>
+
+<p>Ahora, si el usuario tiene activado JavaScript, al pinchar en el enlace:</p>
+
+<div class="figure" id="figure_8_14">
+    <img src="../../img/javascript/f0814.gif" alt="Enlace con el atributo &quot;lightbox&quot; añadido" />
+
+    <p class="caption"><strong>Figura 8.14</strong> Enlace con el atributo &quot;lightbox&quot; añadido</p>
+</div>
+
+
+<p>Se mostrará la imagen ampliada centrada en la misma página:</p>
+
+<div class="figure" id="figure_8_15">
+    <img src="../../img/javascript/f0815.gif" alt="Imagen ampliada que se muestra al pinchar sobre el enlace" />
+
+    <p class="caption"><strong>Figura 8.15</strong> Imagen ampliada que se muestra al pinchar sobre el enlace</p>
+</div>
+
+
+<p>Lightbox se activa automáticamente para todos los enlaces cuyo atributo <code>rel</code> sea igual a <code>lightbox</code>. Además, Lightbox muestra como título de la imagen el valor del atributo <code>title</code> del enlace. Si el usuario no tiene activado JavaScript, la imagen se abrirá en una página nueva, como ocurre si no se utiliza Lightbox. La sencillez de uso y el resultado tan espectacular que se consigue son los puntos fuertes de Lightbox.</p>
+
+<p>Normalmente, Lightbox no se utiliza con enlaces de texto sino con imágenes que contienen enlaces:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">a</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;images/image-1.jpg&quot;</span> <span class="kw3">rel</span><span class="sy0">=</span><span class="st0">&quot;lightbox&quot;</span> <span class="kw3">title</span><span class="sy0">=</span><span class="st0">&quot;Título de la imagen 1&quot;</span>&gt;&lt;<span class="kw2">img</span> <span class="kw3">src</span><span class="sy0">=</span><span class="st0">&quot;images/imagen_pequena1.jpg&quot;</span> <span class="sy0">/</span>&gt;&lt;<span class="sy0">/</span><span class="kw2">a</span>&gt;</span></pre>
+</div>
+
+<p>Ahora, si el usuario tiene activado JavaScript, al pinchar sobre la imagen pequeña:</p>
+
+<div class="figure" id="figure_8_16">
+    <img src="../../img/javascript/f0816.gif" alt="Imagen en miniatura con el enlace preparado para Lightbox" />
+
+    <p class="caption"><strong>Figura 8.16</strong> Imagen en miniatura con el enlace preparado para Lightbox</p>
+</div>
+
+
+<p>Se mostrará la imagen ampliada centrada en la misma página:</p>
+
+<div class="figure" id="figure_8_17">
+    <img src="../../img/javascript/f0817.gif" alt="Imagen ampliada que se muestra al pinchar sobre la imagen en miniatura" />
+
+    <p class="caption"><strong>Figura 8.17</strong> Imagen ampliada que se muestra al pinchar sobre la imagen en miniatura</p>
+</div>
+
+
+<p>La imagen ampliada se muestra con una vistosa animación y el fondo de la página completa se oscurece para que el usuario centre toda su atención en la imagen. El usuario puede cerrar la imagen ampliada y volver a la página original pulsando sobre la imagen <code>CLOSE X</code> de la esquina inferior derecha de la imagen.</p>
+
+<p>Utilizar Lightbox aporta muchas ventajas respecto de la experiencia de usuario del sitio web. Además, el código XHTML permanece intacto y no se ensucia con llamadas a funciones JavaScript, ya que lo único que hay que añadir es un atributo <code>rel="lightbox"</code> a las imágenes y enlaces que vayan a utilizar Lightbox.</p>
+
+<p>Además, Lightbox permite relacionar varias imágenes entre sí para crear una galería de imágenes. Así, mientras se visualiza una imagen ampliada es posible pasar a la siguiente imagen de la galería. Para relacionar varias imágenes entre sí, tan sólo es necesario aplicar un valor único al atributo <code>rel</code> como se muestra a continuación:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">a</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;images/imagen-1.jpg&quot;</span> <span class="kw3">rel</span><span class="sy0">=</span><span class="st0">&quot;lightbox[galeria1]&quot;</span>&gt;</span>imagen #1<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">a</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">a</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;images/imagen-2.jpg&quot;</span> <span class="kw3">rel</span><span class="sy0">=</span><span class="st0">&quot;lightbox[galeria1]&quot;</span>&gt;</span>imagen #2<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">a</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">a</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;images/imagen-3.jpg&quot;</span> <span class="kw3">rel</span><span class="sy0">=</span><span class="st0">&quot;lightbox[galeria1]&quot;</span>&gt;</span>imagen #3<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">a</span>&gt;</span></pre>
+</div>
+
+<p>Todas las imágenes que tengan el mismo valor del atributo <code>rel</code>, automáticamente pasarán a formar parte de una galería de fotos por la que se puede navegar hacia la siguiente o hacia la anterior imagen.</p>
+
+<p>La técnica Lightbox presentada solamente es válida para elementos de tipo imagen. No es posible por tanto mostrar una página web o cierto código XHTML dentro de una ventana de ese tipo.</p>
+
+<p>Afortunadamente, existen otras librerías basadas en Lightbox y que permiten mostrar cualquier tipo de código XHMTL en el interior de la ventana. La más conocida es la técnica creada por ParticleTree y que se puede encontrar en:
+http://particletree.com/features/lightbox-gone-wild/</p>
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="menu_desplegable.html">&larr; Anterior <span>8.4. Menú desplegable</span></a>
+            
+            <a class="span5 next" href="../capitulo_9.html">Siguiente &rarr; <span>Capítulo 9. Detección y corrección de errores</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Galerías de imágenes (Lightbox) (Introducción a JavaScript%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a JavaScript : Galerías de imágenes (Lightbox)']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> El primer script</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Programación básica</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Programación avanzada</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> DOM</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Eventos</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Formularios</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_8.html">
+            <span>Capítulo 8.</span> Otras utilidades
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="relojes_contadores_e_intervalos_de_tiempo.html">
+            <span>8.1.</span> Relojes, contadores e intervalos de tiempo
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="calendario.html">
+            <span>8.2.</span> Calendario
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="tooltip.html">
+            <span>8.3.</span> Tooltip
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="menu_desplegable.html">
+            <span>8.4.</span> Menú desplegable
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="galerias_de_imagenes_lightbox.html">
+            <span>8.5.</span> Galerías de imágenes (Lightbox)
+        </a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Detección y corrección de errores</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Recursos útiles</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

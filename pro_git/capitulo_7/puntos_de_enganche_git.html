@@ -1,0 +1,224 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>7.3. Puntos de enganche Git (Pro Git, el libro oficial de Git)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="atributos_de_git.html" />
+        <link rel="next" href="un_ejemplo_de_implantacion_de_una_determinada_politica_en_git.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="7.3. Puntos de enganche Git (Pro Git, el libro oficial de Git)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page pro_git">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Pro Git, el libro oficial de Git</a></li>
+  <li><a href="../capitulo_7.html">Capítulo 7. Personalizando Git</a></li>
+  <li class="current"><span>7.3.. Puntos de enganche Git</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="puntos_de_enganche_git"><span>7.3.</span> Puntos de enganche Git</h1>
+    
+
+<p>Al igual que en otros sistemas de control de versiones, Git también cuenta con mecanismos para lanzar scrips de usuario cuando suceden ciertas acciones importantes. Hay dos grupos de esos puntos de lanzamiento: los del lado cliente y los del lado servidor. Los puntos del lado cliente están relacionados con operaciones tales como la confirmación de cambios (<em>commit</em>) o la fusión (<em>merge</em>). Los del lado servidor están relacionados con operaciones tales como la recepción de contenidos enviados (<em>push</em>) a un servidor. Estos puntos de enganche pueden utilizarse para multitud de aplicaciones. Vamos a ver unas pocas de ellas.</p>
+
+<h3 id="instalando_un_punto_de_enganche">7.3.1. Instalando un punto de enganche</h3>
+
+<p>Los puntos de enganche se guardan en la subcarpeta <code>hooks</code> de la carpeta Git. En la mayoría de proyectos, estará en <code>.git/hooks</code>. Por defecto, esta carpeta contiene unos cuantos scripts de ejemplo. Algunos de ellos son útiles por sí mismos; pero su misión principal es la de documentar las variables de entrada para cada script. Todos los ejemplos se han escrito como scripts de shell, con algo de código Perl embebido en ellos. Pero cualquier tipo de script ejecutable que tenga el nombre adecuado puede servir igual de bien — los puedes escribir en Ruby o en Python o en cualquier lenguaje de scripting con el que trabajes —. En las versiones de Git posteriores a la 1.6, esos ejemplos tendrán un nombre acabado en .sample; y tendras que renombrarlos. Para las versiones anteriores a la 1.6, los ejemplos tienen el nombre correcto, pero les falta la marca de ejecutables.</p>
+
+<p>Para activar un punto de enganche para un script, pon el archivo correspondiente en la carpeta <code>hooks</code>; con el nombre adecuado y con la marca de ejecutable. A partir de ese momento, será automáticamente lanzado cuando se dé la acción correspondiente. Vamos a ver la mayoría de nombres de puntos de enganche disponibles.</p>
+
+<h3 id="puntos_de_enganche_del_lado_cliente">7.4.2. Puntos de enganche del lado cliente</h3>
+
+<p>Hay muchos de ellos. En esta sección los dividiremos en puntos de enganche en el flujo de trabajo de confirmación de cambios, puntos en el flujo de trabajo de correo electrónico y resto de puntos de enganche del lado servidor.</p>
+
+<h4 id="puntos_en_el_flujo_de_trabajo_de_confirmacion_de_cambios">7.3.2.1. Puntos en el flujo de trabajo de confirmación de cambios</h4>
+
+<p>Los primeros cuatro puntos de enganche están relacionados con el proceso de confirmación de cambios. Primero se activa el punto de enganche <code>pre-commit</code>, incluso antes de que teclees el mensaje de confirmación. Se suele utilizar para inspeccionar la instantánea (<em>snapshot</em>) que vas a confirmar, para ver si has olvidado algo, para asegurar que las pruebas se ejecutan, o para revisar cualquier aspecto que necesites inspeccionar en el codigo. Saliendo con un valor de retorno distinto de cero, se aborta la confirmación de cambios. Aunque siempre puedes saltartelo con la orden <code>git commit --no-verify</code>. Puede ser util para realizar tareas tales como revisar el estilo del código (lanzando <code>lint</code> o algo equivalente), revisar los espacios en blanco de relleno (el script de ejemplo hace exactamente eso), o revisar si todos los nuevos métodos llevan la adecuada documentación.</p>
+
+<p>El punto de enganche <code>prepare-commit-msg</code> se activa antes de arrancar el editor del mensaje de confirmación de cambios, pero después de crearse el mensaje por defecto. Te permite editar el mensaje por defecto, antes de que lo vea el autor de la confirmación de cambios. Este punto de enganche recibe varias entradas: la ubicación (<em>path</em>) del archivo temporal donde se almacena el mensaje de confirmación, el tipo de confirmación y la clave SHA-1 si estamos enmendando un commit existente. Este punto de enganche no tiene mucha utilidad para las confirmaciones de cambios normales; pero sí para las confirmaciones donde el mensaje por defecto es autogenerado, como en las confirmaciones de fusiones (<em>merge</em>), los mensajes con plantilla, las confirmaciones aplastadas (squash), o las confirmaciones de correccion (<em>amend</em>). Se puede utilizar combinandolo con una plantilla de confirmación, para poder insertar información automáticamente.</p>
+
+<p>El punto de enganche <code>commit-msg</code> recibe un parámetro: la ubicación (<em>path</em>) del archivo temporal que contiene el mensaje de confirmación actual. Si este script termina con un código de salida distinto de cero, Git aborta el proceso de confirmación de cambios; permitiendo así validar el estado del proyecto o el mensaje de confirmación antes de permitir continuar. En la última parte de este capítulo, veremos cómo podemos utilizar este punto de enganche  para revisar si el mensaje de confirmación es conforme a un determinado patrón obligatorio.</p>
+
+<p>Despues de completar todo el proceso de confirmación de cambios, es cuando se lanza el punto de enganche <code>post-commit</code>. Este no recibe ningún parámetro, pero podemos obtener facilmente la última confirmación de cambios con el comando <code>git log -1 HEAD</code>. Habitualmente, este script final se suele utilizar para realizar notificaciones o tareas similares.</p>
+
+<p>Los scripts del lado cliente relacionados con la confirmación de cambios pueden ser utilizados en prácticamente cualquier flujo de trabajo. A menudo, se suelen utilizar para obligar a seguir ciertas reglas; aunque es importante indicar que estos script no se transfieren durante el clonado. Puedes implantar reglas en el lado servidor para rechazar envios (<em>push</em>) que no cumplan ciertos estandares, pero es completamente voluntario para los desarroladores el utilizar scripts en el lado cliente. Por tanto, estos scripts son para ayudar a los desarrolladores, y, como tales, han de ser configurados y mantenidos por ellos, pudiendo ser sobreescritos o modificados por ellos en cualquier momento.</p>
+
+<h4 id="puntos_en_el_flujo_de_trabajo_del_correo_electronico">7.3.2.2. Puntos en el flujo de trabajo del correo electrónico</h4>
+
+<p>Tienes disponibles tres puntos de enganche en el lado cliente para interactuar con el flujo de trabajo de correo electrónico. Todos ellos se invocan al utilizar el comando <code>git am</code>, por lo que si no utilizas dicho comando, puedes saltar directamente a la siguiente sección. Si recibes parches a través de corrreo-e preparados con <code>git format-patch</code>, es posible que parte de lo descrito en esta sección te pueda ser util.</p>
+
+<p>El primer punto de enganche que se activa es <code>applypatch-msg</code>. Recibe un solo argumento: el nombre del archivo temporal que contiene el mensaje de confirmación propuesto. Git abortará la aplicación del parche si este script termina con un código de salida distinto de cero. Puedes utilizarlo para asegurarte de que el mensaje de confirmación esté correctamente formateado o para normalizar el mensaje permitiendo al script que lo edite sobre la marcha.</p>
+
+<p>El siguiente punto de enganche que se activa al aplicar parches con <code>git am</code> es el punto <code>pre-applypatch</code>. No recibe ningún argumento de entrada y se lanza después de que el parche haya sido aplicado, por lo que puedes utilizarlo para revisar la situación (<em>snapshot</em>) antes de confirmarla. Con este script, puedes lanzar pruebas o similares para chequear el arbol de trabajo. Si falta algo o si alguna de las pruebas falla, saliendo con un código de salida distinto de cero abortará el comando <code>git am</code> sin confirmar el parche.</p>
+
+<p>El último punto de enganche que se activa durante una operación <code>git am</code> es el punto <code>post-applypatch</code>. Puedes utilizarlo para notificar de su aplicación al grupo o al autor del parche. No puedes detener el proceso de parcheo con este script.</p>
+
+<h4 id="otros_puntos_de_enganche_del_lado_cliente">7.3.2.3. Otros puntos de enganche del lado cliente</h4>
+
+<p>El punto <code>pre-rebase</code> se activa antes de cualquier reorganización y puede abortarla si retorna con un codigo de salida distinto de cero. Puedes usarlo para impedir reorganizaciones de cualquier confirmación de cambios ya enviada (<em>push</em>) a algún servidor.  El script de ejemplo para <code>pre-rebase</code> hace precisamente eso, aunque asumiendo que <code>next</code> es el nombre de la rama publicada. Si lo vas a utilizar, tendrás que modificarlo para que se ajuste al nombre que tenga tu rama publicada.</p>
+
+<p>Tras completarse la ejecución de un comando <code>git checkout</code>, es cuando se activa el punto de enganche <code>post-checkout</code>. Lo puedes utilizar para ajustar tu carpeta de trabajo al entorno de tu proyecto. Entre otras cosas, puedes mover grandes archivos binarios de los que no quieras llevar control, puedes autogenerar documentación, etc.</p>
+
+<p>Y, por último, el punto de enganche <code>post-merge</code> se activa tras completarse la ejecución de un comando <code>git merge</code>. Puedes utilizarlo para recuperar datos de tu carpeta de trabajo que Git no puede controlar, como por ejemplo datos relativos a permisos. Este punto de enganche puede utilizarse también para comprobar la presencia de ciertos archivos, externos al control de Git, que desees copiar cada vez que cambie la carpeta de trabajo.</p>
+
+<h3 id="puntos_de_enganche_del_lado_servidor">7.3.3. Puntos de enganche del lado servidor</h3>
+
+<p>Aparte de los puntos del lado cliente, como administrador de sistemas, puedes utilizar un par de puntos de enganche importantes en el lado servidor; para implementar prácticamente cualquier tipo de política que quieras mantener en tu proyecto. Estos scripts se lanzan antes y después de cada envio (<em>push</em>) al servidor. El script previo, puede terminar con un código de salida distinto de cero y abortar el envio, devolviendo el correspondiente mensaje de error al cliente. Este script puede implementar políticas de recepción tan complejas como desees.</p>
+
+<h4 id="pre_receive_y_post_receive">7.3.3.1. <code>pre-receive</code> y <code>post-receive</code></h4>
+
+<p>El primer script que se activa al manejar un envio de un cliente es el correspondiente al punto de enganche <code>pre-receive</code>. Recibe una lista de referencias que se están enviando (<em>push</em>) desde la entrada estandar (stdin); y, si termina con un codigo de salida distinto de cero, ninguna de ellas será aceptada. Puedes utilizar este punto de enganche para realizar tareas tales como la de comprobar que ninguna de las referencias actualizadas no son de avance directo (non-fast-forward); o para comprobar que el usuario que realiza el envio tiene realmente permisos para para crear, borrar o modificar cualquiera de los archivos que está tratando de cambiar.</p>
+
+<p>El punto de enganche <code>post-receive</code> se activa cuando termina todo el proceso, y se puede utilizar para actualizar otros servicios o para enviar notificaciones a otros usuarios. Recibe los mismos datos que <code>pre-receive</code> desde la entrada estandar. Algunos ejemplos de posibles aplicaciones pueden ser la de alimentar una lista de correo-e, avisar a un servidor de integración continua, o actualizar un sistema de seguimiento de tickets de servicio — pudiendo incluso procesar el mensaje de confirmación para ver si hemos de abrir, modificar o dar por cerrado algún ticket —. Este script no puede detener el proceso de envio, pero el cliente no se desconecta hasta que no se completa su ejecución; por tanto, has de ser cuidadoso cuando intentes realizar con él tareas que puedan requerir mucho tiempo.</p>
+
+<h4 id="update">7.3.3.2. update</h4>
+
+<p>El punto de enganche <code>update</code> es muy similar a <code>pre-receive</code>, pero con la diferencia de que se activa una vez por cada rama que se está intentando actualizar con el envio. Si la persona que realiza el envio intenta actualizar varias ramas, <code>pre-receive</code> se ejecuta una sola vez, mientras que <code>update</code> se ejecuta tantas veces como ramas se estén actualizando. El lugar de recibir datos desde la entrada estandar (<code>stdin</code>), este script recibe tres argumentos: el nombre de la rama, la clave SHA-1 a la que esta apuntada antes del envio, y la clave SHA-1 que el usuario está intentando enviar. Si el script <code>update</code> termina con un código de salida distinto de cero, únicamente los cambios de esa rama son rechazados; el resto de ramas continuarán con sus actualizaciones.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="atributos_de_git.html">&larr; Anterior <span>7.2. Atributos de Git</span></a>
+            
+            <a class="span5 next" href="un_ejemplo_de_implantacion_de_una_determinada_politica_en_git.html">Siguiente &rarr; <span>7.4. Un ejemplo de implantación de una determinada política en Git</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Puntos de enganche Git (Pro Git, el libro oficial de Git%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Pro Git, el libro oficial de Git : Puntos de enganche Git']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Empezando</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Fundamentos de Git</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Trabajando con ramas en Git</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Git en un servidor</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Git en entornos distribuidos</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Las herramientas de Git</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_7.html">
+            <span>Capítulo 7.</span> Personalizando Git
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="configuracion_de_git.html">
+            <span>7.1.</span> Configuración de Git
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="atributos_de_git.html">
+            <span>7.2.</span> Atributos de Git
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="puntos_de_enganche_git.html">
+            <span>7.3.</span> Puntos de enganche Git
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="un_ejemplo_de_implantacion_de_una_determinada_politica_en_git.html">
+            <span>7.4.</span> Un ejemplo de implantación de una determinada política en Git
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="resumen.html">
+            <span>7.5.</span> Resumen
+        </a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Git y otros sistemas</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Funcionamiento interno de Git</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

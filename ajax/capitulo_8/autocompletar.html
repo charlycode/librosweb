@@ -1,0 +1,223 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>8.3. Autocompletar (Introducción a AJAX)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="teclado_virtual.html" />
+        <link rel="next" href="../capitulo_9.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="8.3. Autocompletar (Introducción a AJAX)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page ajax">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Introducción a AJAX</a></li>
+  <li><a href="../capitulo_8.html">Capítulo 8. Técnicas básicas con AJAX</a></li>
+  <li class="current"><span>8.3. Autocompletar</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="autocompletar"><span>8.3.</span> Autocompletar</h1>
+    
+
+<h3 id="contexto">8.3.1. Contexto</h3>
+
+<p>Algunas veces, se presenta al usuario un cuadro de texto en el que tiene que introducir un valor que pertenece a un grupo muy grande de datos. Algunos casos habituales son: una dirección de correo electrónico que pertenezca a la libreta de direcciones del usuario, el nombre válido de un municipio de un país, el nombre de un empleado de una empresa grande, etc.</p>
+
+<p>En la mayoría de casos, utilizar una lista desplegable que muestre todos los valores es completamente inviable, ya que pueden existir miles de posibles valores. Por otra parte, un cuadro de texto simple resulta de poca utilidad para el usuario. La solución consiste en combinar un cuadro de texto y una lista desplegable mediante AJAX.</p>
+
+<p>Al usuario se le presenta un cuadro de texto simple en el que puede introducir la información. A medida que el usuario escribe en el cuadro de texto, la aplicación solicita al servidor aquellos términos que estén relacionados con lo escrito por el usuario. Cuando la aplicación recibe la respuesta del servidor, la muestra al usuario a modo de ayuda para autocompletar la información.</p>
+
+<h3 id="solucion_propuesta">8.3.2. Solución propuesta</h3>
+
+<p>A continuación se muestra la interacción del sistema de autocompletado propuesto:</p>
+
+<div class="figure" id="figure_8_10">
+    <img src="../../img/ajax/f0810.gif" alt="Interacción completa del usuario con el sistema de autocompletado" />
+
+    <p class="caption"><strong>Figura 8.10</strong> Interacción completa del usuario con el sistema de autocompletado</p>
+</div>
+
+
+<p><div class="exercise"><p class="title">Ejercicio 19</p> <p>A partir del formulario proporcionado, añadir la opción de autocompletar el nombre del municipio que está escribiendo el usuario. El esquema del funcionamiento propuesto es el siguiente:</p>
+
+<p>1) Al cargar la página, se debe crear un elemento HTML de tipo <code>&lt;div&gt;</code> en el que se van a mostrar las sugerencias enviadas por el servidor.</p>
+
+<p>Además, se debe establecer el evento de teclado adecuado en el cuadro de texto y también se debe posicionar el cursor en ese cuadro de texto para poder escribir en el directamente (Pista: <code>focus()</code>).</p>
+
+<p>2) Cuando se pulse una tecla sobre el cuadro de texto, se debe ejecutar la función <code>autocompleta()</code>. Desde esta función, se debe llamar a la función responsable de obtener la lista de municipios del servidor. El script se llama <code>autocompletaMunicipios.php</code>, el parámetro que se envía mediante <code>POST</code>, se llama <code>municipio</code> y debe contener la cadena de texto escrita por el usuario.</p>
+
+<p>El servidor responde con un array en formato JSON con la lista de municipios cuyo nombre comienza por el texto enviado. Ejemplo de respuesta del servidor:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="br0">&#91;</span> <span class="st0">&quot;Alegría-Dulantzi&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Amurrio&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Añana&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Aramaio&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Armiñón&quot;</span><span class="sy0">,</span> ... <span class="br0">&#93;</span></pre>
+</div>
+
+<p>3) Una vez obtenido el array de sugerencias, se debe mostrar en forma de lista de elementos (etiqueta <code>&lt;ul&gt;</code> de HTML). Para transformar el array en la lista <code>&lt;ul&gt;</code>, modificar el <code>prototype</code> del objeto <code>Array</code> y añadir una función específica que realice la transformación.</p>
+
+<p>4) Modificar la función <code>autocompleta()</code> para tener en consideración 3 teclas especiales: las flechas superior e inferior y la tecla <code>Enter</code>. (Pista: propiedad <code>keyCode</code>). Cuando se utilizan las flechas del teclado hacia arriba y hacia abajo, se van seleccionando los elementos de la lista. Cuando se pulsa el <code>Enter</code>, se selecciona el elemento copiando su valor al cuadro de texto y ocultando la lista de sugerencias. (Pista: variable global <code>elementoSeleccionado</code>)</p>
+
+<p>5) Para mejorar el rendimiento de la aplicación, añadir una cache para las sugerencias. Cada vez que se recibe una lista de sugerencias del servidor, se almacena en un objeto que relaciona el texto que ha introducido el usuario y la respuesta del servidor. Ejemplo:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="br0">&#123;</span>
+<span class="st0">&quot;a&quot;</span><span class="sy0">:</span> <span class="br0">&#91;</span><span class="st0">&quot;Ababuj&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Abades&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Abadía&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Abadín&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Abadiño&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Abáigar&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Abajas&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Abaltzisketa&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Abánades&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Abanilla&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Abanto y Ciérvana-Abanto Zierbena&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Abanto&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Abarán&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Abarca de Campos&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Abárzuza&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Abaurregaina/Abaurrea Alta&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Abaurrepea/Abaurrea Baja&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Abegondo&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Abejar&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Abejuela&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Abella de la Conca&quot;</span><span class="br0">&#93;</span><span class="sy0">,</span>
+&nbsp;
+<span class="st0">&quot;al&quot;</span><span class="sy0">:</span> <span class="br0">&#91;</span><span class="st0">&quot;Alacón&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Aladrén&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Alaejos&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Alagón&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Alaior&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Alájar&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Alajeró&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Alameda de Gardón (La)&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Alameda de la Sagra&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Alameda del Valle&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Alameda&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Alamedilla (La)&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Alamedilla&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Alamillo&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Alaminos&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Alamús (Els)&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Alange&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Alanís&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Alaquàs&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Alar del Rey&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Alaraz&quot;</span><span class="br0">&#93;</span><span class="sy0">,</span>
+...
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>De esta forma, antes de realizar una petición al servidor, se comprueba si ya está disponible una lista de sugerencias para ese texto. Además, cuando se realiza una consulta al servidor, la respuesta se almacena en la cache para su posible reutilización futura.</p>
+
+<p>6) Mostrar un mensaje adecuado cuando el servidor devuelva un array vacío por no haber sugerencias para el texto introducido por el usuario.</p>
+
+<p><a href="../../ejercicios/ajax/ejercicio19/ejercicio19.zip">Descargar archivo ZIP con el script autocompletaMunicipios.php</a></p>
+
+<p><a href="../capitulo14/ejercicio_19.html">Ver solución</a></p></div></p>
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="teclado_virtual.html">&larr; Anterior <span>8.2. Teclado virtual</span></a>
+            
+            <a class="span5 next" href="../capitulo_9.html">Siguiente &rarr; <span>Capítulo 9. Técnicas avanzadas con AJAX</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Autocompletar (Introducción a AJAX%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a AJAX : Autocompletar']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción a AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> JavaScript básico</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> JavaScript avanzado</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> DOM (Document Object Model)</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> BOM (Browser Object Model)</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Eventos</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Primeros pasos con AJAX</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_8.html">
+            <span>Capítulo 8.</span> Técnicas básicas con AJAX
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="teclado_virtual.html">
+            <span>8.2.</span> Teclado virtual
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="autocompletar.html">
+            <span>8.3.</span> Autocompletar
+        </a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Técnicas avanzadas con AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Frameworks y librerías</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Otras utilidades</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Recursos útiles</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Bibliografía</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

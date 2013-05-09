@@ -1,0 +1,228 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>1.10. Sintaxis de la definición de cada propiedad CSS (Introducción a CSS)</title>
+        <link href="../main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="comentarios.html" />
+        <link rel="next" href="../capitulo_2.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="1.10. Sintaxis de la definición de cada propiedad CSS (Introducción a CSS)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page css">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Introducción a CSS</a></li>
+  <li><a href="../capitulo_1.html">Capítulo 1. Introducción</a></li>
+  <li class="current"><span>1.10.. Sintaxis de la definición de cada propiedad CSS</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="sintaxis_de_la_definicion_de_cada_propiedad_css"><span>1.10.</span> Sintaxis de la definición de cada propiedad CSS</h1>
+    
+
+<p>A lo largo de los próximos capítulos, se incluyen las definiciones formales de la mayoría de propiedades de CSS. La definición formal se basa en la información recogida en el estándar oficial y se muestra en forma de tabla.</p>
+
+<p>Una de las principales informaciones de cada definición es la lista de posibles valores que admite la propiedad. Para definir la lista de valores permitidos se sigue un formato que es necesario detallar.</p>
+
+<p>Si el valor permitido se indica como una sucesión de palabras sin ningún carácter que las separe (paréntesis, comas, barras, etc.) el valor de la propiedad se debe indicar tal y como se muestra y con esas palabras en el mismo orden.</p>
+
+<p>Si el valor permitido se indica como una sucesión de valores separados por una barra simple (carácter <code>|</code>) el valor de la propiedad debe tomar uno y sólo uno de los valores indicados. Por ejemplo, la notación <code>&lt;porcentaje&gt; | &lt;medida&gt; | inherit</code> indica que la propiedad solamente puede tomar como valor la palabra reservada <code>inherit</code> o un porcentaje o una medida.</p>
+
+<p>Si el valor permitido se indica como una sucesión de valores separados por una barra doble (símbolo <code>||</code>) el valor de la propiedad puede tomar uno o más valores de los indicados y en cualquier orden.</p>
+
+<p>Por ejemplo, la notación <code>&lt;color&gt; || &lt;estilo&gt; || &lt;medida&gt;</code> indica que la propiedad puede tomar como valor cualquier combinación de los valores indicados y en cualquier orden. Se podría establecer un color y un estilo, solamente una medida o una medida y un estilo. Además, el orden en el que se indican los valores es indiferente. Opcionalmente, se pueden utilizar paréntesis para agrupar diferentes valores.</p>
+
+<p>Por último, en cada valor o agrupación de valores se puede indicar el tipo de valor: opcional, obligatorio, múltiple o restringido.</p>
+
+<p>El carácter <code>*</code> indica que el valor ocurre cero o más veces; el carácter <code>+</code> indica que el valor ocurre una o más veces; el carácter <code>?</code> indica que el valor es opcional y por último, el carácter <code>{número_1, número_2}</code> indica que el valor ocurre al menos tantas veces como el valor indicado en <code>número_1</code> y como máximo tantas veces como el valor indicado en <code>número_2</code>.</p>
+
+<p>Por ejemplo, el valor <code>[&lt;family-name&gt; , ]*</code> indica que el valor de tipo <code>&lt;family_name&gt;</code> seguido por una coma se puede incluir cero o más veces. El valor <code>&lt;url&gt;? &lt;color&gt;</code> significa que la URL es opcional y el color obligatorio y en el orden indicado. Por último, el valor <code>[&lt;medida&gt; | thick | thin] {1,4}</code> indica que se pueden escribir entre 1 y 4 veces un valor que sea o una medida o la palabra <code>thick</code> o la palabra <code>thin</code>.</p>
+
+<p>No obstante, la mejor forma de entender la notación formal para las propiedades de CSS es observar la definición de cada propiedad y volver a esta sección siempre que sea necesario.</p>
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="comentarios.html">&larr; Anterior <span>1.9. Comentarios</span></a>
+            
+            <a class="span5 next" href="../capitulo_2.html">Siguiente &rarr; <span>Capítulo 2. Selectores</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Sintaxis de la definición de cada propiedad CSS (Introducción a CSS%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a CSS : Sintaxis de la definición de cada propiedad CSS']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1 ">
+        <a href="../capitulo_1.html">
+            <span>Capítulo 1.</span> Introducción
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="breve_historia_de_css.html">
+            <span>1.2.</span> Breve historia de CSS
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="soporte_de_css_en_los_navegadores.html">
+            <span>1.3.</span> Soporte de CSS en los navegadores
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="especificacion_oficial.html">
+            <span>1.4.</span> Especificación oficial
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="funcionamiento_basico_de_css.html">
+            <span>1.5.</span> Funcionamiento básico de CSS
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="como_incluir_css_en_un_documento_xhtml.html">
+            <span>1.6.</span> Cómo incluir CSS en un documento XHTML
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="glosario_basico.html">
+            <span>1.7.</span> Glosario básico
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="medios_css.html">
+            <span>1.8.</span> Medios CSS
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="comentarios.html">
+            <span>1.9.</span> Comentarios
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="sintaxis_de_la_definicion_de_cada_propiedad_css.html">
+            <span>1.10.</span> Sintaxis de la definición de cada propiedad CSS
+        </a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Selectores</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Unidades de medida y colores</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Modelo de cajas</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Posicionamiento y visualización</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Texto</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Enlaces</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Imágenes</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Listas</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Tablas</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Layout</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Otros</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Recursos útiles</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Ejercicios</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

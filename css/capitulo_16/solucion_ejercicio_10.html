@@ -1,0 +1,276 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>16.10. Solución ejercicio 10 (Introducción a CSS)</title>
+        <link href="../main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="solucion_ejercicio_9.html" />
+        <link rel="next" href="solucion_ejercicio_11.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="16.10. Solución ejercicio 10 (Introducción a CSS)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page css">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Introducción a CSS</a></li>
+  <li><a href="../capitulo_16.html">Capítulo 16. Ejercicios resueltos</a></li>
+  <li class="current"><span>16.10.. Solución ejercicio 10</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="solucion_ejercicio_10"><span>16.10.</span> Solución ejercicio 10</h1>
+    
+
+<div class="code css">
+<pre class="css">&lt;!DOCTYPE html PUBLIC <span class="st0">&quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot;</span> <span class="st0">&quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;</span><span class="sy0">&gt;</span>
+&lt;html xmlns<span class="sy0">=</span><span class="st0">&quot;http://www.w3.org/1999/xhtml&quot;</span><span class="sy0">&gt;</span>
+&lt;head<span class="sy0">&gt;</span>
+&lt;meta http-equiv<span class="sy0">=</span><span class="st0">&quot;Content-Type&quot;</span> <span class="kw1">content</span><span class="sy0">=</span><span class="st0">&quot;text/html; charset=iso-8859-1&quot;</span> /<span class="sy0">&gt;</span>
+&lt;title<span class="sy0">&gt;</span>Ejercicio menu vertical avanzado&lt;/title<span class="sy0">&gt;</span>
+&lt;style type<span class="sy0">=</span><span class="st0">&quot;text/css&quot;</span><span class="sy0">&gt;</span>
+ul<span class="re1">.menu</span> <span class="br0">&#123;</span>
+  <span class="kw1">width</span><span class="sy0">:</span> <span class="re3">180px</span><span class="sy0">;</span>
+  <span class="kw1">list-style</span><span class="sy0">:</span> <span class="kw2">none</span><span class="sy0">;</span>
+  <span class="kw1">margin</span><span class="sy0">:</span> <span class="nu0">0</span><span class="sy0">;</span>
+  <span class="kw1">padding</span><span class="sy0">:</span> <span class="nu0">0</span><span class="sy0">;</span>
+  <span class="kw1">border</span><span class="sy0">:</span> <span class="re3">1px</span> <span class="kw2">solid</span> <span class="re0">#7C7C7C</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+ul<span class="re1">.menu</span> li <span class="br0">&#123;</span>
+  <span class="kw1">border-bottom</span><span class="sy0">:</span> <span class="re3">1px</span> <span class="kw2">solid</span> <span class="re0">#7C7C7C</span><span class="sy0">;</span>
+  <span class="kw1">border-top</span><span class="sy0">:</span> <span class="re3">1px</span> <span class="kw2">solid</span> <span class="re0">#FFF</span><span class="sy0">;</span>
+  <span class="kw1">background</span><span class="sy0">:</span> <span class="re0">#F4F4F4</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+ul<span class="re1">.menu</span> li a <span class="br0">&#123;</span>
+  <span class="kw1">padding</span><span class="sy0">:</span> <span class="re3">.2em</span> <span class="nu0">0</span> <span class="re3">.2em</span> <span class="re3">1.5em</span><span class="sy0">;</span>
+  <span class="kw1">display</span><span class="sy0">:</span> <span class="kw2">block</span><span class="sy0">;</span>
+  <span class="kw1">text-decoration</span><span class="sy0">:</span> <span class="kw2">none</span><span class="sy0">;</span>
+  <span class="kw1">color</span><span class="sy0">:</span> <span class="re0">#333</span><span class="sy0">;</span>
+  <span class="kw1">background</span><span class="sy0">:</span> <span class="re0">#F4F4F4</span> <span class="kw2">url</span><span class="br0">&#40;</span><span class="st0">&quot;../../comun/imagenes/flecha_inactiva.png&quot;</span><span class="br0">&#41;</span> <span class="kw2">no-repeat</span> <span class="re3">3px</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+ul<span class="re1">.menu</span> li a<span class="re2">:hover</span><span class="sy0">,</span> ul<span class="re1">.menu</span> li a<span class="re2">:active </span><span class="br0">&#123;</span>
+  <span class="kw1">background</span><span class="sy0">:</span> <span class="re0">#E4E4E4</span> <span class="kw2">url</span><span class="br0">&#40;</span><span class="st0">&quot;../../comun/imagenes/flecha_activa.png&quot;</span><span class="br0">&#41;</span> <span class="kw2">no-repeat</span> <span class="re3">3px</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&lt;/style<span class="sy0">&gt;</span>
+&lt;/head<span class="sy0">&gt;</span>
+&nbsp;
+&lt;body<span class="sy0">&gt;</span>
+&lt;ul class<span class="sy0">=</span><span class="st0">&quot;menu&quot;</span><span class="sy0">&gt;</span>
+  &lt;li<span class="sy0">&gt;</span>&lt;a href<span class="sy0">=</span><span class="st0">&quot;#&quot;</span> title<span class="sy0">=</span><span class="st0">&quot;Enlace genérico&quot;</span><span class="sy0">&gt;</span>Elemento <span class="nu0">1</span>&lt;/a<span class="sy0">&gt;</span>&lt;/li<span class="sy0">&gt;</span>
+  &lt;li<span class="sy0">&gt;</span>&lt;a href<span class="sy0">=</span><span class="st0">&quot;#&quot;</span> title<span class="sy0">=</span><span class="st0">&quot;Enlace genérico&quot;</span><span class="sy0">&gt;</span>Elemento <span class="nu0">2</span>&lt;/a<span class="sy0">&gt;</span>&lt;/li<span class="sy0">&gt;</span>
+  &lt;li<span class="sy0">&gt;</span>&lt;a href<span class="sy0">=</span><span class="st0">&quot;#&quot;</span> title<span class="sy0">=</span><span class="st0">&quot;Enlace genérico&quot;</span><span class="sy0">&gt;</span>Elemento <span class="nu0">3</span>&lt;/a<span class="sy0">&gt;</span>&lt;/li<span class="sy0">&gt;</span>
+  &lt;li<span class="sy0">&gt;</span>&lt;a href<span class="sy0">=</span><span class="st0">&quot;#&quot;</span> title<span class="sy0">=</span><span class="st0">&quot;Enlace genérico&quot;</span><span class="sy0">&gt;</span>Elemento <span class="nu0">4</span>&lt;/a<span class="sy0">&gt;</span>&lt;/li<span class="sy0">&gt;</span>
+  &lt;li<span class="sy0">&gt;</span>&lt;a href<span class="sy0">=</span><span class="st0">&quot;#&quot;</span> title<span class="sy0">=</span><span class="st0">&quot;Enlace genérico&quot;</span><span class="sy0">&gt;</span>Elemento <span class="nu0">5</span>&lt;/a<span class="sy0">&gt;</span>&lt;/li<span class="sy0">&gt;</span>
+  &lt;li<span class="sy0">&gt;</span>&lt;a href<span class="sy0">=</span><span class="st0">&quot;#&quot;</span> title<span class="sy0">=</span><span class="st0">&quot;Enlace genérico&quot;</span><span class="sy0">&gt;</span>Elemento <span class="nu0">6</span>&lt;/a<span class="sy0">&gt;</span>&lt;/li<span class="sy0">&gt;</span>
+&lt;/ul<span class="sy0">&gt;</span>
+&lt;/body<span class="sy0">&gt;</span>
+&lt;/html<span class="sy0">&gt;</span></pre>
+</div>
+
+<p><a href="../../ejercicios/css/soluciones/ejercicio10/ejercicio10.html">Descargar solución completa</a></p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="solucion_ejercicio_9.html">&larr; Anterior <span>16.9. Solución ejercicio 9</span></a>
+            
+            <a class="span5 next" href="solucion_ejercicio_11.html">Siguiente &rarr; <span>16.11. Solución ejercicio 11</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Solución ejercicio 10 (Introducción a CSS%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a CSS : Solución ejercicio 10']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Selectores</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Unidades de medida y colores</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Modelo de cajas</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Posicionamiento y visualización</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Texto</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Enlaces</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Imágenes</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Listas</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Tablas</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Layout</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Otros</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Recursos útiles</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Ejercicios</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_16.html">
+            <span>Capítulo 16.</span> Ejercicios resueltos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="solucion_ejercicio_1.html">
+            <span>16.1.</span> Solución ejercicio 1
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="solucion_ejercicio_2.html">
+            <span>16.2.</span> Solución ejercicio 2
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="solucion_ejercicio_3.html">
+            <span>16.3.</span> Solución ejercicio 3
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="solucion_ejercicio_4.html">
+            <span>16.4.</span> Solución ejercicio 4
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="solucion_ejercicio_5.html">
+            <span>16.5.</span> Solución ejercicio 5
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="solucion_ejercicio_6.html">
+            <span>16.6.</span> Solución ejercicio 6
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="solucion_ejercicio_7.html">
+            <span>16.7.</span> Solución ejercicio 7
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="solucion_ejercicio_8.html">
+            <span>16.8.</span> Solución ejercicio 8
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="solucion_ejercicio_9.html">
+            <span>16.9.</span> Solución ejercicio 9
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="solucion_ejercicio_10.html">
+            <span>16.10.</span> Solución ejercicio 10
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="solucion_ejercicio_11.html">
+            <span>16.11.</span> Solución ejercicio 11
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="solucion_ejercicio_12.html">
+            <span>16.12.</span> Solución ejercicio 12
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="solucion_ejercicio_13.html">
+            <span>16.13.</span> Solución ejercicio 13
+        </a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

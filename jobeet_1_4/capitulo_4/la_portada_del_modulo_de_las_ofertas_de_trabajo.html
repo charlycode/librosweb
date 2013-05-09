@@ -1,0 +1,353 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>4.4. La portada del módulo de las ofertas de trabajo (El tutorial Jobeet)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="las_hojas_de_estilo_imagenes_y_archivos_javascript.html" />
+        <link rel="next" href="la_plantilla_de_la_pagina_de_una_oferta_de_trabajo.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="4.4. La portada del módulo de las ofertas de trabajo (El tutorial Jobeet)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page jobeet_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">El tutorial Jobeet</a></li>
+  <li><a href="../capitulo_4.html">Capítulo 4. El controlador y la vista</a></li>
+  <li class="current"><span>4.4.. La portada del módulo de las ofertas de trabajo</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="la_portada_del_modulo_de_las_ofertas_de_trabajo"><span>4.4.</span> La portada del módulo de las ofertas de trabajo</h1>
+    
+
+<p>Como se explicó en la lección anterior, la portada del módulo <code>job</code> se genera en una acción llamada <code>index</code>. La acción es la parte del controlador de esta página y la plantilla asociada (llamada <code>indexSuccess.php</code>) es la parte de la vista:</p>
+
+<div class="code code">
+<pre class="code">apps/
+  frontend/
+    modules/
+      job/
+        actions/
+          actions.class.php
+        templates/
+          indexSuccess.php</pre>
+</div>
+
+<h3 id="la_accion">4.4.1. La acción</h3>
+
+<p>Las acciones se definen como métodos de una clase. Para la portada que estamos creando, la clase se llama <code>jobActions</code> (siempre es el nombre del módulo seguido por la palabra <code>Actions</code>) y el método se llama <code>executeIndex()</code> (siempre es la palabra <code>execute</code> seguida del nombre de la acción). Lo único que hace esta acción es obtener la información de todas las ofertas de trabajo de la base de datos:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// apps/frontend/modules/job/actions/actions.class.php</span>
+<span class="kw2">class</span> jobActions <span class="kw2">extends</span> sfActions
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> executeIndex<span class="br0">&#40;</span>sfWebRequest <span class="re0">$request</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">jobeet_job_list</span> <span class="sy0">=</span> JobeetJobPeer<span class="sy0">::</span><span class="me2">doSelect</span><span class="br0">&#40;</span><span class="kw2">new</span> Criteria<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="co1">// ...</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Entrando en el detalle del código anterior, se puede observar que el método <code>executeIndex()</code> (que es el controlador) realiza llamadas a los métodos de la clase <code>JobeetJobPeer</code> del modelo para obtener la lista de todas las ofertas de trabajo (gracias a <code>new Criteria()</code>). Este método devuelve un array de objetos de tipo <code>JobeetJob</code>, que se asigna a la propiedad <code>jobeet_job_list</code> del objeto.</p>
+
+<p>Todas las propiedades de este objeto se pasan automáticamente a la plantilla, que es la parte de la vista. Para pasar datos del controlador a la vista, lo único que tienes que hacer es crear una propiedad en el objeto mediante <code>$this-&gt;nombreDeLaPropiedad</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">public</span> <span class="kw2">function</span> executeFooBar<span class="br0">&#40;</span>sfWebRequest <span class="re0">$request</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">foo</span> <span class="sy0">=</span> <span class="st_h">'bar'</span><span class="sy0">;</span>
+  <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">bar</span> <span class="sy0">=</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'bar'</span><span class="sy0">,</span> <span class="st_h">'baz'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>El código anterior permite que en la plantilla existan dos variables llamadas <code>$foo</code> y <code>$bar</code> que contienen los valores establecidos en la acción.</p>
+
+<h3 id="la_plantilla">4.4.2. La plantilla</h3>
+
+<p>Symfony utiliza por defecto una convención para deducir el nombre de la plantilla asociada a cada acción y que consiste en el nombre de la acción seguido de la palabra <code>Success</code>. Por tanto, la plantilla llamada <code>indexSuccess.php</code> es la que genera todo el código HTML de la tabla que muestra el listado de ofertas de trabajo. A continuación se muestra el código completo de la plantilla:</p>
+
+<div class="code php">
+<pre class="php">&lt;!-- apps/frontend/modules/job/templates/indexSuccess.php --&gt;
+<span class="kw2">&lt;?php</span> use_stylesheet<span class="br0">&#40;</span><span class="st_h">'jobs.css'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+&nbsp;
+&lt;h1&gt;Job List&lt;/h1&gt;
+&nbsp;
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Id&lt;/th&gt;
+      &lt;th&gt;Category&lt;/th&gt;
+      &lt;th&gt;Type&lt;/th&gt;
+&lt;!-- more columns here --&gt;
+      &lt;th&gt;Created at&lt;/th&gt;
+      &lt;th&gt;Updated at&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    <span class="kw2">&lt;?php</span> <span class="kw1">foreach</span> <span class="br0">&#40;</span><span class="re0">$jobeet_job_list</span> <span class="kw1">as</span> <span class="re0">$jobeet_job</span><span class="br0">&#41;</span><span class="sy0">:</span> <span class="sy1">?&gt;</span>
+    &lt;tr&gt;
+      &lt;td&gt;
+        &lt;a href=&quot;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> url_for<span class="br0">&#40;</span><span class="st_h">'job/show?id='</span><span class="sy0">.</span><span class="re0">$jobeet_job</span><span class="sy0">-&gt;</span><span class="me1">getId</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>&quot;&gt;
+          <span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$jobeet_job</span><span class="sy0">-&gt;</span><span class="me1">getId</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+        &lt;/a&gt;
+      &lt;/td&gt;
+      &lt;td&gt;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$jobeet_job</span><span class="sy0">-&gt;</span><span class="me1">getCategoryId</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>&lt;/td&gt;
+      &lt;td&gt;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$jobeet_job</span><span class="sy0">-&gt;</span><span class="kw3">getType</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>&lt;/td&gt;
+&lt;!-- more columns here --&gt;
+      &lt;td&gt;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$jobeet_job</span><span class="sy0">-&gt;</span><span class="me1">getCreatedAt</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>&lt;/td&gt;
+      &lt;td&gt;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$jobeet_job</span><span class="sy0">-&gt;</span><span class="me1">getUpdatedAt</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>&lt;/td&gt;
+    &lt;/tr&gt;
+    <span class="kw2">&lt;?php</span> <span class="kw1">endforeach</span><span class="sy0">;</span> <span class="sy1">?&gt;</span>
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&nbsp;
+&lt;a href=&quot;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> url_for<span class="br0">&#40;</span><span class="st_h">'job/new'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>&quot;&gt;New&lt;/a&gt;</pre>
+</div>
+
+<p>En el código de la plantilla anterior, se emplea una sentencia <code>foreach</code> para recorrer la lista de objetos de tipo <code>Job</code> (almacenados en la variable <code>$jobeet_job_list</code>) y para cada oferta de trabajo, se muestra el valor de todas sus columnas. Para acceder al valor de cada columna, puedes utilizar un método generado automáticamente y que se construye uniendo la palabra <code>get</code> junto con el nombre de la columna en formato <em>camelCase</em>. El formato <em>camelCase</em> consiste en eliminar los guiones bajos del nombre original de la columna y escribir en mayúsculas la primera letra de cada palabra. De esta forma, la columna <code>created_at</code> tiene un método asociado llamado <code>getCreatedAt()</code>.</p>
+
+<p>El código anterior muestra el valor de todas las columnas de los objetos, pero en la aplicación real sólo queremos mostrar algunas de las columnas disponibles:</p>
+
+<div class="code php">
+<pre class="php">&lt;!-- apps/frontend/modules/job/templates/indexSuccess.php --&gt;
+<span class="kw2">&lt;?php</span> use_stylesheet<span class="br0">&#40;</span><span class="st_h">'jobs.css'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+&nbsp;
+&lt;div id=&quot;jobs&quot;&gt;
+  &lt;table class=&quot;jobs&quot;&gt;
+    <span class="kw2">&lt;?php</span> <span class="kw1">foreach</span> <span class="br0">&#40;</span><span class="re0">$jobeet_job_list</span> <span class="kw1">as</span> <span class="re0">$i</span> <span class="sy0">=&gt;</span> <span class="re0">$job</span><span class="br0">&#41;</span><span class="sy0">:</span> <span class="sy1">?&gt;</span>
+      &lt;tr class=&quot;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="kw3">fmod</span><span class="br0">&#40;</span><span class="re0">$i</span><span class="sy0">,</span> <span class="nu0">2</span><span class="br0">&#41;</span> ? <span class="st_h">'even'</span> <span class="sy0">:</span> <span class="st_h">'odd'</span> <span class="sy1">?&gt;</span>&quot;&gt;
+        &lt;td class=&quot;location&quot;&gt;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$job</span><span class="sy0">-&gt;</span><span class="me1">getLocation</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>&lt;/td&gt;
+        &lt;td class=&quot;position&quot;&gt;
+          &lt;a href=&quot;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> url_for<span class="br0">&#40;</span><span class="st_h">'job/show?id='</span><span class="sy0">.</span><span class="re0">$job</span><span class="sy0">-&gt;</span><span class="me1">getId</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>&quot;&gt;
+            <span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$job</span><span class="sy0">-&gt;</span><span class="me1">getPosition</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+          &lt;/a&gt;
+        &lt;/td&gt;
+        &lt;td class=&quot;company&quot;&gt;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$job</span><span class="sy0">-&gt;</span><span class="me1">getCompany</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>&lt;/td&gt;
+      &lt;/tr&gt;
+    <span class="kw2">&lt;?php</span> <span class="kw1">endforeach</span><span class="sy0">;</span> <span class="sy1">?&gt;</span>
+  &lt;/table&gt;
+&lt;/div&gt;</pre>
+</div>
+
+<div class="figure" id="figure_4_5">
+    <img src="../../img/jobeet_1_4/f0405.png" alt="La página principal" />
+
+    <p class="caption"><strong>Figura 4.5</strong> La página principal</p>
+</div>
+
+
+<p>La función <code>url_for()</code> utilizada en la plantilla anterior es un helper muy útil de Symfony que explicaremos en la lección de mañana.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="las_hojas_de_estilo_imagenes_y_archivos_javascript.html">&larr; Anterior <span>4.3. Las hojas de estilo, imágenes y archivos JavaScript</span></a>
+            
+            <a class="span5 next" href="la_plantilla_de_la_pagina_de_una_oferta_de_trabajo.html">Siguiente &rarr; <span>4.5. La plantilla de la página de una oferta de trabajo</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'La portada del módulo de las ofertas de trabajo (El tutorial Jobeet%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'El tutorial Jobeet : La portada del módulo de las ofertas de trabajo']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Comenzando el proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> El proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> El modelo de datos</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_4.html">
+            <span>Capítulo 4.</span> El controlador y la vista
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="la_arquitectura_mvc.html">
+            <span>4.1.</span> La arquitectura MVC
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_layout.html">
+            <span>4.2.</span> El layout
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="las_hojas_de_estilo_imagenes_y_archivos_javascript.html">
+            <span>4.3.</span> Las hojas de estilo, imágenes y archivos JavaScript
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="la_portada_del_modulo_de_las_ofertas_de_trabajo.html">
+            <span>4.4.</span> La portada del módulo de las ofertas de trabajo
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="la_plantilla_de_la_pagina_de_una_oferta_de_trabajo.html">
+            <span>4.5.</span> La plantilla de la página de una oferta de trabajo
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="slots.html">
+            <span>4.6.</span> Slots
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="la_accion_de_la_pagina_de_una_oferta_de_trabajo.html">
+            <span>4.7.</span> La acción de la página de una oferta de trabajo
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="la_peticion_y_la_respuesta.html">
+            <span>4.8.</span> La petición y la respuesta
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="nos_vemos_manana.html">
+            <span>4.9.</span> Nos vemos mañana
+        </a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> El sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Profundizando en el modelo</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Trabajando con la página de cada categoría</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Pruebas unitarias</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Pruebas funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Probando los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> El generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> El usuario</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> El día de descanso</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Canales Atom</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Servicios web</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> El buscador</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>20</span> <a href="../capitulo_20.html"> Plugins</a>
+    </li>
+    <li class="level-1">
+        <span>21</span> <a href="../capitulo_21.html"> El día del diseño</a>
+    </li>
+    <li class="level-1">
+        <span>22</span> <a href="../capitulo_22.html"> La cache</a>
+    </li>
+    <li class="level-1">
+        <span>23</span> <a href="../capitulo_23.html"> Pasando a producción</a>
+    </li>
+    <li class="level-1">
+        <span>24</span> <a href="../capitulo_24.html"> Un repaso a Symfony</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

@@ -1,0 +1,404 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>6.9. Ignorando los formularios embebidos (Más con Symfony)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="guardando_formularios_de_objetos.html" />
+        <link rel="next" href="embebiendo_facilmente_formularios_relacionados_con_doctrine.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="6.9. Ignorando los formularios embebidos (Más con Symfony)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page mas_con_symfony">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Más con Symfony</a></li>
+  <li><a href="../capitulo_6.html">Capítulo 6. Formularios avanzados</a></li>
+  <li class="current"><span>6.9.. Ignorando los formularios embebidos</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="ignorando_los_formularios_embebidos"><span>6.9.</span> Ignorando los formularios embebidos</h1>
+    
+
+<p>La implementación actual de <code>ProductForm</code> sufre una carencia importante. Como
+los campos <code>filename</code> y <code>caption</code> son obligatorios en <code>ProductPhotoForm</code>, la
+validación del formulario principal siempre falla a menos que el usuario suba
+dos nuevas fotos. En otras palabras, el usuario no puede modificar solamente
+el precio de <code>Product</code> sin tener que subir dos nuevas fotos del producto.</p>
+
+<div class="figure" id="figure_6_3">
+    <img src="../../img/mas_con_symfony/advanced_forms_04.png" alt="Error de validación de las fotos en el formulario del producto" title="Error de validación de las fotos en el formulario del producto" />
+
+    <p class="caption"><strong>Figura 6.3</strong> Error de validación de las fotos en el formulario del producto</p>
+</div>
+
+
+<p>Por este motivo se van a redefinir los requisitos de la aplicación para que si
+el usuario deja vacíos todos los campos de tipo <code>ProductPhotoForm</code>, el formulario
+principal los ignore. No obstante, si al menos un campo de este tipo tiene
+información (sea el <code>caption</code> o el <code>filename</code>), el formulario realiza la
+validación tradicional y se guarda normalmente. Para conseguirlo, se va a
+utilizar una técnica avanzada que hace uso de un post-validador propio.</p>
+
+<p>El primer paso consiste en modificar el formulario <code>ProductPhotoForm</code> para hacer
+que los campos <code>caption</code> y <code>filename</code> sean opcionales:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// lib/form/doctrine/ProductPhotoForm.class.php</span>
+<span class="kw2">public</span> <span class="kw2">function</span> configure<span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">setValidator</span><span class="br0">&#40;</span><span class="st_h">'filename'</span><span class="sy0">,</span> <span class="kw2">new</span> sfValidatorFile<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span>
+    <span class="st_h">'mime_types'</span> <span class="sy0">=&gt;</span> <span class="st_h">'web_images'</span><span class="sy0">,</span>
+    <span class="st_h">'path'</span> <span class="sy0">=&gt;</span> sfConfig<span class="sy0">::</span><span class="me2">get</span><span class="br0">&#40;</span><span class="st_h">'sf_upload_dir'</span><span class="br0">&#41;</span><span class="sy0">.</span><span class="st_h">'/products'</span><span class="sy0">,</span>
+    <span class="st_h">'required'</span> <span class="sy0">=&gt;</span> <span class="kw4">false</span><span class="sy0">,</span>
+  <span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+  <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">validatorSchema</span><span class="br0">&#91;</span><span class="st_h">'caption'</span><span class="br0">&#93;</span><span class="sy0">-&gt;</span><span class="me1">setOption</span><span class="br0">&#40;</span><span class="st_h">'required'</span><span class="sy0">,</span> <span class="kw4">false</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>El código anterior establece la opción <code>required</code> a <code>false</code> al redefinir el
+validador por defecto del campo <code>filename</code>. Además, también se ha establecido
+de forma explícita la opción <code>required</code> del campo <code>caption</code> a <code>false</code>.</p>
+
+<p>Seguidamente se añade el post-validador en el formulario <code>ProductPhotoCollectionForm</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// lib/form/doctrine/ProductPhotoCollectionForm.class.php</span>
+<span class="kw2">public</span> <span class="kw2">function</span> configure<span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="co1">// ...</span>
+&nbsp;
+  <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">mergePostValidator</span><span class="br0">&#40;</span><span class="kw2">new</span> ProductPhotoValidatorSchema<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Un post-validador es un tipo especial de validador que tiene acceso a todos los
+valores enviados, a diferencia de un validador que sólo pude acceder a un único
+campo del formulario. Uno de los post-validadores más utilizados es
+<code>sfValidatorSchemaCompare</code> que comprueba por ejemplo que el valor de un campo
+sea inferior al del otro campo.</p>
+
+<h3 id="creando_un_validador_propio">6.9.1. Creando un validador propio</h3>
+
+<p>Afortunadamente es muy sencillo crear un validador propio. Crea un nuevo archivo
+llamado <code>ProductPhotoValidatorSchema.class.php</code> y guárdalo en el directorio
+<code>lib/validator/</code> (debes crear este directorio a mano):</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// lib/validator/ProductPhotoValidatorSchema.class.php</span>
+<span class="kw2">class</span> ProductPhotoValidatorSchema <span class="kw2">extends</span> sfValidatorSchema
+<span class="br0">&#123;</span>
+  <span class="kw2">protected</span> <span class="kw2">function</span> configure<span class="br0">&#40;</span><span class="re0">$options</span> <span class="sy0">=</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="re0">$messages</span> <span class="sy0">=</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">addMessage</span><span class="br0">&#40;</span><span class="st_h">'caption'</span><span class="sy0">,</span> <span class="st_h">'The caption is required.'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">addMessage</span><span class="br0">&#40;</span><span class="st_h">'filename'</span><span class="sy0">,</span> <span class="st_h">'The filename is required.'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="kw2">protected</span> <span class="kw2">function</span> doClean<span class="br0">&#40;</span><span class="re0">$values</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$errorSchema</span> <span class="sy0">=</span> <span class="kw2">new</span> sfValidatorErrorSchema<span class="br0">&#40;</span><span class="re0">$this</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="kw1">foreach</span><span class="br0">&#40;</span><span class="re0">$values</span> <span class="kw1">as</span> <span class="re0">$key</span> <span class="sy0">=&gt;</span> <span class="re0">$value</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="re0">$errorSchemaLocal</span> <span class="sy0">=</span> <span class="kw2">new</span> sfValidatorErrorSchema<span class="br0">&#40;</span><span class="re0">$this</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+      <span class="co1">// se ha rellenado el campo filename pero no el campo caption</span>
+      <span class="kw1">if</span> <span class="br0">&#40;</span><span class="re0">$value</span><span class="br0">&#91;</span><span class="st_h">'filename'</span><span class="br0">&#93;</span> <span class="sy0">&amp;&amp;</span> <span class="sy0">!</span><span class="re0">$value</span><span class="br0">&#91;</span><span class="st_h">'caption'</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+      <span class="br0">&#123;</span>
+        <span class="re0">$errorSchemaLocal</span><span class="sy0">-&gt;</span><span class="me1">addError</span><span class="br0">&#40;</span><span class="kw2">new</span> sfValidatorError<span class="br0">&#40;</span><span class="re0">$this</span><span class="sy0">,</span> <span class="st_h">'required'</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="st_h">'caption'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+      <span class="br0">&#125;</span>
+&nbsp;
+      <span class="co1">// se ha rellenado el campo caption pero no el campo filename</span>
+      <span class="kw1">if</span> <span class="br0">&#40;</span><span class="re0">$value</span><span class="br0">&#91;</span><span class="st_h">'caption'</span><span class="br0">&#93;</span> <span class="sy0">&amp;&amp;</span> <span class="sy0">!</span><span class="re0">$value</span><span class="br0">&#91;</span><span class="st_h">'filename'</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+      <span class="br0">&#123;</span>
+        <span class="re0">$errorSchemaLocal</span><span class="sy0">-&gt;</span><span class="me1">addError</span><span class="br0">&#40;</span><span class="kw2">new</span> sfValidatorError<span class="br0">&#40;</span><span class="re0">$this</span><span class="sy0">,</span> <span class="st_h">'required'</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="st_h">'filename'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+      <span class="br0">&#125;</span>
+&nbsp;
+      <span class="co1">// no se ha rellenado ni caption ni filename, se eliminan los valores vacíos</span>
+      <span class="kw1">if</span> <span class="br0">&#40;</span><span class="sy0">!</span><span class="re0">$value</span><span class="br0">&#91;</span><span class="st_h">'filename'</span><span class="br0">&#93;</span> <span class="sy0">&amp;&amp;</span> <span class="sy0">!</span><span class="re0">$value</span><span class="br0">&#91;</span><span class="st_h">'caption'</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+      <span class="br0">&#123;</span>
+        <span class="kw3">unset</span><span class="br0">&#40;</span><span class="re0">$values</span><span class="br0">&#91;</span><span class="re0">$key</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+      <span class="br0">&#125;</span>
+&nbsp;
+      <span class="co1">// algun error para este formulario embebido</span>
+      <span class="kw1">if</span> <span class="br0">&#40;</span><span class="kw3">count</span><span class="br0">&#40;</span><span class="re0">$errorSchemaLocal</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+      <span class="br0">&#123;</span>
+        <span class="re0">$errorSchema</span><span class="sy0">-&gt;</span><span class="me1">addError</span><span class="br0">&#40;</span><span class="re0">$errorSchemaLocal</span><span class="sy0">,</span> <span class="br0">&#40;</span>string<span class="br0">&#41;</span> <span class="re0">$key</span><span class="br0">&#41;</span><span class="sy0">;</span>
+      <span class="br0">&#125;</span>
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="co1">// lanza un error para el formulario principal</span>
+    <span class="kw1">if</span> <span class="br0">&#40;</span><span class="kw3">count</span><span class="br0">&#40;</span><span class="re0">$errorSchema</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="kw1">throw</span> <span class="kw2">new</span> sfValidatorErrorSchema<span class="br0">&#40;</span><span class="re0">$this</span><span class="sy0">,</span> <span class="re0">$errorSchema</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="kw1">return</span> <span class="re0">$values</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Todos los validadores heredan de <code>sfValidatorBase</code> y solamente requieren el
+método <code>doClean()</code>. También se puede emplear el método <code>configure()</code> para
+añadir opciones o mensajes al validador. En este caso, se han añadido dos
+mensajes al validador. Igualmente, se pueden añadir opciones adicionales
+mediante el método <code>addOption()</code>.</p></div>
+
+<p>El método <code>doClean()</code> se encarga de <em>limpiar</em> y validar los datos enviados. La
+propia lógica del validador es muy simple:</p>
+
+<ul>
+<li>Si la foto enviada solamente tiene un nombre de archivo o un título, se lanza
+un error (<code>sfValidatorErrorSchema</code>) con el mensaje apropiado</li>
+<li>Si la foto enviada no tiene ni nombre de archivo ni título, se eliminan los
+dos valores para evitar guardar una foto vacía</li>
+<li>Si no se producen errores de validación, el método devuelve un array con
+los datos <em>limpios</em></li>
+</ul>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Como en este caso el validador propio se va a utilizar como post-validador,
+su método <code>doClean()</code> espera un array con los valores enviados por el usuario
+y devuelve un array con los valores <em>limpios</em>. Los validadores propios para
+campos individuales también se pueden crear igual de fácil. En este caso, el
+método <code>doClean()</code> solamente espera un valor (el valor enviado por el usuario)
+y devuelve un único valor.</p></div>
+
+<p>El último paso consiste en redefinir el método <code>saveEmbeddedForms()</code> de <code>ProductForm</code>
+para eliminar los formularios de fotos vacíos de forma que no se guarde una
+foto vacía en la base de datos (ya que se lanzaría una excepción porque la
+columna <code>caption</code> es obligatoria):</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">public</span> <span class="kw2">function</span> saveEmbeddedForms<span class="br0">&#40;</span><span class="re0">$con</span> <span class="sy0">=</span> <span class="kw4">null</span><span class="sy0">,</span> <span class="re0">$forms</span> <span class="sy0">=</span> <span class="kw4">null</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="kw1">if</span> <span class="br0">&#40;</span><span class="kw4">null</span> <span class="sy0">===</span> <span class="re0">$forms</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$photos</span> <span class="sy0">=</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getValue</span><span class="br0">&#40;</span><span class="st_h">'newPhotos'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$forms</span> <span class="sy0">=</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">embeddedForms</span><span class="sy0">;</span>
+    <span class="kw1">foreach</span> <span class="br0">&#40;</span><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">embeddedForms</span><span class="br0">&#91;</span><span class="st_h">'newPhotos'</span><span class="br0">&#93;</span> <span class="kw1">as</span> <span class="re0">$name</span> <span class="sy0">=&gt;</span> <span class="re0">$form</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="kw1">if</span> <span class="br0">&#40;</span><span class="sy0">!</span><span class="kw3">isset</span><span class="br0">&#40;</span><span class="re0">$photos</span><span class="br0">&#91;</span><span class="re0">$name</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+      <span class="br0">&#123;</span>
+        <span class="kw3">unset</span><span class="br0">&#40;</span><span class="re0">$forms</span><span class="br0">&#91;</span><span class="st_h">'newPhotos'</span><span class="br0">&#93;</span><span class="br0">&#91;</span><span class="re0">$name</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+      <span class="br0">&#125;</span>
+    <span class="br0">&#125;</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="kw1">return</span> parent<span class="sy0">::</span><span class="me2">saveEmbeddedForms</span><span class="br0">&#40;</span><span class="re0">$con</span><span class="sy0">,</span> <span class="re0">$forms</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="guardando_formularios_de_objetos.html">&larr; Anterior <span>6.8. Guardando formularios de objetos</span></a>
+            
+            <a class="span5 next" href="embebiendo_facilmente_formularios_relacionados_con_doctrine.html">Siguiente &rarr; <span>6.10. Embebiendo fácilmente formularios relacionados con Doctrine</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Ignorando los formularios embebidos (Más con Symfony%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Más con Symfony : Ignorando los formularios embebidos']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Enrutamiento avanzado</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Mejora tu productividad</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Emails</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Widgets y validadores propios</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_6.html">
+            <span>Capítulo 6.</span> Formularios avanzados
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="mini_proyecto_productos_y_fotos.html">
+            <span>6.1.</span> Mini-proyecto: productos y fotos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="aprendiendo_mas_haciendo_los_ejemplos.html">
+            <span>6.2.</span> Aprendiendo más haciendo los ejemplos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="configuracion_basica_del_formulario.html">
+            <span>6.3.</span> Configuración básica del formulario
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="embebiendo_formularios.html">
+            <span>6.4.</span> Embebiendo formularios
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="refactorizando.html">
+            <span>6.5.</span> Refactorizando
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="diseccionando_el_objeto_sfform.html">
+            <span>6.6.</span> Diseccionando el objeto sfForm
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="mostrando_los_formularios_embebidos.html">
+            <span>6.7.</span> Mostrando los formularios embebidos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="guardando_formularios_de_objetos.html">
+            <span>6.8.</span> Guardando formularios de objetos
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="ignorando_los_formularios_embebidos.html">
+            <span>6.9.</span> Ignorando los formularios embebidos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="embebiendo_facilmente_formularios_relacionados_con_doctrine.html">
+            <span>6.10.</span> Embebiendo fácilmente formularios relacionados con Doctrine
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="eventos_de_formulario.html">
+            <span>6.11.</span> Eventos de formulario
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="aplicando_estilos_diferentes_para_los_elementos_con_errores.html">
+            <span>6.12.</span> Aplicando estilos diferentes para los elementos con errores
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="conclusion.html">
+            <span>6.13.</span> Conclusión
+        </a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Mejorando la barra de depuración web</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Uso avanzado de Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Utilizando la herencia de tablas de Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Funcionamiento interno de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Windows y Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Desarrollando aplicaciones Facebook</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Descubriendo el poder de la línea de comandos</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Jugando con la cache de configuración de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Trabajando con la comunidad Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>A</span> <a href="../apendice_a.html"> Código JavaScript de sfWidgetFormGMapAddress</a>
+    </li>
+    <li class="level-1">
+        <span>B</span> <a href="../apendice_b.html"> Ejemplo de instalador propio</a>
+    </li>
+    <li class="level-1">
+        <span>C</span> <a href="../apendice_c.html"> Licencia</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

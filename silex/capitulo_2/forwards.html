@@ -1,0 +1,230 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>2.8. Forwards (Silex, el manual oficial)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="redirecciones.html" />
+        <link rel="next" href="json.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="2.8. Forwards (Silex, el manual oficial)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page silex">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Silex, el manual oficial</a></li>
+  <li><a href="../capitulo_2.html">Capítulo 2. Primeros pasos</a></li>
+  <li class="current"><span>2.8.. Forwards</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="forwards"><span>2.8.</span> Forwards</h1>
+    
+
+<p>Los <em>forwards</em> se pueden considerar redirecciones internas, ya que se trata de delegar la ejecución de la aplicación en un controlador diferente al asociado originalmente con la ruta. Este proceso es interno, por lo que no interviene el navegador del usuario y por tanto, es totalmente transparente al usuario (al contrario que las redirecciones). Técnicamente Silex utiliza una sub-petición para hacer el <em>forward</em>:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">use</span> Symfony\Component\HttpFoundation\Request<span class="sy0">;</span>
+<span class="kw2">use</span> Symfony\Component\HttpKernel\HttpKernelInterface<span class="sy0">;</span>
+&nbsp;
+<span class="re0">$app</span><span class="sy0">-&gt;</span><span class="me1">get</span><span class="br0">&#40;</span><span class="st_h">'/'</span><span class="sy0">,</span> <span class="kw2">function</span> <span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="kw2">use</span> <span class="br0">&#40;</span><span class="re0">$app</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="co1">// forward to /hello</span>
+    <span class="re0">$subRequest</span> <span class="sy0">=</span> Request<span class="sy0">::</span><span class="me2">create</span><span class="br0">&#40;</span><span class="st_h">'/hello'</span><span class="sy0">,</span> <span class="st_h">'GET'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="kw1">return</span> <span class="re0">$app</span><span class="sy0">-&gt;</span><span class="me1">handle</span><span class="br0">&#40;</span><span class="re0">$subRequest</span><span class="sy0">,</span> HttpKernelInterface<span class="sy0">::</span><span class="me2">SUB_REQUEST</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<div class="admonition tip"><p><strong class="title">Truco</strong> Si utilizas el proveedor <code>UrlGeneratorProvider</code>, también puedes generar la URL a partir del nombre de la ruta:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$request</span> <span class="sy0">=</span> Request<span class="sy0">::</span><span class="me2">create</span><span class="br0">&#40;</span><span class="re0">$app</span><span class="br0">&#91;</span><span class="st_h">'url_generator'</span><span class="br0">&#93;</span><span class="sy0">-&gt;</span><span class="me1">generate</span><span class="br0">&#40;</span><span class="st_h">'hello'</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="st_h">'GET'</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p></p></div>
+
+<p>Los <em>forwards</em> requieren algo más de trabajo, ya que normalmente querrás enviar a la sub-petición determinada información que solo está disponible en la petición principal, como por ejemplo las cookies, la sesión y los parámetros del servidor.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="redirecciones.html">&larr; Anterior <span>2.7. Redirecciones</span></a>
+            
+            <a class="span5 next" href="json.html">Siguiente &rarr; <span>2.9. JSON</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Forwards (Silex, el manual oficial%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Silex, el manual oficial : Forwards']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_2.html">
+            <span>Capítulo 2.</span> Primeros pasos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="instalacion.html">
+            <span>2.1.</span> Instalación
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="actualizacion.html">
+            <span>2.2.</span> Actualización
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="inicializacion.html">
+            <span>2.3.</span> Inicialización
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="enrutamiento.html">
+            <span>2.4.</span> Enrutamiento
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="configuracion_global.html">
+            <span>2.5.</span> Configuración global
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="gestion_de_errores.html">
+            <span>2.6.</span> Gestión de errores
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="redirecciones.html">
+            <span>2.7.</span> Redirecciones
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="forwards.html">
+            <span>2.8.</span> Forwards
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="json.html">
+            <span>2.9.</span> JSON
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="streaming.html">
+            <span>2.10.</span> Streaming
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="traits.html">
+            <span>2.11.</span> Traits
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="seguridad.html">
+            <span>2.12.</span> Seguridad
+        </a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Middlewares</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Organizando los controladores</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Servicios</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Proveedores</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Tests</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Funcionamiento interno</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Silex y los servidores web</a>
+    </li>
+    <li class="level-1">
+        <span>A</span> <a href="../apendice_a.html"> Proveedores de servicios de Silex</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

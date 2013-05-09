@@ -1,0 +1,376 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>border-collapse (Referencia de CSS 2.1)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="border-collapse (Referencia de CSS 2.1)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page referencia_css">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="index.html">Referencia de CSS 2.1</a></li>
+  <li class="current"><span>border-collapse</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="border_collapse">border-collapse</h1>
+    <div class="table" id="table_13_1">
+
+    <table class="table property css" summary="Definición de la propiedad border-collapse de CSS"> 
+<tr><th>Definición</th><td>Selecciona el modelo de bordes de las celdas de la tabla</td></tr><tr><th>Valores <br/> permitidos</th><td>Uno y sólo uno de los siguientes valores:<ul><li>collapse</li><li>separate</li><li><a href="el-valor-inherit.html">inherit</a></li></ul></td></tr><tr><th>Valor inicial</th><td>separate</td></tr><tr><th>Se aplica a</th><td>Los elementos de tipo tabla</td></tr><tr><th>Válida en</th><td><a href="medios.html">medios visuales</a></td></tr><tr><th>Se hereda</th><td>si</td></tr><tr class="nobottom"><th>Definición en<br/>el estándar</th><td><a href="http://www.w3.org/TR/CSS21/tables.html#propdef-border-collapse">http://www.w3.org/TR/CSS21/tables.html#propdef-border-collapse</a></td></tr>
+</table>
+</div>
+
+
+<h2 id="ejemplos_de_uso">Ejemplos de uso</h2>
+
+<p>El estándar de CSS 2.1 establece que existen dos modelos de bordes para las celdas de las tablas. El primer modelo es el "separado"  <em>separate</em>) y hace que todas las celdas de la tabla muestren sus cuatro bordes. El segundo modelo es el "fusionado"  <em>collapse</em>) y combina los bordes de las celdas adyacentes.</p>
+
+<p>El modelo de bordes influye en la estética de los bordes de las celdas, pero es independiente de las propiedades <code>border</code>, <code>border-width</code>, <code>border-color</code> y <code>border-style</code>. El modelo de bordes se establece mediante la propiedad <code>border-collapse</code>.</p>
+
+<p>Los navegadores utilizan por defecto el modelo de bordes <code>separate</code>, que hace que todas las celdas estén separadas y muestren siempre sus cuatro bordes. La tabla del siguiente ejemplo emplea el modelo <code>separate</code>:</p>
+
+<div class="example">
+<style type="text/css">
+table.td_border td { border: 1px solid; }
+</style>
+<div class="table" id="table_13_2">
+
+    <table class="td_border" style="border: none; border-collapse: separate; border-spacing: 3px;" summary="Descripción de la tabla y su contenido">
+<tbody>
+  <tr>
+    <td>Celda 1 - 1</td>
+    <td>Celda 1 - 2</td>
+    <td>Celda 1 - 3</td>
+  </tr>
+  <tr>
+    <td>Celda 2 - 1</td>
+    <td>Celda 2 - 2</td>
+    <td>Celda 2 - 3</td>
+  </tr>
+  <tr>
+    <td>Celda 3 - 1</td>
+    <td>Celda 3 - 2</td>
+    <td>Celda 3 - 3</td>
+  </tr>
+</tbody>
+</table>
+</div>
+
+</div>
+
+<p>A continuación se muestra el código CSS correspondiente a la tabla anterior:</p>
+
+<div class="code css">
+<pre class="css">table <span class="br0">&#123;</span>
+  <span class="kw1">border-collapse</span><span class="sy0">:</span> <span class="kw2">separate</span><span class="sy0">;</span>
+  <span class="kw1">border-spacing</span><span class="sy0">:</span>  <span class="re3">3px</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Casi siempre que se utiliza la propiedad <code>border-collapse: separate</code>, también se emplea la propiedad <a href="border-spacing.html">border-spacing</a> para controlar la separación entre las celdas.</p>
+
+<p>En el modelo de bordes separados, todas las celdas muestran siempre sus cuatro bordes, independientemente de la separación entre las celdas. En el siguiente ejemplo se utiliza el modelo de bordes separados y se reduce la separación a <code>0px</code>:</p>
+
+<div class="example">
+<style type="text/css">
+table.td_border td { border: 1px solid; }
+</style>
+<div class="table" id="table_13_3">
+
+    <table class="td_border" style="border: none; border-collapse: separate; border-spacing: 0;" summary="Descripción de la tabla y su contenido">
+<tbody>
+  <tr>
+    <td>Celda 1 - 1</td>
+    <td>Celda 1 - 2</td>
+    <td>Celda 1 - 3</td>
+  </tr>
+  <tr>
+    <td>Celda 2 - 1</td>
+    <td>Celda 2 - 2</td>
+    <td>Celda 2 - 3</td>
+  </tr>
+  <tr>
+    <td>Celda 3 - 1</td>
+    <td>Celda 3 - 2</td>
+    <td>Celda 3 - 3</td>
+  </tr>
+</tbody>
+</table>
+</div>
+
+</div>
+
+<p>El aspecto final de la tabla anterior puede que no sea el deseado, porque los bordes de las celdas adyacentes se muestran como un borde de grosor doble, ya que en realidad son dos bordes iguales sin separación entre ellos.</p>
+
+<p>El otro modelo de bordes disponible se denomina <code>collapse</code> y consiste en la fusión automática de todos los bordes adyacentes. A continuación se muestra la misma tabla del ejemplo anterior pero utilizando el modelo <code>collapse</code>:</p>
+
+<div class="example">
+<style type="text/css">
+table.td_border td { border: 1px solid; }
+</style>
+<div class="table" id="table_13_4">
+
+    <table class="td_border" style="border: none; border-collapse: collapse;" summary="Descripción de la tabla y su contenido">
+<tbody>
+  <tr>
+    <td>Celda 1 - 1</td>
+    <td>Celda 1 - 2</td>
+    <td>Celda 1 - 3</td>
+  </tr>
+  <tr>
+    <td>Celda 2 - 1</td>
+    <td>Celda 2 - 2</td>
+    <td>Celda 2 - 3</td>
+  </tr>
+  <tr>
+    <td>Celda 3 - 1</td>
+    <td>Celda 3 - 2</td>
+    <td>Celda 3 - 3</td>
+  </tr>
+</tbody>
+</table>
+</div>
+
+</div>
+
+<p>La otra gran diferencia entre los dos modelos de bordes es que en el modelo <code>separate</code> las filas, grupos de filas, columnas y grupos de columnas no pueden establecer bordes.</p>
+
+<p>A continuación se muestran dos tablas idénticas que utilizan diferentes modelos de bordes:</p>
+
+<div class="example">
+<div class="table" id="table_13_5">
+
+    <table style="border: none; border-collapse: separate;" summary="Descripción de la tabla y su contenido">
+<tbody>
+  <tr style="border: medium solid red">
+    <td>Celda 1 - 1</td>
+    <td>Celda 1 - 2</td>
+    <td>Celda 1 - 3</td>
+  </tr>
+  <tr style="border: medium solid green">
+    <td>Celda 2 - 1</td>
+    <td>Celda 2 - 2</td>
+    <td>Celda 2 - 3</td>
+  </tr>
+  <tr style="border: medium solid blue">
+    <td>Celda 3 - 1</td>
+    <td>Celda 3 - 2</td>
+    <td>Celda 3 - 3</td>
+  </tr>
+</tbody>
+</table>
+</div>
+
+
+<br/>
+
+<div class="table" id="table_13_6">
+
+    <table style="border: none; border-collapse: collapse;" summary="Descripción de la tabla y su contenido">
+<tbody>
+  <tr style="border: medium solid red">
+    <td>Celda 1 - 1</td>
+    <td>Celda 1 - 2</td>
+    <td>Celda 1 - 3</td>
+  </tr>
+  <tr style="border: medium solid green">
+    <td>Celda 2 - 1</td>
+    <td>Celda 2 - 2</td>
+    <td>Celda 2 - 3</td>
+  </tr>
+  <tr style="border: medium solid blue">
+    <td>Celda 3 - 1</td>
+    <td>Celda 3 - 2</td>
+    <td>Celda 3 - 3</td>
+  </tr>
+</tbody>
+</table>
+</div>
+
+</div>
+
+<p>Las dos tablas del ejemplo anterior establecen los mismos bordes en todas sus filas. Sin embargo, como la primera tabla utiliza el modelo de bordes <code>separate</code>, los navegadores ignoran todos los bordes de sus filas.</p>
+
+<p>Cuando todos los bordes son exactamente iguales, la fusión de los bordes adyacentes es trivial, ya que consiste en mostrar únicamente uno de los dos bordes existentes en la intersección de las dos celdas. Por lo tanto, en realidad cada celda sólo muestra medio borde.</p>
+
+<p>Sin embargo, cuando los bordes adyacentes tienen diferentes estilos y grosores, el navegador debe determinar cuál de los dos bordes debe ser representado. El estándar de CSS 2.1 define de forma precisa el algoritmo que se sigue para determinar el borde ganador:</p>
+
+<ol>
+<li>Los bordes definidos con un estilo <code>border-style: hidden</code> tienen la máxima prioridad. Los bordes con este estilo eliminan cualquier otro borde adyacente y por tanto, no se muestra ningún borde.</li>
+<li>Los bordes definidos con el estilo <code>border-style: none</code> tienen la mínima prioridad. Sólo se oculta este borde si todos los demás bordes adyacentes también tienen un estilo <code>none</code>.</li>
+<li>Si ningún borde adyacente es <code>hidden</code> y al menos uno de ellos no es <code>none</code>, siempre gana el borde más ancho.</li>
+<li>Si en el caso anterior varios bordes son de la misma anchura, el ganador se determina mediante el estilo del borde. La lista de estilos de bordes ordenados de más a menos prioridad es la siguiente: <code>double</code>, <code>solid</code>, <code>dashed</code>, <code>dotted</code>, <code>ridge</code>, <code>outset</code>, <code>groove</code>, <code>inset</code>.</li>
+<li>Si los bordes adyacentes sólo se diferencian en su color, la prioridad la determina el elemento que define el borde. Los bordes de las celdas son los más prioritarios, seguidos por orden de prioridad por: filas, grupos de filas, columnas, grupos de columnas y tabla.</li>
+<li>Si se mantiene la igualdad entre los bordes adyacentes, gana el borde que se encuentre más a la izquierda (suponiendo que el valor de la propiedad <a href="direction.html">direction</a> de la tabla es <code>ltr</code>).</li>
+</ol>
+
+<p>A continuación se muestra un ejemplo complejo de resolución de conflictos al fusionar bordes muy diferentes:</p>
+
+<div class="example">
+<div class="table" id="table_13_7">
+
+    <table style="border: thick solid red; border-collapse: collapse;" summary="Descripción de la tabla y su contenido">
+<tbody>
+  <tr style="border: medium dashed black">
+    <td style="border: double blue">Celda 1 - 1</td>
+    <td style="border: solid green">Celda 1 - 2</td>
+    <td style="border: hidden">Celda 1 - 3</td>
+  </tr>
+  <tr>
+    <td style="border: medium solid blue">Celda 2 - 1</td>
+    <td style="border: medium solid green">Celda 2 - 2</td>
+    <td>Celda 2 - 3</td>
+  </tr>
+  <tr style="border: dashed black">
+    <td>Celda 3 - 1</td>
+    <td style="border: medium dotted">Celda 3 - 2</td>
+    <td>Celda 3 - 3</td>
+  </tr>
+</tbody>
+</table>
+</div>
+
+</div>
+
+<p>Si el navegador que utilizas para ver esta página sigue correctamente los estándares, el aspecto de la tabla anterior debe ser exactamente como el de la siguiente imagen:</p>
+
+<div class="example">
+<img src="../../img/referencia_css/border-collapse-1.png" />
+</div>
+
+<p>A continuación se muestra el código HTML y CSS del ejemplo anterior:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">table</span> <span class="kw3">style</span><span class="sy0">=</span><span class="st0">&quot;border: thick solid red; border-collapse: collapse;&quot;</span> <span class="kw3">summary</span><span class="sy0">=</span><span class="st0">&quot;Descripción de la tabla y su contenido&quot;</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">tbody</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">tr</span> <span class="kw3">style</span><span class="sy0">=</span><span class="st0">&quot;border: medium dashed black&quot;</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">td</span> <span class="kw3">style</span><span class="sy0">=</span><span class="st0">&quot;border: double blue&quot;</span>&gt;</span>Celda 1 - 1<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">td</span> <span class="kw3">style</span><span class="sy0">=</span><span class="st0">&quot;border: solid green&quot;</span>&gt;</span>Celda 1 - 2<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">td</span> <span class="kw3">style</span><span class="sy0">=</span><span class="st0">&quot;border: hidden&quot;</span>&gt;</span>Celda 1 - 3<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;</span>
+  <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">tr</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">tr</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">td</span> <span class="kw3">style</span><span class="sy0">=</span><span class="st0">&quot;border: medium solid blue&quot;</span>&gt;</span>Celda 2 - 1<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">td</span> <span class="kw3">style</span><span class="sy0">=</span><span class="st0">&quot;border: medium solid green&quot;</span>&gt;</span>Celda 2 - 2<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">td</span>&gt;</span>Celda 2 - 3<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;</span>
+  <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">tr</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">tr</span> <span class="kw3">style</span><span class="sy0">=</span><span class="st0">&quot;border: dashed black&quot;</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">td</span>&gt;</span>Celda 3 - 1<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">td</span> <span class="kw3">style</span><span class="sy0">=</span><span class="st0">&quot;border: medium dotted&quot;</span>&gt;</span>Celda 3 - 2<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">td</span>&gt;</span>Celda 3 - 3<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;</span>
+  <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">tr</span>&gt;</span>
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">tbody</span>&gt;</span>
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">table</span>&gt;</span></pre>
+</div>
+
+<p>Por último, existen tres estilos de borde que tienen un significado especial cuando se utilizan en las tablas:</p>
+
+<ul>
+<li><code>hidden</code>, visualmente es idéntico a <code>none</code>, pero si se utiliza el modelo de bordes <code>collapse</code>, tiene la máxima prioridad e impide que se vea cualquier otro borde adyacente.</li>
+<li><code>inset</code>, en el modelo de bordes <code>collapse</code> se visualiza igual que el estilo <code>ridge</code>.</li>
+<li><code>outset</code>, en el modelo de bordes <code>collapse</code> se visualiza igual que el estilo <code>groove</code>.</li>
+</ul>
+
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'border-collapse (Referencia de CSS 2.1%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Referencia de CSS 2.1 : border-collapse']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Propiedades relacionadas</span></h3>
+
+
+                                                    <ul class="toc">
+                    <li class="active">
+                <a href="border-collapse.html">border-collapse</a>
+            </li>
+                    <li class="">
+                <a href="border-spacing.html">border-spacing</a>
+            </li>
+                    <li class="">
+                <a href="caption-side.html">caption-side</a>
+            </li>
+                    <li class="">
+                <a href="empty-cells.html">empty-cells</a>
+            </li>
+                    <li class="">
+                <a href="table-layout.html">table-layout</a>
+            </li>
+                </ul>
+                        
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

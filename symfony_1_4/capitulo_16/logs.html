@@ -1,0 +1,357 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>16.1. Logs (Symfony 1.4, la guía definitiva)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="../capitulo_16.html" />
+        <link rel="next" href="depuracion_de_aplicaciones.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="16.1. Logs (Symfony 1.4, la guía definitiva)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page symfony_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Symfony 1.4, la guía definitiva</a></li>
+  <li><a href="../capitulo_16.html">Capítulo 16. Herramientas para la administración de aplicaciones</a></li>
+  <li class="current"><span>16.1.. Logs</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="logs"><span>16.1.</span> Logs</h1>
+    
+
+<p>La única forma de comprender lo sucedido cuando falla la ejecución de una petición, consiste en echar un vistazo a la traza generada por el proceso que se ejecuta. Afortunadamente, y como se va a ver en esta sección, tanto PHP como Symfony guardan mucha información de este tipo en archivos de log.</p>
+
+<h3 id="logs_de_php">16.1.1. Logs de PHP</h3>
+
+<p>PHP dispone de una directiva llamada <code>error_reporting</code>, que se define en el archivo de configuración <code>php.ini</code>, y que especifica los eventos de PHP que se guardan en el archivo de log. Symfony permite redefinir el valor de esta opción, tanto a nivel de aplicación como de entorno, en el archivo <code>settings.yml</code>, tal y como se muestra en el listado 16-1.</p>
+
+<p><strong>Listado 16-1 - Indicando el valor de la directiva <code>error_reporting</code>, en <code>frontend/config/settings.yml</code></strong></p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co4">prod</span>:<span class="co4">
+ .settings</span>:<span class="co3">
+    error_reporting</span><span class="sy2">: </span> &lt;?php echo <span class="br0">&#40;</span>E_PARSE | E_COMPILE_ERROR | E_ERROR | E_CORE_ERROR | E_USER_ERROR<span class="br0">&#41;</span>.<span class="st0">&quot;\n&quot;</span> ?<span class="sy2">&gt;
+</span><span class="co4">
+dev</span>:<span class="co4">
+  .settings</span>:<span class="co3">
+    error_reporting</span><span class="sy2">: </span> &lt;?php echo <span class="br0">&#40;</span>E_ALL | E_STRICT<span class="br0">&#41;</span>.<span class="st0">&quot;\n&quot;</span> ?&gt;</pre>
+</div>
+
+<p>Para no penalizar el rendimiento de la aplicación en el entorno de producción, el servidor solamente guarda en el archivo de log los errores críticos de PHP. No obstante, en el entorno de desarrollo, se guardan en el log todos los tipos de eventos, de forma que el programador puede disponer de la máxima información para seguir la pista a los errores.</p>
+
+<p>El lugar en el que se guardan los archivos de log de PHP depende de la configuración del archivo <code>php.ini</code>. Si no se ha modificado su valor, PHP utiliza las herramientas de log del servidor web (como por ejemplo los logs de error del servidor Apache). En este caso, los archivos de log de PHP se encuentran en el directorio de logs del servidor web.</p>
+
+<h3 id="logs_de_symfony">16.1.2. Logs de Symfony</h3>
+
+<p>Además de los archivos de log creados por PHP, Symfony también guarda mucha información de sus propios eventos en otros archivos de log. Los archivos de log creados por Symfony se encuentran en el directorio <code>miproyecto/log/</code>. Symfony crea un archivo por cada aplicación y cada entorno. El archivo del entorno de desarrollo de una aplicación llamada <code>frontend</code> sería <code>frontend_dev.log</code> y el archivo de log del entorno de producción de la misma aplicación se llamaría <code>frontend_prod.log</code>.</p>
+
+<p>Si se dispone de una aplicación Symfony ejecutándose, se puede observar que la sintaxis de los archivos de log generados es muy sencilla. Cada evento resulta en una nueva línea en el archivo de log de la aplicación. Cada línea incluye la fecha y hora a la que se ha producido, el tipo de evento, el objeto que ha sido procesado y otros detalles relevantes que dependen de cada tipo de evento y/o objeto procesado. El listado 16-2 muestra un ejemplo del contenido de un archivo de log de Symfony.</p>
+
+<p><strong>Listado 16-2 - Contenido de un archivo de log de Symfony, en <code>log/frontend_dev.log</code></strong></p>
+
+<div class="code code">
+<pre class="code">Nov 15 16:30:25 symfony [info ] {sfAction} call &quot;barActions-&gt;executemessages()&quot;
+Nov 15 16:30:25 symfony [info ] {sfPropelLogger} executeQuery: SELECT bd_message.ID...
+Nov 15 16:30:25 symfony [info ] {sfView} set slot &quot;leftbar&quot; (bar/index)
+Nov 15 16:30:25 symfony [info ] {sfView} set slot &quot;messageblock&quot; (bar/mes...
+Nov 15 16:30:25 symfony [info ] {sfView} execute view for template &quot;messa...
+Nov 15 16:30:25 symfony [info ] {sfView} render &quot;/home/production/myproject/...
+Nov 15 16:30:25 symfony [info ] {sfView} render to client</pre>
+</div>
+
+<p>Estos archivos de log contienen mucha información, como por ejemplo las consultas SQL enviadas a la base de datos, las plantillas que se han procesado, las llamadas realizadas entre objetos, etc.</p>
+
+<p>A partir de Symfony 1.1 es posible personalizar el formato de los mensajes de log redefiniendo las opciones <code>format</code> y/o <code>time_format</code> en el archivo de configuración <code>factories.yml</code>, tal y como muestra el listado 16-3.</p>
+
+<p><strong>Listado 16-3 - Modificando el formato de los mensajes de log</strong></p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co4">all</span>:<span class="co4">
+  logger</span>:<span class="co4">
+    param</span>:<span class="co4">
+      sf_file_debug</span>:<span class="co4">
+        param</span>:<span class="co3">
+          format</span><span class="sy2">: </span>     <span class="co2">%time% %type% [%priority%] %message%%EOL%</span><span class="co3">
+          time_format</span><span class="sy2">: </span><span class="co2">%b %d %H:%M:%S</span></pre>
+</div>
+
+<h4 id="configuracion_del_nivel_de_log_de_symfony">16.1.2.1. Configuración del nivel de log de Symfony</h4>
+
+<p>Symfony define ocho niveles diferentes para los mensajes de log: <code>emerg</code>, <code>alert</code>, <code>crit</code>, <code>err</code>, <code>warning</code>, <code>notice</code>, <code>info</code> y <code>debug</code>, que son los mismos niveles que define el paquete <code>PEAR::Log</code> (http://pear.php.net/package/Log/). El archivo de configuración <code>factories.yml</code> de cada aplicación permite definir el nivel de los mensajes que se guardan en el archivo de log, como se muestra en el listado 16-4.</p>
+
+<p><strong>Listado 16-4 - Configuración por defecto de los archivos de log en Symfony, en <code>frontend/config/factories.yml</code></strong></p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co4">prod</span>:<span class="co4">
+  logger</span>:<span class="co4">
+    param</span>:<span class="co3">
+      level</span><span class="sy2">: </span>err</pre>
+</div>
+
+<p>Por defecto, en todos los entornos salvo en el de producción, se guardan en los archivos de log todos los mensajes (hasta el nivel menos importante, el nivel <code>debug</code>). En el entorno de producción, los archivos de log están deshabilitados. Además, en este mismo entorno, si se activan los logs asignando el valor <code>on</code> a la opción <code>logging_enabled</code> en el archivo de configuración <code>settings.yml</code>, solamente se guardan los mensajes más importantes (de <code>crit</code> a <code>emerg</code>).</p>
+
+<p>En el archivo <code>factories.yml</code> se puede modificar el nivel de los mensajes guardados para cada entorno de ejecución, de forma que se limite el tipo de mensajes que se guardan en el archivo de log.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Para determinar si están habilitados los archivos de log, se puede utilizar la instrucción <code>sfConfig::get('sf_logging_enabled')</code>.</p></div>
+
+<h4 id="anadiendo_un_mensaje_de_log">16.1.2.2. Añadiendo un mensaje de log</h4>
+
+<p>Además de los mensajes generados por Symfony, también es posible añadir mensajes propios en el archivo de log desde el código de la aplicación, utilizando alguna de las técnicas mostradas en el listado 16-5.</p>
+
+<p><strong>Listado 16-5 - Añadiendo un mensaje de log propio</strong></p>
+
+<div class="code php">
+<pre class="php">// Desde la acción
+$this-&gt;logMessage($mensaje, $nivel);
+&nbsp;
+// Desde una plantilla
+<span class="kw2">&lt;?php</span> use_helper<span class="br0">&#40;</span><span class="st_h">'Debug'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+<span class="kw2">&lt;?php</span> log_message<span class="br0">&#40;</span><span class="re0">$mensaje</span><span class="sy0">,</span> <span class="re0">$nivel</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span></pre>
+</div>
+
+<p>El valor de la opción <code>$nivel</code> puede ser uno de los valores definidos para los mensajes de log de Symfony.</p>
+
+<p>Además, para escribir un mensaje en el log desde cualquier punto de la aplicación, se pueden utilizar directamente los métodos de <code>sfLogger</code>, como se muestra en el listado 16-6. Los métodos disponibles comparten el mismo nombre que los niveles de log definidos.</p>
+
+<p><strong>Listado 16-6 - Añadiendo un mensaje de log propio desde cualquier punto de la aplicación</strong></p>
+
+<div class="code php">
+<pre class="php"><span class="kw1">if</span> <span class="br0">&#40;</span>sfConfig<span class="sy0">::</span><span class="me2">get</span><span class="br0">&#40;</span><span class="st_h">'sf_logging_enabled'</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  sfContext<span class="sy0">::</span><span class="me2">getInstance</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">getLogger</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">info</span><span class="br0">&#40;</span><span class="re0">$mensaje</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<div class="admonition sidebar"><p><strong class="title">Personalizando el mecanismo de logs</strong> El mecanismo de log de Symfony es muy sencillo y es muy fácil de personalizar.</p>
+
+<p>El único requisito es que las clases del nuevo mecanismo de log deben heredar de la clase <code>sfLogger</code>, que define un método llamado <code>doLog()</code>. Symfony invoca el método <code>doLog()</code> con dos parámetros: <code>$mensaje</code> (el mensaje que se quiere guardar en el log) y <code>$prioridad</code> (el nivel del mensaje).</p>
+
+<p>La siguiente clase <code>miPropioLog</code> define un mecanismo de log muy sencillo que utiliza la función <code>error_log</code> de PHP:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">class</span> miPropioLog <span class="kw2">extends</span> sfLogger
+<span class="br0">&#123;</span>
+  <span class="kw2">protected</span> <span class="kw2">function</span> doLog<span class="br0">&#40;</span><span class="re0">$mensaje</span><span class="sy0">,</span> <span class="re0">$prioridad</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="kw3">error_log</span><span class="br0">&#40;</span><span class="kw3">sprintf</span><span class="br0">&#40;</span><span class="st_h">'%s (%s)'</span><span class="sy0">,</span> <span class="re0">$mensaje</span><span class="sy0">,</span> sfLogger<span class="sy0">::</span><span class="me2">getPriorityName</span><span class="br0">&#40;</span><span class="re0">$prioridad</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Para crear un mecanismo de log a partir de una clase existente, puedes implementar la interfaz <code>sfLoggerInterface</code>, que define un método llamado <code>log()</code> que toma los mismos parámetros que el método <code>doLog()</code> anterior:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw1">require_once</span><span class="br0">&#40;</span><span class="st_h">'Log.php'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="kw1">require_once</span><span class="br0">&#40;</span><span class="st_h">'Log/error_log.php'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="co1">// Clase sencilla que implementa la interfaz del mecanismo de log</span>
+<span class="co1">// que se quiere utilizar con Symfony</span>
+<span class="kw2">class</span> Log_my_error_log <span class="kw2">extends</span> Log_error_log implements sfLoggerInterface
+<span class="br0">&#123;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p></p></div>
+
+<h4 id="borrando_y_rotando_archivos_de_log">16.1.2.3. Borrando y rotando archivos de log</h4>
+
+<p>Periódicamente es necesario borrar los archivos del directorio <code>log/</code> de las aplicaciones, ya que estos archivos suelen crecer en tamaño varios MB cada pocos días, aunque todo depende del tráfico de la aplicación. Symfony proporciona la tarea <code>log:clear</code> para este propósito, y se puede ejecutar de forma periódica manualmente o mediante una tarea programada. El siguiente comando por ejemplo borra todos los archivos de log:</p>
+
+<div class="code cli">
+<pre class="cli">&gt; php symfony log:clear</pre>
+</div>
+
+<p>Para mejorar el rendimiento y la seguridad de la aplicación, suele ser habitual almacenar los archivos de log de Symfony en varios archivos pequeños en vez de en un solo archivo muy grande. La estrategia de almacenamiento ideal para los archivos de log es la de vaciar y hacer una copia de seguridad cada poco tiempo del archivo de log principal y mantener un número limitado de copias de seguridad.</p>
+
+<p>Esta estrategia se denomina <em>rotación de archivos de log</em> y el listado 16-7 muestra cómo activar una rotación con un período (<code>period</code>) de <code>7</code> días y un historial o número de copias de seguridad (<code>history</code>) de <code>10</code>. De esta forma, se trabaja con un archivo de log activo y se dispone de 10 copias de seguridad, cada una con los mensajes de log de 7 días diferentes. Cuando transcurren otros 7 días, el archivo de log activo se transforma en una copia de seguridad y se borra el archivo de la copia de seguridad más antigua.</p>
+
+<p><strong>Listado 16-7 - Ejecutando la rotación de logs</strong></p>
+
+<div class="code cli">
+<pre class="cli">&gt; php symfony log:rotate frontend prod --period=7 --history=10</pre>
+</div>
+
+<p>Las copias de seguridad de los archivos de log se almacenan en el directorio <code>logs/history/</code> y a su nombre se les añade un sufijo con la fecha completa en la que fueron guardados.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="../capitulo_16.html">&larr; Anterior <span>Capítulo 16. Herramientas para la administración de aplicaciones</span></a>
+            
+            <a class="span5 next" href="depuracion_de_aplicaciones.html">Siguiente &rarr; <span>16.2. Depuración de aplicaciones</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Logs (Symfony 1.4, la guía definitiva%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Symfony 1.4, la guía definitiva : Logs']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción a Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Explorando el interior de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Ejecutar aplicaciones Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Introducción a la creación de páginas</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Configurar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> El Controlador</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> La Vista</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> El modelo (Doctrine)</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Enlaces y sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Emails</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Uso de la cache</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Pruebas unitarias y funcionales</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_16.html">
+            <span>Capítulo 16.</span> Herramientas para la administración de aplicaciones
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="logs.html">
+            <span>16.1.</span> Logs
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="depuracion_de_aplicaciones.html">
+            <span>16.2.</span> Depuración de aplicaciones
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="utilizando_symfony_fuera_de_la_web.html">
+            <span>16.3.</span> Utilizando Symfony fuera de la web
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="cargando_datos_en_una_base_de_datos.html">
+            <span>16.4.</span> Cargando datos en una base de datos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="instalando_aplicaciones.html">
+            <span>16.5.</span> Instalando aplicaciones
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="resumen.html">
+            <span>16.6.</span> Resumen
+        </a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> Personalizar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> Rendimiento</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Configuración avanzada</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

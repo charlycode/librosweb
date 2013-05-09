@@ -1,0 +1,292 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>2.2. Cómo funciona el sistema de enrutamiento (Más con Symfony)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="preparacion_del_proyecto_un_cms_para_muchos_clientes.html" />
+        <link rel="next" href="creando_una_clase_de_ruta_personalizada.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="2.2. Cómo funciona el sistema de enrutamiento (Más con Symfony)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page mas_con_symfony">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Más con Symfony</a></li>
+  <li><a href="../capitulo_2.html">Capítulo 2. Enrutamiento avanzado</a></li>
+  <li class="current"><span>2.2.. Cómo funciona el sistema de enrutamiento</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="como_funciona_el_sistema_de_enrutamiento"><span>2.2.</span> Cómo funciona el sistema de enrutamiento</h1>
+    
+
+<p>Las rutas de Symfony son objetos de tipo ~<code>sfRoute</code>~ que tienen dos importantes
+tareas:</p>
+
+<ul>
+<li>Generar URL: si por ejemplo se pasa al método <code>page_show</code> un parámetro
+llamado <code>slug</code>, debería ser capaz de generar una URL real (por ejemplo,
+<code>/location</code>).</li>
+<li>Procesar las URL entrantes: a partir de la URL de una petición, cada ruta
+debe ser capaz de determinar si la URL cumple los requisitos de la ruta.</li>
+</ul>
+
+<p>La información de cada ruta individual normalmente se configura en el archivo 
+<code>app/mi_aplicacion/config/routing.yml</code> que se encuentra en el directorio de configuración
+de cada aplicación. Si una ruta es <em>"un objeto de tipo <code>sfRoute</code>"</em>, ¿cómo se transforma
+la configuración YAML en objetos <code>sfRoute</code>?</p>
+
+<h3 id="gestor_de_configuracion_de_la_cache_del_enrutamiento">2.2.1. Gestor de configuración de la cache del enrutamiento</h3>
+
+<p>Aunque las rutas se definen en un archivo YAML, cada entrada de ese archivo se
+transforma en un objeto durante la petición mediante un tipo especial de clase
+llamada <em>gestor de configuración de la cache</em>. El resultado es código PHP que representa a todas
+y cada una de las rutas de la aplicación. Aunque los detalles de funcionamiento
+de este proceso están fuera del alcance de este capítulo, se muestra a continuación
+parte de la versión compilada final de la ruta <code>page_show</code>. El archivo compilado
+se encuentra en <code>cache/mi_aplicacion/mi_entorno/config/config_routing.yml.php</code>
+y depende de la aplicación y del entorno. A continuación se muestra un pequeño
+extracto de la ruta <code>page_show</code> completa:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">new</span> sfDoctrineRoute<span class="br0">&#40;</span><span class="st_h">'/:slug'</span><span class="sy0">,</span> <span class="kw3">array</span> <span class="br0">&#40;</span>
+  <span class="st_h">'module'</span> <span class="sy0">=&gt;</span> <span class="st_h">'page'</span><span class="sy0">,</span>
+  <span class="st_h">'action'</span> <span class="sy0">=&gt;</span> <span class="st_h">'show'</span><span class="sy0">,</span>
+<span class="br0">&#41;</span><span class="sy0">,</span> <span class="kw3">array</span> <span class="br0">&#40;</span>
+  <span class="st_h">'slug'</span> <span class="sy0">=&gt;</span> <span class="st_h">'[^/\\.]+'</span><span class="sy0">,</span>
+<span class="br0">&#41;</span><span class="sy0">,</span> <span class="kw3">array</span> <span class="br0">&#40;</span>
+  <span class="st_h">'model'</span> <span class="sy0">=&gt;</span> <span class="st_h">'Page'</span><span class="sy0">,</span>
+  <span class="st_h">'type'</span> <span class="sy0">=&gt;</span> <span class="st_h">'object'</span><span class="sy0">,</span>
+<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> El nombre de la clase de cada ruta se define en la clave <code>class</code> del archivo
+<code>routing.yml</code>. Si no se especifica una clave <code>class</code>, por defecto se considera
+que es una clase de tipo <code>sfRoute</code>. Otra clase de ruta común es <code>sfRequestRoute</code>
+que permite al programador crear rutas RESTful. El libro 
+<em><a href="http://www.symfony-project.org/reference/1_3/en/10-Routing">The symfony Reference Book</a></em>
+incluye la lista completa de clases de ruta y todas sus opciones.</p></div>
+
+<h3 id="asociando_una_peticion_con_una_ruta_especifica">2.2.2. Asociando una petición con una ruta específica</h3>
+
+<p>Una de las tareas principales del framework de enrutamiento consiste en asociar
+cada URL entrante con su objeto de ruta correcto. La clase ~<code>sfPatternRouting</code>~
+es el núcleo central del enrutamiento y se encarga de realizar este proceso. A
+pesar de su importancia, los programadores no interactúan casi nunca de forma
+directa con <code>sfPatternRouting</code>.</p>
+
+<p>Para asociar la ruta correcta, <code>sfPatternRouting</code> itera por cada clase <code>sfRoute</code>
+preguntando si el patrón de la ruta coincide con la URL entrante. Internamente
+<code>sfPatternRouting</code> ejecuta el método <code>sfRoute::matchesUrl()</code> sobre cada
+objeto de ruta. Este método simplemente devuelve <code>false</code> si el patrón de la ruta
+no coincide con la URL entrante.</p>
+
+<p>Cuando el patrón de la ruta coincide, el método <code>sfRoute::matchesUrl()</code> hace
+mucho más que devolver <code>true</code>. En este caso, la ruta devuelve un array de
+parámetros que se incluyen en el objeto de la petición. La URL 
+<code>http://pete.sympalbuilder.com/location</code> por ejemplo está asociada con la ruta
+<code>page_show</code>, cuyo método <code>matchesUrl()</code> devolvería el siguiente array:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'slug'</span> <span class="sy0">=&gt;</span> <span class="st_h">'location'</span><span class="br0">&#41;</span></pre>
+</div>
+
+<p>Esta información se incluye después en el objeto de la petición, por lo que es
+posible acceder a las variables de la ruta (por ejemplo <code>slug</code>) desde las acciones
+y otros lugares del proyecto.</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">slug</span> <span class="sy0">=</span> <span class="re0">$request</span><span class="sy0">-&gt;</span><span class="me1">getParameter</span><span class="br0">&#40;</span><span class="st_h">'slug'</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Como puede que ya hayas adivinado, redefinir el método <code>sfRoute::matchesUrl()</code>
+es la mejor forma de personalizar las rutas para que hagan cualquier cosa.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="preparacion_del_proyecto_un_cms_para_muchos_clientes.html">&larr; Anterior <span>2.1. Preparación del proyecto: un CMS para muchos clientes</span></a>
+            
+            <a class="span5 next" href="creando_una_clase_de_ruta_personalizada.html">Siguiente &rarr; <span>2.3. Creando una clase de ruta personalizada</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Cómo funciona el sistema de enrutamiento (Más con Symfony%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Más con Symfony : Cómo funciona el sistema de enrutamiento']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_2.html">
+            <span>Capítulo 2.</span> Enrutamiento avanzado
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="preparacion_del_proyecto_un_cms_para_muchos_clientes.html">
+            <span>2.1.</span> Preparación del proyecto: un CMS para muchos clientes
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="como_funciona_el_sistema_de_enrutamiento.html">
+            <span>2.2.</span> Cómo funciona el sistema de enrutamiento
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="creando_una_clase_de_ruta_personalizada.html">
+            <span>2.3.</span> Creando una clase de ruta personalizada
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="colecciones_de_rutas.html">
+            <span>2.4.</span> Colecciones de rutas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="creando_una_coleccion_de_rutas_propia.html">
+            <span>2.5.</span> Creando una colección de rutas propia
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="personalizando_una_coleccion_de_rutas_de_objeto.html">
+            <span>2.6.</span> Personalizando una colección de rutas de objeto
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="opciones_de_las_colecciones_de_rutas.html">
+            <span>2.7.</span> Opciones de las colecciones de rutas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="conclusion.html">
+            <span>2.8.</span> Conclusión
+        </a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Mejora tu productividad</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Emails</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Widgets y validadores propios</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Formularios avanzados</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Mejorando la barra de depuración web</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Uso avanzado de Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Utilizando la herencia de tablas de Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Funcionamiento interno de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Windows y Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Desarrollando aplicaciones Facebook</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Descubriendo el poder de la línea de comandos</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Jugando con la cache de configuración de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Trabajando con la comunidad Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>A</span> <a href="../apendice_a.html"> Código JavaScript de sfWidgetFormGMapAddress</a>
+    </li>
+    <li class="level-1">
+        <span>B</span> <a href="../apendice_b.html"> Ejemplo de instalador propio</a>
+    </li>
+    <li class="level-1">
+        <span>C</span> <a href="../apendice_c.html"> Licencia</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

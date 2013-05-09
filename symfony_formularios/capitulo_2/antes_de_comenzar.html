@@ -1,0 +1,237 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>2.1. Antes de comenzar (Los formularios de Symfony 1.4)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="../capitulo_2.html" />
+        <link rel="next" href="validadores.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="2.1. Antes de comenzar (Los formularios de Symfony 1.4)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page symfony_formularios">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Los formularios de Symfony 1.4</a></li>
+  <li><a href="../capitulo_2.html">Capítulo 2. Validación de formularios</a></li>
+  <li class="current"><span>2.1.. Antes de comenzar</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="antes_de_comenzar"><span>2.1.</span> Antes de comenzar</h1>
+    
+
+<p>El formulario de contacto creado en el capítulo 1 todavía no es muy útil. ¿Qué sucede si un usuario envía una dirección de email inválida o si el mensaje enviado está vacío? En estos casos, lo habitual es mostrar mensajes de error que le indiquen al usuario que tiene que corregir los datos enviados, como se muestra en la figura 2-1.</p>
+
+<div class="figure" id="figure_2_1">
+    <img src="../../img/symfony_formularios/f0201.png" alt="Mostrando mensajes de error" />
+
+    <p class="caption"><strong>Figura 2.1</strong> Mostrando mensajes de error</p>
+</div>
+
+
+<p>A continuación se describen las reglas de validación que se van a incluir en el formulario de contacto:</p>
+
+<ul>
+<li><code>nombre</code>: opcional</li>
+<li><code>email</code>: obligatorio, debe ser una dirección válida de correo electrónico</li>
+<li><code>asunto</code>: obligatorio, seleccionado entre una lista de valores predefinidos</li>
+<li><code>mensaje</code>: obligatorio, debe tener una longitud de al menos cuatro caracteres</li>
+</ul>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> ¿Por qué es necesario validar el campo <code>asunto</code>? Al fin y al cabo, su valor se selecciona mediante una etiqueta <code>&lt;select&gt;</code> que obliga al usuario a seleccionar un valor entre una lista de valores predefinidos. Aunque es cierto que los usuarios normales sólo podrán seleccionar uno de los valores predefinidos, cualquier usuario con conocimientos medios puede utilizar herramientas como Firebug para manipular los valores de la lista desplegable. Además, otros usuarios pueden utilizar herramientas como <code>curl</code> o <code>wget</code> para construir peticiones HTTP a medida que incluyan valores arbitrarios.</p></div>
+
+<p>El listado 2-1 muestra la misma plantilla que se utiliza en el capítulo 1.</p>
+
+<p><strong>Listado 2-1 - La plantilla del formulario <code>Contacto</code></strong></p>
+
+<div class="code php">
+<pre class="php">// apps/frontend/modules/contacto/templates/indexSucces.php
+&lt;form action=&quot;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> url_for<span class="br0">&#40;</span><span class="st_h">'contacto/index'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>&quot; method=&quot;POST&quot;&gt;
+  &lt;table&gt;
+    <span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$formulario</span> <span class="sy1">?&gt;</span>
+    &lt;tr&gt;
+      &lt;td colspan=&quot;2&quot;&gt;
+        &lt;input type=&quot;submit&quot; /&gt;
+      &lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/table&gt;
+&lt;/form&gt;</pre>
+</div>
+
+<p>La figura 2-2 muestra la interacción entre la aplicación y el usuario. El primer paso consiste en mostrar la información al usuario. Cuando el usuario envía el formulario, si los datos son válidos se le redirige a la página de agradecimiento y si los datos no cumplen alguna de las reglas de validación, se vuelve a mostrar el formulario con los mensajes de error.</p>
+
+<div class="figure" id="figure_2_2">
+    <img src="../../img/symfony_formularios/f0202.png" alt="Interacción entre la aplicación y el usuario" />
+
+    <p class="caption"><strong>Figura 2.2</strong> Interacción entre la aplicación y el usuario</p>
+</div>
+
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="../capitulo_2.html">&larr; Anterior <span>Capítulo 2. Validación de formularios</span></a>
+            
+            <a class="span5 next" href="validadores.html">Siguiente &rarr; <span>2.2. Validadores</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Antes de comenzar (Los formularios de Symfony 1.4%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Los formularios de Symfony 1.4 : Antes de comenzar']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Creación de formularios</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_2.html">
+            <span>Capítulo 2.</span> Validación de formularios
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="antes_de_comenzar.html">
+            <span>2.1.</span> Antes de comenzar
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="validadores.html">
+            <span>2.2.</span> Validadores
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="personalizando_los_validadores.html">
+            <span>2.3.</span> Personalizando los validadores
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="seguridad_de_los_validadores.html">
+            <span>2.4.</span> Seguridad de los validadores
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="validadores_logicos.html">
+            <span>2.5.</span> Validadores lógicos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="validadores_globales.html">
+            <span>2.6.</span> Validadores globales
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="subiendo_archivos.html">
+            <span>2.7.</span> Subiendo archivos
+        </a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Formularios para diseñadores web</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Integración con Propel</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Integrando Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Referencia de Widgets</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Validadores</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

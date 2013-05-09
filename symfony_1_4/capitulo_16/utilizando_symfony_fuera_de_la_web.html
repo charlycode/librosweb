@@ -1,0 +1,330 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>16.3. Utilizando Symfony fuera de la web (Symfony 1.4, la guía definitiva)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="depuracion_de_aplicaciones.html" />
+        <link rel="next" href="cargando_datos_en_una_base_de_datos.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="16.3. Utilizando Symfony fuera de la web (Symfony 1.4, la guía definitiva)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page symfony_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Symfony 1.4, la guía definitiva</a></li>
+  <li><a href="../capitulo_16.html">Capítulo 16. Herramientas para la administración de aplicaciones</a></li>
+  <li class="current"><span>16.3.. Utilizando Symfony fuera de la web</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="utilizando_symfony_fuera_de_la_web"><span>16.3.</span> Utilizando Symfony fuera de la web</h1>
+    
+
+<p>En ocasiones, los scripts se ejecutan desde la línea de comandos o mediante una tarea programada. Muchas veces estos scripts deben tener acceso a todas las clases y características de Symfony, por ejemplo para enviar correos electrónicos de forma automática o para actualizar el modelo de datos mediante cálculos y operaciones complejas.</p>
+
+<p>La forma más sencilla de crear un script de este tipo consiste en añadir al script las primeras líneas de los controladores frontales de Symfony para inicializar el framework. Además, estos scripts también pueden utilizar la línea de comandos de Symfony para aprovecharse del procesamiento de los argumentos y de la inicialización automática de la base de datos.</p>
+
+<h3 id="archivos_por_lotes">16.3.1. Archivos por lotes</h3>
+
+<p>La inicialización completa de Symfony se puede realizar con sólo unas pocas líneas de código PHP, tal y como muestra el listado 16-13.</p>
+
+<p><strong>Listado 16-13 - Ejemplo de archivo por lotes, en <code>lib/miScript.php</code></strong></p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">&lt;?php</span>
+&nbsp;
+<span class="kw1">require_once</span><span class="br0">&#40;</span><span class="kw3">dirname</span><span class="br0">&#40;</span><span class="kw4">__FILE__</span><span class="br0">&#41;</span><span class="sy0">.</span><span class="st_h">'/../config/ProjectConfiguration.class.php'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$configuration</span> <span class="sy0">=</span> ProjectConfiguration<span class="sy0">::</span><span class="me2">getApplicationConfiguration</span><span class="br0">&#40;</span><span class="st_h">'frontend'</span><span class="sy0">,</span> <span class="st_h">'dev'</span><span class="sy0">,</span> <span class="kw4">true</span><span class="br0">&#41;</span><span class="sy0">;</span>
+sfContext<span class="sy0">::</span><span class="me2">createInstance</span><span class="br0">&#40;</span><span class="re0">$configuration</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="co1">// Borra las dos líneas siguientes si no utilizas una base de datos</span>
+<span class="re0">$databaseManager</span> <span class="sy0">=</span> <span class="kw2">new</span> sfDatabaseManager<span class="br0">&#40;</span><span class="re0">$configuration</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$databaseManager</span><span class="sy0">-&gt;</span><span class="me1">loadConfiguration</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="co1">// A continuación añade tu propio código</span></pre>
+</div>
+
+<p>Las líneas del listado anterior se parecen mucho a las primeras líneas de un controlador frontal (ver capítulo 6) porque son procesos similares: inicializar Symfony y procesar la configuración del proyecto y de la aplicación. El método <code>ProjectConfiguration::getApplicationConfiguration()</code> requiere tres parámetros:</p>
+
+<ul>
+<li>El nombre de una aplicación</li>
+<li>El nombre de un entorno de ejecución</li>
+<li>Un valor <em>booleano</em> que indica si se activan o no las opciones de depuración de aplicaciones</li>
+</ul>
+
+<p>Para ejecutar el script anterior sólo es necesario llamarlo desde la línea de comandos:</p>
+
+<div class="code php">
+<pre class="php"><span class="sy0">&gt;</span> php lib<span class="sy0">/</span>miScript<span class="sy0">.</span>php</pre>
+</div>
+
+<h3 id="creando_tareas_propias">16.3.2. Creando tareas propias</h3>
+
+<p>Una alternativa mejor a la creación de scripts y archivos por lotes es utilizar Symfony para crear nuevas tareas. De la misma forma que utilizas tareas como <code>cache:clear</code> y <code>propel:build-model</code>, puedes ejecutar tus propias tareas en la línea de comandos mediante <code>php symfony</code>. Las ventajas de las tareas propias es que pueden aprovechar el procesamiento de argumentos y opciones de la línea de comandos, pueden mostrar mensajes de ayuda sobre su uso y pueden ampliar las tareas existentes.</p>
+
+<p>Una tarea propia es una clase que hereda de <code>sfBaseTask</code> y cuyo código se encuentra en el directorio <code>lib/task/</code> de la raíz del proyecto o en el directorio <code>lib/task</code> de un plugin. La única restricción es que su nombre debe terminar en <code>Task.class.php</code>. El listado 16-14 muestra un ejemplo de tarea propia.</p>
+
+<p><strong>Listado 16-14 - Ejemplo de tarea, en <code>lib/task/pruebaHolaMundoTask.class.php</code></strong></p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">class</span> pruebaHolaMundoTask <span class="kw2">extends</span> sfBaseTask
+<span class="br0">&#123;</span>
+  <span class="kw2">protected</span> <span class="kw2">function</span> configure<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="kw2">namespace</span> <span class="sy0">=</span> <span class="st_h">'prueba'</span><span class="sy0">;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">name</span> <span class="sy0">=</span> <span class="st_h">'holaMundo'</span><span class="sy0">;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">briefDescription</span> <span class="sy0">=</span> <span class="st_h">'Muestra un mensaje de saludo'</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="kw2">protected</span> <span class="kw2">function</span> execute<span class="br0">&#40;</span><span class="re0">$arguments</span> <span class="sy0">=</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="re0">$options</span> <span class="sy0">=</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="co1">// Aquí se incluye el código de la tarea</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="kw3">log</span><span class="br0">&#40;</span><span class="st_h">'Hola mundo'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>El código que se incluye en el método <code>execute()</code> tiene acceso a todas las librerías de Symfony, como en el caso del script mostrado en la sección anterior. La principal diferencia se produce al ejecutar la tarea:</p>
+
+<div class="code cli">
+<pre class="cli">&gt; php symfony prueba:holaMundo</pre>
+</div>
+
+<p>El nombre de la tarea se forma con las propiedades <code>namespace</code> y <code>name</code> (que son de tipo <em>protected</em>) y no se tiene en cuenta el nombre de la clase ni el nombre de los archivos. Además, como la tarea se integra con la línea de comandos de Symfony, se muestra en el listado de tareas cuando se ejecuta el comando:</p>
+
+<div class="code cli">
+<pre class="cli">&gt; php symfony</pre>
+</div>
+
+<p>Si no quieres crear el esqueleto de la tarea manualmente, puedes utilizar la tarea <code>generate:task</code>. Esta tarea crea todo el código de una tarea vacía y dispone de muchas opciones para personalizar el código generado. Para acceder a sus opciones, simplemente ejecuta el siguiente comando:</p>
+
+<div class="code cli">
+<pre class="cli">&gt; php symfony help generate:task</pre>
+</div>
+
+<p>Las tareas pueden aceptar argumentos (parámetros obligatorios y en un orden determinado) y opciones (parámetros opcionales en los que tampoco importa su orden). El listado 16-15 muestra una tarea más compleja que hace uso de todas estas características.</p>
+
+<p><strong>Listado 16-15 - Ejemplo de tarea compleja, en <code>lib/task/miSegundaTask.class.php</code></strong></p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">class</span> miSegundaTask <span class="kw2">extends</span> sfBaseTask
+<span class="br0">&#123;</span>
+  <span class="kw2">protected</span> <span class="kw2">function</span> configure<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="kw2">namespace</span>        <span class="sy0">=</span> <span class="st_h">'prueba'</span><span class="sy0">;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">name</span>             <span class="sy0">=</span> <span class="st_h">'miSegundaTask'</span><span class="sy0">;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">briefDescription</span> <span class="sy0">=</span> <span class="st_h">'Ejemplo de tarea compleja'</span><span class="sy0">;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">detailedDescription</span> <span class="sy0">=</span> <span class="co3">&lt;&lt;&lt;EOF
+La tarea [prueba:miSegundaTask|INFO] realiza algunas cosas interesantes. La puedes ejecutar de la siguiente manera:
+&nbsp;
+  [php symfony prueba:miSegundaTask frontend|INFO]
+&nbsp;
+Puedes aumentar el nivel de detalle de los mensajes generados mediante la opción [verbose|COMMENT]:
+&nbsp;
+  [php symfony prueba:miSegundaTask frontend --verbose=on|INFO]
+EOF</span><span class="sy0">;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">addArgument</span><span class="br0">&#40;</span><span class="st_h">'aplicacion'</span><span class="sy0">,</span> sfCommandArgument<span class="sy0">::</span><span class="me2">REQUIRED</span><span class="sy0">,</span> <span class="st_h">'El nombre de la aplicación'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">addOption</span><span class="br0">&#40;</span><span class="st_h">'verbose'</span><span class="sy0">,</span> <span class="kw4">null</span><span class="sy0">,</span> sfCommandOption<span class="sy0">::</span><span class="me2">PARAMETER_REQUIRED</span><span class="sy0">,</span> <span class="st_h">'Aumenta el nivel de detalle de los mensajes generados'</span><span class="sy0">,</span> <span class="kw4">false</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="kw2">protected</span> <span class="kw2">function</span> execute<span class="br0">&#40;</span><span class="re0">$arguments</span> <span class="sy0">=</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="re0">$options</span> <span class="sy0">=</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="co1">// Aquí se incluye el código de la tarea</span>
+&nbsp;
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Si tu tarea quiere acceder a una base de datos, su clase debe heredar de <code>sfPropelBaseTask</code> en vez de <code>sfBaseTask</code>. De esta forma, la inicialización de la tarea tiene en cuenta que debe cargar todas las clases de Propel. Para crear una conexión con la base de datos en el método <code>execute()</code> ejecuta la siguiente instrucción:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$databaseManager</span> <span class="sy0">=</span> <span class="kw2">new</span> sfDatabaseManager<span class="br0">&#40;</span><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">configuration</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Si la configuración de la tarea define los argumentos <code>application</code> y <code>env</code>, se tienen en cuenta automáticamente cuando se construye la configuración de la tarea, por lo que una tarea puede utilizar cualquiera de las conexiones con bases de datos definidas en el archivo <code>databases.yml</code>. Las tareas vacías creadas con la tarea <code>generate:task</code> incluyen esta inicialización por defecto.</p></div>
+
+<p>Una buena forma de descubrir las posibilidades de las tareas consiste en ver el código fuente de las propias tareas de Symfony.</p>
+
+<p>Si creas una tarea con el mismo nombre que alguna tarea existente, tu clase redefine la clase existente. Por lo tanto, un plugin puede redefinir las tareas de Symfony y un proyecto puede redefinir tanto las tareas de Symfony como las tareas de los plugins. Si además se tiene en cuenta que una tarea puede heredar de otra tarea, se comprueba que el mecanismo de línea de comandos de Symfony es realmente flexible.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="depuracion_de_aplicaciones.html">&larr; Anterior <span>16.2. Depuración de aplicaciones</span></a>
+            
+            <a class="span5 next" href="cargando_datos_en_una_base_de_datos.html">Siguiente &rarr; <span>16.4. Cargando datos en una base de datos</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Utilizando Symfony fuera de la web (Symfony 1.4, la guía definitiva%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Symfony 1.4, la guía definitiva : Utilizando Symfony fuera de la web']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción a Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Explorando el interior de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Ejecutar aplicaciones Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Introducción a la creación de páginas</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Configurar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> El Controlador</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> La Vista</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> El modelo (Doctrine)</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Enlaces y sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Emails</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Uso de la cache</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Pruebas unitarias y funcionales</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_16.html">
+            <span>Capítulo 16.</span> Herramientas para la administración de aplicaciones
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="logs.html">
+            <span>16.1.</span> Logs
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="depuracion_de_aplicaciones.html">
+            <span>16.2.</span> Depuración de aplicaciones
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="utilizando_symfony_fuera_de_la_web.html">
+            <span>16.3.</span> Utilizando Symfony fuera de la web
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="cargando_datos_en_una_base_de_datos.html">
+            <span>16.4.</span> Cargando datos en una base de datos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="instalando_aplicaciones.html">
+            <span>16.5.</span> Instalando aplicaciones
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="resumen.html">
+            <span>16.6.</span> Resumen
+        </a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> Personalizar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> Rendimiento</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Configuración avanzada</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

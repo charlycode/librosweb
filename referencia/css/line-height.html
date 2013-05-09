@@ -1,0 +1,186 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>line-height (Referencia de CSS 2.1)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="line-height (Referencia de CSS 2.1)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page referencia_css">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="index.html">Referencia de CSS 2.1</a></li>
+  <li class="current"><span>line-height</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="line_height">line-height</h1>
+    <div class="table" id="table_56_1">
+
+    <table class="table property css" summary="Definición de la propiedad line-height de CSS"> 
+<tr><th>Definición</th><td>Establece el interlineado del texto</td></tr><tr><th rowspan="2">Valores <br/> permitidos</th><td class="nobottom">Uno y sólo uno de los siguientes valores:<ul><li>normal</li><li>número</li><li><a href="unidades_de_medida.html">medida</a></li><li><a href="porcentajes.html">porcentaje</a></li><li><a href="el-valor-inherit.html">inherit</a></li></ul></td></tr><tr><td>Si se utilizan porcentajes, hace referencia al tamaño de letra del propio elemento</td></tr><tr><th>Valor inicial</th><td>normal</td></tr><tr><th>Se aplica a</th><td>Todos los elementos</td></tr><tr><th>Válida en</th><td><a href="medios.html">medios visuales</a></td></tr><tr><th>Se hereda</th><td>si</td></tr><tr class="nobottom"><th>Definición en<br/>el estándar</th><td><a href="http://www.w3.org/TR/CSS21/visudet.html#propdef-line-height">http://www.w3.org/TR/CSS21/visudet.html#propdef-line-height</a></td></tr>
+</table>
+</div>
+
+
+<h2 id="ejemplos_de_uso">Ejemplos de uso</h2>
+
+<p>La propiedad <code>line-height</code> establece la altura de cada línea que forma el contenido de texto de un elemento, por lo que se emplea para controlar el interlineado del texto. El uso de <code>line-height</code> es imprescindible cuando se quiere facilitar la lectura de los contenidos de una página.</p>
+
+<p>Si el valor de <code>line-height</code> es mayor que el tamaño de letra del texto, los navegadores añaden un espacio de separación del mismo tamaño por encima y por debajo del texto. En los elementos de bloque, la propiedad <code>line-height</code> indica la altura mínima de sus contenidos de texto. En los elementos en línea, <code>line-height</code> indica directamente la altura de la caja que forma ese elemento (salvo las imágenes, cuya altura se determina mediante la propiedad <a href="height.html">height</a>).</p>
+
+<p>El interlineado se puede establecer mediante cuatro tipos de valores. El valor por defecto es <code>normal</code>, que indica al navegador que se debe utilizar un valor <em>razonable</em> en función del tamaño de letra del texto. El estándar no establece ese valor <em>razonable</em>, pero recomienda que sea un número comprendido entre <code>1.0</code> y <code>1.2</code>.</p>
+
+<div class="example">
+<p style="line-height: 1"><strong>line-height: 1</strong> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Fusce ut leo eu ipsum faucibus pretium. Donec iaculis lorem eleifend mi tempor porttitor. Integer porttitor dui vel dui. Donec ornare adipiscing pede. Proin elementum augue ut magna.</p>
+
+<p style="line-height: normal"><strong>line-height: normal</strong> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Fusce ut leo eu ipsum faucibus pretium. Donec iaculis lorem eleifend mi tempor porttitor. Integer porttitor dui vel dui. Donec ornare adipiscing pede. Proin elementum augue ut magna.</p>
+</div>
+
+<p>El interlineado también se puede establecer mediante cualquiera de las <a href="medidas/index.html">unidades de medida absolutas y relativas</a> de CSS, como por ejemplo píxel, puntos y porcentajes:</p>
+
+<div class="example">
+<p style="line-height: normal"><strong>line-height: normal</strong> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Fusce ut leo eu ipsum faucibus pretium. Donec iaculis lorem eleifend mi tempor porttitor. Integer porttitor dui vel dui. Donec ornare adipiscing pede. Proin elementum augue ut magna.</p>
+
+<p style="line-height: 24px"><strong>line-height: 24px</strong> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Fusce ut leo eu ipsum faucibus pretium. Donec iaculis lorem eleifend mi tempor porttitor. Integer porttitor dui vel dui. Donec ornare adipiscing pede. Proin elementum augue ut magna.</p>
+
+<p style="line-height: 16pt"><strong>line-height: 16pt</strong> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Fusce ut leo eu ipsum faucibus pretium. Donec iaculis lorem eleifend mi tempor porttitor. Integer porttitor dui vel dui. Donec ornare adipiscing pede. Proin elementum augue ut magna.</p>
+
+<p style="line-height: 130%"><strong>line-height: 130%</strong> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Fusce ut leo eu ipsum faucibus pretium. Donec iaculis lorem eleifend mi tempor porttitor. Integer porttitor dui vel dui. Donec ornare adipiscing pede. Proin elementum augue ut magna.</p>
+</div>
+
+<p>Si se utilizan porcentajes, el valor que se toma como referencia es el tamaño de letra del texto, por lo que <code>line-height: 130%</code> significa que el tamaño de cada línea debe ser un <code>30%</code> superior al tamaño de la letra.</p>
+
+<p>Por último, el interlineado en CSS también se puede establecer mediante un número sin unidades de medida, que se interpreta como el múltiplo del tamaño de letra del elemento:</p>
+
+<div class="example">
+<p style="line-height: normal"><strong>line-height: normal</strong> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Fusce ut leo eu ipsum faucibus pretium. Donec iaculis lorem eleifend mi tempor porttitor. Integer porttitor dui vel dui. Donec ornare adipiscing pede. Proin elementum augue ut magna.</p>
+
+<p style="line-height: 1.3"><strong>line-height: 1.3</strong> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Fusce ut leo eu ipsum faucibus pretium. Donec iaculis lorem eleifend mi tempor porttitor. Integer porttitor dui vel dui. Donec ornare adipiscing pede. Proin elementum augue ut magna.</p>
+
+<p style="line-height: 1.6"><strong>line-height: 1.6</strong> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Fusce ut leo eu ipsum faucibus pretium. Donec iaculis lorem eleifend mi tempor porttitor. Integer porttitor dui vel dui. Donec ornare adipiscing pede. Proin elementum augue ut magna.</p>
+
+<p style="line-height: 2.1"><strong>line-height: 2.1</strong> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Fusce ut leo eu ipsum faucibus pretium. Donec iaculis lorem eleifend mi tempor porttitor. Integer porttitor dui vel dui. Donec ornare adipiscing pede. Proin elementum augue ut magna.</p>
+</div>
+
+<p>Se recomienda utilizar esta última forma de establecer el interlineado porque es la más sencilla y la más flexible, ya que se adapta correctamente a cualquier cambio en el tamaño de letra del texto.</p>
+
+<p>Si el texto se muestra con varios tipos o tamaños de letra diferentes, el navegador toma el tamaño de la letra más grande para calcular el valor de la propiedad <code>line-height</code>.</p>
+
+<div class="example">
+<p style="line-height: 1.6"><strong>line-height: 1.6</strong> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Fusce ut leo eu ipsum faucibus pretium. Donec iaculis lorem eleifend mi tempor porttitor. Integer porttitor dui vel dui. Donec ornare adipiscing pede. Proin elementum augue ut magna.</p>
+
+<p style="line-height: 1.6"><strong>line-height: 1.6</strong> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. <span style="font-size: 1.5em">[font-size: 1.5em] Fusce ut leo eu ipsum faucibus pretium.</span> Donec iaculis lorem eleifend mi tempor porttitor. Integer porttitor dui vel dui. Donec ornare adipiscing pede. Proin elementum augue ut magna.</p>
+</div>
+
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'line-height (Referencia de CSS 2.1%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Referencia de CSS 2.1 : line-height']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Propiedades relacionadas</span></h3>
+
+
+                                        <ul class="toc">
+                    <li class="">
+                <a href="direction.html">direction</a>
+            </li>
+                    <li class="active">
+                <a href="line-height.html">line-height</a>
+            </li>
+                    <li class="">
+                <a href="text-align.html">text-align</a>
+            </li>
+                    <li class="">
+                <a href="text-decoration.html">text-decoration</a>
+            </li>
+                    <li class="">
+                <a href="text-indent.html">text-indent</a>
+            </li>
+                    <li class="">
+                <a href="text-transform.html">text-transform</a>
+            </li>
+                    <li class="">
+                <a href="unicode-bidi.html">unicode-bidi</a>
+            </li>
+                    <li class="">
+                <a href="word-spacing.html">word-spacing</a>
+            </li>
+                </ul>
+                                    
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

@@ -1,0 +1,261 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>5.3. Acceso directo a los nodos (Introducción a JavaScript)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="tipos_de_nodos.html" />
+        <link rel="next" href="creacion_y_eliminacion_de_nodos.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="5.3. Acceso directo a los nodos (Introducción a JavaScript)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page javascript">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Introducción a JavaScript</a></li>
+  <li><a href="../capitulo_5.html">Capítulo 5. DOM</a></li>
+  <li class="current"><span>5.3. Acceso directo a los nodos</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="acceso_directo_a_los_nodos"><span>5.3.</span> Acceso directo a los nodos</h1>
+    
+
+<p>Una vez construido automáticamente el árbol completo de nodos DOM, ya es posible utilizar las funciones DOM para acceder de forma directa a cualquier nodo del árbol. Como acceder a un nodo del árbol es equivalente a acceder a <em>"un trozo"</em> de la página, una vez construido el árbol, ya es posible manipular de forma sencilla la página: acceder al valor de un elemento, establecer el valor de un elemento, mover un elemento de la página, crear y añadir nuevos elementos, etc.</p>
+
+<p>DOM proporciona dos métodos alternativos para acceder a un nodo específico: acceso a través de sus nodos padre y acceso directo.</p>
+
+<p>Las funciones que proporciona DOM para acceder a un nodo a través de sus nodos padre consisten en acceder al nodo raíz de la página y después a sus nodos hijos y a los nodos hijos de esos hijos y así sucesivamente hasta el último nodo de la rama terminada por el nodo buscado. Sin embargo, cuando se quiere acceder a un nodo específico, es mucho más rápido acceder directamente a ese nodo y no llegar hasta él descendiendo a través de todos sus nodos padre.</p>
+
+<p>Por ese motivo, no se van a presentar las funciones necesarias para el acceso jerárquico de nodos y se muestran solamente las que permiten acceder de forma directa a los nodos.</p>
+
+<p>Por último, es importante recordar que el acceso a los nodos, su modificación y su eliminación solamente es posible cuando el árbol DOM ha sido construido completamente, es decir, después de que la página XHTML se cargue por completo. Más adelante se verá cómo asegurar que un código JavaScript solamente se ejecute cuando el navegador ha cargado entera la página XHTML.</p>
+
+<h3 id="getelementsbytagname">5.3.1. getElementsByTagName()</h3>
+
+<p>Como sucede con todas las funciones que proporciona DOM, la función <code>getElementsByTagName()</code> tiene un nombre muy largo, pero que lo hace autoexplicativo.</p>
+
+<p>La función <code>getElementsByTagName(nombreEtiqueta)</code> obtiene todos los elementos de la página XHTML cuya etiqueta sea igual que el parámetro que se le pasa a la función.</p>
+
+<p>El siguiente ejemplo muestra cómo obtener todos los párrafos de una página XHTML:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> parrafos <span class="sy0">=</span> document.<span class="me1">getElementsByTagName</span><span class="br0">&#40;</span><span class="st0">&quot;p&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>El valor que se indica delante del nombre de la función (en este caso, <code>document</code>) es el nodo a partir del cual se realiza la búsqueda de los elementos. En este caso, como se quieren obtener todos los párrafos de la página, se utiliza el valor <code>document</code> como punto de partida de la búsqueda.</p>
+
+<p>El valor que devuelve la función es un array con todos los nodos que cumplen la condición de que su etiqueta coincide con el parámetro proporcionado. El valor devuelto es un array de nodos DOM, no un array de cadenas de texto o un array de objetos normales. Por lo tanto, se debe procesar cada valor del array de la forma que se muestra en las siguientes secciones.</p>
+
+<p>De este modo, se puede obtener el primer párrafo de la página de la siguiente manera:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> primerParrafo <span class="sy0">=</span> parrafos<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>De la misma forma, se podrían recorrer todos los párrafos de la página con el siguiente código:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">for</span><span class="br0">&#40;</span><span class="kw1">var</span> i<span class="sy0">=</span><span class="nu0">0</span><span class="sy0">;</span> i<span class="sy0">&lt;</span>parrafos.<span class="me1">length</span><span class="sy0">;</span> i<span class="sy0">++</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="kw1">var</span> parrafo <span class="sy0">=</span> parrafos<span class="br0">&#91;</span>i<span class="br0">&#93;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>La función <code>getElementsByTagName()</code> se puede aplicar de forma recursiva sobre cada uno de los nodos devueltos por la función. En el siguiente ejemplo, se obtienen todos los enlaces del primer párrafo de la página:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> parrafos <span class="sy0">=</span> document.<span class="me1">getElementsByTagName</span><span class="br0">&#40;</span><span class="st0">&quot;p&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="kw1">var</span> primerParrafo <span class="sy0">=</span> parrafos<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="sy0">;</span>
+<span class="kw1">var</span> enlaces <span class="sy0">=</span> primerParrafo.<span class="me1">getElementsByTagName</span><span class="br0">&#40;</span><span class="st0">&quot;a&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<h3 id="getelementsbyname">5.3.2. getElementsByName()</h3>
+
+<p>La función <code>getElementsByName()</code> es similar a la anterior, pero en este caso se buscan los elementos cuyo atributo <code>name</code> sea igual al parámetro proporcionado. En el siguiente ejemplo, se obtiene directamente el único párrafo con el nombre indicado:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> parrafoEspecial <span class="sy0">=</span> document.<span class="me1">getElementsByName</span><span class="br0">&#40;</span><span class="st0">&quot;especial&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="sy0">&lt;</span>p name<span class="sy0">=</span><span class="st0">&quot;prueba&quot;</span><span class="sy0">&gt;</span>...<span class="sy0">&lt;/</span>p<span class="sy0">&gt;</span>
+<span class="sy0">&lt;</span>p name<span class="sy0">=</span><span class="st0">&quot;especial&quot;</span><span class="sy0">&gt;</span>...<span class="sy0">&lt;/</span>p<span class="sy0">&gt;</span>
+<span class="sy0">&lt;</span>p<span class="sy0">&gt;</span>...<span class="sy0">&lt;/</span>p<span class="sy0">&gt;</span></pre>
+</div>
+
+<p>Normalmente el atributo <code>name</code> es único para los elementos HTML que lo definen, por lo que es un método muy práctico para acceder directamente al nodo deseado. En el caso de los elementos HTML <em>radiobutton</em>, el atributo <code>name</code> es común a todos los <em>radiobutton</em> que están relacionados, por lo que la función devuelve una colección de elementos.</p>
+
+<p>Internet Explorer 6.0 no implementa de forma correcta esta función, ya que sólo la tiene en cuenta para los elementos de tipo <code>&lt;input&gt;</code> y <code>&lt;img&gt;</code>. Además, también tiene en consideración los elementos cuyo atributo <code>id</code> sea igual al parámetro de la función.</p>
+
+<h3 id="getelementbyid">5.3.3. getElementById()</h3>
+
+<p>La función <code>getElementById()</code> es la más utilizada cuando se desarrollan aplicaciones web dinámicas. Se trata de la función preferida para acceder directamente a un nodo y poder leer o modificar sus propiedades.</p>
+
+<p>La función <code>getElementById()</code> devuelve el elemento XHTML cuyo atributo <code>id</code> coincide con el parámetro indicado en la función. Como el atributo <code>id</code> debe ser único para cada elemento de una misma página, la función devuelve únicamente el nodo deseado.</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> cabecera <span class="sy0">=</span> document.<span class="me1">getElementById</span><span class="br0">&#40;</span><span class="st0">&quot;cabecera&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="sy0">&lt;</span>div id<span class="sy0">=</span><span class="st0">&quot;cabecera&quot;</span><span class="sy0">&gt;</span>
+  <span class="sy0">&lt;</span>a href<span class="sy0">=</span><span class="st0">&quot;/&quot;</span> id<span class="sy0">=</span><span class="st0">&quot;logo&quot;</span><span class="sy0">&gt;</span>...<span class="sy0">&lt;/</span>a<span class="sy0">&gt;</span>
+<span class="sy0">&lt;/</span>div<span class="sy0">&gt;</span></pre>
+</div>
+
+<p>La función <code>getElementById()</code> es tan importante y tan utilizada en todas las aplicaciones web, que casi todos los ejemplos y ejercicios que siguen la utilizan constantemente.</p>
+
+<p>Internet Explorer 6.0 también interpreta incorrectamente esta función, ya que devuelve también aquellos elementos cuyo atributo <code>name</code> coincida con el parámetro proporcionado a la función.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="tipos_de_nodos.html">&larr; Anterior <span>5.2. Tipos de nodos</span></a>
+            
+            <a class="span5 next" href="creacion_y_eliminacion_de_nodos.html">Siguiente &rarr; <span>5.4. Creación y eliminación de nodos</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Acceso directo a los nodos (Introducción a JavaScript%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a JavaScript : Acceso directo a los nodos']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> El primer script</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Programación básica</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Programación avanzada</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_5.html">
+            <span>Capítulo 5.</span> DOM
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="arbol_de_nodos.html">
+            <span>5.1.</span> Árbol de nodos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="tipos_de_nodos.html">
+            <span>5.2.</span> Tipos de nodos
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="acceso_directo_a_los_nodos.html">
+            <span>5.3.</span> Acceso directo a los nodos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="creacion_y_eliminacion_de_nodos.html">
+            <span>5.4.</span> Creación y eliminación de nodos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="acceso_directo_a_los_atributos_xhtml.html">
+            <span>5.5.</span> Acceso directo a los atributos XHTML
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicios_sobre_dom.html">
+            <span>5.6.</span> Ejercicios sobre DOM
+        </a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Eventos</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Otras utilidades</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Detección y corrección de errores</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Recursos útiles</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

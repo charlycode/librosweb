@@ -1,0 +1,225 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>11.3. Ofuscar el código JavaScript (Introducción a AJAX)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="mejorar_el_rendimiento_de_las_aplicaciones_complejas.html" />
+        <link rel="next" href="evitar_el_problema_de_los_dominios_diferentes.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="11.3. Ofuscar el código JavaScript (Introducción a AJAX)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page ajax">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Introducción a AJAX</a></li>
+  <li><a href="../capitulo_11.html">Capítulo 11. Otras utilidades</a></li>
+  <li class="current"><span>11.3. Ofuscar el código JavaScript</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="ofuscar_el_codigo_javascript"><span>11.3.</span> Ofuscar el código JavaScript</h1>
+    
+
+<p>El código de las aplicaciones JavaScript, al igual que el resto de contenidos de las páginas web, está disponible para ser accedido y visualizado por cualquier usuario. Con la aparición de las aplicaciones basadas en AJAX, muchas empresas han desarrollado complejas aplicaciones cuyo código fuente está a disposición de cualquier usuario.</p>
+
+<p>Aunque se trata de un problema casi imposible de solucionar, existen técnicas que minimizan el problema de que se pueda acceder libremente al código fuente de la aplicación. La principal técnica es la de ofuscar el código fuente de la aplicación.</p>
+
+<p>Los <em>ofuscadores</em> utilizan diversos mecanismos para hacer casi imposible de entender el código fuente de una aplicación. Manteniendo el comportamiento de la aplicación, consiguen <em>ensuciar</em> y dificultar tanto el código que no es mayor problema que alguien pueda acceder a ese código.</p>
+
+<p>El programa ofuscador <a href="http://www.jasob.com/">Jasob</a> ofrece un ejemplo del resultado de ofuscar cierto código JavaScript. Este es el código original antes de ofuscarlo:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="co1">//------------------------------------------------------</span>
+<span class="co1">// Calculate salary for each employee in &quot;aEmployees&quot;.</span>
+<span class="co1">// &quot;aEmployees&quot; is array of &quot;Employee&quot; objects.</span>
+<span class="co1">//------------------------------------------------------</span>
+<span class="kw1">function</span> CalculateSalary<span class="br0">&#40;</span>aEmployees<span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+   <span class="kw1">var</span> nEmpIndex <span class="sy0">=</span> <span class="nu0">0</span><span class="sy0">;</span>
+   while <span class="br0">&#40;</span>nEmpIndex <span class="sy0">&lt;</span> aEmployees.<span class="me1">length</span><span class="br0">&#41;</span>
+   <span class="br0">&#123;</span>
+      <span class="kw1">var</span> oEmployee <span class="sy0">=</span> aEmployees<span class="br0">&#91;</span>nEmpIndex<span class="br0">&#93;</span><span class="sy0">;</span>
+      oEmployee.<span class="me1">fSalary</span> <span class="sy0">=</span> CalculateBaseSalary<span class="br0">&#40;</span>oEmployee.<span class="me1">nType</span><span class="sy0">,</span> 
+&nbsp;
+                                              oEmployee.<span class="me1">nWorkingHours</span><span class="br0">&#41;</span><span class="sy0">;</span>
+      <span class="kw1">if</span> <span class="br0">&#40;</span>oEmployee.<span class="me1">bBonusAllowed</span> <span class="sy0">==</span> <span class="kw2">true</span><span class="br0">&#41;</span>
+      <span class="br0">&#123;</span>
+         oEmployee.<span class="me1">fBonus</span> <span class="sy0">=</span> CalculateBonusSalary<span class="br0">&#40;</span>oEmployee.<span class="me1">nType</span><span class="sy0">,</span> 
+                                                 oEmployee.<span class="me1">nWorkingHours</span><span class="sy0">,</span> 
+                                                 oEmployee.<span class="me1">fSalary</span><span class="br0">&#41;</span><span class="sy0">;</span> 
+      <span class="br0">&#125;</span>
+      <span class="kw1">else</span>
+      <span class="br0">&#123;</span>
+         oEmployee.<span class="me1">fBonus</span> <span class="sy0">=</span> <span class="nu0">0</span><span class="sy0">;</span>
+      <span class="br0">&#125;</span>
+      oEmployee.<span class="me1">sSalaryColor</span> <span class="sy0">=</span> GetSalaryColor<span class="br0">&#40;</span>oEmployee.<span class="me1">fSalary</span> <span class="sy0">+</span> 
+                                              oEmployee.<span class="me1">fBonus</span><span class="br0">&#41;</span><span class="sy0">;</span>
+      nEmpIndex<span class="sy0">++;</span>
+   <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Después de pasar el código anterior por el ofuscador el resultado es:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">function</span> c<span class="br0">&#40;</span>g<span class="br0">&#41;</span><span class="br0">&#123;</span><span class="kw1">var</span> m<span class="sy0">=</span><span class="nu0">0</span><span class="sy0">;</span>while<span class="br0">&#40;</span>m<span class="sy0">&lt;</span>g.<span class="me1">length</span><span class="br0">&#41;</span><span class="br0">&#123;</span><span class="kw1">var</span> r<span class="sy0">=</span>g<span class="br0">&#91;</span>m<span class="br0">&#93;</span><span class="sy0">;</span>r.<span class="me1">l</span><span class="sy0">=</span>d<span class="br0">&#40;</span>r.<span class="me1">n</span><span class="sy0">,</span>r.<span class="me1">o</span><span class="br0">&#41;</span><span class="sy0">;</span><span class="kw1">if</span><span class="br0">&#40;</span>r.<span class="me1">j</span><span class="sy0">==</span><span class="kw2">true</span><span class="br0">&#41;</span><span class="br0">&#123;</span>
+r.<span class="me1">k</span><span class="sy0">=</span>e<span class="br0">&#40;</span>r.<span class="me1">n</span><span class="sy0">,</span>r.<span class="me1">o</span><span class="sy0">,</span>r.<span class="me1">l</span><span class="br0">&#41;</span><span class="sy0">;</span><span class="br0">&#125;</span><span class="kw1">else</span><span class="br0">&#123;</span>r.<span class="me1">k</span><span class="sy0">=</span><span class="nu0">0</span><span class="sy0">;</span><span class="br0">&#125;</span>r.<span class="me1">t</span><span class="sy0">=</span>f<span class="br0">&#40;</span>r.<span class="me1">l</span><span class="sy0">+</span>r.<span class="me1">k</span><span class="br0">&#41;</span><span class="sy0">;</span>m<span class="sy0">++;</span><span class="br0">&#125;</span><span class="br0">&#125;</span></pre>
+</div>
+
+<p>Al sustituir todos los nombres de las variables y de las funciones por nombres de una sola letra, es prácticamente imposible comprender el código del programa. En ocasiones, también se utilizan ofuscadores de este tipo con el propósito de reducir el tamaño del código fuente.</p>
+
+<p>Además de aplicaciones comerciales específicamente diseñadas para ofuscar código JavaScript, también se pueden utilizar las herramientas que minimizan el tamaño de los scripts. Eliminando los comentarios y reduciendo el nombre de todas las variables, los programas que minimizan el tamaño de los scripts también consiguen ofuscar su código.</p>
+
+<p>La aplicación <a href="http://dean.edwards.name/packer/">packer</a> es gratuita, se puede acceder via web y consigue una excelente compresión del código original. También se puede utilizar <a href="http://adrian3.googlepages.com/jsjuicer.html">jsjuicer</a>, que está disponible como aplicación descargable y también <a href="http://gueschla.com/labs/jsjuicer/">se puede utilizar vía web</a>.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="mejorar_el_rendimiento_de_las_aplicaciones_complejas.html">&larr; Anterior <span>11.2. Mejorar el rendimiento de las aplicaciones complejas</span></a>
+            
+            <a class="span5 next" href="evitar_el_problema_de_los_dominios_diferentes.html">Siguiente &rarr; <span>11.4. Evitar el problema de los dominios diferentes</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Ofuscar el código JavaScript (Introducción a AJAX%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a AJAX : Ofuscar el código JavaScript']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción a AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> JavaScript básico</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> JavaScript avanzado</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> DOM (Document Object Model)</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> BOM (Browser Object Model)</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Eventos</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Primeros pasos con AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Técnicas básicas con AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Técnicas avanzadas con AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Frameworks y librerías</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_11.html">
+            <span>Capítulo 11.</span> Otras utilidades
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="mejorar_el_rendimiento_de_las_aplicaciones_complejas.html">
+            <span>11.2.</span> Mejorar el rendimiento de las aplicaciones complejas
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="ofuscar_el_codigo_javascript.html">
+            <span>11.3.</span> Ofuscar el código JavaScript
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="evitar_el_problema_de_los_dominios_diferentes.html">
+            <span>11.4.</span> Evitar el problema de los dominios diferentes
+        </a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Recursos útiles</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Bibliografía</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

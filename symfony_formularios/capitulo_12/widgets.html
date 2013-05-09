@@ -1,0 +1,233 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>12.2. Widgets (Los formularios de Symfony 1.4)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="../capitulo_12.html" />
+        <link rel="next" href="widgets_de_tipo_input.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="12.2. Widgets (Los formularios de Symfony 1.4)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page symfony_formularios">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Los formularios de Symfony 1.4</a></li>
+  <li><a href="../capitulo_12.html">Capítulo 12. Referencia de Widgets</a></li>
+  <li class="current"><span>12.2.. Widgets</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="widgets"><span>12.2.</span> Widgets</h1>
+    
+
+<p>A continuación se muestra el listado completo de todos los widgets de Symfony:</p>
+
+<ul>
+<li><code>sfWidgetFormChoice</code></li>
+<li><code>sfWidgetFormDate</code></li>
+<li><code>sfWidgetFormDateRange</code></li>
+<li><code>sfWidgetFormDateTime</code></li>
+<li><code>sfWidgetFormDoctrineChoice</code></li>
+<li><code>sfWidgetFormFilterInput</code></li>
+<li><code>sfWidgetFormFilterDate</code></li>
+<li><code>sfWidgetFormI18nDate</code></li>
+<li><code>sfWidgetFormI18nDateTime</code></li>
+<li><code>sfWidgetFormI18nSelectCountry</code></li>
+<li><code>sfWidgetFormI18nSelectLanguage</code></li>
+<li><code>sfWidgetFormI18nSelectCurrency</code></li>
+<li><code>sfWidgetFormI18nTime</code></li>
+<li><code>sfWidgetFormInput</code></li>
+<li><code>sfWidgetFormInputCheckbox</code></li>
+<li><code>sfWidgetFormInputFile</code></li>
+<li><code>sfWidgetFormInputFileEditable</code></li>
+<li><code>sfWidgetFormInputHidden</code></li>
+<li><code>sfWidgetFormInputPassword</code></li>
+<li><code>sfWidgetFormJQueryAutocompleter</code></li>
+<li><code>sfWidgetFormJQueryDate</code></li>
+<li><code>sfWidgetFormPropelChoice</code></li>
+<li><code>sfWidgetFormReCaptcha</code></li>
+<li><code>sfWidgetFormSchema</code></li>
+<li><code>sfWidgetFormSchemaDecorator</code></li>
+<li><code>sfWidgetFormSelect</code></li>
+<li><code>sfWidgetFormSelectDoubleList</code></li>
+<li><code>sfWidgetFormSelectMany</code></li>
+<li><code>sfWidgetFormSelectCheckbox</code></li>
+<li><code>sfWidgetFormSelectRadio</code></li>
+<li><code>sfWidgetFormTextarea</code></li>
+<li><code>sfWidgetFormTextareaTinyMCE</code></li>
+<li><code>sfWidgetFormTime</code></li>
+</ul>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="../capitulo_12.html">&larr; Anterior <span>Capítulo 12. Referencia de Widgets</span></a>
+            
+            <a class="span5 next" href="widgets_de_tipo_input.html">Siguiente &rarr; <span>12.3. Widgets de tipo input</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Widgets (Los formularios de Symfony 1.4%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Los formularios de Symfony 1.4 : Widgets']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Creación de formularios</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Validación de formularios</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Formularios para diseñadores web</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Integración con Propel</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Integrando Doctrine</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_12.html">
+            <span>Capítulo 12.</span> Referencia de Widgets
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="widgets.html">
+            <span>12.2.</span> Widgets
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="widgets_de_tipo_input.html">
+            <span>12.3.</span> Widgets de tipo input
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="widgets_para_elecciones.html">
+            <span>12.4.</span> Widgets para elecciones
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="widgets_para_fechas.html">
+            <span>12.5.</span> Widgets para fechas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="widgets_de_internacionalizacion.html">
+            <span>12.6.</span> Widgets de internacionalización
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="widget_para_captcha.html">
+            <span>12.7.</span> Widget para CAPTCHA
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="widgets_para_filtros.html">
+            <span>12.8.</span> Widgets para filtros
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="sfwidgetformschema.html">
+            <span>12.9.</span> sfWidgetFormSchema
+        </a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Validadores</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

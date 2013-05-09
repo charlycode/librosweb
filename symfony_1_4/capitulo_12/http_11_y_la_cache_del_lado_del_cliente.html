@@ -1,0 +1,294 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>12.4. HTTP 1.1 y la cache del lado del cliente (Symfony 1.4, la guía definitiva)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="probando_y_monitorizando_la_cache.html" />
+        <link rel="next" href="resumen.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="12.4. HTTP 1.1 y la cache del lado del cliente (Symfony 1.4, la guía definitiva)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page symfony_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Symfony 1.4, la guía definitiva</a></li>
+  <li><a href="../capitulo_12.html">Capítulo 12. Uso de la cache</a></li>
+  <li class="current"><span>12.4.. HTTP 1.1 y la cache del lado del cliente</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="http_11_y_la_cache_del_lado_del_cliente"><span>12.4.</span> HTTP 1.1 y la cache del lado del cliente</h1>
+    
+
+<p>El protocolo HTTP 1.1 define una serie de cabeceras que se pueden utilizar para acelerar una aplicación controlando la cache del navegador del usuario.</p>
+
+<p>La especificación del protocolo HTTP 1.1 publicada por el W3C (World Wide Web Consortium) define todas las cabeceras con gran detalle (http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html). Si una acción tiene habilitada la cache y utiliza la opción <code>with_layout</code>, entonces puede hacer uso de los mecanismos que se describen en las siguientes secciones.</p>
+
+<p>Aunque algunos de los navegadores de los usuarios no soporten HTTP 1.1, no existe ningún riesgo en utilizar las opciones de cache de HTTP 1.1. Los navegadores que reciben cabeceras que no entienden, simplemente las ignoran, por lo que se aconseja utilizar los mecanismos de cache de HTTP 1.1.</p>
+
+<p>Además, las cabeceras de HTTP 1.1 también las interpretan los servidores proxy y servidores cache. De esta forma, aunque el navegador del usuario no soporte HTTP 1.1, puede haber un proxy en la ruta de la petición que pueda aprovechar esas características.</p>
+
+<h3 id="uso_de_la_cabecera_etag_para_evitar_el_envio_de_contenidos_no_modificados">12.4.1. Uso de la cabecera ETag para evitar el envío de contenidos no modificados</h3>
+
+<p>Cuando se habilita la característica de ETag, el servidor web añade a la respuesta una cabecera especial que contiene una <em>firma</em> de la respuesta enviada.</p>
+
+<div class="code code">
+<pre class="code">ETag: &quot;1A2Z3E4R5T6Y7U&quot;</pre>
+</div>
+
+<p>El navegador del usuario almacena esta firma y la envía junto con la petición la próxima vez que el usuario acceda a la misma página. Si la firma demuestra que la página no se ha modificado desde la primera petición, el servidor no envía de nuevo la página de respuesta. En su lugar, envía una cabecera de tipo <code>304: Not modified</code>. Esta técnica ahorra tiempo de CPU (si se está utilizando la compresión de contenidos) y ancho de banda (ya que la página no se vuelve a enviar) en el servidor, y tiempo de carga (porque la página no se envía de nuevo) en el cliente. En resumen, las páginas que se guardan en la cache con la cabecera ETag son todavía más rápidas de cargar que las páginas que están en la cache y no tienen ETag.</p>
+
+<p>Symfony permite activar la característica ETag para toda la aplicación en el archivo <code>settings.yml</code>. El valor por defecto de la opción ETag se muestra a continuación:</p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co4">all</span>:<span class="co4">
+  .settings</span>:<span class="co3">
+    etag</span><span class="sy2">: </span>true</pre>
+</div>
+
+<p>En las acciones que se guardan en la cache junto con el layout, la respuesta se obtiene directamente del directorio <code>cache/</code>, por lo que el proceso es todavía más rápido.</p>
+
+<h3 id="anadiendo_la_cabecera_last_modified_para_evitar_el_envio_de_contenidos_todavia_validos">12.4.2. Añadiendo la cabecera Last-Modified para evitar el envío de contenidos todavía válidos</h3>
+
+<p>Cuando el servidor envía la respuesta al navegador, puede añadir una cabecera especial que indica cuando se modificaron por última vez los datos contenidos en la página:</p>
+
+<div class="code code">
+<pre class="code">Last-Modified: Sat, 23 Nov 2010 13:27:31 GMT</pre>
+</div>
+
+<p>Los navegadores interpretan esta cabecera y la próxima vez que solicitan la misma página, añaden una cabecera <code>If-Modified</code> apropiada:</p>
+
+<div class="code code">
+<pre class="code">If-Modified-Since: Sat, 23 Nov 2010   13:27:31 GMT</pre>
+</div>
+
+<p>El servidor entonces puede comparar el valor enviado por el cliente y el valor devuelto por la aplicación. Si coinciden, el servidor devuelve una cabecera<code>304: Not modified</code>, ahorrando ancho de banda y tiempo de CPU, al igual que sucedía con la cabecera ETag.</p>
+
+<p>Symfony permite establecer la cabecera <code>Last-Modified</code> de la misma forma que se establece cualquier otra cabecera. En una acción se puede añadir de la siguiente manera:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getResponse</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">setHttpHeader</span><span class="br0">&#40;</span><span class="st_h">'Last-Modified'</span><span class="sy0">,</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getResponse</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="kw3">getDate</span><span class="br0">&#40;</span><span class="re0">$timestamp</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>La fecha puede ser la fecha actual o la fecha de la última actualización de los datos de la página, obtenida a partir de la base de datos o del sistema de archivos. El método <code>getDate()</code> del objeto <code>sfResponse</code> convierte un <em>timestamp</em> en una fecha formateada según el estándar requerido por la cabecera <code>Last-Modified</code> (RFC1123).</p>
+
+<h3 id="anadiendo_cabeceras_vary_para_permitir_varias_versiones_de_la_pagina_en_la_cache">12.4.3. Añadiendo cabeceras Vary para permitir varias versiones de la página en la cache</h3>
+
+<p>Otra de las cabeceras de HTTP 1.1 es <code>Vary</code>, que define los parámetros de los que depende una página y que utilizan los navegadores y los servidores proxy para organizar la cache de las páginas. Si por ejemplo el contenido de una página depende de las cookies, se puede utilizar la siguiente cabecera <code>Vary</code>:</p>
+
+<div class="code code">
+<pre class="code">Vary: Cookie</pre>
+</div>
+
+<p>En la mayoría de ocasiones, es difícil habilitar la cache para las acciones porque la página puede variar en función de las cookies, el idioma del usuario o cualquier otro parámetro. Si no es un inconveniente aumentar el tamaño de la cache, se puede utilizar en este caso la cabecera <code>Vary</code>. Además, se puede emplear esta cabecera para toda la aplicación o solo para algunas acciones, definiéndolo en el archivo de configuración <code>cache.yml</code> o mediante el método disponible en <code>sfResponse</code>, como se muestra a continuación:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getResponse</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">addVaryHttpHeader</span><span class="br0">&#40;</span><span class="st_h">'Cookie'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getResponse</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">addVaryHttpHeader</span><span class="br0">&#40;</span><span class="st_h">'User-Agent'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getResponse</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">addVaryHttpHeader</span><span class="br0">&#40;</span><span class="st_h">'Accept-Language'</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Symfony guarda en la cache versiones diferentes de la página en función de cada uno de estos parámetros. Aunque el tamaño de la cache aumenta, la ventaja es que cuando el servidor recibe una petición que coincide con estas cabeceras, la respuesta se obtiene directamente de la cache en vez de tener que procesarla. Se trata de un mecanismo muy útil para mejorar el rendimiento de las páginas que solo varían en función de las cabeceras de la petición.</p>
+
+<h3 id="anadiendo_la_cabecera_cache_control_para_permitir_la_cache_en_el_lado_del_cliente">12.4.4. Añadiendo la cabecera Cache-Control para permitir la cache en el lado del cliente</h3>
+
+<p>Hasta ahora, aunque se hayan añadido las cabeceras, el navegador sigue enviando peticiones al servidor a pesar de disponer de una versión de la página en su cache. Para evitar estas peticiones, se pueden añadir las cabeceras <code>Cache-Control</code> y <code>Expires</code> a la respuesta. PHP deshabilita por defecto estas cabeceras, pero Symfony puede saltarse este comportamiento para evitar las peticiones innecesarias al servidor.</p>
+
+<p>Como es habitual, esta opción se activa mediante un método del objeto <code>sfResponse</code>. En una acción se puede definir el tiempo máximo que una página debería permanecer en la cache (en segundos):</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getResponse</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">addCacheControlHttpHeader</span><span class="br0">&#40;</span><span class="st_h">'max_age=60'</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Además, se pueden especificar las condiciones bajo las cuales se guarda la página en la cache, de forma que la cache del proveedor no almacene por ejemplo datos privados (como números de cuenta y contraseñas):</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getResponse</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">addCacheControlHttpHeader</span><span class="br0">&#40;</span><span class="st_h">'private=True'</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Mediante el uso de las directivas HTTP de <code>Cache-Control</code> es posible controlar los diversos mecanismos de cache existentes entre el servidor y el navegador del cliente. La especificación del W3C de <code>Cache-Control</code> contiene la explicación detallada de todas estas directivas.</p>
+
+<p>Symfony permite añadir otra cabecera llamada <code>Expires</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getResponse</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">setHttpHeader</span><span class="br0">&#40;</span><span class="st_h">'Expires'</span><span class="sy0">,</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getResponse</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="kw3">getDate</span><span class="br0">&#40;</span><span class="re0">$timestamp</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> La consecuencia más importante de activar el mecanismo <code>Cache-Control</code> es que los logs del servidor no muestran todas las peticiones realizadas por los usuarios, sino solamente las que recibe realmente el servidor. De esta forma, si mejora el rendimiento de un sitio web, su popularidad descenderá de forma aparente en las estadísticas de acceso al sitio.</p></div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="probando_y_monitorizando_la_cache.html">&larr; Anterior <span>12.3. Probando y monitorizando la cache</span></a>
+            
+            <a class="span5 next" href="resumen.html">Siguiente &rarr; <span>12.5. Resumen</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'HTTP 1.1 y la cache del lado del cliente (Symfony 1.4, la guía definitiva%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Symfony 1.4, la guía definitiva : HTTP 1.1 y la cache del lado del cliente']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción a Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Explorando el interior de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Ejecutar aplicaciones Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Introducción a la creación de páginas</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Configurar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> El Controlador</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> La Vista</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> El modelo (Doctrine)</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Enlaces y sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Emails</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_12.html">
+            <span>Capítulo 12.</span> Uso de la cache
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="guardando_la_respuesta_en_la_cache.html">
+            <span>12.1.</span> Guardando la respuesta en la cache
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="eliminando_elementos_de_la_cache.html">
+            <span>12.2.</span> Eliminando elementos de la cache
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="probando_y_monitorizando_la_cache.html">
+            <span>12.3.</span> Probando y monitorizando la cache
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="http_11_y_la_cache_del_lado_del_cliente.html">
+            <span>12.4.</span> HTTP 1.1 y la cache del lado del cliente
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="resumen.html">
+            <span>12.5.</span> Resumen
+        </a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Pruebas unitarias y funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Herramientas para la administración de aplicaciones</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> Personalizar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> Rendimiento</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Configuración avanzada</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

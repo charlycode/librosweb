@@ -1,0 +1,397 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>9.3. Helpers de enlaces (Symfony 1.4, la guía definitiva)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="reescritura_de_url.html" />
+        <link rel="next" href="configuracion_del_sistema_de_enrutamiento.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="9.3. Helpers de enlaces (Symfony 1.4, la guía definitiva)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page symfony_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Symfony 1.4, la guía definitiva</a></li>
+  <li><a href="../capitulo_9.html">Capítulo 9. Enlaces y sistema de enrutamiento</a></li>
+  <li class="current"><span>9.3.. Helpers de enlaces</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="helpers_de_enlaces"><span>9.3.</span> Helpers de enlaces</h1>
+    
+
+<p>Debido al sistema de enrutamiento, es conveniente utilizar los <em>helpers</em> de enlaces en las plantillas en vez de etiquetas <code>&lt;a&gt;</code> normales y corrientes. Más que una molestia, el uso de estos <em>helpers</em> debe verse como un método sencillo de mantener la aplicación <em>limpia</em> y muy fácil de mantener. Además, los <em>helpers</em> de enlaces incluyen una serie de utilidades y atajos que no es recomendable desaprovechar.</p>
+
+<h3 id="hiperenlaces_botones_y_formularios">9.3.1. Hiperenlaces, botones y formularios</h3>
+
+<p>En secciones anteriores ya se ha mostrado el <em>helper</em> <code>link_to()</code>. Se utiliza para mostrar enlaces válidos según XHTML y requiere de dos parámetros: el elemento que va a mostrar el enlace y la URI interna del recurso al que apunta el enlace. Si en vez de un enlace se necesita un botón, simplemente se utiliza el <em>helper</em> <code>button_to()</code>. Los formularios también disponen de un <em>helper</em> para controlar el valor del atributo <code>action</code>. El siguiente capítulo explica los formularios en detalle. El listado 9-7 muestra algunos ejemplos de <em>helpers</em> de enlaces.</p>
+
+<p><strong>Listado 9-7 - Helpers de enlaces para las etiquetas <code>&lt;a&gt;</code>, <code>&lt;input&gt;</code> y <code>&lt;form&gt;</code></strong></p>
+
+<div class="code php">
+<pre class="php">// Enlace simple de texto
+<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> link_to<span class="br0">&#40;</span><span class="st_h">'Mi artículo'</span><span class="sy0">,</span> <span class="st_h">'articulo/ver?titulo=Economia_en_Francia'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+ =&gt; &lt;a href=&quot;/url/con/enrutamiento/a/Economia_en_Francia&quot;&gt;Mi artículo&lt;/a&gt;
+&nbsp;
+// Enlace en una imagen
+<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> link_to<span class="br0">&#40;</span>image_tag<span class="br0">&#40;</span><span class="st_h">'ver.gif'</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="st_h">'articulo/ver?titulo=Economia_en_Francia'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+ =&gt; &lt;a href=&quot;/url/con/enrutamiento/a/Economia_en_Francia&quot;&gt;&lt;img src=&quot;/images/ver.gif&quot; /&gt;&lt;/a&gt;
+&nbsp;
+// Boton
+<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> button_to<span class="br0">&#40;</span><span class="st_h">'Mi artículo'</span><span class="sy0">,</span> <span class="st_h">'articulo/ver?titulo=Economia_en_Francia'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+ =&gt; &lt;input value=&quot;Mi artículo&quot; type=&quot;button&quot; onclick=&quot;document.location.href='/url/con/enrutamiento/a/Economia_en_Francia';&quot; /&gt;
+&nbsp;
+// Formulario
+<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> form_tag<span class="br0">&#40;</span><span class="st_h">'articulo/ver?titulo=Economia_en_Francia'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+ =&gt; &lt;form method=&quot;post&quot; action=&quot;/url/con/enrutamiento/a/Economia_en_Francia&quot; /&gt;</pre>
+</div>
+
+<p>Los <em>helpers</em> de enlaces aceptan URI internas y también URL absolutas (las que empiezan por <code>http://</code> y para las que no se aplica el sistema de enrutamiento) y URL internas a una página (también llamadas <em>anclas</em>). Las aplicaciones reales suelen construir sus URI internas en base a una serie de parámetros dinámicos. El listado 9-8 muestra ejemplos de todos estos casos.</p>
+
+<p><strong>Listado 9-8 - URL que admiten los <em>helpers</em> de enlaces</strong></p>
+
+<div class="code php">
+<pre class="php">// URI interna
+<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> link_to<span class="br0">&#40;</span><span class="st_h">'Mi artículo'</span><span class="sy0">,</span> <span class="st_h">'articulo/ver?titulo=Economia_en_Francia'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+ =&gt; &lt;a href=&quot;/url/con/enrutamiento/a/Economia_en_Francia&quot;&gt;Mi artículo&lt;/a&gt;
+&nbsp;
+// URI interna con parámetros dinámicos
+<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> link_to<span class="br0">&#40;</span><span class="st_h">'Mi artículo'</span><span class="sy0">,</span> <span class="st_h">'articulo/ver?titulo='</span><span class="sy0">.</span><span class="re0">$articulo</span><span class="sy0">-&gt;</span><span class="me1">getTitulo</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+&nbsp;
+// URI interna con anclas (enlaces a secciones internas de la página)
+<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> link_to<span class="br0">&#40;</span><span class="st_h">'Mi artículo'</span><span class="sy0">,</span> <span class="st_h">'articulo/ver?titulo=Economia_en_Francia#seccion1'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+ =&gt; &lt;a href=&quot;/url/con/enrutamiento/a/Economia_en_Francia#seccion1&quot;&gt;Mi artículo&lt;/a&gt;
+&nbsp;
+// URL absolutas
+<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> link_to<span class="br0">&#40;</span><span class="st_h">'Mi artículo'</span><span class="sy0">,</span> <span class="st_h">'http://www.ejemplo.com/cualquierpagina.html'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+ =&gt; &lt;a href=&quot;http://www.ejemplo.com/cualquierpagina.html&quot;&gt;Mi artículo&lt;/a&gt;</pre>
+</div>
+
+<h3 id="opciones_de_los_helpers_de_enlaces">9.3.2. Opciones de los helpers de enlaces</h3>
+
+<p>Como se explicó en el Capítulo 7, los <em>helpers</em> aceptan como argumento opciones adicionales, que se pueden indicar en forma de array asociativo o en forma de cadena de texto. Los <em>helpers</em> de enlaces también aceptan este tipo de opciones, como muestra el listado 9-9.</p>
+
+<p><strong>Listado 9-9 - Los helpers de enlaces aceptan opciones adicionales</strong></p>
+
+<div class="code php">
+<pre class="php">// Opciones adicionales como array asociativo
+<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> link_to<span class="br0">&#40;</span><span class="st_h">'Mi artículo'</span><span class="sy0">,</span> <span class="st_h">'articulo/ver?titulo=Economia_en_Francia'</span><span class="sy0">,</span> <span class="kw3">array</span><span class="br0">&#40;</span>
+  <span class="st_h">'class'</span>  <span class="sy0">=&gt;</span> <span class="st_h">'miclasecss'</span><span class="sy0">,</span>
+  <span class="st_h">'target'</span> <span class="sy0">=&gt;</span> <span class="st_h">'_blank'</span>
+<span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+&nbsp;
+// Opciones adicionales como cadena de texto (producen el mismo resultado)
+<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> link_to<span class="br0">&#40;</span><span class="st_h">'Mi artículo'</span><span class="sy0">,</span> <span class="st_h">'articulo/ver?titulo=Economia_en_Francia'</span><span class="sy0">,</span><span class="st_h">'class=miclasecss target=_blank'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+ =&gt; &lt;a href=&quot;/url/con/enrutamiento/a/Economia_en_Francia&quot; class=&quot;miclasecss&quot; target=&quot;_blank&quot;&gt;Mi artículo&lt;/a&gt;</pre>
+</div>
+
+<p>También se pueden utilizar otras opciones específicas de Symfony llamadas <code>confirm</code> y <code>popup</code>. La primera muestra una ventana JavaScript de confirmación al pinchar en el enlace y la segunda opción abre el destino del enlace en una nueva ventana, como se muestra en el listado 9-10.</p>
+
+<p><strong>Listado 9-10 - Opciones <code>confirm</code> y <code>popup</code> en los <em>helpers</em> de enlaces</strong></p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">&lt;?php</span> <span class="kw1">echo</span> link_to<span class="br0">&#40;</span><span class="st_h">'Borrar elemento'</span><span class="sy0">,</span> <span class="st_h">'item/borrar?id=123'</span><span class="sy0">,</span> <span class="st_h">'confirm=¿Estás seguro?'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+ =&gt; &lt;a onclick=&quot;return confirm('¿Estás seguro?');&quot;
+       href=&quot;/url/con/enrutamiento/a/borrar/123.html&quot;&gt;Borrar elemento&lt;/a&gt;
+&nbsp;
+<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> link_to<span class="br0">&#40;</span><span class="st_h">'Añadir al carrito'</span><span class="sy0">,</span> <span class="st_h">'carritoCompra/anadir?id=100'</span><span class="sy0">,</span> <span class="st_h">'popup=true'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+ =&gt; &lt;a onclick=&quot;window.open(this.href);return false;&quot;
+       href=&quot;/url/con/enrutamiento/a/carritoCompra/anadir/id/100.html&quot;&gt;Añadir al carrito&lt;/a&gt;
+&nbsp;
+<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> link_to<span class="br0">&#40;</span><span class="st_h">'Añadir al carrito'</span><span class="sy0">,</span> <span class="st_h">'carritoCompra/anadir?id=100'</span><span class="sy0">,</span> <span class="kw3">array</span><span class="br0">&#40;</span>
+  <span class="st_h">'popup'</span> <span class="sy0">=&gt;</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'popupWindow'</span><span class="sy0">,</span> <span class="st_h">'width=310,height=400,left=320,top=0'</span><span class="br0">&#41;</span>
+<span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+ =&gt; &lt;a onclick=&quot;window.open(this.href,'popupWindow',
+       'width=310,height=400,left=320,top=0');return false;&quot;
+       href=&quot;/url/con/enrutamiento/a/carritoCompra/anadir/id/100.html&quot;&gt;Añadir al carrito&lt;/a&gt;</pre>
+</div>
+
+<p>Estas opciones también se pueden combinar entre si.</p>
+
+<h3 id="opciones_get_y_post_falsas">9.3.3. Opciones GET y POST falsas</h3>
+
+<p>En ocasiones, los programadores web utilizan peticiones GET para realizar acciones más propias de una petición POST. Si se considera por ejemplo la siguiente URL:</p>
+
+<div class="code code">
+<pre class="code">http://www.ejemplo.com/index.php/carritoCompra/anadir/id/100</pre>
+</div>
+
+<p>Este tipo de petición modifica los datos de la aplicación, ya que añade un elemento al objeto que representa el carrito de la compra y que se almacena en la sesión del servidor o en una base de datos. Si los usuarios añaden esta URL a los favoritos de sus navegadores o si la URL se cachea o es indexada por un buscador, se pueden producir problemas en la base de datos y en las métricas del sitio web. En realidad, esta petición debería tratarse como una petición de tipo POST, ya que los robots que utilizan los buscadores no hacen peticiones POST para indexar las páginas.</p>
+
+<p>Symfony permite transformar una llamada a los <em>helpers</em> <code>link_to()</code> o <code>button_to()</code> en una petición POST. Solamente es necesario añadir la opción <code>post=true</code>, tal y como se muestra en el listado 9-11.</p>
+
+<p><strong>Listado 9-11 - Convirtiendo un enlace en una petición POST</strong></p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">&lt;?php</span> <span class="kw1">echo</span> link_to<span class="br0">&#40;</span><span class="st_h">'Ver carrito de la compra'</span><span class="sy0">,</span> <span class="st_h">'carritoCompra/anadir?id=100'</span><span class="sy0">,</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'post'</span> <span class="sy0">=&gt;</span> <span class="st_h">'true'</span><span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+ =&gt; &lt;a onclick=&quot;f = document.createElement('form'); document.body.appendChild(f);
+                f.method = 'POST'; f.action = this.href; f.submit();return false;&quot;
+       href=&quot;/carritoCompra/anadir/id/100.html&quot;&gt;Ver carrito de la compra&lt;/a&gt;</pre>
+</div>
+
+<p>La etiqueta <code>&lt;a&gt;</code> resultante conserva el atributo <code>href</code>, por lo que los navegadores sin soporte de JavaScript, como por ejemplo los robots que utilizan los buscadores, utilizan el enlace normal con la petición GET. Asi que es posible que se deba restringir la acción para que solamente responda a las peticiones de tipo POST, que se puede realizar añadiendo por ejemplo la siguiente instrucción al principio de la acción:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">forward404Unless</span><span class="br0">&#40;</span><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getRequest</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">isMethod</span><span class="br0">&#40;</span><span class="st_h">'post'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Esta opción no se debe utilizar en los enlaces que se encuentran dentro de los formularios, ya que genera su propia etiqueta <code>&lt;form&gt;</code>.</p>
+
+<p>Se trata de una buena práctica definir como peticiones POST los enlaces que realizan acciones que modifican los datos.</p>
+
+<h3 id="forzando_los_parametros_de_la_peticion_como_variables_de_tipo_get">9.3.4. Forzando los parámetros de la petición como variables de tipo GET</h3>
+
+<p>Las variables que se pasan como parámetro a <code>link_to()</code> se transforman en patrones según las reglas del sistema de enrutamiento. Si no existe en el archivo <code>routing.yml</code> ninguna regla que coincida con la URI interna, se aplica la regla por defecto que transforma <code>modulo/accion?clave=valor</code> en <code>/modulo/accion/clave/valor</code>, como se muestra en el listado 9-12.</p>
+
+<p><strong>Listado 9-12 - Regla de enrutamiento por defecto</strong></p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">&lt;?php</span> <span class="kw1">echo</span> link_to<span class="br0">&#40;</span><span class="st_h">'Mi artículo'</span><span class="sy0">,</span> <span class="st_h">'articulo/ver?titulo=Economia_en_Francia'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+=&gt; &lt;a href=&quot;/articulo/ver/titulo/Economia_en_Francia&quot;&gt;Mi artículo&lt;/a&gt;</pre>
+</div>
+
+<p>Si quieres utilizar la sintaxis de las peticiones <code>GET</code> (para pasar los parámetros de la petición en la forma <code>?clave=valor</code>) se deben indicar los parámetros en la opción <code>query_string</code>.</p>
+
+<p>Si se utilizan enlaces que tienen una parte correspondiente a las anclas se pueden producir conflictos. Por ello, el nombre del ancla se debe indicar en la opción <code>anchor</code> en vez de añadirlo directamente a la URL. Todos los <em>helpers</em> de enlaces aceptan estas opciones, tal y como se muestra en el listado 9-13.</p>
+
+<p><strong>Listado 9-13 - Forzando el uso de variables tipo GET con la opción <code>query_string</code></strong></p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">&lt;?php</span> <span class="kw1">echo</span> link_to<span class="br0">&#40;</span><span class="st_h">'Mi artículo'</span><span class="sy0">,</span> <span class="st_h">'articulo/ver'</span><span class="sy0">,</span> <span class="kw3">array</span><span class="br0">&#40;</span>
+  <span class="st_h">'query_string'</span> <span class="sy0">=&gt;</span> <span class="st_h">'titulo=Economia_en_Francia'</span><span class="sy0">,</span>
+  <span class="st_h">'anchor'</span> <span class="sy0">=&gt;</span> <span class="st_h">'seccion_dentro_de_la_pagina'</span>
+<span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+=&gt; &lt;a href=&quot;/articulo/ver?titulo=Economia_en_Francia#seccion_dentro_de_la_pagina&quot;&gt;Mi artículo&lt;/a&gt;</pre>
+</div>
+
+<p>Las URL con los parámetros en forma de variables GET se pueden interpretar por los scripts en el lado del cliente y por las variables <code>$_GET</code> y <code>$_REQUEST</code> en el lado del servidor.</p>
+
+<div class="admonition sidebar"><p><strong class="title">Helpers de contenidos estáticos</strong> El Capítulo 7 introdujo los helpers para contenidos estáticos <code>image_tag()</code>, <code>stylesheet_tag()</code> y <code>javascript_include_ tag()</code>, que permiten incluir imágenes, hojas de estilos y archivos JavaScript en la respuesta del servidor. Las rutas a los contenidos estáticos no se procesan en el sistema de enrutamiento, ya que se trata de enlaces a recursos que se guardan en el directorio web público.</p>
+
+<p>Además, no es necesario indicar la extensión para los contenidos estáticos. Symfony añade de forma automática las extensiones <code>.png</code>, <code>.js</code> o <code>.css</code> cuando se llama al <em>helper</em> de una imagen, un archivo JavaScript o una hoja de estilos. Symfony también busca de forma automática estos contenidos estáticos en los directorios <code>web/images/</code>, <code>web/js/</code> y <code>web/css/</code>. Evidentemente, es posible incluir otros tipos de archivos y archivos que se encuentren en otros directorios. Para ello, solo es necesario indicar como argumento el nombre completo del archivo o la ruta completa al archivo.</p>
+
+<p>Para indicar el tamaño de una imagen, se utiliza la opción <code>size</code>. Esta opción requiere una anchura y una altura en píxel separadas por un <code>x</code>.</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">&lt;?php</span> <span class="kw1">echo</span> image_tag<span class="br0">&#40;</span><span class="st_h">'prueba'</span><span class="sy0">,</span> <span class="st_h">'size=100x20'</span><span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+ =&gt; &lt;img href=&quot;/images/prueba.png&quot; width=&quot;100&quot; height=&quot;20&quot;/&gt;</pre>
+</div>
+
+<p>Si los contenidos estáticos se tienen que añadir en la sección <code>&lt;head&gt;</code> de la página (por ejemplo para los archivos JavaScript y las hojas de estilos), se deben utilizar los helpers <code>use_stylesheet()</code> y <code>use_javascript()</code> en las plantillas, en vez de las funciones acabadas en <code>_tag()</code> utilizadas en el layout. Estos helpers añaden los contenidos estáticos a la respuesta y los añaden antes de que se envíe la etiqueta <code>&lt;/head&gt;</code> al navegador.</p></div>
+
+<h3 id="utilizando_rutas_absolutas">9.3.5. Utilizando rutas absolutas</h3>
+
+<p>Los <em>helpers</em> de enlaces y de contenidos estáticos generan rutas relativas por defecto. Para forzar el uso de rutas absolutas, se debe asignar el valor <code>true</code> a la opción <code>absolute</code>, como muestra el listado 9-14. Esta técnica es muy útil cuando se deben incluir enlaces en mensajes de email, canales RSS o respuestas de una API.</p>
+
+<p><strong>Listado 9-14 - Utilizando URL absolutas en vez de relativas</strong></p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">&lt;?php</span> <span class="kw1">echo</span> url_for<span class="br0">&#40;</span><span class="st_h">'articulo/ver?titulo=Economia_en_Francia'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+ =&gt; '/url/con/enrutamiento/a/Economia_en_Francia'
+<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> url_for<span class="br0">&#40;</span><span class="st_h">'articulo/ver?titulo=Economia_en_Francia'</span><span class="sy0">,</span> <span class="kw4">true</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+ =&gt; 'http://www.ejemplo.com/url/con/enrutamiento/a/Economia_en_Francia'
+&nbsp;
+<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> link_to<span class="br0">&#40;</span><span class="st_h">'economía'</span><span class="sy0">,</span> <span class="st_h">'articulo/ver?titulo=Economia_en_Francia'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+ =&gt; &lt;a href=&quot;/url/con/enrutamiento/a/Economia_en_Francia&quot;&gt;economía&lt;/a&gt;
+<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> link_to<span class="br0">&#40;</span><span class="st_h">'economía'</span><span class="sy0">,</span> <span class="st_h">'articulo/ver?titulo=Economia_en_Francia'</span><span class="sy0">,</span><span class="st_h">'absolute=true'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+ =&gt; &lt;a href=&quot; http://www.ejemplo.com/url/con/enrutamiento/a/Economia_en_Francia&quot;&gt;economía&lt;/a&gt;
+&nbsp;
+// Lo mismo sucede con los helpers de contenidos estáticos
+<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> image_tag<span class="br0">&#40;</span><span class="st_h">'prueba'</span><span class="sy0">,</span> <span class="st_h">'absolute=true'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> javascript_include_tag<span class="br0">&#40;</span><span class="st_h">'miscript'</span><span class="sy0">,</span> <span class="st_h">'absolute=true'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span></pre>
+</div>
+
+<div class="admonition sidebar"><p><strong class="title">El helper de correo electrónico</strong> Hoy en día, existen robots que rastrean todas las páginas web en busca de direcciones de correo electrónico que puedan ser utilizadas en los envíos masivos de spam. Por este motivo, no se pueden incluir directamente las direcciones de correo electrónico en las páginas web sin acabar siendo una víctima del spam en poco tiempo. Afortunadamente, Symfony proporciona un <em>helper</em> llamado <code>mail_to()</code>.</p>
+
+<p>El <em>helper</em> <code>mail_to()</code> requiere 2 parámetros: la dirección de correo electrónico real y la cadena de texto que se muestra al usuario. Como opción adicional se puede utilizar el parámetro <code>encode</code>, que produce un código HTML bastante difícil de leer, que los navegadores muestran correctamente, pero que los robots de spam no son capaces de entender.</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">&lt;?php</span> <span class="kw1">echo</span> mail_to<span class="br0">&#40;</span><span class="st_h">'midireccion@midominio.com'</span><span class="sy0">,</span> <span class="st_h">'contacto'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+ =&gt; &lt;a href=&quot;mailto:midireccion@midominio.com&quot;&gt;contacto&lt;/a&gt;
+<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> mail_to<span class="br0">&#40;</span><span class="st_h">'midireccion@midominio.com'</span><span class="sy0">,</span> <span class="st_h">'contacto'</span><span class="sy0">,</span> <span class="st_h">'encode=true'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+ =&gt; &lt;a href=&quot;&amp;#109;&amp;#x61;... &amp;#111;&amp;#x6d;&quot;&gt;&amp;#x63;&amp;#x74;... e&amp;#115;&amp;#x73;&lt;/a&gt;</pre>
+</div>
+
+<p>Las direcciones de email resultantes están compuestas por caracteres transformados por un codificador aleatorio que los transforma en entidades decimales y hexadecimales aleatoriamente. Aunque este truco funciona para la mayoría de robots de spam, las técnicas que emplean este tipo de empresas evolucionan rápidamente y podrían dejar obsoleta esta técnica en poco tiempo.</p></div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="reescritura_de_url.html">&larr; Anterior <span>9.2. Reescritura de URL</span></a>
+            
+            <a class="span5 next" href="configuracion_del_sistema_de_enrutamiento.html">Siguiente &rarr; <span>9.4. Configuración del sistema de enrutamiento</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Helpers de enlaces (Symfony 1.4, la guía definitiva%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Symfony 1.4, la guía definitiva : Helpers de enlaces']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción a Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Explorando el interior de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Ejecutar aplicaciones Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Introducción a la creación de páginas</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Configurar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> El Controlador</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> La Vista</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> El modelo (Doctrine)</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_9.html">
+            <span>Capítulo 9.</span> Enlaces y sistema de enrutamiento
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="que_es_el_enrutamiento.html">
+            <span>9.1.</span> ¿Qué es el enrutamiento?
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="reescritura_de_url.html">
+            <span>9.2.</span> Reescritura de URL
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="helpers_de_enlaces.html">
+            <span>9.3.</span> Helpers de enlaces
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="configuracion_del_sistema_de_enrutamiento.html">
+            <span>9.4.</span> Configuración del sistema de enrutamiento
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="trabajando_con_rutas_en_las_acciones.html">
+            <span>9.5.</span> Trabajando con rutas en las acciones
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="resumen.html">
+            <span>9.6.</span> Resumen
+        </a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Emails</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Uso de la cache</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Pruebas unitarias y funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Herramientas para la administración de aplicaciones</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> Personalizar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> Rendimiento</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Configuración avanzada</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

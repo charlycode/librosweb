@@ -1,0 +1,209 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>2.2. Comprobar el diseño en varios navegadores (CSS avanzado)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="../capitulo_2.html" />
+        <link rel="next" href="mejora_progresiva.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="2.2. Comprobar el diseño en varios navegadores (CSS avanzado)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page css_avanzado">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">CSS avanzado</a></li>
+  <li><a href="../capitulo_2.html">Capítulo 2. Buenas prácticas</a></li>
+  <li class="current"><span>2.2.. Comprobar el diseño en varios navegadores</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="comprobar_el_diseno_en_varios_navegadores"><span>2.2.</span> Comprobar el diseño en varios navegadores</h1>
+    
+
+<h3 id="principales_navegadores">2.2.1. Principales navegadores</h3>
+
+<p>Una de las prácticas imprescindibles de los diseñadores web profesionales consiste en probar su trabajo en varios navegadores diferentes. De esta forma, el diseñador puede descubrir los errores de su trabajo y también los errores causados por los propios navegadores.</p>
+
+<p>El número de navegadores y versiones diferentes que se deben probar depende de cada diseñador. En el caso ideal, el diseñador conoce estadísticas de uso de los navegadores que utilizan los usuarios para acceder al sitio o aplicación web que está diseñando. Una buena práctica consiste en probar los diseños en aquellos navegadores y versiones que sumen un 90% de cuota de mercado.</p>
+
+<p>Cuando no se dispone de estadísticas de uso o el diseño es para un sitio web completamente nuevo, se debe probar el diseño en los navegadores más utilizados por los usuarios en general. Aunque no existe ninguna estadística completamente fiable y los resultados varían mucho de un país a otro, en general los siguientes navegadores y versiones suman más del 90% de cuota de mercado: Internet Explorer 6, Internet Explorer 7, Firefox 2, Firefox 3, Safari 3, Opera 9 y Google Chrome 1.</p>
+
+<p>En primer lugar, los diseñadores web profesionales disponen de todos los navegadores principales instalados en sus equipos de trabajo. Por lo tanto, si no lo has hecho ya, descarga e instala los siguientes navegadores:</p>
+
+<ul>
+<li><a href="http://www.mozilla-europe.org/es/firefox/">Firefox</a>: disponible para sistemas operativos Windows, Mac, Linux y en más de 45 idiomas.</li>
+<li><a href="http://www.opera.com/download/">Opera</a>: disponible para sistemas operativos Windows, Mac, Linux y en múltiples idiomas.</li>
+<li><a href="http://www.apple.com/es/safari/">Safari</a>: disponible solamente para sistemas operativos Windows y Mac.</li>
+<li><a href="http://www.google.com/chrome/?hl=es">Google Chrome</a>: disponible en más de 40 idiomas y para Windows, Mac, Linux.</li>
+</ul>
+
+<p>Respecto al navegador Internet Explorer, la mayoría de diseñadores trabajan en entornos Windows en los que ya está instalado por defecto. Si tienes la fortuna de trabajar con un sistema operativo tipo Linux, puedes instalar varias versiones de Internet Explorer mediante la aplicación <a href="http://www.tatanka.com.br/ies4linux/page/Main_Page">IEs4Linux</a>. También es posible instalar varias versiones de Internet Explorer en los sistemas operativos Mac OS X gracias a la aplicación <a href="http://www.kronenberg.org/ies4osx/">ies4osx</a>.</p>
+
+<h3 id="probar_el_diseno_en_todos_los_navegadores">2.2.2. Probar el diseño en todos los navegadores</h3>
+
+<p>En algunas ocasiones no es suficiente con probar los diseños sólo en los navegadores más utilizados, ya que el cliente quiere que su sitio o aplicación web se vea correctamente en muchos otros navegadores. Por otra parte, no es práctico que los diseñadores prueben sus trabajos en decenas de navegadores y versiones para cada sistema operativo.</p>
+
+<p>Afortunadamente, existe una aplicación web gratuita que permite solucionar este problema. La aplicación <a href="http://browsershots.org">Browsershots</a> prueba la página indicada en varias versiones diferentes de cada navegador, crea una imagen de cómo se ve la página en cada uno de ellos y nos muestra esa imagen.</p>
+
+<p>Aunque el proceso es lento y mucho menos flexible que probar la página en nuestros propios navegadores, el resultado permite al diseñador comprobar si su trabajo se ve correctamente en multitud de navegadores y sistemas operativos. En la actualidad, Browsershots comprueba el aspecto de las páginas en 4 sistemas operativos y 72 navegadores diferentes.</p>
+
+<h3 id="integrar_internet_explorer_en_firefox">2.2.3. Integrar Internet Explorer en Firefox</h3>
+
+<p>Algunos diseñadores prueban continuamente sus diseños en los navegadores Internet Explorer y Firefox y después los comprueban en el resto de navegadores para corregir los últimos errores. Si este es tu caso, puedes mejorar tu productividad gracias a una extensión de Firefox.</p>
+
+<p><a href="https://addons.mozilla.org/es-ES/firefox/addon/1419">IE Tab</a> es una extensión que se instala en el navegador Firefox y hace que Internet Explorer se integre en Firefox. Una vez instalada, esta extensión permite ver las páginas con Internet Explorer dentro de Firefox.</p>
+
+<p>Aunque resulta sorprendente, IE Tab hace que las páginas en Firefox se puedan ver mediante Internet Explorer, de forma que los diseñadores no tienen que cambiar constantemente de navegador y por tanto aumenta considerablemente su productividad.</p>
+
+<h3 id="diferentes_versiones_de_internet_explorer">2.2.4. Diferentes versiones de Internet Explorer</h3>
+
+<p>El principal problema de los diseñadores web que quieren probar su trabajo en diferentes navegadores y versiones es la imposibilidad de instalar varias versiones del navegador Internet Explorer en el mismo sistema operativo.</p>
+
+<p>Aunque la empresa Microsoft, creadora de Internet Explorer, sigue sin resolver este problema, se han publicado soluciones no oficiales para disponer de varias versiones de Internet Explorer en el mismo sistema operativo.</p>
+
+<p>La primera solución propuesta fue el <em><a href="http://browsers.evolt.org/">Browser Archive</a></em>, un repositorio de navegadores desde el que se pueden descargar versiones antiguas de decenas de navegadores diferentes, entre ellos Internet Explorer. Lamentablemente hace mucho tiempo que no se añaden nuevas versiones, por lo que la última versión disponible de Internet Explorer es la 6.</p>
+
+<p>Más recientemente se ha presentado <a href="http://www.my-debugbar.com/wiki/IETester/HomePage">IETester</a>, una aplicación descargable gratuitamente y que permite disponer de Internet Explorer 5.5, 6, 7 y 8 en un mismo sistema operativo. De esta forma, IETester es una de las herramientas imprescindibles de los diseñadores web profesionales.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="../capitulo_2.html">&larr; Anterior <span>Capítulo 2. Buenas prácticas</span></a>
+            
+            <a class="span5 next" href="mejora_progresiva.html">Siguiente &rarr; <span>2.3. Mejora progresiva</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Comprobar el diseño en varios navegadores (CSS avanzado%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'CSS avanzado : Comprobar el diseño en varios navegadores']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Técnicas imprescindibles</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_2.html">
+            <span>Capítulo 2.</span> Buenas prácticas
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="comprobar_el_diseno_en_varios_navegadores.html">
+            <span>2.2.</span> Comprobar el diseño en varios navegadores
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="mejora_progresiva.html">
+            <span>2.3.</span> Mejora progresiva
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="depuracion.html">
+            <span>2.4.</span> Depuración
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="hojas_de_estilos.html">
+            <span>2.5.</span> Hojas de estilos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="rendimiento.html">
+            <span>2.6.</span> Rendimiento
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="recursos_imprescindibles.html">
+            <span>2.7.</span> Recursos imprescindibles
+        </a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Selectores</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Propiedades avanzadas</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Frameworks</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Técnicas avanzadas</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

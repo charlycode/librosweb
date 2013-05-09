@@ -1,0 +1,331 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>11.9. Seguridad de los formularios (El tutorial Jobeet)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="regresando_al_futuro_en_una_prueba.html" />
+        <link rel="next" href="tareas_de_mantenimiento.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="11.9. Seguridad de los formularios (El tutorial Jobeet)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page jobeet_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">El tutorial Jobeet</a></li>
+  <li><a href="../capitulo_11.html">Capítulo 11. Probando los formularios</a></li>
+  <li class="current"><span>11.9.. Seguridad de los formularios</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="seguridad_de_los_formularios"><span>11.9.</span> Seguridad de los formularios</h1>
+    
+
+<h3 id="la_magia_de_la_serializacion_de_formularios">11.9.1. La magia de la serialización de formularios</h3>
+
+<p>Los formularios de Propel son muy fáciles de utilizar porque realizan automáticamente la mayor parte del trabajo. Si quieres serializar o guardar un formulario en la base de datos, lo único que tienes que hacer es realizar una llamada al método <code>$form-&gt;save()</code>.</p>
+
+<p>¿Cómo funciona este método? Básicamente, el método <code>save()</code> realiza los siguientes pasos:</p>
+
+<ul>
+<li>Iniciar una transacción (porque todos los formularios de Propel anidados se guardan de una vez)</li>
+<li>Procesar los valores enviados (ejecutando los métodos <code>update_NOMBRE_COLUMNA_Column()</code> si existen)</li>
+<li>Invocar el método <code>fromArray()</code> del objeto Propel para actualizar el valor de las columnas</li>
+<li>Guardar el objeto en la base de datos</li>
+<li>Realizar la transacción</li>
+</ul>
+
+<h3 id="caracteristicas_de_seguridad_incluidas_por_defecto">11.9.2. Características de seguridad incluidas por defecto</h3>
+
+<p>El método <code>fromArray()</code> toma un array de valores y actualiza los valores de las columnas correspondientes. ¿No es esto un posible agujero de seguridad? ¿Y si alguien trata de enviar el valor de una columna para la que no tiene autorización? ¿Podría por ejemplo modifica el valor de la columna <code>token</code>?</p>
+
+<p>Vamos a escribir una prueba para simular el envío de una oferta de trabajo con un campo llamado <code>token</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// test/functional/frontend/jobActionsTest.php</span>
+<span class="re0">$browser</span><span class="sy0">-&gt;</span>
+  <span class="me1">get</span><span class="br0">&#40;</span><span class="st_h">'/job/new'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+  <span class="me1">click</span><span class="br0">&#40;</span><span class="st_h">'Preview your job'</span><span class="sy0">,</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'job'</span> <span class="sy0">=&gt;</span> <span class="kw3">array</span><span class="br0">&#40;</span>
+    <span class="st_h">'token'</span> <span class="sy0">=&gt;</span> <span class="st_h">'fake_token'</span><span class="sy0">,</span>
+  <span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+&nbsp;
+  <span class="me1">with</span><span class="br0">&#40;</span><span class="st_h">'form'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">begin</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+    <span class="me1">hasErrors</span><span class="br0">&#40;</span><span class="nu0">7</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+    <span class="me1">hasGlobalError</span><span class="br0">&#40;</span><span class="st_h">'extra_fields'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+  <span class="kw3">end</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="sy0">;</span></pre>
+</div>
+
+<p>Si envías el formulario anterior te encontrarás con un error global de tipo <code>extra_fields</code>. El motivo es que por defecto los formularios no permiten incluir campos adicionales en los valores enviados. Este también es el motivo por el que todos los campos del formulario deben contar con un validador asociado.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> También puedes probar a enviar campos adicionales directamente desde el navegador gracias a herramientas como la extensión <em>Web Developer Toolbar</em> de Firefox.</p></div>
+
+<p>Si quieres deshabilitar esta medida de seguridad, modifica el valor de la opción <code>allow_extra_fields</code> a <code>true</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">class</span> MyForm <span class="kw2">extends</span> sfForm
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> configure<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="co1">// ...</span>
+&nbsp;
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">validatorSchema</span><span class="sy0">-&gt;</span><span class="me1">setOption</span><span class="br0">&#40;</span><span class="st_h">'allow_extra_fields'</span><span class="sy0">,</span> <span class="kw4">true</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>La prueba ahora sí que pasa satisfactoriamente, pero el valor del campo <code>token</code> se ha eliminado de los valores del campo. Así que todavía no es posible saltarse esta medida de seguridad. No obstante, si realmente quieres pasar ese valor, puedes establecer la opción <code>filter_extra_fields</code> a <code>false</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">validatorSchema</span><span class="sy0">-&gt;</span><span class="me1">setOption</span><span class="br0">&#40;</span><span class="st_h">'filter_extra_fields'</span><span class="sy0">,</span> <span class="kw4">false</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Las pruebas creadas en esta sección son sólo para mostrar algunas de las opciones disponibles en el framework. Deberías borrarlas del proyecto Jobeet porque las pruebas no deben validar opciones de Symfony.</p></div>
+
+<h3 id="proteccion_frente_a_ataques_xss_y_csrf">11.9.3. Protección frente a ataques XSS y CSRF</h3>
+
+<p>Durante el primer día creamos la aplicación <code>frontend</code> con el siguiente comando:</p>
+
+<div class="code cli">
+<pre class="cli">$ php symfony generate:app --escaping-strategy=on --csrf-secret=Unique$ecret frontend</pre>
+</div>
+
+<p>La opción <code>--escaping-strategy</code> activa la protección frente a ataques de tipo XSS. Esto significa que por defecto las plantillas aplican el mecanismo de escape a los valores de todas las variables. Si tratas por ejemplo de incluir código HTML en la descripción de una oferta de trabajo, verás que cuando Symfony muestra los detalles de la oferta, las etiquetas se ven tal y como están escritas y no se interpretan como etiquetas HTML.</p>
+
+<p>Por su parte, la opción <code>--csrf-secret</code> activa la protección frente a ataques de tipo CSRF. Si activas esta opción, todos los formularios incluyen un campo oculto llamado <code>_csrf_token</code>.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> El tipo de mecanismo de escape que se aplica y el secreto de CSRF que se utiliza se pueden modificar en cualquier momento en el archivo de configuración <code>apps/frontend/config/settings.yml</code>. Al igual que sucede con el archivo <code>databases.yml</code>, las opciones se pueden configurar para cada entorno de ejecución:</p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co4">all</span>:<span class="co4">
+  .settings</span><span class="sy2">:
+</span>    <span class="co1"># Form security secret (CSRF protection)</span><span class="co3">
+    csrf_secret</span><span class="sy2">: </span>Unique$ecret
+&nbsp;
+     <span class="co1"># Output escaping settings</span><span class="co3">
+    escaping_strategy</span><span class="sy2">: </span>on<span class="co3">
+    escaping_method</span><span class="sy2">: </span>  ESC_SPECIALCHARS</pre>
+</div>
+
+<p></p></div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="regresando_al_futuro_en_una_prueba.html">&larr; Anterior <span>11.8. Regresando al futuro en una prueba</span></a>
+            
+            <a class="span5 next" href="tareas_de_mantenimiento.html">Siguiente &rarr; <span>11.10. Tareas de mantenimiento</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Seguridad de los formularios (El tutorial Jobeet%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'El tutorial Jobeet : Seguridad de los formularios']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Comenzando el proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> El proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> El modelo de datos</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> El controlador y la vista</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> El sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Profundizando en el modelo</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Trabajando con la página de cada categoría</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Pruebas unitarias</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Pruebas funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Los formularios</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_11.html">
+            <span>Capítulo 11.</span> Probando los formularios
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="enviando_un_formulario.html">
+            <span>11.1.</span> Enviando un formulario
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_tester_de_formularios.html">
+            <span>11.2.</span> El tester de formularios
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="probando_la_redireccion.html">
+            <span>11.3.</span> Probando la redirección
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_tester_de_propel.html">
+            <span>11.4.</span> El tester de Propel
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="probando_la_existencia_de_errores.html">
+            <span>11.5.</span> Probando la existencia de errores
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="indicando_el_metodo_http_de_un_enlace.html">
+            <span>11.6.</span> Indicando el método HTTP de un enlace
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="la_seguridad_que_te_dan_las_pruebas.html">
+            <span>11.7.</span> La seguridad que te dan las pruebas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="regresando_al_futuro_en_una_prueba.html">
+            <span>11.8.</span> Regresando al futuro en una prueba
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="seguridad_de_los_formularios.html">
+            <span>11.9.</span> Seguridad de los formularios
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="tareas_de_mantenimiento.html">
+            <span>11.10.</span> Tareas de mantenimiento
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="nos_vemos_manana.html">
+            <span>11.11.</span> Nos vemos mañana
+        </a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> El generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> El usuario</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> El día de descanso</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Canales Atom</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Servicios web</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> El buscador</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>20</span> <a href="../capitulo_20.html"> Plugins</a>
+    </li>
+    <li class="level-1">
+        <span>21</span> <a href="../capitulo_21.html"> El día del diseño</a>
+    </li>
+    <li class="level-1">
+        <span>22</span> <a href="../capitulo_22.html"> La cache</a>
+    </li>
+    <li class="level-1">
+        <span>23</span> <a href="../capitulo_23.html"> Pasando a producción</a>
+    </li>
+    <li class="level-1">
+        <span>24</span> <a href="../capitulo_24.html"> Un repaso a Symfony</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

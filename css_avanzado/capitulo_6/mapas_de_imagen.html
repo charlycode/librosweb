@@ -1,0 +1,337 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>6.2. Mapas de imagen (CSS avanzado)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="../capitulo_6.html" />
+        <link rel="next" href="variables_en_las_hojas_de_estilos.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="6.2. Mapas de imagen (CSS avanzado)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page css_avanzado">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">CSS avanzado</a></li>
+  <li><a href="../capitulo_6.html">Capítulo 6. Técnicas avanzadas</a></li>
+  <li class="current"><span>6.2.. Mapas de imagen</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="mapas_de_imagen"><span>6.2.</span> Mapas de imagen</h1>
+    
+
+<p>Los mapas de imagen se llevan utilizando desde los orígenes de HTML. Combinando las etiquetas <code>&lt;map&gt;</code> y <code>&lt;area&gt;</code> junto con el atributo <code>usemap</code> de la etiqueta <code>&lt;img&gt;</code> es posible definir diferentes zonas pinchables dentro de una misma imagen.</p>
+
+<p>Hoy en día los mapas de imagen HTML han sido sustituidos por otras soluciones como Flash, que son más fáciles de utilizar y disponen de más posibilidades. No obstante, recientemente ha surgido un nuevo tipo de mapa de imagen creado sólo con CSS.</p>
+
+<p>Estos mapas de imagen CSS no suelen utilizarse para definir zonas pinchables dentro de una imagen, sino que se emplean para mostrar información adicional y comentarios sobre las diferentes zonas de una imagen. El sitio de fotografía <a href="http://www.flickr.com/">Flickr</a> utiliza los mapas de imagen para mostrar notas y comentarios de los usuarios. Otros sitios web como <a href="http://www.facebook.com/">Facebook</a> utilizan los mapas de imagen para que los usuarios etiqueten las fotografías indicando el nombre de las personas que aparecen en cada una.</p>
+
+<p>A continuación se explican los pasos necesarios para crear un mapa de imagen exclusivamente con CSS similar a los de Flickr y Facebook.</p>
+
+<p>En primer lugar, selecciona la imagen en la que se van a mostrar las notas. En este ejemplo se utiliza una imagen de la fotógrafa <a href="http://www.flickr.com/photos/visualpanic/">visualpanic</a> que se puede utilizar libremente y que está <a href="http://www.flickr.com/photos/visualpanic/233508614/">disponible en Flickr</a>:</p>
+
+<div class="figure" id="figure_6_1">
+    <img src="../../img/css_avanzado/f0601.jpg" alt="Imagen original en la que se va a mostrar el mapa de imagen" />
+
+    <p class="caption"><strong>Figura 6.1</strong> Imagen original en la que se va a mostrar el mapa de imagen</p>
+</div>
+
+
+<p>El funcionamiento del mapa de imagen terminado es el que muestra la siguiente secuencia de imágenes:</p>
+
+<div class="figure" id="figure_6_2">
+    <img src="../../img/css_avanzado/f0602.jpg" alt="Funcionamiento del mapa de imagen creado con CSS" />
+
+    <p class="caption"><strong>Figura 6.2</strong> Funcionamiento del mapa de imagen creado con CSS</p>
+</div>
+
+
+<p>La imagen por defecto no muestra ninguna zona activa. Cuando el usuario pasa el ratón por encima de cualquier parte de la imagen, se muestra el recuadro de todas las zonas activas disponibles. Además, cuando el usuario pasa el ratón por encima de una zona activa, se muestra el comentario asociado.</p>
+
+<p>El código HTML del mapa de imagen creado con CSS varía mucho en función de la solución utilizada. Aunque algunas soluciones crean varios <code>&lt;div&gt;</code> y tablas por cada nota/comentario, en este ejemplo se simplifica al máximo el código HTML y sólo se utiliza un elemento <code>&lt;div&gt;</code> y una lista <code>&lt;ul&gt;</code>:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">div</span> <span class="kw3">class</span><span class="sy0">=</span><span class="st0">&quot;mapa_imagen&quot;</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">img</span> <span class="kw3">src</span><span class="sy0">=</span><span class="st0">&quot;imagenes/mar.jpg&quot;</span> <span class="sy0">/</span>&gt;</span>
+&nbsp;
+  <span class="sc2">&lt;<span class="kw2">ul</span> <span class="kw3">class</span><span class="sy0">=</span><span class="st0">&quot;notas&quot;</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">li</span> <span class="kw3">id</span><span class="sy0">=</span><span class="st0">&quot;nota1&quot;</span>&gt;&lt;<span class="kw2">p</span>&gt;</span>Todo el mar es suyo :)<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">p</span>&gt;&lt;<span class="sy0">/</span><span class="kw2">li</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">li</span> <span class="kw3">id</span><span class="sy0">=</span><span class="st0">&quot;nota2&quot;</span>&gt;&lt;<span class="kw2">p</span>&gt;</span>¡Me encanta este color azul!<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">p</span>&gt;&lt;<span class="sy0">/</span><span class="kw2">li</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">li</span> <span class="kw3">id</span><span class="sy0">=</span><span class="st0">&quot;nota3&quot;</span>&gt;&lt;<span class="kw2">p</span>&gt;</span>Dan ganas de tirarse...<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">p</span>&gt;&lt;<span class="sy0">/</span><span class="kw2">li</span>&gt;</span>
+  <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">ul</span>&gt;</span>
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">div</span>&gt;</span></pre>
+</div>
+
+<p>El elemento <code>&lt;div class="mapa_imagen"&gt;</code> encierra todos los elementos que forman el mapa de imagen (la imagen original y las notas/comentarios). Los comentarios se incluyen mediante una lista no ordenada <code>&lt;ul&gt;</code>, en la que cada elemento <code>&lt;li&gt;</code> es un comentario.</p>
+
+<p>El elemento <code>&lt;div&gt;</code> y la lista <code>&lt;ul&gt;</code> deben utilizar el atributo <code>class</code> y no <code>id</code> porque en una misma página puede haber varios mapas de imagen. Por su parte, los elementos <code>&lt;li&gt;</code> de cada comentario deben utilizar atributos <code>id</code>, ya que cada comentario se muestra en una posición única y tiene unas dimensiones únicas de anchura y altura.</p>
+
+<p>La clave de los mapas de imagen CSS consiste en posicionar cada <code>&lt;li&gt;</code> de forma absoluta respecto de la imagen y asignarles una anchura/altura adecuadas. Posteriormente, se emplea la pseudo-clase <code>:hover</code> para mostrar/ocultar elementos cuando el usuario pasa el ratón por encima.</p>
+
+<p>1) Posicionar de forma absoluta cada nota:</p>
+
+<div class="code css">
+<pre class="css">div<span class="re1">.mapa_imagen</span> <span class="br0">&#123;</span>
+  <span class="kw1">position</span><span class="sy0">:</span> <span class="kw2">relative</span>
+<span class="br0">&#125;</span>
+ul<span class="re1">.notas</span> li <span class="br0">&#123;</span>
+  <span class="kw1">position</span><span class="sy0">:</span> <span class="kw2">absolute</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>2) Aplicar los estilos básicos a las notas (borde blanco y sin adornos de lista):</p>
+
+<div class="code css">
+<pre class="css">ul<span class="re1">.notas</span> li <span class="br0">&#123;</span>
+  <span class="kw1">border</span><span class="sy0">:</span> <span class="kw2">medium</span> <span class="kw2">solid</span> <span class="re0">#FFF</span><span class="sy0">;</span>
+  <span class="kw1">list-style</span><span class="sy0">:</span> <span class="kw2">none</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>3) Ocultar por defecto las notas y mostrarlas cuando se pasa el ratón por encima de la imagen:</p>
+
+<div class="code css">
+<pre class="css">ul<span class="re1">.notas</span> li <span class="br0">&#123;</span>
+  <span class="kw1">display</span><span class="sy0">:</span> <span class="kw2">none</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+div<span class="re1">.mapa_imagen</span><span class="re2">:hover </span>ul<span class="re1">.notas</span> li <span class="br0">&#123;</span>
+  <span class="kw1">display</span><span class="sy0">:</span> <span class="kw2">block</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>4) Aplicar los estilos básicos al texto de las notas y posicionarlo debajo de cada nota:</p>
+
+<div class="code css">
+<pre class="css">ul<span class="re1">.notas</span> li p <span class="br0">&#123;</span>
+  <span class="kw1">position</span><span class="sy0">:</span> <span class="kw2">absolute</span><span class="sy0">;</span>
+  <span class="kw1">top</span><span class="sy0">:</span> <span class="re3">100%</span><span class="sy0">;</span>
+&nbsp;
+  <span class="kw1">background</span><span class="sy0">:</span> <span class="re0">#FFF</span><span class="sy0">;</span>
+  opacity<span class="sy0">:</span> <span class="nu0">0.65</span><span class="sy0">;</span>
+&nbsp;
+  <span class="kw1">margin</span><span class="sy0">:</span> <span class="re3">10px</span> <span class="nu0">0</span> <span class="nu0">0</span> <span class="nu0">0</span><span class="sy0">;</span>
+  <span class="kw1">padding</span><span class="sy0">:</span> <span class="re3">0.3em</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>5) Ocultar por defecto el texto de las notas y mostrarlo cuando se pasa el ratón por encima de la nota:</p>
+
+<div class="code css">
+<pre class="css">ul<span class="re1">.notas</span> li p <span class="br0">&#123;</span>
+  <span class="kw1">display</span><span class="sy0">:</span> <span class="kw2">none</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+ul<span class="re1">.notas</span> li<span class="re2">:hover </span>p <span class="br0">&#123;</span>
+  <span class="kw1">display</span><span class="sy0">:</span> <span class="kw2">block</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>6) Establecer la posición y dimensiones de cada nota:</p>
+
+<div class="code css">
+<pre class="css">ul<span class="re1">.notas</span> li<span class="re0">#nota1</span> <span class="br0">&#123;</span>
+  <span class="kw1">width</span><span class="sy0">:</span> <span class="re3">140px</span><span class="sy0">;</span> <span class="kw1">height</span><span class="sy0">:</span> <span class="re3">110px</span><span class="sy0">;</span> <span class="kw1">top</span><span class="sy0">:</span> <span class="re3">130px</span><span class="sy0">;</span> <span class="kw1">left</span><span class="sy0">:</span> <span class="re3">345px</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+ul<span class="re1">.notas</span> li<span class="re0">#nota2</span> <span class="br0">&#123;</span>
+  <span class="kw1">width</span><span class="sy0">:</span> <span class="re3">30px</span><span class="sy0">;</span> <span class="kw1">height</span><span class="sy0">:</span> <span class="re3">200px</span><span class="sy0">;</span> <span class="kw1">top</span><span class="sy0">:</span> <span class="re3">10px</span><span class="sy0">;</span> <span class="kw1">left</span><span class="sy0">:</span> <span class="re3">10px</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+ul<span class="re1">.notas</span> li<span class="re0">#nota3</span> <span class="br0">&#123;</span>
+  <span class="kw1">width</span><span class="sy0">:</span> <span class="re3">60px</span><span class="sy0">;</span> <span class="kw1">height</span><span class="sy0">:</span> <span class="re3">60px</span><span class="sy0">;</span> <span class="kw1">top</span><span class="sy0">:</span> <span class="re3">200px</span><span class="sy0">;</span> <span class="kw1">left</span><span class="sy0">:</span> <span class="re3">150px</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Aplicando las reglas CSS anteriores el mapa de imagen CSS ya funciona correctamente en los navegadores Firefox y Safari. Desafortunadamente, los navegadores Internet Explorer y Opera tienen errores que impiden que el ejemplo funcione correctamente. El problema reside en que los elementos <code>&lt;li&gt;</code> tienen un fondo transparente y tanto Internet Explorer como Opera tienen problemas con la pseudo-clase <code>:hover</code> sobre estos elementos.</p>
+
+<p>La solución consiste en añadir un fondo (color o imagen) sobre los elementos <code>&lt;li&gt;</code>. Como lo único importante es añadir un fondo, independientemente de si el fondo es real o no, la siguiente regla CSS es suficiente:</p>
+
+<div class="code css">
+<pre class="css">ul<span class="re1">.notas</span> li <span class="br0">&#123;</span>
+  <span class="kw1">background</span><span class="sy0">:</span> <span class="kw2">url</span><span class="br0">&#40;</span><span class="st0">&quot;esta_imagen_no_existe&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>El código CSS completo del mapa de imagen que funciona en todos los navegadores es el siguiente:</p>
+
+<div class="code css">
+<pre class="css">div<span class="re1">.mapa_imagen</span> <span class="br0">&#123;</span>
+  <span class="kw1">position</span><span class="sy0">:</span> <span class="kw2">relative</span>
+<span class="br0">&#125;</span>
+ul<span class="re1">.notas</span> li <span class="br0">&#123;</span>
+  <span class="kw1">list-style</span><span class="sy0">:</span> <span class="kw2">none</span><span class="sy0">;</span>
+  <span class="kw1">display</span><span class="sy0">:</span> <span class="kw2">none</span><span class="sy0">;</span>
+  <span class="kw1">position</span><span class="sy0">:</span> <span class="kw2">absolute</span><span class="sy0">;</span>
+  <span class="kw1">border</span><span class="sy0">:</span> <span class="kw2">medium</span> <span class="kw2">solid</span> <span class="kw2">white</span><span class="sy0">;</span>
+  <span class="kw1">background</span><span class="sy0">:</span> <span class="kw2">url</span><span class="br0">&#40;</span><span class="st0">&quot;esta_imagen_no_existe&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+div<span class="re1">.mapa_imagen</span><span class="re2">:hover </span>ul<span class="re1">.notas</span> li <span class="br0">&#123;</span>
+  <span class="kw1">display</span><span class="sy0">:</span> <span class="kw2">block</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+ul<span class="re1">.notas</span> li p <span class="br0">&#123;</span>
+  <span class="kw1">margin</span><span class="sy0">:</span> <span class="re3">10px</span> <span class="nu0">0</span> <span class="nu0">0</span> <span class="nu0">0</span><span class="sy0">;</span>
+  <span class="kw1">padding</span><span class="sy0">:</span> <span class="re3">.3em</span><span class="sy0">;</span>
+  <span class="kw1">display</span><span class="sy0">:</span> <span class="kw2">none</span><span class="sy0">;</span>
+  <span class="kw1">background</span><span class="sy0">:</span> <span class="re0">#FFF</span><span class="sy0">;</span>
+  opacity<span class="sy0">:</span> <span class="nu0">0.65</span><span class="sy0">;</span>
+  <span class="kw1">position</span><span class="sy0">:</span> <span class="kw2">absolute</span><span class="sy0">;</span>
+  <span class="kw1">top</span><span class="sy0">:</span> <span class="re3">100%</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+ul<span class="re1">.notas</span> li<span class="re2">:hover </span>p <span class="br0">&#123;</span>
+  <span class="kw1">display</span><span class="sy0">:</span> <span class="kw2">block</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+ul<span class="re1">.notas</span> li<span class="re0">#nota1</span> <span class="br0">&#123;</span>
+  <span class="kw1">width</span><span class="sy0">:</span> <span class="re3">140px</span><span class="sy0">;</span> <span class="kw1">height</span><span class="sy0">:</span> <span class="re3">110px</span><span class="sy0">;</span> <span class="kw1">top</span><span class="sy0">:</span> <span class="re3">130px</span><span class="sy0">;</span> <span class="kw1">left</span><span class="sy0">:</span> <span class="re3">345px</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+ul<span class="re1">.notas</span> li<span class="re0">#nota2</span> <span class="br0">&#123;</span>
+  <span class="kw1">width</span><span class="sy0">:</span> <span class="re3">30px</span><span class="sy0">;</span> <span class="kw1">height</span><span class="sy0">:</span> <span class="re3">200px</span><span class="sy0">;</span> <span class="kw1">top</span><span class="sy0">:</span> <span class="re3">10px</span><span class="sy0">;</span> <span class="kw1">left</span><span class="sy0">:</span> <span class="re3">10px</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+ul<span class="re1">.notas</span> li<span class="re0">#nota3</span> <span class="br0">&#123;</span>
+  <span class="kw1">width</span><span class="sy0">:</span> <span class="re3">60px</span><span class="sy0">;</span> <span class="kw1">height</span><span class="sy0">:</span> <span class="re3">60px</span><span class="sy0">;</span> <span class="kw1">top</span><span class="sy0">:</span> <span class="re3">200px</span><span class="sy0">;</span> <span class="kw1">left</span><span class="sy0">:</span> <span class="re3">150px</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>El resultado final es el que muestra la siguiente imagen:</p>
+
+<div class="figure" id="figure_6_3">
+    <img src="../../img/css_avanzado/f0603.jpg" alt="Mapa de imagen con todas sus zonas activadas" />
+
+    <p class="caption"><strong>Figura 6.3</strong> Mapa de imagen con todas sus zonas activadas</p>
+</div>
+
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="../capitulo_6.html">&larr; Anterior <span>Capítulo 6. Técnicas avanzadas</span></a>
+            
+            <a class="span5 next" href="variables_en_las_hojas_de_estilos.html">Siguiente &rarr; <span>6.3. Variables en las hojas de estilos</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Mapas de imagen (CSS avanzado%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'CSS avanzado : Mapas de imagen']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Técnicas imprescindibles</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Buenas prácticas</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Selectores</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Propiedades avanzadas</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Frameworks</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_6.html">
+            <span>Capítulo 6.</span> Técnicas avanzadas
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="mapas_de_imagen.html">
+            <span>6.2.</span> Mapas de imagen
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="variables_en_las_hojas_de_estilos.html">
+            <span>6.3.</span> Variables en las hojas de estilos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="estilos_alternativos.html">
+            <span>6.4.</span> Estilos alternativos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="comentarios_condicionales_filtros_y_hacks.html">
+            <span>6.5.</span> Comentarios condicionales, filtros y hacks
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="selector_de_navegador.html">
+            <span>6.6.</span> Selector de navegador
+        </a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

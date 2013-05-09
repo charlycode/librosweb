@@ -1,0 +1,253 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>2.4. Elementos HTML (Introducción a XHTML)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="etiquetas_y_atributos.html" />
+        <link rel="next" href="sintaxis_de_las_etiquetas_xhtml.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="2.4. Elementos HTML (Introducción a XHTML)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page xhtml">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Introducción a XHTML</a></li>
+  <li><a href="../capitulo_2.html">Capítulo 2. Características básicas</a></li>
+  <li class="current"><span>2.4. Elementos HTML</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="elementos_html"><span>2.4.</span> Elementos HTML</h1>
+    
+
+<p>Además de etiquetas y atributos, HTML define el término <strong>elemento</strong> para referirse a las partes que componen los documentos HTML.</p>
+
+<p>Aunque en ocasiones se habla de forma indistinta de "elementos" y "etiquetas", en realidad un elemento HTML es mucho más que una etiqueta, ya que está formado por:</p>
+
+<ul>
+<li>Una etiqueta de apertura.</li>
+<li>Cero o más atributos.</li>
+<li>Texto encerrado por la etiqueta.</li>
+<li>Una etiqueta de cierre.</li>
+</ul>
+
+<p>El texto encerrado por la etiqueta es opcional, ya que algunas etiquetas de HTML no pueden encerrar ningún texto. El siguiente esquema muestra un elemento HTML, formado por una etiqueta <code>&lt;p&gt;</code>, atributos y contenidos de texto:</p>
+
+<div class="figure" id="figure_2_7">
+    <img src="../../img/xhtml/esquema_elementos_html.gif" alt="Esquema de las partes que componen un elemento HTML" />
+
+    <p class="caption"><strong>Figura 2.7</strong> Esquema de las partes que componen un elemento HTML</p>
+</div>
+
+
+<p>La estructura mostrada en el esquema anterior es un elemento HTML ya que comienza con una etiqueta de apertura (<code>&lt;p&gt;</code>), contiene cero o más atributos (<code>class="normal"</code>), dispone de un contenido de texto (<code>Esto es un párrafo</code>) y finaliza con una etiqueta de cierre (<code>&lt;/p&gt;</code>).</p>
+
+<p>Por tanto, si una página web tiene dos párrafos de texto, la página contiene dos elementos y cuatro etiquetas (dos etiquetas <code>&lt;p&gt;</code> de apertura y dos etiquetas <code>&lt;/p&gt;</code> de cierre). De todas formas, aunque estrictamente no son lo mismo, es habitual intercambiar las palabras "elemento" y "etiqueta".</p>
+
+<p>Por otra parte, el lenguaje HTML clasifica a todos los elementos en dos grupos: elementos <strong>en línea</strong> (<em>inline elements</em> en inglés) y elementos de <strong>bloque</strong> (<em>block elements</em> en inglés).</p>
+
+<p>La principal diferencia entre los dos tipos de elementos es la forma en la que ocupan el espacio disponible en la página. Los elementos de bloque siempre empiezan en una nueva línea y ocupan todo el espacio disponible hasta el final de la línea, aunque sus contenidos no lleguen hasta el final de la línea. Por su parte, los elementos en línea sólo ocupan el espacio necesario para mostrar sus contenidos.</p>
+
+<p>Si se considera el siguiente ejemplo:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">html</span>&gt;</span>
+&nbsp;
+<span class="sc2">&lt;<span class="kw2">head</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">title</span>&gt;</span>Ejemplo de elementos en línea y elementos de bloque<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">title</span>&gt;</span>
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">head</span>&gt;</span>
+&nbsp;
+<span class="sc2">&lt;<span class="kw2">body</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">p</span>&gt;</span>Los párrafos son elementos de bloque.<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">p</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">a</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;http://www.google.com&quot;</span>&gt;</span>Los enlaces son elementos en línea<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">a</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">p</span>&gt;</span>Dentro de un párrafo, <span class="sc2">&lt;<span class="kw2">a</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;http://www.google.com&quot;</span>&gt;</span>los enlaces<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">a</span>&gt;</span>
+siguen siendo elementos en línea.<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">p</span>&gt;</span>
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">body</span>&gt;</span>
+&nbsp;
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">html</span>&gt;</span></pre>
+</div>
+
+<p>La siguiente imagen muestra cómo visualizan los navegadores el código HTML anterior (mediante CSS se han añadido bordes que muestran el espacio ocupado por cada elemento):</p>
+
+<div class="figure" id="figure_2_8">
+    <img src="../../img/xhtml/ejemplo_elementos_linea_bloque.gif" alt="Diferencias entre elementos en línea y elementos de bloque" />
+
+    <p class="caption"><strong>Figura 2.8</strong> Diferencias entre elementos en línea y elementos de bloque</p>
+</div>
+
+
+<p>El primer párrafo contiene un texto corto que sólo ocupa la mitad de la anchura de la ventana del navegador. No obstante, el espacio reservado por el navegador para el primer párrafo llega hasta el final de esa línea, por lo que resulta evidente que los elementos <code>&lt;p&gt;</code> son elementos de bloque.</p>
+
+<p>Por otra parte, el primer enlace del ejemplo anterior también tiene un texto corto que ocupa solamente la mitad de la anchura de la ventana del navegador. En este caso, el navegador sólo reserva para el enlace el sitio necesario para mostrar sus contenidos. Si se añade otro enlace en esa misma línea, se mostraría a continuación del primer enlace. Por tanto, los elementos <code>&lt;a&gt;</code> son elementos en línea.</p>
+
+<p>Por último, el segundo párrafo sigue ocupando todo el espacio disponible hasta el final de cada línea (por ser un elemento de bloque) y el enlace que se encuentra dentro del párrafo sólo ocupa el sitio necesario para mostrar sus contenidos (por ser un elemento en línea).</p>
+
+<p>La mayoría de elementos de bloque pueden contener en su interior elementos en línea y otros elementos de bloque. Los elementos en línea sólo pueden contener texto u otros elementos en línea. En otras palabras, un elemento de bloque no puede aparecer dentro de un elemento en línea. En cambio, un elemento en línea puede aparecer dentro de un elemento de bloque y dentro de otro elemento en línea.</p>
+
+<p>Los elementos en línea definidos por HTML son: <code>a</code>, <code>abbr</code>, <code>acronym</code>, <code>b</code>, <code>basefont</code>, <code>bdo</code>, <code>big</code>, <code>br</code>, <code>cite</code>, <code>code</code>, <code>dfn</code>, <code>em</code>, <code>font</code>, <code>i</code>, <code>img</code>, <code>input</code>, <code>kbd</code>, <code>label</code>, <code>q</code>, <code>s</code>, <code>samp</code>, <code>select</code>, <code>small</code>, <code>span</code>, <code>strike</code>, <code>strong</code>, <code>sub</code>, <code>sup</code>, <code>textarea</code>, <code>tt</code>, <code>u</code>, <code>var</code>.</p>
+
+<p>Los elementos de bloque definidos por HTML son: <code>address</code>, <code>blockquote</code>, <code>center</code>, <code>dir</code>, <code>div</code>, <code>dl</code>, <code>fieldset</code>, <code>form</code>, <code>h1</code>, <code>h2</code>, <code>h3</code>, <code>h4</code>, <code>h5</code>, <code>h6</code>, <code>hr</code>, <code>isindex</code>, <code>menu</code>, <code>noframes</code>, <code>nos-cript</code>, <code>ol</code>, <code>p</code>, <code>pre</code>, <code>table</code>, <code>ul</code>.</p>
+
+<p>Los siguientes elementos también se considera que son de bloque: <code>dd</code>, <code>dt</code>, <code>frame-set</code>, <code>li</code>, <code>tbody</code>, <code>td</code>, <code>tfoot</code>, <code>th</code>, <code>thead</code>, <code>tr</code>.</p>
+
+<p>Los siguientes elementos pueden ser en línea y de bloque según las circunstancias: <code>button</code>, <code>del</code>, <code>iframe</code>, <code>ins</code>, <code>map</code>, <code>object</code>, <code>script</code>.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="etiquetas_y_atributos.html">&larr; Anterior <span>2.3. Etiquetas y atributos</span></a>
+            
+            <a class="span5 next" href="sintaxis_de_las_etiquetas_xhtml.html">Siguiente &rarr; <span>2.5. Sintaxis de las etiquetas XHTML</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Elementos HTML (Introducción a XHTML%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a XHTML : Elementos HTML']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_2.html">
+            <span>Capítulo 2.</span> Características básicas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_primer_documento_html.html">
+            <span>2.2.</span> El primer documento HTML
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="etiquetas_y_atributos.html">
+            <span>2.3.</span> Etiquetas y atributos
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="elementos_html.html">
+            <span>2.4.</span> Elementos HTML
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="sintaxis_de_las_etiquetas_xhtml.html">
+            <span>2.5.</span> Sintaxis de las etiquetas XHTML
+        </a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Texto</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Enlaces</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Listas</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Imágenes y objetos</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Tablas</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Estructura y layout</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Metainformación</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Otras etiquetas importantes</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Accesibilidad</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Validación</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Fragmentos de código</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

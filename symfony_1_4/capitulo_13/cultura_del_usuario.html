@@ -1,0 +1,270 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>13.1. Cultura del usuario (Symfony 1.4, la guía definitiva)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="../capitulo_13.html" />
+        <link rel="next" href="estandares_y_formatos.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="13.1. Cultura del usuario (Symfony 1.4, la guía definitiva)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page symfony_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Symfony 1.4, la guía definitiva</a></li>
+  <li><a href="../capitulo_13.html">Capítulo 13. Internacionalización y localización</a></li>
+  <li class="current"><span>13.1.. Cultura del usuario</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="cultura_del_usuario"><span>13.1.</span> Cultura del usuario</h1>
+    
+
+<p>Todas las opciones relacionadas con i18n en Symfony se basan en un parámetro de la sesión de usuario llamado <code>culture</code> (cultura). La cultura está formada por la combinación del país e idioma del usuario y determina la forma en la que se muestra el texto y la información que depende de la cultura. Como su valor se serializa en la sesión de usuario, la cultura se almacena de forma persistente entre páginas diferentes.</p>
+
+<h3 id="indicando_la_cultura_por_defecto">13.1.1. Indicando la cultura por defecto</h3>
+
+<p>Por defecto, la cultura de los nuevos usuarios toma el valor de la opción <code>default_culture</code>. Se puede modificar su valor en el archivo de configuración <code>settings.yml</code>, como se muestra en el listado 13-1.</p>
+
+<p><strong>Listado 13-1 - Indicando la cultura por defecto, en <code>frontend/config/settings.yml</code></strong></p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co4">all</span>:<span class="co4">
+  .settings</span>:<span class="co3">
+    default_culture</span><span class="sy2">: </span>    fr_FR</pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Durante el desarrollo de la aplicación, es posible que los cambios en el archivo <code>settings.yml</code> no se reflejen en la aplicación accedida mediante el navegador. La razón es que la sesión guarda la información de la cultura de las páginas anteriores. Para acceder a la aplicación con el nuevo valor de la cultura, se deben borrar las cookies del dominio de la aplicación o se debe reiniciar el navegador.</p></div>
+
+<p>La cultura debe indicar el país y el idioma ya que, por ejemplo, se puede disponer de una traducción al francés diferente para los usuarios de Francia, Bélgica y Canadá, como también se pueden ofrecer traducciones diferentes al español para los usuarios de España y México. El idioma se codifica mediante dos caracteres en minúscula siguiendo el estándar ISO 639-1 (<code>en</code> para inglés, por ejemplo). El país se codifica en forma de dos caracteres en mayúscula siguiendo el estándar ISO 3166-1 (<code>GB</code> para Reino Unido, por ejemplo).</p>
+
+<h3 id="modificando_la_cultura_de_un_usuario">13.1.2. Modificando la cultura de un usuario</h3>
+
+<p>La cultura de un usuario se puede modificar mientras accede a la aplicación (por ejemplo cuando un usuario decide cambiar la versión en inglés por la versión en francés) o cuando el usuario accede a la aplicación y se utiliza el idioma que ha seleccionado en sus preferencias. Por este motivo la clase <code>sfUser</code> ofrece métodos <em>getter</em> y <em>setter</em> para la cultura del usuario. El listado 13-2 muestra cómo utilizar estos métodos en la acción.</p>
+
+<p><strong>Listado 13-2 - Modificando y obteniendo la cultura en una acción</strong></p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// Modificando la cultura</span>
+<span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getUser</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">setCulture</span><span class="br0">&#40;</span><span class="st_h">'en_US'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="co1">// Obteniendo la cultura</span>
+<span class="re0">$cultura</span> <span class="sy0">=</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getUser</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">getCulture</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+ <span class="sy0">=&gt;</span> en_US</pre>
+</div>
+
+<div class="admonition sidebar"><p><strong class="title">La cultura en la URL</strong> Cuando se utilizan las opciones de localización e internacionalización de Symfony, parece que existen varias versiones diferentes de una página para una misma URL, ya que la versión que se muestra depende de la sesión de usuario. Este comportamiento hace difícil guardar las páginas en la cache o que las páginas se indexen correctamente en los buscadores.</p>
+
+<p>Una solución es hacer que la cultura se muestre en todas las URL, de forma que las páginas traducidas se muestran como si fueran URL diferentes. Para conseguirlo, se añade la opción <code>:sf_culture</code> en todas las reglas del archivo <code>routing.yml</code> de la aplicación:</p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co4">pagina</span>:<span class="co3">
+  url</span><span class="sy2">: </span>/:sf_culture/:pagina<span class="co3">
+  param</span><span class="sy2">: </span><span class="sy1">...</span><span class="co3">
+  requirements</span><span class="sy2">: </span><span class="br0">&#123;</span> sf_culture<span class="sy2">: </span><span class="br0">&#40;</span>?:fr|en|de<span class="br0">&#41;</span> <span class="br0">&#125;</span>
+<span class="co4">
+articulo</span>:<span class="co3">
+  url</span><span class="sy2">: </span>/:sf_culture/:ano/:mes/:dia/:slug<span class="co3">
+  param</span><span class="sy2">: </span><span class="sy1">...</span><span class="co3">
+  requirements</span><span class="sy2">: </span><span class="br0">&#123;</span> sf_culture<span class="sy2">: </span><span class="br0">&#40;</span>?:fr|en|de<span class="br0">&#41;</span> <span class="br0">&#125;</span></pre>
+</div>
+
+<p>Para no tener que añadir manualmente el parámetro de petición <code>sf_culture</code> en todas las llamadas a <code>link_to()</code>, Symfony añade automáticamente la cultura del usuario a los parámetros de enrutamiento por defecto. También funciona de forma inversa, ya que Symfony modifica automáticamente la cultura del usuario si encuentra el parámetro <code>sf_culture</code> en la URL.</p></div>
+
+<h3 id="determinando_la_cultura_de_forma_automatica">13.1.3. Determinando la cultura de forma automática</h3>
+
+<p>En muchas aplicaciones, la cultura del usuario se define durante la primera petición, en función de las preferencias de su navegador. Los usuarios pueden definir en el navegador una serie de idiomas que están dispuestos a aceptar. Esta información se envía al servidor en cada petición, mediante la cabecera HTTP <code>Accept-Language</code>. En Symfony esta cabecera se puede acceder a través del objeto <code>sfWebRequest</code>. Si por ejemplo se quiere obtener la lista de idiomas preferidos del usuario en una acción, se utiliza la siguiente instrucción:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$idiomas</span> <span class="sy0">=</span> <span class="re0">$peticion</span><span class="sy0">-&gt;</span><span class="me1">getLanguages</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Aunque la cabecera HTTP es una cadena de texto, Symfony la procesa y la convierte automáticamente en un array. Por tanto, el idioma preferido del usuario se puede obtener en el ejemplo anterior mediante <code>$idiomas[0]</code>.</p>
+
+<p>En la página principal de un sitio web y en un filtro utilizado en varias páginas, puede ser útil establecer automáticamente la cultura del usuario al idioma preferido del navegador del usuario. Sin embargo, como tu sitio web sólo estará disponible en un número limitado de idiomas, se mejor utilizar el método <code>getPreferredCulture()</code>. Este método compara los idiomas preferidos por el usuario y los idiomas disponibles en la aplicación, devolviendo el mejor valor posible:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// El sitio web está disponible sólo en inglés y francés</span>
+<span class="re0">$idioma</span> <span class="sy0">=</span> <span class="re0">$peticion</span><span class="sy0">-&gt;</span><span class="me1">getPreferredCulture</span><span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'en'</span><span class="sy0">,</span> <span class="st_h">'fr'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Si no se producen coincidencias entre los idiomas preferidos por el usuario y los idiomas disponibles en la aplicación, el método anterior simplemente devuelve el primer idioma disponible (en el ejemplo anterior, el método devolvería el valor <code>en</code>).</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> La cabecera HTTP <code>Accept-Language</code> no es una información muy fiable, ya que casi ningún usuario sabe cómo modificar su valor en el navegador. En la mayoría de los casos, el idioma preferido del navegador es el idioma de la propia interfaz del navegador y los usuarios no están disponibles en todos los idiomas. Si se decide establecer de forma automática el valor de la cultura según el idioma preferido del navegador, es una buena idea proporcionar una forma sencilla de seleccionar otro idioma.</p></div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="../capitulo_13.html">&larr; Anterior <span>Capítulo 13. Internacionalización y localización</span></a>
+            
+            <a class="span5 next" href="estandares_y_formatos.html">Siguiente &rarr; <span>13.2. Estándares y formatos</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Cultura del usuario (Symfony 1.4, la guía definitiva%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Symfony 1.4, la guía definitiva : Cultura del usuario']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción a Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Explorando el interior de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Ejecutar aplicaciones Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Introducción a la creación de páginas</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Configurar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> El Controlador</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> La Vista</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> El modelo (Doctrine)</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Enlaces y sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Emails</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Uso de la cache</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_13.html">
+            <span>Capítulo 13.</span> Internacionalización y localización
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="cultura_del_usuario.html">
+            <span>13.1.</span> Cultura del usuario
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="estandares_y_formatos.html">
+            <span>13.2.</span> Estándares y formatos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="informacion_textual_en_la_base_de_datos.html">
+            <span>13.3.</span> Información textual en la base de datos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="traduccion_de_la_interfaz.html">
+            <span>13.4.</span> Traducción de la interfaz
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="resumen.html">
+            <span>13.5.</span> Resumen
+        </a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Pruebas unitarias y funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Herramientas para la administración de aplicaciones</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> Personalizar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> Rendimiento</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Configuración avanzada</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

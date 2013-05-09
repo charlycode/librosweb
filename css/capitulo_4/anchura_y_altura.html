@@ -1,0 +1,289 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>4.1. Anchura y altura (Introducción a CSS)</title>
+        <link href="../main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="../capitulo_4.html" />
+        <link rel="next" href="margen_y_relleno.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="4.1. Anchura y altura (Introducción a CSS)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page css">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Introducción a CSS</a></li>
+  <li><a href="../capitulo_4.html">Capítulo 4. Modelo de cajas</a></li>
+  <li class="current"><span>4.1.. Anchura y altura</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="anchura_y_altura"><span>4.1.</span> Anchura y altura</h1>
+    
+
+<h3 id="anchura">4.3.1. Anchura</h3>
+
+<p>La propiedad CSS que controla la anchura de la caja de los elementos se denomina <code>width</code>.</p>
+
+<div class="table" id="table_4_1">
+
+    <table class="table property css" summary="Definición de la propiedad width de CSS">
+    <thead>
+        <tr>
+            <th scope="row">Propiedad</th>
+            <td><strong class="title"><strong>width</strong></strong></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">Valores</th>
+            <td><a href="../../referencia/css/unidades_de_medida.html">unidad de medida</a> | <a href="../../referencia/css/porcentajes.html">porcentaje</a> | auto | <a href="../../referencia/css/el_valor_inherit.html">inherit</a></td>
+        </tr>
+        <tr>
+            <th scope="row">Se aplica a</th>
+            <td>Todos los elementos, salvo los elementos en línea que no sean imágenes, las filas de tabla y los grupos de filas de tabla</td>
+        </tr>
+        <tr>
+            <th scope="row">Valor inicial</th>
+            <td>auto</td>
+        </tr>
+        <tr>
+            <th scope="row">Descripción</th>
+            <td>Establece la anchura de un elemento</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+
+<p>La propiedad <code>width</code> no admite valores negativos y los valores en porcentaje se calculan a partir de la anchura de su elemento padre. El valor <code>inherit</code> indica que la anchura del elemento se hereda de su elemento padre. El valor <code>auto</code>, que es el que se utiliza si no se establece de forma explícita un valor a esta propiedad, indica que el navegador debe calcular automáticamente la anchura del elemento, teniendo en cuenta sus contenidos y el sitio disponible en la página.</p>
+
+<p>El siguiente ejemplo establece el valor de la anchura del elemento <code>&lt;div&gt;</code> lateral:</p>
+
+<div class="code css">
+<pre class="css"><span class="re0">#lateral</span> <span class="br0">&#123;</span> <span class="kw1">width</span><span class="sy0">:</span> <span class="re3">200px</span><span class="sy0">;</span> <span class="br0">&#125;</span>
+&nbsp;
+&lt;div id<span class="sy0">=</span><span class="st0">&quot;lateral&quot;</span><span class="sy0">&gt;</span>
+  ...
+&lt;/div<span class="sy0">&gt;</span></pre>
+</div>
+
+<p>CSS define otras dos propiedades relacionadas con la anchura de los elementos: <code>min-width</code> y <code>max-width</code>, que se verán más adelante.</p>
+
+<h3 id="altura">4.1.2. Altura</h3>
+
+<p>La propiedad CSS que controla la altura de los elementos se denomina <code>height</code>.</p>
+
+<div class="table" id="table_4_2">
+
+    <table class="table property css" summary="Definición de la propiedad height de CSS">
+    <thead>
+        <tr>
+            <th scope="row">Propiedad</th>
+            <td><strong class="title"><strong>height</strong></strong></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">Valores</th>
+            <td><a href="../../referencia/css/unidades_de_medida.html">unidad de medida</a> | <a href="../../referencia/css/porcentajes.html">porcentaje</a> | auto | <a href="../../referencia/css/el_valor_inherit.html">inherit</a></td>
+        </tr>
+        <tr>
+            <th scope="row">Se aplica a</th>
+            <td>Todos los elementos, salvo los elementos en línea que no sean imágenes, las columnas de tabla y los grupos de columnas de tabla</td>
+        </tr>
+        <tr>
+            <th scope="row">Valor inicial</th>
+            <td>auto</td>
+        </tr>
+        <tr>
+            <th scope="row">Descripción</th>
+            <td>Establece la altura de un elemento</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+
+<p>Al igual que sucede con <code>width</code>, la propiedad <code>height</code> no admite valores negativos. Si se indica un porcentaje, se toma como referencia la altura del elemento padre. Si el elemento padre no tiene una altura definida explícitamente, se asigna el valor <code>auto</code> a la altura.</p>
+
+<p>El valor <code>inherit</code> indica que la altura del elemento se hereda de su elemento padre. El valor <code>auto</code>, que es el que se utiliza si no se establece de forma explícita un valor a esta propiedad, indica que el navegador debe calcular automáticamente la altura del elemento, teniendo en cuenta sus contenidos y el sitio disponible en la página.</p>
+
+<p>El siguiente ejemplo establece el valor de la altura del elemento <code>&lt;div&gt;</code> de cabecera:</p>
+
+<div class="code css">
+<pre class="css"><span class="re0">#cabecera</span> <span class="br0">&#123;</span> <span class="kw1">height</span><span class="sy0">:</span> <span class="re3">60px</span><span class="sy0">;</span> <span class="br0">&#125;</span>
+&nbsp;
+&lt;div id<span class="sy0">=</span><span class="st0">&quot;cabecera&quot;</span><span class="sy0">&gt;</span>
+  ...
+&lt;/div<span class="sy0">&gt;</span></pre>
+</div>
+
+<p>CSS define otras dos propiedades relacionadas con la altura de los elementos: <code>min-height</code> y <code>max-height</code>, que se verán más adelante.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="../capitulo_4.html">&larr; Anterior <span>Capítulo 4. Modelo de cajas</span></a>
+            
+            <a class="span5 next" href="margen_y_relleno.html">Siguiente &rarr; <span>4.2. Margen y relleno</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Anchura y altura (Introducción a CSS%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a CSS : Anchura y altura']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Selectores</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Unidades de medida y colores</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_4.html">
+            <span>Capítulo 4.</span> Modelo de cajas
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="anchura_y_altura.html">
+            <span>4.1.</span> Anchura y altura
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="margen_y_relleno.html">
+            <span>4.2.</span> Margen y relleno
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="bordes.html">
+            <span>4.3.</span> Bordes
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="margen_relleno_bordes_y_modelo_de_cajas.html">
+            <span>4.4.</span> Margen, relleno, bordes y modelo de cajas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="fondos.html">
+            <span>4.5.</span> Fondos
+        </a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Posicionamiento y visualización</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Texto</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Enlaces</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Imágenes</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Listas</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Tablas</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Layout</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Otros</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Recursos útiles</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Ejercicios</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

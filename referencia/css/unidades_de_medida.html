@@ -1,0 +1,195 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>Unidades de medida (Referencia de CSS 2.1)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Unidades de medida (Referencia de CSS 2.1)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page referencia_css">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="index.html">Referencia de CSS 2.1</a></li>
+  <li class="current"><span>Unidades de medida</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="unidades_de_medida">Unidades de medida</h1>
+    <p>Las unidades de medida son una de las partes más importantes de CSS, ya que se utilizan para definir la altura, anchura y márgenes de todos los elementos y para establecer el tamaño de letra del texto.</p>
+
+<p>CSS divide todas las unidades de medida en dos grupos: absolutas y relativas. Las unidades relativas definen su valor en relación con otra medida, por lo que para obtener su valor real, se debe realizar alguna operación con el valor indicado. Las unidades absolutas establecen de forma completa el valor de una medida, por lo que su valor real es directamente el valor indicado.</p>
+
+<p>Las medidas, absolutas y relativas, se indican como un valor numérico entero o decimal seguido de una unidad de medida (sin ningún espacio en blanco entre el número y la unidad de medida).</p>
+
+<p>Si el valor es <code>0</code>, la unidad de medida es opcional. Si el valor es distinto a <code>0</code> y no se indica ninguna unidad, la medida se ignora completamente, lo que suele ser una fuente habitual de errores para los diseñadores que empiezan con CSS. Algunas propiedades permiten indicar medidas negativas, aunque habitualmente sus valores son positivos.</p>
+
+<h3 id="unidades_relativas">Unidades relativas</h3>
+
+<p>La unidades relativas son más flexibles que las unidades absolutas porque se adaptan más fácilmente a los diferentes <a href="medios.html">medios</a>. A continuación se muestra la lista de unidades de medida relativas y la referencia que toma cada una para determinar su valor real:</p>
+
+<ul>
+<li><code>em</code>, relativa respecto del tamaño de letra empleado. Aunque no es una definición exacta, el valor de <code>1 em</code> se puede aproximar por la anchura de la letra <code>M</code>  <em>"eme mayúscula"</em>) del tipo de letra que se esté utilizando</li>
+<li><code>ex</code>, relativa respecto de la altura de la letra <code>x</code>  <em>"equis minúscula"</em>) del tipo de letra que se esté utilizando</li>
+<li><code>px</code>, (píxel) relativa respecto de la pantalla del usuario</li>
+</ul>
+
+<p>Cuando se establece el tamaño de la letra, la unidad relativa más utilizada es <code>em</code>. En el siguiente ejemplo, se define el valor del tamaño de la letra de varios elementos utilizando la unidad <code>em</code>:</p>
+
+<div class="example">
+<div class="box" style="font-size: 1em; width: 90%">[1em] Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</div>
+<div class="box" style="font-size: 1.5em; width: 90%">[1.5em] Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</div>
+<div class="box" style="font-size: 2em; width: 90%">[2em] Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</div>
+</div>
+
+<p>Cuando se utilizan unidades relativas, es imprescindible conocer la referencia que se toma para obtener el valor definitivo. En otras palabras, un tamaño de letra <code>1em</code> o <code>3em</code> no significan nada a menos que se conozca su valor de referencia.</p>
+
+<p>Si se define el tamaño de letra de un elemento mediante la unidad <code>em</code>, su referencia es el tamaño de letra del primer elemento contenedor que tenga establecido un tamaño de letra. Si el elemento no se encuentra dentro de ningún otro elemento, entonces la referencia es el tamaño de letra del <code>&lt;body&gt;</code>.</p>
+
+<p>En el siguiente ejemplo, los elementos interiores tienen el mismo tamaño de letra (<code>1em</code>). Sin embargo, como sus elementos contenedores tienen tamaños muy diferentes (<code>0.9em</code> y <code>1.5em</code>) el tamaño de letra resultante es muy diferente:</p>
+
+<div class="example">
+<div class="box" style="font-size: .9em; width: 90%">[0.9em]
+  <div class="innerbox" style="font-size: 1em; width: 80%">[1em] Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</div>
+</div>
+<div class="box" style="font-size: 1.5em; width: 90%">[1.5em]
+  <div class="innerbox" style="font-size: 1em; width: 80%">[1em] Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</div>
+</div>
+</div>
+
+<p>Por otra parte, si se utiliza la unidad <code>em</code> para definir la anchura de un elemento, la referencia es el tamaño de letra del propio elemento. En el siguiente ejemplo, los dos elementos tienen la misma anchura (<code>20em</code>), pero como su tamaño de letra es muy diferente (<code>1em</code> y <code>2em</code>) la anchura resultante también es muy diferente:</p>
+
+<div class="example">
+<div class="box" style="width: 20em; font-size: 1em">
+div { width: 20em; font-size: 1em; }
+</div>
+<div class="box" style="width: 20em; font-size: 2em">
+div { width: 20em; font-size: 2em; }
+</div>
+</div>
+
+<p>La unidad de medida <code>ex</code> se utiliza mucho menos que la unidad <code>em</code>, aunque el funcionamiento de ambas es idéntico. Por su parte, la unidad de medida píxel (<code>px</code>) sí que se utiliza de forma habitual y toma como referencia el tamaño de la pantalla del usuario.</p>
+
+<div class="example">
+<div class="box" style="width: 250px">
+div { width: 250px; }
+</div>
+<div class="box" style="width: 450px">
+div { width: 450px; }
+</div>
+</div>
+
+<p>Aunque los píxel normalmente sólo se utilizan para definir la anchura y altura de los elementos, también se pueden utilizar para establecer el tamaño de la letra, aunque en este caso se recomienda utilizar la unidad <code>em</code>:</p>
+
+<div class="example">
+<div class="box" style="font-size: 10px; width: 90%">[10px] Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</div>
+<div class="box" style="font-size: 18px; width: 90%">[18px] Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</div>
+<div class="box" style="font-size: 25px; width: 90%">[25px] Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</div>
+</div>
+
+<h3 id="unidades_absolutas">Unidades absolutas</h3>
+
+<p>Las unidades de medida absolutas son completas, ya que sus valores reales no se calculan a partir de otro valor de referencia, sino que son directamente los valores indicados. A continuación se muestra la lista de unidades absolutas definidas por CSS y su significado:</p>
+
+<ul>
+<li><code>in</code>, del inglés <em>"inches"</em>, pulgadas (1 pulgada son <code>2.54</code> centímetros)</li>
+<li><code>cm</code>, centímetros</li>
+<li><code>mm</code>, milímetros</li>
+<li><code>pt</code>, puntos (1 punto equivale a <code>1 pulgada/72</code>, es decir, unos <code>0.35</code> milímetros)</li>
+<li><code>pc</code>, picas (1 pica equivale a <code>12</code> puntos, es decir, unos <code>4.23</code> milímetros)</li>
+</ul>
+
+<p>A continuación se muestran ejemplos de utilización de unidades absolutas:</p>
+
+<div class="example">
+<div class="box" style="font-size: 12pt; width: 90%">[12pt] Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</div>
+<div class="box" style="width: 10cm; height: 1in">div { width: 10cm; height: 1in; }</div>
+<div class="box" style="width: 80mm; height: 7pc">div { width: 80mm; height: 7pc; }</div>
+</div>
+
+<p>A pesar de que parecen más fáciles de comprender, las unidades absolutas se utilizan mucho menos que las unidades relativas. El motivo es que las unidades absolutas son adecuadas para medios impresos pero no lo son tanto para medios flexibles como una pantalla. De todas las unidades absolutas, los puntos (<code>pt</code>) es la única que se emplea ocasionalmente y casi siempre para definir el tamaño de letra para los <a href="medios.html">medios</a> impresos (<code>print</code>) de CSS.</p>
+
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Unidades de medida (Referencia de CSS 2.1%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Referencia de CSS 2.1 : Unidades de medida']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Propiedades relacionadas</span></h3>
+
+
+                                                                
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

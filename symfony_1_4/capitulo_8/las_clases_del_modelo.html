@@ -1,0 +1,289 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>8.3. Las clases del modelo (Symfony 1.4, la guía definitiva)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="esquema_de_base_de_datos_de_symfony.html" />
+        <link rel="next" href="acceso_a_los_datos.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="8.3. Las clases del modelo (Symfony 1.4, la guía definitiva)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page symfony_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Symfony 1.4, la guía definitiva</a></li>
+  <li><a href="../capitulo_8.html">Capítulo 8. El modelo (Doctrine)</a></li>
+  <li class="current"><span>8.3.. Las clases del modelo</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="las_clases_del_modelo"><span>8.3.</span> Las clases del modelo</h1>
+    
+
+<p>El esquema se utiliza para construir las clases del modelo que necesita la capa del ORM. Para reducir el tiempo de ejecución de la aplicación, estas clases se generan mediante una tarea de línea de comandos llamada <code>doctrine:build-model</code>.</p>
+
+<div class="code cli">
+<pre class="cli">$ php symfony doctrine:build-model</pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Después de construir el modelo, es necesario borrar la caché interna de Symfony mediante el comando <code>php symfony cc</code> para que Symfony sea capaz de encontrar los nuevos modelos.</p></div>
+
+<p>Al ejecutar ese comando, se analiza el esquema y se generan las clases base del modelo, que se almacenan en el directorio <code>lib/model/doctrine/base</code> del proyecto:</p>
+
+<ul>
+<li><code>BaseArticulo.php</code></li>
+<li><code>BaseComentario.php</code></li>
+</ul>
+
+<p>Además, se crean las verdaderas clases del modelo de datos en el directorio <code>lib/model/doctrine</code>:</p>
+
+<ul>
+<li><code>Articulo.php</code></li>
+<li><code>ArticuloTable.php</code></li>
+<li><code>Comentario.php</code></li>
+<li><code>ComentarioTable.php</code></li>
+</ul>
+
+<p>Sólo se han definido dos modelos y se han generado seis archivos. Aunque este hecho no es nada extraño, merece una explicación.</p>
+
+<h3 id="clases_base_y_clases_personalizadas">8.3.1. Clases base y clases personalizadas</h3>
+
+<p>¿Por qué es útil mantener dos versiones del modelo de objetos de datos en dos directorios diferentes?</p>
+
+<p>Puede ser necesario añadir métodos y propiedades personalizadas en los objetos del modelo (piensa por ejemplo en el método <code>getNombreCompleto()</code> del listado 8-1). También es posible que a medida que el proyecto se esté desarrollando, se añadan tablas o columnas. Además, cada vez que se modifica el archivo <code>schema.yml</code> se deben regenerar las clases del modelo de objetos mediante el comando <code>doctrine:build-model</code>. Si se añaden los métodos personalizados en las clases que se generan, se borrarían cada vez que se vuelven a generar esas clases.</p>
+
+<p>Las clases con nombre <code>Base</code> del directorio <code>lib/model/doctrine/base</code> son las que se generan directamente a partir del esquema. Nunca modifiques estas clases, ya que cada vez que generas el modelo, estas clases se borran y se vuelven a crear automáticamente.</p>
+
+<p>Por otra parte, las clases de objetos propias que están en el directorio <code>lib/model/doctrine</code> heredan de las clases con nombre <code>Base</code>. Estas clases no se modifican cuando se ejecuta la tarea <code>doctrine:build-model</code>, por lo que son las clases en las que añades tus propios métodos y código.</p>
+
+<p>El listado 8-4 muestra un ejemplo de una clase propia del modelo creada la primera vez que se ejecuta la tarea <code>doctrine:build-model</code>.</p>
+
+<p><strong>Listado 8-4 - Archivo de ejemplo de una clase del modelo, en <code>lib/model/doctrine/Articulo.php</code></strong></p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">class</span> Articulo <span class="kw2">extends</span> BaseArticulo
+<span class="br0">&#123;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Esta clase hereda de la clase <code>BaseArticulo</code>, pero no le afectan las modificaciones en el esquema.</p>
+
+<p>Este mecanismo de clases personalizadas que heredan de las clases base permite empezar a programar desde el primer momento, sin ni siquiera conocer el modelo relacional definitivo de la base de datos. La estructura de archivos creada permite personalizar y evolucionar el modelo.</p>
+
+<h3 id="clases_objeto_y_clases_tabla">8.3.2. Clases objeto y clases tabla</h3>
+
+<p><code>Articulo</code> y <code>Comentario</code> son clases objeto que representan un registro de la base de datos. Permiten acceder a las columnas de un registro y a los registros relacionados. Por tanto, es posible obtener el título de un artículo invocando un método del objeto <code>Articulo</code>, como se muestra en el listado 8-5.</p>
+
+<p><strong>Listado 8-5 - Las clases objeto disponen de <em>getters</em> para los registros de las columnas</strong></p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$articulo</span> <span class="sy0">=</span> <span class="kw2">new</span> Articulo<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="co1">// ...</span>
+<span class="re0">$titulo</span> <span class="sy0">=</span> <span class="re0">$articulo</span><span class="sy0">-&gt;</span><span class="me1">getTitulo</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p><code>ArticuloTable</code> y <code>ComentarioTable</code> son clases de tipo tabla; es decir, clases que tienen métodos públicos para trabajar con las tablas de la base de datos. Proporcionan los medios necesarios para buscar registros en una tabla. Sus métodos devuelven normalmente un objeto o una colección de objetos de la clase objeto relacionada, como se muestra en el listado 8-6.</p>
+
+<p><strong>Listado 8-6 - Las clases tabla contienen métodos públicos para obtener registros de la base de datos</strong></p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// $articulo es una instancia de la clase Articulo</span>
+<span class="re0">$articulo</span> <span class="sy0">=</span> Doctrine_Core<span class="sy0">::</span><span class="me2">getTable</span><span class="br0">&#40;</span><span class="st_h">'Articulo'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">find</span><span class="br0">&#40;</span><span class="nu0">123</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="esquema_de_base_de_datos_de_symfony.html">&larr; Anterior <span>8.2. Esquema de base de datos de Symfony</span></a>
+            
+            <a class="span5 next" href="acceso_a_los_datos.html">Siguiente &rarr; <span>8.4. Acceso a los datos</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Las clases del modelo (Symfony 1.4, la guía definitiva%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Symfony 1.4, la guía definitiva : Las clases del modelo']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción a Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Explorando el interior de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Ejecutar aplicaciones Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Introducción a la creación de páginas</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Configurar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> El Controlador</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> La Vista</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_8.html">
+            <span>Capítulo 8.</span> El modelo (Doctrine)
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="por_que_utilizar_un_orm_y_una_capa_de_abstraccion.html">
+            <span>8.1.</span> ¿Por qué utilizar un ORM y una capa de abstracción?
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="esquema_de_base_de_datos_de_symfony.html">
+            <span>8.2.</span> Esquema de base de datos de Symfony
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="las_clases_del_modelo.html">
+            <span>8.3.</span> Las clases del modelo
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="acceso_a_los_datos.html">
+            <span>8.4.</span> Acceso a los datos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="conexiones_con_la_base_de_datos.html">
+            <span>8.5.</span> Conexiones con la base de datos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="extender_el_modelo.html">
+            <span>8.6.</span> Extender el modelo
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="sintaxis_extendida_del_esquema.html">
+            <span>8.7.</span> Sintaxis extendida del esquema
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="no_crees_el_modelo_dos_veces.html">
+            <span>8.8.</span> No crees el modelo dos veces
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="resumen.html">
+            <span>8.9.</span> Resumen
+        </a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Enlaces y sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Emails</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Uso de la cache</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Pruebas unitarias y funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Herramientas para la administración de aplicaciones</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> Personalizar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> Rendimiento</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Configuración avanzada</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

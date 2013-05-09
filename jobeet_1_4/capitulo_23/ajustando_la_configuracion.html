@@ -1,0 +1,259 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>23.3. Ajustando la configuración (El tutorial Jobeet)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="las_librerias_de_symfony.html" />
+        <link rel="next" href="modificando_la_estructura_de_directorios.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="23.3. Ajustando la configuración (El tutorial Jobeet)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page jobeet_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">El tutorial Jobeet</a></li>
+  <li><a href="../capitulo_23.html">Capítulo 23. Pasando a producción</a></li>
+  <li class="current"><span>23.3.. Ajustando la configuración</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="ajustando_la_configuracion"><span>23.3.</span> Ajustando la configuración</h1>
+    
+
+<h3 id="configuracion_de_la_base_de_datos">23.3.1. Configuración de la base de datos</h3>
+
+<p>En la mayoría de ocasiones, los datos de conexión con la base de datos de producción son diferentes de los datos de conexión en local. Gracias a los entornos de ejecución de Symfony, es muy sencillo definir una configuración diferente para la base de datos de producción:</p>
+
+<div class="code cli">
+<pre class="cli">$ php symfony configure:database &quot;mysql:host=localhost;dbname=prod_dbname&quot; prod_user prod_pass</pre>
+</div>
+
+<p>Recuerda que también puedes realizar la configuración de la base de datos editando a mano el archivo <code>databases.yml</code>.</p>
+
+<h3 id="archivos_web">23.3.2. Archivos web</h3>
+
+<p>Como Jobeet utiliza plugins que incluyen archivos web (CSS y JavaScript), Symfony crea enlaces simbólicos relativos en el directorio <code>web/</code> del proyecto. La tarea <code>plugin:publish-assets</code> regenera o crea estos enlaces simbólicos cuando se instalan plugins sin utilizar la tarea <code>plugin:install</code>:</p>
+
+<div class="code cli">
+<pre class="cli">$ php symfony plugin:publish-assets</pre>
+</div>
+
+<h3 id="paginas_de_error_propias">23.3.3. Páginas de error propias</h3>
+
+<p>Antes de subir la aplicación a producción, es conveniente que personalices las páginas de error de Symfony como por ejemplo la página de <em>"Error 404: Página No Encontrada"</em> o la página que muestra las excepciones.</p>
+
+<p>Durante el tutorial del día 16 ya configuramos la página de error del formato <code>YAML</code> creando los archivos <code>error.yaml.php</code> y <code>exception.yaml.php</code> en el directorio <code>config/error/</code>. Symfony utiliza el archivo <code>error.yaml.php</code> en el entorno <code>prod</code> mientras que el archivo <code>exception.yaml.php</code> se emplea en el entorno <code>dev</code>.</p>
+
+<p>Por tanto, para personalizar las páginas de error de las excepciones del formato <code>HTML</code>, crea los archivos <code>config/error/error.html.php</code> y <code>config/error/exception.html.php</code>.</p>
+
+<p>La página del error <code>404</code>  <em>"página no encontrada"</em>) se puede personalizar modificando las opciones de configuración <code>error_404_module</code> y <code>error_404_action</code>:</p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co1"># apps/frontend/config/settings.yml</span><span class="co4">
+all</span>:<span class="co4">
+  .actions</span>:<span class="co3">
+    error_404_module</span><span class="sy2">: </span>default<span class="co3">
+    error_404_action</span><span class="sy2">: </span>error404</pre>
+</div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="las_librerias_de_symfony.html">&larr; Anterior <span>23.2. Las librerías de Symfony</span></a>
+            
+            <a class="span5 next" href="modificando_la_estructura_de_directorios.html">Siguiente &rarr; <span>23.4. Modificando la estructura de directorios</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Ajustando la configuración (El tutorial Jobeet%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'El tutorial Jobeet : Ajustando la configuración']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Comenzando el proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> El proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> El modelo de datos</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> El controlador y la vista</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> El sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Profundizando en el modelo</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Trabajando con la página de cada categoría</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Pruebas unitarias</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Pruebas funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Probando los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> El generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> El usuario</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> El día de descanso</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Canales Atom</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Servicios web</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> El buscador</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>20</span> <a href="../capitulo_20.html"> Plugins</a>
+    </li>
+    <li class="level-1">
+        <span>21</span> <a href="../capitulo_21.html"> El día del diseño</a>
+    </li>
+    <li class="level-1">
+        <span>22</span> <a href="../capitulo_22.html"> La cache</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_23.html">
+            <span>Capítulo 23.</span> Pasando a producción
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="preparando_el_servidor_de_produccion.html">
+            <span>23.1.</span> Preparando el servidor de producción
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="las_librerias_de_symfony.html">
+            <span>23.2.</span> Las librerías de Symfony
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="ajustando_la_configuracion.html">
+            <span>23.3.</span> Ajustando la configuración
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="modificando_la_estructura_de_directorios.html">
+            <span>23.4.</span> Modificando la estructura de directorios
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="las_factorias.html">
+            <span>23.5.</span> Las factorías
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="instalando_aplicaciones.html">
+            <span>23.6.</span> Instalando aplicaciones
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="nos_vemos_manana.html">
+            <span>23.7.</span> Nos vemos mañana
+        </a>
+    </li>
+    <li class="level-1">
+        <span>24</span> <a href="../capitulo_24.html"> Un repaso a Symfony</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

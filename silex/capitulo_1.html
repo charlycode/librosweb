@@ -1,0 +1,188 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>Capítulo 1. Introducción (Silex, el manual oficial)</title>
+        <link href="../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="index.html" />
+        <link rel="next" href="capitulo_1/introduccion_2.html" />
+        <link rel="start" href="index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Capítulo 1. Introducción (Silex, el manual oficial)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page silex">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../index.html">Inicio</a></li>
+  <li><a href="index.html">Silex, el manual oficial</a></li>
+  <li class="current"><span>Capítulo 1. Introducción</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="capitulo_1"><span>Capítulo 1.</span> Introducción</h1>
+    <h2 id="introduccion_2">1.1. Introducción</h2>
+
+
+<p>Silex es un <em>microframework</em> desarrollado con PHP 5.3. Se basa en los mismos principios que Symfony2 y Pimple y está inspirado por el microframework Sinatra de Ruby.</p>
+
+<p>Los microframeworks están pensados para poder crear aplicaciones web enteras en un solo archivo. Las características de Silex son:</p>
+
+<ul>
+<li><em>Conciso</em>: Silex proporciona una API concisa e intuitiva que hasta es divertida de utilizar.</li>
+<li><em>Extensible</em>: Silex dispone de un sistema de extensiones basado en el micro contenedor de servicios Pimple y que facilita el uso de librerías creadas por terceros.</li>
+<li><em>Facil de testear</em>: Silex utiliza el componente <code>HttpKernel</code> de Symfony para abstraer el manejo de la petición y de la respuesta. Esto facilita mucho la creación de tests tanto para las aplicaciones como para el propio framework. Además, Silex respeta la filosofía de funcionamiento de la especificación HTTP y te ayuda a que tu también la sigas.</li>
+</ul>
+
+<p>Silex define los controladores y los asocia a las rutas en un solo paso, como se muestra en el siguiente código:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// web/index.php</span>
+&nbsp;
+<span class="kw1">require_once</span> __DIR__<span class="sy0">.</span><span class="st_h">'/../vendor/autoload.php'</span><span class="sy0">;</span>
+&nbsp;
+<span class="re0">$app</span> <span class="sy0">=</span> <span class="kw2">new</span> Silex\Application<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="re0">$app</span><span class="sy0">-&gt;</span><span class="me1">get</span><span class="br0">&#40;</span><span class="st_h">'/hello/{name}'</span><span class="sy0">,</span> <span class="kw2">function</span> <span class="br0">&#40;</span><span class="re0">$name</span><span class="br0">&#41;</span> <span class="kw2">use</span> <span class="br0">&#40;</span><span class="re0">$app</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="kw1">return</span> <span class="st_h">'Hello '</span><span class="sy0">.</span><span class="re0">$app</span><span class="sy0">-&gt;</span><span class="me1">escape</span><span class="br0">&#40;</span><span class="re0">$name</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="re0">$app</span><span class="sy0">-&gt;</span><span class="me1">run</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Lo único que necesitas para poder utilizar Silex es incluir el archivo que carga automáticamente las clases (<code>autoload.php</code>).</p>
+
+<p>Después, se define una ruta asociada a la URL <code>/hello/{name}</code> y que solo se podrá acceder a través del método <code>GET</code> de HTTP.</p>
+
+<p>Cuando la petición del usuario coincide con el patrón de una ruta, se ejecuta la función asociada a la ruta y se devuelve al usuario el resultado de esa función.</p>
+
+<p>La última instrucción ejecuta la aplicación (<code>$app-&gt;run()</code>).</p>
+
+<p>Accede a la URL <code>/hello/world</code> con tu navegador y podrás ver el resultado. ¡Realmente es así de sencillo!</p>
+
+<p>Instalar Silex no puede ser más fácil, ya que solo tienes que descargar un archivo desde <a href="http://silex.sensiolabs.org/download">silex.sensiolabs.org/download</a>, descomprimirlo y listo.</p>
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="index.html">&larr; Anterior <span> </span></a>
+            
+            <a class="span5 next" href="capitulo_1/introduccion_2.html">Siguiente &rarr; <span>1.1. Introducción</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Introducción (Silex, el manual oficial%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Silex, el manual oficial : Introducción']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1 active">
+        <a href="capitulo_1.html">
+            <span>Capítulo 1.</span> Introducción
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="capitulo_1/introduccion_2.html">
+            <span>1.1.</span> Introducción
+        </a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="capitulo_2.html"> Primeros pasos</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="capitulo_3.html"> Middlewares</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="capitulo_4.html"> Organizando los controladores</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="capitulo_5.html"> Servicios</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="capitulo_6.html"> Proveedores</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="capitulo_7.html"> Tests</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="capitulo_8.html"> Funcionamiento interno</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="capitulo_9.html"> Silex y los servidores web</a>
+    </li>
+    <li class="level-1">
+        <span>A</span> <a href="apendice_a.html"> Proveedores de servicios de Silex</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

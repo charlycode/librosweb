@@ -1,0 +1,293 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>2.4. Depuración (CSS avanzado)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="mejora_progresiva.html" />
+        <link rel="next" href="hojas_de_estilos.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="2.4. Depuración (CSS avanzado)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page css_avanzado">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">CSS avanzado</a></li>
+  <li><a href="../capitulo_2.html">Capítulo 2. Buenas prácticas</a></li>
+  <li class="current"><span>2.4.. Depuración</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="depuracion"><span>2.4.</span> Depuración</h1>
+    
+
+<p>Inevitablemente, todos los diseñadores web cometen errores en los trabajos que realizan. En la mayoría de las ocasiones, los errores se descubren al probar el diseño en diferentes navegadores. Además de mostrar los errores, los principales navegadores disponen de herramientas que permiten descubrir de forma sencilla la causa concreta del error.</p>
+
+<p>Antes de que existieran estas herramientas avanzadas, el trabajo del diseñador era mucho más complicado, ya que no era fácil descubrir la causa exacta del error entre todas las posibles:</p>
+
+<ul>
+<li>El selector está mal escrito.</li>
+<li>Las propiedades están mal escritas o tienen valores no permitidos.</li>
+<li>Otros selectores tienen más prioridad y están sobreescribiendo una propiedad y/o valor.</li>
+<li>Las reglas y valores están bien escritos, pero los elementos no ocupan el espacio que a simple vista parece que están ocupando en la pantalla.</li>
+<li>El navegador tiene un error que impide mostrar correctamente la página.</li>
+</ul>
+
+<p>Los diseñadores web idearon hace mucho tiempo soluciones ingeniosas para cada uno de los problemas anteriores. En primer lugar, cuando no se está seguro de si todas las reglas CSS están bien escritas, lo mejor es validar la hoja de estilos utilizando el <a href="http://jigsaw.w3.org/css-validator/">validador CSS del W3C</a>.</p>
+
+<p>Una vez descartado el error de sintaxis, el siguiente problema a resolver es por qué una regla CSS no se aplica correctamente a un elemento. Una estrategia muy utilizada consistía en añadir alguna propiedad que sea visualmente significativa para comprobar si realmente el selector se está aplicando. Poner todo el texto del elemento en negrita, aumentar mucho su tamaño de letra y cambiar el color de fondo eran algunas de las estrategias habituales. Cuando lo anterior no resultaba, se utilizaba directamente la palabra reservada <code>!important</code> para aumentar la prioridad de esa propiedad CSS.</p>
+
+<p>Otro de los problemas habituales en el diseño web está relacionado con el espacio que ocupa cada elemento en pantalla. Como los elementos por defecto no muestran ningún borde y su color de fondo es transparente, no es posible conocer a simple vista el espacio que ocupa cada elemento. Por lo tanto, cuando se posicionan elementos de forma flotante o cuando se establecen márgenes, rellenos, alturas y anchuras máximas/mínimas, no es posible visualizar si el navegador está mostrando correctamente todos los elementos.</p>
+
+<p>Para solucionar este problema la técnica habitual consistía en añadir un borde visible a los elementos. Como los bordes visibles ocupan sitio en pantalla, el problema de esta solución es que modifica el propio diseño. La alternativa consistía en añadir un color de fondo diferente para cada elemento. Otra posible alternativa es el uso de la propiedad <code>outline</code> de CSS, que añade un perfil en el contorno de un elemento pero no ocupa sitio y por tanto no modifica el diseño de la página.</p>
+
+<p>Los navegadores modernos como Safari, Opera y Firefox incluyen el soporte de la propiedad <code>outline</code>, mientras que el navegador Internet Explorer 7 no es capaz de mostrar perfiles en los elementos de la página. El diseñador Chris Page ha publicado un artículo llamado <em><a href="http://homepage.mac.com/chrispage/iblog/C42511381/E20060806095030/index.html">A Handy CSS Debugging Snippet</a></em> en el que muestra unas reglas CSS que hacen uso de <code>outline</code> y permiten depurar fácilmente cualquier diseño sin utilizar herramientas avanzadas:</p>
+
+<div class="code css">
+<pre class="css"><span class="sy0">*</span> <span class="br0">&#123;</span> <span class="kw1">outline</span><span class="sy0">:</span> <span class="re3">2px</span> <span class="kw2">dotted</span> <span class="kw2">red</span> <span class="br0">&#125;</span>
+<span class="sy0">*</span> <span class="sy0">*</span> <span class="br0">&#123;</span> <span class="kw1">outline</span><span class="sy0">:</span> <span class="re3">2px</span> <span class="kw2">dotted</span> <span class="kw2">green</span> <span class="br0">&#125;</span>
+<span class="sy0">*</span> <span class="sy0">*</span> <span class="sy0">*</span> <span class="br0">&#123;</span> <span class="kw1">outline</span><span class="sy0">:</span> <span class="re3">2px</span> <span class="kw2">dotted</span> orange <span class="br0">&#125;</span>
+<span class="sy0">*</span> <span class="sy0">*</span> <span class="sy0">*</span> <span class="sy0">*</span> <span class="br0">&#123;</span> <span class="kw1">outline</span><span class="sy0">:</span> <span class="re3">2px</span> <span class="kw2">dotted</span> <span class="kw1">blue</span> <span class="br0">&#125;</span>
+<span class="sy0">*</span> <span class="sy0">*</span> <span class="sy0">*</span> <span class="sy0">*</span> <span class="sy0">*</span> <span class="br0">&#123;</span> <span class="kw1">outline</span><span class="sy0">:</span> <span class="re3">1px</span> <span class="kw2">solid</span> <span class="kw2">red</span> <span class="br0">&#125;</span>
+<span class="sy0">*</span> <span class="sy0">*</span> <span class="sy0">*</span> <span class="sy0">*</span> <span class="sy0">*</span> <span class="sy0">*</span> <span class="br0">&#123;</span> <span class="kw1">outline</span><span class="sy0">:</span> <span class="re3">1px</span> <span class="kw2">solid</span> <span class="kw2">green</span> <span class="br0">&#125;</span>
+<span class="sy0">*</span> <span class="sy0">*</span> <span class="sy0">*</span> <span class="sy0">*</span> <span class="sy0">*</span> <span class="sy0">*</span> <span class="sy0">*</span> <span class="br0">&#123;</span> <span class="kw1">outline</span><span class="sy0">:</span> <span class="re3">1px</span> <span class="kw2">solid</span> orange <span class="br0">&#125;</span>
+<span class="sy0">*</span> <span class="sy0">*</span> <span class="sy0">*</span> <span class="sy0">*</span> <span class="sy0">*</span> <span class="sy0">*</span> <span class="sy0">*</span> <span class="sy0">*</span> <span class="br0">&#123;</span> <span class="kw1">outline</span><span class="sy0">:</span> <span class="re3">1px</span> <span class="kw2">solid</span> <span class="kw1">blue</span> <span class="br0">&#125;</span></pre>
+</div>
+
+<h3 id="firebug">2.4.1. Firebug</h3>
+
+<p>Al margen de soluciones manuales y técnicas más o menos ingeniosas, los diseñadores web profesionales de hoy en día utilizan herramientas avanzadas para averiguar con precisión la causa de los errores de diseño. De todas las herramientas disponibles, la mejor con mucha diferencia es <a href="https://addons.mozilla.org/es-ES/firefox/addon/1843">Firebug</a>, una extensión del navegador Firefox.</p>
+
+<p>Firebug dispone de todas las utilidades que necesitan los diseñadores y programadores web en su trabajo. Firebug es una herramienta gratuita, completa, fácil de utilizar y para la que se publican nuevas versiones de forma continua.</p>
+
+<p>Después de instalar Firebug, en la esquina inferior derecha del navegador Firefox aparece un nuevo icono. Para acceder a Firebug, se puede pinchar con el ratón sobre ese icono o se puede pulsar directamente la tecla <code>F12</code> después de cargar la página que se quiere depurar.</p>
+
+<p>Firebug muestra su información dividida en los siguientes paneles:
+  * Consola: muestra mensajes de error, notificaciones y otros tipos de mensajes. No es muy útil para los diseñadores web.
+  * HTML: muestra el código HTML de la página y permite seleccionar los elementos, modificar sus contenidos y ver las reglas CSS que se le están aplicando.
+  * CSS: muestra todas las hojas de estilos incluidas en la página y permite modificar sus valores.
+  * Guión y DOM: paneles relacionados con la programación JavaScript. No son muy útiles para los diseñadores web.
+  * Red: muestra toda la información de todos los elementos descargados por la página (HTML, JavaScript, CSS, imágenes).</p>
+
+<p>El primero de los paneles importantes para los diseñadores web es el panel HTML:</p>
+
+<div class="figure" id="figure_2_8">
+    <img src="../../img/css_avanzado/f0208.png" alt="Panel HTML de Firebug" />
+
+    <p class="caption"><strong>Figura 2.8</strong> Panel HTML de Firebug</p>
+</div>
+
+
+<p>El panel HTML es el más utilizado por los diseñadores web, ya que muestra toda la información de la página relacionada con HTML y CSS. En la parte izquierda del panel se muestra el código HTML de la página y en la parte derecha la información CSS.</p>
+
+<p>Si se pulsa el botón "Inspeccionar" de la parte superior de Firebug, es posible seleccionar con el ratón un elemento de la página web. Después de pinchar sobre cualquier elemento, en la parte izquierda se muestra el código HTML de ese elemento y en la parte derecha todas las reglas CSS que se le aplican.</p>
+
+<p>Si se pulsa sobre el contenido de un elemento en la parte izquierda del panel HTML, se puede modificar su valor y ver el resultado en tiempo real sobre la propia página web. Desde este mismo panel también es posible eliminar el elemento de la página.</p>
+
+<p>La parte derecha del panel HTML es la más útil, ya que siempre muestra todas las reglas CSS que se aplican a un elemento de la página. Gracias a esta información es imposible dudar si un selector está bien escrito o si una regla CSS realmente se está aplicando a un elemento.</p>
+
+<p>Además, como normalmente varias reglas CSS diferentes aplican valores diferentes a las mismas propiedades de un mismo elemento, Firebug muestra tachadas todas las propiedades que en teoría se deben aplicar al elemento pero que no lo hacen porque existen otras reglas CSS con más prioridad.</p>
+
+<p>La parte derecha del panel HTML incluye otras utilidades interesantes como cuando se pasa el ratón por encima de un color definido en formato hexadecimal y que hace que se vea realmente cuál es el color. Igualmente, al pasar el ratón por encima de una <code>url()</code> utilizada para incluir una imagen, Firebug muestra de qué imagen se trata. Las reglas CSS que se muestran en la parte derecha del panel HTML también se pueden modificar, eliminar y bloquear temporalmente. También es posible añadir nuevas propiedades a cualquier regla CSS.</p>
+
+<p>Firebug muestra por defecto el valor de las reglas CSS tal y como se han establecido en las hojas de estilos. Sin embargo, muchas veces estos valores originales no son prácticos. ¿cuál es el tamaño de letra de un elemento con <code>font-size: 1em</code>? Sin más información es imposible saberlo. ¿cuál es la anchura en píxeles de un elemento con la propiedad <code>width: 60%</code>? Imposible saberlo sin conocer las anchuras de sus elementos contenedores.</p>
+
+<p>Por todo ello, Firebug permite mostrar los valores que realmente utiliza Firefox para dibujar cada elemento en pantalla. Pulsando sobre el texto <code>Opciones</code> de la parte derecha del panel HTML, se puede activar la opción <code>Show Computed Style</code>:</p>
+
+<div class="figure" id="figure_2_9">
+    <img src="../../img/css_avanzado/f0209.png" alt="Panel HTML de Firebug con la opción Show Computed Style" />
+
+    <p class="caption"><strong>Figura 2.9</strong> Panel HTML de Firebug con la opción Show Computed Style</p>
+</div>
+
+
+<p>Después de activar esta opción, los tamaños de letra y anchuras se muestran en píxeles y se muestra el valor de todas las propiedades CSS del elemento, independientemente de si se han establecido de forma explícita o de si se trata de los valores por defecto que aplica el navegador.</p>
+
+<p>Otra de las utilidades más interesantes del panel HTML es la información sobre la maquetación del elemento, que se puede mostrar pinchando sobre la pestaña <code>Maquetación</code> de la parte derecha del panel:</p>
+
+<div class="figure" id="figure_2_10">
+    <img src="../../img/css_avanzado/f0210.png" alt="Pestaña Maquetación del panel HTML de Firebug" />
+
+    <p class="caption"><strong>Figura 2.10</strong> Pestaña Maquetación del panel HTML de Firebug</p>
+</div>
+
+
+<p>La opción <code>Maquetación</code> muestra la información completa del <em>"box model"</em> o modelo de cajas de un elemento: anchura, altura, rellenos, bordes y márgenes.</p>
+
+<p>El otro panel más utilizado por los diseñadores web es el panel CSS, que muestra el contenido de todas las hojas de estilos que se están aplicando en la página y permite realizar cualquier modificación sobre cualquier regla CSS viendo el resultado en tiempo real en la propia página:</p>
+
+<div class="figure" id="figure_2_11">
+    <img src="../../img/css_avanzado/f0211.png" alt="Panel CSS de Firebug" />
+
+    <p class="caption"><strong>Figura 2.11</strong> Panel CSS de Firebug</p>
+</div>
+
+
+<p>Por último, el panel Red de Firebug permite ver toda la información sobre todos los elementos que se descarga el navegador para mostrar la página:</p>
+
+<div class="figure" id="figure_2_12">
+    <img src="../../img/css_avanzado/f0212.png" alt="Panel Red de Firebug" />
+
+    <p class="caption"><strong>Figura 2.12</strong> Panel Red de Firebug</p>
+</div>
+
+
+<p>Desde el punto de vista del diseñador, este panel se puede utilizar para mejorar el rendimiento de la página reduciendo el número de archivos CSS, reduciendo el número de imágenes de adorno mediante los <em>sprites CSS</em>, reduciendo el número de peticiones HTTP realizadas al servidor y reduciendo el tamaño de los archivos.</p>
+
+<h3 id="otras_herramientas_de_depuracion">2.4.2. Otras herramientas de depuración</h3>
+
+<p>Firebug es la mejor herramienta para depurar el diseño de los sitios web, pero sólo está disponible para el navegador Firefox. Como la mayoría de errores en el diseño web sólo se producen en los navegadores de la familia Internet Explorer, Firebug no se puede utilizar.</p>
+
+<p>Afortunadamente, los creadores de Firebug han publicado una versión reducida y simplificada de Firebug compatible con el resto de navegadores. La versión reducida se denomina <a href="http://getfirebug.com/lite.html">Firebug Lite</a> y requiere el uso de JavaScript. Aunque se puede descargar Firebug Lite para utilizarlo desde nuestros propios servidores, la forma más sencilla de probarla es añadir el siguiente código en la página que se quiere depurar:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">script</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text/javascript&quot;</span> <span class="kw3">src</span><span class="sy0">=</span><span class="st0">&quot;http://getfirebug.com/releases/lite/1.2/firebug-lite-compressed.js&quot;</span>&gt;&lt;<span class="sy0">/</span><span class="kw2">script</span>&gt;</span></pre>
+</div>
+
+<p>El código anterior se puede colocar en cualquier zona de la página, aunque normalmente se incluye dentro de la sección <code>&lt;head&gt;</code>.</p>
+
+<p>Por último, como las empresas que desarrollan los navegadores consideran que Firebug es insuperable, desde hace un tiempo se dedican a copiar todas sus características. Internet Explorer 8, Safari 3 y Opera 9 disponen de herramientas de depuración que son una réplica de Firebug.</p>
+
+<p>Internet Explorer 8 ha denominado a su herramienta <em><a href="http://msdn.microsoft.com/en-us/library/cc848894(VS.85).aspx">Developer Tools</a></em>, mientras que Opera la ha denominado <em><a href="http://www.opera.com/products/dragonfly/">Dragonfly</a></em> y en Safari está disponible desde el menú <code>Desarrollo</code>.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="mejora_progresiva.html">&larr; Anterior <span>2.3. Mejora progresiva</span></a>
+            
+            <a class="span5 next" href="hojas_de_estilos.html">Siguiente &rarr; <span>2.5. Hojas de estilos</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Depuración (CSS avanzado%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'CSS avanzado : Depuración']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Técnicas imprescindibles</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_2.html">
+            <span>Capítulo 2.</span> Buenas prácticas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="comprobar_el_diseno_en_varios_navegadores.html">
+            <span>2.2.</span> Comprobar el diseño en varios navegadores
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="mejora_progresiva.html">
+            <span>2.3.</span> Mejora progresiva
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="depuracion.html">
+            <span>2.4.</span> Depuración
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="hojas_de_estilos.html">
+            <span>2.5.</span> Hojas de estilos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="rendimiento.html">
+            <span>2.6.</span> Rendimiento
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="recursos_imprescindibles.html">
+            <span>2.7.</span> Recursos imprescindibles
+        </a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Selectores</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Propiedades avanzadas</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Frameworks</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Técnicas avanzadas</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

@@ -1,0 +1,291 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>13.2. Versión para imprimir (Introducción a CSS)</title>
+        <link href="../main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="../capitulo_13.html" />
+        <link rel="next" href="personalizar_el_cursor.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="13.2. Versión para imprimir (Introducción a CSS)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page css">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Introducción a CSS</a></li>
+  <li><a href="../capitulo_13.html">Capítulo 13. Otros</a></li>
+  <li class="current"><span>13.2.. Versión para imprimir</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="version_para_imprimir"><span>13.2.</span> Versión para imprimir</h1>
+    
+
+<p>La mayoría de sitios web de calidad ofrecen al usuario la posibilidad de imprimir sus contenidos mediante una versión específica para impresora de cada página.</p>
+
+<p>Estas versiones optimizadas para impresora eliminan los contenidos superfluos, modifican o eliminan las imágenes y colores de fondo y sobre todo, optimizan los contenidos de texto para facilitar su lectura.</p>
+
+<p>CSS simplifica al máximo la creación de una versión para imprimir gracias al concepto de los medios CSS. Como se sabe, los estilos CSS que se aplican a los contenidos pueden variar en función del medio a través del que se acceden (pantalla, televisor, móvil, impresora, etc.)</p>
+
+<p>De esta forma, realizar una versión para imprimir de una página HTML es tan sencillo como crear unas cuantas reglas CSS que optimicen sus contenidos para conseguir la mejor impresión.</p>
+
+<p>El sitio web <a href="http://www.alistapart.com">A List Apart</a> es un excelente ejemplo de cómo los sitios web de calidad crean versiones específicas para impresora de las páginas web originales. Cuando se visualiza un artículo de ese sitio web en una pantalla normal, su aspecto es el siguiente:</p>
+
+<div class="figure" id="figure_13_1">
+    <img src="../../img/css/f1301.gif" alt="Aspecto de un artículo de A List Apart como se ve en la pantalla" />
+
+    <p class="caption"><strong>Figura 13.1</strong> Aspecto de un artículo de A List Apart como se ve en la pantalla</p>
+</div>
+
+
+<p>Además de sus contenidos, las páginas de los artículos muestran el logotipo del sitio, el menú principal de navegación y una barra lateral con varias utilidades como un buscador.</p>
+
+<p>Sin embargo, cuando se imprime la página del mismo artículo, su aspecto es el que muestra la siguiente imagen:</p>
+
+<div class="figure" id="figure_13_2">
+    <img src="../../img/css/f1302.gif" alt="Aspecto de un artículo de A List Apart como se ve cuando se imprime" />
+
+    <p class="caption"><strong>Figura 13.2</strong> Aspecto de un artículo de A List Apart como se ve cuando se imprime</p>
+</div>
+
+
+<p>La página impresa elimina todos los contenidos superfluos como los menús de navegación, el buscador y el formulario para añadir comentarios en el artículo. Además, modifica la estructura de la página para que la zona de contenidos ocupe toda la anchura de la página y el espacio se aproveche mejor.</p>
+
+<p>Crear una versión para imprimir similar a la mostrada en el ejemplo anterior es una tarea que no lleva más de unos pocos minutos.</p>
+
+<p>Las reglas CSS de la versión para imprimir se aplican solamente al medio <code>print</code>. Por lo tanto, en primer lugar se crea una nueva hoja de estilos y al enlazarla se especifica que sólo debe aplicarse en las impresoras:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">link</span> <span class="kw3">rel</span><span class="sy0">=</span><span class="st0">&quot;stylesheet&quot;</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text/css&quot;</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;/css/imprimir.css&quot;</span> <span class="kw3">media</span><span class="sy0">=</span><span class="st0">&quot;print&quot;</span> <span class="sy0">/</span>&gt;</span></pre>
+</div>
+
+<p>Normalmente, las hojas de estilos para la pantalla se aplican a todos los medios (por utilizar el valor <code>media="all"</code> al enlazarla o por no indicar ningún valor en el atributo <code>media</code>). Por este motivo, cuando se imprime una página se aplican los mismos estilos que se aplican al visualizarla en la pantalla.</p>
+
+<p>Aprovechando este comportamiento, las hojas de estilos para impresoras son muy sencillas, ya que sólo deben modificar algunos estilos aplicados en el resto de hojas de estilos.</p>
+
+<p>Por este motivo, normalmente las hojas de estilos para impresora se construyen siguiendo los pasos que se muestran a continuación:</p>
+
+<p>1) Ocultar los elementos que no se van a imprimir:</p>
+
+<div class="code css">
+<pre class="css"><span class="re0">#cabecera</span><span class="sy0">,</span> <span class="re0">#menu</span><span class="sy0">,</span> <span class="re0">#lateral</span><span class="sy0">,</span> <span class="re0">#comentarios</span> <span class="br0">&#123;</span>
+  <span class="kw1">display</span><span class="sy0">:</span> <span class="kw2">none</span> !important<span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Los bloques (normalmente encerrados en elementos de tipo <code>&lt;div&gt;</code>) que no se van a imprimir se ocultan con la propiedad <code>display</code> y su valor <code>none</code>. La palabra clave <code>!important</code> aumenta la prioridad de esta regla CSS y más adelante se explica su significado.</p>
+
+<p>2) Corregir la estructura de la página:</p>
+
+<div class="code css">
+<pre class="css">body<span class="sy0">,</span> <span class="re0">#contenido</span><span class="sy0">,</span> <span class="re0">#principal</span><span class="sy0">,</span> <span class="re0">#pie</span> <span class="br0">&#123;</span>
+  <span class="kw1">float</span><span class="sy0">:</span> <span class="kw2">none</span> !important<span class="sy0">;</span>
+  <span class="kw1">width</span><span class="sy0">:</span> <span class="kw2">auto</span> !important<span class="sy0">;</span>
+  <span class="kw1">margin</span><span class="sy0">:</span>  <span class="nu0">0</span> !important<span class="sy0">;</span>
+  <span class="kw1">padding</span><span class="sy0">:</span> <span class="nu0">0</span> !important<span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Normalmente, las páginas web complejas están formadas por varias columnas posicionadas mediante la propiedad <code>float</code>. Si al imprimir la página se eliminan las columnas laterales, es conveniente reajustar la anchura y el posicionamiento de la zona de contenidos y de otras zonas que sí se van a imprimir.</p>
+
+<p>3) Modificar los colores y tipos de letra:</p>
+
+<div class="code css">
+<pre class="css">body <span class="br0">&#123;</span> <span class="kw1">color</span><span class="sy0">:</span> <span class="re0">#000</span><span class="sy0">;</span> <span class="kw1">font</span><span class="sy0">:</span> <span class="re3">100%</span>/<span class="re3">150%</span> Georgia<span class="sy0">,</span> <span class="st0">&quot;Times New Roman&quot;</span><span class="sy0">,</span> Times<span class="sy0">,</span> <span class="kw2">serif</span><span class="sy0">;</span> <span class="br0">&#125;</span></pre>
+</div>
+
+<p>Aunque el uso de impresoras en color es mayoritario, suele ser conveniente imprimir todo el texto de las páginas de color negro, para ahorrar costes y para aumentar el contraste cuando se imprime sobre hojas de color blanco. También suele ser conveniente modificar el tipo de letra y escoger uno que facilite al máximo la lectura del texto.</p>
+
+<h3 id="imprimiendo_los_enlaces">13.2.1. Imprimiendo los enlaces</h3>
+
+<p>Uno de los principales problemas de las páginas HTML impresas es la pérdida de toda la información relativa a los enlaces. En principio, imprimir los enlaces de una página es absurdo porque no se pueden utilizar en el medio impreso.</p>
+
+<p>Sin embargo, lo que puede ser realmente útil es mostrar al lado de un enlace la dirección a la que apunta. De esta forma, al imprimir la página no se pierde la información relativa a los enlaces.</p>
+
+<p>CSS incluye una propiedad llamada <code>content</code> que permite crear nuevos contenidos de texto para añadirlos a la página HTML. Si se combina la propiedad <code>content</code> y el <em>pseudo-elemento</em> <code>:after</code>, es posible insertar de forma dinámica la dirección a la que apunta un enlace justo después de su texto:</p>
+
+<div class="code css">
+<pre class="css">a<span class="re2">:after </span><span class="br0">&#123;</span>
+  <span class="kw1">content</span><span class="sy0">:</span> <span class="st0">&quot; (&quot;</span> attr<span class="br0">&#40;</span>href<span class="br0">&#41;</span> <span class="st0">&quot;) &quot;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>El código CSS anterior añade después de cada enlace de la página un texto formado por la dirección a la que apunta el enlace mostrada entre paréntesis. Si se quiere añadir las direcciones antes de cada enlace, se puede utilizar el <em>pseudo-elemento</em> <code>:before</code>:</p>
+
+<div class="code css">
+<pre class="css">a<span class="re2">:before </span><span class="br0">&#123;</span>
+  <span class="kw1">content</span><span class="sy0">:</span> <span class="st0">&quot; (&quot;</span> attr<span class="br0">&#40;</span>href<span class="br0">&#41;</span> <span class="st0">&quot;) &quot;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="../capitulo_13.html">&larr; Anterior <span>Capítulo 13. Otros</span></a>
+            
+            <a class="span5 next" href="personalizar_el_cursor.html">Siguiente &rarr; <span>13.3. Personalizar el cursor</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Versión para imprimir (Introducción a CSS%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a CSS : Versión para imprimir']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Selectores</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Unidades de medida y colores</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Modelo de cajas</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Posicionamiento y visualización</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Texto</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Enlaces</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Imágenes</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Listas</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Tablas</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Layout</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_13.html">
+            <span>Capítulo 13.</span> Otros
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="version_para_imprimir.html">
+            <span>13.2.</span> Versión para imprimir
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="personalizar_el_cursor.html">
+            <span>13.3.</span> Personalizar el cursor
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="hacks_y_filtros.html">
+            <span>13.4.</span> Hacks y filtros
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="prioridad_de_las_declaraciones_css.html">
+            <span>13.5.</span> Prioridad de las declaraciones CSS
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="validador.html">
+            <span>13.6.</span> Validador
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="recomendaciones_generales_sobre_css.html">
+            <span>13.7.</span> Recomendaciones generales sobre CSS
+        </a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Recursos útiles</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Ejercicios</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

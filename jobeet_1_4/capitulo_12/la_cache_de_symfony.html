@@ -1,0 +1,318 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>12.4. La cache de Symfony (El tutorial Jobeet)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="el_aspecto_de_la_aplicacion_backend.html" />
+        <link rel="next" href="la_configuracion_de_la_aplicacion_backend.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="12.4. La cache de Symfony (El tutorial Jobeet)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page jobeet_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">El tutorial Jobeet</a></li>
+  <li><a href="../capitulo_12.html">Capítulo 12. El generador de la parte de administración</a></li>
+  <li class="current"><span>12.4.. La cache de Symfony</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="la_cache_de_symfony"><span>12.4.</span> La cache de Symfony</h1>
+    
+
+<p>Si eres de los que sienten curiosidad por cómo funcionan las cosas, seguramente ya has abierto los archivos generados por la tarea <code>propel:generate-admin</code> en el directorio <code>apps/backend/modules/</code>. Si no lo habías hecho, este es el momento de hacerlo. ¡Sorpresa! Los directorios <code>templates</code> están vacíos y los archivos <code>actions.class.php</code> también están casi vacíos:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// apps/backend/modules/job/actions/actions.class.php</span>
+<span class="kw1">require_once</span> <span class="kw3">dirname</span><span class="br0">&#40;</span><span class="kw4">__FILE__</span><span class="br0">&#41;</span><span class="sy0">.</span><span class="st_h">'/../lib/jobGeneratorConfiguration.class.php'</span><span class="sy0">;</span>
+<span class="kw1">require_once</span> <span class="kw3">dirname</span><span class="br0">&#40;</span><span class="kw4">__FILE__</span><span class="br0">&#41;</span><span class="sy0">.</span><span class="st_h">'/../lib/jobGeneratorHelper.class.php'</span><span class="sy0">;</span>
+&nbsp;
+<span class="kw2">class</span> jobActions <span class="kw2">extends</span> autoJobActions
+<span class="br0">&#123;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>¿Cómo es posible que funcionen estos módulos? Si te fijas con atención, verás que la clase <code>jobActions</code> hereda de la clase <code>autoJobActions</code>. Si esta clase <code>autoJobActions</code> no existe, Symfony la genera automáticamente. En realidad, esta clase se encuentra en el directorio <code>cache/backend/dev/modules/autoJob/</code>, que contiene los archivos <em>verdaderos</em> del módulo:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// cache/backend/dev/modules/autoJob/actions/actions.class.php</span>
+<span class="kw2">class</span> autoJobActions <span class="kw2">extends</span> sfActions
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> preExecute<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">configuration</span> <span class="sy0">=</span> <span class="kw2">new</span> jobGeneratorConfiguration<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="kw1">if</span> <span class="br0">&#40;</span><span class="sy0">!</span><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getUser</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">hasCredential</span><span class="br0">&#40;</span>
+      <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">configuration</span><span class="sy0">-&gt;</span><span class="me1">getCredentials</span><span class="br0">&#40;</span><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getActionName</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+    <span class="br0">&#41;</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+&nbsp;
+<span class="co1">// ...</span></pre>
+</div>
+
+<p>El funcionamiento del generador de la parte de administración te debería resultar familiar. En realidad, su funcionamiento es muy similar al de las clases del modelo y de los formularios. En base a la definición del esquema de datos, Symfony genera las clases del modelo y de los formularios. En el caso del generador de la parte de administración, el módulo generado automáticamente se configura modificando el archivo <code>config/generator.yml</code> que se encuentra dentro del propio módulo:</p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co1"># apps/backend/modules/job/config/generator.yml</span><span class="co4">
+generator</span>:<span class="co3">
+  class</span><span class="sy2">: </span>sfPropelGenerator<span class="co4">
+  param</span>:<span class="co3">
+    model_class</span><span class="sy2">: </span>          JobeetJob<span class="co3">
+    theme</span><span class="sy2">: </span>                admin<span class="co3">
+    non_verbose_templates</span><span class="sy2">: </span>true<span class="co3">
+    with_show</span><span class="sy2">: </span>            false<span class="co3">
+    singular</span><span class="sy2">: </span>             ~<span class="co3">
+    plural</span><span class="sy2">: </span>               ~<span class="co3">
+    route_prefix</span><span class="sy2">: </span>         jobeet_job<span class="co3">
+    with_propel_route</span><span class="sy2">: </span>    <span class="nu0">1</span>
+<span class="co4">
+    config</span>:<span class="co3">
+      actions</span><span class="sy2">: </span>~<span class="co3">
+      fields</span><span class="sy2">: </span> ~<span class="co3">
+      list</span><span class="sy2">: </span>   ~<span class="co3">
+      filter</span><span class="sy2">: </span> ~<span class="co3">
+      form</span><span class="sy2">: </span>   ~<span class="co3">
+      edit</span><span class="sy2">: </span>   ~<span class="co3">
+      new</span><span class="sy2">: </span>    ~</pre>
+</div>
+
+<p>Cada vez que modificas el archivo <code>generator.yml</code>, Symfony regenera su cache. Como veremos en el resto de secciones, personalizar un módulo de administración generado automáticamente es muy sencillo, rápido y hasta divertido.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> La regeneración automática de los archivos de la cache sólo se realiza en el entorno de desarrollo. En el entorno de producción, debes borrar la cache manualmente mediante la tarea <code>cache:clear</code>.</p></div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="el_aspecto_de_la_aplicacion_backend.html">&larr; Anterior <span>12.3. El aspecto de la aplicación backend</span></a>
+            
+            <a class="span5 next" href="la_configuracion_de_la_aplicacion_backend.html">Siguiente &rarr; <span>12.5. La configuración de la aplicación backend</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'La cache de Symfony (El tutorial Jobeet%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'El tutorial Jobeet : La cache de Symfony']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Comenzando el proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> El proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> El modelo de datos</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> El controlador y la vista</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> El sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Profundizando en el modelo</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Trabajando con la página de cada categoría</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Pruebas unitarias</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Pruebas funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Probando los formularios</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_12.html">
+            <span>Capítulo 12.</span> El generador de la parte de administración
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="creando_la_aplicacion_backend.html">
+            <span>12.1.</span> Creando la aplicación backend
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="los_modulos_de_la_aplicacion_backend.html">
+            <span>12.2.</span> Los módulos de la aplicación backend
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_aspecto_de_la_aplicacion_backend.html">
+            <span>12.3.</span> El aspecto de la aplicación backend
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="la_cache_de_symfony.html">
+            <span>12.4.</span> La cache de Symfony
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="la_configuracion_de_la_aplicacion_backend.html">
+            <span>12.5.</span> La configuración de la aplicación backend
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="configuracion_del_titulo.html">
+            <span>12.6.</span> Configuración del título
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="configuracion_de_los_campos.html">
+            <span>12.7.</span> Configuración de los campos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="configuracion_de_la_pagina_list.html">
+            <span>12.8.</span> Configuración de la página list
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="configuracion_de_la_pagina_de_formularios.html">
+            <span>12.9.</span> Configuración de la página de formularios
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="configuracion_de_los_filtros.html">
+            <span>12.10.</span> Configuración de los filtros
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="modificando_las_acciones.html">
+            <span>12.11.</span> Modificando las acciones
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="personalizando_las_plantillas.html">
+            <span>12.12.</span> Personalizando las plantillas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="configuracion_final.html">
+            <span>12.13.</span> Configuración final
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="nos_vemos_manana.html">
+            <span>12.14.</span> Nos vemos mañana
+        </a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> El usuario</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> El día de descanso</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Canales Atom</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Servicios web</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> El buscador</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>20</span> <a href="../capitulo_20.html"> Plugins</a>
+    </li>
+    <li class="level-1">
+        <span>21</span> <a href="../capitulo_21.html"> El día del diseño</a>
+    </li>
+    <li class="level-1">
+        <span>22</span> <a href="../capitulo_22.html"> La cache</a>
+    </li>
+    <li class="level-1">
+        <span>23</span> <a href="../capitulo_23.html"> Pasando a producción</a>
+    </li>
+    <li class="level-1">
+        <span>24</span> <a href="../capitulo_24.html"> Un repaso a Symfony</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

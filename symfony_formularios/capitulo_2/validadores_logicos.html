@@ -1,0 +1,246 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>2.5. Validadores lógicos (Los formularios de Symfony 1.4)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="seguridad_de_los_validadores.html" />
+        <link rel="next" href="validadores_globales.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="2.5. Validadores lógicos (Los formularios de Symfony 1.4)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page symfony_formularios">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Los formularios de Symfony 1.4</a></li>
+  <li><a href="../capitulo_2.html">Capítulo 2. Validación de formularios</a></li>
+  <li class="current"><span>2.5.. Validadores lógicos</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="validadores_logicos"><span>2.5.</span> Validadores lógicos</h1>
+    
+
+<p>Un único campo puede definir varios validadores utilizando los validadores lógicos:</p>
+
+<ul>
+<li><code>sfValidatorAnd</code>: para ser válido, el campo debe pasar todos los validadores</li>
+<li><code>sfValidatorOr</code>: para ser válido, el campo debe pasar al menos un validador</li>
+</ul>
+
+<p>Los constructores de los validadores lógicos aceptan como primer argumento una lista de validadores. El listado 2-11 emplea <code>sfValidatorAnd</code> para establecer dos validadores obligatorios en el campo <code>nombre</code>.</p>
+
+<p><strong>Listado 2-11 - Empleando el validador <code>sfValidatorAnd</code></strong></p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">class</span> ContactoForm <span class="kw2">extends</span> sfForm
+<span class="br0">&#123;</span>
+ <span class="kw2">public</span> <span class="kw2">function</span> configure<span class="br0">&#40;</span><span class="br0">&#41;</span>
+ <span class="br0">&#123;</span>
+    <span class="co1">// ...</span>
+&nbsp;
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">setValidators</span><span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span>
+      <span class="co1">// ...</span>
+      <span class="st_h">'nombre'</span> <span class="sy0">=&gt;</span> <span class="kw2">new</span> sfValidatorAnd<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span>
+        <span class="kw2">new</span> sfValidatorString<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'min_length'</span> <span class="sy0">=&gt;</span> <span class="nu0">5</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+        <span class="kw2">new</span> sfValidatorRegex<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'pattern'</span> <span class="sy0">=&gt;</span> <span class="st_h">'/[\w- ]+/'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+      <span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+    <span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Cuando se envía el formulario, el valor del campo <code>nombre</code> debe tener al menos cinco caracteres y debe cumplir con la expresión regular <code>[\w- ]+</code></p>
+
+<p>Como los validadores lógicos también son validadores, se pueden combinar para crear validaciones tan complejas como las mostradas en el listado 2-12.</p>
+
+<p><strong>Listado 2-12 - Combinando varios validadores lógicos</strong></p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">class</span> ContactoForm <span class="kw2">extends</span> sfForm
+<span class="br0">&#123;</span>
+ <span class="kw2">public</span> <span class="kw2">function</span> configure<span class="br0">&#40;</span><span class="br0">&#41;</span>
+ <span class="br0">&#123;</span>
+    <span class="co1">// ...</span>
+&nbsp;
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">setValidators</span><span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span>
+      <span class="co1">// ...</span>
+      <span class="st_h">'nombre'</span> <span class="sy0">=&gt;</span> <span class="kw2">new</span> sfValidatorOr<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span>
+        <span class="kw2">new</span> sfValidatorAnd<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span>
+          <span class="kw2">new</span> sfValidatorString<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'min_length'</span> <span class="sy0">=&gt;</span> <span class="nu0">5</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+          <span class="kw2">new</span> sfValidatorRegex<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'pattern'</span> <span class="sy0">=&gt;</span> <span class="st_h">'/[\w- ]+/'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+        <span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+        <span class="kw2">new</span> sfValidatorEmail<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+      <span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+    <span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="seguridad_de_los_validadores.html">&larr; Anterior <span>2.4. Seguridad de los validadores</span></a>
+            
+            <a class="span5 next" href="validadores_globales.html">Siguiente &rarr; <span>2.6. Validadores globales</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Validadores lógicos (Los formularios de Symfony 1.4%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Los formularios de Symfony 1.4 : Validadores lógicos']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Creación de formularios</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_2.html">
+            <span>Capítulo 2.</span> Validación de formularios
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="antes_de_comenzar.html">
+            <span>2.1.</span> Antes de comenzar
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="validadores.html">
+            <span>2.2.</span> Validadores
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="personalizando_los_validadores.html">
+            <span>2.3.</span> Personalizando los validadores
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="seguridad_de_los_validadores.html">
+            <span>2.4.</span> Seguridad de los validadores
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="validadores_logicos.html">
+            <span>2.5.</span> Validadores lógicos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="validadores_globales.html">
+            <span>2.6.</span> Validadores globales
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="subiendo_archivos.html">
+            <span>2.7.</span> Subiendo archivos
+        </a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Formularios para diseñadores web</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Integración con Propel</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Integrando Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Referencia de Widgets</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Validadores</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

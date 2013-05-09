@@ -1,0 +1,278 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>Capítulo 7. Enlaces (Introducción a CSS)</title>
+        <link href="main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="capitulo_6/texto.html" />
+        <link rel="next" href="capitulo_7/estilos_avanzados.html" />
+        <link rel="start" href="index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Capítulo 7. Enlaces (Introducción a CSS)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page css">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../index.html">Inicio</a></li>
+  <li><a href="index.html">Introducción a CSS</a></li>
+  <li class="current"><span>Capítulo 7.. Enlaces</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="capitulo_7"><span>Capítulo 7.</span> Enlaces</h1>
+    <h2 id="estilos_basicos">7.1. Estilos básicos</h2>
+
+
+<h3 id="tamano_color_y_decoracion">7.1.1. Tamaño, color y decoración</h3>
+
+<p>Los estilos más sencillos que se pueden aplicar a los enlaces son los que modifican su tamaño de letra, su color y la decoración del texto del enlace. Utilizando las propiedades <code>text-decoration</code> y <code>font-weight</code> se pueden conseguir estilos como los que se muestran en la siguiente imagen:</p>
+
+<div class="figure" id="figure_7_1">
+    <img src="../img/css/f0701.gif" alt="Ejemplo de enlaces con estilos diferentes" />
+
+    <p class="caption"><strong>Figura 7.1</strong> Ejemplo de enlaces con estilos diferentes</p>
+</div>
+
+
+<p>A continuación se muestran las reglas CSS del ejemplo anterior:</p>
+
+<div class="code css">
+<pre class="css">a <span class="br0">&#123;</span> <span class="kw1">margin</span><span class="sy0">:</span> <span class="re3">1em</span> <span class="nu0">0</span><span class="sy0">;</span> <span class="kw1">display</span><span class="sy0">:</span> <span class="kw2">block</span><span class="sy0">;</span><span class="br0">&#125;</span>
+&nbsp;
+<span class="re1">.alternativo</span> <span class="br0">&#123;</span><span class="kw1">color</span><span class="sy0">:</span> <span class="re0">#CC0000</span><span class="sy0">;</span><span class="br0">&#125;</span>
+<span class="re1">.simple</span> <span class="br0">&#123;</span><span class="kw1">text-decoration</span><span class="sy0">:</span> <span class="kw2">none</span><span class="sy0">;</span><span class="br0">&#125;</span>
+<span class="re1">.importante</span> <span class="br0">&#123;</span><span class="kw1">font-weight</span><span class="sy0">:</span> <span class="kw2">bold</span><span class="sy0">;</span> <span class="kw1">font-size</span><span class="sy0">:</span> <span class="re3">1.3em</span><span class="sy0">;</span><span class="br0">&#125;</span>
+<span class="re1">.raro</span> <span class="br0">&#123;</span><span class="kw1">text-decoration</span><span class="sy0">:</span><span class="kw2">overline</span><span class="sy0">;</span><span class="br0">&#125;</span>
+&nbsp;
+&lt;a href<span class="sy0">=</span><span class="st0">&quot;#&quot;</span><span class="sy0">&gt;</span>Enlace con el estilo por defecto&lt;/a<span class="sy0">&gt;</span>
+&lt;a class<span class="sy0">=</span><span class="st0">&quot;alternativo&quot;</span> href<span class="sy0">=</span><span class="st0">&quot;#&quot;</span><span class="sy0">&gt;</span>Enlace de <span class="kw1">color</span> rojo&lt;/a<span class="sy0">&gt;</span>
+&lt;a class<span class="sy0">=</span><span class="st0">&quot;simple&quot;</span> href<span class="sy0">=</span><span class="st0">&quot;#&quot;</span><span class="sy0">&gt;</span>Enlace sin subrayado&lt;/a<span class="sy0">&gt;</span>
+&lt;a class<span class="sy0">=</span><span class="st0">&quot;importante&quot;</span> href<span class="sy0">=</span><span class="st0">&quot;#&quot;</span><span class="sy0">&gt;</span>Enlace muy importante&lt;/a<span class="sy0">&gt;</span>
+&lt;a class<span class="sy0">=</span><span class="st0">&quot;raro&quot;</span> href<span class="sy0">=</span><span class="st0">&quot;#&quot;</span><span class="sy0">&gt;</span>Enlace con un estilo raro&lt;/a<span class="sy0">&gt;</span></pre>
+</div>
+
+<h3 id="pseudo_clases">7.1.2. Pseudo-clases</h3>
+
+<p>CSS también permite aplicar diferentes estilos a un mismo enlace en función de su estado. De esta forma, es posible cambiar el aspecto de un enlace cuando por ejemplo el usuario pasa el ratón por encima o cuando el usuario pincha sobre ese enlace.</p>
+
+<p>Como con los atributos <code>id</code> o <code>class</code> no es posible aplicar diferentes estilos a un mismo elemento en función de su estado, CSS introduce un nuevo concepto llamado <em>pseudo-clases</em>. En concreto, CSS define las siguientes cuatro pseudo-clases:</p>
+
+<ul>
+<li><code>:link</code>, aplica estilos a los enlaces que apuntan a páginas o recursos que aún no han sido visitados por el usuario.</li>
+<li><code>:visited</code>, aplica estilos a los enlaces que apuntan a recursos que han sido visitados anteriormente por el usuario. El historial de enlaces visitados se borra automáticamente cada cierto tiempo y el usuario también puede borrarlo manualmente.</li>
+<li><code>:hover</code>, aplica estilos al enlace sobre el que el usuario ha posicionado el puntero del ratón.</li>
+<li><code>:active</code>, aplica estilos al enlace que está pinchando el usuario. Los estilos sólo se aplican desde que el usuario pincha el botón del ratón hasta que lo suelta, por lo que suelen ser unas pocas décimas de segundo.</li>
+</ul>
+
+<p>Como se sabe, por defecto los navegadores muestran los enlaces no visitados de color azul y subrayados y los enlaces visitados de color morado. Las pseudo-clases anteriores permiten modificar completamente ese aspecto por defecto y por eso casi todas las páginas las utilizan.</p>
+
+<p>El siguiente ejemplo muestra cómo ocultar el subrayado cuando el usuario pasa el ratón por encima de cualquier enlace de la página:</p>
+
+<div class="code css">
+<pre class="css">a<span class="re2">:hover </span><span class="br0">&#123;</span> <span class="kw1">text-decoration</span><span class="sy0">:</span> <span class="kw2">none</span><span class="sy0">;</span> <span class="br0">&#125;</span></pre>
+</div>
+
+<p>Aplicando las reglas anteriores, los navegadores ocultan el subrayado del enlace sobre el que se posiciona el ratón:</p>
+
+<div class="figure" id="figure_7_2">
+    <img src="../img/css/f0702.gif" alt="Ocultando el subrayado de los enlaces al pasar el ratón por encima" />
+
+    <p class="caption"><strong>Figura 7.2</strong> Ocultando el subrayado de los enlaces al pasar el ratón por encima</p>
+</div>
+
+
+<p>Las pseudo-clases siempre incluyen dos puntos (<code>:</code>) por delante de su nombre y siempre se añaden a continuación del elemento al que se aplican, sin dejar ningún espacio en blanco por delante:</p>
+
+<div class="code css">
+<pre class="css"><span class="coMULTI">/* Incorrecto: el nombre de la pseudo-clase no se puede separar de los dos puntos iniciales */</span>
+a<span class="sy0">:</span> visited <span class="br0">&#123;</span> ... <span class="br0">&#125;</span>
+&nbsp;
+<span class="coMULTI">/* Incorrecto: la pseudo-clase siempre se añade a continuación del elemento al que modifica */</span>
+a <span class="re2">:visited </span><span class="br0">&#123;</span> ... <span class="br0">&#125;</span>
+&nbsp;
+<span class="coMULTI">/* Correcto: la pseudo-clase modifica el comportamiento del elemento &lt;a&gt; */</span>
+a<span class="re2">:visited </span><span class="br0">&#123;</span> ... <span class="br0">&#125;</span></pre>
+</div>
+
+<p>Las pseudo-clases también se pueden combinar con cualquier otro selector complejo:</p>
+
+<div class="code css">
+<pre class="css">a<span class="re1">.importante</span><span class="re2">:visited </span><span class="br0">&#123;</span> ... <span class="br0">&#125;</span>
+a<span class="re0">#principal</span><span class="re2">:hover </span><span class="br0">&#123;</span> ... <span class="br0">&#125;</span>
+div<span class="re0">#menu</span> ul li a<span class="re1">.primero</span><span class="re2">:active </span><span class="br0">&#123;</span> ... <span class="br0">&#125;</span></pre>
+</div>
+
+<p>Cuando se aplican varias pseudo-clases diferentes sobre un mismo enlace, se producen colisiones entre los estilos de algunas pseudo-clases. Si se pasa por ejemplo el ratón por encima de un enlace visitado, se aplican los estilos de las pseudo-clases <code>:hover</code> y <code>:visited</code>. Si el usuario pincha sobre un enlace no visitado, se aplican las pseudo-clases <code>:hover</code>, <code>:link</code> y <code>:active</code> y así sucesivamente.</p>
+
+<p>Si se definen varias pseudo-clases sobre un mismo enlace, el único orden que asegura que todos los estilos de las pseudo-clases se aplican de forma coherente es el siguiente: <code>:link</code>, <code>:visited</code>, <code>:hover</code> y <code>:active</code>. De hecho, en muchas hojas de estilos es habitual establecer los estilos de los enlaces de la siguiente forma:</p>
+
+<div class="code css">
+<pre class="css">a<span class="re2">:link</span><span class="sy0">,</span> a<span class="re2">:visited </span><span class="br0">&#123;</span>
+  ...
+<span class="br0">&#125;</span>
+&nbsp;
+a<span class="re2">:hover</span><span class="sy0">,</span> a<span class="re2">:active </span><span class="br0">&#123;</span>
+  ...
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Las pseudo-clases <code>:link</code> y <code>:visited</code> solamente están definidas para los enlaces, pero las pseudo-clases <code>:hover</code> y <code>:active</code> se definen para todos los elementos HTML. Desafortunadamente, Internet Explorer 6 y sus versiones anteriores solamente las soportan para los enlaces.</p>
+
+<p>También es posible combinar en un mismo elemento las pseudo-clases que son compatibles entre sí:</p>
+
+<div class="code css">
+<pre class="css"><span class="coMULTI">/* Los estilos se aplican cuando el usuario pasa el ratón por encima de un 
+   enlace que todavía no ha visitado */</span>
+a<span class="re2">:link</span><span class="re2">:hover </span><span class="br0">&#123;</span> ... <span class="br0">&#125;</span>
+&nbsp;
+<span class="coMULTI">/* Los estilos se aplican cuando el usuario pasa el ratón por encima de un 
+   enlace que ha visitado previamente */</span>
+a<span class="re2">:visited</span><span class="re2">:hover </span><span class="br0">&#123;</span> ... <span class="br0">&#125;</span></pre>
+</div>
+
+<p><div class="exercise"><p class="title">Ejercicio 8</p> <a href="http://librosweb.es/css/capitulo_15/ejercicio_8.html">Ver enunciado</a></div></p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="capitulo_6/texto.html">&larr; Anterior <span>6.2. Texto</span></a>
+            
+            <a class="span5 next" href="capitulo_7/estilos_avanzados.html">Siguiente &rarr; <span>7.2. Estilos avanzados</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Enlaces (Introducción a CSS%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a CSS : Enlaces']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="capitulo_2.html"> Selectores</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="capitulo_3.html"> Unidades de medida y colores</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="capitulo_4.html"> Modelo de cajas</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="capitulo_5.html"> Posicionamiento y visualización</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="capitulo_6.html"> Texto</a>
+    </li>
+    <li class="level-1 active">
+        <a href="capitulo_7.html">
+            <span>Capítulo 7.</span> Enlaces
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="capitulo_7/estilos_avanzados.html">
+            <span>7.2.</span> Estilos avanzados
+        </a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="capitulo_8.html"> Imágenes</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="capitulo_9.html"> Listas</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="capitulo_10.html"> Tablas</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="capitulo_11.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="capitulo_12.html"> Layout</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="capitulo_13.html"> Otros</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="capitulo_14.html"> Recursos útiles</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="capitulo_15.html"> Ejercicios</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="capitulo_16.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

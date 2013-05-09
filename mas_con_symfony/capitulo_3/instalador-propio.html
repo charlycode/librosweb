@@ -1,0 +1,386 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>3.1. Empieza más rápido: personalizando la creación de proyectos (Más con Symfony)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="../capitulo_3.html" />
+        <link rel="next" href="programa_mas_rapido.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="3.1. Empieza más rápido: personalizando la creación de proyectos (Más con Symfony)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page mas_con_symfony">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Más con Symfony</a></li>
+  <li><a href="../capitulo_3.html">Capítulo 3. Mejora tu productividad</a></li>
+  <li class="current"><span>3.1.. Empieza más rápido: personalizando la creación de proyectos</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="instalador-propio"><span>3.1.</span> Empieza más rápido: personalizando la creación de proyectos</h1>
+    
+
+<p>Gracias a la línea de comandos de Symfony, crear un proyecto nuevo es tan
+sencillo como lo siguiente:</p>
+
+<div class="code cli">
+<pre class="cli">$ php /ruta/hasta/symfony generate:project mi_proyecto --orm=Doctrine</pre>
+</div>
+
+<p>La tarea <code>generate:project</code> genera la estructura de directorios por defecto
+del nuevo proyecto y crea todos los archivos de configuración con los valores
+iniciales adecuados. Después se puede hacer uso de otras tareas de Symfony para
+crear aplicaciones, instalar plugins, configurar el modelo, etc.</p>
+
+<p>No obstante, lo primero que haces después de crear cada proyecto seguramente
+siempre es lo mismo: creas la aplicación principal, instalas varios plugins,
+modificas el valor de algunas opciones de configuración a tu gusto, etc.</p>
+
+<p>Desde la versión 1.3 de Symfony es posible personalizar y automatizar el
+proceso de creación de un nuevo proyecto.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Como todas las tareas de Symfony son clases, resulta muy sencillo personalizar
+su comportamiento mediante la herencia, salvo en el caso de la tarea
+<code>generate:project</code>. El motivo es que cuando se ejecuta esa tarea todavía no
+existe ningún proyecto, por lo que no existe una forma sencilla de personalizar
+su comportamiento.</p></div>
+
+<p>La tarea <code>generate:project</code> permite el uso de una opción llamada <code>--installer</code>
+y que indica el nombre del archivo PHP que se ejecuta durante el proceso de
+creación del proyecto:</p>
+
+<div class="code cli">
+<pre class="cli">$ php /ruta/hasta/symfony generate:project --installer=/donde_sea/mi_instalador.php</pre>
+</div>
+
+<p>El script <code>/donde_sea/mi_instalador.php</code> se ejecuta dentro del contexto de la
+instancia de <code>sfGenerateProjectTask</code>, por lo que tiene acceso a todos sus
+métodos (invocándolos a través del objeto <code>$this</code>). Las siguientes secciones
+muestran todos los métodos disponibles que puedes utilizar para personalizar el
+proceso de creación de proyectos.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Si en tu archivo de configuración <code>php.ini</code> activas la inclusión de archivos
+mediante URL en la función <code>include()</code>, puedes incluso utilizar una URL como
+instalador (obviamente debes tener mucho cuidado en este caso, ya que estás
+haciendo uso de un script remoto del que puede que no sepas nada):</p>
+
+<div class="code cli">
+<pre class="cli">$ symfony generate:project --installer=http://ejemplo.com/instalador_symfony.php</pre>
+</div>
+
+<p></p></div>
+
+<h3 id="installdir">3.1.1. <code>installDir()</code></h3>
+
+<p>El método <code>installDir()</code> copia una estructura de directorios (compuesta de
+archivos y subdirectorios) en el nuevo proyecto:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">installDir</span><span class="br0">&#40;</span><span class="kw3">dirname</span><span class="br0">&#40;</span><span class="kw4">__FILE__</span><span class="br0">&#41;</span><span class="sy0">.</span><span class="st_h">'/skeleton'</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<h3 id="runtask">3.1.2. <code>runTask()</code></h3>
+
+<p>El método <code>runTask()</code> ejecuta una tarea. Como argumento se le pasa el nombre
+de la tarea y una cadena de texto con todos los argumentos y opciones de esa
+tarea:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">runTask</span><span class="br0">&#40;</span><span class="st_h">'configure:author'</span><span class="sy0">,</span> <span class="st0">&quot;'Fabien Potencier'&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Las opciones y argumentos de la tarea también se pueden pasar como array:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">runTask</span><span class="br0">&#40;</span><span class="st_h">'configure:author'</span><span class="sy0">,</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'author'</span> <span class="sy0">=&gt;</span> <span class="st_h">'Fabien Potencier'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<div class="admonition tip"><p><strong class="title">Truco</strong> También se pueden utilizar los nombres cortos de las tareas:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">runTask</span><span class="br0">&#40;</span><span class="st_h">'cc'</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p></p></div>
+
+<p>Este método se puede utilizar también para instalar plugins:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">runTask</span><span class="br0">&#40;</span><span class="st_h">'plugin:install'</span><span class="sy0">,</span> <span class="st_h">'sfDoctrineGuardPlugin'</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Para instalar una versión específica del plugin, simplemente se pasan las
+opciones adecuadas:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">runTask</span><span class="br0">&#40;</span><span class="st_h">'plugin:install'</span><span class="sy0">,</span> <span class="st_h">'sfDoctrineGuardPlugin'</span><span class="sy0">,</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'release'</span> <span class="sy0">=&gt;</span> <span class="st_h">'10.0.0'</span><span class="sy0">,</span> <span class="st_h">'stability'</span> <span class="sy0">=&gt;</span> beta<span class="st_h">'));</span></pre>
+</div>
+
+<div class="admonition tip"><p><strong class="title">Truco</strong> Para ejecutar tareas de un plugin recién instalado, es necesario volver a
+cargar las tareas ejecutando el siguiente código:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">reloadTasks</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p></p></div>
+
+<p>Si creas una nueva aplicación y quieres utilizar tareas como <code>generate:module</code>
+que dependen de una aplicación específica, debes modificar el contexto de la
+configuración manualmente:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">setConfiguration</span><span class="br0">&#40;</span><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">createConfiguration</span><span class="br0">&#40;</span><span class="st_h">'frontend'</span><span class="sy0">,</span> <span class="st_h">'dev'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<h3 id="mensajes_de_log">3.1.3. Mensajes de log</h3>
+
+<p>El script de instalación también puede mostrar fácilmente mensajes de log que
+indiquen al programador la instalación que se está realizando:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// mensaje de log sencillo</span>
+<span class="re0">$this</span><span class="sy0">-&gt;</span><span class="kw3">log</span><span class="br0">&#40;</span><span class="st_h">'mensaje creado por el instalador'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="co1">// bloque de mensajes de log</span>
+<span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">logBlock</span><span class="br0">&#40;</span><span class="st_h">'Instalador de Fabien'</span><span class="sy0">,</span> <span class="st_h">'ERROR_LARGE'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="co1">// sección de mensajes de log</span>
+<span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">logSection</span><span class="br0">&#40;</span><span class="st_h">'install'</span><span class="sy0">,</span> <span class="st_h">'instalación de varios archivos'</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<h3 id="interaccion_con_el_usuario">3.1.4. Interacción con el usuario</h3>
+
+<p>Los métodos <code>askConfirmation()</code>, <code>askAndValidate()</code> y <code>ask()</code> permiten realizar
+preguntas y por tanto convierten la instalación en un proceso configurable de
+forma dinámica.</p>
+
+<p>Si sólo necesitas una confirmación, utiliza el método <code>askConfirmation()</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw1">if</span> <span class="br0">&#40;</span><span class="sy0">!</span><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">askConfirmation</span><span class="br0">&#40;</span><span class="st_h">'¿Seguro que quieres utilizar este instalador?'</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">logSection</span><span class="br0">&#40;</span><span class="st_h">'install'</span><span class="sy0">,</span> <span class="st_h">'¡Buena elección!'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+  <span class="kw1">return</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>También puedes hacer uso del método <code>ask()</code> para preguntar al usuario y obtener
+su respuesta en forma de cadena de texto:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$secreto</span> <span class="sy0">=</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">ask</span><span class="br0">&#40;</span><span class="st_h">'Escribe una cadena de texto única para el secreto de CSRF:'</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Y si quieres validar la respuesta, puedes emplear el método <code>askAndValidate()</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$validador</span> <span class="sy0">=</span> <span class="kw2">new</span> sfValidatorEmail<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'invalid'</span> <span class="sy0">=&gt;</span> <span class="st_h">'¡Vaya, parece que no es un email!'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$email</span> <span class="sy0">=</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">askAndValidate</span><span class="br0">&#40;</span><span class="st_h">'Por favor, introduce tu email:'</span><span class="sy0">,</span> <span class="re0">$validador</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<h3 id="operaciones_con_el_sistema_de_archivos">3.1.5. Operaciones con el sistema de archivos</h3>
+
+<p>Si quieres realizar cambios en el sistema de archivos, puedes acceder al
+objeto de Symfony encargado de estas operaciones:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getFilesystem</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;...</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<div class="admonition sidebar"><p><strong class="title">El proceso de creación del <em>sandbox</em></strong> El <em>sandbox</em> de Symfony no es más que un proyecto con una aplicación creada y
+con una base de datos SQLite preconfigurada. Cualquiera puede crearse su propio
+sandbox haciendo uso de su script de instalación:</p>
+
+<div class="code cli">
+<pre class="cli">$ php symfony generate:project --installer=/ruta/hasta/symfony/data/bin/sandbox_installer.php</pre>
+</div>
+
+<p>Echa un vistazo al script <code>symfony/data/bin/sandbox_installer.php</code> para ver un
+ejemplo real de un script de instalación.</p></div>
+
+<p>El script de instalación no deja de ser un archivo PHP normal, por lo que puedes
+hacer cualquier otra cosa que quieras. En lugar de ejecutar las mismas tareas
+una y otra vez al crear un nuevo proyecto Symfony, puedes utilizar tu propio
+script para adaptar como quieras la instalación de los proyectos Symfony. Crear
+un nuevo proyecto con un instalador es mucho más rápido y evita que te olvides
+de ejecutar algún paso. Además, puedes compartir tu script de instalación con
+otros programadores.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> El el <a class="internal" href="../capitulo_6.html#advanced-forms">capítulo 6</a> usaremos un instalador propio. Su código fuente
+se puede encontrar en el <a class="internal" href="../apendice_b.html#custom-installer-example">apéndice B</a>.</p></div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="../capitulo_3.html">&larr; Anterior <span>Capítulo 3. Mejora tu productividad</span></a>
+            
+            <a class="span5 next" href="programa_mas_rapido.html">Siguiente &rarr; <span>3.2. Programa más rápido</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Empieza más rápido: personalizando la creación de proyectos (Más con Symfony%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Más con Symfony : Empieza más rápido: personalizando la creación de proyectos']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Enrutamiento avanzado</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_3.html">
+            <span>Capítulo 3.</span> Mejora tu productividad
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="instalador-propio.html">
+            <span>3.1.</span> Empieza más rápido: personalizando la creación de proyectos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="programa_mas_rapido.html">
+            <span>3.2.</span> Programa más rápido
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="encuentra_la_documentacion_mas_rapido.html">
+            <span>3.3.</span> Encuentra la documentación más rápido
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="depura_mas_rapido.html">
+            <span>3.4.</span> Depura más rápido
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="crea_pruebas_mas_rapido.html">
+            <span>3.5.</span> Crea pruebas más rápido
+        </a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Emails</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Widgets y validadores propios</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Formularios avanzados</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Mejorando la barra de depuración web</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Uso avanzado de Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Utilizando la herencia de tablas de Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Funcionamiento interno de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Windows y Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Desarrollando aplicaciones Facebook</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Descubriendo el poder de la línea de comandos</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Jugando con la cache de configuración de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Trabajando con la comunidad Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>A</span> <a href="../apendice_a.html"> Código JavaScript de sfWidgetFormGMapAddress</a>
+    </li>
+    <li class="level-1">
+        <span>B</span> <a href="../apendice_b.html"> Ejemplo de instalador propio</a>
+    </li>
+    <li class="level-1">
+        <span>C</span> <a href="../apendice_c.html"> Licencia</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

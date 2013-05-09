@@ -1,0 +1,269 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>4.8. El demonio Git (Pro Git, el libro oficial de Git)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="gitosis.html" />
+        <link rel="next" href="git_en_un_alojamiento_externo.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="4.8. El demonio Git (Pro Git, el libro oficial de Git)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page pro_git">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Pro Git, el libro oficial de Git</a></li>
+  <li><a href="../capitulo_4.html">Capítulo 4. Git en un servidor</a></li>
+  <li class="current"><span>4.8.. El demonio Git</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="el_demonio_git"><span>4.8.</span> El demonio Git</h1>
+    
+
+<p>Para dar a tus proyectos un acceso público, sin autentificar, de solo lectura, querrás ir más allá del protocolo HTTP y comenzar a utilizar el protocolo Git. Principalmente, por razones de velocidad. El protocolo Git es mucho más eficiente y, por tanto, más rápido que el protocolo HTTP. Utilizándolo, ahorrarás mucho tiempo a tus usuarios.</p>
+
+<p>Aunque, sigue siendo solo para acceso unicamente de lectura y sin autentificar. Si lo estás utilizando en un servidor fuera del perímetro de tu cortafuegos, se debe utilizar exclusivamente para proyectos que han de ser públicos, visibles para todo el mundo. Si lo estás utilizando en un servidor dentro del perímetro de tu cortafuegos, puedes utilizarlo para proyectos donde un gran número de personas o de ordenadores (integración contínua o servidores de desarrollo) necesiten acceso de solo lectura. Y donde quieras evitar la gestión de claves SSH para cada una de ellas.</p>
+
+<p>En cualquier caso, el protocolo Git es relativamente sencillo de configurar. Tan solo necesitas lanzar este comando de forma demonizada:</p>
+
+<div class="code code">
+<pre class="code">git daemon --reuseaddr --base-path=/opt/git/ /opt/git/</pre>
+</div>
+
+<p>El parámetro <code>--reuseaddr</code> permite al servidor reiniciarse sin esperar a que se liberen viejas conexiones; el parámetro <code>--base-path</code> permite a los usuarios clonar proyectos sin necesidad de indicar su camino completo; y el camino indicado al final del comando mostrará al demonio Git dónde buscar los repositorios a exportar. Si tienes un cortafuegos activo, necesitarás abrir el puerto 9418 para la máquina donde estás configurando el demónio Git.</p>
+
+<p>Este proceso se puede demonizar de diferentes maneras, dependiendo del sistema operativo con el que trabajas. En una máquina Ubuntu, puedes usar un script de arranque. Poniendo en el siguiente archivo:</p>
+
+<div class="code code">
+<pre class="code">/etc/event.d/local-git-daemon</pre>
+</div>
+
+<p>un script tal como:</p>
+
+<div class="code code">
+<pre class="code">start on startup
+stop on shutdown
+exec /usr/bin/git daemon \
+    --user=git --group=git \
+    --reuseaddr \
+    --base-path=/opt/git/ \
+    /opt/git/
+respawn</pre>
+</div>
+
+<p>Por razones de seguridad, es recomendable lanzar este demonio con un usuario que tenga unicamente permisos de lectura en los repositorios — lo puedes hacer creando un nuevo usuario <code>git-ro</code> y lanzando el demonio con él —.  Para simplificar, en estos ejemplos vamos a lanzar el demonio Git bajo el mismo usuario <code>git</code> con el que hemos lanzado Gitosis.</p>
+
+<p>Tras reiniciar tu máquina, el demonio Git arrancará automáticamente y se reiniciará cuando se caiga. Para arrancarlo sin necesidad de reiniciar la máquina, puedes utilizar el comando:</p>
+
+<div class="code code">
+<pre class="code">initctl start local-git-daemon</pre>
+</div>
+
+<p>En otros sistemas operativos, puedes utilizar <code>xinetd</code>, un script en el sistema <code>sysvinit</code>, o alguna otra manera — siempre y cuando demonizes el comando y puedas monitorizarlo —.</p>
+
+<p>A continuación, has de indicar en tu servidor Gitosis a cuales de tus repositorios ha de permitir acceso sin autentificar por parte del servidor Git. Añadiendo una sección por cada repositorio, puedes indicar a cuáles permitirá leer el demonio Git. Por ejemplo, si quieres permitir acceso a tu <code>proyecto iphone</code>, puedes añadir lo siguiente al archivo <code>gitosis.conf</code>:</p>
+
+<div class="code repo iphone_project">
+<pre class="repoiphone_project">daemon = yes</pre>
+</div>
+
+<p>Cuando confirmes (<em>commit</em>) y envies (<em>push</em>) estos cambios, el demonio que está en marcha en el servidor comenzará a responder a peticiones de cualquiera que solicite dicho proyecto a través del puerto 9418 de tu servidor.</p>
+
+<p>Si decides no utilizar Gitosis, pero sigues queriendo utilizar un demonio Git, has de lanzar este comando en cada proyecto que desees servír vía el demonio Git:</p>
+
+<div class="code code">
+<pre class="code">$ cd /path/to/project.git
+$ touch git-daemon-export-ok</pre>
+</div>
+
+<p>La presencia de este archivo, indica a Git que está permitido el servir este proyecto sin necesidad de autentificación.</p>
+
+<p>También podemos controlar a través de Gitosis los proyectos a ser mostrados por GitWeb. Previamente, has de añadir algo como esto al archivo <code>/etc/gitweb.conf</code>:</p>
+
+<div class="code code">
+<pre class="code">$projects_list = &quot;/home/git/gitosis/projects.list&quot;;
+$projectroot = &quot;/home/git/repositories&quot;;
+$export_ok = &quot;git-daemon-export-ok&quot;;
+@git_base_url_list = ('git://gitserver');</pre>
+</div>
+
+<p>Los proyectos a ser mostrados por GitWeb se controlarán añadiendo o quitando parámetros <code>gitweb</code> en el archivo de configuración de Gitosis. Por ejemplo, si quieres mostrar el proyecto iphone, has de poner algo así como:</p>
+
+<div class="code repo iphone_project">
+<pre class="repoiphone_project">daemon = yes
+gitweb = yes</pre>
+</div>
+
+<p>A partir de ese momento, cuando confirmes cambios (<em>commit</em>) y envies (<em>push</em>) el proyecto, GitWeb comenzará a mostrar tu proyecto iphone.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="gitosis.html">&larr; Anterior <span>4.7. Gitosis</span></a>
+            
+            <a class="span5 next" href="git_en_un_alojamiento_externo.html">Siguiente &rarr; <span>4.9. Git en un alojamiento externo</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'El demonio Git (Pro Git, el libro oficial de Git%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Pro Git, el libro oficial de Git : El demonio Git']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Empezando</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Fundamentos de Git</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Trabajando con ramas en Git</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_4.html">
+            <span>Capítulo 4.</span> Git en un servidor
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="los_protocolos.html">
+            <span>4.1.</span> Los Protocolos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="poniendo_git_en_un_servidor.html">
+            <span>4.2.</span> Poniendo Git en un Servidor
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="generando_tu_clave_publica_ssh.html">
+            <span>4.3.</span> Generando tu clave pública SSH
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="preparando_el_servidor.html">
+            <span>4.4.</span> Preparando el servidor
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="acceso_publico.html">
+            <span>4.5.</span> Acceso público
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="gitweb.html">
+            <span>4.6.</span> GitWeb
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="gitosis.html">
+            <span>4.7.</span> Gitosis
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="el_demonio_git.html">
+            <span>4.8.</span> El demonio Git
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="git_en_un_alojamiento_externo.html">
+            <span>4.9.</span> Git en un alojamiento externo
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="resumen.html">
+            <span>4.10.</span> Resumen
+        </a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Git en entornos distribuidos</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Las herramientas de Git</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Personalizando Git</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Git y otros sistemas</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Funcionamiento interno de Git</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

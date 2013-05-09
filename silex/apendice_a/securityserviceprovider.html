@@ -1,0 +1,723 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>A.5. SecurityServiceProvider (Silex, el manual oficial)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="monologserviceprovider.html" />
+        <link rel="next" href="serializerserviceprovider.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="A.5. SecurityServiceProvider (Silex, el manual oficial)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page silex">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Silex, el manual oficial</a></li>
+  <li><a href="../apendice_a.html">Apéndice A. Proveedores de servicios de Silex</a></li>
+  <li class="current"><span>A.5.. SecurityServiceProvider</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="securityserviceprovider"><span>A.5.</span> SecurityServiceProvider</h1>
+    
+
+<p>El proveedor <code>SecurityServiceProvider</code> gestiona la autenticación y la autorización de acceso a tus aplicaciones.</p>
+
+<h3 id="parametros_de_configuracion">A.13.1. Parámetros de configuración</h3>
+
+<p>Este proveedor no define ningún parámetro de configuración.</p>
+
+<h3 id="servicios_proporcionados">A.13.2. Servicios proporcionados</h3>
+
+<p>El proveedor proporciona los siguientes servicios:</p>
+
+<ul>
+<li><code>security</code>: es el principal punto de acceso al proveedor de seguridad. Se emplea sobre todo para obtener el <em>token</em> que representa al usuario actual.</li>
+<li><code>security.authentication_manager</code>: es una instancia de la clase <a href="http://api.symfony.com/master/Symfony/Component/Security/Core/Authentication/AuthenticationProviderManager.html">AuthenticationProviderManager</a> que se encarga de la autenticación.</li>
+<li><code>security.access_manager</code>: es una instancia de la clase <a href="http://api.symfony.com/master/Symfony/Component/Security/Core/Authorization/AccessDecisionManager.html">AccessDecisionManager</a>, que se encarga de todo lo relativo a la autorización.</li>
+<li><code>security.session_strategy</code>: define la estrategia que se utiliza en las sesiones relacionadas con la autenticación.</li>
+<li><code>security.user_checker</code>: comprueba los permisos del usuario después de realizar la autenticación.</li>
+<li><code>security.last_error</code>: devuelve el último error de autenticación relacionado con el objeto <code>Request</code> proporcionado.</li>
+<li><code>security.encoder_factory</code>: define el mecanismo de codificación utilizado para las contraseñas de los usuarios (por defecto se utiliza un algoritmo básico de tipo <em>digest</em>).</li>
+<li><code>security.encoder.digest</code>: el codificador de contraseñas utilizado para todos los usuarios de la aplicación.</li>
+</ul>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Este proveedor define muchos otros servicios que se utilizan internamente y por tanto, rara vez se necesita modificarlos por parte de la aplicación.</p></div>
+
+<h3 id="como_se_registra_el_proveedor">A.13.3. Cómo se registra el proveedor</h3>
+
+<p>El siguiente código muestra un ejemplo de cómo registrar este proveedor:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$app</span><span class="sy0">-&gt;</span><span class="me1">register</span><span class="br0">&#40;</span><span class="kw2">new</span> Silex\Provider\SecurityServiceProvider<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span>
+    <span class="st_h">'security.firewalls'</span> <span class="sy0">=&gt;</span> <span class="co1">// ver explicación en la próxima sección</span>
+<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> El componente <code>Security</code> de Symfony se incluye cuando descargas Silex en forma de archivo comprimido. Si instalas Silex mediante Composer, debes añadir la siguiente dependencia en el archivo <code>composer.json</code>:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="st0">&quot;require&quot;</span><span class="sy0">:</span> <span class="br0">&#123;</span>
+    <span class="st0">&quot;symfony/security&quot;</span><span class="sy0">:</span> <span class="st0">&quot;2.1.*&quot;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p></p></div>
+
+<div class="admonition caution"><p><strong class="title">Advertencia</strong> Las opciones de seguridad sólo están disponibles después de que la aplicación se haya iniciado. Así que si quieres utilizar todo eso fuera del controlador que procesa las peticiones de los usuarios, no olvides ejecutar primero el método <code>boot()</code> para iniciar la aplicación:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$app</span><span class="sy0">-&gt;</span><span class="me1">boot</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p></p></div>
+
+<h3 id="ejemplos_de_uso">A.13.4. Ejemplos de uso</h3>
+
+<p>El componente <code>Security</code> es uno de los más poderosos y complejos de Symfony.
+Consulta la documentación relacionada con el componente para aprender más sobre
+el.</p>
+
+<div class="admonition tip"><p><strong class="title">Truco</strong> Si tu aplicación no funciona como esperas, es posible que la configuración de la seguridad no sea correcta. Para solucionar más fácilmente este tipo de problemas, no olvides activar los logs en la aplicación, ya que el componente <code>Security</code> genera muchos mensajes de log útiles. Para activar el log, consulta la sección anterior sobre el proveedor <code>MonologServiceProvider</code>.</p></div>
+
+<p>A continuación se incluye una lista con las soluciones a los problemas más habituales relacionados con la seguridad de la aplicación.</p>
+
+<h4 id="accessing_the_current_user">A.5.4.1. Accessing the current User</h4>
+
+<p>La información del usuario que está actualmente conectado a la aplicación se guarda en un objeto especial llamado <em>token</em>. Puedes acceder a este <em>token</em> a través del servicio <code>security</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$token</span> <span class="sy0">=</span> <span class="re0">$app</span><span class="br0">&#91;</span><span class="st_h">'security'</span><span class="br0">&#93;</span><span class="sy0">-&gt;</span><span class="me1">getToken</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Si la aplicación no dispone de información sobre el usuario, el valor del <em>token</em> es <code>null</code>. Si un usuario está conectado a la aplicación, puedes obtener su objeto a través del método <code>getUser()</code> del <em>token</em>:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw1">if</span> <span class="br0">&#40;</span><span class="kw4">null</span> <span class="sy0">!==</span> <span class="re0">$token</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="re0">$user</span> <span class="sy0">=</span> <span class="re0">$token</span><span class="sy0">-&gt;</span><span class="me1">getUser</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>El valor devuelto por el método <code>getUser()</code> puede ser una cadena de texto, un objeto que implemente el método <code>__toString()</code>, o una instancia de la clase <a href="http://api.symfony.com/master/Symfony/Component/Security/Core/User/UserInterface.html">UserInterface</a>.</p>
+
+<h4 id="restringir_el_acceso_a_una_parte_del_sitio_web">A.5.4.2. Restringir el acceso a una parte del sitio web</h4>
+
+<p>El siguiente código muestra un ejemplo que utiliza la autenticación simple de HTTP para proteger con contraseña cualquier URL de la aplicación que empiece por <code>/admin/</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$app</span><span class="br0">&#91;</span><span class="st_h">'security.firewalls'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="kw3">array</span><span class="br0">&#40;</span>
+    <span class="st_h">'admin'</span> <span class="sy0">=&gt;</span> <span class="kw3">array</span><span class="br0">&#40;</span>
+        <span class="st_h">'pattern'</span> <span class="sy0">=&gt;</span> <span class="st_h">'^/admin'</span><span class="sy0">,</span>
+        <span class="st_h">'http'</span> <span class="sy0">=&gt;</span> <span class="kw4">true</span><span class="sy0">,</span>
+        <span class="st_h">'users'</span> <span class="sy0">=&gt;</span> <span class="kw3">array</span><span class="br0">&#40;</span>
+            <span class="co1">// la contraseña sin codificar es &quot;foo&quot;</span>
+            <span class="st_h">'admin'</span> <span class="sy0">=&gt;</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'ROLE_ADMIN'</span><span class="sy0">,</span> <span class="st_h">'5FZ2Z8QIkA7UTZ4BYkoC+GsReLf569mSKDsfods6LYQ8t+a8EW9oaircfMpmaLbPBh4FOBiiFyLfuZmTSUwzZg=='</span><span class="br0">&#41;</span><span class="sy0">,</span>
+        <span class="br0">&#41;</span><span class="sy0">,</span>
+    <span class="br0">&#41;</span><span class="sy0">,</span>
+<span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>El valor de la opción <code>pattern</code> es una expresión regular, pero también puede ser una instancia de la clase <a href="http://api.symfony.com/master/Symfony/Component/HttpFoundation/RequestMatcher.html">RequestMatcher</a>. La opción <code>http</code> con valor <code>true</code> indica que se debe utilizar la autenticación simple de HTTP y la opción <code>users</code> define los usuarios de la aplicación (en este caso se define solo un usuario cuyo login es <code>admin</code>).</p>
+
+<p>Para cada usuario de la aplicación se debe proporcionar la siguiente información:</p>
+
+<ul>
+<li>El rol o array de roles asociados al usuario (un rol es una cadena de texto que empieza por <code>ROLE_</code>y sigue con el valor que quieras).</li>
+<li>La contraseña codificada del usuario.</li>
+</ul>
+
+<div class="admonition caution"><p><strong class="title">Advertencia</strong> Todos los usuarios deben tener al menos un rol asociado.</p></div>
+
+<p>Por defecto Silex obliga a que las contraseñas de los usuarios estén codificadas (por eso en el ejemplo anterior hay una cadena muy larga de caracteres extraños). Para codificar una contraseña, utiliza el servicio <code>security.encoder_factory</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// encuentra el codificador adecuado para la instancia de UserInterface</span>
+<span class="re0">$encoder</span> <span class="sy0">=</span> <span class="re0">$app</span><span class="br0">&#91;</span><span class="st_h">'security.encoder_factory'</span><span class="br0">&#93;</span><span class="sy0">-&gt;</span><span class="me1">getEncoder</span><span class="br0">&#40;</span><span class="re0">$user</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="co1">// codificar la contraseña &quot;foo&quot;</span>
+<span class="re0">$password</span> <span class="sy0">=</span> <span class="re0">$encoder</span><span class="sy0">-&gt;</span><span class="me1">encodePassword</span><span class="br0">&#40;</span><span class="st_h">'foo'</span><span class="sy0">,</span> <span class="re0">$user</span><span class="sy0">-&gt;</span><span class="me1">getSalt</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Cuando el usuario de la aplicación se ha autenticado, el usuario almacenado en el <em>token</em> es una instancia de la clase <a href="http://api.symfony.com/master/Symfony/Component/Security/Core/User/User.html">User</a>.</p>
+
+<h4 id="restringir_con_un_formulario_el_acceso_a_una_parte_del_sitio_web">A.5.4.3. Restringir con un formulario el acceso a una parte del sitio web</h4>
+
+<p>Si prefieres utilizar un formulario para que los usuarios se autentiquen, la configuración es muy parecida a la mostrada anteriormente. El principal cambio es que en vez de la opción <code>http</code>, ahora debes definir la opción <code>form</code> y estos dos parámetros de configuración:</p>
+
+<ul>
+<li><code>login_path</code>: la ruta a la que se le redirige al usuario cuando intenta acceder a una zona restringida y todavía no se ha autenticado.</li>
+<li><code>check_path</code>: la URL del controlador que valida que el login y contraseña introducidos por el usuario son correctos.</li>
+</ul>
+
+<p>El siguiente código muestra cómo proteger con un formulario todas las URL que empiezan por <code>/admin/</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$app</span><span class="br0">&#91;</span><span class="st_h">'security.firewalls'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="kw3">array</span><span class="br0">&#40;</span>
+    <span class="st_h">'admin'</span> <span class="sy0">=&gt;</span> <span class="kw3">array</span><span class="br0">&#40;</span>
+        <span class="st_h">'pattern'</span> <span class="sy0">=&gt;</span> <span class="st_h">'^/admin/'</span><span class="sy0">,</span>
+        <span class="st_h">'form'</span> <span class="sy0">=&gt;</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'login_path'</span> <span class="sy0">=&gt;</span> <span class="st_h">'/login'</span><span class="sy0">,</span> <span class="st_h">'check_path'</span> <span class="sy0">=&gt;</span> <span class="st_h">'/admin/login_check'</span><span class="br0">&#41;</span><span class="sy0">,</span>
+        <span class="st_h">'users'</span> <span class="sy0">=&gt;</span> <span class="kw3">array</span><span class="br0">&#40;</span>
+            <span class="st_h">'admin'</span> <span class="sy0">=&gt;</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'ROLE_ADMIN'</span><span class="sy0">,</span> <span class="st_h">'5FZ2Z8QIkA7UTZ4BYkoC+GsReLf569mSKDsfods6LYQ8t+a8EW9oaircfMpmaLbPBh4FOBiiFyLfuZmTSUwzZg=='</span><span class="br0">&#41;</span><span class="sy0">,</span>
+        <span class="br0">&#41;</span><span class="sy0">,</span>
+    <span class="br0">&#41;</span><span class="sy0">,</span>
+<span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>A la hora de elegir las rutas asociadas con el formulario, ten en cuenta lo siguiente:</p>
+
+<ul>
+<li>La ruta a la que apunta la opción <code>login_path</code> debe encontrarse fuera de la zona protegida de la aplicación. Si estuviera dentro de una zona protegida, asegúrate de activar el mecanismo de autenticación <code>anonymous</code>, tal y como se explica más adelante.</li>
+<li>La ruta a la que apunta la opción <code>check_path</code> siempre debe encontrase dentro de la zona protegida de la aplicación.</li>
+</ul>
+
+<p>Para completar el ejemplo anterior, define el controlador que crea el formulario de login:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">use</span> Symfony\Component\HttpFoundation\Request<span class="sy0">;</span>
+&nbsp;
+<span class="re0">$app</span><span class="sy0">-&gt;</span><span class="me1">get</span><span class="br0">&#40;</span><span class="st_h">'/login'</span><span class="sy0">,</span> <span class="kw2">function</span><span class="br0">&#40;</span>Request <span class="re0">$request</span><span class="br0">&#41;</span> <span class="kw2">use</span> <span class="br0">&#40;</span><span class="re0">$app</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="kw1">return</span> <span class="re0">$app</span><span class="br0">&#91;</span><span class="st_h">'twig'</span><span class="br0">&#93;</span><span class="sy0">-&gt;</span><span class="me1">render</span><span class="br0">&#40;</span><span class="st_h">'login.html'</span><span class="sy0">,</span> <span class="kw3">array</span><span class="br0">&#40;</span>
+        <span class="st_h">'error'</span>         <span class="sy0">=&gt;</span> <span class="re0">$app</span><span class="br0">&#91;</span><span class="st_h">'security.last_error'</span><span class="br0">&#93;</span><span class="br0">&#40;</span><span class="re0">$request</span><span class="br0">&#41;</span><span class="sy0">,</span>
+        <span class="st_h">'last_username'</span> <span class="sy0">=&gt;</span> <span class="re0">$app</span><span class="br0">&#91;</span><span class="st_h">'session'</span><span class="br0">&#93;</span><span class="sy0">-&gt;</span><span class="me1">get</span><span class="br0">&#40;</span><span class="st_h">'_security.last_username'</span><span class="br0">&#41;</span><span class="sy0">,</span>
+    <span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>La variable <code>error</code> contiene el último mensaje de error relacionado con la autenticación (si existe) y la variable <code>last_username</code> almacena el último login que ha probado el usuario antes de producirse el error.</p>
+
+<p>Por último, crea la plantilla para mostrar el formulario</p>
+
+<div class="code twig">
+<pre class="twig">&lt;form action=&quot;<span class="kw6"><span class="br0">&#123;</span><span class="br0">&#123;</span></span> <span class="re0">path</span><span class="br0">&#40;</span><span class="st0">'admin_login_check'</span><span class="br0">&#41;</span> <span class="kw6"><span class="br0">&#125;</span><span class="br0">&#125;</span></span>&quot; method=&quot;post&quot;&gt;
+    <span class="kw6"><span class="br0">&#123;</span><span class="br0">&#123;</span></span> <span class="re0">error</span> <span class="kw6"><span class="br0">&#125;</span><span class="br0">&#125;</span></span>
+    &lt;input type=&quot;text&quot; name=&quot;_username&quot; value=&quot;<span class="kw6"><span class="br0">&#123;</span><span class="br0">&#123;</span></span> <span class="re0">last_username</span> <span class="kw6"><span class="br0">&#125;</span><span class="br0">&#125;</span></span>&quot; /&gt;
+    &lt;input type=&quot;password&quot; name=&quot;_password&quot; value=&quot;&quot; /&gt;
+    &lt;input type=&quot;submit&quot; /&gt;
+&lt;/form&gt;</pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> La ruta <code>admin_login_check</code> la crea Silex automáticamente y su nombre se crea utilizando el valor de la opción <code>check_path</code> (las barras inclinadas <code>/</code> se reemplazan por guiones bajos <code>_</code> y la primera barra <code>/</code> se elimina).</p></div>
+
+<h4 id="definiendo_mas_de_un_firewall">A.5.4.4. Definiendo más de un firewall</h4>
+
+<p>Las aplicaciones Silex pueden definir más de un firewall por cada proyecto.</p>
+
+<p>Definir varios firewalls puede ser utili cuando quieres utilizar diferentes estrategias de autenticación en varias partes del sitio web o cuando quieres utilizar diferentes tipos de usuarios (por ejemplo utilizando la autenticación HTTP básica para la API del sitio y un formulario para la zona privada de administración del sitio web).</p>
+
+<p>Si quieres proteger todas las URL de la aplicación salvo el formulario de login, también tendrás que definir más de un firewall:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$app</span><span class="br0">&#91;</span><span class="st_h">'security.firewalls'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="kw3">array</span><span class="br0">&#40;</span>
+    <span class="st_h">'login'</span> <span class="sy0">=&gt;</span> <span class="kw3">array</span><span class="br0">&#40;</span>
+        <span class="st_h">'pattern'</span> <span class="sy0">=&gt;</span> <span class="st_h">'^/login$'</span><span class="sy0">,</span>
+    <span class="br0">&#41;</span><span class="sy0">,</span>
+    <span class="st_h">'secured'</span> <span class="sy0">=&gt;</span> <span class="kw3">array</span><span class="br0">&#40;</span>
+        <span class="st_h">'pattern'</span> <span class="sy0">=&gt;</span> <span class="st_h">'^.*$'</span><span class="sy0">,</span>
+        <span class="st_h">'form'</span> <span class="sy0">=&gt;</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'login_path'</span> <span class="sy0">=&gt;</span> <span class="st_h">'/login'</span><span class="sy0">,</span> <span class="st_h">'check_path'</span> <span class="sy0">=&gt;</span> <span class="st_h">'/login_check'</span><span class="br0">&#41;</span><span class="sy0">,</span>
+        <span class="st_h">'users'</span> <span class="sy0">=&gt;</span> <span class="kw3">array</span><span class="br0">&#40;</span>
+            <span class="st_h">'admin'</span> <span class="sy0">=&gt;</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'ROLE_ADMIN'</span><span class="sy0">,</span> <span class="st_h">'5FZ2Z8QIkA7UTZ4BYkoC+GsReLf569mSKDsfods6LYQ8t+a8EW9oaircfMpmaLbPBh4FOBiiFyLfuZmTSUwzZg=='</span><span class="br0">&#41;</span><span class="sy0">,</span>
+        <span class="br0">&#41;</span><span class="sy0">,</span>
+    <span class="br0">&#41;</span><span class="sy0">,</span>
+<span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>El orden en el que se registran los firewalls es muy importante, ya que siempre se utiliza el primero cuyo patrón coincide con la URL solicitada por el usuario. Así que la configuración anterior primero hace que la URL <code>/login</code> no sea segura (ya que no tiene ninguna información de autenticación) y después protege el resto de URL de la aplicación.</p>
+
+<h4 id="desconectando_usuarios">A.5.4.5. Desconectando usuarios</h4>
+
+<p>Cuando utilices un formulario para autenticar a los usuarios, puedes añadir la opción <code>logout</code> para permitir que los usuarios se puedan desconectar del sitio. El valor de la opción <code>logout_path</code> debe encontrarse dentro de la zona protegida del sitio web:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$app</span><span class="br0">&#91;</span><span class="st_h">'security.firewalls'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="kw3">array</span><span class="br0">&#40;</span>
+    <span class="st_h">'secured'</span> <span class="sy0">=&gt;</span> <span class="kw3">array</span><span class="br0">&#40;</span>
+        <span class="st_h">'pattern'</span> <span class="sy0">=&gt;</span> <span class="st_h">'^/admin/'</span><span class="sy0">,</span>
+        <span class="st_h">'form'</span> <span class="sy0">=&gt;</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'login_path'</span> <span class="sy0">=&gt;</span> <span class="st_h">'/login'</span><span class="sy0">,</span> <span class="st_h">'check_path'</span> <span class="sy0">=&gt;</span> <span class="st_h">'/admin/login_check'</span><span class="br0">&#41;</span><span class="sy0">,</span>
+        <span class="st_h">'logout'</span> <span class="sy0">=&gt;</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'logout_path'</span> <span class="sy0">=&gt;</span> <span class="st_h">'/admin/logout'</span><span class="br0">&#41;</span><span class="sy0">,</span>
+&nbsp;
+        <span class="co1">// ...</span>
+    <span class="br0">&#41;</span><span class="sy0">,</span>
+<span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>En este caso también se genera automáticamente una ruta en función del valor de la opción <code>logout_path</code> (las barras inclinadas <code>/</code> se reemplazan por guiones bajos <code>_</code> y la primera barra <code>/</code> se elimina).:</p>
+
+<div class="code twig">
+<pre class="twig">&lt;a href=&quot;<span class="kw6"><span class="br0">&#123;</span><span class="br0">&#123;</span></span> <span class="re0">path</span><span class="br0">&#40;</span><span class="st0">'logout'</span><span class="br0">&#41;</span> <span class="kw6"><span class="br0">&#125;</span><span class="br0">&#125;</span></span>&quot;&gt;Logout&lt;/a&gt;</pre>
+</div>
+
+<h4 id="permitiendo_el_acceso_a_los_usuarios_anonimos">A.5.4.6. Permitiendo el acceso a los usuarios anónimos</h4>
+
+<p>Si en tu aplicación sólo está protegido el acceso a algunas zonas concretas, la información del usuario no estará disponible en las zonas no seguras. Para poder obtener la información del usuario también en esas zonas, activa el mecanismo de autenticación <code>anonymous</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$app</span><span class="br0">&#91;</span><span class="st_h">'security.firewalls'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="kw3">array</span><span class="br0">&#40;</span>
+    <span class="st_h">'unsecured'</span> <span class="sy0">=&gt;</span> <span class="kw3">array</span><span class="br0">&#40;</span>
+        <span class="st_h">'anonymous'</span> <span class="sy0">=&gt;</span> <span class="kw4">true</span><span class="sy0">,</span>
+&nbsp;
+        <span class="co1">// ...</span>
+    <span class="br0">&#41;</span><span class="sy0">,</span>
+<span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Después de activar esta opción, el usuario actual siempre está disponible a través del componente de seguridad. Si el usuario no está autenticado, Silex devuelve la cadena <code>anon.</code> para hacer referencia a los usuarios anónimos.</p>
+
+<h4 id="comprobando_los_roles_de_los_usuarios">A.5.4.7. Comprobando los roles de los usuarios</h4>
+
+<p>Utiliza el método <code>isGranted()</code> para comprobar si un usuario tiene un determinado rol:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw1">if</span> <span class="br0">&#40;</span><span class="re0">$app</span><span class="br0">&#91;</span><span class="st_h">'security'</span><span class="br0">&#93;</span><span class="sy0">-&gt;</span><span class="me1">isGranted</span><span class="br0">&#40;</span><span class="st_h">'ROLE_ADMIN'</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="co1">// ...</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Esta comprobación también se puede realizar desde las plantillas Twig:</p>
+
+<div class="code twig">
+<pre class="twig"><span class="kw6"><span class="br0">&#123;</span>%</span> <span class="kw1">if</span> <span class="re0">is_granted</span><span class="br0">&#40;</span><span class="st0">'ROLE_ADMIN'</span><span class="br0">&#41;</span> <span class="kw6">%<span class="br0">&#125;</span></span>
+    &lt;a href=&quot;/secured?_switch_user=fabien&quot;&gt;Switch to Fabien&lt;/a&gt;
+<span class="kw6"><span class="br0">&#123;</span>%</span> <span class="kw1">endif</span> <span class="kw6">%<span class="br0">&#125;</span></span></pre>
+</div>
+
+<p>Silex define un rol especial llamado <code>IS_AUTHENTICATED_FULLY</code> que permite comprobar si el usuario está realmente autenticado, es decir, si no es anónimo:</p>
+
+<div class="code twig">
+<pre class="twig"><span class="kw6"><span class="br0">&#123;</span>%</span> <span class="kw1">if</span> <span class="re0">is_granted</span><span class="br0">&#40;</span><span class="st0">'IS_AUTHENTICATED_FULLY'</span><span class="br0">&#41;</span> <span class="kw6">%<span class="br0">&#125;</span></span>
+    &lt;a href=&quot;<span class="kw6"><span class="br0">&#123;</span><span class="br0">&#123;</span></span> <span class="re0">path</span><span class="br0">&#40;</span><span class="st0">'logout'</span><span class="br0">&#41;</span> <span class="kw6"><span class="br0">&#125;</span><span class="br0">&#125;</span></span>&quot;&gt;Logout&lt;/a&gt;
+<span class="kw6"><span class="br0">&#123;</span>%</span> <span class="kw1">else</span> <span class="kw6">%<span class="br0">&#125;</span></span>
+    &lt;a href=&quot;<span class="kw6"><span class="br0">&#123;</span><span class="br0">&#123;</span></span> <span class="re0">path</span><span class="br0">&#40;</span><span class="st0">'login'</span><span class="br0">&#41;</span> <span class="kw6"><span class="br0">&#125;</span><span class="br0">&#125;</span></span>&quot;&gt;Login&lt;/a&gt;
+<span class="kw6"><span class="br0">&#123;</span>%</span> <span class="kw1">endif</span> <span class="kw6">%<span class="br0">&#125;</span></span></pre>
+</div>
+
+<p>Para que el código anterior funcione, no olvides definir una ruta llamada <code>login</code>.</p>
+
+<div class="admonition tip"><p><strong class="title">Truco</strong> <strong>No</strong> utilices el método <code>getRoles()</code> para comprobar los roles del usuario.</p></div>
+
+<div class="admonition caution"><p><strong class="title">Advertencia</strong> El método <code>isGranted()</code> lanza una excepción cuando no dispone de la información relativa a la autenticación (lo que sucede en las zonas no protegidas). Esto significa que si utilizas por ejemplo este método en la plantilla de una página no protegida por un firewall, Silex mostrará un mensaje de error.</p></div>
+
+<h4 id="impersonando_usuarios">A.5.4.8. Impersonando usuarios</h4>
+
+<p>Silex también permite <em>impersonar</em> usuarios, lo que te permite ver la aplicación como si fueras otro usuario (y sin necesidad de saber su contraseña). Para ello, activa la estrategia de autenticación <code>switch_user</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$app</span><span class="br0">&#91;</span><span class="st_h">'security.firewalls'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="kw3">array</span><span class="br0">&#40;</span>
+    <span class="st_h">'unsecured'</span> <span class="sy0">=&gt;</span> <span class="kw3">array</span><span class="br0">&#40;</span>
+        <span class="st_h">'switch_user'</span> <span class="sy0">=&gt;</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'parameter'</span> <span class="sy0">=&gt;</span> <span class="st_h">'_switch_user'</span><span class="sy0">,</span> <span class="st_h">'role'</span> <span class="sy0">=&gt;</span> <span class="st_h">'ROLE_ALLOWED_TO_SWITCH'</span><span class="br0">&#41;</span><span class="sy0">,</span>
+&nbsp;
+        <span class="co1">// ...</span>
+    <span class="br0">&#41;</span><span class="sy0">,</span>
+<span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Para cambiar de usuario, añade el parámetro <code>_switch_user</code> a cualquier URL indicando el <em>login</em> del usuario por el que te quieres hacer pasar (para que puedas hacerlo, tu usuario tiene que tener el role <code>ROLE_ALLOWED_TO_SWITCH</code>):</p>
+
+<div class="code twig">
+<pre class="twig"><span class="kw6"><span class="br0">&#123;</span>%</span> <span class="kw1">if</span> <span class="re0">is_granted</span><span class="br0">&#40;</span><span class="st0">'ROLE_ALLOWED_TO_SWITCH'</span><span class="br0">&#41;</span> <span class="kw6">%<span class="br0">&#125;</span></span>
+    &lt;a href=&quot;?_switch_user=fabien&quot;&gt;Hacerte pasar por el usuario Fabien&lt;/a&gt;
+<span class="kw6"><span class="br0">&#123;</span>%</span> <span class="kw1">endif</span> <span class="kw6">%<span class="br0">&#125;</span></span></pre>
+</div>
+
+<p>Silex define otro rol especial llamado <code>ROLE_PREVIOUS_ADMIN</code> para comprobar si el usuario actual en realidad es otro usuario que está haciéndose pasar por el. Este rol sirve por ejemplo para que el usuario anule la <em>impersonación</em> y vuelva a ser él mismo:</p>
+
+<div class="code twig">
+<pre class="twig"><span class="kw6"><span class="br0">&#123;</span>%</span> <span class="kw1">if</span> <span class="re0">is_granted</span><span class="br0">&#40;</span><span class="st0">'ROLE_PREVIOUS_ADMIN'</span><span class="br0">&#41;</span> <span class="kw6">%<span class="br0">&#125;</span></span>
+    Eres un usuario de tipo administrador pero te has cambiado a otro usuario,
+    &lt;a href=&quot;?_switch_user=_exit&quot;&gt; anular&lt;/a&gt; el cambio de usuario.
+<span class="kw6"><span class="br0">&#123;</span>%</span> <span class="kw1">endif</span> <span class="kw6">%<span class="br0">&#125;</span></span></pre>
+</div>
+
+<h4 id="definiendo_una_jerarquia_de_roles">A.5.4.9. Definiendo una jerarquía de roles</h4>
+
+<p>Las jerarquías de roles o permisos permiten asignar automáticamente roles a los
+usuarios. Observa el siguiente código:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$app</span><span class="br0">&#91;</span><span class="st_h">'security.role_hierarchy'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="kw3">array</span><span class="br0">&#40;</span>
+    <span class="st_h">'ROLE_ADMIN'</span> <span class="sy0">=&gt;</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'ROLE_USER'</span><span class="sy0">,</span> <span class="st_h">'ROLE_ALLOWED_TO_SWITCH'</span><span class="br0">&#41;</span><span class="sy0">,</span>
+<span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Esta configuración hace que todos los usuarios que tengan el rol <code>ROLE_ADMIN</code>
+también dispongan automáticamente de los roles <code>ROLE_USER</code> y
+<code>ROLE_ALLOWED_TO_SWITCH</code>.</p>
+
+<h4 id="configurando_las_reglas_de_acceso">A.5.4.10. Configurando las reglas de acceso</h4>
+
+<p>Los roles permiten a la aplicación dividir a los usuarios en diferentes tipos,
+pero también se emplean para resringir el acceso a determinadas zonas del sitio
+web:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$app</span><span class="br0">&#91;</span><span class="st_h">'security.access_rules'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="kw3">array</span><span class="br0">&#40;</span>
+    <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'^/admin'</span><span class="sy0">,</span> <span class="st_h">'ROLE_ADMIN'</span><span class="sy0">,</span> <span class="st_h">'https'</span><span class="br0">&#41;</span><span class="sy0">,</span>
+    <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'^.*$'</span><span class="sy0">,</span> <span class="st_h">'ROLE_USER'</span><span class="br0">&#41;</span><span class="sy0">,</span>
+<span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>La configuración anterior obliga a que los usuarios que quieran acceder a cualquier URL que empiece por <code>/admin</code> tengan que disponer del rol <code>ROLE_ADMIN</code>. Para acceder al resto del sitio web, los usuarios deben disponer del rol <code>ROLE_USER</code>. Además, la opción <code>https</code> indica que la sección de administración sólo puede ser accedida a través de HTTPS. Si no es el caso, Silex redirigirá automáticamente al usuario.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> El primer valor de cada array, además de una cadena de texto, también puede ser una instancia de la clase <a href="http://api.symfony.com/master/Symfony/Component/HttpFoundation/RequestMatcher.html">RequestMatcher</a>.</p></div>
+
+<h4 id="utilizando_un_proveedor_de_usuarios_propio">A.5.4.11. Utilizando un proveedor de usuarios propio</h4>
+
+<p>Los arrays de usuarios son una manera sencilla de definir los usuarios que pueden acceder a la aplicación. Esta solución puede ser correcta por ejemplo para la parte de administración de un sitio web personal o muy pequeño. No obstante, para sitios web medianos o grandes es mejor definir tu propio proveedor de usuarios.</p>
+
+<p>El valor de la opción <code>users</code> también puede ser un servicio que devuelva una instancia de la clase <a href="http://api.symfony.com/master/Symfony/Component/Security/Core/User/UserProviderInterface.html">UserProviderInterface</a>:</p>
+
+<div class="code php">
+<pre class="php"><span class="st_h">'users'</span> <span class="sy0">=&gt;</span> <span class="re0">$app</span><span class="sy0">-&gt;</span><span class="me1">share</span><span class="br0">&#40;</span><span class="kw2">function</span> <span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="kw2">use</span> <span class="br0">&#40;</span><span class="re0">$app</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="kw1">return</span> <span class="kw2">new</span> UserProvider<span class="br0">&#40;</span><span class="re0">$app</span><span class="br0">&#91;</span><span class="st_h">'db'</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span><span class="br0">&#41;</span><span class="sy0">,</span></pre>
+</div>
+
+<p>El siguiente código muestra un ejemplo de un proveedor de usuarios que utiliza una base de datos para almacenar los usuarios (para ello utiliza la librería DBAL de Doctrine):</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">use</span> Symfony\Component\Security\Core\User\UserProviderInterface<span class="sy0">;</span>
+<span class="kw2">use</span> Symfony\Component\Security\Core\User\UserInterface<span class="sy0">;</span>
+<span class="kw2">use</span> Symfony\Component\Security\Core\User\User<span class="sy0">;</span>
+<span class="kw2">use</span> Symfony\Component\Security\Core\Exception\UnsupportedUserException<span class="sy0">;</span>
+<span class="kw2">use</span> Symfony\Component\Security\Core\Exception\UsernameNotFoundException<span class="sy0">;</span>
+<span class="kw2">use</span> Doctrine\DBAL\Connection<span class="sy0">;</span>
+&nbsp;
+<span class="kw2">class</span> UserProvider implements UserProviderInterface
+<span class="br0">&#123;</span>
+    <span class="kw2">private</span> <span class="re0">$conn</span><span class="sy0">;</span>
+&nbsp;
+    <span class="kw2">public</span> <span class="kw2">function</span> __construct<span class="br0">&#40;</span>Connection <span class="re0">$conn</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+        <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">conn</span> <span class="sy0">=</span> <span class="re0">$conn</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="kw2">public</span> <span class="kw2">function</span> loadUserByUsername<span class="br0">&#40;</span><span class="re0">$username</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+        <span class="re0">$stmt</span> <span class="sy0">=</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">conn</span><span class="sy0">-&gt;</span><span class="me1">executeQuery</span><span class="br0">&#40;</span><span class="st_h">'SELECT * FROM users WHERE username = ?'</span><span class="sy0">,</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="kw3">strtolower</span><span class="br0">&#40;</span><span class="re0">$username</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+        <span class="kw1">if</span> <span class="br0">&#40;</span><span class="sy0">!</span><span class="re0">$user</span> <span class="sy0">=</span> <span class="re0">$stmt</span><span class="sy0">-&gt;</span><span class="me1">fetch</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+            <span class="kw1">throw</span> <span class="kw2">new</span> UsernameNotFoundException<span class="br0">&#40;</span><span class="kw3">sprintf</span><span class="br0">&#40;</span><span class="st_h">'Username &quot;%s&quot; does not exist.'</span><span class="sy0">,</span> <span class="re0">$username</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+        <span class="br0">&#125;</span>
+&nbsp;
+        <span class="kw1">return</span> <span class="kw2">new</span> User<span class="br0">&#40;</span><span class="re0">$user</span><span class="br0">&#91;</span><span class="st_h">'username'</span><span class="br0">&#93;</span><span class="sy0">,</span> <span class="re0">$user</span><span class="br0">&#91;</span><span class="st_h">'password'</span><span class="br0">&#93;</span><span class="sy0">,</span> <span class="kw3">explode</span><span class="br0">&#40;</span><span class="st_h">','</span><span class="sy0">,</span> <span class="re0">$user</span><span class="br0">&#91;</span><span class="st_h">'roles'</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="kw4">true</span><span class="sy0">,</span> <span class="kw4">true</span><span class="sy0">,</span> <span class="kw4">true</span><span class="sy0">,</span> <span class="kw4">true</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="kw2">public</span> <span class="kw2">function</span> refreshUser<span class="br0">&#40;</span>UserInterface <span class="re0">$user</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+        <span class="kw1">if</span> <span class="br0">&#40;</span><span class="sy0">!</span><span class="re0">$user</span> instanceof User<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+            <span class="kw1">throw</span> <span class="kw2">new</span> UnsupportedUserException<span class="br0">&#40;</span><span class="kw3">sprintf</span><span class="br0">&#40;</span><span class="st_h">'Instances of &quot;%s&quot; are not supported.'</span><span class="sy0">,</span> <span class="kw3">get_class</span><span class="br0">&#40;</span><span class="re0">$user</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+        <span class="br0">&#125;</span>
+&nbsp;
+        <span class="kw1">return</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">loadUserByUsername</span><span class="br0">&#40;</span><span class="re0">$user</span><span class="sy0">-&gt;</span><span class="me1">getUsername</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="kw2">public</span> <span class="kw2">function</span> supportsClass<span class="br0">&#40;</span><span class="re0">$class</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+        <span class="kw1">return</span> <span class="re0">$class</span> <span class="sy0">===</span> <span class="st_h">'Symfony\Component\Security\Core\User\User'</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Como puedes ver en el código anterior, se utiliza la clase <code>User</code> para almacenar la información del usuario, pero también puedes utilizar tu propia clase. El único requisito es que la clase implemente la interfaz <a href="http://api.symfony.com/master/Symfony/Component/Security/Core/User/UserInterface.html">UserInterface</a>.</p>
+
+<p>Y este es el código que podrías utilizar para crear las tablas en la base de datos y para cargar algunos usuarios de prueba:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">use</span> Doctrine\DBAL\Schema\Table<span class="sy0">;</span>
+&nbsp;
+<span class="re0">$schema</span> <span class="sy0">=</span> <span class="re0">$app</span><span class="br0">&#91;</span><span class="st_h">'db'</span><span class="br0">&#93;</span><span class="sy0">-&gt;</span><span class="me1">getSchemaManager</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="kw1">if</span> <span class="br0">&#40;</span><span class="sy0">!</span><span class="re0">$schema</span><span class="sy0">-&gt;</span><span class="me1">tablesExist</span><span class="br0">&#40;</span><span class="st_h">'users'</span><span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="re0">$users</span> <span class="sy0">=</span> <span class="kw2">new</span> Table<span class="br0">&#40;</span><span class="st_h">'users'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$users</span><span class="sy0">-&gt;</span><span class="me1">addColumn</span><span class="br0">&#40;</span><span class="st_h">'id'</span><span class="sy0">,</span> <span class="st_h">'integer'</span><span class="sy0">,</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'unsigned'</span> <span class="sy0">=&gt;</span> <span class="kw4">true</span><span class="sy0">,</span> <span class="st_h">'autoincrement'</span> <span class="sy0">=&gt;</span> <span class="kw4">true</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$users</span><span class="sy0">-&gt;</span><span class="me1">setPrimaryKey</span><span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'id'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$users</span><span class="sy0">-&gt;</span><span class="me1">addColumn</span><span class="br0">&#40;</span><span class="st_h">'username'</span><span class="sy0">,</span> <span class="st_h">'string'</span><span class="sy0">,</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'length'</span> <span class="sy0">=&gt;</span> <span class="nu0">32</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$users</span><span class="sy0">-&gt;</span><span class="me1">addUniqueIndex</span><span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'username'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$users</span><span class="sy0">-&gt;</span><span class="me1">addColumn</span><span class="br0">&#40;</span><span class="st_h">'password'</span><span class="sy0">,</span> <span class="st_h">'string'</span><span class="sy0">,</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'length'</span> <span class="sy0">=&gt;</span> <span class="nu0">255</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$users</span><span class="sy0">-&gt;</span><span class="me1">addColumn</span><span class="br0">&#40;</span><span class="st_h">'roles'</span><span class="sy0">,</span> <span class="st_h">'string'</span><span class="sy0">,</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'length'</span> <span class="sy0">=&gt;</span> <span class="nu0">255</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="re0">$schema</span><span class="sy0">-&gt;</span><span class="me1">createTable</span><span class="br0">&#40;</span><span class="re0">$users</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="re0">$app</span><span class="br0">&#91;</span><span class="st_h">'db'</span><span class="br0">&#93;</span><span class="sy0">-&gt;</span><span class="me1">executeQuery</span><span class="br0">&#40;</span><span class="st_h">'INSERT INTO users (username, password, roles) VALUES (&quot;fabien&quot;, &quot;5FZ2Z8QIkA7UTZ4BYkoC+GsReLf569mSKDsfods6LYQ8t+a8EW9oaircfMpmaLbPBh4FOBiiFyLfuZmTSUwzZg==&quot;, &quot;ROLE_USER&quot;)'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$app</span><span class="br0">&#91;</span><span class="st_h">'db'</span><span class="br0">&#93;</span><span class="sy0">-&gt;</span><span class="me1">executeQuery</span><span class="br0">&#40;</span><span class="st_h">'INSERT INTO users (username, password, roles) VALUES (&quot;admin&quot;, &quot;5FZ2Z8QIkA7UTZ4BYkoC+GsReLf569mSKDsfods6LYQ8t+a8EW9oaircfMpmaLbPBh4FOBiiFyLfuZmTSUwzZg==&quot;, &quot;ROLE_ADMIN&quot;)'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<div class="admonition tip"><p><strong class="title">Truco</strong> Si utilizas el ORM de Doctrine, puedes hacer uso de una clase proveedora de usuarios que los carga a partir de entidades de Doctrine.</p></div>
+
+<h4 id="utilizando_un_codificador_de_contrasenas_propio">A.5.4.12. Utilizando un codificador de contraseñas propio</h4>
+
+<p>Silex utiliza por defecto el algoritmo <code>sha512</code> para codificar las contraseñas de los usuarios. El proceso es un poco complejo, ya que la contraseña se codifica varias veces seguidas utilizando cada vez el resultado del paso anterior. Por último, el resultado se codifica mediante la codificación <code>base64</code>. Para modificar estas opciones, redefine el servicio <code>security.encoder.digest</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">use</span> Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder<span class="sy0">;</span>
+&nbsp;
+<span class="re0">$app</span><span class="br0">&#91;</span><span class="st_h">'security.encoder.digest'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="re0">$app</span><span class="sy0">-&gt;</span><span class="me1">share</span><span class="br0">&#40;</span><span class="kw2">function</span> <span class="br0">&#40;</span><span class="re0">$app</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="co1">// utilizar el algoritmo sha1, sin codificar el resultado en base64 y</span>
+    <span class="co1">// realizando 1 única iteración</span>
+    <span class="kw1">return</span> <span class="kw2">new</span> MessageDigestPasswordEncoder<span class="br0">&#40;</span><span class="st_h">'sha1'</span><span class="sy0">,</span> <span class="kw4">false</span><span class="sy0">,</span> <span class="nu0">1</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<h4 id="utilizando_un_proveedor_de_autenticacion_propio">A.5.4.13. Utilizando un proveedor de autenticación propio</h4>
+
+<p>El componente <code>Security</code> de Symfony incluye muchos proveedores de autenticación
+listos para utilizar (HTTP, formularios, X.509, etc.) pero tamabién puedes crear
+tus propios proveedores.</p>
+
+<p>Para registrar un nuevo proveedor de autenticación, crea un servicio llamado 
+<code>security.authentication_listener.factory.XXX</code>, reemplazando el valor <code>XXX</code> por el nombre con el que quieras utilizar este proveedor en la configuración de tu aplicación. El siguiente ejemplo crea un proveedor llamado <code>wsse</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$app</span><span class="br0">&#91;</span><span class="st_h">'security.authentication_listener.factory.wsse'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="re0">$app</span><span class="sy0">-&gt;</span><span class="me1">protect</span><span class="br0">&#40;</span><span class="kw2">function</span> <span class="br0">&#40;</span><span class="re0">$name</span><span class="sy0">,</span> <span class="re0">$options</span><span class="br0">&#41;</span> <span class="kw2">use</span> <span class="br0">&#40;</span><span class="re0">$app</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="co1">// define the authentication provider object</span>
+    <span class="re0">$app</span><span class="br0">&#91;</span><span class="st_h">'security.authentication_provider.'</span><span class="sy0">.</span><span class="re0">$name</span><span class="sy0">.</span><span class="st_h">'.wsse'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="re0">$app</span><span class="sy0">-&gt;</span><span class="me1">share</span><span class="br0">&#40;</span><span class="kw2">function</span> <span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="kw2">use</span> <span class="br0">&#40;</span><span class="re0">$app</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+        <span class="kw1">return</span> <span class="kw2">new</span> WsseProvider<span class="br0">&#40;</span><span class="re0">$app</span><span class="br0">&#91;</span><span class="st_h">'security.user_provider.default'</span><span class="br0">&#93;</span><span class="sy0">,</span> __DIR__<span class="sy0">.</span><span class="st_h">'/security_cache'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="co1">// define the authentication listener object</span>
+    <span class="re0">$app</span><span class="br0">&#91;</span><span class="st_h">'security.authentication_listener.'</span><span class="sy0">.</span><span class="re0">$name</span><span class="sy0">.</span><span class="st_h">'.wsse'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="re0">$app</span><span class="sy0">-&gt;</span><span class="me1">share</span><span class="br0">&#40;</span><span class="kw2">function</span> <span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="kw2">use</span> <span class="br0">&#40;</span><span class="re0">$app</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+        <span class="kw1">return</span> <span class="kw2">new</span> WsseListener<span class="br0">&#40;</span><span class="re0">$app</span><span class="br0">&#91;</span><span class="st_h">'security'</span><span class="br0">&#93;</span><span class="sy0">,</span> <span class="re0">$app</span><span class="br0">&#91;</span><span class="st_h">'security.authentication_manager'</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="kw1">return</span> <span class="kw3">array</span><span class="br0">&#40;</span>
+        <span class="co1">// the authentication provider id</span>
+        <span class="st_h">'security.authentication_provider.'</span><span class="sy0">.</span><span class="re0">$name</span><span class="sy0">.</span><span class="st_h">'.wsse'</span><span class="sy0">,</span>
+        <span class="co1">// the authentication listener id</span>
+        <span class="st_h">'security.authentication_listener.'</span><span class="sy0">.</span><span class="re0">$name</span><span class="sy0">.</span><span class="st_h">'.wsse'</span><span class="sy0">,</span>
+        <span class="co1">// the entry point id</span>
+        <span class="kw4">null</span><span class="sy0">,</span>
+        <span class="co1">// the position of the listener in the stack</span>
+        <span class="st_h">'pre_auth'</span>
+    <span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Una vez definido, ya puedes utilizar tu proveedor exactamente igual que si fuera alguno de los proveedores predefinidos de Symfony:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$app</span><span class="sy0">-&gt;</span><span class="me1">register</span><span class="br0">&#40;</span><span class="kw2">new</span> Silex\Provider\SecurityServiceProvider<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="kw3">array</span><span class="br0">&#40;</span>
+    <span class="st_h">'security.firewalls'</span> <span class="sy0">=&gt;</span> <span class="kw3">array</span><span class="br0">&#40;</span>
+        <span class="st_h">'default'</span> <span class="sy0">=&gt;</span> <span class="kw3">array</span><span class="br0">&#40;</span>
+            <span class="st_h">'wsse'</span> <span class="sy0">=&gt;</span> <span class="kw4">true</span><span class="sy0">,</span>
+&nbsp;
+            <span class="co1">// ...</span>
+        <span class="br0">&#41;</span><span class="sy0">,</span>
+    <span class="br0">&#41;</span><span class="sy0">,</span>
+<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>El valor <code>true</code> se puede reemplazar por un array de opciones para ajustar el comportamiento del proveedor de autenticación. Este array se pasa al constructor del proveedor como segundo argumento.</p>
+
+<h3 id="traits">A.12.5. Traits</h3>
+
+<p>El <em>trait</em> <code>Silex\Application\SecurityTrait</code> definido por este proveedor añade los siguientes atajos:</p>
+
+<ul>
+<li><code>user</code>: devuelve el usuario actualmente conectado en la aplicación.</li>
+<li><code>encodePassword</code>: codifica la contraseña indicada.</li>
+</ul>
+
+<div class="code php">
+<pre class="php"><span class="re0">$user</span> <span class="sy0">=</span> <span class="re0">$app</span><span class="sy0">-&gt;</span><span class="me1">user</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="re0">$encoded</span> <span class="sy0">=</span> <span class="re0">$app</span><span class="sy0">-&gt;</span><span class="me1">encodePassword</span><span class="br0">&#40;</span><span class="re0">$user</span><span class="sy0">,</span> <span class="st_h">'foo'</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>El <em>trait</em> <code>Silex\Route\SecurityTrait</code> definido por este proveedor añade los siguientes atajos:</p>
+
+<ul>
+<li><code>secure</code>: protege un controlador para que solo pueda ser accedido por los roles indicados.</li>
+</ul>
+
+<div class="code php">
+<pre class="php"><span class="re0">$app</span><span class="sy0">-&gt;</span><span class="me1">get</span><span class="br0">&#40;</span><span class="st_h">'/'</span><span class="sy0">,</span> <span class="kw2">function</span> <span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="co1">// do something but only for admins</span>
+<span class="br0">&#125;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">secure</span><span class="br0">&#40;</span><span class="st_h">'ROLE_ADMIN'</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="monologserviceprovider.html">&larr; Anterior <span>A.4. MonologServiceProvider</span></a>
+            
+            <a class="span5 next" href="serializerserviceprovider.html">Siguiente &rarr; <span>A.6. SerializerServiceProvider</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'SecurityServiceProvider (Silex, el manual oficial%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Silex, el manual oficial : SecurityServiceProvider']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Primeros pasos</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Middlewares</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Organizando los controladores</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Servicios</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Proveedores</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Tests</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Funcionamiento interno</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Silex y los servidores web</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../apendice_a.html">
+            <span>Apéndice A.</span> Proveedores de servicios de Silex
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="doctrineserviceprovider.html">
+            <span>A.1.</span> DoctrineServiceProvider
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="formserviceprovider.html">
+            <span>A.2.</span> FormServiceProvider
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="httpcacheserviceprovider.html">
+            <span>A.3.</span> HttpCacheServiceProvider
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="monologserviceprovider.html">
+            <span>A.4.</span> MonologServiceProvider
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="securityserviceprovider.html">
+            <span>A.5.</span> SecurityServiceProvider
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="serializerserviceprovider.html">
+            <span>A.6.</span> SerializerServiceProvider
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="servicecontrollerserviceprovider.html">
+            <span>A.7.</span> ServiceControllerServiceProvider
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="sessionserviceprovider.html">
+            <span>A.8.</span> SessionServiceProvider
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="swiftmailerserviceprovider.html">
+            <span>A.9.</span> SwiftmailerServiceProvider
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="translationserviceprovider.html">
+            <span>A.10.</span> TranslationServiceProvider
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="twigserviceprovider.html">
+            <span>A.11.</span> TwigServiceProvider
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="urlgeneratorserviceprovider.html">
+            <span>A.12.</span> UrlGeneratorServiceProvider
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="validatorserviceprovider.html">
+            <span>A.13.</span> ValidatorServiceProvider
+        </a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

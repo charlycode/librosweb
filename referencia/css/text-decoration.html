@@ -1,0 +1,323 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>text-decoration (Referencia de CSS 2.1)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="text-decoration (Referencia de CSS 2.1)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page referencia_css">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="index.html">Referencia de CSS 2.1</a></li>
+  <li class="current"><span>text-decoration</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="text_decoration">text-decoration</h1>
+    <div class="table" id="table_102_1">
+
+    <table class="table property css" summary="Definición de la propiedad text-decoration de CSS"> 
+<tr><th>Definición</th><td>Establece la decoración que se añade al texto de un elemento</td></tr><tr><th>Valores <br/> permitidos</th><td>La explicación de los valores permitidos para esta propiedad es compleja debido a su gran flexibilidad. Existen tres opciones diferentes para establecer el valor o valores de esta propiedad:
+<ol>
+  <li>
+    El valor none
+    <div class="clear"></div>
+  </li>
+  <li>
+    <span style="clear: both; display: block">Uno o más de los siguientes valores y en cualquier orden:</span>
+    <ul style="float: left; clear: both; width: 100%">
+      <li style="float: left; min-width: 20%; width: 30%; list-style: square">underline</li>
+      <li style="float: left; min-width: 20%; width: 30%; list-style: square">overline</li>
+      <li style="float: left; min-width: 20%; width: 30%; list-style: square">line-through</li>
+      <li style="float: left; min-width: 20%; width: 30%; list-style: square">blink</li>
+    </ul>
+    <div class="clear"></div>
+  </li>
+  <li>
+    El valor <a href="el-valor-inherit.html">inherit</a>
+    <div class="clear"></div>
+  </li>
+</ol>
+</td></tr><tr><th>Valor inicial</th><td>none</td></tr><tr><th>Se aplica a</th><td>Todos los elementos</td></tr><tr><th>Válida en</th><td><a href="medios.html">medios visuales</a></td></tr><tr><th>Se hereda</th><td>no</td></tr><tr class="nobottom"><th>Definición en<br/>el estándar</th><td><a href="http://www.w3.org/TR/CSS21/text.html#propdef-text-decoration">http://www.w3.org/TR/CSS21/text.html#propdef-text-decoration</a></td></tr>
+</table>
+</div>
+
+
+<h2 id="ejemplos_de_uso">Ejemplos de uso</h2>
+
+<p>La propiedad <code>text-decoration</code> establece la decoración que se aplica al texto de un elemento.
+El estándar CSS 2.1 define los siguientes cinco tipos de decoraciones:</p>
+
+<ul>
+<li><code>underline</code>: se muestran subrayadas todas las líneas de texto.</li>
+<li><code>overline</code>: similar al valor <code>underline</code>, pero en este caso el subrayado se muestra en la parte superior de cada línea.</li>
+<li><code>line-through</code>: todas las líneas de texto se muestran tachadas mediante una línea continua en el medio de cada línea.</li>
+<li><code>blink</code>: el texto parpadea apareciendo y desapareciendo de forma alternativa.</li>
+<li><code>none</code>: el texto no muestra ninguna decoración, por lo que se eliminan todas las decoraciones que puede haber heredado el elemento.</li>
+</ul>
+
+<p>En la práctica, los valores más utilizados son <code>none</code> para mostrar el texto sin
+<em>adornos</em> y <code>underline</code> para mostrar el texto subrayado. El valor <code>line-through</code>
+se emplea ocasionalmente para mostrar tachado un contenido erróneo o que ya no
+es válido. El valor <code>overline</code> apenas se utiliza, ya que su efecto es poco útil
+en la práctica. Por último, el valor <code>blink</code> nunca se emplea en los sitios web
+correctos, ya que suele molestar a la mayoría de usuarios y perjudica la
+accesibilidad del sitio web. De hecho, el propio estándar de CSS 2.1 aconseja
+que los navegadores no hagan parpadear el texto.</p>
+
+<p>Los valores definidos por la propiedad <code>text-decoration</code> se pueden utilizar de
+forma individual y también de forma conjunta para crear efectos avanzados:</p>
+
+<div class="example">
+<p style="text-decoration: underline"><strong>text-decoration: underline</strong> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Fusce ut leo eu ipsum faucibus pretium. Donec iaculis lorem eleifend mi tempor porttitor.</p>
+
+<p style="text-decoration: overline"><strong>text-decoration: overline</strong> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Fusce ut leo eu ipsum faucibus pretium. Donec iaculis lorem eleifend mi tempor porttitor.</p>
+
+<p style="text-decoration: underline overline"><strong>text-decoration: underline overline</strong> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Fusce ut leo eu ipsum faucibus pretium. Donec iaculis lorem eleifend mi tempor porttitor.</p>
+
+<p style="text-decoration: blink"><strong>text-decoration: blink</strong> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Fusce ut leo eu ipsum faucibus pretium. Donec iaculis lorem eleifend mi tempor porttitor.</p>
+
+<p style="text-decoration: line-through"><strong>text-decoration: line-through</strong> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Fusce ut leo eu ipsum faucibus pretium. Donec iaculis lorem eleifend mi tempor porttitor.</p>
+
+<p style="text-decoration: overline underline line-through"><strong>text-decoration: overline underline line-through</strong> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Fusce ut leo eu ipsum faucibus pretium. Donec iaculis lorem eleifend mi tempor porttitor.</p>
+</div>
+
+<p>El color y el grosor de las líneas utilizadas en la decoración del texto no se pueden
+modificar. Todos los navegadores muestran las líneas con el mismo color que el
+de la letra del texto. En cuanto al grosor, algunos navegadores lo calculan
+automáticamente en función del tamaño de letra y otros navegadores muestran las
+líneas siempre con un grosor de <code>1px</code>:</p>
+
+<div class="example">
+<p style="text-decoration: underline; color: green"><strong>text-decoration: underline</strong> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Fusce ut leo eu ipsum faucibus pretium. Donec iaculis lorem eleifend mi tempor porttitor.</p>
+
+<p style="text-decoration: underline; color: red; font-weight: bold;"><strong>text-decoration: underline</strong> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Fusce ut leo eu ipsum faucibus pretium. Donec iaculis lorem eleifend mi tempor porttitor.</p>
+
+<p style="text-decoration: underline; color: green; font-size: 1.5em"><strong>text-decoration: underline</strong> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Fusce ut leo eu ipsum faucibus pretium. Donec iaculis lorem eleifend mi tempor porttitor.</p>
+</div>
+
+<p>Si un elemento incluye en su interior textos de diferentes colores y tamaños,
+la línea empleada en su decoración no cambia ni de color ni de grosor, sino que
+se utilizan el color y grosor calculados para el elemento principal:</p>
+
+<div class="example">
+<p style="text-decoration: underline;"><strong>text-decoration: underline</strong> Lorem ipsum dolor <span style="color: green">sit amet</span>, consectetuer <span style="color: red; font-weight: bold">adipiscing elit</span>. Fusce ut leo eu <span style="color: green; font-size: 1.5em">ipsum faucibus pretium</span>. Donec iaculis lorem eleifend mi tempor porttitor.</p>
+</div>
+
+<p>Por otra parte, los valores <code>underline</code>, <code>overline</code> y <code>line-through</code> sólo se
+aplican al contenido de texto, por lo que no se subrayan elementos como las
+imágenes. No obstante, cuando una imagen se muestra en el interior del texto,
+la mayoría de navegadores también le aplican todas las decoraciones:</p>
+
+<div class="example">
+<strong>Imagen en línea con el texto</strong>: se aplica el subrayado a las imágenes
+<div style="text-decoration: underline;"> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. <img src="../../img/referencia_css/imagen_pequena.png"> Fusce ut leo eu ipsum faucibus pretium. Donec iaculis lorem eleifend mi tempor porttitor. <img src="../../img/referencia_css/imagen_pequena.png"></div>
+
+<br/>
+
+<strong>Imagen independiente</strong>: no se aplica el subrayado <br/>
+<img src="../../img/referencia_css/imagen_pequena.png" style="text-decoration: underline"> 
+</div>
+
+<p>El código HTML y CSS del ejemplo anterior se muestra a continuación:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">div</span> <span class="kw3">style</span><span class="sy0">=</span><span class="st0">&quot;text-decoration: underline;&quot;</span>&gt;</span> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. <span class="sc2">&lt;<span class="kw2">img</span> <span class="kw3">src</span><span class="sy0">=</span><span class="st0">&quot;imagen.png&quot;</span> <span class="sy0">/</span>&gt;</span> Fusce ut leo eu ipsum faucibus pretium. Donec iaculis lorem eleifend mi tempor porttitor. <span class="sc2">&lt;<span class="kw2">img</span> <span class="kw3">src</span><span class="sy0">=</span><span class="st0">&quot;imagen.png&quot;</span> <span class="sy0">/</span>&gt;&lt;<span class="sy0">/</span><span class="kw2">div</span>&gt;</span>
+&nbsp;
+<span class="sc2">&lt;<span class="kw2">img</span> <span class="kw3">style</span><span class="sy0">=</span><span class="st0">&quot;text-decoration: underline&quot;</span> <span class="kw3">src</span><span class="sy0">=</span><span class="st0">&quot;imagen.png&quot;</span> <span class="sy0">/</span>&gt;</span></pre>
+</div>
+
+<p>Si un elemento tiene en su interior elementos posicionados de forma flotante o
+de forma absoluta, los valores de la propiedad <code>text-decoration</code> no se heredan
+en esos elementos.</p>
+
+<p>Además, las líneas de los valores <code>underline</code>, <code>overline</code> y <code>line-through</code>
+se muestran tanto en el texto como en los espacios en blanco entre cada letra
+(<a href="letter-spacing.html">letter-spacing</a>) y cada palabra (<a href="word-spacing.html">word-spacing</a>), pero no se muestran en
+los márgenes, bordes y rellenos:</p></p>
+
+<div class="example">
+<strong>letter-spacing: 3px</strong>
+<p style="text-decoration: underline; letter-spacing: 3px">Lorem ipsum dolor sit amet</p>
+
+<strong>margin: 0.5em; padding: 0.5em</strong>
+<p style="text-decoration: underline; padding: .5em; margin: .5em">Lorem ipsum dolor sit amet</p>
+
+<strong>word-spacing: 15px</strong>
+<p style="text-decoration: underline; word-spacing: 15px">Lorem ipsum dolor sit amet</p>
+</div>
+
+<p>La propiedad <code>text-decoration: underline</code> parece similar a la propiedad
+<a href="border-bottom.html">border-bottom</a>, pero en la práctica son muy diferentes. La principal diferencia
+es que <code>text-decoration</code> sólo subraya el contenido de texto, mientras que
+<a href="border-bottom.html">border-bottom</a> subraya toda la caja del elemento, tal y como demuestran los
+dos párrafos del siguiente ejemplo:</p>
+
+<div class="example">
+<p style="text-decoration: underline"><strong>text-decoration: underline</strong>
+Lorem ipsum dolor sit amet</p>
+<p style="border-bottom: solid 1px"><strong>border-bottom: 1px solid</strong>
+Lorem ipsum dolor sit amet</p>
+</div>
+
+<p>La otra gran diferencia es que el subrayado se realiza en la <em>línea de base</em>
+del texto, mientras que el borde inferior se realiza debajo del texto. En la
+práctica, esto significa que el subrayado se superpone con letras como <code>g</code>,
+<code>j</code>, <code>p</code>, <code>q</code>, <code>y</code>, pero el borde inferior siempre se muestra por debajo de
+cualquier letra.</p>
+
+<p>La propiedad <code>text-decoration</code> se utiliza habitualmente con los enlaces, ya que
+permite ocultar el subrayado que muestran por defecto los enlaces. De hecho, en
+muchos sitios web es común encontrar la siguiente regla CSS:</p>
+
+<div class="code css">
+<pre class="css">a <span class="br0">&#123;</span>
+  <span class="kw1">text-decoration</span><span class="sy0">:</span> <span class="kw2">none</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Además, combinando la propiedad <code>text-decoration</code> con la <em>pseudo-clase</em>
+<code>:hover</code> se pueden conseguir efectos avanzados. Prueba a pasar el ratón por
+encima de cada enlace para mostrar/ocultar el subrayado:</p>
+
+<div class="example">
+<style type="text/css">
+a.text-decoration-sin { text-decoration: none }
+a.text-decoration-sin:hover { text-decoration: underline }
+a.text-decoration-con { text-decoration: underline }
+a.text-decoration-con:hover { text-decoration: none }
+</style>
+
+<a class="text-decoration-sin" href="#">Lorem ipsum dolor sit amet</a>
+<br/>
+<a class="text-decoration-sin" href="#">Lorem ipsum dolor sit amet</a>
+<br/>
+<a class="text-decoration-con" href="#">Lorem ipsum dolor sit amet</a>
+<br/>
+<a class="text-decoration-con" href="#">Lorem ipsum dolor sit amet</a>
+</div>
+
+<p>El efecto anterior también es muy utilizado en muchos sitios web, por lo que es
+común incluir las siguientes reglas CSS:</p></p>
+
+<div class="code css">
+<pre class="css">a <span class="br0">&#123;</span>
+  <span class="kw1">text-decoration</span><span class="sy0">:</span> <span class="kw2">none</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+a<span class="re2">:hover </span><span class="br0">&#123;</span>
+  <span class="kw1">text-decoration</span><span class="sy0">:</span> <span class="kw2">underline</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'text-decoration (Referencia de CSS 2.1%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Referencia de CSS 2.1 : text-decoration']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Propiedades relacionadas</span></h3>
+
+
+                                        <ul class="toc">
+                    <li class="">
+                <a href="direction.html">direction</a>
+            </li>
+                    <li class="">
+                <a href="line-height.html">line-height</a>
+            </li>
+                    <li class="">
+                <a href="text-align.html">text-align</a>
+            </li>
+                    <li class="active">
+                <a href="text-decoration.html">text-decoration</a>
+            </li>
+                    <li class="">
+                <a href="text-indent.html">text-indent</a>
+            </li>
+                    <li class="">
+                <a href="text-transform.html">text-transform</a>
+            </li>
+                    <li class="">
+                <a href="unicode-bidi.html">unicode-bidi</a>
+            </li>
+                    <li class="">
+                <a href="word-spacing.html">word-spacing</a>
+            </li>
+                </ul>
+                                    
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

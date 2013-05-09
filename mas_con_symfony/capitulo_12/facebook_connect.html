@@ -1,0 +1,315 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>12.3. Facebook Connect (Más con Symfony)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="creando_un_primer_proyecto_con_sffacebookconnectplugin.html" />
+        <link rel="next" href="buenas_practicas_en_las_aplicaciones_facebook.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="12.3. Facebook Connect (Más con Symfony)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page mas_con_symfony">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Más con Symfony</a></li>
+  <li><a href="../capitulo_12.html">Capítulo 12. Desarrollando aplicaciones Facebook</a></li>
+  <li class="current"><span>12.3.. Facebook Connect</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="facebook_connect"><span>12.3.</span> Facebook Connect</h1>
+    
+
+<h3 id="como_funciona_facebook_connect_y_como_se_puede_integrar">12.3.1. Cómo funciona Facebook Connect y cómo se puede integrar</h3>
+
+<p>El funcionamiento de Facebook Connect se basa en compartir su sesión con la
+sesión del sitio web. Para ello se copian las cookies de autenticación de
+Facebook en el sitio web mediante un <code>&lt;iframe&gt;</code> que se crea en el sitio web que
+apunta a una página de Facebook, que a su vez crea un <code>&lt;iframe&gt;</code> al sitio web.
+Como para realizar este proceso Facebook Connect debe tener acceso al sitio web,
+no es posible utilizar o probar Facebook Connect en un sitio web local o en una
+intranet. El punto de entrada es un archivo llamado <code>xd_receiver.htm</code> y que
+también proporciona el plugin <code>sfFacebookConnectPlugin</code>. Para que este archivo
+sea accesible, recuerda ejecutar la tarea <code>plugin:publish-assets</code> después de
+instalar el plugin.</p>
+
+<p>Una vez hecho lo anterior, la librería oficial de Facebook ya puede utilizar la
+sesión de Facebook. Además, el plugin <code>sfFacebookConnectPlugin</code> crea un usuario
+de tipo <code>sfGuard</code> asociado con la sesión de Facebook, por lo que la integración
+con el sitio web de Symfony es completa. Este es el motivo por el que el plugin
+redirige por defecto a la acción <code>sfFacebookConnectAuth/signIn</code> después de pulsar
+el botón de <em>Facebook Connect</em> y una vez que la sesión de Facebook ha sido
+validada. El plugin primero busca algún usuario existente con ese UID de Facebook
+o con el mismo hash de email (como se explica más adelante). Si no se encuentra
+ningún usuario, se crea uno nuevo.</p>
+
+<p>Otra estrategia común consiste en no crear directamente el usuario sino redirigirle
+a un formulario de registro propio. En ese formulario se pueden rellenar de
+forma automática todos los datos proporcionados por la sesión de Facebook, tal
+y como muestra el código del siguiente ejemplo:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">public</span> <span class="kw2">function</span> setDefaultsFromFacebookSession<span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="kw1">if</span> <span class="br0">&#40;</span><span class="re0">$fb_uid</span> <span class="sy0">=</span> sfFacebook<span class="sy0">::</span><span class="me2">getAnyFacebookUid</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$ret</span> <span class="sy0">=</span> sfFacebook<span class="sy0">::</span><span class="me2">getFacebookApi</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">users_getInfo</span><span class="br0">&#40;</span>
+      <span class="kw3">array</span><span class="br0">&#40;</span>
+        <span class="re0">$fb_uid</span>
+      <span class="br0">&#41;</span><span class="sy0">,</span>
+      <span class="kw3">array</span><span class="br0">&#40;</span>
+        <span class="st_h">'first_name'</span><span class="sy0">,</span>
+        <span class="st_h">'last_name'</span><span class="sy0">,</span>
+      <span class="br0">&#41;</span>
+    <span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="kw1">if</span> <span class="br0">&#40;</span><span class="re0">$ret</span> <span class="sy0">&amp;&amp;</span> <span class="kw3">count</span><span class="br0">&#40;</span><span class="re0">$ret</span><span class="br0">&#41;</span><span class="sy0">&gt;</span><span class="nu0">0</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="kw1">if</span> <span class="br0">&#40;</span><span class="kw3">array_key_exists</span><span class="br0">&#40;</span><span class="st_h">'first_name'</span><span class="sy0">,</span> <span class="re0">$ret</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+      <span class="br0">&#123;</span>
+        <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">setDefault</span><span class="br0">&#40;</span><span class="st_h">'first_name'</span><span class="sy0">,</span><span class="re0">$ret</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#91;</span><span class="st_h">'first_name'</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+      <span class="br0">&#125;</span>
+      <span class="kw1">if</span> <span class="br0">&#40;</span><span class="kw3">array_key_exists</span><span class="br0">&#40;</span><span class="st_h">'last_name'</span><span class="sy0">,</span> <span class="re0">$ret</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+      <span class="br0">&#123;</span>
+        <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">setDefault</span><span class="br0">&#40;</span><span class="st_h">'last_name'</span><span class="sy0">,</span><span class="re0">$ret</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#91;</span><span class="st_h">'last_name'</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+      <span class="br0">&#125;</span>
+    <span class="br0">&#125;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Si se quiere utilizar esta segunda estrategia, simplemente se debe indicar en
+el archivo <code>app.yml</code> que después de conectar con <em>Facebook Connect</em> se redirige
+al usuario a la ruta indicada:</p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co1"># default values</span><span class="co4">
+all</span>:<span class="co4">
+  facebook</span>:<span class="co3">
+    redirect_after_connect</span><span class="sy2">: </span>true<span class="co3">
+    redirect_after_connect_url</span><span class="sy2">: </span>'@register_with_facebook'</pre>
+</div>
+
+<h3 id="el_filtro_de_facebook_connect">12.3.2. El filtro de Facebook Connect</h3>
+
+<p>Otra de las características importantes de <em>Facebook Connect</em> es que muchos de
+los usuarios que visitan tu sitio web ya se han conectado previamente en Facebook.
+Esta característica la aprovecha el plugin <code>sfFacebookConnectRememberMeFilter</code>
+de forma muy útil. Si un usuario que visita tu sitio web ya está conectado a
+Facebook, el plugin <code>sfFacebookConnectRememberMeFilter</code> le conecta de forma
+automática al sitio web de la misma forma en la que lo hace el filtro <em>"Remember
+me"</em>.</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$sfGuardUser</span> <span class="sy0">=</span> sfFacebook<span class="sy0">::</span><span class="me2">getSfGuardUserByFacebookSession</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="kw1">if</span> <span class="br0">&#40;</span><span class="re0">$sfGuardUser</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getContext</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">getUser</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">signIn</span><span class="br0">&#40;</span><span class="re0">$sfGuardUser</span><span class="sy0">,</span> <span class="kw4">true</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Sin embargo, esta funcionalidad tiene una desventaja que puede ser importante:
+los usuarios no se pueden desconectar del sitio web mientras permanezcan
+conectados en Facebook. Por tanto, emplea esta característica con cautela.</p>
+
+<h3 id="como_evitar_los_errores_de_javascript_en_internet_explorer">12.3.3. Cómo evitar los errores de JavaScript en Internet Explorer</h3>
+
+<p>Uno de los errores más graves que pueden suceder en una aplicación web es el
+famoso error <em>"Operation aborted"</em> de Internet Explorer que impide que se muestre
+la aplicación web. El motivo de este error es el motor de renderizado de IE 6
+y IE 7, que produce un error grave cuando se añaden elementos DOM al <code>&lt;body&gt;</code>
+desde un script que no sea hijo directo del <code>&lt;body&gt;</code></p>
+
+<p>Desafortunadamente esta práctica es habitual cuando cargas el código JavaScript
+de Facebook Connect sin preocuparte de cargarlo solamente desde el elemento
+<code>&lt;body&gt;</code> y desde el final de la página. Symfony puede solucionar fácilmente
+este problema mediante el uso de los <code>slots</code>. Siempre que se vaya a incluir el
+script de Facebook Connect, se utiliza un <code>slot</code> en la plantilla y se muestra
+al final del layout, justo antes de la etiqueta <code>&lt;/body&gt;</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// en una plantilla que utilice XFBML o un botón de Facebook Connect</span>
+slot<span class="br0">&#40;</span><span class="st_h">'fb_connect'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+include_facebook_connect_script<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+end_slot<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="co1">// justo antes de la etiqueta &lt;/body&gt; del layout</span>
+<span class="kw1">if</span> <span class="br0">&#40;</span>has_slot<span class="br0">&#40;</span><span class="st_h">'fb_connect'</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  include_slot<span class="br0">&#40;</span><span class="st_h">'fb_connect'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="creando_un_primer_proyecto_con_sffacebookconnectplugin.html">&larr; Anterior <span>12.2. Creando un primer proyecto con <code>sfFacebookConnectPlugin</code></span></a>
+            
+            <a class="span5 next" href="buenas_practicas_en_las_aplicaciones_facebook.html">Siguiente &rarr; <span>12.4. Buenas prácticas en las aplicaciones Facebook</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Facebook Connect (Más con Symfony%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Más con Symfony : Facebook Connect']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Enrutamiento avanzado</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Mejora tu productividad</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Emails</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Widgets y validadores propios</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Formularios avanzados</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Mejorando la barra de depuración web</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Uso avanzado de Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Utilizando la herencia de tablas de Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Funcionamiento interno de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Windows y Symfony</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_12.html">
+            <span>Capítulo 12.</span> Desarrollando aplicaciones Facebook
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="desarrollando_aplicaciones_facebook.html">
+            <span>12.1.</span> Desarrollando aplicaciones Facebook
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="creando_un_primer_proyecto_con_sffacebookconnectplugin.html">
+            <span>12.2.</span> Creando un primer proyecto con <code>sfFacebookConnectPlugin</code>
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="facebook_connect.html">
+            <span>12.3.</span> Facebook Connect
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="buenas_practicas_en_las_aplicaciones_facebook.html">
+            <span>12.4.</span> Buenas prácticas en las aplicaciones Facebook
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="proximos_pasos.html">
+            <span>12.5.</span> Próximos pasos
+        </a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Descubriendo el poder de la línea de comandos</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Jugando con la cache de configuración de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Trabajando con la comunidad Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>A</span> <a href="../apendice_a.html"> Código JavaScript de sfWidgetFormGMapAddress</a>
+    </li>
+    <li class="level-1">
+        <span>B</span> <a href="../apendice_b.html"> Ejemplo de instalador propio</a>
+    </li>
+    <li class="level-1">
+        <span>C</span> <a href="../apendice_c.html"> Licencia</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

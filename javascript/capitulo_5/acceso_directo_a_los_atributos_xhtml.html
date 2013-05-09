@@ -1,0 +1,247 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>5.5. Acceso directo a los atributos XHTML (Introducción a JavaScript)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="creacion_y_eliminacion_de_nodos.html" />
+        <link rel="next" href="ejercicios_sobre_dom.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="5.5. Acceso directo a los atributos XHTML (Introducción a JavaScript)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page javascript">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Introducción a JavaScript</a></li>
+  <li><a href="../capitulo_5.html">Capítulo 5. DOM</a></li>
+  <li class="current"><span>5.5. Acceso directo a los atributos XHTML</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="acceso_directo_a_los_atributos_xhtml"><span>5.5.</span> Acceso directo a los atributos XHTML</h1>
+    
+
+<p>Una vez que se ha accedido a un nodo, el siguiente paso natural consiste en acceder y/o modificar sus atributos y propiedades. Mediante DOM, es posible acceder de forma sencilla a todos los atributos XHTML y todas las propiedades CSS de cualquier elemento de la página.</p>
+
+<p>Los atributos XHTML de los elementos de la página se transforman automáticamente en propiedades de los nodos. Para acceder a su valor, simplemente se indica el nombre del atributo XHTML detrás del nombre del nodo.</p>
+
+<p>El siguiente ejemplo obtiene de forma directa la dirección a la que enlaza el enlace:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> enlace <span class="sy0">=</span> document.<span class="me1">getElementById</span><span class="br0">&#40;</span><span class="st0">&quot;enlace&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+alert<span class="br0">&#40;</span>enlace.<span class="me1">href</span><span class="br0">&#41;</span><span class="sy0">;</span> <span class="co1">// muestra http://www...com</span>
+&nbsp;
+<span class="sy0">&lt;</span>a id<span class="sy0">=</span><span class="st0">&quot;enlace&quot;</span> href<span class="sy0">=</span><span class="st0">&quot;http://www...com&quot;</span><span class="sy0">&gt;</span>Enlace<span class="sy0">&lt;/</span>a<span class="sy0">&gt;</span></pre>
+</div>
+
+<p>En el ejemplo anterior, se obtiene el nodo DOM que representa el enlace mediante la función <code>document.getElementById()</code>. A continuación, se obtiene el atributo <code>href</code> del enlace mediante <code>enlace.href</code>. Para obtener por ejemplo el atributo <code>id</code>, se utilizaría <code>enlace.id</code>.</p>
+
+<p>Las propiedades CSS no son tan fáciles de obtener como los atributos XHTML. Para obtener el valor de cualquier propiedad CSS del nodo, se debe utilizar el atributo <code>style</code>. El siguiente ejemplo obtiene el valor de la propiedad <code>margin</code> de la imagen:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> imagen <span class="sy0">=</span> document.<span class="me1">getElementById</span><span class="br0">&#40;</span><span class="st0">&quot;imagen&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+alert<span class="br0">&#40;</span>imagen.<span class="me1">style</span>.<span class="me1">margin</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="sy0">&lt;</span>img id<span class="sy0">=</span><span class="st0">&quot;imagen&quot;</span> style<span class="sy0">=</span><span class="st0">&quot;margin:0; border:0;&quot;</span> src<span class="sy0">=</span><span class="st0">&quot;logo.png&quot;</span> <span class="sy0">/&gt;</span></pre>
+</div>
+
+<p>Aunque el funcionamiento es homogéneo entre distintos navegadores, los resultados no son exactamente iguales, como muestran las siguientes imágenes que son el resultado de ejecutar el código anterior en distintos navegadores:</p>
+
+<div class="figure left" id="figure_5_4">
+    <img src="../../img/javascript/f0404.gif" alt="Valores que muestra Internet Explorer al acceder a las propiedades CSS a través de JavaScript" />
+
+    <p class="caption"><strong>Figura 5.4</strong> Valores que muestra Internet Explorer al acceder a las propiedades CSS a través de JavaScript</p>
+</div>
+
+
+<div class="figure left" id="figure_5_5">
+    <img src="../../img/javascript/f0405.gif" alt="Valores que muestra Firefox al acceder a las propiedades CSS a través de JavaScript" />
+
+    <p class="caption"><strong>Figura 5.5</strong> Valores que muestra Firefox al acceder a las propiedades CSS a través de JavaScript</p>
+</div>
+
+
+<p>Si el nombre de una propiedad CSS es compuesto, se accede a su valor modificando ligeramente su nombre:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> parrafo <span class="sy0">=</span> document.<span class="me1">getElementById</span><span class="br0">&#40;</span><span class="st0">&quot;parrafo&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+alert<span class="br0">&#40;</span>parrafo.<span class="me1">style</span>.<span class="me1">fontWeight</span><span class="br0">&#41;</span><span class="sy0">;</span>  <span class="co1">// muestra &quot;bold&quot;</span>
+&nbsp;
+<span class="sy0">&lt;</span>p id<span class="sy0">=</span><span class="st0">&quot;parrafo&quot;</span> style<span class="sy0">=</span><span class="st0">&quot;font-weight: bold;&quot;</span><span class="sy0">&gt;</span>...<span class="sy0">&lt;/</span>p<span class="sy0">&gt;</span></pre>
+</div>
+
+<p>La transformación del nombre de las propiedades CSS compuestas consiste en eliminar todos los guiones medios (<code>-</code>) y escribir en mayúscula la letra siguiente a cada guión medio. A continuación se muestran algunos ejemplos:</p>
+
+<ul>
+<li><code>font-weight</code> se transforma en <code>fontWeight</code></li>
+<li><code>line-height</code> se transforma en <code>lineHeight</code></li>
+<li><code>border-top-style</code> se transforma en <code>borderTopStyle</code></li>
+<li><code>list-style-image</code> se transforma en <code>listStyleImage</code></li>
+</ul>
+
+<p>El único atributo XHTML que no tiene el mismo nombre en XHTML y en las propiedades DOM es el atributo <code>class</code>. Como la palabra <code>class</code> está reservada por JavaScript, no es posible utilizarla para acceder al atributo <code>class</code> del elemento XHTML. En su lugar, DOM utiliza el nombre <code>className</code> para acceder al atributo <code>class</code> de XHTML:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> parrafo <span class="sy0">=</span> document.<span class="me1">getElementById</span><span class="br0">&#40;</span><span class="st0">&quot;parrafo&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+alert<span class="br0">&#40;</span>parrafo.<span class="kw5">class</span><span class="br0">&#41;</span><span class="sy0">;</span> <span class="co1">// muestra &quot;undefined&quot;</span>
+alert<span class="br0">&#40;</span>parrafo.<span class="me1">className</span><span class="br0">&#41;</span><span class="sy0">;</span> <span class="co1">// muestra &quot;normal&quot;</span>
+&nbsp;
+<span class="sy0">&lt;</span>p id<span class="sy0">=</span><span class="st0">&quot;parrafo&quot;</span> <span class="kw5">class</span><span class="sy0">=</span><span class="st0">&quot;normal&quot;</span><span class="sy0">&gt;</span>...<span class="sy0">&lt;/</span>p<span class="sy0">&gt;</span></pre>
+</div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="creacion_y_eliminacion_de_nodos.html">&larr; Anterior <span>5.4. Creación y eliminación de nodos</span></a>
+            
+            <a class="span5 next" href="ejercicios_sobre_dom.html">Siguiente &rarr; <span>5.6. Ejercicios sobre DOM</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Acceso directo a los atributos XHTML (Introducción a JavaScript%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a JavaScript : Acceso directo a los atributos XHTML']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> El primer script</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Programación básica</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Programación avanzada</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_5.html">
+            <span>Capítulo 5.</span> DOM
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="arbol_de_nodos.html">
+            <span>5.1.</span> Árbol de nodos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="tipos_de_nodos.html">
+            <span>5.2.</span> Tipos de nodos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="acceso_directo_a_los_nodos.html">
+            <span>5.3.</span> Acceso directo a los nodos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="creacion_y_eliminacion_de_nodos.html">
+            <span>5.4.</span> Creación y eliminación de nodos
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="acceso_directo_a_los_atributos_xhtml.html">
+            <span>5.5.</span> Acceso directo a los atributos XHTML
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicios_sobre_dom.html">
+            <span>5.6.</span> Ejercicios sobre DOM
+        </a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Eventos</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Otras utilidades</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Detección y corrección de errores</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Recursos útiles</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

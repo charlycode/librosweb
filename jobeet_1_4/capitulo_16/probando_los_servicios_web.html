@@ -1,0 +1,264 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>16.2. Probando los servicios web (El tutorial Jobeet)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="los_afiliados.html" />
+        <link rel="next" href="el_formulario_para_darse_de_alta_como_afiliado.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="16.2. Probando los servicios web (El tutorial Jobeet)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page jobeet_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">El tutorial Jobeet</a></li>
+  <li><a href="../capitulo_16.html">Capítulo 16. Servicios web</a></li>
+  <li class="current"><span>16.2.. Probando los servicios web</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="probando_los_servicios_web"><span>16.2.</span> Probando los servicios web</h1>
+    
+
+<p>Si quieres probar el nuevo servicio web que acabamos de crear, copia el archivo de datos de los afiliados del directorio <code>data/fixtures/</code> al directorio <code>test/fixtures/</code> y reemplaza el contenido del archivo <code>apiActionsTest.php</code> generado automáticamente por el siguiente código:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// test/functional/frontend/apiActionsTest.php</span>
+<span class="kw1">include</span><span class="br0">&#40;</span><span class="kw3">dirname</span><span class="br0">&#40;</span><span class="kw4">__FILE__</span><span class="br0">&#41;</span><span class="sy0">.</span><span class="st_h">'/../../bootstrap/functional.php'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="re0">$browser</span> <span class="sy0">=</span> <span class="kw2">new</span> JobeetTestFunctional<span class="br0">&#40;</span><span class="kw2">new</span> sfBrowser<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$browser</span><span class="sy0">-&gt;</span><span class="me1">loadData</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="re0">$browser</span><span class="sy0">-&gt;</span>
+  <span class="me1">info</span><span class="br0">&#40;</span><span class="st_h">'1 - Web service security'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+&nbsp;
+  <span class="me1">info</span><span class="br0">&#40;</span><span class="st_h">'  1.1 - A token is needed to access the service'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+  <span class="me1">get</span><span class="br0">&#40;</span><span class="st_h">'/api/foo/jobs.xml'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+  <span class="me1">with</span><span class="br0">&#40;</span><span class="st_h">'response'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">isStatusCode</span><span class="br0">&#40;</span><span class="nu0">404</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+&nbsp;
+  <span class="me1">info</span><span class="br0">&#40;</span><span class="st_h">'  1.2 - An inactive account cannot access the web service'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+  <span class="me1">get</span><span class="br0">&#40;</span><span class="st_h">'/api/symfony/jobs.xml'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+  <span class="me1">with</span><span class="br0">&#40;</span><span class="st_h">'response'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">isStatusCode</span><span class="br0">&#40;</span><span class="nu0">404</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+&nbsp;
+  <span class="me1">info</span><span class="br0">&#40;</span><span class="st_h">'2 - The jobs returned are limited to the categories configured for the affiliate'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+  <span class="me1">get</span><span class="br0">&#40;</span><span class="st_h">'/api/sensio_labs/jobs.xml'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+  <span class="me1">with</span><span class="br0">&#40;</span><span class="st_h">'request'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">isFormat</span><span class="br0">&#40;</span><span class="st_h">'xml'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+  <span class="me1">with</span><span class="br0">&#40;</span><span class="st_h">'response'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">checkElement</span><span class="br0">&#40;</span><span class="st_h">'job'</span><span class="sy0">,</span> <span class="nu0">32</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+&nbsp;
+  <span class="me1">info</span><span class="br0">&#40;</span><span class="st_h">'3 - The web service supports the JSON format'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+  <span class="me1">get</span><span class="br0">&#40;</span><span class="st_h">'/api/sensio_labs/jobs.json'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+  <span class="me1">with</span><span class="br0">&#40;</span><span class="st_h">'request'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">isFormat</span><span class="br0">&#40;</span><span class="st_h">'json'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+  <span class="me1">with</span><span class="br0">&#40;</span><span class="st_h">'response'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">contains</span><span class="br0">&#40;</span><span class="st_h">'&quot;category&quot;: &quot;Programming&quot;'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+&nbsp;
+  <span class="me1">info</span><span class="br0">&#40;</span><span class="st_h">'4 - The web service supports the YAML format'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+  <span class="me1">get</span><span class="br0">&#40;</span><span class="st_h">'/api/sensio_labs/jobs.yaml'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+  <span class="me1">with</span><span class="br0">&#40;</span><span class="st_h">'response'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">begin</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+    <span class="me1">isHeader</span><span class="br0">&#40;</span><span class="st_h">'content-type'</span><span class="sy0">,</span> <span class="st_h">'text/yaml; charset=utf-8'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+    <span class="me1">contains</span><span class="br0">&#40;</span><span class="st_h">'category: Programming'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+  <span class="kw3">end</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="sy0">;</span></pre>
+</div>
+
+<p>En el código anterior se utilizan por primera vez dos métodos que te pueden resultar útiles:</p>
+
+<ul>
+<li><code>isFormat()</code>: comprueba el formato de la respuesta</li>
+<li><code>contains()</code>: para el contenido que no sea HTML comprueba si la respuesta contiene el trozo de texto que se indica</li>
+</ul>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="los_afiliados.html">&larr; Anterior <span>16.1. Los afiliados</span></a>
+            
+            <a class="span5 next" href="el_formulario_para_darse_de_alta_como_afiliado.html">Siguiente &rarr; <span>16.3. El formulario para darse de alta como afiliado</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Probando los servicios web (El tutorial Jobeet%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'El tutorial Jobeet : Probando los servicios web']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Comenzando el proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> El proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> El modelo de datos</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> El controlador y la vista</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> El sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Profundizando en el modelo</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Trabajando con la página de cada categoría</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Pruebas unitarias</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Pruebas funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Probando los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> El generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> El usuario</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> El día de descanso</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Canales Atom</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_16.html">
+            <span>Capítulo 16.</span> Servicios web
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="los_afiliados.html">
+            <span>16.1.</span> Los afiliados
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="probando_los_servicios_web.html">
+            <span>16.2.</span> Probando los servicios web
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_formulario_para_darse_de_alta_como_afiliado.html">
+            <span>16.3.</span> El formulario para darse de alta como afiliado
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="administrando_los_afiliados.html">
+            <span>16.4.</span> Administrando los afiliados
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="enviando_emails.html">
+            <span>16.5.</span> Enviando emails
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="nos_vemos_manana.html">
+            <span>16.6.</span> Nos vemos mañana
+        </a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> El buscador</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>20</span> <a href="../capitulo_20.html"> Plugins</a>
+    </li>
+    <li class="level-1">
+        <span>21</span> <a href="../capitulo_21.html"> El día del diseño</a>
+    </li>
+    <li class="level-1">
+        <span>22</span> <a href="../capitulo_22.html"> La cache</a>
+    </li>
+    <li class="level-1">
+        <span>23</span> <a href="../capitulo_23.html"> Pasando a producción</a>
+    </li>
+    <li class="level-1">
+        <span>24</span> <a href="../capitulo_24.html"> Un repaso a Symfony</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

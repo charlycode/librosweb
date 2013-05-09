@@ -1,0 +1,320 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>13.5. Validador de archivos (Los formularios de Symfony 1.4)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="validadores_de_fechas.html" />
+        <link rel="next" href="validadores_logicos.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="13.5. Validador de archivos (Los formularios de Symfony 1.4)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page symfony_formularios">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Los formularios de Symfony 1.4</a></li>
+  <li><a href="../capitulo_13.html">Capítulo 13. Validadores</a></li>
+  <li class="current"><span>13.5.. Validador de archivos</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="validador_de_archivos"><span>13.5.</span> Validador de archivos</h1>
+    
+
+<h3 id="sfvalidatorfile">13.5.1. sfValidatorFile</h3>
+
+<p><code>sfValidatorFile</code> valida los archivos subidos por los usuarios. Además, el validador convierte el archivo subido en una instancia de la clase <code>sfValidatedFile</code> o de la clase que se indique en la opción <code>validated_file_class</code>.</p>
+
+<div class="table" id="table_13_18">
+
+    <table>
+<thead>
+<tr>
+  <th>Opción</th>
+  <th>Error</th>
+  <th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>max_size</code></td>
+  <td><code>max_size</code></td>
+  <td>El tamaño máximo permitido para los archivos subidos</td>
+</tr>
+<tr>
+  <td><code>mime_types</code></td>
+  <td><code>mime_types</code></td>
+  <td>Array con los tipos MIME permitidos o el nombre de la categoría de tipos MIME (la única categoría disponible es <code>web_images</code>)</td>
+</tr>
+<tr>
+  <td><code>mime_type_guessers</code></td>
+  <td>-</td>
+  <td>Array con los ejecutables de PHP encargados de adivinar el tipo MIME de los archivos (deben devolver o el tipo MIME o <code>null</code>)</td>
+</tr>
+<tr>
+  <td><code>mime_categories</code></td>
+  <td>-</td>
+  <td>Array de categorías de tipos MIME (la categoría <code>web_images</code> está definida por defecto)</td>
+</tr>
+<tr>
+  <td><code>path</code></td>
+  <td>-</td>
+  <td>La ruta en la que se guarda el archivo y que utiliza la clase <code>sfValidatedFile</code> (opcional)</td>
+</tr>
+<tr>
+  <td><code>validated_file_class</code></td>
+  <td>-</td>
+  <td>Nombre de la clase que gestiona el archivo subido y validado (opcional)</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+<p>La categoría <code>web_images</code> incluye los siguientes tipos MIME:</p>
+
+<ul>
+<li><code>image/jpeg</code></li>
+<li><code>image/pjpeg</code></li>
+<li><code>image/png</code></li>
+<li><code>image/x-png</code></li>
+<li><code>image/gif</code></li>
+</ul>
+
+<p>Si la opción <code>mime_types</code> está activada, el validador necesita comprobar el tipo MIME del archivo subido. Por este motivo el validador ya incluye tres <em>comprobadores</em> de tipos MIME:</p>
+
+<ul>
+<li><code>guessFromFileinfo</code>: utiliza la función <code>finfo_open()</code> (de la extensión <code>Fileinfo</code> de PECL)</li>
+<li><code>guessFromMimeContentType</code>: utiliza la función <code>mime_content_type()</code> (obsoleto)</li>
+<li><code>guessFromFileBinary</code>: utiliza el contenido del propio archivo (sólo funciona en los sistemas *nix)</li>
+</ul>
+
+<div class="table" id="table_13_19">
+
+    <table>
+<thead>
+<tr>
+  <th>Error</th>
+  <th>Variables</th>
+  <th>Valor por defecto (se muestra en inglés)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>max_size</code></td>
+  <td><code>%size%</code>, <code>%max_size%</code></td>
+  <td>File is too large (maximum is %max_size% bytes).</td>
+</tr>
+<tr>
+  <td><code>mime_types</code></td>
+  <td><code>%mime_types%</code>, <code>%mime_type%</code></td>
+  <td>Invalid mime type (%mime_type%).</td>
+</tr>
+<tr>
+  <td><code>partial</code></td>
+  <td></td>
+  <td>The uploaded file was only partially uploaded.</td>
+</tr>
+<tr>
+  <td><code>no_tmp_dir</code></td>
+  <td></td>
+  <td>Missing a temporary folder.</td>
+</tr>
+<tr>
+  <td><code>cant_write</code></td>
+  <td></td>
+  <td>Failed to write file to disk.</td>
+</tr>
+<tr>
+  <td><code>extension</code></td>
+  <td></td>
+  <td>File upload stopped by extension.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+<p>El validador asocia los errores de PHP de la siguiente manera:</p>
+
+<ul>
+<li><code>UPLOAD_ERR_INI_SIZE</code>:   <code>max_size</code></li>
+<li><code>UPLOAD_ERR_FORM_SIZE</code>:  <code>max_size</code></li>
+<li><code>UPLOAD_ERR_PARTIAL</code>:    <code>partial</code></li>
+<li><code>UPLOAD_ERR_NO_TMP_DIR</code>: <code>no_tmp_dir</code></li>
+<li><code>UPLOAD_ERR_CANT_WRITE</code>: <code>cant_write</code></li>
+<li><code>UPLOAD_ERR_EXTENSION</code>:  <code>extension</code></li>
+</ul>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="validadores_de_fechas.html">&larr; Anterior <span>13.4. Validadores de fechas</span></a>
+            
+            <a class="span5 next" href="validadores_logicos.html">Siguiente &rarr; <span>13.6. Validadores lógicos</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Validador de archivos (Los formularios de Symfony 1.4%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Los formularios de Symfony 1.4 : Validador de archivos']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Creación de formularios</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Validación de formularios</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Formularios para diseñadores web</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Integración con Propel</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Integrando Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Referencia de Widgets</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_13.html">
+            <span>Capítulo 13.</span> Validadores
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="validadores.html">
+            <span>13.2.</span> Validadores
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="validadores_simples.html">
+            <span>13.3.</span> Validadores simples
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="validadores_de_fechas.html">
+            <span>13.4.</span> Validadores de fechas
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="validador_de_archivos.html">
+            <span>13.5.</span> Validador de archivos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="validadores_logicos.html">
+            <span>13.6.</span> Validadores lógicos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="validadores_de_internacionalizacion.html">
+            <span>13.7.</span> Validadores de internacionalización
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="validadores_de_propel.html">
+            <span>13.8.</span> Validadores de Propel
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="validadores_de_doctrine.html">
+            <span>13.9.</span> Validadores de Doctrine
+        </a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

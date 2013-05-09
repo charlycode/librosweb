@@ -1,0 +1,333 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>2.3. Mejora progresiva (CSS avanzado)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="comprobar_el_diseno_en_varios_navegadores.html" />
+        <link rel="next" href="depuracion.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="2.3. Mejora progresiva (CSS avanzado)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page css_avanzado">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">CSS avanzado</a></li>
+  <li><a href="../capitulo_2.html">Capítulo 2. Buenas prácticas</a></li>
+  <li class="current"><span>2.3.. Mejora progresiva</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="mejora_progresiva"><span>2.3.</span> Mejora progresiva</h1>
+    
+
+<p>La mejora progresiva (<em>"progressive enhancement"</em>) es uno de los conceptos más importantes del diseño web y a la vez uno de los más desconocidos. Su origen proviene de su concepto contrario, la degradación útil o <em>"graceful degradation"</em>.</p>
+
+<p>La degradación útil es un concepto propuesto hace décadas por el psicólogo inglés David Courtenay Marr. Aplicada al diseño web, la degradación útil significa que un sitio web sigue funcionando correctamente cuando el usuario accede con un navegador limitado o antiguo en el que no funcionan las características más avanzadas.</p>
+
+<p>La mejora progresiva toma ese concepto y lo aplica de forma inversa. En el diseño web, la mejora progresiva significa que el sitio web dispone de características más avanzadas cuanto más avanzado sea el navegador con el que accede el usuario.</p>
+
+<p>Muchos diseñadores web y muchos de sus clientes están obsesionados con que sus diseños se vean exactamente igual en cualquier versión de cualquier navegador. Aunque resulta prácticamente imposible conseguirlo, este tipo de diseñadores prefiere sacrificar cualquier característica interesante de CSS de manera que las páginas se vean igual en cualquier navegador.</p>
+
+<p>La mejora progresiva propone que el diseño web se realice de la siguiente manera:</p>
+
+<ul>
+<li>En primer lugar, el diseño web debe permitir el acceso completo y correcto a toda la información de la página independientemente del tipo de navegador utilizado por el usuario.</li>
+<li>Después de cumplir el requisito anterior, se deben utilizar las características más modernas de CSS 2 e incluso de CSS 3, aunque sólo los usuarios con navegadores más modernos sean capaces de disfrutarlas.</li>
+</ul>
+
+<p>La técnica de la mejora progresiva es mucho mejor que las soluciones alternativas que utilizan algunos diseñadores, como por ejemplo:</p>
+
+<ul>
+<li>Utilizar sólo las características de CSS que soporte correctamente el navegador obsoleto Internet Explorer 6, porque un gran número de usuarios siguen utilizándolo.</li>
+<li>Utilizar sólo las características de CSS que soporten correctamente navegadores limitados como Internet Explorer 7, ya que es el navegador más utilizado por los usuarios.</li>
+<li>Olvidarse completamente de navegadores limitados como Internet Explorer 6 y 7, diseñando los sitios web sólo para los navegadores más modernos.</li>
+</ul>
+
+<p>A continuación se muestra la mejora progresiva en la práctica mediante un ejemplo publicado en el artículo <em><a href="http://dev.opera.com/articles/view/progressive-enhancement-with-css-3-a-be/">Progressive Enhancement with CSS 3: A better experience for modern browsers</a></em>.</p>
+
+<p>El propósito del ejemplo es crear un menú de navegación que se ve más bonito cuanto más moderno sea tu navegador. Como es habitual, el código HTML del menú se basa en una lista de tipo <code>&lt;ul&gt;</code>:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">ul</span>&gt;</span> 
+  <span class="sc2">&lt;<span class="kw2">li</span>&gt;&lt;<span class="kw2">a</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;&quot;</span>&gt;</span>Lorem Ipsum<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">a</span>&gt;&lt;<span class="sy0">/</span><span class="kw2">li</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">li</span>&gt;&lt;<span class="kw2">a</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;&quot;</span>&gt;</span>Lorem Ipsum<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">a</span>&gt;&lt;<span class="sy0">/</span><span class="kw2">li</span>&gt;</span> 
+  <span class="sc2">&lt;<span class="kw2">li</span>&gt;&lt;<span class="kw2">a</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;&quot;</span>&gt;</span>Lorem Ipsum<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">a</span>&gt;&lt;<span class="sy0">/</span><span class="kw2">li</span>&gt;</span> 
+  <span class="sc2">&lt;<span class="kw2">li</span>&gt;&lt;<span class="kw2">a</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;&quot;</span>&gt;</span>Lorem Ipsum<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">a</span>&gt;&lt;<span class="sy0">/</span><span class="kw2">li</span>&gt;</span> 
+  <span class="sc2">&lt;<span class="kw2">li</span>&gt;&lt;<span class="kw2">a</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;&quot;</span>&gt;</span>Lorem Ipsum<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">a</span>&gt;&lt;<span class="sy0">/</span><span class="kw2">li</span>&gt;</span> 
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">ul</span>&gt;</span></pre>
+</div>
+
+<p>El primer paso consiste en aplicar los estilos CSS básicos que interpretan correctamente todas las versiones de todos los navegadores. Aunque estos estilos hacen que el menú tenga un aspecto muy básico, permiten el acceso correcto a todos los contenidos.</p>
+
+<div class="code css">
+<pre class="css">ul <span class="br0">&#123;</span>
+  <span class="kw1">background-color</span><span class="sy0">:</span> <span class="kw1">blue</span><span class="sy0">;</span>
+  <span class="kw1">border-bottom</span><span class="sy0">:</span> <span class="re3">1px</span> <span class="kw2">dotted</span> <span class="re0">#999</span><span class="sy0">;</span>
+  <span class="kw1">list-style</span><span class="sy0">:</span> <span class="kw2">none</span><span class="sy0">;</span>
+  <span class="kw1">margin</span><span class="sy0">:</span> <span class="re3">15px</span><span class="sy0">;</span>
+  <span class="kw1">width</span><span class="sy0">:</span> <span class="re3">150px</span><span class="sy0">;</span>
+  <span class="kw1">padding-left</span><span class="sy0">:</span> <span class="nu0">0</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+li <span class="br0">&#123;</span>
+  <span class="kw1">background-color</span><span class="sy0">:</span> <span class="re0">#FFF</span><span class="sy0">;</span>
+  <span class="kw1">border</span><span class="sy0">:</span> <span class="re3">1px</span> <span class="kw2">dotted</span> <span class="re0">#999</span><span class="sy0">;</span>
+  <span class="kw1">border-bottom-width</span><span class="sy0">:</span> <span class="nu0">0</span><span class="sy0">;</span>
+  <span class="kw1">font</span><span class="sy0">:</span> <span class="re3">1.2em</span>/<span class="nu0">1.333</span> Verdana<span class="sy0">,</span> Arial<span class="sy0">,</span> <span class="kw2">sans-serif</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+li a <span class="br0">&#123;</span>
+  <span class="kw1">color</span><span class="sy0">:</span> <span class="re0">#000</span><span class="sy0">;</span>
+  <span class="kw1">display</span><span class="sy0">:</span> <span class="kw2">block</span><span class="sy0">;</span>
+  <span class="kw1">height</span><span class="sy0">:</span> <span class="re3">100%</span><span class="sy0">;</span>
+  <span class="kw1">padding</span><span class="sy0">:</span> <span class="re3">0.25em</span> <span class="nu0">0</span><span class="sy0">;</span>
+  <span class="kw1">text-align</span><span class="sy0">:</span> <span class="kw2">center</span><span class="sy0">;</span>
+  <span class="kw1">text-decoration</span><span class="sy0">:</span> <span class="kw2">none</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+li a<span class="re2">:hover </span><span class="br0">&#123;</span> <span class="kw1">background-color</span><span class="sy0">:</span> <span class="re0">#EFEFEF</span><span class="sy0">;</span> <span class="br0">&#125;</span></pre>
+</div>
+
+<p>Las reglas CSS anteriores hacen que el menú de navegación tenga el siguiente aspecto en cada navegador:</p>
+
+<div class="figure" id="figure_2_3">
+    <img src="../../img/css_avanzado/f0203.png" alt="Aspecto del menú en los navegadores Internet Explorer 6 y 7, Firefox 3, Safari 3 y Opera 9" />
+
+    <p class="caption"><strong>Figura 2.3</strong> Aspecto del menú en los navegadores Internet Explorer 6 y 7, Firefox 3, Safari 3 y Opera 9</p>
+</div>
+
+
+<p>Como se ve en la imagen anterior, incluso con unos estilos CSS tan básicos se producen diferencias visuales entre los navegadores. El motivo es que Internet Explorer 6 no es capaz de mostrar un borde punteado de <code>1px</code> de anchura y lo sustituye por un borde discontinuo.</p>
+
+<p>El siguiente paso consiste en utilizar el selector de hijos (uno de los selectores avanzados de CSS) para añadir nuevos estilos:</p>
+
+<div class="code css">
+<pre class="css">body <span class="sy0">&gt;</span> ul <span class="br0">&#123;</span> <span class="kw1">border-width</span><span class="sy0">:</span> <span class="nu0">0</span><span class="sy0">;</span> <span class="br0">&#125;</span>
+&nbsp;
+ul <span class="sy0">&gt;</span> li <span class="br0">&#123;</span>
+  <span class="kw1">border</span><span class="sy0">:</span> <span class="re3">1px</span> <span class="kw2">solid</span> <span class="re0">#FFF</span><span class="sy0">;</span>
+  <span class="kw1">border-width</span><span class="sy0">:</span> <span class="re3">1px</span> <span class="nu0">0</span> <span class="nu0">0</span> <span class="nu0">0</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+li <span class="sy0">&gt;</span> a <span class="br0">&#123;</span>
+  <span class="kw1">background-color</span><span class="sy0">:</span> <span class="re0">#666</span><span class="sy0">;</span>
+  <span class="kw1">color</span><span class="sy0">:</span> <span class="kw2">white</span><span class="sy0">;</span>
+  <span class="kw1">font-weight</span><span class="sy0">:</span> <span class="kw2">bold</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+li<span class="re2">:first-child </span>a <span class="br0">&#123;</span> <span class="kw1">color</span><span class="sy0">:</span> <span class="kw2">yellow</span><span class="sy0">;</span> <span class="br0">&#125;</span>
+&nbsp;
+li <span class="sy0">&gt;</span> a<span class="re2">:hover</span><span class="br0">&#123;</span> <span class="kw1">background-color</span><span class="sy0">:</span> <span class="re0">#999</span><span class="sy0">;</span> <span class="br0">&#125;</span></pre>
+</div>
+
+<p>Ahora el primer elemento del menú de navegación se muestra con otro estilo y cuando el usuario pasa su ratón por encima de un elemento se muestra destacado:</p>
+
+<div class="figure" id="figure_2_4">
+    <img src="../../img/css_avanzado/f0204.png" alt="Aspecto del menú en los navegadores Internet Explorer 6 y 7, Firefox 3, Safari 3 y Opera 9" />
+
+    <p class="caption"><strong>Figura 2.4</strong> Aspecto del menú en los navegadores Internet Explorer 6 y 7, Firefox 3, Safari 3 y Opera 9</p>
+</div>
+
+
+<p>El navegador Internet Explorer 6 se queda atrás y sigue mostrando el menú con el mismo aspecto, ya que no es capaz de entender el selector de hijos. La mejora progresiva permite que los usuarios de Internet Explorer 6 sigan accediendo a todos los contenidos y que el resto de usuarios vean un menú más avanzado.</p>
+
+<p>A continuación se modifica la opacidad de los elementos del menú, de forma que el elemento seleccionado se vea más claramente:</p>
+
+<div class="code css">
+<pre class="css">li <span class="br0">&#123;</span> opacity<span class="sy0">:</span> <span class="nu0">0.9</span><span class="sy0">;</span> <span class="br0">&#125;</span>
+&nbsp;
+li<span class="re2">:hover</span><span class="br0">&#123;</span> opacity<span class="sy0">:</span> <span class="nu0">1</span><span class="sy0">;</span> <span class="br0">&#125;</span></pre>
+</div>
+
+<p>En esta ocasión, el navegador que se queda atrás es Internet Explorer 7, ya que no incluye soporte para esa propiedad de CSS. En el resto de navegadores se muestra correctamente el efecto:</p>
+
+<div class="figure" id="figure_2_5">
+    <img src="../../img/css_avanzado/f0205.png" alt="Aspecto del menú en los navegadores Internet Explorer 6 y 7, Firefox 3, Safari 3 y Opera 9" />
+
+    <p class="caption"><strong>Figura 2.5</strong> Aspecto del menú en los navegadores Internet Explorer 6 y 7, Firefox 3, Safari 3 y Opera 9</p>
+</div>
+
+
+<p>Otra posible mejora del menú consiste en añadir una sombra al texto del elemento seleccionado mediante la propiedad <code>text-shadow</code> de CSS:</p>
+
+<div class="code css">
+<pre class="css">li a<span class="re2">:hover </span><span class="br0">&#123;</span> <span class="kw1">text-shadow</span><span class="sy0">:</span> <span class="re3">2px</span> <span class="re3">2px</span> <span class="re3">4px</span> <span class="re0">#333</span><span class="sy0">;</span> <span class="br0">&#125;</span></pre>
+</div>
+
+<p>Solamente los navegadores Safari y Opera soportan la propiedad <code>text-shadow</code>, por lo que el navegador Firefox se queda atrás y no muestra esta mejora:</p>
+
+<div class="figure" id="figure_2_6">
+    <img src="../../img/css_avanzado/f0206.png" alt="Aspecto del menú en los navegadores Internet Explorer 6 y 7, Firefox 3, Safari 3 y Opera 9" />
+
+    <p class="caption"><strong>Figura 2.6</strong> Aspecto del menú en los navegadores Internet Explorer 6 y 7, Firefox 3, Safari 3 y Opera 9</p>
+</div>
+
+
+<p>Por último, utilizando los selectores de CSS 3 se va a alternar el color de fondo de los elementos del menú para mejorar su visualización:</p>
+
+<div class="code css">
+<pre class="css">li<span class="re2">:nth-</span>child<span class="br0">&#40;</span>2n<span class="sy0">+</span><span class="nu0">1</span><span class="br0">&#41;</span> a <span class="br0">&#123;</span>
+  <span class="kw1">background-color</span><span class="sy0">:</span> <span class="re0">#333</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+li<span class="re2">:nth-</span>child<span class="br0">&#40;</span>n<span class="br0">&#41;</span> a<span class="re2">:hover </span><span class="br0">&#123;</span>
+  <span class="kw1">background-color</span><span class="sy0">:</span> <span class="re0">#AAA</span><span class="sy0">;</span>
+  <span class="kw1">color</span><span class="sy0">:</span> <span class="re0">#000</span><span class="sy0">;</span>
+<span class="br0">&#125;</span> 
+&nbsp;
+li<span class="re2">:first-child </span><span class="sy0">&gt;</span> a<span class="re2">:hover</span><span class="br0">&#123;</span> <span class="kw1">color</span><span class="sy0">:</span> <span class="kw2">yellow</span><span class="sy0">;</span> <span class="br0">&#125;</span></pre>
+</div>
+
+<p>Solamente los navegadores Opera y Safari incluyen todos los selectores de CSS 3, por lo que el resultado final del menú en cada navegador es el que muestra la siguiente imagen:</p>
+
+<div class="figure" id="figure_2_7">
+    <img src="../../img/css_avanzado/f0207.png" alt="Aspecto del menú en los navegadores Internet Explorer 6 y 7, Firefox 3, Safari 3 y Opera 9" />
+
+    <p class="caption"><strong>Figura 2.7</strong> Aspecto del menú en los navegadores Internet Explorer 6 y 7, Firefox 3, Safari 3 y Opera 9</p>
+</div>
+
+
+<p>Como se ha visto en este ejemplo, la mejora progresiva permite aprovechar todas las posibilidades de CSS sin perjudicar a los navegadores obsoletos o limitados. Los usuarios de Internet Explorer 6 visualizan un menú muy básico adecuado para un navegador obsoleto, pero que les permite el acceso a todos los contenidos. Los usuarios de Internet Explorer 7 visualizan un menú normal adecuado a las limitaciones de su navegador pero que también permite el acceso a todos los contenidos. Por último, los usuarios de los navegadores más avanzados (Opera y Safari) visualizan un menú avanzado que aprovecha todas las características disponibles en CSS.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="comprobar_el_diseno_en_varios_navegadores.html">&larr; Anterior <span>2.2. Comprobar el diseño en varios navegadores</span></a>
+            
+            <a class="span5 next" href="depuracion.html">Siguiente &rarr; <span>2.4. Depuración</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Mejora progresiva (CSS avanzado%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'CSS avanzado : Mejora progresiva']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Técnicas imprescindibles</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_2.html">
+            <span>Capítulo 2.</span> Buenas prácticas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="comprobar_el_diseno_en_varios_navegadores.html">
+            <span>2.2.</span> Comprobar el diseño en varios navegadores
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="mejora_progresiva.html">
+            <span>2.3.</span> Mejora progresiva
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="depuracion.html">
+            <span>2.4.</span> Depuración
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="hojas_de_estilos.html">
+            <span>2.5.</span> Hojas de estilos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="rendimiento.html">
+            <span>2.6.</span> Rendimiento
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="recursos_imprescindibles.html">
+            <span>2.7.</span> Recursos imprescindibles
+        </a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Selectores</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Propiedades avanzadas</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Frameworks</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Técnicas avanzadas</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

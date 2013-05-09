@@ -1,0 +1,558 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>6.3. Obteniendo información del evento (objeto event) (Introducción a JavaScript)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="modelo_basico_de_eventos.html" />
+        <link rel="next" href="../capitulo_7.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="6.3. Obteniendo información del evento (objeto event) (Introducción a JavaScript)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page javascript">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Introducción a JavaScript</a></li>
+  <li><a href="../capitulo_6.html">Capítulo 6. Eventos</a></li>
+  <li class="current"><span>6.3. Obteniendo información del evento (objeto event)</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="obteniendo_informacion_del_evento_objeto_event"><span>6.3.</span> Obteniendo información del evento (objeto event)</h1>
+    
+
+<p>Normalmente, los manejadores de eventos requieren información adicional para procesar sus tareas. Si una función por ejemplo se encarga de procesar el evento <code>onclick</code>, quizás necesite saber en que posición estaba el ratón en el momento de pinchar el botón.</p>
+
+<p>No obstante, el caso más habitual en el que es necesario conocer información adicional sobre el evento es el de los eventos asociados al teclado. Normalmente, es muy importante conocer la tecla que se ha pulsado, por ejemplo para diferenciar las teclas normales de las teclas especiales (<code>ENTER</code>, tabulador, <code>Alt</code>, <code>Ctrl.</code>, etc.).</p>
+
+<p>JavaScript permite obtener información sobre el ratón y el teclado mediante un objeto especial llamado <code>event</code>. Desafortunadamente, los diferentes navegadores presentan diferencias muy notables en el tratamiento de la información sobre los eventos.</p>
+
+<p>La principal diferencia reside en la forma en la que se obtiene el objeto <code>event</code>. Internet Explorer considera que este objeto forma parte del objeto <code>window</code> y el resto de navegadores lo consideran como el único argumento que tienen las funciones manejadoras de eventos.</p>
+
+<p>Aunque es un comportamiento que resulta muy extraño al principio, todos los navegadores modernos excepto Internet Explorer crean <em>mágicamente</em> y de forma automática un argumento que se pasa a la función manejadora, por lo que no es necesario incluirlo en la llamada a la función manejadora. De esta forma, para utilizar este <em>"argumento mágico"</em>, sólo es necesario asignarle un nombre, ya que los navegadores lo crean automáticamente.</p>
+
+<p>En resumen, en los navegadores tipo Internet Explorer, el objeto <code>event</code> se obtiene directamente mediante:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> evento <span class="sy0">=</span> window.<span class="me1">event</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Por otra parte, en el resto de navegadores, el objeto <code>event</code> se obtiene <em>mágicamente</em> a partir del argumento que el navegador crea automáticamente:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">function</span> manejadorEventos<span class="br0">&#40;</span>elEvento<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="kw1">var</span> evento <span class="sy0">=</span> elEvento<span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Si se quiere programar una aplicación que funcione correctamente en todos los navegadores, es necesario obtener el objeto <code>event</code> de forma correcta según cada navegador. El siguiente código muestra la forma correcta de obtener el objeto <code>event</code> en cualquier navegador:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">function</span> manejadorEventos<span class="br0">&#40;</span>elEvento<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="kw1">var</span> evento <span class="sy0">=</span> elEvento <span class="sy0">||</span> window.<span class="me1">event</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Una vez obtenido el objeto <code>event</code>, ya se puede acceder a toda la información relacionada con el evento, que depende del tipo de evento producido.</p>
+
+<h3 id="informacion_sobre_el_evento">6.3.1. Información sobre el evento</h3>
+
+<p>La propiedad <code>type</code> indica el tipo de evento producido, lo que es útil cuando una misma función se utiliza para manejar varios eventos:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> tipo <span class="sy0">=</span> evento.<span class="me1">type</span><span class="sy0">;</span></pre>
+</div>
+
+<p>La propiedad <code>type</code> devuelve el tipo de evento producido, que es igual al nombre del evento pero sin el prefijo <code>on</code>.</p>
+
+<p>Mediante esta propiedad, se puede rehacer de forma más sencilla el ejemplo anterior en el que se resaltaba una sección de contenidos al pasar el ratón por encima:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">function</span> resalta<span class="br0">&#40;</span>elEvento<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="kw1">var</span> evento <span class="sy0">=</span> elEvento <span class="sy0">||</span> window.<span class="me1">event</span><span class="sy0">;</span>
+  <span class="kw1">switch</span><span class="br0">&#40;</span>evento.<span class="me1">type</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="kw1">case</span> <span class="st0">'mouseover'</span><span class="sy0">:</span>
+      <span class="kw1">this</span>.<span class="me1">style</span>.<span class="me1">borderColor</span> <span class="sy0">=</span> <span class="st0">'black'</span><span class="sy0">;</span>
+      <span class="kw1">break</span><span class="sy0">;</span>
+    <span class="kw1">case</span> <span class="st0">'mouseout'</span><span class="sy0">:</span>
+      <span class="kw1">this</span>.<span class="me1">style</span>.<span class="me1">borderColor</span> <span class="sy0">=</span> <span class="st0">'silver'</span><span class="sy0">;</span>
+      <span class="kw1">break</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+window.<span class="me1">onload</span> <span class="sy0">=</span> <span class="kw1">function</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  document.<span class="me1">getElementById</span><span class="br0">&#40;</span><span class="st0">&quot;seccion&quot;</span><span class="br0">&#41;</span>.<span class="me1">onmouseover</span> <span class="sy0">=</span> resalta<span class="sy0">;</span>
+  document.<span class="me1">getElementById</span><span class="br0">&#40;</span><span class="st0">&quot;seccion&quot;</span><span class="br0">&#41;</span>.<span class="me1">onmouseout</span> <span class="sy0">=</span> resalta<span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+<span class="sy0">&lt;</span>div id<span class="sy0">=</span><span class="st0">&quot;seccion&quot;</span> style<span class="sy0">=</span><span class="st0">&quot;width:150px; height:60px; border:thin solid silver&quot;</span><span class="sy0">&gt;</span>
+  Sección de contenidos...
+<span class="sy0">&lt;/</span>div<span class="sy0">&gt;</span></pre>
+</div>
+
+<h3 id="informacion_sobre_los_eventos_de_teclado">6.3.2. Información sobre los eventos de teclado</h3>
+
+<p>De todos los eventos disponibles en JavaScript, los eventos relacionados con el teclado son los más incompatibles entre diferentes navegadores y por tanto, los más difíciles de manejar. En primer lugar, existen muchas diferencias entre los navegadores, los teclados y los sistemas operativos de los usuarios, principalmente debido a las diferencias entre idiomas.</p>
+
+<p>Además, existen tres eventos diferentes para las pulsaciones de las teclas (<code>onkeyup</code>, <code>onkeypress</code> y <code>onkeydown</code>). Por último, existen dos tipos de teclas: las teclas <em>normales</em> (como letras, números y símbolos normales) y las teclas <em>especiales</em> (como <code>ENTER</code>, <code>Alt</code>, <code>Shift</code>, etc.)</p>
+
+<p>Cuando un usuario pulsa una tecla normal, se producen tres eventos seguidos y en este orden: <code>onkeydown</code>, <code>onkeypress</code> y <code>onkeyup</code>. El evento <code>onkeydown</code> se corresponde con el hecho de pulsar una tecla y no soltarla; el evento <code>onkeypress</code> es la propia pulsación de la tecla y el evento <code>onkeyup</code> hace referencia al hecho de soltar una tecla que estaba pulsada.</p>
+
+<p>La forma más sencilla de obtener la información sobre la tecla que se ha pulsado es mediante el evento <code>onkeypress</code>. La información que proporcionan los eventos <code>onkeydown</code> y <code>onkeyup</code> se puede considerar como más técnica, ya que devuelven el código interno de cada tecla y no el carácter que se ha pulsado.</p>
+
+<p>A continuación se incluye una lista con todas las propiedades diferentes de todos los eventos de teclado tanto en Internet Explorer como en el resto de navegadores:</p>
+
+<ul>
+<li>Evento <code>keydown</code>:
+
+<ul>
+<li>Mismo comportamiento en todos los navegadores:
+
+<ul>
+<li>Propiedad <code>keyCode</code>: código interno de la tecla</li>
+<li>Propiedad <code>charCode</code>: no definido</li>
+</ul></li>
+</ul></li>
+<li>Evento <code>keypress</code>:
+
+<ul>
+<li>Internet Explorer:
+
+<ul>
+<li>Propiedad <code>keyCode</code>: el código del carácter de la tecla que se ha pulsado</li>
+<li>Propiedad <code>charCode</code>: no definido</li>
+</ul></li>
+<li>Resto de navegadores:
+
+<ul>
+<li>Propiedad <code>keyCode</code>: para las teclas normales, no definido. Para las teclas especiales, el código interno de la tecla.</li>
+<li>Propiedad <code>charCode</code>: para las teclas normales, el código del carácter de la tecla que se ha pulsado. Para las teclas especiales, <code>0</code>.</li>
+</ul></li>
+</ul></li>
+<li>Evento <code>keyup</code>:
+
+<ul>
+<li>Mismo comportamiento en todos los navegadores:
+
+<ul>
+<li>Propiedad <code>keyCode</code>: código interno de la tecla</li>
+<li>Propiedad <code>charCode</code>: no definido</li>
+</ul></li>
+</ul></li>
+</ul>
+
+<p>Para convertir el código de un carácter (no confundir con el código interno) al carácter que representa la tecla que se ha pulsado, se utiliza la función <code>String.fromCharCode()</code>.</p>
+
+<p>A continuación se incluye un script que muestra toda la información sobre los tres eventos de teclado:</p>
+
+<div class="code javascript">
+<pre class="javascript">window.<span class="me1">onload</span> <span class="sy0">=</span> <span class="kw1">function</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  document.<span class="me1">onkeyup</span> <span class="sy0">=</span> muestraInformacion<span class="sy0">;</span>
+  document.<span class="me1">onkeypress</span> <span class="sy0">=</span> muestraInformacion<span class="sy0">;</span>
+  document.<span class="me1">onkeydown</span> <span class="sy0">=</span> muestraInformacion<span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+<span class="kw1">function</span> muestraInformacion<span class="br0">&#40;</span>elEvento<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="kw1">var</span> evento <span class="sy0">=</span> window.<span class="me1">event</span> <span class="sy0">||</span> elEvento<span class="sy0">;</span>
+&nbsp;
+  <span class="kw1">var</span> mensaje <span class="sy0">=</span> <span class="st0">&quot;Tipo de evento: &quot;</span> <span class="sy0">+</span> evento.<span class="me1">type</span> <span class="sy0">+</span> <span class="st0">&quot;&lt;br&gt;&quot;</span> <span class="sy0">+</span>
+                <span class="st0">&quot;Propiedad keyCode: &quot;</span> <span class="sy0">+</span> evento.<span class="me1">keyCode</span> <span class="sy0">+</span> <span class="st0">&quot;&lt;br&gt;&quot;</span> <span class="sy0">+</span>
+                <span class="st0">&quot;Propiedad charCode: &quot;</span> <span class="sy0">+</span> evento.<span class="me1">charCode</span> <span class="sy0">+</span> <span class="st0">&quot;&lt;br&gt;&quot;</span> <span class="sy0">+</span>
+                <span class="st0">&quot;Carácter pulsado: &quot;</span> <span class="sy0">+</span> <span class="kw4">String</span>.<span class="me1">fromCharCode</span><span class="br0">&#40;</span>evento.<span class="me1">charCode</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+  info.<span class="me1">innerHTML</span> <span class="sy0">+=</span> <span class="st0">&quot;&lt;br&gt;--------------------------------------&lt;br&gt;&quot;</span> <span class="sy0">+</span> mensaje
+<span class="br0">&#125;</span>
+&nbsp;
+...
+&nbsp;
+<span class="sy0">&lt;</span>div id<span class="sy0">=</span><span class="st0">&quot;info&quot;</span><span class="sy0">&gt;&lt;/</span>div<span class="sy0">&gt;</span></pre>
+</div>
+
+<p>Al pulsar la tecla <code>a</code> en el navegador Firefox, se muestra la siguiente sucesión de eventos:</p>
+
+<div class="code cli">
+<pre class="cli">--------------------------------------
+Tipo de evento: keydown
+Propiedad keyCode: 65
+Propiedad charCode: 0
+Carácter pulsado: ?
+--------------------------------------
+Tipo de evento: keypress
+Propiedad keyCode: 0
+Propiedad charCode: 97
+Carácter pulsado: a
+--------------------------------------
+Tipo de evento: keyup
+Propiedad keyCode: 65
+Propiedad charCode: 0
+Carácter pulsado: ?</pre>
+</div>
+
+<p>Al pulsar la tecla <code>A</code> (la misma tecla, pero habiendo activado previamente las mayúsculas) se muestra la siguiente sucesión de eventos en el navegador Firefox:</p>
+
+<div class="code cli">
+<pre class="cli">--------------------------------------
+Tipo de evento: keydown
+Propiedad keyCode: 65
+Propiedad charCode: 0
+Carácter pulsado: ?
+--------------------------------------
+Tipo de evento: keypress
+Propiedad keyCode: 0
+Propiedad charCode: 65
+Carácter pulsado: A
+--------------------------------------
+Tipo de evento: keyup
+Propiedad keyCode: 65
+Propiedad charCode: 0
+Carácter pulsado: ?</pre>
+</div>
+
+<p>En los eventos <code>keydown</code> y <code>keyup</code>, la propiedad <code>keyCode</code> sigue valiendo lo mismo en los dos casos. El motivo es que <code>keyCode</code> almacena el código interno de la tecla, por lo que si se pulsa la misma tecla, se obtiene el mismo código, independientemente de que una misma tecla puede producir caracteres diferentes (por ejemplo mayúsculas y minúsculas).</p>
+
+<p>En el evento <code>keypress</code>, el valor de la propiedad <code>charCode</code> varía, ya que el carácter <code>a</code>, no es el mismo que el carácter <code>A</code>. En este caso, el valor de <code>charCode</code> coincide con el código ASCII del carácter pulsado.</p>
+
+<p>Siguiendo en el navegador Firefox, si ahora se pulsa una tecla <em>especial</em>, como por ejemplo el tabulador, se muestra la siguiente información:</p>
+
+<div class="code cli">
+<pre class="cli">--------------------------------------
+Tipo de evento: keydown
+Propiedad keyCode: 9
+Propiedad charCode: 0
+Carácter pulsado: ?
+--------------------------------------
+Tipo de evento: keypress
+Propiedad keyCode: 9
+Propiedad charCode: 0
+Carácter pulsado: ?
+--------------------------------------
+Tipo de evento: keyup
+Propiedad keyCode: 9
+Propiedad charCode: 0
+Carácter pulsado: ?</pre>
+</div>
+
+<p>Las teclas especiales no disponen de la propiedad <code>charCode</code>, ya que sólamente se guarda el código interno de la tecla pulsada en la propiedad <code>keyCode</code>, en este caso el código <code>9</code>. Si se pulsa la tecla <code>Enter</code>, se obtiene el código <code>13</code>, la tecla de la flecha superior produce el código <code>38</code>, etc. No obstante, dependiendo del teclado utilizado para pulsar las teclas y dependiendo de la disposición de las teclas en función del idioma del teclado, estos códigos podrían variar.</p>
+
+<p>A continuación se muestra el resultado de la ejecución del mismo ejemplo anterior en el navegador Internet Explorer. Al pulsar la tecla <code>a</code>, se obtiene la siguiente información:</p>
+
+<div class="code cli">
+<pre class="cli">--------------------------------------
+Tipo de evento: keydown
+Propiedad keyCode: 65
+Propiedad charCode: undefined
+Carácter pulsado: 
+--------------------------------------
+Tipo de evento: keypress
+Propiedad keyCode: 97
+Propiedad charCode: undefined
+Carácter pulsado: 
+--------------------------------------
+Tipo de evento: keyup
+Propiedad keyCode: 65
+Propiedad charCode: undefined
+Carácter pulsado:</pre>
+</div>
+
+<p>La propiedad <code>keyCode</code> en el evento <code>keypress</code> contiene el código ASCII del carácter de la tecla, por lo que se puede obtener directamente el carácter mediante <code>String.fromCharCode(keyCode)</code>.</p>
+
+<p>Si se pulsa la tecla <code>A</code>, la información mostrada es idéntica a la anterior, salvo que el código que muestra el evento <code>keypress</code> cambia por <code>65</code>, que es el código ASCII de la tecla <code>A</code>:</p>
+
+<div class="code cli">
+<pre class="cli">--------------------------------------
+Tipo de evento: keydown
+Propiedad keyCode: 65
+Propiedad charCode: undefined
+Carácter pulsado: 
+--------------------------------------
+Tipo de evento: keypress
+Propiedad keyCode: 65
+Propiedad charCode: undefined
+Carácter pulsado: 
+--------------------------------------
+Tipo de evento: keyup
+Propiedad keyCode: 65
+Propiedad charCode: undefined
+Carácter pulsado:</pre>
+</div>
+
+<p>Al pulsar una tecla <em>especial</em> como el tabulador, Internet Explorer muestra la siguiente información:</p>
+
+<div class="code cli">
+<pre class="cli">--------------------------------------
+Tipo de evento: keydown
+Propiedad keyCode: 9
+Propiedad charCode: undefined
+Carácter pulsado:</pre>
+</div>
+
+<p>Los códigos mostrados para las teclas especiales coinciden con los de Firefox y el resto de navegadores, pero recuerda que pueden variar en función del teclado que se utiliza y en función de la disposición de las teclas para cada idioma.</p>
+
+<p>Por último, las propiedades <code>altKey</code>, <code>ctrlKey</code> y <code>shiftKey</code> almacenan un valor booleano que indica si alguna de esas teclas estaba pulsada al producirse el evento del teclado. Sorprendentemente, estas tres propiedades funcionan de la misma forma en todos los navegadores:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">if</span><span class="br0">&#40;</span>evento.<span class="me1">altKey</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  alert<span class="br0">&#40;</span><span class="st0">'Estaba pulsada la tecla ALT'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>A continuación se muestra el caso en el que se pulsa la tecla <code>Shift</code> y sin soltarla, se pulsa sobre la tecla que contiene el número <code>2</code> (en este caso, se refiere a la tecla que se encuentra en la parte superior del teclado y por tanto, no se refiere a la que se encuentra en el teclado numérico). Tanto Internet Explorer como Firefox muestran la misma secuencia de eventos:</p>
+
+<div class="code cli">
+<pre class="cli">--------------------------------------
+Tipo de evento: keydown
+Propiedad keyCode: 16
+Propiedad charCode: 0
+Carácter pulsado: ?
+--------------------------------------
+Tipo de evento: keydown
+Propiedad keyCode: 50
+Propiedad charCode: 0
+Carácter pulsado: ?
+--------------------------------------
+Tipo de evento: keypress
+Propiedad keyCode: 0
+Propiedad charCode: 34
+Carácter pulsado: &quot;
+--------------------------------------
+Tipo de evento: keyup
+Propiedad keyCode: 50
+Propiedad charCode: 0
+Carácter pulsado: ?
+--------------------------------------
+Tipo de evento: keyup
+Propiedad keyCode: 16
+Propiedad charCode: 0
+Carácter pulsado: ?</pre>
+</div>
+
+<p>El evento <code>keypress</code> es el único que permite obtener el <em>carácter realmente pulsado</em>, ya que al pulsar sobre la tecla <code>2</code> habiendo pulsado la tecla <code>Shift</code> previamente, se obtiene el carácter <code>"</code>, que es precisamente el que muestra el evento <code>keypress</code>.</p>
+
+<p>El siguiente código de JavaScript permite obtener de forma correcta en cualquier navegador el carácter correspondiente a la tecla pulsada:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">function</span> manejador<span class="br0">&#40;</span>elEvento<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="kw1">var</span> evento <span class="sy0">=</span> elEvento <span class="sy0">||</span> window.<span class="me1">event</span><span class="sy0">;</span>
+  <span class="kw1">var</span> caracter <span class="sy0">=</span> evento.<span class="me1">charCode</span> <span class="sy0">||</span> evento.<span class="me1">keyCode</span><span class="sy0">;</span>
+  alert<span class="br0">&#40;</span><span class="st0">&quot;El carácter pulsado es: &quot;</span> <span class="sy0">+</span> <span class="kw4">String</span>.<span class="me1">fromCharCode</span><span class="br0">&#40;</span>caracter<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+document.<span class="me1">onkeypress</span> <span class="sy0">=</span> manejador<span class="sy0">;</span></pre>
+</div>
+
+<h3 id="informacion_sobre_los_eventos_de_raton">6.3.3. Información sobre los eventos de ratón</h3>
+
+<p>La información más relevante sobre los eventos relacionados con el ratón es la de las coordenadas de la posición del puntero del ratón. Aunque el origen de las coordenadas siempre se encuentra en la esquina superior izquierda, el punto que se toma como referencia de las coordenadas puede variar.</p>
+
+<p>De esta forma, es posible obtener la posición del ratón respecto de la pantalla del ordenador, respecto de la ventana del navegador y respecto de la propia página HTML (que se utiliza cuando el usuario ha hecho <em>scroll</em> sobre la página). Las coordenadas más sencillas son las que se refieren a la posición del puntero respecto de la ventana del navegador, que se obtienen mediante las propiedades <code>clientX</code> y <code>clientY</code>:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">function</span> muestraInformacion<span class="br0">&#40;</span>elEvento<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="kw1">var</span> evento <span class="sy0">=</span> elEvento <span class="sy0">||</span> window.<span class="me1">event</span><span class="sy0">;</span>
+  <span class="kw1">var</span> coordenadaX <span class="sy0">=</span> evento.<span class="me1">clientX</span><span class="sy0">;</span>
+  <span class="kw1">var</span> coordenadaY <span class="sy0">=</span> evento.<span class="me1">clientY</span><span class="sy0">;</span>
+  alert<span class="br0">&#40;</span><span class="st0">&quot;Has pulsado el ratón en la posición: &quot;</span> <span class="sy0">+</span> coordenadaX <span class="sy0">+</span> <span class="st0">&quot;, &quot;</span> <span class="sy0">+</span> coordenadaY<span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+document.<span class="me1">onclick</span> <span class="sy0">=</span> muestraInformacion<span class="sy0">;</span></pre>
+</div>
+
+<p>Las coordenadas de la posición del puntero del ratón respecto de la pantalla completa del ordenador del usuario se obtienen de la misma forma, mediante las propiedades <code>screenX</code> y <code>screenY</code>:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> coordenadaX <span class="sy0">=</span> evento.<span class="me1">screenX</span><span class="sy0">;</span>
+<span class="kw1">var</span> coordenadaY <span class="sy0">=</span> evento.<span class="me1">screenY</span><span class="sy0">;</span></pre>
+</div>
+
+<p>En muchas ocasiones, es necesario obtener otro par de coordenadas diferentes: las que corresponden a la posición del ratón respecto del origen de la página. Estas coordenadas no siempre coinciden con las coordenadas respecto del origen de la ventana del navegador, ya que el usuario puede hacer <em>scroll</em> sobre la página web. Internet Explorer no proporciona estas coordenadas de forma directa, mientras que el resto de navegadores sí que lo hacen. De esta forma, es necesario detectar si el navegador es de tipo Internet Explorer y en caso afirmativo realizar un cálculo sencillo:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="co1">// Detectar si el navegador es Internet Explorer</span>
+<span class="kw1">var</span> ie <span class="sy0">=</span> navigator.<span class="me1">userAgent</span>.<span class="me1">toLowerCase</span><span class="br0">&#40;</span><span class="br0">&#41;</span>.<span class="me1">indexOf</span><span class="br0">&#40;</span><span class="st0">'msie'</span><span class="br0">&#41;</span><span class="sy0">!=-</span><span class="nu0">1</span><span class="sy0">;</span>
+&nbsp;
+<span class="kw1">if</span><span class="br0">&#40;</span>ie<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  coordenadaX <span class="sy0">=</span> evento.<span class="me1">clientX</span> <span class="sy0">+</span> document.<span class="me1">body</span>.<span class="me1">scrollLeft</span><span class="sy0">;</span>
+  coordenadaY <span class="sy0">=</span> evento.<span class="me1">clientY</span> <span class="sy0">+</span> document.<span class="me1">body</span>.<span class="me1">scrollTop</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+<span class="kw1">else</span> <span class="br0">&#123;</span>
+  coordenadaX <span class="sy0">=</span> evento.<span class="me1">pageX</span><span class="sy0">;</span>
+  coordenadaY <span class="sy0">=</span> evento.<span class="me1">pageY</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+alert<span class="br0">&#40;</span><span class="st0">&quot;Has pulsado el ratón en la posición: &quot;</span> <span class="sy0">+</span> coordenadaX <span class="sy0">+</span> <span class="st0">&quot;, &quot;</span> <span class="sy0">+</span> coordenadaY <span class="sy0">+</span> <span class="st0">&quot; respecto de la página web&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>La variable <code>ie</code> vale <code>true</code> si el navegador en el que se ejecuta el script es de tipo Internet Explorer (cualquier versión) y vale <code>false</code> en otro caso. Para el resto de navegadores, las coordenadas respecto del origen de la página se obtienen mediante las propiedades <code>pageX</code> y <code>pageY</code>. En el caso de Internet Explorer, se obtienen sumando la posición respecto de la ventana del navegador (<code>clientX</code>, <code>clientY</code>) y el desplazamiento que ha sufrido la página (<code>document.body.scrollLeft</code>, <code>document.body.scrollTop</code>).</p>
+
+<p><div class="exercise"><p class="title">Ejercicio 15</p> Completar el código JavaScript proporcionado para que:</p>
+
+<ol>
+<li>Al mover el ratón en cualquier punto de la ventana del navegador, se muestre la posición del puntero respecto del navegador y respecto de la página: <div class="figure" id="figure_6_1">
+    <img src="../../img/javascript/f0601.gif" alt="Información que se muestra para los eventos del ratón" />
+
+    <p class="caption"><strong>Figura 6.1</strong> Información que se muestra para los eventos del ratón</p>
+</div>
+ Para mostrar los mensajes, utilizar la función <code>muestraInformacion()</code> deduciendo su funcionamiento a partir de su código fuente.</li>
+<li>Al pulsar cualquier tecla, el mensaje mostrado debe cambiar para indicar el nuevo evento y su información asociada: <div class="figure" id="figure_6_2">
+    <img src="../../img/javascript/f0602.gif" alt="Información que se muestra para los eventos del teclado" />
+
+    <p class="caption"><strong>Figura 6.2</strong> Información que se muestra para los eventos del teclado</p>
+</div>
+</li>
+<li>Añadir la siguiente característica al script: cuando se pulsa un botón del ratón, el color de fondo del cuadro de mensaje debe ser amarillo (<code>#FFFFCC</code>) y cuando se pulsa una tecla, el color de fondo debe ser azul (<code>#CCE6FF</code>). Al volver a mover el ratón, el color de fondo vuelve a ser blanco. <div class="figure" id="figure_6_3">
+    <img src="../../img/javascript/f0603.gif" alt="El color de fondo del cuadro de información cambia en función del tipo de evento" />
+
+    <p class="caption"><strong>Figura 6.3</strong> El color de fondo del cuadro de información cambia en función del tipo de evento</p>
+</div>
+</li>
+</ol>
+
+<p><a href="../../ejercicios/javascript/ejercicio15/ejercicio15.html">Descargar página HTML</a></p>
+
+<p><a href="../capitulo_11/ejercicio_15.html">Ver solución</a></div></p>
+
+<p><div class="exercise"><p class="title">Ejercicio 16</p> Crear un script que informe al usuario en que zona de la pantalla ha pulsado el ratón. Las zonas definidas son las siguientes: izquierda arriba, izquierda abajo, derecha arriba y derecha abajo. Para determinar el tamaño de la ventana del navegador, utilizar la función <code>tamanoVentanaNavegador()</code> proporcionada.</p>
+
+<p><a href="../../ejercicios/javascript/ejercicio16/ejercicio16.html">Descargar página HTML</a></p>
+
+<p><a href="../capitulo_11/ejercicio_16.html">Ver solución</a></div></p>
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="modelo_basico_de_eventos.html">&larr; Anterior <span>6.2. Modelo básico de eventos</span></a>
+            
+            <a class="span5 next" href="../capitulo_7.html">Siguiente &rarr; <span>Capítulo 7. Formularios</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Obteniendo información del evento (objeto event) (Introducción a JavaScript%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a JavaScript : Obteniendo información del evento (objeto event)']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> El primer script</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Programación básica</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Programación avanzada</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> DOM</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_6.html">
+            <span>Capítulo 6.</span> Eventos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="modelos_de_eventos.html">
+            <span>6.1.</span> Modelos de eventos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="modelo_basico_de_eventos.html">
+            <span>6.2.</span> Modelo básico de eventos
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="obteniendo_informacion_del_evento_objeto_event.html">
+            <span>6.3.</span> Obteniendo información del evento (objeto event)
+        </a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Otras utilidades</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Detección y corrección de errores</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Recursos útiles</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

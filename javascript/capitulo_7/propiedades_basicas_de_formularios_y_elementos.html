@@ -1,0 +1,243 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>7.1. Propiedades básicas de formularios y elementos (Introducción a JavaScript)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="../capitulo_7.html" />
+        <link rel="next" href="utilidades_basicas_para_formularios.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="7.1. Propiedades básicas de formularios y elementos (Introducción a JavaScript)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page javascript">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Introducción a JavaScript</a></li>
+  <li><a href="../capitulo_7.html">Capítulo 7. Formularios</a></li>
+  <li class="current"><span>7.1. Propiedades básicas de formularios y elementos</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="propiedades_basicas_de_formularios_y_elementos"><span>7.1.</span> Propiedades básicas de formularios y elementos</h1>
+    
+
+<p>JavaScript dispone de numerosas propiedades y funciones que facilitan la programación de aplicaciones que manejan formularios. En primer lugar, cuando se carga una página web, el navegador crea automáticamente un array llamado <code>forms</code> y que contiene la referencia a todos los formularios de la página.</p>
+
+<p>Para acceder al array <code>forms</code>, se utiliza el objeto <code>document</code>, por lo que <code>document.forms</code> es el array que contiene todos los formularios de la página. Como se trata de un array, el acceso a cada formulario se realiza con la misma sintaxis de los arrays. La siguiente instrucción accede al primer formulario de la página:</p>
+
+<div class="code javascript">
+<pre class="javascript">document.<span class="me1">forms</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Además del array de formularios, el navegador crea automáticamente un array llamado <code>elements</code> por cada uno de los formularios de la página. Cada array <code>elements</code> contiene la referencia a todos los elementos (cuadros de texto, botones, listas desplegables, etc.) de ese formulario. Utilizando la sintaxis de los arrays, la siguiente instrucción obtiene el primer elemento del primer formulario de la página:</p>
+
+<div class="code javascript">
+<pre class="javascript">document.<span class="me1">forms</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>.<span class="me1">elements</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>La sintaxis de los arrays no siempre es tan concisa. El siguiente ejemplo muestra cómo obtener directamente el último elemento del primer formulario de la página:</p>
+
+<div class="code javascript">
+<pre class="javascript">document.<span class="me1">forms</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>.<span class="me1">elements</span><span class="br0">&#91;</span>document.<span class="me1">forms</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>.<span class="me1">elements</span>.<span class="me1">length</span><span class="sy0">-</span><span class="nu0">1</span><span class="br0">&#93;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Aunque esta forma de acceder a los formularios es rápida y sencilla, tiene un inconveniente muy grave. ¿Qué sucede si cambia el diseño de la página y en el código HTML se cambia el orden de los formularios originales o se añaden nuevos formularios? El problema es que <em>"el primer formulario de la página"</em> ahora podría ser otro formulario diferente al que espera la aplicación.</p>
+
+<p>En un entorno tan cambiante como el diseño web, es muy difícil confiar en que el orden de los formularios se mantenga estable en una página web. Por este motivo, siempre debería evitarse el acceso a los formularios de una página mediante el array <code>document.forms</code>.</p>
+
+<p>Una forma de evitar los problemas del método anterior consiste en acceder a los formularios de una página a través de su nombre (atributo <code>name</code>) o a través de su atributo <code>id</code>.  El objeto <code>document</code> permite acceder directamente a cualquier formulario mediante su atributo <code>name</code>:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> formularioPrincipal <span class="sy0">=</span> document.<span class="me1">formulario</span><span class="sy0">;</span>
+<span class="kw1">var</span> formularioSecundario <span class="sy0">=</span> document.<span class="me1">otro_formulario</span><span class="sy0">;</span>
+&nbsp;
+<span class="sy0">&lt;</span>form name<span class="sy0">=</span><span class="st0">&quot;formulario&quot;</span> <span class="sy0">&gt;</span>
+  ...
+<span class="sy0">&lt;/</span>form<span class="sy0">&gt;</span>
+&nbsp;
+<span class="sy0">&lt;</span>form name<span class="sy0">=</span><span class="st0">&quot;otro_formulario&quot;</span> <span class="sy0">&gt;</span>
+  ...
+<span class="sy0">&lt;/</span>form<span class="sy0">&gt;</span></pre>
+</div>
+
+<p>Accediendo de esta forma a los formularios de la página, el script funciona correctamente aunque se reordenen los formularios o se añadan nuevos formularios a la página. Los elementos de los formularios también se pueden acceder directamente mediante su atributo <code>name</code>:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> formularioPrincipal <span class="sy0">=</span> document.<span class="me1">formulario</span><span class="sy0">;</span>
+<span class="kw1">var</span> primerElemento <span class="sy0">=</span> document.<span class="me1">formulario</span>.<span class="me1">elemento</span><span class="sy0">;</span>
+&nbsp;
+<span class="sy0">&lt;</span>form name<span class="sy0">=</span><span class="st0">&quot;formulario&quot;</span><span class="sy0">&gt;</span>
+  <span class="sy0">&lt;</span>input type<span class="sy0">=</span><span class="st0">&quot;text&quot;</span> name<span class="sy0">=</span><span class="st0">&quot;elemento&quot;</span> <span class="sy0">/&gt;</span>
+<span class="sy0">&lt;/</span>form<span class="sy0">&gt;</span></pre>
+</div>
+
+<p>Obviamente, también se puede acceder a los formularios y a sus elementos utilizando las funciones DOM de acceso directo a los nodos. El siguiente ejemplo utiliza la habitual función <code>document.getElementById()</code> para acceder de forma directa a un formulario y a uno de sus elementos:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> formularioPrincipal <span class="sy0">=</span> document.<span class="me1">getElementById</span><span class="br0">&#40;</span><span class="st0">&quot;formulario&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="kw1">var</span> primerElemento <span class="sy0">=</span> document.<span class="me1">getElementById</span><span class="br0">&#40;</span><span class="st0">&quot;elemento&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="sy0">&lt;</span>form name<span class="sy0">=</span><span class="st0">&quot;formulario&quot;</span> id<span class="sy0">=</span><span class="st0">&quot;formulario&quot;</span> <span class="sy0">&gt;</span>
+  <span class="sy0">&lt;</span>input type<span class="sy0">=</span><span class="st0">&quot;text&quot;</span> name<span class="sy0">=</span><span class="st0">&quot;elemento&quot;</span> id<span class="sy0">=</span><span class="st0">&quot;elemento&quot;</span> <span class="sy0">/&gt;</span>
+<span class="sy0">&lt;/</span>form<span class="sy0">&gt;</span></pre>
+</div>
+
+<p>Independientemente del método utilizado para obtener la referencia a un elemento de formulario, cada elemento dispone de las siguientes propiedades útiles para el desarrollo de las aplicaciones:</p>
+
+<ul>
+<li><code>type</code>: indica el tipo de elemento que se trata. Para los elementos de tipo <code>&lt;input&gt;</code> (<code>text</code>, <code>button</code>, <code>checkbox</code>, etc.) coincide con el valor de su atributo <code>type</code>. Para las listas desplegables normales (elemento <code>&lt;select&gt;</code>) su valor es <code>select-one</code>, lo que permite diferenciarlas de las listas que permiten seleccionar varios elementos a la vez y cuyo tipo es <code>select-multiple</code>. Por último, en los elementos de tipo <code>&lt;textarea&gt;</code>, el valor de <code>type</code> es <code>textarea</code>.</li>
+<li><code>form</code>: es una referencia directa al formulario al que pertenece el elemento. Así, para acceder al formulario de un elemento, se puede utilizar <code>document.getElementById("id_del_elemento").form</code></li>
+<li><code>name</code>: obtiene el valor del atributo <code>name</code> de XHTML. Solamente se puede leer su valor, por lo que no se puede modificar.</li>
+<li><code>value</code>: permite leer y modificar el valor del atributo <code>value</code> de XHTML. Para los campos de texto (<code>&lt;input type="text"&gt;</code> y <code>&lt;textarea&gt;</code>) obtiene el texto que ha escrito el usuario. Para los botones obtiene el texto que se muestra en el botón. Para los elementos <em>checkbox</em> y <em>radiobutton</em> no es muy útil, como se verá más adelante</li>
+</ul>
+
+<p>Por último, los eventos más utilizados en el manejo de los formularios son los siguientes:</p>
+
+<ul>
+<li><code>onclick</code>: evento que se produce cuando se pincha con el ratón sobre un elemento. Normalmente se utiliza con cualquiera de los tipos de botones que permite definir XHTML (<code>&lt;input type="button"&gt;</code>, <code>&lt;input type="submit"&gt;</code>, <code>&lt;input type="image"&gt;</code>).</li>
+<li><code>onchange</code>: evento que se produce cuando el usuario cambia el valor de un elemento de texto (<code>&lt;input type="text"&gt;</code> o <code>&lt;textarea&gt;</code>). También se produce cuando el usuario selecciona una opción en una lista desplegable (<code>&lt;select&gt;</code>). Sin embargo, el evento sólo se produce si después de realizar el cambio, el usuario <em>pasa</em> al siguiente campo del formulario, lo que técnicamente se conoce como que <em>"el otro campo de formulario ha perdido el foco"</em>.</li>
+<li><code>onfocus</code>: evento que se produce cuando el usuario selecciona un elemento del formulario.</li>
+<li><code>onblur</code>: evento complementario de <code>onfocus</code>, ya que se produce cuando el usuario ha <em>deseleccionado</em> un elemento por haber seleccionado otro elemento del formulario. Técnicamente, se dice que el elemento anterior <em>"ha perdido el foco"</em>.</li>
+</ul>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="../capitulo_7.html">&larr; Anterior <span>Capítulo 7. Formularios</span></a>
+            
+            <a class="span5 next" href="utilidades_basicas_para_formularios.html">Siguiente &rarr; <span>7.2. Utilidades básicas para formularios</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Propiedades básicas de formularios y elementos (Introducción a JavaScript%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a JavaScript : Propiedades básicas de formularios y elementos']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> El primer script</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Programación básica</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Programación avanzada</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> DOM</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Eventos</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_7.html">
+            <span>Capítulo 7.</span> Formularios
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="propiedades_basicas_de_formularios_y_elementos.html">
+            <span>7.1.</span> Propiedades básicas de formularios y elementos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="utilidades_basicas_para_formularios.html">
+            <span>7.2.</span> Utilidades básicas para formularios
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="validacion.html">
+            <span>7.3.</span> Validación
+        </a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Otras utilidades</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Detección y corrección de errores</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Recursos útiles</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

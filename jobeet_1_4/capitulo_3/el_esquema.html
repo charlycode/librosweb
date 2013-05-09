@@ -1,0 +1,306 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>3.2. El esquema (El tutorial Jobeet)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="el_modelo_relacional.html" />
+        <link rel="next" href="la_base_de_datos.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="3.2. El esquema (El tutorial Jobeet)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page jobeet_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">El tutorial Jobeet</a></li>
+  <li><a href="../capitulo_3.html">Capítulo 3. El modelo de datos</a></li>
+  <li class="current"><span>3.2.. El esquema</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="el_esquema"><span>3.2.</span> El esquema</h1>
+    
+
+<p>Los datos de las ofertas de trabajo, afiliados y categorías se guardan en una base de datos relacional. Por otra parte, como Symfony es un framework orientado a objetos, nuestro objetivo es trabajar con objetos siempre que sea posible. Así por ejemplo, preferimos utilizar objetos a tener que escribir sentencias SQL para obtener los registros de la base de datos.</p>
+
+<p>Para trabajar con objetos en una base de datos relacional, es necesario realizar un <em>mapeo</em> o conversión entre la información de la base de datos y los objetos PHP. Este <em>mapeo</em> se realiza con unas herramientas llamadas <a href="http://es.wikipedia.org/wiki/Mapeo_objeto-relacional">ORM</a> y Symfony incluye por defecto dos de las más utilizadas: <a href="http://propel.phpdb.org/">Propel</a> y <a href="http://www.doctrine-project.org/">Doctrine</a>. En este tutorial vamos a utilizar Propel.</p>
+
+<p>A partir de la descripción de cada tabla y de las relaciones entre tablas, el ORM crea las clases PHP necesarias para trabajar con objetos. Existen dos formas de crear la descripción del esquema de datos: mediante la introspección de una base de datos existente o creando el esquema manualmente.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Existen aplicaciones para crear bases de datos gráficamente (por ejemplo <a href="http://www.fabforce.net/dbdesigner4/">Dbdesigner de Fabforce</a>) y para generar archivos de tipo <code>schema.xml</code> (por ejemplo <a href="http://blog.tooleshed.com/docs/dbd2propel/transform.php">DB Designer 4 TO Propel Schema Converter</a>).</p></div>
+
+<p>Como todavía no tenemos ninguna base de datos y como queremos que Jobeet funcione con todos los tipos de gestores de bases de datos, vamos a crear el archivo del esquema a mano. Para ello, abre el archivo <code>config/schema.yml</code> y añade lo siguiente tal y como está escrito:</p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co1"># config/schema.yml</span><span class="co4">
+propel</span>:<span class="co4">
+  jobeet_category</span>:<span class="co3">
+    id</span><span class="sy2">: </span>          ~<span class="co3">
+    name</span><span class="sy2">: </span>        <span class="br0">&#123;</span> type<span class="sy2">: </span>varchar<span class="br0">&#40;</span><span class="nu0">255</span><span class="br0">&#41;</span>, required<span class="sy2">: </span>true, index<span class="sy2">: </span>unique <span class="br0">&#125;</span>
+<span class="co4">
+  jobeet_job</span>:<span class="co3">
+    id</span><span class="sy2">: </span>          ~<span class="co3">
+    category_id</span><span class="sy2">: </span> <span class="br0">&#123;</span> type<span class="sy2">: </span>integer, foreignTable<span class="sy2">: </span>jobeet_category, foreignReference<span class="sy2">: </span>id, required<span class="sy2">: </span>true <span class="br0">&#125;</span><span class="co3">
+    type</span><span class="sy2">: </span>        <span class="br0">&#123;</span> type<span class="sy2">: </span>varchar<span class="br0">&#40;</span><span class="nu0">255</span><span class="br0">&#41;</span> <span class="br0">&#125;</span><span class="co3">
+    company</span><span class="sy2">: </span>     <span class="br0">&#123;</span> type<span class="sy2">: </span>varchar<span class="br0">&#40;</span><span class="nu0">255</span><span class="br0">&#41;</span>, required<span class="sy2">: </span>true <span class="br0">&#125;</span><span class="co3">
+    logo</span><span class="sy2">: </span>        <span class="br0">&#123;</span> type<span class="sy2">: </span>varchar<span class="br0">&#40;</span><span class="nu0">255</span><span class="br0">&#41;</span> <span class="br0">&#125;</span><span class="co3">
+    url</span><span class="sy2">: </span>         <span class="br0">&#123;</span> type<span class="sy2">: </span>varchar<span class="br0">&#40;</span><span class="nu0">255</span><span class="br0">&#41;</span> <span class="br0">&#125;</span><span class="co3">
+    position</span><span class="sy2">: </span>    <span class="br0">&#123;</span> type<span class="sy2">: </span>varchar<span class="br0">&#40;</span><span class="nu0">255</span><span class="br0">&#41;</span>, required<span class="sy2">: </span>true <span class="br0">&#125;</span><span class="co3">
+    location</span><span class="sy2">: </span>    <span class="br0">&#123;</span> type<span class="sy2">: </span>varchar<span class="br0">&#40;</span><span class="nu0">255</span><span class="br0">&#41;</span>, required<span class="sy2">: </span>true <span class="br0">&#125;</span><span class="co3">
+    description</span><span class="sy2">: </span> <span class="br0">&#123;</span> type<span class="sy2">: </span>longvarchar, required<span class="sy2">: </span>true <span class="br0">&#125;</span><span class="co3">
+    how_to_apply</span><span class="sy2">: </span><span class="br0">&#123;</span> type<span class="sy2">: </span>longvarchar, required<span class="sy2">: </span>true <span class="br0">&#125;</span><span class="co3">
+    token</span><span class="sy2">: </span>       <span class="br0">&#123;</span> type<span class="sy2">: </span>varchar<span class="br0">&#40;</span><span class="nu0">255</span><span class="br0">&#41;</span>, required<span class="sy2">: </span>true, index<span class="sy2">: </span>unique <span class="br0">&#125;</span><span class="co3">
+    is_public</span><span class="sy2">: </span>   <span class="br0">&#123;</span> type<span class="sy2">: </span>boolean, required<span class="sy2">: </span>true, default<span class="sy2">: </span><span class="nu0">1</span> <span class="br0">&#125;</span><span class="co3">
+    is_activated</span><span class="sy2">: </span><span class="br0">&#123;</span> type<span class="sy2">: </span>boolean, required<span class="sy2">: </span>true, default<span class="sy2">: </span><span class="nu0">0</span> <span class="br0">&#125;</span><span class="co3">
+    email</span><span class="sy2">: </span>       <span class="br0">&#123;</span> type<span class="sy2">: </span>varchar<span class="br0">&#40;</span><span class="nu0">255</span><span class="br0">&#41;</span>, required<span class="sy2">: </span>true <span class="br0">&#125;</span><span class="co3">
+    expires_at</span><span class="sy2">: </span>  <span class="br0">&#123;</span> type<span class="sy2">: </span>timestamp, required<span class="sy2">: </span>true <span class="br0">&#125;</span><span class="co3">
+    created_at</span><span class="sy2">: </span>  ~<span class="co3">
+    updated_at</span><span class="sy2">: </span>  ~
+<span class="co4">
+  jobeet_affiliate</span>:<span class="co3">
+    id</span><span class="sy2">: </span>          ~<span class="co3">
+    url</span><span class="sy2">: </span>         <span class="br0">&#123;</span> type<span class="sy2">: </span>varchar<span class="br0">&#40;</span><span class="nu0">255</span><span class="br0">&#41;</span>, required<span class="sy2">: </span>true <span class="br0">&#125;</span><span class="co3">
+    email</span><span class="sy2">: </span>       <span class="br0">&#123;</span> type<span class="sy2">: </span>varchar<span class="br0">&#40;</span><span class="nu0">255</span><span class="br0">&#41;</span>, required<span class="sy2">: </span>true, index<span class="sy2">: </span>unique <span class="br0">&#125;</span><span class="co3">
+    token</span><span class="sy2">: </span>       <span class="br0">&#123;</span> type<span class="sy2">: </span>varchar<span class="br0">&#40;</span><span class="nu0">255</span><span class="br0">&#41;</span>, required<span class="sy2">: </span>true <span class="br0">&#125;</span><span class="co3">
+    is_active</span><span class="sy2">: </span>   <span class="br0">&#123;</span> type<span class="sy2">: </span>boolean, required<span class="sy2">: </span>true, default<span class="sy2">: </span><span class="nu0">0</span> <span class="br0">&#125;</span><span class="co3">
+    created_at</span><span class="sy2">: </span>  ~
+<span class="co4">
+  jobeet_category_affiliate</span>:<span class="co3">
+    category_id</span><span class="sy2">: </span> <span class="br0">&#123;</span> type<span class="sy2">: </span>integer, foreignTable<span class="sy2">: </span>jobeet_category, foreignReference<span class="sy2">: </span>id, required<span class="sy2">: </span>true, primaryKey<span class="sy2">: </span>true, onDelete<span class="sy2">: </span>cascade <span class="br0">&#125;</span><span class="co3">
+    affiliate_id</span><span class="sy2">: </span><span class="br0">&#123;</span> type<span class="sy2">: </span>integer, foreignTable<span class="sy2">: </span>jobeet_affiliate, foreignReference<span class="sy2">: </span>id, required<span class="sy2">: </span>true, primaryKey<span class="sy2">: </span>true, onDelete<span class="sy2">: </span>cascade <span class="br0">&#125;</span></pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Si eres de los que prefieres crear la base de datos directamente con sentencias SQL, puedes generar el archivo de configuración <code>schema.yml</code> a partir de una base de datos existente mediante la tarea <code>propel:build-schema</code></p>
+
+<div class="code cli">
+<pre class="cli">$ php symfony propel:build-schema</pre>
+</div>
+
+<p>La tarea anterior requiere que se haya configurado una base de datos en el archivo <code>databases.yml</code>, tal y como se explica más adelante. Por tanto, si ejecutas ahora esa tarea, no va a funcionar correctamente porque no sabe la base de datos para la que debe crear el esquema.</p></div>
+
+<p>El esquema de datos no es más que la traducción del diagrama de entidad-relación al formato YAML.</p>
+
+<div class="admonition sidebar"><p><strong class="title">El formato YAML</strong> Según la definición del <a href="http://www.yaml.org/">sitio web oficial de YAML</a>, <em>"YAML es un formato para serializar datos que es fácil de leer por las personas y es compatible con todos los lenguajes de programación"</em>.</p>
+
+<p>Dicho de otra forma, YAML es un lenguaje muy sencillo que permite describir datos: cadenas de texto, número enteros, fechas, arrays <em>simples</em> y arrays asociativos.</p>
+
+<p>YAML utiliza la tabulación para indicar su estructura, los elementos que forman una secuencia utilizan un guión medio y los pares clave/valor de los arrays asociativos se separan con dos puntos. YAML también dispone de una notación abreviada para describir la misma estructura con menos líneas: los arrays simples se definen con <code>[]</code> y los arrays asociativos se definen con <code>{}</code>.</p>
+
+<p>Si todavía no conoces YAML, deberías aprender sus características básicas antes de continuar, ya que Symfony utiliza YAML en la mayoría de sus archivos de configuración.</p>
+
+<p>Lo más importante que debes tener en cuenta al modificar un archivo YAML es que la tabulación siempre se realiza con espacios en blanco y nunca con el tabulador.</p></div>
+
+<p>El archivo <code>schema.yml</code> describe todas las tablas y columnas de la base de datos. Cada columna se describe con la siguiente información:</p>
+
+<ul>
+<li><code>type</code>: el tipo de columna, que puede ser <code>boolean</code>, <code>tinyint</code>, <code>smallint</code>, <code>integer</code>, <code>bigint</code>, <code>double</code>, <code>float</code>, <code>real</code>, <code>decimal</code>, <code>char</code>, <code>varchar(size)</code>, <code>longvarchar</code>, <code>date</code>, <code>time</code>, <code>timestamp</code>, <code>blob</code> y <code>clob</code>.</li>
+<li><code>required</code>: si vale <code>true</code>, la columna es obligatoria.</li>
+<li><code>index</code>: si vale <code>true</code>, se crea un índice para la columna; si vale <code>unique</code>, se crea un índice único.</li>
+<li><code>primaryKey</code>: indica que esta columna es clave primaria de la tabla.</li>
+<li><code>foreignTable</code>, <code>foreignReference</code>: indica que esta columna es clave externa de otra tabla.</li>
+</ul>
+
+<p>En las columnas cuyo valor es simplemente <code>~</code>, que en realidad es como se indica el valor <code>null</code> en YAML (<code>id</code>, <code>created_at</code> y <code>updated_at</code>), Symfony adivina cuál es la mejor configuración para esa columna (los campos llamados <code>id</code> se consideran claves primarias y los campos llamados <code>created_at</code> y <code>updated_at</code> se consideran de tipo <code>timestamp</code>).</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> El atributo <code>onDelete</code> define el comportamiento de las claves primarias ante las sentencias <code>ON DELETE</code>. Propel admite los valores <code>CASCADE</code>, <code>SETNULL</code> y <code>RESTRICT</code>. Cuando se borra por ejemplo el registro de una oferta de trabajo  <em>job</em>) todos los registros relacionados de la tabla <code>jobeet_category_affiliate</code> se borran automáticamente mediante la base de datos o mediante Propel si el sistema gestor de base de datos no es capaz de hacerlo.</p></div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="el_modelo_relacional.html">&larr; Anterior <span>3.1. El modelo relacional</span></a>
+            
+            <a class="span5 next" href="la_base_de_datos.html">Siguiente &rarr; <span>3.3. La base de datos</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'El esquema (El tutorial Jobeet%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'El tutorial Jobeet : El esquema']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Comenzando el proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> El proyecto</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_3.html">
+            <span>Capítulo 3.</span> El modelo de datos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_modelo_relacional.html">
+            <span>3.1.</span> El modelo relacional
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="el_esquema.html">
+            <span>3.2.</span> El esquema
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="la_base_de_datos.html">
+            <span>3.3.</span> La base de datos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_orm.html">
+            <span>3.4.</span> El ORM
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="los_datos_iniciales.html">
+            <span>3.5.</span> Los datos iniciales
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="probando_la_aplicacion_en_el_navegador.html">
+            <span>3.6.</span> Probando la aplicación en el navegador
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="nos_vemos_manana.html">
+            <span>3.7.</span> Nos vemos mañana
+        </a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> El controlador y la vista</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> El sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Profundizando en el modelo</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Trabajando con la página de cada categoría</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Pruebas unitarias</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Pruebas funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Probando los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> El generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> El usuario</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> El día de descanso</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Canales Atom</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Servicios web</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> El buscador</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>20</span> <a href="../capitulo_20.html"> Plugins</a>
+    </li>
+    <li class="level-1">
+        <span>21</span> <a href="../capitulo_21.html"> El día del diseño</a>
+    </li>
+    <li class="level-1">
+        <span>22</span> <a href="../capitulo_22.html"> La cache</a>
+    </li>
+    <li class="level-1">
+        <span>23</span> <a href="../capitulo_23.html"> Pasando a producción</a>
+    </li>
+    <li class="level-1">
+        <span>24</span> <a href="../capitulo_24.html"> Un repaso a Symfony</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

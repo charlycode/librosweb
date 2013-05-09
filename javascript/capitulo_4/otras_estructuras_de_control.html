@@ -1,0 +1,307 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>4.4. Otras estructuras de control (Introducción a JavaScript)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="sentencias_break_y_continue.html" />
+        <link rel="next" href="../capitulo_5.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="4.4. Otras estructuras de control (Introducción a JavaScript)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page javascript">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Introducción a JavaScript</a></li>
+  <li><a href="../capitulo_4.html">Capítulo 4. Programación avanzada</a></li>
+  <li class="current"><span>4.4. Otras estructuras de control</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="otras_estructuras_de_control"><span>4.4.</span> Otras estructuras de control</h1>
+    
+
+<p>Las estructuras de control de flujo que se han visto (<code>if</code>, <code>else</code>, <code>for</code>) y las sentencias que modifican su comportamiento (<code>break</code>, <code>continue</code>) no son suficientes para realizar algunas tareas complejas y otro tipo de repeticiones. Por ese motivo, JavaScript proporciona otras estructuras de control de flujo diferentes y en algunos casos más eficientes.</p>
+
+<h3 id="estructura_while">4.4.1. Estructura while</h3>
+
+<p>La estructura <code>while</code> permite crear bucles que se ejecutan ninguna o más veces, dependiendo de la condición indicada. Su definición formal es:</p>
+
+<div class="code javascript">
+<pre class="javascript">while<span class="br0">&#40;</span>condicion<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  ...
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>El funcionamiento del bucle <code>while</code> se resume en: <em>"mientras se cumpla la condición indicada, repite indefinidamente las instrucciones incluidas dentro del bucle"</em>.</p>
+
+<p>Si la condición no se cumple ni siquiera la primera vez, el bucle no se ejecuta. Si la condición se cumple, se ejecutan las instrucciones una vez y se vuelve a comprobar la condición. Si se sigue cumpliendo la condición, se vuelve a ejecutar el bucle y así se continúa hasta que la condición no se cumpla.</p>
+
+<p>Evidentemente, las variables que controlan la condición deben modificarse dentro del propio bucle, ya que de otra forma, la condición se cumpliría siempre y el bucle <code>while</code> se repetiría indefinidamente.</p>
+
+<p>El siguiente ejemplo utiliza el bucle <code>while</code> para sumar todos los números menores o iguales que otro número:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> resultado <span class="sy0">=</span> <span class="nu0">0</span><span class="sy0">;</span>
+<span class="kw1">var</span> numero <span class="sy0">=</span> <span class="nu0">100</span><span class="sy0">;</span>
+<span class="kw1">var</span> i <span class="sy0">=</span> <span class="nu0">0</span><span class="sy0">;</span>
+&nbsp;
+while<span class="br0">&#40;</span>i <span class="sy0">&lt;=</span> numero<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  resultado <span class="sy0">+=</span> i<span class="sy0">;</span>
+  i<span class="sy0">++;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+alert<span class="br0">&#40;</span>resultado<span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>El programa debe sumar todos los números menores o igual que otro dado. Por ejemplo si el número es <code>5</code>, se debe calcular: <code>1 + 2 + 3 + 4 + 5 = 15</code></p>
+
+<p>Este tipo de condiciones  <em>"suma números mientras sean menores o iguales que otro número dado"</em>) se resuelven muy fácilmente con los bucles tipo <code>while</code>, aunque también se podían resolver con bucles de tipo <code>for</code>.</p>
+
+<p>En el ejemplo anterior, mientras se cumpla la condición, es decir, mientras que la variable <code>i</code> sea menor o igual que la variable <code>numero</code>, se ejecutan las instrucciones del bucle.</p>
+
+<p>Dentro del bucle se suma el valor de la variable <code>i</code> al resultado total (variable <code>resultado</code>) y se actualiza el valor de la variable <code>i</code>, que es la que controla la condición del bucle. Si no se actualiza el valor de la variable <code>i</code>, la ejecución del bucle continua infinitamente o hasta que el navegador permita al usuario detener el script.</p>
+
+<h3 id="estructura_dowhile">4.4.2. Estructura do...while</h3>
+
+<p>El bucle de tipo <code>do...while</code> es muy similar al bucle <code>while</code>, salvo que en este caso <strong>siempre</strong> se ejecutan las instrucciones del bucle al menos la primera vez. Su definición formal es:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">do</span> <span class="br0">&#123;</span>
+  ...
+<span class="br0">&#125;</span> while<span class="br0">&#40;</span>condicion<span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>De esta forma, como la condición se comprueba después de cada repetición, la primera vez siempre se ejecutan las instrucciones del bucle. Es importante no olvidar que después del <code>while()</code> se debe añadir el carácter <code>;</code> (al contrario de lo que sucede con el bucle <code>while</code> simple).</p>
+
+<p>Utilizando este bucle se puede calcular fácilmente el factorial de un número:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> resultado <span class="sy0">=</span> <span class="nu0">1</span><span class="sy0">;</span>
+<span class="kw1">var</span> numero <span class="sy0">=</span> <span class="nu0">5</span><span class="sy0">;</span>
+&nbsp;
+<span class="kw1">do</span> <span class="br0">&#123;</span>
+  resultado <span class="sy0">*=</span> numero<span class="sy0">;</span>  <span class="co1">// resultado = resultado * numero</span>
+  numero<span class="sy0">--;</span>
+<span class="br0">&#125;</span> while<span class="br0">&#40;</span>numero <span class="sy0">&gt;</span> <span class="nu0">0</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+alert<span class="br0">&#40;</span>resultado<span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>En el código anterior, el <code>resultado</code> se multiplica en cada repetición por el valor de la variable <code>numero</code>. Además, en cada repetición se decrementa el valor de esta variable <code>numero</code>. La condición del bucle <code>do...while</code> es que el valor de <code>numero</code> sea mayor que <code>0</code>, ya que el factorial de un número multiplica todos los números menores o iguales que él mismo, pero hasta el número 1 (el factorial de 5 por ejemplo es <code>5 x 4 x 3 x 2 x 1 = 120</code>).</p>
+
+<p>Como en cada repetición se decrementa el valor de la variable <code>numero</code> y la condición es que <code>numero</code> sea mayor que cero, en la repetición en la que <code>numero</code> valga <code>0</code>, la condición ya no se cumple y el programa se sale del bucle <code>do...while</code>.</p>
+
+<h3 id="estructura_switch">4.4.3. Estructura switch</h3>
+
+<p>La estructura <code>if...else</code> se puede utilizar para realizar comprobaciones múltiples y tomar decisiones complejas. Sin embargo, si todas las condiciones dependen siempre de la misma variable, el código JavaScript resultante es demasiado redundante:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">if</span><span class="br0">&#40;</span>numero <span class="sy0">==</span> <span class="nu0">5</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  ...
+<span class="br0">&#125;</span>
+<span class="kw1">else</span> <span class="kw1">if</span><span class="br0">&#40;</span>numero <span class="sy0">==</span> <span class="nu0">8</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  ...
+<span class="br0">&#125;</span>
+<span class="kw1">else</span> <span class="kw1">if</span><span class="br0">&#40;</span>numero <span class="sy0">==</span> <span class="nu0">20</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  ...
+<span class="br0">&#125;</span>
+<span class="kw1">else</span> <span class="br0">&#123;</span>
+  ...
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>En estos casos, la estructura <code>switch</code> es la más eficiente, ya que está especialmente diseñada para manejar de forma sencilla múltiples condiciones sobre la misma variable. Su definición formal puede parecer compleja, aunque su uso es muy sencillo:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">switch</span><span class="br0">&#40;</span>variable<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="kw1">case</span> valor_1<span class="sy0">:</span>
+    ...
+    <span class="kw1">break</span><span class="sy0">;</span>
+  <span class="kw1">case</span> valor_2<span class="sy0">:</span>
+    ...
+    <span class="kw1">break</span><span class="sy0">;</span>
+  ...
+  <span class="kw1">case</span> valor_n<span class="sy0">:</span>
+    ...
+    <span class="kw1">break</span><span class="sy0">;</span>
+  <span class="kw1">default</span><span class="sy0">:</span>
+    ...
+    <span class="kw1">break</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>El anterior ejemplo realizado con <code>if...else</code> se puede rehacer mediante <code>switch</code>:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">switch</span><span class="br0">&#40;</span>numero<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="kw1">case</span> <span class="nu0">5</span><span class="sy0">:</span>
+    ...
+    <span class="kw1">break</span><span class="sy0">;</span>
+  <span class="kw1">case</span> <span class="nu0">8</span><span class="sy0">:</span>
+    ...
+    <span class="kw1">break</span><span class="sy0">;</span>
+  <span class="kw1">case</span> <span class="nu0">20</span><span class="sy0">:</span>
+    ...
+    <span class="kw1">break</span><span class="sy0">;</span>
+  <span class="kw1">default</span><span class="sy0">:</span>
+    ...
+    <span class="kw1">break</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>La estructura <code>switch</code> se define mediante la palabra reservada <code>switch</code> seguida, entre paréntesis, del nombre de la variable que se va a utilizar en las comparaciones. Como es habitual, las instrucciones que forman parte del <code>switch</code> se encierran entre las llaves <code>{</code> y <code>}</code>.</p>
+
+<p>Dentro del <code>switch</code> se definen todas las comparaciones que se quieren realizar sobre el valor de la variable. Cada comparación se indica mediante la palabra reservada <code>case</code> seguida del valor con el que se realiza la comparación. Si el valor de la variable utilizada por <code>switch</code> coincide con el valor indicado por <code>case</code>, se ejecutan las instrucciones definidas dentro de ese <code>case</code>.</p>
+
+<p>Normalmente, después de las instrucciones de cada <code>case</code> se incluye la sentencia <code>break</code> para terminar la ejecución del <code>switch</code>, aunque no es obligatorio. Las comparaciones se realizan por orden, desde el primer <code>case</code> hasta el último, por lo que es muy importante el orden en el que se definen los <code>case</code>.</p>
+
+<p>¿Qué sucede si ningún valor de la variable del <code>switch</code> coincide con los valores definidos en los <code>case</code>? En este caso, se utiliza el valor <code>default</code> para indicar las instrucciones que se ejecutan en el caso en el que ningún <code>case</code> se cumpla para la variable indicada.</p>
+
+<p>Aunque <code>default</code> es opcional, las estructuras <code>switch</code> suelen incluirlo para definir al menos un valor por defecto para alguna variable o para mostrar algún mensaje por pantalla.</p>
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="sentencias_break_y_continue.html">&larr; Anterior <span>4.3. Sentencias break y continue</span></a>
+            
+            <a class="span5 next" href="../capitulo_5.html">Siguiente &rarr; <span>Capítulo 5. DOM</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Otras estructuras de control (Introducción a JavaScript%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a JavaScript : Otras estructuras de control']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> El primer script</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Programación básica</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_4.html">
+            <span>Capítulo 4.</span> Programación avanzada
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="funciones.html">
+            <span>4.1.</span> Funciones
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ambito_de_las_variables.html">
+            <span>4.2.</span> Ámbito de las variables
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="sentencias_break_y_continue.html">
+            <span>4.3.</span> Sentencias break y continue
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="otras_estructuras_de_control.html">
+            <span>4.4.</span> Otras estructuras de control
+        </a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> DOM</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Eventos</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Otras utilidades</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Detección y corrección de errores</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Recursos útiles</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

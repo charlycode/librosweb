@@ -1,0 +1,253 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>4.5. Otros tipos de enlaces (Introducción a XHTML)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="enlaces_avanzados.html" />
+        <link rel="next" href="ejemplos_de_enlaces_habituales.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="4.5. Otros tipos de enlaces (Introducción a XHTML)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page xhtml">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Introducción a XHTML</a></li>
+  <li><a href="../capitulo_4.html">Capítulo 4. Enlaces</a></li>
+  <li class="current"><span>4.5. Otros tipos de enlaces</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="otros_tipos_de_enlaces"><span>4.5.</span> Otros tipos de enlaces</h1>
+    
+
+<p>Los enlaces mostrados en las secciones anteriores son los más utilizados por las páginas web. Los enlaces creados con la etiqueta <code>&lt;a&gt;</code> permiten enlazar cualquier tipo de recurso desde cualquier página. La característica más importante de estos enlaces es que el usuario debe activar la carga de los recursos. En otras palabras, el navegador no carga ningún recurso enlazado con la etiqueta <code>&lt;a&gt;</code> a menos que el usuario pinche sobre el enlace.</p>
+
+<p>Además de estos enlaces, las páginas HTML pueden incluir otro tipo de enlaces que cargan los recursos automáticamente. Si una página HTML utiliza archivos CSS para aplicar estilos a sus contenidos, no es lógico que los enlace con la etiqueta <code>&lt;a&gt;</code> y espere a que el usuario pinche sobre el enlace para así cargar los archivos CSS. De la misma forma, muchas páginas web dinámicas necesitan que el navegador cargue varios archivos JavaScript para funcionar correctamente.</p>
+
+<p>HTML define las etiquetas <code>&lt;script&gt;</code> y <code>&lt;link&gt;</code> para enlazar recursos que se deben cargar automáticamente. Cuando el navegador encuentra alguna de estas dos etiquetas, descarga los recursos enlazados y los aplica a la página web.</p>
+
+<p>La etiqueta <code>&lt;script&gt;</code> tiene dos modos de funcionamiento, ya que se emplea tanto para insertar un bloque de código JavaScript en la página como para enlazar un archivo JavaScript externo.</p>
+
+<table class="property" summary="Definición y propiedades de la etiqueta script de XHTML"><thead><tr>  <th scope="row">Etiqueta</th>  <td><strong class="title"><span>&lt;</span>script<span>&gt;</span></strong></td></tr></thead><tbody><tr>  <th scope="row">Atributos comunes</th>  <td>-</td></tr><tr>  <th scope="row">Atributos propios</th>  <td><ul><li><p><code>src = "url"</code> - Indica la dirección del archivo que contiene el código</p></li><li><p><code>type = "tipo_de_contenido"</code> - Permite "avisar" al navegador sobre el tipo de código que se incluye (normalmente JavaScript)</p></li><li><p><code>defer = "defer"</code> - El código no va a modificar el contenido de la página web</p></li><li><p><code>charset = "tipo_de_charset"</code> - Describe la codificación del código enlazado</p></li></ul></td></tr><tr>  <th scope="row">Tipo de elemento</th>  <td>Bloque y en línea (también puede ser una etiqueta vacía)</td></tr><tr>  <th scope="row">Descripción</th>  <td>Se emplea para enlazar o definir un bloque de código (normalmente JavaScript)</td></tr></tbody></table>
+
+<p>Aunque la etiqueta <code>&lt;script&gt;</code> permite enlazar código de varios lenguajes de programación, el uso habitual de <code>&lt;script&gt;</code> consiste en enlazar un archivo JavaScript externo:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">head</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">script</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text/javascript&quot;</span> <span class="kw3">src</span><span class="sy0">=</span><span class="st0">&quot;http://www.ejemplo.com/js/inicializar.js&quot;</span>&gt;&lt;<span class="sy0">/</span><span class="kw2">script</span>&gt;</span>
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">head</span>&gt;</span></pre>
+</div>
+
+<p>El atributo <code>type</code> utilizado habitualmente para los archivos JavaScript es <code>"text/javascript"</code>. El atributo <code>src</code> es equivalente al atributo <code>href</code> de los enlaces creados con la etiqueta <code>&lt;a&gt;</code>. La URL indicada en el atributo <code>src</code> puede ser absoluta o relativa y externa o interna.</p>
+
+<p>Además de enlazar un archivo JavaScript externo, la misma etiqueta <code>&lt;script&gt;</code> también permite incluir en la página web un bloque de código JavaScript:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">html</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">head</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">script</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text/javascript&quot;</span>&gt;</span>
+  //<span class="sc-2">&lt;![CDATA[</span>
+<span class="sc-2">    window.onload = function() { alert(&quot;La página se ha cargado completamente&quot;); }</span>
+<span class="sc-2">  //]]&gt;</span>
+  <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">script</span>&gt;</span>
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">head</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">body</span>&gt;</span>
+...
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">body</span>&gt;</span>
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">html</span>&gt;</span></pre>
+</div>
+
+<p>Cuando se incluye código JavaScript en la propia página XHTML, se debe insertar dentro de una sección especial llamada <code>CDATA</code>. Para ello, el código JavaScript se debe encerrar entre <code>&lt;![CDATA[</code> y <code>]]&gt;</code>. Cuando el navegador encuentra una sección de este tipo, no procesa su contenido como si fuera XHTML y por tanto no tiene en cuenta los posibles errores de validación de XHTML.</p>
+
+<p>De esta forma, se pueden construir páginas XHTML válidas y código JavaScript correcto. En los capítulos posteriores se profundiza en el concepto de validación de páginas XHTML. Los caracteres <code>//</code> al comienzo y al final de la sección <code>CDATA</code> son necesarios para los navegadores que no son capaces de procesar correctamente estas secciones.</p>
+
+<p>La etiqueta <code>&lt;script&gt;</code> (tanto cuando enlaza, como cuando incluye directamente el código) puede aparecer en cualquier parte del documento HTML, aunque normalmente se incluye dentro de la cabecera de la página (<code>&lt;head&gt;...&lt;/head&gt;</code>).</p>
+
+<p>La segunda etiqueta de XHTML para enlazar recursos es <code>&lt;link&gt;</code>, que permite enlazar y relacionar la página con otros recursos externos.</p>
+
+<table class="property" summary="Definición y propiedades de la etiqueta link de XHTML"><thead><tr>  <th scope="row">Etiqueta</th>  <td><strong class="title"><span>&lt;</span>link<span>&gt;</span></strong></td></tr></thead><tbody><tr>  <th scope="row">Atributos comunes</th>  <td><a href="../capitulo_2/etiquetas_y_atributos.html#atributos_basicos">básicos</a>, <a href="../capitulo_2/etiquetas_y_atributos.html#atributos_para_internacionalizacion">internacionalización</a> y <a href="../capitulo_2/etiquetas_y_atributos.html#atributos_de_eventos">eventos</a></td></tr><tr>  <th scope="row">Atributos propios</th>  <td><ul><li><p>Los siguientes con el mismo significado que para la etiqueta "a": charset, href, hreflang, type, rel y rev</p></li><li><p><code>media = "tipo_de_medio"</code> - Indica el medio para el que debe aplicarse la relación</p></li></ul></td></tr><tr>  <th scope="row">Tipo de elemento</th>  <td>Etiqueta vacía</td></tr><tr>  <th scope="row">Descripción</th>  <td>Se emplea para enlazar y establecer relaciones entre el documento y otros recursos</td></tr></tbody></table>
+
+<p>Al contrario que <code>&lt;script&gt;</code>, la etiqueta <code>&lt;link&gt;</code> solamente se puede incluir dentro de la cabecera del documento. Se pueden añadir tantas etiquetas <code>&lt;link&gt;</code> como sean necesarias, pero siempre dentro de <code>&lt;head&gt;...&lt;/head&gt;</code>.</p>
+
+<p>El atributo <code>media</code> hace referencia al medio para el que es válida la relación con el recurso enlazado. Los medios disponibles también están estandarizados, siendo los más comunes <code>screen</code> para los contenidos mostrados en pantalla, <code>print</code> para las impresoras y <code>handheld</code> para los dispositivos móviles.</p>
+
+<p>El uso habitual de la etiqueta <code>&lt;link&gt;</code> es el de enlazar las hojas de estilos CSS utilizadas por las páginas web:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">head</span>&gt;</span>
+  ...
+  <span class="sc2">&lt;<span class="kw2">link</span> <span class="kw3">rel</span><span class="sy0">=</span><span class="st0">&quot;stylesheet&quot;</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text/css&quot;</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;/css/comun.css&quot;</span> <span class="sy0">/</span>&gt;</span>
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">head</span>&gt;</span></pre>
+</div>
+
+<p>En este caso, es habitual establecer los atributos <code>rel</code> y <code>type</code> para indicar el tipo de recurso enlazado y su relación con la página web. La URL del recurso enlazado se indica en el atributo <code>href</code>, que admite tanto URL absolutas como relativas.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="enlaces_avanzados.html">&larr; Anterior <span>4.4. Enlaces avanzados</span></a>
+            
+            <a class="span5 next" href="ejemplos_de_enlaces_habituales.html">Siguiente &rarr; <span>4.6. Ejemplos de enlaces habituales</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Otros tipos de enlaces (Introducción a XHTML%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a XHTML : Otros tipos de enlaces']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Características básicas</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Texto</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_4.html">
+            <span>Capítulo 4.</span> Enlaces
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="url.html">
+            <span>4.1.</span> URL
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="enlaces_relativos_y_absolutos.html">
+            <span>4.2.</span> Enlaces relativos y absolutos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="enlaces_basicos.html">
+            <span>4.3.</span> Enlaces básicos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="enlaces_avanzados.html">
+            <span>4.4.</span> Enlaces avanzados
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="otros_tipos_de_enlaces.html">
+            <span>4.5.</span> Otros tipos de enlaces
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejemplos_de_enlaces_habituales.html">
+            <span>4.6.</span> Ejemplos de enlaces habituales
+        </a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Listas</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Imágenes y objetos</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Tablas</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Estructura y layout</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Metainformación</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Otras etiquetas importantes</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Accesibilidad</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Validación</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Fragmentos de código</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

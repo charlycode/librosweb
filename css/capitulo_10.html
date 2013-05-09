@@ -1,0 +1,319 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>Capítulo 10. Tablas (Introducción a CSS)</title>
+        <link href="main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="capitulo_9/estilos_avanzados.html" />
+        <link rel="next" href="capitulo_10/estilos_avanzados.html" />
+        <link rel="start" href="index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Capítulo 10. Tablas (Introducción a CSS)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page css">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../index.html">Inicio</a></li>
+  <li><a href="index.html">Introducción a CSS</a></li>
+  <li class="current"><span>Capítulo 10.. Tablas</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="capitulo_10"><span>Capítulo 10.</span> Tablas</h1>
+    <h2 id="estilos_basicos">10.1. Estilos básicos</h2>
+
+
+<p>Cuando se aplican bordes a las celdas de una tabla, el aspecto por defecto con el que se muestra en un navegador es el siguiente:</p>
+
+<div class="figure" id="figure_10_1">
+    <img src="../img/css/f1001.gif" alt="Aspecto por defecto de los bordes de una tabla" />
+
+    <p class="caption"><strong>Figura 10.1</strong> Aspecto por defecto de los bordes de una tabla</p>
+</div>
+
+
+<p>El código HTML y CSS del ejemplo anterior se muestra a continuación:</p>
+
+<div class="code css">
+<pre class="css"><span class="re1">.normal</span> <span class="br0">&#123;</span>
+  <span class="kw1">width</span><span class="sy0">:</span> <span class="re3">250px</span><span class="sy0">;</span>
+  <span class="kw1">border</span><span class="sy0">:</span> <span class="re3">1px</span> <span class="kw2">solid</span> <span class="re0">#000</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+<span class="re1">.normal</span> th<span class="sy0">,</span> <span class="re1">.normal</span> td <span class="br0">&#123;</span>
+  <span class="kw1">border</span><span class="sy0">:</span> <span class="re3">1px</span> <span class="kw2">solid</span> <span class="re0">#000</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+&lt;table class<span class="sy0">=</span><span class="st0">&quot;normal&quot;</span> summary<span class="sy0">=</span><span class="st0">&quot;Tabla genérica&quot;</span><span class="sy0">&gt;</span>
+  &lt;tr<span class="sy0">&gt;</span>
+    &lt;th scope<span class="sy0">=</span><span class="st0">&quot;col&quot;</span><span class="sy0">&gt;</span>A&lt;/th<span class="sy0">&gt;</span>
+    &lt;th scope<span class="sy0">=</span><span class="st0">&quot;col&quot;</span><span class="sy0">&gt;</span>B&lt;/th<span class="sy0">&gt;</span>
+    &lt;th scope<span class="sy0">=</span><span class="st0">&quot;col&quot;</span><span class="sy0">&gt;</span>C&lt;/th<span class="sy0">&gt;</span>
+    &lt;th scope<span class="sy0">=</span><span class="st0">&quot;col&quot;</span><span class="sy0">&gt;</span>D&lt;/th<span class="sy0">&gt;</span>
+    &lt;th scope<span class="sy0">=</span><span class="st0">&quot;col&quot;</span><span class="sy0">&gt;</span>E&lt;/th<span class="sy0">&gt;</span>
+  &lt;/tr<span class="sy0">&gt;</span>
+  ...
+&lt;/table<span class="sy0">&gt;</span></pre>
+</div>
+
+<p>El estándar CSS 2.1 define dos modelos diferentes para el tratamiento de los bordes de las celdas. La propiedad que permite seleccionar el modelo de bordes es <code>border-collapse</code>:</p>
+
+<div class="table" id="table_10_1">
+
+    <table class="table property css" summary="Definición de la propiedad border-collapse de CSS">
+    <thead>
+        <tr>
+            <th scope="row">Propiedad</th>
+            <td><strong class="title"><strong>border-collapse</strong></strong></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">Valores</th>
+            <td>collapse | separate | <a href="../referencia/css/el_valor_inherit.html">inherit</a></td>
+        </tr>
+        <tr>
+            <th scope="row">Se aplica a</th>
+            <td>Todas las tablas</td>
+        </tr>
+        <tr>
+            <th scope="row">Valor inicial</th>
+            <td>separate</td>
+        </tr>
+        <tr>
+            <th scope="row">Descripción</th>
+            <td>Define el mecanismo de fusión de los bordes de las celdas adyacentes de una tabla</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+
+<p>El modelo <code>collapse</code> fusiona de forma automática los bordes de las celdas adyacentes, mientras que el modelo <code>separate</code> fuerza a que cada celda muestre sus cuatro bordes. Por defecto, los navegadores utilizan el modelo <code>separate</code>, tal y como se puede comprobar en el ejemplo anterior.</p>
+
+<p>En general, los diseñadores prefieren el modelo <code>collapse</code> porque estéticamente resulta más atractivo y más parecido a las tablas de datos tradicionales. El ejemplo anterior se puede rehacer para mostrar la tabla con bordes sencillos y sin separación entre celdas:</p>
+
+<div class="figure" id="figure_10_2">
+    <img src="../img/css/f1003.gif" alt="Ejemplo de propiedad border-collapse" />
+
+    <p class="caption"><strong>Figura 10.2</strong> Ejemplo de propiedad border-collapse</p>
+</div>
+
+
+<p>El código CSS completo del ejemplo anterior se muestra a continuación:</p>
+
+<div class="code css">
+<pre class="css"><span class="re1">.normal</span> <span class="br0">&#123;</span>
+  <span class="kw1">width</span><span class="sy0">:</span> <span class="re3">250px</span><span class="sy0">;</span>
+  <span class="kw1">border</span><span class="sy0">:</span> <span class="re3">1px</span> <span class="kw2">solid</span> <span class="re0">#000</span><span class="sy0">;</span>
+  <span class="kw1">border-collapse</span><span class="sy0">:</span> <span class="kw2">collapse</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+<span class="re1">.normal</span> th<span class="sy0">,</span> <span class="re1">.normal</span> td <span class="br0">&#123;</span>
+  <span class="kw1">border</span><span class="sy0">:</span> <span class="re3">1px</span> <span class="kw2">solid</span> <span class="re0">#000</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+&lt;table class<span class="sy0">=</span><span class="st0">&quot;normal&quot;</span> summary<span class="sy0">=</span><span class="st0">&quot;Tabla genérica&quot;</span><span class="sy0">&gt;</span>
+  &lt;tr<span class="sy0">&gt;</span>
+    &lt;th scope<span class="sy0">=</span><span class="st0">&quot;col&quot;</span><span class="sy0">&gt;</span>A&lt;/th<span class="sy0">&gt;</span>
+    &lt;th scope<span class="sy0">=</span><span class="st0">&quot;col&quot;</span><span class="sy0">&gt;</span>B&lt;/th<span class="sy0">&gt;</span>
+    &lt;th scope<span class="sy0">=</span><span class="st0">&quot;col&quot;</span><span class="sy0">&gt;</span>C&lt;/th<span class="sy0">&gt;</span>
+    &lt;th scope<span class="sy0">=</span><span class="st0">&quot;col&quot;</span><span class="sy0">&gt;</span>D&lt;/th<span class="sy0">&gt;</span>
+    &lt;th scope<span class="sy0">=</span><span class="st0">&quot;col&quot;</span><span class="sy0">&gt;</span>E&lt;/th<span class="sy0">&gt;</span>
+  &lt;/tr<span class="sy0">&gt;</span>
+  ...
+&lt;/table<span class="sy0">&gt;</span></pre>
+</div>
+
+<p>Aunque parece sencillo, el mecanismo que utiliza el modelo <code>collapse</code> es muy complejo, ya que cuando los bordes que se fusionan no son exactamente iguales, debe tener en cuenta la anchura de cada borde, su estilo y el tipo de celda que contiene el borde (columna, fila, grupo de filas, grupo de columnas) para determinar la prioridad de cada borde.</p>
+
+<p>Si se opta por el modelo <code>separate</code> (que es el que se aplica si no se indica lo contrario) se puede utilizar la propiedad <code>border-spacing</code> para controlar la separación entre los bordes de cada celda.</p>
+
+<div class="table" id="table_10_2">
+
+    <table class="table property css" summary="Definición de la propiedad border-spacing de CSS">
+    <thead>
+        <tr>
+            <th scope="row">Propiedad</th>
+            <td><strong class="title"><strong>border-spacing</strong></strong></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">Valores</th>
+            <td><a href="../referencia/css/unidades_de_medida.html">unidad de medida</a> <a href="../referencia/css/unidades_de_medida.html">unidad de medida</a>? | <a href="../referencia/css/el_valor_inherit.html">inherit</a></td>
+        </tr>
+        <tr>
+            <th scope="row">Se aplica a</th>
+            <td>Todas las tablas</td>
+        </tr>
+        <tr>
+            <th scope="row">Valor inicial</th>
+            <td>0</td>
+        </tr>
+        <tr>
+            <th scope="row">Descripción</th>
+            <td>Establece la separación entre los bordes de las celdas adyacentes de una tabla</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+
+<p>Si solamente se indica como valor una medida, se asigna ese valor como separación horizontal y vertical. Si se indican dos medidas, la primera es la separación horizontal y la segunda es la separación vertical entre celdas.</p>
+
+<p>La propiedad <code>border-spacing</code> sólo controla la separación entre celdas y por tanto, no se puede utilizar para modificar el tipo de modelo de bordes que se utiliza. En concreto, si se establece un valor igual a <code>0</code> para la separación entre los bordes de las celdas, el resultado es muy diferente al modelo <code>collapse</code>:</p>
+
+<div class="figure" id="figure_10_3">
+    <img src="../img/css/f1002.gif" alt="Ejemplo de propiedad border-spacing" />
+
+    <p class="caption"><strong>Figura 10.3</strong> Ejemplo de propiedad border-spacing</p>
+</div>
+
+
+<p>En la tabla del ejemplo anterior, se ha establecido la propiedad <code>border-spacing: 0</code>, por lo que el navegador no introduce ninguna separación entre los bordes de las celdas. Además, como no se ha establecido de forma explícita ningún modelo de bordes, el navegador utiliza el modelo <code>separate</code>.</p>
+
+<p>El resultado es que <code>border-spacing: 0</code> muestra los bordes con una anchura doble, ya que en realidad se trata de dos bordes iguales sin separación entre ellos. Por tanto, las diferencias visuales con el modelo <code>border-collapse: collapse</code> son muy evidentes.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="capitulo_9/estilos_avanzados.html">&larr; Anterior <span>9.2. Estilos avanzados</span></a>
+            
+            <a class="span5 next" href="capitulo_10/estilos_avanzados.html">Siguiente &rarr; <span>10.2. Estilos avanzados</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Tablas (Introducción a CSS%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a CSS : Tablas']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="capitulo_2.html"> Selectores</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="capitulo_3.html"> Unidades de medida y colores</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="capitulo_4.html"> Modelo de cajas</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="capitulo_5.html"> Posicionamiento y visualización</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="capitulo_6.html"> Texto</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="capitulo_7.html"> Enlaces</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="capitulo_8.html"> Imágenes</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="capitulo_9.html"> Listas</a>
+    </li>
+    <li class="level-1 active">
+        <a href="capitulo_10.html">
+            <span>Capítulo 10.</span> Tablas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="capitulo_10/estilos_avanzados.html">
+            <span>10.2.</span> Estilos avanzados
+        </a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="capitulo_11.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="capitulo_12.html"> Layout</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="capitulo_13.html"> Otros</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="capitulo_14.html"> Recursos útiles</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="capitulo_15.html"> Ejercicios</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="capitulo_16.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

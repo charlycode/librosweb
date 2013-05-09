@@ -1,0 +1,566 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>10.3. Widgets de formulario (Symfony 1.4, la guía definitiva)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="modificando_el_aspecto_de_los_formularios.html" />
+        <link rel="next" href="procesando_el_envio_del_formulario.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="10.3. Widgets de formulario (Symfony 1.4, la guía definitiva)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page symfony_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Symfony 1.4, la guía definitiva</a></li>
+  <li><a href="../capitulo_10.html">Capítulo 10. Formularios</a></li>
+  <li class="current"><span>10.3.. Widgets de formulario</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="widgets_de_formulario"><span>10.3.</span> Widgets de formulario</h1>
+    
+
+<p>Symfony incluye muchos tipos diferentes de widgets para crear los formularios. Todos los widgets admiten como mínimo la opción <code>default</code>.</p>
+
+<p>Al crear el formulario también puedes definir el título de cada widget e incluso sus atributos HTML:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">form</span> <span class="sy0">=</span> <span class="kw2">new</span> sfForm<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">form</span><span class="sy0">-&gt;</span><span class="me1">setWidgets</span><span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span>
+  <span class="st_h">'nombre'</span>    <span class="sy0">=&gt;</span> <span class="kw2">new</span> sfWidgetFormInput<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'label'</span> <span class="sy0">=&gt;</span> <span class="st_h">'Tu nombre'</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'size'</span> <span class="sy0">=&gt;</span> <span class="nu0">25</span><span class="sy0">,</span> <span class="st_h">'class'</span> <span class="sy0">=&gt;</span> <span class="st_h">'miclase'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+  <span class="st_h">'email'</span>   <span class="sy0">=&gt;</span> <span class="kw2">new</span> sfWidgetFormInput<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'default'</span> <span class="sy0">=&gt;</span> <span class="st_h">'yo@ejemplo.com'</span><span class="sy0">,</span> <span class="st_h">'label'</span> <span class="sy0">=&gt;</span> <span class="st_h">'Tu Email'</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'onclick'</span> <span class="sy0">=&gt;</span> <span class="st_h">'this.value = &quot;&quot;;'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+  <span class="st_h">'asunto'</span> <span class="sy0">=&gt;</span> <span class="kw2">new</span> sfWidgetFormChoice<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'choices'</span> <span class="sy0">=&gt;</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'Asunto A'</span><span class="sy0">,</span> <span class="st_h">'Asunto B'</span><span class="sy0">,</span> <span class="st_h">'Asunto C'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+  <span class="st_h">'mensaje'</span> <span class="sy0">=&gt;</span> <span class="kw2">new</span> sfWidgetFormTextarea<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'rows'</span> <span class="sy0">=&gt;</span> <span class="st_h">'20'</span><span class="sy0">,</span> <span class="st_h">'cols'</span> <span class="sy0">=&gt;</span> <span class="nu0">5</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Symfony emplea estos parámetros al mostrar el widget, pero su valor se puede redefinir en la plantilla mediante los atributos del método <code>renderRow()</code>.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Una alternativa a utilizar el método <code>setWidgets()</code> junto con un array asociativo es el uso de varios métodos <code>setWidget($nombre, $widget)</code>.</p></div>
+
+<h3 id="widgets_estandar">10.3.1. Widgets estándar</h3>
+
+<p>A continuación se muestran todos los tipos de widgets disponibles y el código HTML que generan al ejecutar el método <code>renderRow()</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// Campo de texto</span>
+<span class="re0">$form</span><span class="sy0">-&gt;</span><span class="me1">setWidget</span><span class="br0">&#40;</span><span class="st_h">'nombre_completo'</span><span class="sy0">,</span> <span class="kw2">new</span> sfWidgetFormInput<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'default'</span> <span class="sy0">=&gt;</span> <span class="st_h">'José Pérez'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="sy0">&lt;</span>label <span class="kw1">for</span><span class="sy0">=</span><span class="st0">&quot;nombre_completo&quot;</span><span class="sy0">&gt;</span>Nombre Completo<span class="sy0">&lt;/</span>label<span class="sy0">&gt;</span>
+  <span class="sy0">&lt;</span>input type<span class="sy0">=</span><span class="st0">&quot;text&quot;</span> name<span class="sy0">=</span><span class="st0">&quot;nombre_completo&quot;</span> id<span class="sy0">=</span><span class="st0">&quot;nombre_completo&quot;</span> value<span class="sy0">=</span><span class="st0">&quot;José Pérez&quot;</span> <span class="sy0">/&gt;</span>
+&nbsp;
+<span class="co1">// Textarea</span>
+<span class="re0">$form</span><span class="sy0">-&gt;</span><span class="me1">setWidget</span><span class="br0">&#40;</span><span class="st_h">'direccion'</span><span class="sy0">,</span> <span class="kw2">new</span> sfWidgetFormTextarea<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'default'</span> <span class="sy0">=&gt;</span> <span class="st_h">'Introduce aquí tu dirección'</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'cols'</span> <span class="sy0">=&gt;</span> <span class="nu0">20</span><span class="sy0">,</span> <span class="st_h">'rows'</span> <span class="sy0">=&gt;</span> <span class="nu0">5</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="sy0">&lt;</span>label <span class="kw1">for</span><span class="sy0">=</span><span class="st0">&quot;direccion&quot;</span><span class="sy0">&gt;</span>Direccion<span class="sy0">&lt;/</span>label<span class="sy0">&gt;</span>
+  <span class="sy0">&lt;</span>textarea name<span class="sy0">=</span><span class="st0">&quot;direccion&quot;</span> id<span class="sy0">=</span><span class="st0">&quot;direccion&quot;</span> cols<span class="sy0">=</span><span class="st0">&quot;20&quot;</span> rows<span class="sy0">=</span><span class="st0">&quot;5&quot;</span><span class="sy0">&gt;</span>Introduce aquí tu dirección<span class="sy0">&lt;/</span>textarea<span class="sy0">&gt;</span>
+&nbsp;
+<span class="co1">// Campo de contraseña</span>
+<span class="co1">// Por razones de seguridad estos widgets no admiten el parámetro 'default'</span>
+<span class="re0">$form</span><span class="sy0">-&gt;</span><span class="me1">setWidget</span><span class="br0">&#40;</span><span class="st_h">'contrasena'</span><span class="sy0">,</span> <span class="kw2">new</span> sfWidgetFormInputPassword<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="sy0">&lt;</span>label <span class="kw1">for</span><span class="sy0">=</span><span class="st0">&quot;contrasena&quot;</span><span class="sy0">&gt;</span>Contrasena<span class="sy0">&lt;/</span>label<span class="sy0">&gt;</span>
+  <span class="sy0">&lt;</span>input type<span class="sy0">=</span><span class="st0">&quot;password&quot;</span> name<span class="sy0">=</span><span class="st0">&quot;contrasena&quot;</span> id<span class="sy0">=</span><span class="st0">&quot;contrasena&quot;</span> <span class="sy0">/&gt;</span>
+&nbsp;
+<span class="co1">// Campo oculto</span>
+<span class="re0">$form</span><span class="sy0">-&gt;</span><span class="me1">setWidget</span><span class="br0">&#40;</span><span class="st_h">'id'</span><span class="sy0">,</span> <span class="kw2">new</span> sfWidgetFormInputHidden<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'default'</span> <span class="sy0">=&gt;</span> <span class="nu0">1234</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="sy0">&lt;</span>input type<span class="sy0">=</span><span class="st0">&quot;hidden&quot;</span> name<span class="sy0">=</span><span class="st0">&quot;id&quot;</span> id<span class="sy0">=</span><span class="st0">&quot;id&quot;</span> value<span class="sy0">=</span><span class="st0">&quot;1234&quot;</span> <span class="sy0">/&gt;</span>
+&nbsp;
+<span class="co1">// Campo de selección</span>
+<span class="re0">$form</span><span class="sy0">-&gt;</span><span class="me1">setWidget</span><span class="br0">&#40;</span><span class="st_h">'soltero'</span><span class="sy0">,</span> <span class="kw2">new</span> sfWidgetFormInputCheckbox<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'value_attribute_value'</span> <span class="sy0">=&gt;</span> <span class="st_h">'soltero'</span><span class="sy0">,</span> <span class="st_h">'default'</span> <span class="sy0">=&gt;</span> <span class="kw4">true</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="sy0">&lt;</span>label <span class="kw1">for</span><span class="sy0">=</span><span class="st0">&quot;soltero&quot;</span><span class="sy0">&gt;</span>Soltero<span class="sy0">&lt;/</span>label<span class="sy0">&gt;</span>
+  <span class="sy0">&lt;</span>input type<span class="sy0">=</span><span class="st0">&quot;checkbox&quot;</span> name<span class="sy0">=</span><span class="st0">&quot;soltero&quot;</span> id<span class="sy0">=</span><span class="st0">&quot;soltero&quot;</span> value<span class="sy0">=</span><span class="st0">&quot;true&quot;</span> checked<span class="sy0">=</span><span class="st0">&quot;checked&quot;</span> <span class="sy0">/&gt;</span></pre>
+</div>
+
+<p>Además de todas las opciones comentadas anteriormente, cada widget dispone de opciones adicionales que puedes consultar en la documentación de la API.</p>
+
+<h3 id="widgets_de_listas">10.3.2. Widgets de listas</h3>
+
+<p>Symfony dispone de un widget llamado <code>choice</code> que debes utilizar siempre que el usuario realice una selección entre una lista de valores, independientemente de si el usuario selecciona uno o más valores. El comportamiento del widget <code>choice</code> se controla con dos parámetros opcionales llamados <code>multiple</code> (vale <code>false</code> por defecto) y <code>expanded</code> (también vale <code>false</code> por defecto):</p>
+
+<div class="table" id="table_10_1">
+
+    <table>
+<thead>
+<tr>
+  <th></th>
+  <th><code>multiple</code> = <code>false</code></th>
+  <th><code>multiple</code> = <code>true</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>expanded</code> = <code>false</code></td>
+  <td>Lista desplegable (<code>&lt;select&gt;</code>)</td>
+  <td>Cuadro desplegable (<code>&lt;select multiple&gt;</code>)</td>
+</tr>
+<tr>
+  <td><code>expanded</code> = <code>true</code></td>
+  <td>Lista de <em>radiobutton</em></td>
+  <td>Lista de <em>checkbox</em></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+<p>El widget <code>choice</code> necesita al menos un parámetro llamado <code>choices</code> y que sea un array asociativo con el valor y el texto de cada opción. A continuación se muestra un ejemplo de su sintaxis:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// Lista desplegable (select)</span>
+<span class="re0">$form</span><span class="sy0">-&gt;</span><span class="me1">setWidget</span><span class="br0">&#40;</span><span class="st_h">'pais'</span><span class="sy0">,</span> <span class="kw2">new</span> sfWidgetFormChoice<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span>
+  <span class="st_h">'choices'</span>   <span class="sy0">=&gt;</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">''</span> <span class="sy0">=&gt;</span> <span class="st_h">'Selecciona un país'</span><span class="sy0">,</span> <span class="st_h">'us'</span> <span class="sy0">=&gt;</span> <span class="st_h">'EEUU'</span><span class="sy0">,</span> <span class="st_h">'ca'</span> <span class="sy0">=&gt;</span> <span class="st_h">'Canada'</span><span class="sy0">,</span> <span class="st_h">'uk'</span> <span class="sy0">=&gt;</span> <span class="st_h">'Reino Unido'</span><span class="sy0">,</span> <span class="st_h">'otro'</span><span class="br0">&#41;</span><span class="sy0">,</span>
+  <span class="st_h">'default'</span>   <span class="sy0">=&gt;</span> <span class="st_h">'uk'</span>
+<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="co1">// Symfony genera el siguiente código HTML</span>
+<span class="sy0">&lt;</span>label <span class="kw1">for</span><span class="sy0">=</span><span class="st0">&quot;pais&quot;</span><span class="sy0">&gt;</span>Pais<span class="sy0">&lt;/</span>label<span class="sy0">&gt;</span>
+<span class="sy0">&lt;</span>select id<span class="sy0">=</span><span class="st0">&quot;pais&quot;</span> name<span class="sy0">=</span><span class="st0">&quot;pais&quot;</span><span class="sy0">&gt;</span>
+  <span class="sy0">&lt;</span>option value<span class="sy0">=</span><span class="st0">&quot;&quot;</span><span class="sy0">&gt;</span>Selecciona un país<span class="sy0">&lt;/</span>option<span class="sy0">&gt;</span>
+  <span class="sy0">&lt;</span>option value<span class="sy0">=</span><span class="st0">&quot;us&quot;</span><span class="sy0">&gt;</span>EEUU<span class="sy0">&lt;/</span>option<span class="sy0">&gt;</span>
+  <span class="sy0">&lt;</span>option value<span class="sy0">=</span><span class="st0">&quot;ca&quot;</span><span class="sy0">&gt;</span>Canada<span class="sy0">&lt;/</span>option<span class="sy0">&gt;</span>
+  <span class="sy0">&lt;</span>option value<span class="sy0">=</span><span class="st0">&quot;uk&quot;</span> selected<span class="sy0">=</span><span class="st0">&quot;selected&quot;</span><span class="sy0">&gt;</span>Reino Unido<span class="sy0">&lt;/</span>option<span class="sy0">&gt;</span>
+  <span class="sy0">&lt;</span>option value<span class="sy0">=</span><span class="st0">&quot;0&quot;</span><span class="sy0">&gt;</span>otro<span class="sy0">&lt;/</span>option<span class="sy0">&gt;</span>
+<span class="sy0">&lt;/</span>select<span class="sy0">&gt;</span>
+&nbsp;
+<span class="co1">// Cuadro desplegable (se pueden elegir varias opciones a la vez)</span>
+<span class="re0">$form</span><span class="sy0">-&gt;</span><span class="me1">setWidget</span><span class="br0">&#40;</span><span class="st_h">'idiomas'</span><span class="sy0">,</span> <span class="kw2">new</span> sfWidgetFormChoice<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span>
+  <span class="st_h">'multiple'</span> <span class="sy0">=&gt;</span> <span class="st_h">'true'</span><span class="sy0">,</span>
+  <span class="st_h">'choices'</span>  <span class="sy0">=&gt;</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'en'</span> <span class="sy0">=&gt;</span> <span class="st_h">'Inglés'</span><span class="sy0">,</span> <span class="st_h">'fr'</span> <span class="sy0">=&gt;</span> <span class="st_h">'Francés'</span><span class="sy0">,</span> <span class="st_h">'ottro'</span><span class="br0">&#41;</span><span class="sy0">,</span>
+  <span class="st_h">'default'</span>  <span class="sy0">=&gt;</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'en'</span><span class="sy0">,</span> <span class="nu0">0</span><span class="br0">&#41;</span>
+<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="co1">// Symfony genera el siguiente código HTML</span>
+<span class="sy0">&lt;</span>label <span class="kw1">for</span><span class="sy0">=</span><span class="st0">&quot;idiomas&quot;</span><span class="sy0">&gt;</span>Idiomas<span class="sy0">&lt;/</span>label<span class="sy0">&gt;</span>
+<span class="sy0">&lt;</span>select id<span class="sy0">=</span><span class="st0">&quot;idiomas&quot;</span> multiple<span class="sy0">=</span><span class="st0">&quot;multiple&quot;</span> name<span class="sy0">=</span><span class="st0">&quot;idiomas[]&quot;</span><span class="sy0">&gt;</span>
+  <span class="sy0">&lt;</span>option value<span class="sy0">=</span><span class="st0">&quot;en&quot;</span> selected<span class="sy0">=</span><span class="st0">&quot;selected&quot;</span><span class="sy0">&gt;</span>Inglés<span class="sy0">&lt;/</span>option<span class="sy0">&gt;</span>
+  <span class="sy0">&lt;</span>option value<span class="sy0">=</span><span class="st0">&quot;fr&quot;</span><span class="sy0">&gt;</span>Francés<span class="sy0">&lt;/</span>option<span class="sy0">&gt;</span>
+  <span class="sy0">&lt;</span>option value<span class="sy0">=</span><span class="st0">&quot;0&quot;</span> selected<span class="sy0">=</span><span class="st0">&quot;selected&quot;</span><span class="sy0">&gt;</span>otro<span class="sy0">&lt;/</span>option<span class="sy0">&gt;</span>
+<span class="sy0">&lt;/</span>select<span class="sy0">&gt;</span>
+&nbsp;
+<span class="co1">// Lista de radiobutton</span>
+<span class="re0">$form</span><span class="sy0">-&gt;</span><span class="me1">setWidget</span><span class="br0">&#40;</span><span class="st_h">'sexo'</span><span class="sy0">,</span> <span class="kw2">new</span> sfWidgetFormChoice<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span>
+  <span class="st_h">'expanded'</span> <span class="sy0">=&gt;</span> <span class="kw4">true</span><span class="sy0">,</span>
+  <span class="st_h">'choices'</span>  <span class="sy0">=&gt;</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'h'</span> <span class="sy0">=&gt;</span> <span class="st_h">'Hombre'</span><span class="sy0">,</span> <span class="st_h">'m'</span> <span class="sy0">=&gt;</span> <span class="st_h">'Mujer'</span><span class="br0">&#41;</span><span class="sy0">,</span>
+  <span class="st_h">'class'</span>    <span class="sy0">=&gt;</span> <span class="st_h">'lista_de_sexos'</span>
+<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="co1">// Symfony genera el siguiente código HTML</span>
+<span class="sy0">&lt;</span>label <span class="kw1">for</span><span class="sy0">=</span><span class="st0">&quot;sexo&quot;</span><span class="sy0">&gt;</span>Sexo<span class="sy0">&lt;/</span>label<span class="sy0">&gt;</span>
+<span class="sy0">&lt;</span>ul <span class="kw2">class</span><span class="sy0">=</span><span class="st0">&quot;lista_de_sexos&quot;</span><span class="sy0">&gt;</span>
+  <span class="sy0">&lt;</span>li<span class="sy0">&gt;&lt;</span>input type<span class="sy0">=</span><span class="st0">&quot;radio&quot;</span> name<span class="sy0">=</span><span class="st0">&quot;sexo&quot;</span> id<span class="sy0">=</span><span class="st0">&quot;sexo_h&quot;</span> value<span class="sy0">=</span><span class="st0">&quot;h&quot;</span><span class="sy0">&gt;&lt;</span>label <span class="kw1">for</span><span class="sy0">=</span><span class="st0">&quot;sexo_h&quot;</span><span class="sy0">&gt;</span>Hombre<span class="sy0">&lt;/</span>label<span class="sy0">&gt;&lt;/</span>li<span class="sy0">&gt;</span>
+  <span class="sy0">&lt;</span>li<span class="sy0">&gt;&lt;</span>input type<span class="sy0">=</span><span class="st0">&quot;radio&quot;</span> name<span class="sy0">=</span><span class="st0">&quot;sexo&quot;</span> id<span class="sy0">=</span><span class="st0">&quot;sexo_m&quot;</span> value<span class="sy0">=</span><span class="st0">&quot;m&quot;</span><span class="sy0">&gt;&lt;</span>label <span class="kw1">for</span><span class="sy0">=</span><span class="st0">&quot;sexo_m&quot;</span><span class="sy0">&gt;</span>Mujer<span class="sy0">&lt;/</span>label<span class="sy0">&gt;&lt;/</span>li<span class="sy0">&gt;</span>
+<span class="sy0">&lt;/</span>ul<span class="sy0">&gt;</span>
+&nbsp;
+<span class="co1">// Lista de checkbox</span>
+<span class="re0">$form</span><span class="sy0">-&gt;</span><span class="me1">setWidget</span><span class="br0">&#40;</span><span class="st_h">'aficiones'</span><span class="sy0">,</span> <span class="kw2">new</span> sfWidgetFormChoice<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span>
+  <span class="st_h">'multiple'</span> <span class="sy0">=&gt;</span> <span class="st_h">'true'</span><span class="sy0">,</span>
+  <span class="st_h">'expanded'</span> <span class="sy0">=&gt;</span> <span class="kw4">true</span><span class="sy0">,</span>
+  <span class="st_h">'choices'</span> <span class="sy0">=&gt;</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'Programación'</span><span class="sy0">,</span> <span class="st_h">'Otro'</span><span class="br0">&#41;</span>
+<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="co1">// Symfony genera el siguiente código HTML</span>
+<span class="sy0">&lt;</span>label <span class="kw1">for</span><span class="sy0">=</span><span class="st0">&quot;aficiones&quot;</span><span class="sy0">&gt;</span>Aficiones<span class="sy0">&lt;/</span>label<span class="sy0">&gt;</span>
+<span class="sy0">&lt;</span>ul <span class="kw2">class</span><span class="sy0">=</span><span class="st0">&quot;aficiones_list&quot;</span><span class="sy0">&gt;</span>
+  <span class="sy0">&lt;</span>li<span class="sy0">&gt;&lt;</span>input type<span class="sy0">=</span><span class="st0">&quot;checkbox&quot;</span> name<span class="sy0">=</span><span class="st0">&quot;aficiones[]&quot;</span> id<span class="sy0">=</span><span class="st0">&quot;aficiones_0&quot;</span> value<span class="sy0">=</span><span class="st0">&quot;0&quot;</span><span class="sy0">&gt;&lt;</span>label <span class="kw1">for</span><span class="sy0">=</span><span class="st0">&quot;aficiones_0&quot;</span><span class="sy0">&gt;</span>Programación<span class="sy0">&lt;/</span>label<span class="sy0">&gt;&lt;/</span>li<span class="sy0">&gt;</span>
+  <span class="sy0">&lt;</span>li<span class="sy0">&gt;&lt;</span>input type<span class="sy0">=</span><span class="st0">&quot;checkbox&quot;</span> name<span class="sy0">=</span><span class="st0">&quot;aficiones[]&quot;</span> id<span class="sy0">=</span><span class="st0">&quot;aficiones_1&quot;</span> value<span class="sy0">=</span><span class="st0">&quot;1&quot;</span><span class="sy0">&gt;&lt;</span>label <span class="kw1">for</span><span class="sy0">=</span><span class="st0">&quot;aficiones_1&quot;</span><span class="sy0">&gt;</span>Otro<span class="sy0">&lt;/</span>label<span class="sy0">&gt;&lt;/</span>li<span class="sy0">&gt;</span>
+<span class="sy0">&lt;/</span>ul<span class="sy0">&gt;</span></pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Como has podido observar, Symfony genera automáticamente un atributo <code>id</code> para cada campo del formulario. El valor de este atributo es una combinación del nombre y del valor del widget. Puedes redefinir el valor del atributo <code>id</code> widget por widget o también puedes utilizar el método <code>setIdformat()</code> para establecer el formato a utilizar en todos los campos:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// en modules/mimodulo/actions/actions.class.php</span>
+<span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">form</span> <span class="sy0">=</span> <span class="kw2">new</span> sfForm<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">form</span><span class="sy0">-&gt;</span><span class="me1">setIdFormat</span><span class="br0">&#40;</span><span class="st_h">'mi_formulario_%s'</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p></p></div>
+
+<h3 id="widgets_para_claves_externas">10.3.3. Widgets para claves externas</h3>
+
+<p>Siempre que se editan los objetos del modelo de datos mediante formularios, surge la necesidad de mostrar un tipo especial de lista: los objetos relacionados con el objeto que se está modificando. Esto sucede tanto para las relaciones uno-a-muchos como las relaciones muchos-a-muchos. Afortunadamente, el plugin <code>sfPropelPlugin</code> que incluye Symfony dispone de un widget llamado <code>sfWidgetFormPropelChoice</code> que se encarga de todo esto. Si utilizas Doctrine, el plugin <code>sfDoctrinePlugin</code> dispone de un widget similar llamado <code>sfWidgetFormDoctrineChoice</code>.</p>
+
+<p>Si se considera el ejemplo de un modelo llamado <code>Seccion</code> que tiene varios modelos de tipo <code>Articulo</code>, cuando modificas un artículo deberías poder elegir la sección a la que pertenece de entre una lista de valores. Para ello, el formulario <code>ArticleForm</code> debe utilizar el widget <code>sfWidgetFormPropelChoice</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$formularioArticulo</span> <span class="sy0">=</span> <span class="kw2">new</span> sfForm<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$formularioArticulo</span><span class="sy0">-&gt;</span><span class="me1">setWidgets</span><span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span>
+  <span class="st_h">'id'</span>         <span class="sy0">=&gt;</span> sfWidgetFormInputHidden<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+  <span class="st_h">'titulo'</span>     <span class="sy0">=&gt;</span> sfWidgetFormInputText<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+  <span class="st_h">'seccion_id'</span> <span class="sy0">=&gt;</span> sfWidgetFormPropelChoice<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span>
+    <span class="st_h">'model'</span>  <span class="sy0">=&gt;</span> <span class="st_h">'Seccion'</span><span class="sy0">,</span>
+    <span class="st_h">'column'</span> <span class="sy0">=&gt;</span> <span class="st_h">'nombre'</span>
+  <span class="br0">&#41;</span>
+<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>El código anterior hace que el formulario de los artículos muestre la lista de todas las secciones disponibles, siempre que hayas definido un método <code>__toString()</code> en la clase del modelo <code>Seccion</code>. El motivo es que Symfony obtiene primero todos los objetos de tipo <code>Seccion</code> y llena el widget <code>choice</code> aplicando una instrucción <code>echo</code> a cada objeto. Por tanto, el modelo <code>Seccion</code> debe contener al menos el siguiente método:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// en lib/model/Seccion.php</span>
+<span class="kw2">public</span> <span class="kw2">function</span> __toString<span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="kw1">return</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getNombre</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>El widget <code>sfWidgetFormPropelChoice</code> es una versión ampliada del widget <code>sfWidgetFormChoice</code>, por lo que puedes utilizar la opción <code>multiple</code> para manejar las relaciones muchos-a-muchos y la opción <code>expanded</code> para modificar la forma en la que se muestra el widget.</p>
+
+<p>Si quieres ordenar la lista de opciones de alguna forma especial o si quieres filtrarla para no mostrar todas las opciones, puedes utilizar la opción <code>criteria</code> para pasar un objeto de tipo <code>Criteria</code> al widget. Doctrine también incluye esta característica a través de la opción <code>query</code>, que permite pasar un objeto de tipo <code>Doctrine_Query</code>.</p>
+
+<h3 id="widgets_para_fechas">10.3.4. Widgets para fechas</h3>
+
+<p>Los widgets de fecha y hora muestran varias listas desplegables con los valores disponibles para el día, mes, año, hora o minuto.</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// Fecha</span>
+<span class="re0">$anos</span> <span class="sy0">=</span> <span class="kw3">range</span><span class="br0">&#40;</span><span class="nu0">1950</span><span class="sy0">,</span> <span class="nu0">1990</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$form</span><span class="sy0">-&gt;</span><span class="me1">setWidget</span><span class="br0">&#40;</span><span class="st_h">'fecha'</span><span class="sy0">,</span> <span class="kw2">new</span> sfWidgetFormDate<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span>
+  <span class="st_h">'label'</span>   <span class="sy0">=&gt;</span> <span class="st_h">'Fecha de nacimiento'</span><span class="sy0">,</span>
+  <span class="st_h">'default'</span> <span class="sy0">=&gt;</span> <span class="st_h">'01/01/1950'</span><span class="sy0">,</span>  <span class="co1">// puede ser un timestamp o cualquier cadena que entienda la función strtotime()</span>
+  <span class="st_h">'years'</span>   <span class="sy0">=&gt;</span> <span class="kw3">array_combine</span><span class="br0">&#40;</span><span class="re0">$anos</span><span class="sy0">,</span> <span class="re0">$anos</span><span class="br0">&#41;</span>
+<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="co1">// Symfony genera el siguiente código HTML</span>
+<span class="sy0">&lt;</span>label <span class="kw1">for</span><span class="sy0">=</span><span class="st0">&quot;fecha&quot;</span><span class="sy0">&gt;</span><span class="kw3">Date</span> of birth<span class="sy0">&lt;/</span>label<span class="sy0">&gt;</span>
+<span class="sy0">&lt;</span>select id<span class="sy0">=</span><span class="st0">&quot;fecha_month&quot;</span> name<span class="sy0">=</span><span class="st0">&quot;fecha[month]&quot;</span><span class="sy0">&gt;</span>
+  <span class="sy0">&lt;</span>option value<span class="sy0">=</span><span class="st0">&quot;&quot;</span><span class="sy0">/&gt;</span>
+  <span class="sy0">&lt;</span>option selected<span class="sy0">=</span><span class="st0">&quot;selected&quot;</span> value<span class="sy0">=</span><span class="st0">&quot;1&quot;</span><span class="sy0">&gt;</span><span class="nu8">01</span><span class="sy0">&lt;/</span>option<span class="sy0">&gt;</span>
+  <span class="sy0">&lt;</span>option value<span class="sy0">=</span><span class="st0">&quot;2&quot;</span><span class="sy0">&gt;</span><span class="nu8">02</span><span class="sy0">&lt;/</span>option<span class="sy0">&gt;</span>
+  <span class="sy0">...</span>
+  <span class="sy0">&lt;</span>option value<span class="sy0">=</span><span class="st0">&quot;12&quot;</span><span class="sy0">&gt;</span><span class="nu0">12</span><span class="sy0">&lt;/</span>option<span class="sy0">&gt;</span>
+<span class="sy0">&lt;/</span>select<span class="sy0">&gt;</span> <span class="sy0">/</span>
+<span class="sy0">&lt;</span>select id<span class="sy0">=</span><span class="st0">&quot;fecha_day&quot;</span> name<span class="sy0">=</span><span class="st0">&quot;fecha[day]&quot;</span><span class="sy0">&gt;</span>
+  <span class="sy0">&lt;</span>option value<span class="sy0">=</span><span class="st0">&quot;&quot;</span><span class="sy0">/&gt;</span>
+  <span class="sy0">&lt;</span>option selected<span class="sy0">=</span><span class="st0">&quot;selected&quot;</span> value<span class="sy0">=</span><span class="st0">&quot;1&quot;</span><span class="sy0">&gt;</span><span class="nu8">01</span><span class="sy0">&lt;/</span>option<span class="sy0">&gt;</span>
+  <span class="sy0">&lt;</span>option value<span class="sy0">=</span><span class="st0">&quot;2&quot;</span><span class="sy0">&gt;</span><span class="nu8">02</span><span class="sy0">&lt;/</span>option<span class="sy0">&gt;</span>
+  <span class="sy0">...</span>
+  <span class="sy0">&lt;</span>option value<span class="sy0">=</span><span class="st0">&quot;31&quot;</span><span class="sy0">&gt;</span><span class="nu0">31</span><span class="sy0">&lt;/</span>option<span class="sy0">&gt;</span>
+<span class="sy0">&lt;/</span>select<span class="sy0">&gt;</span> <span class="sy0">/</span>
+<span class="sy0">&lt;</span>select id<span class="sy0">=</span><span class="st0">&quot;fecha_year&quot;</span> name<span class="sy0">=</span><span class="st0">&quot;fecha[year]&quot;</span><span class="sy0">&gt;</span>
+  <span class="sy0">&lt;</span>option value<span class="sy0">=</span><span class="st0">&quot;&quot;</span><span class="sy0">/&gt;</span>
+  <span class="sy0">&lt;</span>option selected<span class="sy0">=</span><span class="st0">&quot;selected&quot;</span> value<span class="sy0">=</span><span class="st0">&quot;1950&quot;</span><span class="sy0">&gt;</span><span class="nu0">1950</span><span class="sy0">&lt;/</span>option<span class="sy0">&gt;</span>
+  <span class="sy0">&lt;</span>option value<span class="sy0">=</span><span class="st0">&quot;1951&quot;</span><span class="sy0">&gt;</span><span class="nu0">1951</span><span class="sy0">&lt;/</span>option<span class="sy0">&gt;</span>
+  <span class="sy0">...</span>
+  <span class="sy0">&lt;</span>option value<span class="sy0">=</span><span class="st0">&quot;1990&quot;</span><span class="sy0">&gt;</span><span class="nu0">1990</span><span class="sy0">&lt;/</span>option<span class="sy0">&gt;</span>
+<span class="sy0">&lt;/</span>select<span class="sy0">&gt;</span>
+&nbsp;
+<span class="co1">// Hora</span>
+<span class="re0">$form</span><span class="sy0">-&gt;</span><span class="me1">setWidget</span><span class="br0">&#40;</span><span class="st_h">'inicio'</span><span class="sy0">,</span> <span class="kw2">new</span> sfWidgetFormTime<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'default'</span> <span class="sy0">=&gt;</span> <span class="st_h">'12:00'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="co1">// Symfony genera el siguiente código HTML</span>
+<span class="sy0">&lt;</span>label <span class="kw1">for</span><span class="sy0">=</span><span class="st0">&quot;inicio&quot;</span><span class="sy0">&gt;</span>Inicio<span class="sy0">&lt;/</span>label<span class="sy0">&gt;</span>
+<span class="sy0">&lt;</span>select id<span class="sy0">=</span><span class="st0">&quot;inicio_hour&quot;</span> name<span class="sy0">=</span><span class="st0">&quot;inicio[hour]&quot;</span><span class="sy0">&gt;</span>
+  <span class="sy0">&lt;</span>option value<span class="sy0">=</span><span class="st0">&quot;&quot;</span><span class="sy0">/&gt;</span>
+  <span class="sy0">&lt;</span>option value<span class="sy0">=</span><span class="st0">&quot;0&quot;</span><span class="sy0">&gt;</span><span class="nu8">00</span><span class="sy0">&lt;/</span>option<span class="sy0">&gt;</span>
+  <span class="sy0">...</span>
+  <span class="sy0">&lt;</span>option selected<span class="sy0">=</span><span class="st0">&quot;selected&quot;</span> value<span class="sy0">=</span><span class="st0">&quot;12&quot;</span><span class="sy0">&gt;</span><span class="nu0">12</span><span class="sy0">&lt;/</span>option<span class="sy0">&gt;</span>
+  <span class="sy0">...</span>
+  <span class="sy0">&lt;</span>option value<span class="sy0">=</span><span class="st0">&quot;23&quot;</span><span class="sy0">&gt;</span><span class="nu0">23</span><span class="sy0">&lt;/</span>option<span class="sy0">&gt;</span>
+<span class="sy0">&lt;/</span>select<span class="sy0">&gt;</span> <span class="sy0">:</span>
+<span class="sy0">&lt;</span>select id<span class="sy0">=</span><span class="st0">&quot;inicio_minute&quot;</span> name<span class="sy0">=</span><span class="st0">&quot;inicio[minute]&quot;</span><span class="sy0">&gt;</span>
+  <span class="sy0">&lt;</span>option value<span class="sy0">=</span><span class="st0">&quot;&quot;</span><span class="sy0">/&gt;</span>
+  <span class="sy0">&lt;</span>option selected<span class="sy0">=</span><span class="st0">&quot;selected&quot;</span> value<span class="sy0">=</span><span class="st0">&quot;0&quot;</span><span class="sy0">&gt;</span><span class="nu8">00</span><span class="sy0">&lt;/</span>option<span class="sy0">&gt;</span>
+  <span class="sy0">&lt;</span>option value<span class="sy0">=</span><span class="st0">&quot;1&quot;</span><span class="sy0">&gt;</span><span class="nu8">01</span><span class="sy0">&lt;/</span>option<span class="sy0">&gt;</span>
+  <span class="sy0">...</span>
+  <span class="sy0">&lt;</span>option value<span class="sy0">=</span><span class="st0">&quot;59&quot;</span><span class="sy0">&gt;</span><span class="nu0">59</span><span class="sy0">&lt;/</span>option<span class="sy0">&gt;</span>
+<span class="sy0">&lt;/</span>select<span class="sy0">&gt;</span>
+&nbsp;
+<span class="co1">// Fecha y hora</span>
+<span class="re0">$form</span><span class="sy0">-&gt;</span><span class="me1">setWidget</span><span class="br0">&#40;</span><span class="st_h">'fin'</span><span class="sy0">,</span> <span class="kw2">new</span> sfWidgetFormDateTime<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'default'</span> <span class="sy0">=&gt;</span> <span class="st_h">'01/01/2008 12:00'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="co1">// Symfony muestra el widget en HTML mediante cinco listas desplegables para el mes, día, año, hora y minuto</span></pre>
+</div>
+
+<p>Obviamente es posible modificar la opción <code>format</code> de la fecha para mostrarla con formato europeo en vez del formato internacional (<code>%day%/%month%/%year%</code> en vez de <code>%month%/%day%/%year%</code>) y también puedes mostrar la hora con el formato de 12 horas en vez de 24 horas. Además, puedes redefinir el valor que se muestra como primera opción de cada lista desplegable y puedes limitar el número de valores que se muestran. Una vez más, todas estas opciones avanzadas se explican en la documentación de la API.</p>
+
+<p>Los widgets de fechas son un buen ejemplo del poder de los widgets de Symfony. Como acabas de ver, un widget no solo es un campo simple de formulario, sino que puede ser una combinación de varias etiquetas HTML que Symfony gestiona de forma transparente para el programador.</p>
+
+<h3 id="widgets_para_internacionalizacion">10.3.5. Widgets para internacionalización</h3>
+
+<p>Las aplicaciones multi-idioma modifican el formato de las fechas en función del idioma del usuario (ver Capítulo 13 para los detalles sobre la internacionalización). Para facilitar la traducción de las fechas de los formularios, Symfony incluye el widget <code>sfWidgetFormI18nDate</code>, que espera un parámetro llamado <code>culture</code> para decidir el formato más adecuado para la fecha. También puedes utilizar un parámetro llamado <code>month_format</code> para que la lista desplegable de los meses muestre sus nombres (en el idioma del usuario) en vez simplemente números.</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// Fecha</span>
+<span class="re0">$anos</span> <span class="sy0">=</span> <span class="kw3">range</span><span class="br0">&#40;</span><span class="nu0">1950</span><span class="sy0">,</span> <span class="nu0">1990</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$form</span><span class="sy0">-&gt;</span><span class="me1">setWidget</span><span class="br0">&#40;</span><span class="st_h">'fecha'</span><span class="sy0">,</span> <span class="kw2">new</span> sfWidgetFormI18nDate<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span>
+  <span class="st_h">'culture'</span>      <span class="sy0">=&gt;</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getUser</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">getCulture</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+  <span class="st_h">'month_format'</span> <span class="sy0">=&gt;</span> <span class="st_h">'name'</span><span class="sy0">,</span>   <span class="co1">// Valores permitidos: 'name' (valor por defecto), 'short_name' y 'number' </span>
+  <span class="st_h">'label'</span>        <span class="sy0">=&gt;</span> <span class="st_h">'Fecha de nacimiento'</span><span class="sy0">,</span>
+  <span class="st_h">'default'</span>      <span class="sy0">=&gt;</span> <span class="st_h">'01/01/1950'</span><span class="sy0">,</span>
+  <span class="st_h">'years'</span>        <span class="sy0">=&gt;</span> <span class="kw3">array_combine</span><span class="br0">&#40;</span><span class="re0">$anos</span><span class="sy0">,</span> <span class="re0">$anos</span><span class="br0">&#41;</span>
+<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="co1">// Si el idioma del usuario es el inglés, Symfony genera el siguiente código HTML</span>
+<span class="sy0">&lt;</span>label <span class="kw1">for</span><span class="sy0">=</span><span class="st0">&quot;fecha&quot;</span><span class="sy0">&gt;</span>Fecha de nacimiento<span class="sy0">&lt;/</span>label<span class="sy0">&gt;</span>
+<span class="sy0">&lt;</span>select id<span class="sy0">=</span><span class="st0">&quot;fecha_month&quot;</span> name<span class="sy0">=</span><span class="st0">&quot;fecha[month]&quot;</span><span class="sy0">&gt;</span>
+  <span class="sy0">&lt;</span>option value<span class="sy0">=</span><span class="st0">&quot;&quot;</span><span class="sy0">/&gt;</span>
+  <span class="sy0">&lt;</span>option selected<span class="sy0">=</span><span class="st0">&quot;selected&quot;</span> value<span class="sy0">=</span><span class="st0">&quot;1&quot;</span><span class="sy0">&gt;</span>January<span class="sy0">&lt;/</span>option<span class="sy0">&gt;</span>
+  <span class="sy0">&lt;</span>option value<span class="sy0">=</span><span class="st0">&quot;2&quot;</span><span class="sy0">&gt;</span>February<span class="sy0">&lt;/</span>option<span class="sy0">&gt;</span>
+  <span class="sy0">...</span>
+  <span class="sy0">&lt;</span>option value<span class="sy0">=</span><span class="st0">&quot;12&quot;</span><span class="sy0">&gt;</span>December<span class="sy0">&lt;/</span>option<span class="sy0">&gt;</span>
+<span class="sy0">&lt;/</span>select<span class="sy0">&gt;</span> <span class="sy0">/</span>
+<span class="sy0">&lt;</span>select id<span class="sy0">=</span><span class="st0">&quot;fecha_day&quot;</span> name<span class="sy0">=</span><span class="st0">&quot;fecha[day]&quot;</span><span class="sy0">&gt;...&lt;/</span>select<span class="sy0">&gt;</span> <span class="sy0">/</span>
+<span class="sy0">&lt;</span>select id<span class="sy0">=</span><span class="st0">&quot;fecha_year&quot;</span> name<span class="sy0">=</span><span class="st0">&quot;fecha[year]&quot;</span><span class="sy0">&gt;...&lt;/</span>select<span class="sy0">&gt;</span>
+&nbsp;
+<span class="co1">// Si el idioma del usuario es el francés, Symfony genera el siguiente código HTML</span>
+<span class="sy0">&lt;</span>label <span class="kw1">for</span><span class="sy0">=</span><span class="st0">&quot;fecha&quot;</span><span class="sy0">&gt;</span>Fecha de nacimiento<span class="sy0">&lt;/</span>label<span class="sy0">&gt;</span>
+<span class="sy0">&lt;</span>select id<span class="sy0">=</span><span class="st0">&quot;fecha_day&quot;</span> name<span class="sy0">=</span><span class="st0">&quot;fecha[day]&quot;</span><span class="sy0">&gt;...&lt;/</span>select<span class="sy0">&gt;</span> <span class="sy0">/</span>
+<span class="sy0">&lt;</span>select id<span class="sy0">=</span><span class="st0">&quot;fecha_month&quot;</span> name<span class="sy0">=</span><span class="st0">&quot;fecha[month]&quot;</span><span class="sy0">&gt;</span>
+  <span class="sy0">&lt;</span>option value<span class="sy0">=</span><span class="st0">&quot;&quot;</span><span class="sy0">/&gt;</span>
+  <span class="sy0">&lt;</span>option selected<span class="sy0">=</span><span class="st0">&quot;selected&quot;</span> value<span class="sy0">=</span><span class="st0">&quot;1&quot;</span><span class="sy0">&gt;</span>Janvier<span class="sy0">&lt;/</span>option<span class="sy0">&gt;</span>
+  <span class="sy0">&lt;</span>option value<span class="sy0">=</span><span class="st0">&quot;2&quot;</span><span class="sy0">&gt;</span>Février<span class="sy0">&lt;/</span>option<span class="sy0">&gt;</span>
+  <span class="sy0">...</span>
+  <span class="sy0">&lt;</span>option value<span class="sy0">=</span><span class="st0">&quot;12&quot;</span><span class="sy0">&gt;</span>Décembre<span class="sy0">&lt;/</span>option<span class="sy0">&gt;</span>
+<span class="sy0">&lt;/</span>select<span class="sy0">&gt;</span> <span class="sy0">/</span>
+<span class="sy0">&lt;</span>select id<span class="sy0">=</span><span class="st0">&quot;fecha_year&quot;</span> name<span class="sy0">=</span><span class="st0">&quot;fecha[year]&quot;</span><span class="sy0">&gt;...&lt;/</span>select<span class="sy0">&gt;</span></pre>
+</div>
+
+<p>Existen widgets similares para la hora (<code>sfWidgetFormI18nTime</code>) y para la fecha y hora (<code>sfWidgetFormI18nDateTime</code>).</p>
+
+<p>Los formularios suelen contener otras dos listas desplegables que también dependen del idioma o cultura del usuario: el selector de idioma y el selector de país. Symfony incluye dos widgets específicos para estas listas. Además, no es necesario pasarles la opción <code>choices</code>, porque Symfony ya se encarga de llenarlos con los valores adecuados y en el idioma del usuario (siempre que el idioma del usuario sea uno de los 250 idiomas soportados por Symfony).</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// Lista de países</span>
+<span class="re0">$form</span><span class="sy0">-&gt;</span><span class="me1">setWidget</span><span class="br0">&#40;</span><span class="st_h">'pais'</span><span class="sy0">,</span> <span class="kw2">new</span> sfWidgetFormI18nCountryChoice<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'default'</span> <span class="sy0">=&gt;</span> <span class="st_h">'Reino Unido'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="co1">// Si el idioma del usuario es el inglés, Symfony genera el siguiente código HTML</span>
+<span class="sy0">&lt;</span>label <span class="kw1">for</span><span class="sy0">=</span><span class="st0">&quot;pais&quot;</span><span class="sy0">&gt;</span>Pais<span class="sy0">&lt;/</span>label<span class="sy0">&gt;</span>
+<span class="sy0">&lt;</span>select id<span class="sy0">=</span><span class="st0">&quot;pais&quot;</span> name<span class="sy0">=</span><span class="st0">&quot;pais&quot;</span><span class="sy0">&gt;</span>
+  <span class="sy0">&lt;</span>option value<span class="sy0">=</span><span class="st0">&quot;&quot;</span><span class="sy0">/&gt;</span>
+  <span class="sy0">&lt;</span>option value<span class="sy0">=</span><span class="st0">&quot;AD&quot;</span><span class="sy0">&gt;</span>Andorra<span class="sy0">&lt;/</span>option<span class="sy0">&gt;</span>
+  <span class="sy0">&lt;</span>option value<span class="sy0">=</span><span class="st0">&quot;AE&quot;</span><span class="sy0">&gt;</span>United Arab Emirates<span class="sy0">&lt;/</span>option<span class="sy0">&gt;</span>
+  <span class="sy0">...</span>
+  <span class="sy0">&lt;</span>option value<span class="sy0">=</span><span class="st0">&quot;ZWD&quot;</span><span class="sy0">&gt;</span>Zimbabwe<span class="sy0">&lt;/</span>option<span class="sy0">&gt;</span>
+<span class="sy0">&lt;/</span>select<span class="sy0">&gt;</span>
+&nbsp;
+<span class="co1">// Lista de idiomas</span>
+<span class="re0">$form</span><span class="sy0">-&gt;</span><span class="me1">setWidget</span><span class="br0">&#40;</span><span class="st_h">'idioma'</span><span class="sy0">,</span> <span class="kw2">new</span> sfWidgetFormI18nLanguageChoice<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span>
+  <span class="st_h">'languages'</span> <span class="sy0">=&gt;</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'en'</span><span class="sy0">,</span> <span class="st_h">'fr'</span><span class="sy0">,</span> <span class="st_h">'de'</span><span class="br0">&#41;</span><span class="sy0">,</span>  <span class="co1">// opcionalmente se pueden limitar los idiomas que se muestran</span>
+  <span class="st_h">'default'</span>   <span class="sy0">=&gt;</span> <span class="st_h">'en'</span>
+<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="co1">// Si el idioma del usuario es el inglés, Symfony genera el siguiente código HTML</span>
+<span class="sy0">&lt;</span>label <span class="kw1">for</span><span class="sy0">=</span><span class="st0">&quot;idioma&quot;</span><span class="sy0">&gt;</span>Idioma<span class="sy0">&lt;/</span>label<span class="sy0">&gt;</span>
+<span class="sy0">&lt;</span>select id<span class="sy0">=</span><span class="st0">&quot;idioma&quot;</span> name<span class="sy0">=</span><span class="st0">&quot;idioma&quot;</span><span class="sy0">&gt;</span>
+  <span class="sy0">&lt;</span>option value<span class="sy0">=</span><span class="st0">&quot;&quot;</span><span class="sy0">/&gt;</span>
+  <span class="sy0">&lt;</span>option value<span class="sy0">=</span><span class="st0">&quot;de&quot;</span><span class="sy0">&gt;</span>German<span class="sy0">&lt;/</span>option<span class="sy0">&gt;</span>
+  <span class="sy0">&lt;</span>option value<span class="sy0">=</span><span class="st0">&quot;en&quot;</span> selected<span class="sy0">=</span><span class="st0">&quot;selected&quot;</span><span class="sy0">&gt;</span>English<span class="sy0">&lt;/</span>option<span class="sy0">&gt;</span>
+  <span class="sy0">&lt;</span>option value<span class="sy0">=</span><span class="st0">&quot;fr&quot;</span><span class="sy0">&gt;</span>French<span class="sy0">&lt;/</span>option<span class="sy0">&gt;</span>
+<span class="sy0">&lt;/</span>select<span class="sy0">&gt;</span></pre>
+</div>
+
+<h3 id="widgets_para_archivos">10.3.6. Widgets para archivos</h3>
+
+<p>Trabajar con archivos en Symfony es igual de sencillo que hacerlo con cualquier otro tipo de widget:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// Campo para subir un archivo</span>
+<span class="re0">$form</span><span class="sy0">-&gt;</span><span class="me1">setWidget</span><span class="br0">&#40;</span><span class="st_h">'foto'</span><span class="sy0">,</span> <span class="kw2">new</span> sfWidgetFormInputFile<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="co1">// Symfony genera el siguiente código HTML</span>
+<span class="sy0">&lt;</span>label <span class="kw1">for</span><span class="sy0">=</span><span class="st0">&quot;foto&quot;</span><span class="sy0">&gt;</span>Foto<span class="sy0">&lt;/</span>label<span class="sy0">&gt;</span>
+<span class="sy0">&lt;</span>input id<span class="sy0">=</span><span class="st0">&quot;foto&quot;</span> type<span class="sy0">=</span><span class="st0">&quot;file&quot;</span> name<span class="sy0">=</span><span class="st0">&quot;foto&quot;</span><span class="sy0">/&gt;</span>
+<span class="co1">// Si el formulario tiene un widget de este tipo, el método 'renderFormTag()' añade la opción 'multipart' a la etiqueta &lt;form&gt;</span>
+&nbsp;
+<span class="co1">// Campo para subir un archivo editable</span>
+<span class="re0">$form</span><span class="sy0">-&gt;</span><span class="me1">setWidget</span><span class="br0">&#40;</span><span class="st_h">'foto'</span><span class="sy0">,</span> <span class="kw2">new</span> sfWidgetFormInputFileEditable<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'default'</span> <span class="sy0">=&gt;</span> <span class="st_h">'/images/imagen.png'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="co1">// Symfony genera el código HTML del campo para subir archivos y añade una previsualización del archivo actual</span></pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Existen plugins desarrollados por terceros que incluyen muchos widgets adicionales. Entre otros, puedes encontrar editores avanzados de texto, calendarios y muchos otros componentes gráficos avanzados creados con diferentes librerías de JavaScript. Todos ellos los puedes encontrar en la <a href="http://www.symfony-project.org/plugins/">sección de plugins</a> del sitio web oficial de Symfony.</p></div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="modificando_el_aspecto_de_los_formularios.html">&larr; Anterior <span>10.2. Modificando el aspecto de los formularios</span></a>
+            
+            <a class="span5 next" href="procesando_el_envio_del_formulario.html">Siguiente &rarr; <span>10.4. Procesando el envío del formulario</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Widgets de formulario (Symfony 1.4, la guía definitiva%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Symfony 1.4, la guía definitiva : Widgets de formulario']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción a Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Explorando el interior de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Ejecutar aplicaciones Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Introducción a la creación de páginas</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Configurar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> El Controlador</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> La Vista</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> El modelo (Doctrine)</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Enlaces y sistema de enrutamiento</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_10.html">
+            <span>Capítulo 10.</span> Formularios
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="mostrando_un_formulario.html">
+            <span>10.1.</span> Mostrando un formulario
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="modificando_el_aspecto_de_los_formularios.html">
+            <span>10.2.</span> Modificando el aspecto de los formularios
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="widgets_de_formulario.html">
+            <span>10.3.</span> Widgets de formulario
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="procesando_el_envio_del_formulario.html">
+            <span>10.4.</span> Procesando el envío del formulario
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="validadores.html">
+            <span>10.5.</span> Validadores
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="usos_alternativos_de_los_formularios.html">
+            <span>10.6.</span> Usos alternativos de los formularios
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="widget_y_validadores_propios.html">
+            <span>10.7.</span> Widget y validadores propios
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="formularios_basados_en_un_modelo.html">
+            <span>10.8.</span> Formularios basados en un modelo
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="resumen.html">
+            <span>10.9.</span> Resumen
+        </a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Emails</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Uso de la cache</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Pruebas unitarias y funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Herramientas para la administración de aplicaciones</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> Personalizar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> Rendimiento</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Configuración avanzada</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

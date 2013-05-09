@@ -1,0 +1,506 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>4.5. Configurando los validadores y los widgets (Los formularios de Symfony 1.4)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="4.5. Configurando los validadores y los widgets (Los formularios de Symfony 1.4)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page symfony_formularios">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Los formularios de Symfony 1.4</a></li>
+  <li><a href="../capitulo_4.html">Capítulo 4. Integración con Propel</a></li>
+  <li class="current"><span>4.5. Configurando los validadores y los widgets</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="configurando_los_validadores_y_los_widgets"><span>4.5.</span> Configurando los validadores y los widgets</h1>
+    
+
+<p>En esta sección se muestra cómo configurar los validadores y los widgets generados por defecto.</p>
+
+<p>El formulario <code>ArticuloForm</code> dispone de un campo llamado <code>slug</code>. Un <em>slug</em> es una cadena de caracteres que representa de forma única al artículo dentro de la URL. Si se dispone por ejemplo de un artículo cuyo título es <em>"Optimizando la programación con Symfony"</em> y cuyo <code>id</code> es <code>12</code>, su <em>slug</em> es <code>12-optimizando-la-programacion-con-symfony</code>. Este campo se determina automáticamente a partir del campo <code>titulo</code> cada vez que se guarda el objeto, pero también se permite al usuario establecerlo de forma explícita. Aunque este campo es obligatorio según el esquema de datos, no puede ser un campo obligatorio en el formulario. Por este motivo se modifica el validador para hacer el campo opcional, como se muestra en el listado 4-8. Además, se personaliza el campo <code>contenido</code> aumentando su tamaño y obligando al usuario a escribir al menos cinco caracteres.</p>
+
+<p><strong>Listado 4-8 - Personalizando los validadores y los widgets</strong></p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">class</span> ArticuloForm <span class="kw2">extends</span> BaseArticuloForm
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> configure<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="co1">// ...</span>
+&nbsp;
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">validatorSchema</span><span class="br0">&#91;</span><span class="st_h">'slug'</span><span class="br0">&#93;</span><span class="sy0">-&gt;</span><span class="me1">setOption</span><span class="br0">&#40;</span><span class="st_h">'required'</span><span class="sy0">,</span> <span class="kw4">false</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">validatorSchema</span><span class="br0">&#91;</span><span class="st_h">'contenido'</span><span class="br0">&#93;</span><span class="sy0">-&gt;</span><span class="me1">setOption</span><span class="br0">&#40;</span><span class="st_h">'min_length'</span><span class="sy0">,</span> <span class="nu0">5</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">widgetSchema</span><span class="br0">&#91;</span><span class="st_h">'contenido'</span><span class="br0">&#93;</span><span class="sy0">-&gt;</span><span class="me1">setAttributes</span><span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'rows'</span> <span class="sy0">=&gt;</span> <span class="nu0">10</span><span class="sy0">,</span> <span class="st_h">'cols'</span> <span class="sy0">=&gt;</span> <span class="nu0">40</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>En el código anterior se utilizan los objetos <code>validatorSchema</code> y <code>widgetSchema</code> como si fueran arrays de PHP. Estos arrays aceptan el nombre del campo como clave y devuelven respectivamente el objeto del validador y el objeto del widget. Por lo tanto, es posible personalizar cada campo y cada widget.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Para poder acceder a los objetos como si fueran arrays de PHP, las clases <code>sfValidatorSchema</code> y <code>sfWidgetFormSchema</code> implementan la interfaz <code>ArrayAccess</code>, disponible desde la versión PHP 5.</p></div>
+
+<p>Para asegurar que dos artículos no tengan el mismo <code>slug</code>, la definición del esquema incluye la restricción para hacer el <em>slug</em> único. Esta restricción a nivel de base de datos, se refleja en el formulario <code>ArticuloForm</code> a través del validador <code>sfValidatorPropelUnique</code>. Este validador se puede emplear para asegurar que el valor de un campo sea único en la base de datos, lo que puede ser útil para campos como el login o el email. El listado 4-9 muestra cómo utilizarlo en el formulario <code>ArticuloForm</code>.</p>
+
+<p><strong>Listado 4-9 - Utilizando el validador <code>sfValidatorPropelUnique</code> para asegurar que el valor de un campo sea único</strong></p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">class</span> BaseArticuloForm <span class="kw2">extends</span> BaseFormPropel
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> setup<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="co1">// ...</span>
+&nbsp;
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">validatorSchema</span><span class="sy0">-&gt;</span><span class="me1">setPostValidator</span><span class="br0">&#40;</span>
+      <span class="kw2">new</span> sfValidatorPropelUnique<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'model'</span> <span class="sy0">=&gt;</span> <span class="st_h">'Articulo'</span><span class="sy0">,</span> <span class="st_h">'column'</span> <span class="sy0">=&gt;</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'slug'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+    <span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>El validador <code>sfValidatorPropelUnique</code> se establece como post-validador para que se ejecute después de comprobar que toda la información enviada por el usuario es válida. Para validar que el campo <code>slug</code> sea único, el validador no sólo tiene que accceder a su valor, sino que también debe acceder al valor de la clave o claves primarias. Además, las reglas de validación son diferentes en la creación y en la modificación del objeto, ya que el <em>slug</em> puede permanecer invariante durante la modificación de un artículo.</p>
+
+<p>A continuación se modifica el campo <code>activo</code> de la tabla <code>autor</code>, que se utiliza para determinar si un usuario es activo o no. El listado 4-10 muestra cómo se pueden excluir los autores inactivos en el formulario <code>ArticuloForm</code> modificando la opción <code>criteria</code> del widget <code>sfWidgetPropelSelect</code> asociado al campo <code>autor_id</code>. La opción <code>criteria</code> toma como valor un objeto de tipo <code>Criteria</code> de Propel, lo que permite restringir el número de elementos de la lista desplegable.</p>
+
+<p><strong>Listado 4-10 - Personalizando el widget <code>sfWidgetPropelSelect</code></strong></p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">class</span> ArticuloForm <span class="kw2">extends</span> BaseArticuloForm
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> configure<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="co1">// ...</span>
+&nbsp;
+    <span class="re0">$autorCriteria</span> <span class="sy0">=</span> <span class="kw2">new</span> Criteria<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$autorCriteria</span><span class="sy0">-&gt;</span><span class="me1">add</span><span class="br0">&#40;</span>AutorPeer<span class="sy0">::</span><span class="me2">ACTIVO</span><span class="sy0">,</span> <span class="kw4">true</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">widgetSchema</span><span class="br0">&#91;</span><span class="st_h">'autor_id'</span><span class="br0">&#93;</span><span class="sy0">-&gt;</span><span class="me1">setOption</span><span class="br0">&#40;</span><span class="st_h">'criteria'</span><span class="sy0">,</span> <span class="re0">$autorCriteria</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>El código anterior sólo modifica la lista de opciones disponibles en el widget, pero también se deben restringir las opciones en el validador, tal y como se muestra en el listado 4-11. Al igual que el widget <code>sfWidgetProperSelect</code>, el validador <code>sfValidatorPropelChoice</code> acepta una opción llamada <code>criteria</code> para restringir las opciones válidas para este campo.</p>
+
+<p><strong>Listado 4-11 - Personalizando el validador <code>sfValidatorPropelChoice</code></strong></p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">class</span> ArticuloForm <span class="kw2">extends</span> BaseArticuloForm
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> configure<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="co1">// ...</span>
+&nbsp;
+    <span class="re0">$autorCriteria</span> <span class="sy0">=</span> <span class="kw2">new</span> Criteria<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$autorCriteria</span><span class="sy0">-&gt;</span><span class="me1">add</span><span class="br0">&#40;</span>AutorPeer<span class="sy0">::</span><span class="me2">ACTIVO</span><span class="sy0">,</span> <span class="kw4">true</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">widgetSchema</span><span class="br0">&#91;</span><span class="st_h">'autor_id'</span><span class="br0">&#93;</span><span class="sy0">-&gt;</span><span class="me1">setOption</span><span class="br0">&#40;</span><span class="st_h">'criteria'</span><span class="sy0">,</span> <span class="re0">$autorCriteria</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">validatorSchema</span><span class="br0">&#91;</span><span class="st_h">'autor_id'</span><span class="br0">&#93;</span><span class="sy0">-&gt;</span><span class="me1">setOption</span><span class="br0">&#40;</span><span class="st_h">'criteria'</span><span class="sy0">,</span> <span class="re0">$autorCriteria</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>En el ejemplo anterior se define el objeto <code>Criteria</code> directamente en el método <code>configure()</code>. En un proyecto real, este objeto <code>Criteria</code> puede ser muy útil en otras partes del código, por lo que es mejor crear un método llamado <code>getCriteriaAutoresActivos()</code> dentro de la clase <code>AutorPeer</code> y llamar a este método desde <code>ArticuloForm</code> como muestra el listado 4-12.</p>
+
+<p><strong>Listado 4-12 - Refactorizando el objeto <code>Criteria</code> en la clase del modelo</strong></p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">class</span> AutorPeer <span class="kw2">extends</span> BaseAutorPeer
+<span class="br0">&#123;</span>
+  static <span class="kw2">public</span> <span class="kw2">function</span> getCriteriaAutoresActivos<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$criteria</span> <span class="sy0">=</span> <span class="kw2">new</span> Criteria<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$criteria</span><span class="sy0">-&gt;</span><span class="me1">add</span><span class="br0">&#40;</span>AutorPeer<span class="sy0">::</span><span class="me2">ACTIVO</span><span class="sy0">,</span> <span class="kw4">true</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="kw1">return</span> <span class="re0">$criteria</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+<span class="kw2">class</span> ArticuloForm <span class="kw2">extends</span> BaseArticuloForm
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> configure<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$autorCriteria</span> <span class="sy0">=</span> AutorPeer<span class="sy0">::</span><span class="me2">getCriteriaAutoresActivos</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">widgetSchema</span><span class="br0">&#91;</span><span class="st_h">'autor_id'</span><span class="br0">&#93;</span><span class="sy0">-&gt;</span><span class="me1">setOption</span><span class="br0">&#40;</span><span class="st_h">'criteria'</span><span class="sy0">,</span> <span class="re0">$autorCriteria</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">validatorSchema</span><span class="br0">&#91;</span><span class="st_h">'autor_id'</span><span class="br0">&#93;</span><span class="sy0">-&gt;</span><span class="me1">setOption</span><span class="br0">&#40;</span><span class="st_h">'criteria'</span><span class="sy0">,</span> <span class="re0">$autorCriteria</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Mientras que el widget <code>sfWidgetPropelSelect</code> y el validador <code>sfValidatorPropelChoice</code> representan una relación 1-n entre dos tablas, el widget <code>sfWidgetFormPropelSelectMany</code> y el validador <code>sfValidatorPropelChoiceMany</code> representan una relación de tipo n-n y aceptan las mismas opciones. En el formulario <code>ArticuloForm</code>, estas clases se emplean para representar la relación entre las tablas <code>articulo</code> y <code>etiqueta</code>.</p></div>
+
+<h3 id="modificando_el_validador">4.5.1 Modificando el validador</h3>
+
+<p>El campo <code>email</code> se define en el esquema como <code>varchar(255)</code>, por lo que Symfony crea un validador de tipo <code>sfValidatorString()</code> para restringir su longitud a un máximo de <code>255</code> caracteres. Como este campo requiere que el valor introducido sea una dirección válida de correo eletrónico, el listado 4-14 reemplaza el validador generado por un validador de tipo <code>sfValidatorEmail</code>.</p>
+
+<p><strong>Listado 4-13 - Modificando el validador del campo  <code>email</code> del formulario <code>AutorForm</code></strong></p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">class</span> AutorForm <span class="kw2">extends</span> BaseAutorForm
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> configure<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">validatorSchema</span><span class="br0">&#91;</span><span class="st_h">'email'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="kw2">new</span> sfValidatorEmail<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<h3 id="anadiendo_un_validador">4.5.2 Añadiendo un validador</h3>
+
+<p>En la sección anterior se explica cómo modificar un validador generado automáticamente. Pero en el caso del campo <code>emaill</code>, también es necesario mantener el validador que limita el máximo número de caracteres. El listado 4-14 utiliza el validador <code>sfValidatorAnd</code> para garantizar que la dirección de email sea válida y que su longitud sea igual o inferior al máximo establecido.</p>
+
+<p><strong>Listado 4-14 - Utilizando un validador múltiple</strong></p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">class</span> AutorForm <span class="kw2">extends</span> BaseAutorForm
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> configure<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">validatorSchema</span><span class="br0">&#91;</span><span class="st_h">'email'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="kw2">new</span> sfValidatorAnd<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span>
+      <span class="kw2">new</span> sfValidatorString<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'max_length'</span> <span class="sy0">=&gt;</span> <span class="nu0">255</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+      <span class="kw2">new</span> sfValidatorEmail<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+    <span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>El ejemplo anterior tiene un inconveniente, ya que si se modifica el tamaño del campo <code>email</code> en el esquema de la base de datos, es preciso acordarse de que también hay que modificarlo en el formulario. Por lo tanto, en vez de reemplazar el validador generado automáticamente, es mejor añadir otro validador como se muestra en el listado 4-15.</p>
+
+<p><strong>Listado 4-15 - Añadiendo un validador</strong></p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">class</span> AutorForm <span class="kw2">extends</span> BaseAutorForm
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> configure<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">validatorSchema</span><span class="br0">&#91;</span><span class="st_h">'email'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="kw2">new</span> sfValidatorAnd<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span>
+      <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">validatorSchema</span><span class="br0">&#91;</span><span class="st_h">'email'</span><span class="br0">&#93;</span><span class="sy0">,</span>
+      <span class="kw2">new</span> sfValidatorEmail<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+    <span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<h3 id="modificando_el_widget">4.5.3 Modificando el widget</h3>
+
+<p>El campo <code>estado</code> de la tabla <code>articulo</code> se define en el esquema como una cadena de caracteres. Sus posibles valores se definen en la clase <code>ArticuloPeer</code>, como se muestra en el listado 4-16.</p>
+
+<p><strong>Listado 4-16 - Definiendo los posibles valores del estado en la clase <code>ArticuloPeer</code></strong></p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">class</span> ArticuloPeer <span class="kw2">extends</span> BaseArticuloPeer
+<span class="br0">&#123;</span>
+  static <span class="kw2">protected</span> <span class="re0">$estados</span> <span class="sy0">=</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'borrador'</span><span class="sy0">,</span> <span class="st_h">'online'</span><span class="sy0">,</span> <span class="st_h">'offline'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+  static <span class="kw2">public</span> <span class="kw2">function</span> getEstados<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="kw1">return</span> <span class="kw2">self</span><span class="sy0">::</span><span class="re0">$estados</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="co1">// ...</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Cuando se modifica un artículo, el campo <code>estado</code> se debe representar como una lista desplegable en vez de como un cuadro de texto. Para ello, se modifica el widget de la forma que se muestra en el listado 4-17.</p>
+
+<p><strong>Listado 4-17 - Modificando el widget del campo <code>estado</code></strong></p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">class</span> ArticuloForm <span class="kw2">extends</span> BaseArticuloForm
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> configure<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">widgetSchema</span><span class="br0">&#91;</span><span class="st_h">'estado'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="kw2">new</span> sfWidgetFormSelect<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'choices'</span> <span class="sy0">=&gt;</span> ArticuloPeer<span class="sy0">::</span><span class="me2">getEstados</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Por último, también es necesario modificar el validador para asegurar que el estado seleccionado se encuentre dentro de la lista de estados posibles (ver listado 4-18).</p>
+
+<p><strong>Listado 4-18 - Modificando el validador del campo <code>estado</code></strong></p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">class</span> ArticuloForm <span class="kw2">extends</span> BaseArticuloForm
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> configure<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$estados</span> <span class="sy0">=</span> ArticuloPeer<span class="sy0">::</span><span class="me2">getEstados</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">widgetSchema</span><span class="br0">&#91;</span><span class="st_h">'estado'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="kw2">new</span> sfWidgetFormSelect<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'choices'</span> <span class="sy0">=&gt;</span> <span class="re0">$estados</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">validatorSchema</span><span class="br0">&#91;</span><span class="st_h">'estado'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="kw2">new</span> sfValidatorChoice<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'choices'</span> <span class="sy0">=&gt;</span> <span class="kw3">array_keys</span><span class="br0">&#40;</span><span class="re0">$estados</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<h3 id="eliminando_un_campo">4.5.4 Eliminando un campo</h3>
+
+<p>La tabla <code>articulo</code> tiene dos columnas especiales llamadas <code>created_at</code> y <code>updated_at</code>, cuyos valores gestiona Propel de forma automática. Por lo tanto, para evitar que el usuario modifique sus valores, es necesario eliminar estos dos campos del formulario, tal y como muestra el listado 4-19.</p>
+
+<p><strong>Listado 4-19 - Eliminando un campo</strong></p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">class</span> ArticuloForm <span class="kw2">extends</span> BaseArticuloForm
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> configure<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="kw3">unset</span><span class="br0">&#40;</span><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">validatorSchema</span><span class="br0">&#91;</span><span class="st_h">'created_at'</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="kw3">unset</span><span class="br0">&#40;</span><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">widgetSchema</span><span class="br0">&#91;</span><span class="st_h">'created_at'</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="kw3">unset</span><span class="br0">&#40;</span><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">validatorSchema</span><span class="br0">&#91;</span><span class="st_h">'updated_at'</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="kw3">unset</span><span class="br0">&#40;</span><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">widgetSchema</span><span class="br0">&#91;</span><span class="st_h">'updated_at'</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Eliminar un campo consiste en eliminar su validador y su widget. El listado 4-20 muestra cómo borrar los dos de forma simultánea mediante una sola instrucción, accediendo al formulario como si fuera un array de PHP.</p>
+
+<p><strong>Listado 4-20 - Accediendo al formulario como si fuera un array para eliminar un campo</strong></p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">class</span> ArticuloForm <span class="kw2">extends</span> BaseArticuloForm
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> configure<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="kw3">unset</span><span class="br0">&#40;</span><span class="re0">$this</span><span class="br0">&#91;</span><span class="st_h">'created_at'</span><span class="br0">&#93;</span><span class="sy0">,</span> <span class="re0">$this</span><span class="br0">&#91;</span><span class="st_h">'updated_at'</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<h3 id="resultado_final">4.5.5 Resultado final</h3>
+
+<p>Los listados 4-21 y 4-22 muestran respectivamente las versiones finales de los formularios <code>ArticuloForm</code> y <code>AutorForm</code> después de su personalización.</p>
+
+<p><strong>Listado 4-21 - Formulario <code>ArticuloForm</code></strong></p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">class</span> ArticuloForm <span class="kw2">extends</span> BaseArticuloForm
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> configure<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$autorCriteria</span> <span class="sy0">=</span> AutorPeer<span class="sy0">::</span><span class="me2">getCriteriaAutoresActivos</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="co1">// widgets</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">widgetSchema</span><span class="br0">&#91;</span><span class="st_h">'contenido'</span><span class="br0">&#93;</span><span class="sy0">-&gt;</span><span class="me1">setAttributes</span><span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'rows'</span> <span class="sy0">=&gt;</span> <span class="nu0">10</span><span class="sy0">,</span> <span class="st_h">'cols'</span> <span class="sy0">=&gt;</span> <span class="nu0">40</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">widgetSchema</span><span class="br0">&#91;</span><span class="st_h">'estado'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="kw2">new</span> sfWidgetFormSelect<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'choices'</span> <span class="sy0">=&gt;</span> ArticuloPeer<span class="sy0">::</span><span class="me2">getEstados</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">widgetSchema</span><span class="br0">&#91;</span><span class="st_h">'autor_id'</span><span class="br0">&#93;</span><span class="sy0">-&gt;</span><span class="me1">setOption</span><span class="br0">&#40;</span><span class="st_h">'criteria'</span><span class="sy0">,</span> <span class="re0">$autorCriteria</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="co1">// validators</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">validatorSchema</span><span class="br0">&#91;</span><span class="st_h">'slug'</span><span class="br0">&#93;</span><span class="sy0">-&gt;</span><span class="me1">setOption</span><span class="br0">&#40;</span><span class="st_h">'required'</span><span class="sy0">,</span> <span class="kw4">false</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">validatorSchema</span><span class="br0">&#91;</span><span class="st_h">'contenido'</span><span class="br0">&#93;</span><span class="sy0">-&gt;</span><span class="me1">setOption</span><span class="br0">&#40;</span><span class="st_h">'min_length'</span><span class="sy0">,</span> <span class="nu0">5</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">validatorSchema</span><span class="br0">&#91;</span><span class="st_h">'estado'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="kw2">new</span> sfValidatorChoice<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'choices'</span> <span class="sy0">=&gt;</span> <span class="kw3">array_keys</span><span class="br0">&#40;</span>ArticuloPeer<span class="sy0">::</span><span class="me2">getEstados</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">validatorSchema</span><span class="br0">&#91;</span><span class="st_h">'autor_id'</span><span class="br0">&#93;</span><span class="sy0">-&gt;</span><span class="me1">setOption</span><span class="br0">&#40;</span><span class="st_h">'criteria'</span><span class="sy0">,</span> <span class="re0">$autorCriteria</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="kw3">unset</span><span class="br0">&#40;</span><span class="re0">$this</span><span class="br0">&#91;</span><span class="st_h">'created_at'</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="kw3">unset</span><span class="br0">&#40;</span><span class="re0">$this</span><span class="br0">&#91;</span><span class="st_h">'updated_at'</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p><strong>Listado 4-22 - Formulario <code>AutorForm</code></strong></p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">class</span> AutorForm <span class="kw2">extends</span> BaseAutorForm
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> configure<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">validatorSchema</span><span class="br0">&#91;</span><span class="st_h">'email'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="kw2">new</span> sfValidatorAnd<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span>
+      <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">validatorSchema</span><span class="br0">&#91;</span><span class="st_h">'email'</span><span class="br0">&#93;</span><span class="sy0">,</span>
+      <span class="kw2">new</span> sfValidatorEmail<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+    <span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>La tarea <code>propel:build-forms</code> genera de forma automática la mayoría de elementos de los formularios a partir de la información del modelo de datos. Este proceso automático es muy útil porque:</p>
+
+<ul>
+<li>Simplifica el trabajo del programador, evitándole las tareas más tediosas y repetitivas. De esta forma, el programador se centra en la configuración de los widgets y validadores para que sigan la lógica de la aplicación.</li>
+<li>Además, cada vez que se actualiza el esquema de la base de datos, también se actualizan los formularios generados de forma automática. El único trabajo del programador consiste en ajustar la configuración realizada.</li>
+</ul>
+
+<p>La siguiente sección describe la personalización y configuración de las acciones y plantillas generadas con la tarea <code>propel:generate-crud</code>.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="personalizando_los_formularios_generados_automaticamente.html">&larr; Anterior <span>4.4 Personalizando los formularios generados automáticamente</span></a>
+            
+            <a class="span5 next" href="serializando_formularios.html">Siguiente &rarr; <span>4.6 Serializando formularios</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Configurando los validadores y los widgets (Los formularios de Symfony 1.4%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Los formularios de Symfony 1.4 : Configurando los validadores y los widgets']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+                <li class="level-1">
+            <span>1.</span>
+            <a href="../capitulo_1.html">Creación de formularios</a>
+        </li>
+                                            <li class="level-1">
+            <span>2.</span>
+            <a href="../capitulo_2.html">Validación de formularios</a>
+        </li>
+                                                                            <li class="level-1">
+            <span>3.</span>
+            <a href="../capitulo_3.html">Formularios para diseñadores web</a>
+        </li>
+                                                                    <li class="level-1 ">
+            <a href="../capitulo_4.html">
+                <span>Capítulo 4.</span>
+                Integración con Propel
+            </a>
+        </li>
+                        <li class="level-2 ">
+            <a href="antes_de_comenzar.html">
+                <span>4.1.</span>
+                Antes de comenzar
+            </a>
+        </li>
+                        <li class="level-2 ">
+            <a href="generando_las_clases_del_formulario.html">
+                <span>4.2.</span>
+                Generando las clases del formulario
+            </a>
+        </li>
+                        <li class="level-2 ">
+            <a href="el_generador_crud.html">
+                <span>4.3.</span>
+                El generador CRUD
+            </a>
+        </li>
+                        <li class="level-2 ">
+            <a href="personalizando_los_formularios_generados_automaticamente.html">
+                <span>4.4.</span>
+                Personalizando los formularios generados automáticamente
+            </a>
+        </li>
+                        <li class="level-2 active">
+            <a href="configurando_los_validadores_y_los_widgets.html">
+                <span>4.5.</span>
+                Configurando los validadores y los widgets
+            </a>
+        </li>
+                        <li class="level-2 ">
+            <a href="serializando_formularios.html">
+                <span>4.6.</span>
+                Serializando formularios
+            </a>
+        </li>
+                        <li class="level-1">
+            <span>5.</span>
+            <a href="../capitulo_5.html">Sin título</a>
+        </li>
+                    <li class="level-1">
+            <span>6.</span>
+            <a href="../capitulo_6.html">Sin título</a>
+        </li>
+                    <li class="level-1">
+            <span>7.</span>
+            <a href="../capitulo_7.html">Sin título</a>
+        </li>
+                    <li class="level-1">
+            <span>8.</span>
+            <a href="../capitulo_8.html">Internacionalización y localización</a>
+        </li>
+                                                    <li class="level-1">
+            <span>9.</span>
+            <a href="../capitulo_9.html">Sin título</a>
+        </li>
+                    <li class="level-1">
+            <span>10.</span>
+            <a href="../capitulo_10.html">Sin título</a>
+        </li>
+                    <li class="level-1">
+            <span>11.</span>
+            <a href="../capitulo_11.html">Integrando Doctrine</a>
+        </li>
+                                                            <li class="level-1">
+            <span>12.</span>
+            <a href="../capitulo_12.html">Referencia de Widgets</a>
+        </li>
+                                                                                            <li class="level-1">
+            <span>13.</span>
+            <a href="../capitulo_13.html">Validadores</a>
+        </li>
+                                                                            </ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

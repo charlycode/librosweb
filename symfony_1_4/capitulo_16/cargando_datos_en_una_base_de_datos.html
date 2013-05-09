@@ -1,0 +1,304 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>16.4. Cargando datos en una base de datos (Symfony 1.4, la guía definitiva)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="utilizando_symfony_fuera_de_la_web.html" />
+        <link rel="next" href="instalando_aplicaciones.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="16.4. Cargando datos en una base de datos (Symfony 1.4, la guía definitiva)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page symfony_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Symfony 1.4, la guía definitiva</a></li>
+  <li><a href="../capitulo_16.html">Capítulo 16. Herramientas para la administración de aplicaciones</a></li>
+  <li class="current"><span>16.4.. Cargando datos en una base de datos</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="cargando_datos_en_una_base_de_datos"><span>16.4.</span> Cargando datos en una base de datos</h1>
+    
+
+<p>Durante el desarrollo de una aplicación, uno de los problemas recurrentes es el de la carga inicial de datos en la base de datos. Algunos sistemas de bases de datos disponen de soluciones específicas para esta tarea, pero ninguna se puede utilizar junto en el ORM de Symfony. Gracias al uso de YAML y al objeto <code>sfPropelData</code>, Symfony puede transferir automáticamente los datos almacenados en un archivo de texto a una base de datos. Aunque puede parecer que crear el archivo de texto con los datos iniciales de la aplicación cuesta más tiempo que insertarlos directamente en la base de datos, a la larga se ahorra mucho tiempo. Se trata de una utilidad muy práctica para la carga automática de datos de prueba para la aplicación.</p>
+
+<h3 id="sintaxis_del_archivo_de_datos">16.4.1. Sintaxis del archivo de datos</h3>
+
+<p>Symfony es capaz de procesar todos los archivos que siguen una sintaxis YAML definida muy simple y que se encuentren en el directorio <code>data/fixtures/</code>. Los archivos de datos, también llamados <em>"fixtures"</em>, se organizan por clases y cada sección de clase utiliza una cabecera con el valor del nombre de la clase. Para cada clase, las filas de datos disponen de una etiqueta que las identifica de forma única y una serie de pares <code>nombre_campo: valor</code>. El listado 16-16 muestra un ejemplo de un archivo preparado para cargar sus datos en una base de datos.</p>
+
+<p><strong>Listado 16-16 - Archivo de datos de ejemplo, en <code>data/fixtures/import_data.yml</code></strong></p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co3">Article</span><span class="sy2">: </span>                            <span class="co1">## Crea filas de datos en la tabla blog_article</span><span class="co3">
+  first_post</span><span class="sy2">: </span>                       <span class="co1">## Etiqueta de la primera fila de datos</span><span class="co3">
+    title</span><span class="sy2">: </span>      My first memories<span class="co3">
+    content</span><span class="sy2">: |
+</span><span class="co0">      For a long time I used to go to bed early. Sometimes, when I had put
+      out my candle, my eyes would close so quickly that I had not even time
+      to say &quot;I am going to sleep.&quot;
+</span><span class="co3">
+  second_post</span><span class="sy2">: </span>                      <span class="co1">## Etiqueta de la segunda fila de datos</span><span class="co3">
+    title</span><span class="sy2">: </span>      Things got worse<span class="co3">
+    content</span><span class="sy2">: |
+</span><span class="co0">      Sometimes he hoped that she would die, painlessly, in some accident,
+      she who was out of doors in the streets, crossing busy thoroughfares,
+      from morning to night.</span></pre>
+</div>
+
+<p>Symfony transforma el nombre indicado para las columnas, en métodos <em>setter</em> utilizando la conversión de tipo <em>camelCase</em> (la columna <code>title</code> se transforma en <code>setTitle()</code>, la columna <code>content</code> se transforma en <code>setContent()</code>, etc.). La ventaja de esta transformación es que se puede definir, por ejemplo, una columna llamada <code>password</code> para la que no existe una columna en la tabla de la base de datos; solamente es necesario definir un método llamado <code>setPassword()</code> en el objeto <code>User</code> y ya es posible asignar valores a otras columnas de datos en función de este dato, como por ejemplo una columna que guarde la contraseña encriptada.</p>
+
+<p>No es necesario definir el valor de la columna de la clave primaria. Como es un campo cuyo valor se autoincrementa, la capa de base de datos es capaz de determinar su valor.</p>
+
+<p>A las columnas <code>created_at</code> tampoco es necesario asignarles un valor, ya que Symfony sabe que a las columnas que se llaman así, les debe asignar la fecha actual del sistema a la hora de crearlas.</p>
+
+<h3 id="importando_los_datos">16.4.2. Importando los datos</h3>
+
+<p>La tarea <code>propel:data-load</code> importa los datos de los archivos YAML en una base de datos. Las opciones de conexión con la base de datos se obtienen del archivo de configuración <code>databases.yml</code>, por lo que es necesario indicar a la tarea el nombre de una aplicación. Además, es posible indicar el nombre de un entorno de ejecución mediante la opción <code>--env</code> (su valor por defecro es <code>dev</code>).</p>
+
+<div class="code cli">
+<pre class="cli">&gt; php symfony propel:data-load --env=prod frontend</pre>
+</div>
+
+<p>Al ejecutar este comando, se leen todos los archivos de datos YAML del directorio <code>data/fixtures</code> y se insertan las filas de datos en la base de datos. Por defecto, se reemplaza todo el contenido existente en la base de datos, aunque si se utiliza la opción llamada <code>--append</code>, el comando no borra los datos existentes.</p>
+
+<div class="code cli">
+<pre class="cli">&gt; php symfony propel:data-load --append frontend</pre>
+</div>
+
+<p>También es posible especificar otro archivo de datos u otro directorio, indicando su valor como una ruta relativa respecto del directorio del proyecto.</p>
+
+<div class="code cli">
+<pre class="cli">&gt; php symfony propel:data-load frontend --dir[]=data/misfixtures</pre>
+</div>
+
+<h3 id="usando_tablas_relacionadas">16.4.3. Usando tablas relacionadas</h3>
+
+<p>Ahora ya es posible añadir filas de datos a una tabla, pero de esta forma no es posible añadir filas con claves externas que hacen relación a otra tabla. Como los archivos de datos no incluyen la clave primaria, se necesita un método alternativo para relacionar los diferentes registros de datos entre sí.</p>
+
+<p>Volviendo al ejemplo del Capítulo 8, donde la tabla <code>blog_article</code> está relacionada con la tabla <code>blog_comment</code>, de la forma que se muestra en la figura 16-8.</p>
+
+<div class="figure" id="figure_16_8">
+    <img src="../../img/symfony_1_4/f1608.png" alt="Ejemplo de modelo relacional de una base de datos" />
+
+    <p class="caption"><strong>Figura 16.8</strong> Ejemplo de modelo relacional de una base de datos</p>
+</div>
+
+
+<p>En esta situación es en la que se utilizan las etiquetas únicas de cada fila de datos. Para añadir un campo de tipo <code>Comment</code> al artículo llamado <code>first_post</code>, simplemente es necesario añadir las siguientes líneas del listado 16-17 al archivo de datos <code>import_data.yml</code>.</p>
+
+<p><strong>Listado 16-17 - Añadiendo un registro relacionado con otra tabla, en <code>data/fixtures/import_data.yml</code></strong></p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co4">Comment</span>:<span class="co4">
+  first_comment</span>:<span class="co3">
+    article_id</span><span class="sy2">: </span>  first_post<span class="co3">
+    author</span><span class="sy2">: </span>      Anonymous<span class="co3">
+    content</span><span class="sy2">: </span>     Your prose is too verbose. Write shorter sentences.</pre>
+</div>
+
+<p>La tarea <code>propel:data-load</code> es capaz de reconocer la etiqueta que se asignó anteriormente al artículo en el archivo <code>import_data.yml</code> y es capaz de obtener la clave primaria del registro de tipo <code>Article</code> correspondiente en la base de datos, para asignar ese valor al campo <code>article_id</code>. No es necesario trabajar con los valores de las columnas de tipo ID, solo es necesario enlazar las filas de datos mediante sus etiquetas, por lo que su funcionamiento es realmente simple.</p>
+
+<p>La única restricción para las filas de datos enlazadas es que los objetos utilizados en una clave externa tienen que estar definidos anteriormente en el archivo; es decir, igual que si se tuvieran que definir uno a uno. Los archivos de datos se procesan desde el principio hasta el final y por tanto, el orden en el que se escriben las filas de datos es muy importante.</p>
+
+<p>A partir de Symfony 1.1, este mecanismo también funciona para las relaciones muchos-a-muchos, en las que dos clases se relacionan a través de una tercera clase. Un ejemplo podría ser una clase <code>Articulo</code> que puede tener varios <code>Autores</code> y un <code>Autor</code> puede tener varios <code>Articulos</code>. Normalmente, estas relaciones se resuelven creando una clase <code>ArticuloAutor</code> que se corresponde con una tabla llamada <code>articulo_autor</code> que tiene las columnas <code>articulo_id</code> y <code>autor_id</code>. El listado 16-18 muestra un ejemplo de archivo de datos que define una relación de este tipo. Lo más importante es el uso del plural en el nombre de la tabla (<code>articulo_autors</code>) que indica que existe una clase intermedia entre las dos clases.</p>
+
+<p><strong>Listado 16-18 - Añadiendo un registro con una relación de tipo muchos-a-muchos, en <code>data/fixtures/import_data.yml</code></strong></p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co4">Autor</span>:<span class="co4">
+  primer_autor</span>:<span class="co3">
+    nombre</span><span class="sy2">: </span>Juan Pérez<span class="co3">
+    articulo_autors</span><span class="sy2">: </span><span class="br0">&#91;</span>primer_articulo, segundo_articulo<span class="br0">&#93;</span></pre>
+</div>
+
+<p>Un solo archivo de datos puede contener la declaración de varias clases diferentes. Sin embargo, si se necesitan insertar muchos datos en muchas tablas diferentes, es posible que el archivo de datos sea demasiado largo como para manejarlo fácilmente.</p>
+
+<p>Como la tarea <code>propel:data-load</code> procesa todos los archivos que encuentra en el directorio <code>fixtures/</code>, es posible dividir el archivo de datos YAML en otros archivos más pequeños. Lo único que hay que tener en cuenta es que las claves externas obligan a definir un determinado orden al procesar los datos. Para asegurar que los archivos se procesan en el orden adecuado, se puede añadir un número como prefijo del nombre del archivo, de forma que se procesen en el orden establecido.</p>
+
+<div class="code code">
+<pre class="code">100_article_import_data.yml
+200_comment_import_data.yml
+300_rating_import_data.yml</pre>
+</div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="utilizando_symfony_fuera_de_la_web.html">&larr; Anterior <span>16.3. Utilizando Symfony fuera de la web</span></a>
+            
+            <a class="span5 next" href="instalando_aplicaciones.html">Siguiente &rarr; <span>16.5. Instalando aplicaciones</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Cargando datos en una base de datos (Symfony 1.4, la guía definitiva%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Symfony 1.4, la guía definitiva : Cargando datos en una base de datos']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción a Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Explorando el interior de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Ejecutar aplicaciones Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Introducción a la creación de páginas</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Configurar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> El Controlador</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> La Vista</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> El modelo (Doctrine)</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Enlaces y sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Emails</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Uso de la cache</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Pruebas unitarias y funcionales</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_16.html">
+            <span>Capítulo 16.</span> Herramientas para la administración de aplicaciones
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="logs.html">
+            <span>16.1.</span> Logs
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="depuracion_de_aplicaciones.html">
+            <span>16.2.</span> Depuración de aplicaciones
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="utilizando_symfony_fuera_de_la_web.html">
+            <span>16.3.</span> Utilizando Symfony fuera de la web
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="cargando_datos_en_una_base_de_datos.html">
+            <span>16.4.</span> Cargando datos en una base de datos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="instalando_aplicaciones.html">
+            <span>16.5.</span> Instalando aplicaciones
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="resumen.html">
+            <span>16.6.</span> Resumen
+        </a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> Personalizar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> Rendimiento</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Configuración avanzada</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

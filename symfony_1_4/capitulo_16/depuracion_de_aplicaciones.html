@@ -1,0 +1,414 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>16.2. Depuración de aplicaciones (Symfony 1.4, la guía definitiva)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="logs.html" />
+        <link rel="next" href="utilizando_symfony_fuera_de_la_web.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="16.2. Depuración de aplicaciones (Symfony 1.4, la guía definitiva)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page symfony_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Symfony 1.4, la guía definitiva</a></li>
+  <li><a href="../capitulo_16.html">Capítulo 16. Herramientas para la administración de aplicaciones</a></li>
+  <li class="current"><span>16.2.. Depuración de aplicaciones</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="depuracion_de_aplicaciones"><span>16.2.</span> Depuración de aplicaciones</h1>
+    
+
+<p>No importa lo buenos que sean los programadores o lo bueno que sea Symfony, siempre se acaban cometiendo errores. Una de las claves para el desarrollo rápido de aplicaciones es la detección y comprensión de los errores producidos. Afortunadamente, Symfony proporciona varias herramientas para depurar las aplicaciones.</p>
+
+<h3 id="modo_debug_de_symfony">16.2.1. Modo debug de Symfony</h3>
+
+<p>Symfony dispone de un modo llamado "debug" que facilita el desarrollo y la depuración de las aplicaciones. Cuando se activa este modo, ocurre lo siguiente:</p>
+
+<ul>
+<li>La configuración de la aplicación se comprueba en cada petición, por lo que cualquier cambio en la configuración se aplica inmediatamente, sin necesidad de borrar la cache de configuración.</li>
+<li>Los mensajes de error muestran la traza completa de ejecución de forma clara y útil, para que sea más fácil de encontrar el elemento que está fallando.</li>
+<li>Se muestran más herramientas de depuración (como por ejemplo, todas las consultas a la base de datos).</li>
+<li>También se activa el modo debug de Propel, por lo que cualquier error en la llamada a un objeto de Propel, muestra una lista completa de los errores producidos en toda la arquitectura Propel.</li>
+</ul>
+
+<p>Por otra parte, cuando se desactiva el modo debug, las peticiones se procesan de la siguiente forma:</p>
+
+<ul>
+<li>Los archivos de configuración YAML se procesan una sola vez y se transforman en archivos PHP que se almacenan en la carpeta <code>cache/config/</code>. Todas las peticiones que se realizan después de la primera petición, no tienen en cuenta los archivos YAML de configuración y utilizan en su lugar la configuración guardada en la cache. Por tanto, el procesamiento de cada petición es mucho más rápido.</li>
+<li>Para forzar a que se vuelva a procesar la configuración de la aplicación, es necesario borrar a mano la cache de configuración.</li>
+<li>Cualquier error que se produzca durante el procesamiento de la petición, devuelve una respuesta con el código de estado <code>500</code> (Error Interno del Servidor) y no se muestran los detalles internos del error.</li>
+</ul>
+
+<p>El modo debug se activa para cada aplicación en su controlador frontal. Este modo se controla mediante el valor del tercer argumento que se pasa al método <code>getApplicationConfiguration()</code>, como se muestra en el listado 16-8.</p>
+
+<p><strong>Listado 16-8 - Controlador frontal de ejemplo con el modo debug activado, en <code>web/frontend_dev.php</code></strong></p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">&lt;?php</span>
+&nbsp;
+<span class="kw1">require_once</span><span class="br0">&#40;</span><span class="kw3">dirname</span><span class="br0">&#40;</span><span class="kw4">__FILE__</span><span class="br0">&#41;</span><span class="sy0">.</span><span class="st_h">'/../config/ProjectConfiguration.class.php'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="re0">$configuration</span> <span class="sy0">=</span> ProjectConfiguration<span class="sy0">::</span><span class="me2">getApplicationConfiguration</span><span class="br0">&#40;</span><span class="st_h">'frontend'</span><span class="sy0">,</span> <span class="st_h">'dev'</span><span class="sy0">,</span> <span class="kw4">true</span><span class="br0">&#41;</span><span class="sy0">;</span>
+sfContext<span class="sy0">::</span><span class="me2">createInstance</span><span class="br0">&#40;</span><span class="re0">$configuration</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">dispatch</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> En el servidor de producción, no se debería activar el modo debug y no se debería guardar ningún controlador frontal con este modo activado. El modo debug no solo penaliza el rendimiento de la aplicación, sino que revela información interna de la aplicación. Aunque las herramientas de depuración nunca desvelan la información necesaria para conectarse con la base de datos, la traza generada en las excepciones está llena de información demasiado sensible y que puede ser aprovechada por un usuario malintencionado.</p></div>
+
+<h3 id="excepciones_symfony">16.2.2. Excepciones Symfony</h3>
+
+<p>Cuando se produce una excepción y está activado el modo debug, Symfony muestra un mensaje de error muy útil que contiene toda la información necesaria para descubrir la causa del problema.</p>
+
+<p>Los mensajes que produce la excepción están escritos de forma clara y hacen referencia a la causa más probable del problema. Normalmente ofrecen posibles soluciones para arreglar el error y para la mayoría de problemas comunes, incluso se muestra un enlace a la página del sitio web de Symfony que contiene más información sobre la excepción. La página con el mensaje de la excepción muestra en qué parte del código PHP se ha producido el error y la lista completa de los métodos que se han invocado, como se muestra en la figura 16-1. De esta forma, es posible seguir la traza de ejecución hasta la primera llamada que causó el problema. También se muestran los argumentos que se pasan a cada método.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Symfony se basa en las excepciones de PHP para notificar los errores, que es un método mucho mejor que el funcionamiento de las aplicaciones desarrolladas con PHP 4. Para notificar un error de tipo 404, se utiliza el método <code>sfError404Exception</code>.</p></div>
+
+<div class="figure" id="figure_16_1">
+    <img src="../../img/symfony_1_4/f1601.png" alt="Mensaje mostrado por una excepción de una aplicación Symfony" />
+
+    <p class="caption"><strong>Figura 16.1</strong> Mensaje mostrado por una excepción de una aplicación Symfony</p>
+</div>
+
+
+<p>Mientras se desarrolla la aplicación, las excepciones Symfony son de gran utilidad para depurar el funcionamiento de las aplicaciones.</p>
+
+<h3 id="extension_xdebug">16.2.3. Extensión Xdebug</h3>
+
+<p>La extensión Xdebug de PHP (http://xdebug.org/) permite ampliar la cantidad de información que el servidor web almacena en los archivos de log. Symfony es capaz de integrar los mensajes de Xdebug en sus propios mensajes de error, por lo que es una buena idea activar esta extensión cuando se están depurando las aplicaciones. La instalación de la extensión depende de la plataforma en la que se realiza, por lo que se debe consultar la información disponible en el sitio web de Xdebug. Una vez instalada, se activa manualmente en el archivo de configuración <code>php.ini</code>. En los sistemas *nix, se activa añadiendo la siguiente línea:</p>
+
+<div class="code code">
+<pre class="code">zend_extension=&quot;/usr/local/lib/php/extensions/no-debug-non-zts-20041030/xdebug.so&quot;</pre>
+</div>
+
+<p>En los sistemas Windows, la activación de Xdebug se realiza mediante:</p>
+
+<div class="code code">
+<pre class="code">extension=php_xdebug.dll</pre>
+</div>
+
+<p>El listado 16-9 muestra un ejemplo de la configuración de Xdebug, que también se debe añadir al archivo <code>php.ini</code>.</p>
+
+<p><strong>Listado 16-9 - Configuración de ejemplo para Xdebug</strong></p>
+
+<div class="code code">
+<pre class="code">;xdebug.profiler_enable=1
+;xdebug.profiler_output_dir=&quot;/tmp/xdebug&quot;
+xdebug.auto_trace=1             ; enable tracing
+xdebug.trace_format=0
+;xdebug.show_mem_delta=0        ; memory difference
+;xdebug.show_local_vars=1
+;xdebug.max_nesting_level=100</pre>
+</div>
+
+<p>Por último, para activar la extensión Xdebug, se debe reiniciar el servidor web.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> No debe olvidarse desactivar la extensión Xdebug en el servidor de producción. Si no se desactiva, el rendimiento de la aplicación disminuye notablemente.</p></div>
+
+<h3 id="barra_de_depuracion_web">16.2.4. Barra de depuración web</h3>
+
+<p>Los archivos de log guardan información muy útil, pero no siempre son fáciles de leer. La tarea más básica, que consiste en localizar las líneas del archivo de log correspondientes a una determinada petición, suele complicarse cuando existen varios usuarios simultáneos en la aplicación y cuando el archivo de log es muy grande. En ese momento es cuando se hace necesaria la barra de depuración web.</p>
+
+<p>Esta barra de depuración se muestra como una caja semitransparente superpuesta sobre el contenido de la ventana del navegador y que aparece en la esquina superior derecha, como se ve en la figura 16-2. Esta barra permite acceder directamente a los eventos guardados en el log, a la configuración actual, las propiedades de los objetos de la petición y de la respuesta, los detalles de las consultas realizadas a la base de datos y una tabla con los tiempos empleados en cada elemento de la petición.</p>
+
+<div class="figure" id="figure_16_2">
+    <img src="../../img/symfony_1_4/f1602.jpg" alt="La barra de depuración web se muestra en la esquina superior derecha de la ventana del navegador" />
+
+    <p class="caption"><strong>Figura 16.2</strong> La barra de depuración web se muestra en la esquina superior derecha de la ventana del navegador</p>
+</div>
+
+
+<p>El color de fondo de la barra de depuración web depende del máximo nivel de los mensajes de log producidos durante la petición. Si ningún mensaje pasa del nivel <code>debug</code>, la barra se muestra con color de fondo gris. Si al menos un mensaje alcanza el nivel <code>err</code>, la barra muestra un color de fondo rojo.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> No debe confundirse el modo debug y la barra de depuración web. La barra se puede mostrar incluso cuando el modo debug está desactivado, aunque en este caso, muestra mucha menos información.</p></div>
+
+<p>Para activar la barra de depuración web en una aplicación, se utiliza la opción <code>web_debug</code> del archivo de configuración <code>settings.yml</code>. En los entornos de ejecución <code>prod</code> y <code>test</code>, el valor por defecto de la opción <code>web_debug</code> es <code>off</code>, por lo que se debe activar manualmente si se necesita. En el entorno de ejecución <code>dev</code>, esta opción tiene un valor por defecto de <code>on</code>, tal y como muestra el listado 16-10.</p>
+
+<p><strong>Listado 16-10 - Activando la barra de depuración web, en <code>frontend/config/settings.yml</code></strong></p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co4">dev</span>:<span class="co4">
+  .settings</span>:<span class="co3">
+    web_debug</span><span class="sy2">: </span>             on</pre>
+</div>
+
+<p>Cuando se muestra la barra de depuración web, ofrece mucha información:</p>
+
+<ul>
+<li>Si se pincha sobre el logotipo de Symfony, la barra se oculta. Cuando está minimizada, la barra no oculta los elementos de la página que se encuentran en la esquina superior derecha.</li>
+<li><p>Como muestra la figura 16-3, cuando se pincha sobre la opción <code>vars &amp; config</code>, se muestran los detalles de la petición, de la respuesta, de las opciones de configuración, de las opciones globales y de las propiedades PHP. La línea superior resume el estado de las opciones de configuración más importantes, como el modo debug, la cache y la presencia/ausencia de un acelerador de PHP (su nombre aparece en rojo si está desactivado y en color verde si se encuentra activado).
+<div class="figure" id="figure_16_3">
+    <img src="../../img/symfony_1_4/f1603.png" alt="La sección &quot;vars &amp; config&quot; muestra todas las variables y constantes de la petición" />
+
+    <p class="caption"><strong>Figura 16.3</strong> La sección &quot;vars &amp; config&quot; muestra todas las variables y constantes de la petición</p>
+</div>
+</li>
+<li><p>Cuando la cache se encuentra activada, se muestra una flecha verde en la barra de depuración web. Si se pulsa sobre esta flecha, la página se vuelve a procesar entera, independientemente de si se encuentra almacenada en la cache (no obstante, la cache no se vacía al pulsar sobre esta flecha).</p></li>
+<li>Como muestra la figura 16-4, al pulsar sobre la sección <code>logs &amp; msgs</code>, se muestran los mensajes de log para la petición actual. En función de la importancia de los eventos, las líneas se muestran en gris, amarillo o rojo. Mediante los enlaces que se muestran en forma de lista en la parte superior, es posible filtrar los mensajes de log en función de su categoría.</li>
+</ul>
+
+<div class="figure" id="figure_16_4">
+    <img src="../../img/symfony_1_4/f1604.png" alt="La sección &quot;logs &amp; msgs&quot; muestra los mensajes de log de la petición actual" />
+
+    <p class="caption"><strong>Figura 16.4</strong> La sección &quot;logs &amp; msgs&quot; muestra los mensajes de log de la petición actual</p>
+</div>
+
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Cuando la acción es el resultado de una redirección, solamente se muestran los mensajes de log de la última petición, por lo que es imprescindible consultar los archivos de log completos para depurar las aplicaciones.</p></div>
+
+<ul>
+<li>Si durante el procesamiento de la petición se han ejecutado consultas SQL, se muestra un icono de una base de datos en la barra de depuración web. Si se pulsa sobre este icono, se muestra el detalle de las consultas realizadas, como se muestra en la figura 16-5.</li>
+<li>A la derecha del icono del reloj se muestra el tiempo total de procesamiento requerido por la petición. Como el modo debug y la propia barra de depuración consumen muchos recursos, el tiempo que se muestra es mucho más lento que la ejecución real de la petición. Por tanto, es más importante fijarse en las diferencias de tiempos producidas por los cambios introducidos que en el propio tiempo mostrado. Si se pulsa sobre el icono del reloj, se muestran los detalles del tiempo de procesamiento de cada categoría, tal y como se muestra en la figura 16-6. Symfony muestra el tiempo consumido en las diferentes partes que componen el procesamiento de la petición. Como solamente tiene sentido optimizar el tiempo de procesamiento propio de la petición, no se muestra el tiempo consumido por el núcleo de Symfony. Esta es la razón por la que la suma de todos los tiempos individuales no es igual al tiempo total mostrado.</li>
+<li>Si se pulsa sobre la X roja a la derecha de la barra, se oculta la barra de depuración web.</li>
+</ul>
+
+<div class="figure" id="figure_16_5">
+    <img src="../../img/symfony_1_4/f1605.png" alt="La sección de consultas a la base de datos muestra las consultas ejecutadas durante la petición actual" />
+
+    <p class="caption"><strong>Figura 16.5</strong> La sección de consultas a la base de datos muestra las consultas ejecutadas durante la petición actual</p>
+</div>
+
+
+<div class="figure" id="figure_16_6">
+    <img src="../../img/symfony_1_4/f1606.png" alt="El icono del reloj muestra el tiempo de ejecución dividido por categorías" />
+
+    <p class="caption"><strong>Figura 16.6</strong> El icono del reloj muestra el tiempo de ejecución dividido por categorías</p>
+</div>
+
+
+<div class="admonition sidebar"><p><strong class="title">Creando tu propio contador de tiempo</strong> Symfony utiliza la clase <code>sfTimer</code> para calcular el tiempo empleado en la configuración, el modelo, la acción y la vista. Utilizando el mismo objeto, se puede calcular el tiempo empleado por un proceso propio y mostrar el resultado junto con el resto de tiempos de la barra de depuración web. Se trata de algo muy útil cuando se está trabajando en la optimización del rendimiento de la aplicación.</p>
+
+<p>Para inicializar el control del tiempo para un fragmento de código, se utiliza el método <code>getTimer()</code>. Este método devuelve un objeto de tipo <code>sfTimer</code> y comienza a contar el tiempo. Para detener el avance del contador de tiempo, se invoca el método <code>addTime()</code>. En ese instante, se puede obtener el tiempo transcurrido mediante el método <code>getElapsedTime()</code> y se muestra automáticamente junto con el resto de tiempos en la barra de depuración web.</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// Inicializar el contador y empezar a contar el tiempo</span>
+<span class="re0">$contador</span> <span class="sy0">=</span> sfTimerManager<span class="sy0">::</span><span class="me2">getTimer</span><span class="br0">&#40;</span><span class="st_h">'miContador'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="co1">// Otras instrucciones y código</span>
+<span class="sy0">...</span>
+&nbsp;
+<span class="co1">// Detener el contador y sumar el tiempo transcurrido</span>
+<span class="re0">$contador</span><span class="sy0">-&gt;</span><span class="me1">addTime</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="co1">// Obtener el resultado (y detener el contador si no estaba detenido)</span>
+<span class="re0">$tiempoTranscurrido</span> <span class="sy0">=</span> <span class="re0">$contador</span><span class="sy0">-&gt;</span><span class="me1">getElapsedTime</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>La ventaja de asignar un nombre a cada contador, es que se puede utilizar varias veces para acumular diferentes tiempos. Si por ejemplo el contador <code>miContador</code> se utiliza en un método que se llama 2 veces en cada petición, la segunda llamada al método <code>getTimer('miContador')</code> comienza a contar el tiempo desde donde se quedó la última vez que se llamó a <code>addTime()</code>, por lo que el tiempo transcurrido se sumará al tiempo anterior. El método <code>getCalls()</code> del contador devuelve el número de veces que ha sido utilizado el contador desde que se inició la petición, y este dato también se muestra en la barra de depuración web.</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// Obtener el número de veces que ha sido utilizado el contador</span>
+<span class="re0">$llamadas</span> <span class="sy0">=</span> <span class="re0">$contador</span><span class="sy0">-&gt;</span><span class="me1">getCalls</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Si se utiliza Xdebug, los mensajes de log son mucho más completos. Se guarda en el log todos los archivos PHP y todas las funciones que han sido llamadas, y Symfony integra esta información con su propio log interno. Cada fila de la tabla de mensajes de log dispone de una flecha bidireccional que se puede pulsar para obtener más detalles sobre la petición relacionada. Si algo no va bien, el modo Xdebug es el que más información proporciona para averiguar la causa.</p></div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> La barra de depuración web no se incluye por defecto en las respuestas de tipo Ajax y en los documentos cuyo <code>Content-Type</code> no es de tipo HTML. Para el resto de las páginas, se puede deshabilitar la barra de depuración web manualmente desde la acción mediante la llamada a <code>sfConfig::set('sf_web_debug', false)</code>.</p></div>
+
+<h3 id="depuracion_manual">16.2.5. Depuración manual</h3>
+
+<p>Aunque muchas veces es suficiente con acceder a los mensajes de log generados por el framework, en ocasiones es mejor poder generar mensajes de log propios. Symfony dispone de utilidades, que se pueden acceder desde las acciones y desde las plantillas, para crear trazas sobre los eventos y/o valores presentes durante la ejecución de la petición.</p>
+
+<p>Los mensajes de log propios aparecen en el archivo de log de Symfony y en la barra de depuración web, como cualquier otro mensaje de Symfony. (El listado 16-5 anterior muestra un ejemplo de la sintaxis de un mensaje de log propio). Los mensajes de log propios se pueden utilizar por ejemplo para comprobar el valor de una variable en una plantilla. El listado 16-11 muestra cómo utilizar la barra de depuración web desde una plantilla para obtener información para el programador (también se puede utilizar el método <code>$this-&gt;logMessage()</code> desde una acción).</p>
+
+<p><strong>Listado 16-11 - Creando un mensaje de log propio para depurar la aplicación</strong></p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">&lt;?php</span> use_helper<span class="br0">&#40;</span><span class="st_h">'Debug'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+...
+<span class="kw2">&lt;?php</span> <span class="kw1">if</span> <span class="br0">&#40;</span><span class="re0">$problem</span><span class="br0">&#41;</span><span class="sy0">:</span> <span class="sy1">?&gt;</span>
+  <span class="kw2">&lt;?php</span> log_message<span class="br0">&#40;</span><span class="st_h">'{sfAction} ha pasado por aquí'</span><span class="sy0">,</span> <span class="st_h">'err'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+  ...
+<span class="kw2">&lt;?php</span> <span class="kw1">endif</span> <span class="sy1">?&gt;</span></pre>
+</div>
+
+<p>Si se utiliza el nivel <code>err</code>, se garantiza que el evento sea claramente visible en la lista de mensajes, como se muestra en la figura 16-7.</p>
+
+<div class="figure" id="figure_16_7">
+    <img src="../../img/symfony_1_4/f1607.png" alt="Mensaje de log propio en la sección &quot;logs &amp; msgs&quot; de la barra de depuración web" />
+
+    <p class="caption"><strong>Figura 16.7</strong> Mensaje de log propio en la sección &quot;logs &amp; msgs&quot; de la barra de depuración web</p>
+</div>
+
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="logs.html">&larr; Anterior <span>16.1. Logs</span></a>
+            
+            <a class="span5 next" href="utilizando_symfony_fuera_de_la_web.html">Siguiente &rarr; <span>16.3. Utilizando Symfony fuera de la web</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Depuración de aplicaciones (Symfony 1.4, la guía definitiva%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Symfony 1.4, la guía definitiva : Depuración de aplicaciones']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción a Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Explorando el interior de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Ejecutar aplicaciones Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Introducción a la creación de páginas</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Configurar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> El Controlador</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> La Vista</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> El modelo (Doctrine)</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Enlaces y sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Emails</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Uso de la cache</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Pruebas unitarias y funcionales</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_16.html">
+            <span>Capítulo 16.</span> Herramientas para la administración de aplicaciones
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="logs.html">
+            <span>16.1.</span> Logs
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="depuracion_de_aplicaciones.html">
+            <span>16.2.</span> Depuración de aplicaciones
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="utilizando_symfony_fuera_de_la_web.html">
+            <span>16.3.</span> Utilizando Symfony fuera de la web
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="cargando_datos_en_una_base_de_datos.html">
+            <span>16.4.</span> Cargando datos en una base de datos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="instalando_aplicaciones.html">
+            <span>16.5.</span> Instalando aplicaciones
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="resumen.html">
+            <span>16.6.</span> Resumen
+        </a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> Personalizar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> Rendimiento</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Configuración avanzada</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

@@ -1,0 +1,275 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>4.2. Ámbito de las variables (Introducción a JavaScript)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="funciones.html" />
+        <link rel="next" href="sentencias_break_y_continue.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="4.2. Ámbito de las variables (Introducción a JavaScript)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page javascript">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Introducción a JavaScript</a></li>
+  <li><a href="../capitulo_4.html">Capítulo 4. Programación avanzada</a></li>
+  <li class="current"><span>4.2. Ámbito de las variables</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="ambito_de_las_variables"><span>4.2.</span> Ámbito de las variables</h1>
+    
+
+<p>El ámbito de una variable (llamado <em>"scope"</em> en inglés) es la zona del programa en la que se define la variable. JavaScript define dos ámbitos para las variables: global y local.</p>
+
+<p>El siguiente ejemplo ilustra el comportamiento de los ámbitos:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">function</span> creaMensaje<span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="kw1">var</span> mensaje <span class="sy0">=</span> “Mensaje de prueba”<span class="sy0">;</span>
+<span class="br0">&#125;</span>
+creaMensaje<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+alert<span class="br0">&#40;</span>mensaje<span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>El ejemplo anterior define en primer lugar una función llamada <code>creaMensaje</code> que crea una variable llamada <code>mensaje</code>. A continuación, se ejecuta la función mediante la llamada <code>creaMensaje();</code> y seguidamente, se muestra mediante la función <code>alert()</code> el valor de una variable llamada <code>mensaje</code>.</p>
+
+<p>Sin embargo, al ejecutar el código anterior no se muestra ningún mensaje por pantalla. La razón es que la variable <code>mensaje</code> se ha definido dentro de la función <code>creaMensaje()</code> y por tanto, es una <strong>variable local</strong> que solamente está definida dentro de la función.</p>
+
+<p>Cualquier instrucción que se encuentre dentro de la función puede hacer uso de esa variable, pero todas las instrucciones que se encuentren en otras funciones o fuera de cualquier función no tendrán definida la variable <code>mensaje</code>. De esta forma, para mostrar el mensaje en el código anterior, la función <code>alert()</code> debe llamarse desde dentro de la función <code>creaMensaje()</code>:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">function</span> creaMensaje<span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="kw1">var</span> mensaje <span class="sy0">=</span> “Mensaje de prueba”<span class="sy0">;</span>
+  alert<span class="br0">&#40;</span>mensaje<span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+creaMensaje<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Además de variables locales, también existe el concepto de <strong>variable global</strong>, que está definida en cualquier punto del programa (incluso dentro de cualquier función).</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> mensaje <span class="sy0">=</span> “Mensaje de prueba”<span class="sy0">;</span>
+&nbsp;
+<span class="kw1">function</span> muestraMensaje<span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  alert<span class="br0">&#40;</span>mensaje<span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>El código anterior es el ejemplo inverso al mostrado anteriormente. Dentro de la función <code>muestraMensaje()</code> se quiere hacer uso de una variable llamada <code>mensaje</code> y que no ha sido definida dentro de la propia función. Sin embargo, si se ejecuta el código anterior, sí que se muestra el mensaje definido por la variable <code>mensaje</code>.</p>
+
+<p>El motivo es que en el código JavaScript anterior, la variable <code>mensaje</code> se ha definido fuera de cualquier función. Este tipo de variables automáticamente se transforman en variables globales y están disponibles en cualquier punto del programa (incluso dentro de cualquier función).</p>
+
+<p>De esta forma, aunque en el interior de la función no se ha definido ninguna variable llamada <code>mensaje</code>, la variable global creada anteriormente permite que la instrucción <code>alert()</code> dentro de la función muestre el mensaje correctamente.</p>
+
+<p>Si una variable se declara fuera de cualquier función, automáticamente se transforma en variable global independientemente de si se define utilizando la palabra reservada <code>var</code> o no. Sin embargo, las variables definidas dentro de una función pueden ser globales o locales.</p>
+
+<p>Si en el interior de una función, las variables se declaran mediante <code>var</code> se consideran locales y las variables que no se han declarado mediante <code>var</code>, se transforman automáticamente en variables globales.</p>
+
+<p>Por lo tanto, se puede rehacer el código del primer ejemplo para que muestre el mensaje correctamente. Para ello, simplemente se debe definir la variable dentro de la función sin la palabra reservada <code>var</code>, para que se transforme en una variable global:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">function</span> creaMensaje<span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  mensaje <span class="sy0">=</span> <span class="st0">&quot;Mensaje de prueba&quot;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+creaMensaje<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+alert<span class="br0">&#40;</span>mensaje<span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>¿Qué sucede si una función define una variable local con el mismo nombre que una variable global que ya existe? En este caso, las variables locales prevalecen sobre las globales, pero sólo dentro de la función:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> mensaje <span class="sy0">=</span> <span class="st0">&quot;gana la de fuera&quot;</span><span class="sy0">;</span>
+&nbsp;
+<span class="kw1">function</span> muestraMensaje<span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="kw1">var</span> mensaje <span class="sy0">=</span> <span class="st0">&quot;gana la de dentro&quot;</span><span class="sy0">;</span>
+  alert<span class="br0">&#40;</span>mensaje<span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+alert<span class="br0">&#40;</span>mensaje<span class="br0">&#41;</span><span class="sy0">;</span>
+muestraMensaje<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+alert<span class="br0">&#40;</span>mensaje<span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>El código anterior muestra por pantalla los siguientes mensajes:</p>
+
+<div class="code code">
+<pre class="code">gana la de fuera
+gana la de dentro
+gana la de fuera</pre>
+</div>
+
+<p>Dentro de la función, la variable local llamada <code>mensaje</code> tiene más prioridad que la variable global del mismo nombre, pero solamente dentro de la función.</p>
+
+<p>¿Qué sucede si dentro de una función se define una variable global con el mismo nombre que otra variable global que ya existe? En este otro caso, la variable global definida dentro de la función simplemente modifica el valor de la variable global definida anteriormente:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> mensaje <span class="sy0">=</span> <span class="st0">&quot;gana la de fuera&quot;</span><span class="sy0">;</span>
+<span class="kw1">function</span> muestraMensaje<span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  mensaje <span class="sy0">=</span> <span class="st0">&quot;gana la de dentro&quot;</span><span class="sy0">;</span>
+  alert<span class="br0">&#40;</span>mensaje<span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+alert<span class="br0">&#40;</span>mensaje<span class="br0">&#41;</span><span class="sy0">;</span>
+muestraMensaje<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+alert<span class="br0">&#40;</span>mensaje<span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>En este caso, los mensajes mostrados son:</p>
+
+<div class="code code">
+<pre class="code">gana la de fuera
+gana la de dentro
+gana la de dentro</pre>
+</div>
+
+<p>La recomendación general es definir como variables locales todas las variables que sean de uso exclusivo para realizar las tareas encargadas a cada función. Las variables globales se utilizan para compartir variables entre funciones de forma sencilla.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="funciones.html">&larr; Anterior <span>4.1. Funciones</span></a>
+            
+            <a class="span5 next" href="sentencias_break_y_continue.html">Siguiente &rarr; <span>4.3. Sentencias break y continue</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Ámbito de las variables (Introducción a JavaScript%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a JavaScript : Ámbito de las variables']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> El primer script</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Programación básica</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_4.html">
+            <span>Capítulo 4.</span> Programación avanzada
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="funciones.html">
+            <span>4.1.</span> Funciones
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="ambito_de_las_variables.html">
+            <span>4.2.</span> Ámbito de las variables
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="sentencias_break_y_continue.html">
+            <span>4.3.</span> Sentencias break y continue
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="otras_estructuras_de_control.html">
+            <span>4.4.</span> Otras estructuras de control
+        </a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> DOM</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Eventos</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Otras utilidades</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Detección y corrección de errores</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Recursos útiles</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

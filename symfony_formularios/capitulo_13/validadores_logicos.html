@@ -1,0 +1,427 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>13.6. Validadores lógicos (Los formularios de Symfony 1.4)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="validador_de_archivos.html" />
+        <link rel="next" href="validadores_de_internacionalizacion.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="13.6. Validadores lógicos (Los formularios de Symfony 1.4)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page symfony_formularios">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Los formularios de Symfony 1.4</a></li>
+  <li><a href="../capitulo_13.html">Capítulo 13. Validadores</a></li>
+  <li class="current"><span>13.6.. Validadores lógicos</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="validadores_logicos"><span>13.6.</span> Validadores lógicos</h1>
+    
+
+<h3 id="sfvalidatorand">13.6.1. sfValidatorAnd</h3>
+
+<p><code>sfValidatorAnd</code> considera válido el valor original solamente si pasa correctamente una lista de validadores.</p>
+
+<p>El constructor de <code>sfValidatorAnd</code> toma como primer argumento una lista de validadores:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$v</span> <span class="sy0">=</span> <span class="kw2">new</span> sfValidatorAnd<span class="br0">&#40;</span>
+  <span class="kw3">array</span><span class="br0">&#40;</span>
+    <span class="kw2">new</span> sfValidatorString<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'max'</span> <span class="sy0">=&gt;</span> <span class="nu0">255</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+    <span class="kw2">new</span> sfValidatorEmail<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+  <span class="br0">&#41;</span><span class="sy0">,</span>
+  <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'halt_on_error'</span> <span class="sy0">=&gt;</span> <span class="kw4">true</span><span class="br0">&#41;</span><span class="sy0">,</span>
+  <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'invalid'</span> <span class="sy0">=&gt;</span> <span class="st_h">'El valor indicado debe ser un email de menos de 255 caracteres de longitud.'</span><span class="br0">&#41;</span>
+<span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Por defecto el validador guarda en un array todos los mensajes de error lanzados por los validadores incluidos. También puede mostrar un único mensaje de error si se indica una cadena de texto para el error de tipo <code>invalid</code>, tal y como se muestra en el ejemplo anterior.</p>
+
+<div class="table" id="table_13_20">
+
+    <table>
+<thead>
+<tr>
+  <th>Opción</th>
+  <th>Error</th>
+  <th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>halt_on_error</code></td>
+  <td>-</td>
+  <td>Indica si la validación se debe detener después del primer error o si debe continuar (por defecto vale <code>false</code>)</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+<p>El orden de los validadores es muy importante cuando se establece a <code>true</code> la opción <code>halt_on_error</code>.</p>
+
+<p>La lista de validadores incluidos también se puede gestionar con los métodos <code>getValidators()</code> y <code>addValidator()</code>.</p>
+
+<h3 id="sfvalidatoror">13.6.2. sfValidatorOr</h3>
+
+<p><code>sfValidatorOr</code> considera válido el valor original si pasa correctamente al menos uno de los validadores indicados.</p>
+
+<p>El constructor de <code>sfValidatorOr</code> toma como primer argumento una lista de validadores:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$v</span> <span class="sy0">=</span> <span class="kw2">new</span> sfValidatorOr<span class="br0">&#40;</span>
+  <span class="kw3">array</span><span class="br0">&#40;</span>
+    <span class="kw2">new</span> sfValidatorRegex<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'pattern'</span> <span class="sy0">=&gt;</span> <span class="st_h">'/\.com$/'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+    <span class="kw2">new</span> sfValidatorEmail<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+  <span class="br0">&#41;</span><span class="sy0">,</span>
+  <span class="kw3">array</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+  <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'invalid'</span> <span class="sy0">=&gt;</span> <span class="st_h">'El valor indicado debe ser o un dominio .com o una dirección de email.'</span><span class="br0">&#41;</span>
+<span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Por defecto el validador guarda en un array todos los mensajes de error lanzados por los validadores incluidos. También puede mostrar un único mensaje de error si se indica una cadena de texto para el error de tipo <code>invalid</code>, tal y como se muestra en el ejemplo anterior.</p>
+
+<p>La lista de validadores incluidos también se puede gestionar con los métodos <code>getValidators()</code> y <code>addValidator()</code>.</p>
+
+<h3 id="sfvalidatorschema">13.6.3. sfValidatorSchema</h3>
+
+<p><em>Schema validator</em>: Yes</p>
+
+<p><code>sfValidatorSchema</code> consiste en un validador compuesto por varios campos. Cada campo se forma mediante un nombre y un validador:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$v</span> <span class="sy0">=</span> <span class="kw2">new</span> sfValidatorSchema<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span>
+  <span class="st_h">'nombre'</span> <span class="sy0">=&gt;</span> <span class="kw2">new</span> sfValidatorString<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+  <span class="st_h">'pais'</span>   <span class="sy0">=&gt;</span> <span class="kw2">new</span> sfValidatorI18nChoiceCountry<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Los formularios se definen mediante un esquema de validadores de la clase <code>sfValidatorSchema</code>.</p></div>
+
+<p>Este validador sólo acepta como argumento un array, por lo que lanza una excepción de tipo <code>InvalidArgumentException</code> en cualquier otro caso.</p>
+
+<p>Además, a este tipo de validador también se le puede asignar un pre-validador (que se ejecuta antes que cualquier otro validador) y un post-validador (que se ejecuta sobre los valores <em>limpios</em> después de todos los demás validadores).</p>
+
+<p>Tanto el pre-validador como el post-validador, son esquemas de validadores a los que se les pasan todos los valores. Para establecer este tipo de validadores, se emplean los métodos <code>setPreValidator()</code> y <code>setPostValidator()</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$v</span><span class="sy0">-&gt;</span><span class="me1">setPostValidator</span><span class="br0">&#40;</span>
+  <span class="kw2">new</span> sfValidatorCompare<span class="br0">&#40;</span><span class="st_h">'password1'</span><span class="sy0">,</span> <span class="st_h">'=='</span><span class="sy0">,</span> <span class="st_h">'password2'</span><span class="br0">&#41;</span>
+<span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<div class="table" id="table_13_21">
+
+    <table>
+<thead>
+<tr>
+  <th>Opción</th>
+  <th>Error</th>
+  <th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>allow_extra_fields</code></td>
+  <td><code>extra_fields</code></td>
+  <td>Si vale <code>false</code>, el validador muestra un error cuando el usuario envía más campos que los que tenía el formulario original (por defecto vale <code>false</code>)</td>
+</tr>
+<tr>
+  <td><code>filter_extra_fields</code></td>
+  <td>-</td>
+  <td>Si vale <code>true</code>, el validador elimina los campos adicionales del array de valores limpios (por defecto vale <code>true</code>)</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+<div class="table" id="table_13_22">
+
+    <table>
+<thead>
+<tr>
+  <th>Error</th>
+  <th>Variables</th>
+  <th>Valor por defecto (se muestra en inglés)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>extra_fields</code></td>
+  <td><code>%field%</code></td>
+  <td>Unexpected extra form field named "%field%".</td>
+</tr>
+<tr>
+  <td><code>post_max_size</code></td>
+  <td></td>
+  <td>The form submission cannot be processed. It probably means that you have uploaded a file that is too big.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+<p><code>sfValidatorSchema</code> permite acceder a sus validadores utilizando la notación de los arrays:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$vs</span> <span class="sy0">=</span> <span class="kw2">new</span> sfValidatorSchema<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'nombre'</span> <span class="sy0">=&gt;</span> <span class="kw2">new</span> sfValidatorString<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="re0">$validadorNombre</span> <span class="sy0">=</span> <span class="re0">$vs</span><span class="br0">&#91;</span><span class="st_h">'nombre'</span><span class="br0">&#93;</span><span class="sy0">;</span>
+&nbsp;
+<span class="kw3">unset</span><span class="br0">&#40;</span><span class="re0">$vs</span><span class="br0">&#91;</span><span class="st_h">'nombre'</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>La notación de los arrays también se puede emplear para acceder a los esquemas de validadores anidados:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$vs</span><span class="br0">&#91;</span><span class="st_h">'autor'</span><span class="br0">&#93;</span><span class="br0">&#91;</span><span class="st_h">'nombre'</span><span class="br0">&#93;</span><span class="sy0">-&gt;</span><span class="me1">setMessage</span><span class="br0">&#40;</span><span class="st_h">'invalid'</span><span class="sy0">,</span> <span class="st_h">'El nombre no es válido.'</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Si el tamaño de los datos enviados en el formulario excede del valor de la opción <code>post_max_size</code> del archivo de configuración <code>php.ini</code>, se lanza un error de tipo <code>post_max_size</code>.</p>
+
+<h3 id="sfvalidatorschemacompare">13.6.4. sfValidatorSchemaCompare</h3>
+
+<p><code>sfValidatorSchemaCompare</code> permite comparar dos de los valores incluidos en el array de valores originales:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$v</span> <span class="sy0">=</span> <span class="kw2">new</span> sfValidatorCompare<span class="br0">&#40;</span><span class="st_h">'password1'</span><span class="sy0">,</span> <span class="st_h">'=='</span><span class="sy0">,</span> <span class="st_h">'password2'</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<div class="table" id="table_13_23">
+
+    <table>
+<thead>
+<tr>
+  <th>Opción</th>
+  <th>Error</th>
+  <th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>left_field</code></td>
+  <td>-</td>
+  <td>El nombre del primer campo que se compara</td>
+</tr>
+<tr>
+  <td><code>operator</code></td>
+  <td>-</td>
+  <td>El operador utilizado en la comparación</td>
+</tr>
+<tr>
+  <td><code>right_field</code></td>
+  <td>-</td>
+  <td>El nombre del segundo campo que se compara</td>
+</tr>
+<tr>
+  <td><code>throw_global_error</code></td>
+  <td>-</td>
+  <td>Indica si se lanza un error global (por defecto vale <code>false</code>) o si se lanza un error asociado con el primer campo que se compara</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+<p>Los operadores disponibles para realizar comparaciones son los siguientes:</p>
+
+<ul>
+<li><code>sfValidatorSchemaCompare::EQUAL</code> o también <code>==</code></li>
+<li><code>sfValidatorSchemaCompare::NOT_EQUAL</code> o también <code>!=</code></li>
+<li><code>sfValidatorSchemaCompare::LESS_THAN</code> o también <code>&lt;</code></li>
+<li><code>sfValidatorSchemaCompare::LESS_THAN_EQUAL</code> o también <code>&lt;=</code></li>
+<li><code>sfValidatorSchemaCompare::GREATER_THAN</code> o también <code>&gt;</code></li>
+<li><code>sfValidatorSchemaCompare::GREATER_THAN_EQUAL</code> o también <code>&gt;=</code></li>
+</ul>
+
+<p>Por defecto, el validador lanza un error de tipo global. Sin embargo, si la opción <code>throw_global_error</code> vale <code>true</code>, se lanza un error relacionado con el primer campo comparado.</p>
+
+<p>El mensaje del error de tipo <code>invalid</code> puede utilizar las siguientes variables: <code>%left_field%</code>, <code>%right_field%</code> y <code>%operator%</code>.</p>
+
+<h3 id="sfvalidatorschemafilter">13.6.5. sfValidatorSchemaFilter</h3>
+
+<p><code>sfValidatorSchemaFilter</code> convierte un validador normal en un esquema de validadores. En ocasiones es útil en el post-validador:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$v</span> <span class="sy0">=</span> <span class="kw2">new</span> sfValidatorSchema<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$v</span><span class="sy0">-&gt;</span><span class="me1">setPostValidator</span><span class="br0">&#40;</span>
+  <span class="kw2">new</span> sfValidatorSchemaFilter<span class="br0">&#40;</span><span class="st_h">'email'</span><span class="sy0">,</span> <span class="kw2">new</span> sfValidatorEmail<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+<span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="validador_de_archivos.html">&larr; Anterior <span>13.5. Validador de archivos</span></a>
+            
+            <a class="span5 next" href="validadores_de_internacionalizacion.html">Siguiente &rarr; <span>13.7. Validadores de internacionalización</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Validadores lógicos (Los formularios de Symfony 1.4%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Los formularios de Symfony 1.4 : Validadores lógicos']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Creación de formularios</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Validación de formularios</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Formularios para diseñadores web</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Integración con Propel</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Integrando Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Referencia de Widgets</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_13.html">
+            <span>Capítulo 13.</span> Validadores
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="validadores.html">
+            <span>13.2.</span> Validadores
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="validadores_simples.html">
+            <span>13.3.</span> Validadores simples
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="validadores_de_fechas.html">
+            <span>13.4.</span> Validadores de fechas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="validador_de_archivos.html">
+            <span>13.5.</span> Validador de archivos
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="validadores_logicos.html">
+            <span>13.6.</span> Validadores lógicos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="validadores_de_internacionalizacion.html">
+            <span>13.7.</span> Validadores de internacionalización
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="validadores_de_propel.html">
+            <span>13.8.</span> Validadores de Propel
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="validadores_de_doctrine.html">
+            <span>13.9.</span> Validadores de Doctrine
+        </a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

@@ -1,0 +1,278 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>8.3. Internacionalización de los objetos Propel (Los formularios de Symfony 1.4)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="personalizando_el_objeto_traductor.html" />
+        <link rel="next" href="traduccion_de_widgets.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="8.3. Internacionalización de los objetos Propel (Los formularios de Symfony 1.4)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page symfony_formularios">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Los formularios de Symfony 1.4</a></li>
+  <li><a href="../capitulo_8.html">Capítulo 8. Internacionalización y localización</a></li>
+  <li class="current"><span>8.3.. Internacionalización de los objetos Propel</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="internacionalizacion_de_los_objetos_propel"><span>8.3.</span> Internacionalización de los objetos Propel</h1>
+    
+
+<p>Los formularios de Symfony incluyen el soporte de los objetos Propel internacionalizados. Para mostrar su funcionamiento se utiliza el siguiente modelo de datos de ejemplo con soporte de internacionalización:</p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co4">propel</span>:<span class="co4">
+  articulo</span>:<span class="co4">
+    id</span>:<span class="co3">
+    autor</span><span class="sy2">: </span>      varchar<span class="br0">&#40;</span><span class="nu0">255</span><span class="br0">&#41;</span><span class="co4">
+    created_at</span>:<span class="co4">
+  articulo_i18n</span>:<span class="co3">
+    titulo</span><span class="sy2">: </span>     varchar<span class="br0">&#40;</span><span class="nu0">255</span><span class="br0">&#41;</span><span class="co3">
+    contenido</span><span class="sy2">: </span>  longvarchar</pre>
+</div>
+
+<p>Utilizando los siguientes comandos se pueden generar las clases Propel y las clases del formulario:</p>
+
+<div class="code cli">
+<pre class="cli">$ php symfony build:model
+$ php symfony build:forms</pre>
+</div>
+
+<p>Los comandos anteriores generan varios archivos en el proyecto de Symfony:</p>
+
+<div class="code code">
+<pre class="code">lib/
+  form/
+    ArticuloForm.class.php
+    ArticuloI18nForm.class.php
+    BaseFormPropel.class.php
+  model/
+    Articulo.php
+    ArticuloPeer.php
+    ArticuloI18n.php
+    ArticuloI18nPeer.php</pre>
+</div>
+
+<p>El listado 8-8 muestra cómo configurar el formulario <code>ArticuloForm</code> para poder editar en un mismo formulario las versiones en inglés y francés de un artículo.</p>
+
+<p><strong>Listado 8-8 - Formularios I18n de un objeto Propel internacionalizado</strong></p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">class</span> ArticuloForm <span class="kw2">extends</span> BaseArticuloForm
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> configure<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">embedI18n</span><span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'en'</span><span class="sy0">,</span> <span class="st_h">'fr'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>También es posible personalizar el nombre de los idiomas del formulario añadiendo en el método <code>configure()</code> el código mostrado en el listado 8-9.</p>
+
+<p><strong>Listado 8-9 - Personalizando el nombre de los idiomas</strong></p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">widgetSchema</span><span class="sy0">-&gt;</span><span class="me1">setLabel</span><span class="br0">&#40;</span><span class="st_h">'en'</span><span class="sy0">,</span> <span class="st_h">'Inglés'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">widgetSchema</span><span class="sy0">-&gt;</span><span class="me1">setLabel</span><span class="br0">&#40;</span><span class="st_h">'fr'</span><span class="sy0">,</span> <span class="st_h">'Francés'</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p><strong>Figura 8-1 - Formulario Propel internacionalizado</strong></p>
+
+<div class="figure" id="figure_8_1">
+    <img src="../../img/symfony_formularios/f0801.png" alt="Formulario Propel internacionalizado" />
+
+    <p class="caption"><strong>Figura 8.1</strong> Formulario Propel internacionalizado</p>
+</div>
+
+
+<p>Y eso es todo. Cuando se ejecuta el método <code>save()</code> del objeto del formulario, se guardan de forma automática el objeto Propel asociado y todos los objetos de tipo i18n.</p>
+
+<div class="admonition sidebar"><p><strong class="title">¿Cómo se pasa la cultura del usuario al formulario?</strong> Si se quiere asociar un formulario con la cultura del usuario, se puede utilizar una opción llamada <code>culture</code> cuando se crea el formulario:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">class</span> articuloActions <span class="kw2">extends</span> sfActions
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> executeCrear<span class="br0">&#40;</span><span class="re0">$peticion</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">form</span> <span class="sy0">=</span> <span class="kw2">new</span> ArticuloForm<span class="br0">&#40;</span><span class="kw4">null</span><span class="sy0">,</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'culture'</span> <span class="sy0">=&gt;</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getUser</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">getCulture</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+     <span class="kw1">if</span> <span class="br0">&#40;</span><span class="re0">$peticion</span><span class="sy0">-&gt;</span><span class="me1">isMethod</span><span class="br0">&#40;</span><span class="st_h">'post'</span><span class="br0">&#41;</span> <span class="sy0">&amp;&amp;</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">form</span><span class="sy0">-&gt;</span><span class="me1">bindAndSave</span><span class="br0">&#40;</span><span class="re0">$peticion</span><span class="sy0">-&gt;</span><span class="me1">getParameter</span><span class="br0">&#40;</span><span class="st_h">'articulo'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">redirect</span><span class="br0">&#40;</span><span class="st_h">'articulo/creado'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>En la clase <code>ArticuloForm</code> se puede obtener el valor de la cultura mediante el array <code>options</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">class</span> ArticuloForm <span class="kw2">extends</span> BaseArticuloForm
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> configure<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">embedI18n</span><span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getCurrentCulture</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+   <span class="kw2">public</span> <span class="kw2">function</span> getCurrentCulture<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="kw1">return</span> <span class="kw3">isset</span><span class="br0">&#40;</span><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">options</span><span class="br0">&#91;</span><span class="st_h">'culture'</span><span class="br0">&#93;</span><span class="br0">&#41;</span> ? <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">options</span><span class="br0">&#91;</span><span class="st_h">'culture'</span><span class="br0">&#93;</span> <span class="sy0">:</span> <span class="st_h">'en'</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p></p></div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="personalizando_el_objeto_traductor.html">&larr; Anterior <span>8.2. Personalizando el objeto traductor</span></a>
+            
+            <a class="span5 next" href="traduccion_de_widgets.html">Siguiente &rarr; <span>8.4. Traducción de Widgets</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Internacionalización de los objetos Propel (Los formularios de Symfony 1.4%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Los formularios de Symfony 1.4 : Internacionalización de los objetos Propel']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Creación de formularios</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Validación de formularios</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Formularios para diseñadores web</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Integración con Propel</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Sin título</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_8.html">
+            <span>Capítulo 8.</span> Internacionalización y localización
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="internacionalizacion_de_formularios.html">
+            <span>8.1.</span> Internacionalización de formularios
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="personalizando_el_objeto_traductor.html">
+            <span>8.2.</span> Personalizando el objeto traductor
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="internacionalizacion_de_los_objetos_propel.html">
+            <span>8.3.</span> Internacionalización de los objetos Propel
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="traduccion_de_widgets.html">
+            <span>8.4.</span> Traducción de Widgets
+        </a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Integrando Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Referencia de Widgets</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Validadores</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

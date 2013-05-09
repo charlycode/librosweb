@@ -1,0 +1,200 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>9.3. IIS (Silex, el manual oficial)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="nginx.html" />
+        <link rel="next" href="lighttpd.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="9.3. IIS (Silex, el manual oficial)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page silex">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Silex, el manual oficial</a></li>
+  <li><a href="../capitulo_9.html">Capítulo 9. Silex y los servidores web</a></li>
+  <li class="current"><span>9.3.. IIS</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="iis"><span>9.3.</span> IIS</h1>
+    
+
+<p>Si utilizas el servidor Internet Information Services de Windows, este es el archivo <code>web.config</code> que puedes emplear:</p>
+
+<div class="code xml">
+<pre class="xml"><span class="sc3"><span class="re1">&lt;?xml</span> <span class="re0">version</span>=<span class="st0">&quot;1.0&quot;</span><span class="re2">?&gt;</span></span>
+<span class="sc3"><span class="re1">&lt;configuration<span class="re2">&gt;</span></span></span>
+    <span class="sc3"><span class="re1">&lt;system.webServer<span class="re2">&gt;</span></span></span>
+        <span class="sc3"><span class="re1">&lt;defaultDocument<span class="re2">&gt;</span></span></span>
+            <span class="sc3"><span class="re1">&lt;files<span class="re2">&gt;</span></span></span>
+                <span class="sc3"><span class="re1">&lt;clear</span> <span class="re2">/&gt;</span></span>
+                <span class="sc3"><span class="re1">&lt;add</span> <span class="re0">value</span>=<span class="st0">&quot;index.php&quot;</span> <span class="re2">/&gt;</span></span>
+            <span class="sc3"><span class="re1">&lt;/files<span class="re2">&gt;</span></span></span>
+        <span class="sc3"><span class="re1">&lt;/defaultDocument<span class="re2">&gt;</span></span></span>
+        <span class="sc3"><span class="re1">&lt;rewrite<span class="re2">&gt;</span></span></span>
+            <span class="sc3"><span class="re1">&lt;rules<span class="re2">&gt;</span></span></span>
+                <span class="sc3"><span class="re1">&lt;rule</span> <span class="re0">name</span>=<span class="st0">&quot;Silex Front Controller&quot;</span> <span class="re0">stopProcessing</span>=<span class="st0">&quot;true&quot;</span><span class="re2">&gt;</span></span>
+                    <span class="sc3"><span class="re1">&lt;match</span> <span class="re0">url</span>=<span class="st0">&quot;^(.*)$&quot;</span> <span class="re0">ignoreCase</span>=<span class="st0">&quot;false&quot;</span> <span class="re2">/&gt;</span></span>
+                    <span class="sc3"><span class="re1">&lt;conditions</span> <span class="re0">logicalGrouping</span>=<span class="st0">&quot;MatchAll&quot;</span><span class="re2">&gt;</span></span>
+                        <span class="sc3"><span class="re1">&lt;add</span> <span class="re0">input</span>=<span class="st0">&quot;{REQUEST_FILENAME}&quot;</span> <span class="re0">matchType</span>=<span class="st0">&quot;IsFile&quot;</span></span>
+<span class="sc3">                             <span class="re0">ignoreCase</span>=<span class="st0">&quot;false&quot;</span> <span class="re0">negate</span>=<span class="st0">&quot;true&quot;</span> <span class="re2">/&gt;</span></span>
+                    <span class="sc3"><span class="re1">&lt;/conditions<span class="re2">&gt;</span></span></span>
+                    <span class="sc3"><span class="re1">&lt;action</span> <span class="re0">type</span>=<span class="st0">&quot;Rewrite&quot;</span> <span class="re0">url</span>=<span class="st0">&quot;index.php&quot;</span></span>
+<span class="sc3">                            <span class="re0">appendQueryString</span>=<span class="st0">&quot;true&quot;</span> <span class="re2">/&gt;</span></span>
+                <span class="sc3"><span class="re1">&lt;/rule<span class="re2">&gt;</span></span></span>
+            <span class="sc3"><span class="re1">&lt;/rules<span class="re2">&gt;</span></span></span>
+        <span class="sc3"><span class="re1">&lt;/rewrite<span class="re2">&gt;</span></span></span>
+    <span class="sc3"><span class="re1">&lt;/system.webServer<span class="re2">&gt;</span></span></span>
+<span class="sc3"><span class="re1">&lt;/configuration<span class="re2">&gt;</span></span></span></pre>
+</div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="nginx.html">&larr; Anterior <span>9.2. nginx</span></a>
+            
+            <a class="span5 next" href="lighttpd.html">Siguiente &rarr; <span>9.4. Lighttpd</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'IIS (Silex, el manual oficial%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Silex, el manual oficial : IIS']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Primeros pasos</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Middlewares</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Organizando los controladores</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Servicios</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Proveedores</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Tests</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Funcionamiento interno</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_9.html">
+            <span>Capítulo 9.</span> Silex y los servidores web
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="apache.html">
+            <span>9.1.</span> Apache
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="nginx.html">
+            <span>9.2.</span> nginx
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="iis.html">
+            <span>9.3.</span> IIS
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="lighttpd.html">
+            <span>9.4.</span> Lighttpd
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="php_54.html">
+            <span>9.5.</span> PHP 5.4
+        </a>
+    </li>
+    <li class="level-1">
+        <span>A</span> <a href="../apendice_a.html"> Proveedores de servicios de Silex</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

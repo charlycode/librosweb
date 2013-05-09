@@ -1,0 +1,310 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>11.10. Tareas de mantenimiento (El tutorial Jobeet)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="seguridad_de_los_formularios.html" />
+        <link rel="next" href="nos_vemos_manana.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="11.10. Tareas de mantenimiento (El tutorial Jobeet)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page jobeet_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">El tutorial Jobeet</a></li>
+  <li><a href="../capitulo_11.html">Capítulo 11. Probando los formularios</a></li>
+  <li class="current"><span>11.10.. Tareas de mantenimiento</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="tareas_de_mantenimiento"><span>11.10.</span> Tareas de mantenimiento</h1>
+    
+
+<p>Aunque Symfony es un framework para desarrollar aplicaciones web, también incluye una herramienta para la línea de comandos. Esta herramienta ya la has utilizado para crear la estructura inicial de directorios del proyecto y de la aplicación y también para generar las clases del modelo de datos. Crear una nueva tarea es muy sencillo, ya que todas las herramientas necesarias se incluyen en el framework.</p>
+
+<p>Cuando un usuario crea una nueva oferta de trabajo, es necesario que la active para que se publique en la web. Si no se activan las ofertas, la base de datos puede contener en poco tiempo muchas ofertas de trabajo inactivas. Por tanto, vamos a crear una tarea que elimina todas las ofertas de trabajo inactivas de la base de datos. Además, ejecutaremos esta tarea de forma periódica mediante una tarea programada.</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// lib/task/JobeetCleanupTask.class.php</span>
+<span class="kw2">class</span> JobeetCleanupTask <span class="kw2">extends</span> sfBaseTask
+<span class="br0">&#123;</span>
+  <span class="kw2">protected</span> <span class="kw2">function</span> configure<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">addOptions</span><span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span>
+      <span class="kw2">new</span> sfCommandOption<span class="br0">&#40;</span><span class="st_h">'env'</span><span class="sy0">,</span> <span class="kw4">null</span><span class="sy0">,</span> sfCommandOption<span class="sy0">::</span><span class="me2">PARAMETER_REQUIRED</span><span class="sy0">,</span> <span class="st_h">'The environement'</span><span class="sy0">,</span> <span class="st_h">'prod'</span><span class="br0">&#41;</span><span class="sy0">,</span>
+      <span class="kw2">new</span> sfCommandOption<span class="br0">&#40;</span><span class="st_h">'days'</span><span class="sy0">,</span> <span class="kw4">null</span><span class="sy0">,</span> sfCommandOption<span class="sy0">::</span><span class="me2">PARAMETER_REQUIRED</span><span class="sy0">,</span> <span class="st_h">''</span><span class="sy0">,</span> <span class="nu0">90</span><span class="br0">&#41;</span><span class="sy0">,</span>
+    <span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="kw2">namespace</span> <span class="sy0">=</span> <span class="st_h">'jobeet'</span><span class="sy0">;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">name</span> <span class="sy0">=</span> <span class="st_h">'cleanup'</span><span class="sy0">;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">briefDescription</span> <span class="sy0">=</span> <span class="st_h">'Cleanup Jobeet database'</span><span class="sy0">;</span>
+&nbsp;
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">detailedDescription</span> <span class="sy0">=</span> <span class="co3">&lt;&lt;&lt;EOF
+The [jobeet:cleanup|INFO] task cleans up the Jobeet database:
+&nbsp;
+  [./symfony jobeet:cleanup --env=prod --days=90|INFO]
+EOF</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="kw2">protected</span> <span class="kw2">function</span> execute<span class="br0">&#40;</span><span class="re0">$arguments</span> <span class="sy0">=</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="re0">$options</span> <span class="sy0">=</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$databaseManager</span> <span class="sy0">=</span> <span class="kw2">new</span> sfDatabaseManager<span class="br0">&#40;</span><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">configuration</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="re0">$nb</span> <span class="sy0">=</span> JobeetJobPeer<span class="sy0">::</span><span class="me2">cleanup</span><span class="br0">&#40;</span><span class="re0">$options</span><span class="br0">&#91;</span><span class="st_h">'days'</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">logSection</span><span class="br0">&#40;</span><span class="st_h">'propel'</span><span class="sy0">,</span> <span class="kw3">sprintf</span><span class="br0">&#40;</span><span class="st_h">'Removed %d stale jobs'</span><span class="sy0">,</span> <span class="re0">$nb</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>La configuración de la tarea se realiza en el método <code>configure()</code>. Cada tarea debe tener un nombre único (<code>namespace</code>:<code>nombre</code>) y puede tener argumentos y opciones.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Puedes echar un vistazo a las tareas que incluye Symfony (en el directorio <code>lib/task/</code>) para ver más ejemplos de uso.</p></div>
+
+<p>La tarea <code>jobeet:cleanup</code> define dos opciones, <code>--env</code> y <code>--days</code>, que a su vez definen valores por defecto adecuados.</p>
+
+<p>Las tareas propias se ejecutan exactamente igual que cualquier otra tarea de Symfony:</p>
+
+<div class="code cli">
+<pre class="cli">$ php symfony jobeet:cleanup --days=10 --env=dev</pre>
+</div>
+
+<p>Como siempre, el código que se encarga de limpiar la base de datos se ha incluido en la clase <code>JobeetJobPeer</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// lib/model/JobeetJobPeer.php</span>
+static <span class="kw2">public</span> <span class="kw2">function</span> cleanup<span class="br0">&#40;</span><span class="re0">$days</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="re0">$criteria</span> <span class="sy0">=</span> <span class="kw2">new</span> Criteria<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="re0">$criteria</span><span class="sy0">-&gt;</span><span class="me1">add</span><span class="br0">&#40;</span><span class="kw2">self</span><span class="sy0">::</span><span class="me2">IS_ACTIVATED</span><span class="sy0">,</span> <span class="kw4">false</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="re0">$criteria</span><span class="sy0">-&gt;</span><span class="me1">add</span><span class="br0">&#40;</span><span class="kw2">self</span><span class="sy0">::</span><span class="me2">CREATED_AT</span><span class="sy0">,</span> <span class="kw3">time</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="sy0">-</span> <span class="nu0">86400</span> <span class="sy0">*</span> <span class="re0">$days</span><span class="sy0">,</span> Criteria<span class="sy0">::</span><span class="me2">LESS_THAN</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+  <span class="kw1">return</span> <span class="kw2">self</span><span class="sy0">::</span><span class="me2">doDelete</span><span class="br0">&#40;</span><span class="re0">$criteria</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>El método <code>doDelete()</code> elimina de la base de datos todos los registros que cumplen con los criterios de búsqueda del objeto <code>Criteria</code>. A este método también se le puede pasar un array de claves primarias.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Las tareas de Symfony devuelven un valor en función del éxito en la ejecución de la tarea. Si quieres devolver un valor específico, puedes hacerlo añadiendo al final de la tarea una instrucción <code>return</code> que devuelva un número entero.</p></div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="seguridad_de_los_formularios.html">&larr; Anterior <span>11.9. Seguridad de los formularios</span></a>
+            
+            <a class="span5 next" href="nos_vemos_manana.html">Siguiente &rarr; <span>11.11. Nos vemos mañana</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Tareas de mantenimiento (El tutorial Jobeet%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'El tutorial Jobeet : Tareas de mantenimiento']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Comenzando el proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> El proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> El modelo de datos</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> El controlador y la vista</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> El sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Profundizando en el modelo</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Trabajando con la página de cada categoría</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Pruebas unitarias</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Pruebas funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Los formularios</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_11.html">
+            <span>Capítulo 11.</span> Probando los formularios
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="enviando_un_formulario.html">
+            <span>11.1.</span> Enviando un formulario
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_tester_de_formularios.html">
+            <span>11.2.</span> El tester de formularios
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="probando_la_redireccion.html">
+            <span>11.3.</span> Probando la redirección
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_tester_de_propel.html">
+            <span>11.4.</span> El tester de Propel
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="probando_la_existencia_de_errores.html">
+            <span>11.5.</span> Probando la existencia de errores
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="indicando_el_metodo_http_de_un_enlace.html">
+            <span>11.6.</span> Indicando el método HTTP de un enlace
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="la_seguridad_que_te_dan_las_pruebas.html">
+            <span>11.7.</span> La seguridad que te dan las pruebas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="regresando_al_futuro_en_una_prueba.html">
+            <span>11.8.</span> Regresando al futuro en una prueba
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="seguridad_de_los_formularios.html">
+            <span>11.9.</span> Seguridad de los formularios
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="tareas_de_mantenimiento.html">
+            <span>11.10.</span> Tareas de mantenimiento
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="nos_vemos_manana.html">
+            <span>11.11.</span> Nos vemos mañana
+        </a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> El generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> El usuario</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> El día de descanso</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Canales Atom</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Servicios web</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> El buscador</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>20</span> <a href="../capitulo_20.html"> Plugins</a>
+    </li>
+    <li class="level-1">
+        <span>21</span> <a href="../capitulo_21.html"> El día del diseño</a>
+    </li>
+    <li class="level-1">
+        <span>22</span> <a href="../capitulo_22.html"> La cache</a>
+    </li>
+    <li class="level-1">
+        <span>23</span> <a href="../capitulo_23.html"> Pasando a producción</a>
+    </li>
+    <li class="level-1">
+        <span>24</span> <a href="../capitulo_24.html"> Un repaso a Symfony</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

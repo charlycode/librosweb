@@ -1,0 +1,371 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>12.3. Widgets de tipo input (Los formularios de Symfony 1.4)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="widgets.html" />
+        <link rel="next" href="widgets_para_elecciones.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="12.3. Widgets de tipo input (Los formularios de Symfony 1.4)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page symfony_formularios">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Los formularios de Symfony 1.4</a></li>
+  <li><a href="../capitulo_12.html">Capítulo 12. Referencia de Widgets</a></li>
+  <li class="current"><span>12.3.. Widgets de tipo input</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="widgets_de_tipo_input"><span>12.3.</span> Widgets de tipo input</h1>
+    
+
+<h3 id="sfwidgetforminput">12.3.1. sfWidgetFormInput</h3>
+
+<p>La etiqueta <code>&lt;input&gt;</code> es seguramente la etiqueta más sencilla que vas a utilizar en los formularios y se representa mediante la clase <code>sfWidgetFormInput</code>.</p>
+
+<div class="table" id="table_12_2">
+
+    <table>
+<thead>
+<tr>
+  <th>Opción</th>
+  <th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>type</code></td>
+  <td>El valor del atributo <code>type</code> de HTML (por defecto vale <code>text</code>)</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+<div class="code php">
+<pre class="php"><span class="re0">$w</span> <span class="sy0">=</span> <span class="kw2">new</span> sfWidgetFormInput<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="kw1">echo</span> <span class="re0">$w</span><span class="sy0">-&gt;</span><span class="me1">render</span><span class="br0">&#40;</span><span class="st_h">'nombre'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="co2"># &lt;input type=&quot;text&quot; name=&quot;nombre&quot; id=&quot;nombre&quot; /&gt;</span></pre>
+</div>
+
+<h3 id="sfwidgetforminputcheckbox">12.3.2. sfWidgetFormInputCheckbox</h3>
+
+<p><code>sfWidgetFormInputCheckbox</code> es un widget de tipo <code>&lt;input&gt;</code> cuyo atributo <code>type</code> es <code>checkbox</code>.</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$w</span> <span class="sy0">=</span> <span class="kw2">new</span> sfWidgetFormInputCheckbox<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="kw1">echo</span> <span class="re0">$w</span><span class="sy0">-&gt;</span><span class="me1">render</span><span class="br0">&#40;</span><span class="st_h">'nombre'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="co2"># &lt;input type=&quot;checkbox&quot; name=&quot;nombre&quot; id=&quot;nombre&quot; /&gt;</span></pre>
+</div>
+
+<h3 id="sfwidgetforminputhidden">12.3.3. sfWidgetFormInputHidden</h3>
+
+<p><code>sfWidgetFormInputHidden</code> es un widget de tipo <code>&lt;input&gt;</code> cuyo atributo <code>type</code> vale <code>hidden</code>. La opción <code>is_hidden</code> también se establece al valor <code>true</code>.</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$w</span> <span class="sy0">=</span> <span class="kw2">new</span> sfWidgetFormInputHidden<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="kw1">echo</span> <span class="re0">$w</span><span class="sy0">-&gt;</span><span class="me1">render</span><span class="br0">&#40;</span><span class="st_h">'nombre'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="co2"># &lt;input type=&quot;hidden&quot; name=&quot;nombre&quot; id=&quot;nombre&quot; /&gt;</span></pre>
+</div>
+
+<h3 id="sfwidgetforminputpassword">12.3.4. sfWidgetFormInputPassword</h3>
+
+<p><code>sfWidgetFormInputPassword</code> es un widget de tipo <code>&lt;input&gt;</code> cuyo atributo <code>type</code> es <code>password</code>.</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$w</span> <span class="sy0">=</span> <span class="kw2">new</span> sfWidgetFormInputPassword<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="kw1">echo</span> <span class="re0">$w</span><span class="sy0">-&gt;</span><span class="me1">render</span><span class="br0">&#40;</span><span class="st_h">'nombre'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="co2"># &lt;input type=&quot;password&quot; name=&quot;nombre&quot; id=&quot;nombre&quot; /&gt;</span></pre>
+</div>
+
+<h3 id="sfwidgetforminputfile">12.3.5. sfWidgetFormInputFile</h3>
+
+<p>The <code>sfWidgetFormInputFile</code> es un widget de tipo <code>&lt;input&gt;</code> cuyo atributo <code>type</code> vale <code>file</code>. El valor de la opción <code>needs_multipart</code> se establece automáticamente a <code>true</code>.</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$w</span> <span class="sy0">=</span> <span class="kw2">new</span> sfWidgetFormInputFile<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="kw1">echo</span> <span class="re0">$w</span><span class="sy0">-&gt;</span><span class="me1">render</span><span class="br0">&#40;</span><span class="st_h">'nombre'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="co2"># &lt;input type=&quot;file&quot; name=&quot;nombre&quot; id=&quot;nombre&quot; /&gt;</span></pre>
+</div>
+
+<h3 id="sfwidgetforminputfileeditable">12.3.6. sfWidgetFormInputFileEditable</h3>
+
+<p><code>sfWidgetFormInputFileEditable</code> es un tipo de widget relacionado con los archivos, que extiende el widget <code>sfWidgetFormInputFile</code> para añadir la posibilidad de mostrar o eliminar un archivo subido previamente.</p>
+
+<div class="table" id="table_12_3">
+
+    <table>
+<thead>
+<tr>
+  <th>Opción</th>
+  <th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>file_src</code></td>
+  <td>La ruta web de la imagen actual (esta opción es obligatoria)</td>
+</tr>
+<tr>
+  <td><code>edit_mode</code></td>
+  <td>Valor booleano que vale <code>true</code> si se ha habilitado la posibilidad de editar el archivo y <code>false</code> en cualquier otro caso</td>
+</tr>
+<tr>
+  <td><code>is_image</code></td>
+  <td>Indica si el archivo es una imagen que se puede visualizar</td>
+</tr>
+<tr>
+  <td><code>with_delete</code></td>
+  <td>Indica si se añade un <em>checkbox</em> que permita borrar el archivo</td>
+</tr>
+<tr>
+  <td><code>delete_label</code></td>
+  <td>El título que se muestra para la opción de borrar el archivo</td>
+</tr>
+<tr>
+  <td><code>template</code></td>
+  <td>Código HTML de la plantilla utilizada para mostrar este widget. Las variables disponibles en esta plantilla son las siguientes:&#92; <code>input</code> (el widget para subir una imagen)&#92; <code>delete</code> (el checkbox para borrar el archivo)&#92; <code>delete_label</code> (el título de la opción de borrado)&#92; <code>file</code> (la etiqueta del archivo)</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+<div class="admonition note"><p><strong class="title">Nota</strong> En el modo <code>edit</code>, este widget muestra otro widget cuyo nombre se forma con el mismo nombre que el widget para subir el archivo y el sufijo <code>_delete</code>. Por lo tanto, cuando crees un formulario, no olvides añadir también un validador para este campo adicional.</p></div>
+
+<h3 id="sfwidgetformtextarea">12.3.7. sfWidgetFormTextarea</h3>
+
+<p><code>sfWidgetFormTextarea</code> es un widget simple de tipo <code>&lt;textarea&gt;</code>. Los valores de los atributos <code>rows</code> y <code>cols</code> se establecen automáticamente porque son obligatorios.</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$w</span> <span class="sy0">=</span> <span class="kw2">new</span> sfWidgetFormTextarea<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="kw1">echo</span> <span class="re0">$w</span><span class="sy0">-&gt;</span><span class="me1">render</span><span class="br0">&#40;</span><span class="st_h">'nombre'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="co2"># &lt;textarea rows=&quot;4&quot; cols=&quot;30&quot; name=&quot;nombre&quot; id=&quot;nombre&quot;&gt;&lt;/textarea&gt;</span></pre>
+</div>
+
+<h3 id="sfwidgetformtextareatinymce">12.3.8. sfWidgetFormTextareaTinyMCE</h3>
+
+<p>Al contrario que el widget del <code>&lt;textarea&gt;</code> simple, <code>sfWidgetFormTextareaTinyMCE</code> muestra un editor avanzado de tipo WYSIWYG:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$w</span> <span class="sy0">=</span> <span class="kw2">new</span> sfWidgetFormTextareaTinyMCE<span class="br0">&#40;</span>
+  <span class="kw3">array</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+  <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'class'</span> <span class="sy0">=&gt;</span> <span class="st_h">'foo'</span><span class="br0">&#41;</span>
+<span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Este widget es parte del plugin <code>sfFormExtraPlugin</code> de Symfony.</p></div>
+
+<p>Como los archivos JavaScript del editor TinyMCE no se incluyen con el plugin, debes instalarlos e incluirlos manualmente.</p>
+
+<div class="table" id="table_12_4">
+
+    <table>
+<thead>
+<tr>
+  <th>Opción</th>
+  <th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>theme</code></td>
+  <td>El tema utilizado por Tiny MCE (por defecto se utiliza el tema <code>advanced</code>)</td>
+</tr>
+<tr>
+  <td><code>width</code></td>
+  <td>La anchura del editor</td>
+</tr>
+<tr>
+  <td><code>height</code></td>
+  <td>La altura del editor</td>
+</tr>
+<tr>
+  <td><code>config</code></td>
+  <td>Un array con la configuración específica de JavaScript</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="widgets.html">&larr; Anterior <span>12.2. Widgets</span></a>
+            
+            <a class="span5 next" href="widgets_para_elecciones.html">Siguiente &rarr; <span>12.4. Widgets para elecciones</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Widgets de tipo input (Los formularios de Symfony 1.4%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Los formularios de Symfony 1.4 : Widgets de tipo input']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Creación de formularios</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Validación de formularios</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Formularios para diseñadores web</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Integración con Propel</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Integrando Doctrine</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_12.html">
+            <span>Capítulo 12.</span> Referencia de Widgets
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="widgets.html">
+            <span>12.2.</span> Widgets
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="widgets_de_tipo_input.html">
+            <span>12.3.</span> Widgets de tipo input
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="widgets_para_elecciones.html">
+            <span>12.4.</span> Widgets para elecciones
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="widgets_para_fechas.html">
+            <span>12.5.</span> Widgets para fechas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="widgets_de_internacionalizacion.html">
+            <span>12.6.</span> Widgets de internacionalización
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="widget_para_captcha.html">
+            <span>12.7.</span> Widget para CAPTCHA
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="widgets_para_filtros.html">
+            <span>12.8.</span> Widgets para filtros
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="sfwidgetformschema.html">
+            <span>12.9.</span> sfWidgetFormSchema
+        </a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Validadores</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

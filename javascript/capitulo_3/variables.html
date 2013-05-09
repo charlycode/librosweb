@@ -1,0 +1,265 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>3.1. Variables (Introducción a JavaScript)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="../capitulo_3.html" />
+        <link rel="next" href="tipos_de_variables.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="3.1. Variables (Introducción a JavaScript)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page javascript">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Introducción a JavaScript</a></li>
+  <li><a href="../capitulo_3.html">Capítulo 3. Programación básica</a></li>
+  <li class="current"><span>3.1. Variables</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="variables"><span>3.1.</span> Variables</h1>
+    
+
+<p>Las variables en los lenguajes de programación siguen una lógica similar a las variables utilizadas en otros ámbitos como las matemáticas. Una variable es un elemento que se emplea para almacenar y hacer referencia a otro valor. Gracias a las variables es posible crear <em>"programas genéricos"</em>, es decir, programas que funcionan siempre igual independientemente de los valores concretos utilizados.</p>
+
+<p>De la misma forma que si en Matemáticas no existieran las variables no se podrían definir las ecuaciones y fórmulas, en programación no se podrían hacer programas realmente útiles sin las variables.</p>
+
+<p>Si no existieran variables, un programa que suma dos números podría escribirse como:</p>
+
+<div class="code code">
+<pre class="code">resultado = 3 + 1</pre>
+</div>
+
+<p>El <em>programa</em> anterior es tan poco útil que sólo sirve para el caso en el que el primer número de la suma sea el 3 y el segundo número sea el 1. En cualquier otro caso, el <em>programa</em> obtiene un resultado incorrecto.</p>
+
+<p>Sin embargo, el programa se puede rehacer de la siguiente manera utilizando variables para almacenar y referirse a cada número:</p>
+
+<div class="code javascript">
+<pre class="javascript">numero_1 <span class="sy0">=</span> <span class="nu0">3</span>
+numero_2 <span class="sy0">=</span> <span class="nu0">1</span>
+resultado <span class="sy0">=</span> numero_1 <span class="sy0">+</span> numero_2</pre>
+</div>
+
+<p>Los elementos <code>numero_1</code> y <code>numero_2</code> son <strong>variables</strong> que almacenan los valores que utiliza el programa. El resultado se calcula siempre en función del valor almacenado por las variables, por lo que este programa funciona correctamente para cualquier par de números indicado. Si se modifica el valor de las variables <code>numero_1</code> y <code>numero_2</code>, el programa sigue funcionando correctamente.</p>
+
+<p>Las variables en JavaScript se crean mediante la palabra reservada <code>var</code>. De esta forma, el ejemplo anterior se puede realizar en JavaScript de la siguiente manera:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> numero_1 <span class="sy0">=</span> <span class="nu0">3</span><span class="sy0">;</span>
+<span class="kw1">var</span> numero_2 <span class="sy0">=</span> <span class="nu0">1</span><span class="sy0">;</span>
+<span class="kw1">var</span> resultado <span class="sy0">=</span> numero_1 <span class="sy0">+</span> numero_2<span class="sy0">;</span></pre>
+</div>
+
+<p>La palabra reservada <code>var</code> solamente se debe indicar al definir por primera vez la variable, lo que se denomina <strong>declarar</strong> una variable. Cuando se utilizan las variables en el resto de instrucciones del script, solamente es necesario indicar su nombre. En otras palabras, en el ejemplo anterior sería un error indicar lo siguiente:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> numero_1 <span class="sy0">=</span> <span class="nu0">3</span><span class="sy0">;</span>
+<span class="kw1">var</span> numero_2 <span class="sy0">=</span> <span class="nu0">1</span><span class="sy0">;</span>
+<span class="kw1">var</span> resultado <span class="sy0">=</span> <span class="kw1">var</span> numero_1 <span class="sy0">+</span> <span class="kw1">var</span> numero_2<span class="sy0">;</span></pre>
+</div>
+
+<p>Si cuando se declara una variable se le asigna también un valor, se dice que la variable ha sido <strong>inicializada</strong>. En JavaScript no es obligatorio inicializar las variables, ya que se pueden declarar por una parte y asignarles un valor posteriormente. Por tanto, el ejemplo anterior se puede rehacer de la siguiente manera:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> numero_1<span class="sy0">;</span>
+<span class="kw1">var</span> numero_2<span class="sy0">;</span>
+&nbsp;
+numero_1 <span class="sy0">=</span> <span class="nu0">3</span><span class="sy0">;</span>
+numero_2 <span class="sy0">=</span> <span class="nu0">1</span><span class="sy0">;</span>
+&nbsp;
+<span class="kw1">var</span> resultado <span class="sy0">=</span> numero_1 <span class="sy0">+</span> numero_2<span class="sy0">;</span></pre>
+</div>
+
+<p>Una de las características más sorprendentes de JavaSript para los programadores habituados a otros lenguajes de programación es que tampoco es necesario declarar las variables. En otras palabras, se pueden utilizar variables que no se han definido anteriormente mediante la palabra reservada <code>var</code>. El ejemplo anterior también es correcto en JavaScript de la siguiente forma:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> numero_1 <span class="sy0">=</span> <span class="nu0">3</span><span class="sy0">;</span>
+<span class="kw1">var</span> numero_2 <span class="sy0">=</span> <span class="nu0">1</span><span class="sy0">;</span>
+resultado <span class="sy0">=</span> numero_1 <span class="sy0">+</span> numero_2<span class="sy0">;</span></pre>
+</div>
+
+<p>La variable <code>resultado</code> no está declarada, por lo que JavaScript crea una variable global (más adelante se verán las diferencias entre variables locales y globales) y le asigna el valor correspondiente. De la misma forma, también sería correcto el siguiente código:</p>
+
+<div class="code javascript">
+<pre class="javascript">numero_1 <span class="sy0">=</span> <span class="nu0">3</span><span class="sy0">;</span>
+numero_2 <span class="sy0">=</span> <span class="nu0">1</span><span class="sy0">;</span>
+resultado <span class="sy0">=</span> numero_1 <span class="sy0">+</span> numero_2<span class="sy0">;</span></pre>
+</div>
+
+<p>En cualquier caso, se recomienda declarar todas las variables que se vayan a utilizar.</p>
+
+<p>El nombre de una variable también se conoce como <strong>identificador</strong> y debe cumplir las siguientes normas:</p>
+
+<ul>
+<li>Sólo puede estar formado por letras, números y los símbolos <code>$</code> (dólar) y <code>_</code> (guión bajo).</li>
+<li>El primer carácter no puede ser un número.</li>
+</ul>
+
+<p>Por tanto, las siguientes variables tienen nombres correctos:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> $numero1<span class="sy0">;</span>
+<span class="kw1">var</span> _$letra<span class="sy0">;</span>
+<span class="kw1">var</span> $$$otroNumero<span class="sy0">;</span>
+<span class="kw1">var</span> $_a__$4<span class="sy0">;</span></pre>
+</div>
+
+<p>Sin embargo, las siguientes variables tienen identificadores incorrectos:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> 1numero<span class="sy0">;</span>       <span class="co1">// Empieza por un número</span>
+<span class="kw1">var</span> numero<span class="sy0">;</span><span class="nu0">1</span>_123<span class="sy0">;</span>  <span class="co1">// Contiene un carácter &quot;;&quot;</span></pre>
+</div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="../capitulo_3.html">&larr; Anterior <span>Capítulo 3. Programación básica</span></a>
+            
+            <a class="span5 next" href="tipos_de_variables.html">Siguiente &rarr; <span>3.2. Tipos de variables</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Variables (Introducción a JavaScript%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a JavaScript : Variables']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> El primer script</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_3.html">
+            <span>Capítulo 3.</span> Programación básica
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="variables.html">
+            <span>3.1.</span> Variables
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="tipos_de_variables.html">
+            <span>3.2.</span> Tipos de variables
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="operadores.html">
+            <span>3.3.</span> Operadores
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="estructuras_de_control_de_flujo.html">
+            <span>3.4.</span> Estructuras de control de flujo
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="funciones_y_propiedades_basicas_de_javascript.html">
+            <span>3.5.</span> Funciones y propiedades básicas de JavaScript
+        </a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Programación avanzada</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> DOM</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Eventos</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Otras utilidades</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Detección y corrección de errores</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Recursos útiles</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

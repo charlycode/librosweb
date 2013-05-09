@@ -1,0 +1,287 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>8.3. Tooltip (Introducción a JavaScript)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="calendario.html" />
+        <link rel="next" href="menu_desplegable.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="8.3. Tooltip (Introducción a JavaScript)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page javascript">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Introducción a JavaScript</a></li>
+  <li><a href="../capitulo_8.html">Capítulo 8. Otras utilidades</a></li>
+  <li class="current"><span>8.3. Tooltip</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="tooltip"><span>8.3.</span> Tooltip</h1>
+    
+
+<p>Los <em>tooltips</em> son pequeños recuadros de información que aparecen al posicionar el ratón sobre un elemento. Normalmente se utilizan para ofrecer información adicional sobre el elemento seleccionado o para mostrar al usuario pequeños mensajes de ayuda. Los <em>tooltips</em> son habituales en varios elementos de los sistemas operativos:</p>
+
+<div class="figure" id="figure_8_7">
+    <img src="../../img/javascript/f0807.gif" alt="Aspecto de un tooltip típico en el Sistema Operativo" />
+
+    <p class="caption"><strong>Figura 8.7</strong> Aspecto de un tooltip típico en el Sistema Operativo</p>
+</div>
+
+
+<p>Realizar un <em>tooltip</em> completo mediante JavaScript es una tarea muy compleja, sobre todo por la dificultad de mostrar el mensaje correctamente en función de la posición del ratón. Afortunadamente, existen scripts que ya están preparados para generar cualquier tipo de <em>tooltip</em>. La librería que se va a utilizar se denomina overLIB, y se puede descargar desde su página web principal: http://www.bosrup.com/web/overlib/</p>
+
+<p>La descarga incluye todos los scripts necesarios para el funcionamiento del sistema de <em>tooltips</em>, pero no su documentación, que se puede consultar en: http://www.bosrup.com/web/overlib/?Documentation. La referencia de todos los comandos disponibles se puede consultar en: http://www.bosrup.com/web/overlib/?Command_Reference</p>
+
+<p>A continuación se indican los pasos necesarios para incluir un <em>tooltip</em> básico en cualquier página web:</p>
+
+<p>1) Enlazar los archivos JavaScript requeridos:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="sy0">&lt;</span>script type<span class="sy0">=</span><span class="st0">&quot;text/javascript&quot;</span> src<span class="sy0">=</span><span class="st0">&quot;js/overlib.js&quot;</span><span class="sy0">&gt;&lt;!--</span> overLIB <span class="br0">&#40;</span>c<span class="br0">&#41;</span> Erik Bosrup <span class="sy0">--&gt;&lt;/</span>script<span class="sy0">&gt;</span></pre>
+</div>
+
+<p>Se descomprime el archivo descargado, se guarda el archivo JavaScript en el sitio adecuado (en este ejemplo se supone que los archivos JavaScript se guardan en el directorio <code>js/</code>) y se enlaza directamente desde la cabecera de la página HTML. Los <em>tooltips</em> sólo requieren que se enlace un único archivo JavaScript (<code>overlib.js</code>). El comentario que incluye el código XHTML es el aviso de copyright de la librería, que es obligatorio incluirlo para poder usarla.</p>
+
+<p>2) Definir el texto que activa el <em>tooltip</em> y su contenido:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">p</span>&gt;</span>Lorem ipsum dolor sit amet, <span class="sc2">&lt;<span class="kw2">a</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;#&quot;</span> <span class="kw3">onmouseover</span><span class="sy0">=</span><span class="st0">&quot;return overlib('Prueba de un tooltip básico y muy sencillo.');&quot;</span> <span class="kw3">onmouseout</span><span class="sy0">=</span><span class="st0">&quot;return nd();&quot;</span>&gt;</span>consectetuer adipiscing elit<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">a</span>&gt;</span>. Etiam eget metus. Proin varius auctor tortor. Cras augue neque, porta vitae, vestibulum nec, pulvinar id, nibh. Fusce in arcu. Duis vehicula nonummy orci.<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">p</span>&gt;</span></pre>
+</div>
+
+<p>Los tooltip se incluyen como enlaces de tipo <code>&lt;a&gt;</code> para los que se definen los eventos <code>onmouseover</code> y <code>onmouseout</code>. Cuando el ratón se pasa por encima del enlace anterior, se muestra el <em>tooltip</em> con el aspecto por defecto:</p>
+
+<div class="figure" id="figure_8_8">
+    <img src="../../img/javascript/f0808.gif" alt="Aspecto por defecto del tooltip creado con la librería overLIB" />
+
+    <p class="caption"><strong>Figura 8.8</strong> Aspecto por defecto del tooltip creado con la librería overLIB</p>
+</div>
+
+
+<p>La librería overLIB permite configurar completamente el aspecto y comportamiento de cada <em>tooltip</em>. Las opciones se indican en cada <em>tooltip</em> y se incluyen como parámetros al final de la llamada a la función <code>overlib()</code>:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">a</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;#&quot;</span> <span class="kw3">onmouseover</span><span class="sy0">=</span><span class="st0">&quot;return overlib('Prueba de un tooltip básico y muy sencillo.', CENTER);&quot;</span> <span class="kw3">onmouseout</span><span class="sy0">=</span><span class="st0">&quot;return nd();&quot;</span>&gt;</span>consectetuer adipiscing elit<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">a</span>&gt;</span></pre>
+</div>
+
+<p>El parámetro <code>CENTER</code> indica que el <em>tooltip</em> se debe mostrar centrado respecto de la posición del ratón:</p>
+
+<div class="figure" id="figure_8_9">
+    <img src="../../img/javascript/f0809.gif" alt="Centrando el tooltip respecto de la posición del ratón" />
+
+    <p class="caption"><strong>Figura 8.9</strong> Centrando el tooltip respecto de la posición del ratón</p>
+</div>
+
+
+<p>Otra opción que se puede controlar es la anchura del <em>tooltip</em>. Por defecto, su anchura es de <code>200px</code>, pero la opción <code>WIDTH</code> permite modificarla:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">a</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;#&quot;</span> <span class="kw3">onmouseover</span><span class="sy0">=</span><span class="st0">&quot;return overlib('Prueba de un tooltip básico y muy sencillo.', CENTER, WIDTH, 120);&quot;</span> <span class="kw3">onmouseout</span><span class="sy0">=</span><span class="st0">&quot;return nd();&quot;</span>&gt;</span>consectetuer adipiscing elit<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">a</span>&gt;</span></pre>
+</div>
+
+<p>El valor de la nueva anchura se indica en el parámetro que va detrás de <code>WIDTH</code>. El nuevo aspecto del <em>tooltip</em> es el siguiente:</p>
+
+<div class="figure" id="figure_8_10">
+    <img src="../../img/javascript/f0810.gif" alt="Definiendo la anchura que muestra el tooltip" />
+
+    <p class="caption"><strong>Figura 8.10</strong> Definiendo la anchura que muestra el tooltip</p>
+</div>
+
+
+<p>El uso de los parámetros de configuración en la propia llamada a la función que muestra los <em>tooltips</em> no es recomendable cuando el número de parámetros empieza a ser muy numeroso. Afortunadamente, overLIB permite realizar una única configuración que se utilizará para todos los <em>tooltips</em> de la página.</p>
+
+<p>La configuración global consiste en llamar a la función <code>overlib_pagedefaults()</code> con todos los parámetros de configuración deseados. Por tanto, el código JavaScript necesario para realizar los cambios configurados hasta el momento sería:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">script</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text/javascript&quot;</span> <span class="kw3">src</span><span class="sy0">=</span><span class="st0">&quot;js/overlib.js&quot;</span>&gt;</span><span class="sc-1">&lt;!-- overLIB (c) Erik Bosrup --&gt;</span><span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">script</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">script</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text/javascript&quot;</span>&gt;</span>
+overlib_pagedefaults(CENTER, WIDTH, 120);
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">script</span>&gt;</span>
+&nbsp;
+<span class="sc2">&lt;<span class="kw2">p</span>&gt;</span>Lorem ipsum dolor sit amet, <span class="sc2">&lt;<span class="kw2">a</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;#&quot;</span> <span class="kw3">onmouseover</span><span class="sy0">=</span><span class="st0">&quot;return overlib('Prueba de un tooltip básico y muy sencillo.');&quot;</span> <span class="kw3">onmouseout</span><span class="sy0">=</span><span class="st0">&quot;return nd();&quot;</span>&gt;</span>consectetuer adipiscing elit<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">a</span>&gt;</span>. Etiam eget metus. Proin varius auctor tortor. Cras augue neque, porta vitae, vestibulum nec, pulvinar id, nibh. Fusce in arcu. Duis vehicula nonummy orci.<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">p</span>&gt;</span></pre>
+</div>
+
+<p>Utilizando esta configuración global, se va a modificar por último el aspecto del <em>tooltip</em> para hacerlo más parecido a los tooltips de los sistemas operativos:</p>
+
+<div class="figure" id="figure_8_11">
+    <img src="../../img/javascript/f0811.gif" alt="Tooltip creado con la librería overLIB y personalizado para que parezca un tooltip de Sistema Operativo" />
+
+    <p class="caption"><strong>Figura 8.11</strong> Tooltip creado con la librería overLIB y personalizado para que parezca un tooltip de Sistema Operativo</p>
+</div>
+
+
+<p>En el ejemplo anterior se ha modificado el tamaño y tipo de letra y el color de fondo del <em>tooltip</em> mediante la siguiente configuración:</p>
+
+<div class="code javascript">
+<pre class="javascript">overlib_pagedefaults<span class="br0">&#40;</span>WIDTH<span class="sy0">,</span><span class="nu0">150</span><span class="sy0">,</span>FGCOLOR<span class="sy0">,</span><span class="st0">'#ffffcc'</span><span class="sy0">,</span>BGCOLOR<span class="sy0">,</span><span class="st0">'#666666'</span><span class="sy0">,</span>TEXTFONT<span class="sy0">,</span><span class="st0">&quot;Arial, Helvetica, Verdana&quot;</span><span class="sy0">,</span>TEXTSIZE<span class="sy0">,</span><span class="st0">&quot;.8em&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p><div class="exercise"><p class="title">Ejercicio 19</p> Mejorar el <em>tooltip</em> propuesto añadiendo las siguientes características:</p>
+
+<ol>
+<li>Que el <em>tooltip</em> no se muestre instantáneamente, sino que transcurra un cuarto de segundo hasta que se muestre (pista: <code>DELAY</code>)</li>
+<li>Que exista una separación horizontal de 15 píxel entre el puntero del ratón y el <em>tooltip</em> (pista: <code>OFFSETX</code>)</li>
+<li>Que el <em>tooltip</em> se muestre en la parte superior del puntero del ratón y no en la parte inferior (pista: <code>ABOVE</code>)</li>
+</ol>
+
+<p>El nuevo aspecto del tooltip se muestra en la siguiente imagen: <div class="figure" id="figure_8_12">
+    <img src="../../img/javascript/f0812.gif" alt="Nuevo aspecto del tooltip" />
+
+    <p class="caption"><strong>Figura 8.12</strong> Nuevo aspecto del tooltip</p>
+</div>
+
+
+<p><a href="../capitulo_11/ejercicio_19.html">Ver solución</a></div></p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="calendario.html">&larr; Anterior <span>8.2. Calendario</span></a>
+            
+            <a class="span5 next" href="menu_desplegable.html">Siguiente &rarr; <span>8.4. Menú desplegable</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Tooltip (Introducción a JavaScript%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a JavaScript : Tooltip']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> El primer script</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Programación básica</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Programación avanzada</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> DOM</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Eventos</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Formularios</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_8.html">
+            <span>Capítulo 8.</span> Otras utilidades
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="relojes_contadores_e_intervalos_de_tiempo.html">
+            <span>8.1.</span> Relojes, contadores e intervalos de tiempo
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="calendario.html">
+            <span>8.2.</span> Calendario
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="tooltip.html">
+            <span>8.3.</span> Tooltip
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="menu_desplegable.html">
+            <span>8.4.</span> Menú desplegable
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="galerias_de_imagenes_lightbox.html">
+            <span>8.5.</span> Galerías de imágenes (Lightbox)
+        </a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Detección y corrección de errores</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Recursos útiles</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

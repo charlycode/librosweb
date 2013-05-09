@@ -1,0 +1,374 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>17.2. Indices (El tutorial Jobeet)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="la_tecnologia.html" />
+        <link rel="next" href="busquedas.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="17.2. Indices (El tutorial Jobeet)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page jobeet_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">El tutorial Jobeet</a></li>
+  <li><a href="../capitulo_17.html">Capítulo 17. El buscador</a></li>
+  <li class="current"><span>17.2.. Indices</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="indices"><span>17.2.</span> Indices</h1>
+    
+
+<p>El buscador de Jobeet debe encontrar todas las ofertas de trabajo que coincidan de alguna manera con las palabras clave introducidas por los usuarios. Por ello, antes de poder realizar cualquier búsqueda, es necesario crear los índices con la información de las ofertas de trabajo. En el caso de Jobeet, los índices generados los vamos a guardar en el directorio <code>data/</code></p>
+
+<p>Zend Lucene incluye dos métodos para obtener un índice dependiendo de si ese índice ya existe o no. Vamos a crear un helper en la clase <code>JobeetJobPeer</code> que devuelve o crea un índice en función de si ya existía o no:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// lib/model/JobeetJobPeer.php</span>
+static <span class="kw2">public</span> <span class="kw2">function</span> getLuceneIndex<span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  ProjectConfiguration<span class="sy0">::</span><span class="me2">registerZend</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+  <span class="kw1">if</span> <span class="br0">&#40;</span><span class="kw3">file_exists</span><span class="br0">&#40;</span><span class="re0">$index</span> <span class="sy0">=</span> <span class="kw2">self</span><span class="sy0">::</span><span class="me2">getLuceneIndexFile</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="kw1">return</span> Zend_Search_Lucene<span class="sy0">::</span><span class="me2">open</span><span class="br0">&#40;</span><span class="re0">$index</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+  <span class="kw1">else</span>
+  <span class="br0">&#123;</span>
+    <span class="kw1">return</span> Zend_Search_Lucene<span class="sy0">::</span><span class="me2">create</span><span class="br0">&#40;</span><span class="re0">$index</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+static <span class="kw2">public</span> <span class="kw2">function</span> getLuceneIndexFile<span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="kw1">return</span> sfConfig<span class="sy0">::</span><span class="me2">get</span><span class="br0">&#40;</span><span class="st_h">'sf_data_dir'</span><span class="br0">&#41;</span><span class="sy0">.</span><span class="st_h">'/job.'</span><span class="sy0">.</span>sfConfig<span class="sy0">::</span><span class="me2">get</span><span class="br0">&#40;</span><span class="st_h">'sf_environment'</span><span class="br0">&#41;</span><span class="sy0">.</span><span class="st_h">'.index'</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<h3 id="el_metodo_save">17.2.1. El método save()</h3>
+
+<p>Cada vez que creamos, modificamos o borramos una oferta de trabajo, debemos actualizar el índice. Modifica la clase <code>JobeetJob</code> para que se actualice el índice cada vez que guardamos una oferta de trabajo en la base de datos:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// lib/model/JobeetJob.php</span>
+<span class="kw2">public</span> <span class="kw2">function</span> save<span class="br0">&#40;</span>PropelPDO <span class="re0">$con</span> <span class="sy0">=</span> <span class="kw4">null</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="co1">// ...</span>
+&nbsp;
+  <span class="re0">$ret</span> <span class="sy0">=</span> parent<span class="sy0">::</span><span class="me2">save</span><span class="br0">&#40;</span><span class="re0">$con</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+  <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">updateLuceneIndex</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+  <span class="kw1">return</span> <span class="re0">$ret</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>A continuación, crea el método <code>updateLuceneIndex()</code> que es realmente el que actualiza el índice:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// lib/model/JobeetJob.php</span>
+<span class="kw2">public</span> <span class="kw2">function</span> updateLuceneIndex<span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="re0">$index</span> <span class="sy0">=</span> JobeetJobPeer<span class="sy0">::</span><span class="me2">getLuceneIndex</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+  <span class="co1">// remove existing entries</span>
+  <span class="kw1">foreach</span> <span class="br0">&#40;</span><span class="re0">$index</span><span class="sy0">-&gt;</span><span class="me1">find</span><span class="br0">&#40;</span><span class="st_h">'pk:'</span><span class="sy0">.</span><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getId</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="kw1">as</span> <span class="re0">$hit</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$index</span><span class="sy0">-&gt;</span><span class="me1">delete</span><span class="br0">&#40;</span><span class="re0">$hit</span><span class="sy0">-&gt;</span><span class="me1">id</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="co1">// don't index expired and non-activated jobs</span>
+  <span class="kw1">if</span> <span class="br0">&#40;</span><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">isExpired</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="sy0">||</span> <span class="sy0">!</span><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getIsActivated</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="kw1">return</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="re0">$doc</span> <span class="sy0">=</span> <span class="kw2">new</span> Zend_Search_Lucene_Document<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+  <span class="co1">// store job primary key to identify it in the search results</span>
+  <span class="re0">$doc</span><span class="sy0">-&gt;</span><span class="me1">addField</span><span class="br0">&#40;</span>Zend_Search_Lucene_Field<span class="sy0">::</span><span class="me2">Keyword</span><span class="br0">&#40;</span><span class="st_h">'pk'</span><span class="sy0">,</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getId</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+  <span class="co1">// index job fields</span>
+  <span class="re0">$doc</span><span class="sy0">-&gt;</span><span class="me1">addField</span><span class="br0">&#40;</span>Zend_Search_Lucene_Field<span class="sy0">::</span><span class="me2">UnStored</span><span class="br0">&#40;</span><span class="st_h">'position'</span><span class="sy0">,</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getPosition</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="st_h">'utf-8'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="re0">$doc</span><span class="sy0">-&gt;</span><span class="me1">addField</span><span class="br0">&#40;</span>Zend_Search_Lucene_Field<span class="sy0">::</span><span class="me2">UnStored</span><span class="br0">&#40;</span><span class="st_h">'company'</span><span class="sy0">,</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getCompany</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="st_h">'utf-8'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="re0">$doc</span><span class="sy0">-&gt;</span><span class="me1">addField</span><span class="br0">&#40;</span>Zend_Search_Lucene_Field<span class="sy0">::</span><span class="me2">UnStored</span><span class="br0">&#40;</span><span class="st_h">'location'</span><span class="sy0">,</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getLocation</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="st_h">'utf-8'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="re0">$doc</span><span class="sy0">-&gt;</span><span class="me1">addField</span><span class="br0">&#40;</span>Zend_Search_Lucene_Field<span class="sy0">::</span><span class="me2">UnStored</span><span class="br0">&#40;</span><span class="st_h">'description'</span><span class="sy0">,</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getDescription</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="st_h">'utf-8'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+  <span class="co1">// add job to the index</span>
+  <span class="re0">$index</span><span class="sy0">-&gt;</span><span class="me1">addDocument</span><span class="br0">&#40;</span><span class="re0">$doc</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="re0">$index</span><span class="sy0">-&gt;</span><span class="me1">commit</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Como Zend Lucene no es capaz de actualizar un registro existente en el índice, primero comprobamos si ya existía esa oferta de trabajo en el índice y en caso afirmativo, la eliminamos antes de volver a añadirla.</p>
+
+<p>Indexar la información de una oferta de trabajo es muy sencillo: guardamos la clave primaria para utilizarla posteriormente en las búsquedas e indexamos el contenido de las columnas de datos principales (<code>position</code>, <code>company</code>, <code>location</code> y <code>description</code>). El contenido de estas columnas se indexa pero no se guarda porque al mostrar los resultados de búsqueda utilizaremos los objetos reales.</p>
+
+<h3 id="transacciones_propel">17.2.2. Transacciones Propel</h3>
+
+<p>¿Qué sucede si surge un problema al indexar una oferta de trabajo o si la oferta no se guarda correctamente en la base de datos? En este caso, tanto Propel como Zend Lucene lanzan una excepción. No obstante, puede suceder que hayamos guardado una oferta de trabajo en la base de datos pero su información no se encuentre en el índice. Para evitar que esto ocurra, vamos a encerrar las dos actualizaciones de datos en una transacción que podremos anular en caso de error:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// lib/model/JobeetJob.php</span>
+<span class="kw2">public</span> <span class="kw2">function</span> save<span class="br0">&#40;</span>PropelPDO <span class="re0">$con</span> <span class="sy0">=</span> <span class="kw4">null</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="co1">// ...</span>
+&nbsp;
+  <span class="kw1">if</span> <span class="br0">&#40;</span><span class="kw3">is_null</span><span class="br0">&#40;</span><span class="re0">$con</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$con</span> <span class="sy0">=</span> Propel<span class="sy0">::</span><span class="me2">getConnection</span><span class="br0">&#40;</span>JobeetJobPeer<span class="sy0">::</span><span class="me2">DATABASE_NAME</span><span class="sy0">,</span> Propel<span class="sy0">::</span><span class="me2">CONNECTION_WRITE</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="re0">$con</span><span class="sy0">-&gt;</span><span class="me1">beginTransaction</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  try
+  <span class="br0">&#123;</span>
+    <span class="re0">$ret</span> <span class="sy0">=</span> parent<span class="sy0">::</span><span class="me2">save</span><span class="br0">&#40;</span><span class="re0">$con</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">updateLuceneIndex</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="re0">$con</span><span class="sy0">-&gt;</span><span class="me1">commit</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="kw1">return</span> <span class="re0">$ret</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+  catch <span class="br0">&#40;</span>Exception <span class="re0">$e</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$con</span><span class="sy0">-&gt;</span><span class="me1">rollBack</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="kw1">throw</span> <span class="re0">$e</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<h3 id="el_metodo_delete">17.2.3. El método delete()</h3>
+
+<p>Además de modificar el método <code>save()</code>, también tenemos que redefinir el método <code>delete()</code> para eliminar del índice el registro de la oferta de trabajo borrada:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// lib/model/JobeetJob.php</span>
+<span class="kw2">public</span> <span class="kw2">function</span> delete<span class="br0">&#40;</span>PropelPDO <span class="re0">$con</span> <span class="sy0">=</span> <span class="kw4">null</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="re0">$index</span> <span class="sy0">=</span> JobeetJobPeer<span class="sy0">::</span><span class="me2">getLuceneIndex</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+  <span class="kw1">foreach</span> <span class="br0">&#40;</span><span class="re0">$index</span><span class="sy0">-&gt;</span><span class="me1">find</span><span class="br0">&#40;</span><span class="st_h">'pk:'</span><span class="sy0">.</span><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getId</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="kw1">as</span> <span class="re0">$hit</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$index</span><span class="sy0">-&gt;</span><span class="me1">delete</span><span class="br0">&#40;</span><span class="re0">$hit</span><span class="sy0">-&gt;</span><span class="me1">id</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="kw1">return</span> parent<span class="sy0">::</span><span class="me2">delete</span><span class="br0">&#40;</span><span class="re0">$con</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<h3 id="borrados_masivos">17.2.4. Borrados masivos</h3>
+
+<p>Cada vez que utilizas la tarea <code>propel:data-load</code> para cargar la información de los archivos de datos, Symfony borra todos los registros de las ofertas de trabajo en la base de datos con el método <code>JobeetJobPeer::doDeleteAll()</code>. A continuación, redefinimos este comportamiento por defecto para que también borre todo el índice de ofertas de trabajo:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// lib/model/JobeetJobPeer.php</span>
+<span class="kw2">public</span> static <span class="kw2">function</span> doDeleteAll<span class="br0">&#40;</span><span class="re0">$con</span> <span class="sy0">=</span> <span class="kw4">null</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="kw1">if</span> <span class="br0">&#40;</span><span class="kw3">file_exists</span><span class="br0">&#40;</span><span class="re0">$index</span> <span class="sy0">=</span> <span class="kw2">self</span><span class="sy0">::</span><span class="me2">getLuceneIndexFile</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    sfToolkit<span class="sy0">::</span><span class="me2">clearDirectory</span><span class="br0">&#40;</span><span class="re0">$index</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="kw3">rmdir</span><span class="br0">&#40;</span><span class="re0">$index</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="kw1">return</span> parent<span class="sy0">::</span><span class="me2">doDeleteAll</span><span class="br0">&#40;</span><span class="re0">$con</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="la_tecnologia.html">&larr; Anterior <span>17.1. La tecnología</span></a>
+            
+            <a class="span5 next" href="busquedas.html">Siguiente &rarr; <span>17.3. Búsquedas</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Indices (El tutorial Jobeet%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'El tutorial Jobeet : Indices']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Comenzando el proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> El proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> El modelo de datos</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> El controlador y la vista</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> El sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Profundizando en el modelo</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Trabajando con la página de cada categoría</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Pruebas unitarias</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Pruebas funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Probando los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> El generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> El usuario</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> El día de descanso</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Canales Atom</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Servicios web</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_17.html">
+            <span>Capítulo 17.</span> El buscador
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="la_tecnologia.html">
+            <span>17.1.</span> La tecnología
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="indices.html">
+            <span>17.2.</span> Indices
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="busquedas.html">
+            <span>17.3.</span> Búsquedas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="pruebas_unitarias.html">
+            <span>17.4.</span> Pruebas unitarias
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="tareas.html">
+            <span>17.5.</span> Tareas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="nos_vemos_manana.html">
+            <span>17.6.</span> Nos vemos mañana
+        </a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>20</span> <a href="../capitulo_20.html"> Plugins</a>
+    </li>
+    <li class="level-1">
+        <span>21</span> <a href="../capitulo_21.html"> El día del diseño</a>
+    </li>
+    <li class="level-1">
+        <span>22</span> <a href="../capitulo_22.html"> La cache</a>
+    </li>
+    <li class="level-1">
+        <span>23</span> <a href="../capitulo_23.html"> Pasando a producción</a>
+    </li>
+    <li class="level-1">
+        <span>24</span> <a href="../capitulo_24.html"> Un repaso a Symfony</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

@@ -1,0 +1,217 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>font-size (Referencia de CSS 2.1)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="font-size (Referencia de CSS 2.1)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page referencia_css">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="index.html">Referencia de CSS 2.1</a></li>
+  <li class="current"><span>font-size</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="font_size">font-size</h1>
+    <div class="table" id="table_49_1">
+
+    <table class="table property css" summary="Definición de la propiedad font-size de CSS"> 
+<tr><th>Definición</th><td>Establece el tamaño de letra</td></tr><tr><th rowspan="2">Valores <br/> permitidos</th><td class="nobottom">Uno y sólo uno de los siguientes valores:<ul><li>absolute-size</li><li>relative-size</li><li><a href="unidades_de_medida.html">medida</a></li><li><a href="porcentajes.html">porcentaje</a></li><li><a href="el-valor-inherit.html">inherit</a></li></ul></td></tr><tr><td>Si se utilizan porcentajes, hace referencia al tamaño de letra del elemento contenedor</td></tr><tr><th>Valor inicial</th><td>medium</td></tr><tr><th>Se aplica a</th><td>Todos los elementos</td></tr><tr><th>Válida en</th><td><a href="medios.html">medios visuales</a></td></tr><tr><th>Se hereda</th><td>si</td></tr><tr class="nobottom"><th>Definición en<br/>el estándar</th><td><a href="http://www.w3.org/TR/CSS21/fonts.html#propdef-font-size">http://www.w3.org/TR/CSS21/fonts.html#propdef-font-size</a></td></tr>
+</table>
+</div>
+
+
+<h2 id="ejemplos_de_uso">Ejemplos de uso</h2>
+
+<p>La propiedad <code>font-size</code> permite establecer el tamaño de letra del texto. Además de todas las <a href="medidas/index.html">unidades de medida absolutas y relativas</a> conocidas (<code>em</code>, <code>ex</code>, <code>px</code>, <code>%</code>, <code>in</code>, <code>cm</code>, <code>mm</code>, <code>pt</code>, <code>pc</code>) también se pueden utilizar palabras clave que hacen referencia a tamaños de letra absolutos y relativos.</p>
+
+<p>Los tamaños de letra absolutos se establecen mediante las palabras clave <code>xx-small</code>, <code>x-small</code>, <code>small</code>, <code>medium</code>, <code>large</code>, <code>x-large</code>, <code>xx-large</code>. Aunque depende de cada navegador decidir el tamaño de las palabras clave, normalmente coinciden con los tamaños de los títulos de sección <code>&lt;h1&gt;</code> a <code>&lt;h6&gt;</code>:</p>
+
+<div class="example">
+<p style="position: relative; top: .5em; margin-bottom: .5em">font-size: xx-large</p>
+<p style="font-size: xx-large; margin-top: 0">Lorem ipsum dolor sit amet</p>
+<p style="position: relative; top: .5em; margin-bottom: .5em">font-size: x-large</p>
+<p style="font-size: x-large; margin-top: 0">Lorem ipsum dolor sit amet</p>
+<p style="position: relative; top: .5em; margin-bottom: .5em">font-size: large</p>
+<p style="font-size: large; margin-top: 0">Lorem ipsum dolor sit amet</p>
+<p style="position: relative; top: .5em; margin-bottom: .5em">font-size: medium</p>
+<p style="font-size:medium; margin-top: 0">Lorem ipsum dolor sit amet</p>
+<p style="position: relative; top: .5em; margin-bottom: .5em">font-size: small</p>
+<p style="font-size: small; margin-top: 0">Lorem ipsum dolor sit amet</p>
+<p style="position: relative; top: .5em; margin-bottom: .5em">font-size: x-small</p>
+<p style="font-size: x-smal; margin-top: 0">Lorem ipsum dolor sit amet</p>
+<p style="position: relative; top: .5em; margin-bottom: .5em">font-size: xx-small</p>
+<p style="font-size: xx-small; margin-top: 0">Lorem ipsum dolor sit amet</p>
+</div>
+
+<p>Como son tamaños de letra absolutos, el texto del ejemplo anterior siempre se ve con el mismo tamaño, independientemente de la resolución de la pantalla o del tamaño de otros elementos de la página.</p>
+
+<p>Además de los tamaños absolutos, la propiedad <code>font-size</code> permite establecer el tamaño del texto de forma relativa mediante las palabras clave <code>larger</code> y <code>smaller</code>. La referencia que se toma para calcular un tamaño más grande (<code>larger</code>) o más pequeño (<code>smaller</code>) es el tamaño de letra del elemento contenedor.</p>
+
+<p>De esta forma, si el elemento contenedor tiene un tamaño de letra equivalente a <code>medium</code>, el tamaño utilizado si se indica un valor <code>larger</code> será <code>large</code> y si se indica un valor <code>smaller</code> será <code>small</code>. Si el contenedor tiene un tamaño igual a <code>x-small</code>, el valor <code>larger</code> será <code>small</code> y el valor <code>smaller</code> será <code>xx-small</code> y así sucesivamente. Si el elemento contenedor no tiene un tamaño de letra que coincida exactamente con uno de los valores absolutos, el navegador lo redondea al valor absoluto más cercano.</p>
+
+<p>Hace unos años, era muy común utilizar los valores absolutos (<code>x-small</code>, <code>small</code>, etc.) para establecer el tamaño de letra del texto. No obstante, hoy en día su uso se ha reducido drásticamente. El uso de los valores relativos (<code>larger</code>, <code>smaller</code>) siempre ha sido residual.</p>
+
+<p>De todas las <a href="medidas/index.html">unidades de medida absolutas y relativas</a> disponibles, se recomienda utilizar la unidad <code>em</code> para establecer el tamaño del texto. El motivo es que al tratarse de una unidad de medida relativa, se adapta fácilmente sin realizar cambios a cualquier dispositivo de acceso utilizado por los usuarios.</p>
+
+<p>En el siguiente ejemplo se muestran diferentes tamaños de texto establecidos mediante unidades relativas (<code>em</code>, <code>%</code>, <code>px</code>) y absolutas (<code>pt</code>):</p>
+
+<div class="example">
+<div style="width:25%; float:left">
+<span style="display: block; font-size:.5em">.5em</span>
+<span style="display: block; font-size:.7em">.7em</span>
+<span style="display: block; font-size:.9em">.9em</span>
+<span style="display: block; font-size:1em">1em</span>
+<span style="display: block; font-size:1.5em">1.5em</span>
+<span style="display: block; font-size:2em">2em</span>
+<span style="display: block; font-size:3em">3em</span>
+<span style="display: block; font-size:3.5em">3.5em</span>
+</div>
+<div style="width:25%; float:left">
+<span style="display: block; font-size:50%">50%</span>
+<span style="display: block; font-size:70%">70%</span>
+<span style="display: block; font-size:90%">90%</span>
+<span style="display: block; font-size:100%">100%</span>
+<span style="display: block; font-size:150%">150%</span>
+<span style="display: block; font-size:200%">200%</span>
+<span style="display: block; font-size:300%">300%</span>
+<span style="display: block; font-size:350%">350%</span>
+</div>
+<div style="width:25%; float:left">
+<span style="display: block; font-size:9px">9px</span>
+<span style="display: block; font-size:12px">12px</span>
+<span style="display: block; font-size:14px">14px</span>
+<span style="display: block; font-size:18px">18px</span>
+<span style="display: block; font-size:24px">24px</span>
+<span style="display: block; font-size:36px">36px</span>
+<span style="display: block; font-size:48px">48px</span>
+</div>
+<div style="width:25%; float:left">
+<span style="display: block; font-size:9pt">9pt</span>
+<span style="display: block; font-size:12pt">12pt</span>
+<span style="display: block; font-size:14pt">14pt</span>
+<span style="display: block; font-size:18pt">18pt</span>
+<span style="display: block; font-size:24pt">24pt</span>
+<span style="display: block; font-size:36pt">36pt</span>
+<span style="display: block; font-size:48pt">48pt</span>
+</div>
+<div class="clear"></div>
+</div>
+
+<p>Como se explica en el apartado de <a href="medidas/index.html">unidades de medida relativas y absolutas</a>, el tamaño del texto establecido mediante <code>em</code> toma como referencia el tamaño de letra del elemento contenedor. De esta forma, si se modifica el tamaño de letra de la página o de alguno de sus  elementos contenedores, el tamaño de letra del texto también se modifica. El mismo comportamiento se produce en el tamaño de texto establecido mediante porcentanjes.</p>
+
+<p>Cuando se establece el tamaño del texto mediante píxel, su tamaño real en pantalla puede ser grande o pequeño en función de la resolución de la pantalla, por lo que también se considera una unidad de medida relativa. Por su parte, el texto cuyo tamaño se establece en puntos (unidad <code>pt</code>) siempre se muestra del mismo tamaño, independientemente de la resolución de la pantalla o del tamaño de letra de otros elementos de la página.</p>
+
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'font-size (Referencia de CSS 2.1%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Referencia de CSS 2.1 : font-size']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Propiedades relacionadas</span></h3>
+
+
+                                    <ul class="toc">
+                    <li class="">
+                <a href="color.html">color</a>
+            </li>
+                    <li class="">
+                <a href="font-family.html">font-family</a>
+            </li>
+                    <li class="active">
+                <a href="font-size.html">font-size</a>
+            </li>
+                    <li class="">
+                <a href="font-style.html">font-style</a>
+            </li>
+                    <li class="">
+                <a href="font-variant.html">font-variant</a>
+            </li>
+                    <li class="">
+                <a href="font-weight.html">font-weight</a>
+            </li>
+                    <li class="">
+                <a href="font.html">font</a>
+            </li>
+                    <li class="">
+                <a href="letter-spacing.html">letter-spacing</a>
+            </li>
+                </ul>
+                                        
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

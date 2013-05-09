@@ -1,0 +1,299 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>5.2. Posicionamiento (Introducción a CSS)</title>
+        <link href="../main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="tipos_de_elementos.html" />
+        <link rel="next" href="posicionamiento_normal.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="5.2. Posicionamiento (Introducción a CSS)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page css">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Introducción a CSS</a></li>
+  <li><a href="../capitulo_5.html">Capítulo 5. Posicionamiento y visualización</a></li>
+  <li class="current"><span>5.2.. Posicionamiento</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="posicionamiento"><span>5.2.</span> Posicionamiento</h1>
+    
+
+<p>Los navegadores crean y posicionan de forma automática todas las cajas que forman cada página HTML. No obstante, CSS permite al diseñador modificar la posición en la que se muestra cada caja.</p>
+
+<p>Utilizando las propiedades que proporciona CSS para alterar la posición de las cajas es posible realizar efectos muy avanzados y diseñar estructuras de páginas que de otra forma no serían posibles.</p>
+
+<p>El estándar de CSS define cinco modelos diferentes para posicionar una caja:</p>
+
+<ul>
+<li>Posicionamiento normal o estático: se trata del posicionamiento que utilizan los navegadores si no se indica lo contrario.</li>
+<li>Posicionamiento relativo: variante del posicionamiento normal que consiste en posicionar una caja según el posicionamiento normal y después desplazarla respecto de su posición original.</li>
+<li>Posicionamiento absoluto: la posición de una caja se establece de forma absoluta respecto de su elemento contenedor y el resto de elementos de la página ignoran la nueva posición del elemento.</li>
+<li>Posicionamiento fijo: variante del posicionamiento absoluto que convierte una caja en un elemento inamovible, de forma que su posición en la pantalla siempre es la misma independientemente del resto de elementos e independientemente de si el usuario sube o baja la página en la ventana del navegador.</li>
+<li>Posicionamiento flotante: se trata del modelo más especial de posicionamiento, ya que desplaza las cajas todo lo posible hacia la izquierda o hacia la derecha de la línea en la que se encuentran.</li>
+</ul>
+
+<p>El posicionamiento de una caja se establece mediante la propiedad <code>position</code>:</p>
+
+<div class="table" id="table_5_1">
+
+    <table class="table property css" summary="Definición de la propiedad position de CSS">
+    <thead>
+        <tr>
+            <th scope="row">Propiedad</th>
+            <td><strong class="title"><strong>position</strong></strong></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">Valores</th>
+            <td>static | relative | absolute | fixed | <a href="../../referencia/css/el_valor_inherit.html">inherit</a></td>
+        </tr>
+        <tr>
+            <th scope="row">Se aplica a</th>
+            <td>Todos los elementos</td>
+        </tr>
+        <tr>
+            <th scope="row">Valor inicial</th>
+            <td>static</td>
+        </tr>
+        <tr>
+            <th scope="row">Descripción</th>
+            <td>Selecciona el posicionamiento con el que se mostrará el elemento</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+
+<p>El significado de cada uno de los posibles valores de la propiedad <code>position</code> es el siguiente:</p>
+
+<ul>
+<li><code>static</code>: corresponde al posicionamiento normal o estático. Si se utiliza este valor, se ignoran los valores de las propiedades <code>top</code>, <code>right</code>, <code>bottom</code> y <code>left</code> que se verán a continuación.</li>
+<li><code>relative</code>: corresponde al posicionamiento relativo. El desplazamiento de la caja se controla con las propiedades <code>top</code>, <code>right</code>, <code>bottom</code> y <code>left</code>.</li>
+<li><code>absolute</code>: corresponde al posicionamiento absoluto. El desplazamiento de la caja también se controla con las propiedades <code>top</code>, <code>right</code>, <code>bottom</code> y <code>left</code>, pero su interpretación es mucho más compleja, ya que el origen de coordenadas del desplazamiento depende del posicionamiento de su elemento contenedor.</li>
+<li><code>fixed</code>: corresponde al posicionamiento fijo. El desplazamiento se establece de la misma forma que en el posicionamiento absoluto, pero en este caso el elemento permanece inamovible en la pantalla.</li>
+</ul>
+
+<p>La propiedad <code>position</code> no permite controlar el posicionamiento flotante, que se establece con otra propiedad llamada <code>float</code> y que se explica más adelante. Además, la propiedad <code>position</code> sólo indica cómo se posiciona una caja, pero no la desplaza.</p>
+
+<p>Normalmente, cuando se posiciona una caja también es necesario desplazarla respecto de su posición original o respecto de otro origen de coordenadas. CSS define cuatro propiedades llamadas <code>top</code>, <code>right</code>, <code>bottom</code> y <code>left</code> para controlar el desplazamiento de las cajas posicionadas:</p>
+
+<div class="table" id="table_5_2">
+
+    <table class="table property css" summary="Definición de la propiedad top, right, bottom, left de CSS">
+    <thead>
+        <tr>
+            <th scope="row">Propiedades</th>
+            <td><strong class="title"><strong>top</strong>, <strong>right</strong>, <strong>bottom</strong>, <strong>left</strong></strong></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">Valores</th>
+            <td><a href="../../referencia/css/unidades_de_medida.html">unidad de medida</a> | <a href="../../referencia/css/porcentajes.html">porcentaje</a> | auto | <a href="../../referencia/css/el_valor_inherit.html">inherit</a></td>
+        </tr>
+        <tr>
+            <th scope="row">Se aplica a</th>
+            <td>Todos los elementos posicionados</td>
+        </tr>
+        <tr>
+            <th scope="row">Valor inicial</th>
+            <td>auto</td>
+        </tr>
+        <tr>
+            <th scope="row">Descripción</th>
+            <td>Indican el desplazamiento horizontal y vertical del elemento respecto de su posición original</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+
+<p>En el caso del posicionamiento relativo, cada una de estas propiedades indica el desplazamiento del elemento desde la posición original de su borde superior/derecho/inferior/izquierdo. Si el posicionamiento es absoluto, las propiedades indican el desplazamiento del elemento respecto del borde superior/derecho/inferior/izquierdo de su primer elemento padre posicionado.</p>
+
+<p>En cualquiera de los dos casos, si el desplazamiento se indica en forma de porcentaje, se refiere al porcentaje sobre la anchura (propiedades <code>right</code> y <code>left</code>) o altura (propiedades <code>top</code> y <code>bottom</code>) del elemento.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="tipos_de_elementos.html">&larr; Anterior <span>5.1. Tipos de elementos</span></a>
+            
+            <a class="span5 next" href="posicionamiento_normal.html">Siguiente &rarr; <span>5.3. Posicionamiento normal</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Posicionamiento (Introducción a CSS%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a CSS : Posicionamiento']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Selectores</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Unidades de medida y colores</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Modelo de cajas</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_5.html">
+            <span>Capítulo 5.</span> Posicionamiento y visualización
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="tipos_de_elementos.html">
+            <span>5.1.</span> Tipos de elementos
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="posicionamiento.html">
+            <span>5.2.</span> Posicionamiento
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="posicionamiento_normal.html">
+            <span>5.3.</span> Posicionamiento normal
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="posicionamiento_relativo.html">
+            <span>5.4.</span> Posicionamiento relativo
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="posicionamiento_absoluto.html">
+            <span>5.5.</span> Posicionamiento absoluto
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="posicionamiento_fijo.html">
+            <span>5.6.</span> Posicionamiento fijo
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="posicionamiento_flotante.html">
+            <span>5.7.</span> Posicionamiento flotante
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="visualizacion.html">
+            <span>5.8.</span> Visualización
+        </a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Texto</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Enlaces</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Imágenes</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Listas</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Tablas</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Layout</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Otros</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Recursos útiles</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Ejercicios</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

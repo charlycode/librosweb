@@ -1,0 +1,260 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>caption-side (Referencia de CSS 2.1)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="caption-side (Referencia de CSS 2.1)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page referencia_css">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="index.html">Referencia de CSS 2.1</a></li>
+  <li class="current"><span>caption-side</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="caption_side">caption-side</h1>
+    <div class="table" id="table_31_1">
+
+    <table class="table property css" summary="Definición de la propiedad caption-side de CSS"> 
+<tr><th>Definición</th><td>Establece la posición vertical del título o leyenda de una tabla</td></tr><tr><th>Valores <br/> permitidos</th><td>Uno y sólo uno de los siguientes valores:<ul><li>top</li><li>bottom</li><li><a href="el-valor-inherit.html">inherit</a></li></ul></td></tr><tr><th>Valor inicial</th><td>top</td></tr><tr><th>Se aplica a</th><td>Los elementos de tipo tabla que tengan un título o leyenda</td></tr><tr><th>Válida en</th><td><a href="medios.html">medios visuales</a></td></tr><tr><th>Se hereda</th><td>si</td></tr><tr class="nobottom"><th>Definición en<br/>el estándar</th><td><a href="http://www.w3.org/TR/CSS21/tables.html#propdef-caption-side">http://www.w3.org/TR/CSS21/tables.html#propdef-caption-side</a></td></tr>
+</table>
+</div>
+
+
+<h2 id="ejemplos_de_uso">Ejemplos de uso</h2>
+
+<p>La propiedad <code>caption-side</code> establece la posición vertical del título o leyenda de una tabla. Las tablas XHTML indican su título mediante la etiqueta <code>&lt;caption&gt;</code>, que siempre se incluye en el interior de la etiqueta <code>&lt;table&gt;</code>:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">table</span> <span class="kw3">summary</span><span class="sy0">=</span><span class="st0">&quot;Descripción de la tabla y su contenido&quot;</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">caption</span>&gt;</span>Título de la tabla<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">caption</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">tbody</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">tr</span>&gt;</span>
+      <span class="sc2">&lt;<span class="kw2">td</span>&gt;</span>Celda 1 - 1<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;</span>
+      <span class="sc2">&lt;<span class="kw2">td</span>&gt;</span>Celda 1 - 2<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;</span>
+      <span class="sc2">&lt;<span class="kw2">td</span>&gt;</span>Celda 1 - 3<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;</span>
+    <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">tr</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">tr</span>&gt;</span>
+      <span class="sc2">&lt;<span class="kw2">td</span>&gt;</span>Celda 2 - 1<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;</span>
+      <span class="sc2">&lt;<span class="kw2">td</span>&gt;</span>Celda 2 - 2<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;</span>
+      <span class="sc2">&lt;<span class="kw2">td</span>&gt;</span>Celda 2 - 3<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;</span>
+    <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">tr</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">tr</span>&gt;</span>
+      <span class="sc2">&lt;<span class="kw2">td</span>&gt;</span>Celda 3 - 1<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;</span>
+      <span class="sc2">&lt;<span class="kw2">td</span>&gt;</span>Celda 3 - 2<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;</span>
+      <span class="sc2">&lt;<span class="kw2">td</span>&gt;</span>Celda 3 - 3<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;</span>
+    <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">tr</span>&gt;</span>
+  <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">tbody</span>&gt;</span>
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">table</span>&gt;</span></pre>
+</div>
+
+<p>Por defecto, el título siempre se muestra en la parte superior de la tabla:</p>
+
+<div class="example">
+<div class="table" id="table_31_2">
+
+    <table summary="Descripción de la tabla y su contenido">
+<caption>Título de la tabla</caption>
+<tbody>
+  <tr>
+    <td>Celda 1 - 1</td>
+    <td>Celda 1 - 2</td>
+    <td>Celda 1 - 3</td>
+  </tr>
+  <tr>
+    <td>Celda 2 - 1</td>
+    <td>Celda 2 - 2</td>
+    <td>Celda 2 - 3</td>
+  </tr>
+  <tr>
+    <td>Celda 3 - 1</td>
+    <td>Celda 3 - 2</td>
+    <td>Celda 3 - 3</td>
+  </tr>
+</tbody>
+</table>
+</div>
+
+</div>
+
+<p>La propiedad <code>caption-side</code> dispone de dos valores para controlar la posición vertical del título de la tabla: <code>top</code> es el valor por defecto y muestra el título antes de la tabla, mientras que <code>bottom</code> muestra el título después de la tabla.</p>
+
+<p>El siguiente ejemplo es el resultado de aplicar la propiedad <code>caption-side: bottom</code> a la tabla del ejemplo anterior:</p>
+
+<div class="example">
+<div class="table" id="table_31_3">
+
+    <table style="caption-side: bottom" summary="Descripción de la tabla y su contenido">
+<caption>Título de la tabla</caption>
+<tbody>
+  <tr>
+    <td>Celda 1 - 1</td>
+    <td>Celda 1 - 2</td>
+    <td>Celda 1 - 3</td>
+  </tr>
+  <tr>
+    <td>Celda 2 - 1</td>
+    <td>Celda 2 - 2</td>
+    <td>Celda 2 - 3</td>
+  </tr>
+  <tr>
+    <td>Celda 3 - 1</td>
+    <td>Celda 3 - 2</td>
+    <td>Celda 3 - 3</td>
+  </tr>
+</tbody>
+</table>
+</div>
+
+</div>
+
+<p>Si utilizas el navegador Internet Explorer 7 o alguna de sus versiones anteriores, el título de la tabla sigue apareciendo en la parte superior, ya que ese navegador no soporta la propiedad <code>caption-side</code>.</p>
+
+<p>La posición horizontal del título se controla mediante la propiedad <a href="text-align.html">text-align</a> sobre el elemento <code>&lt;caption&gt;</code>. El siguiente código se emplea para mostrar el título de la tabla centrado en su parte inferior:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">table</span> <span class="kw3">style</span><span class="sy0">=</span><span class="st0">&quot;caption-side: bottom&quot;</span> <span class="kw3">summary</span><span class="sy0">=</span><span class="st0">&quot;Descripción de la tabla y su contenido&quot;</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">caption</span> <span class="kw3">style</span><span class="sy0">=</span><span class="st0">&quot;text-align: center&quot;</span>&gt;</span>Título de la tabla<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">caption</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">thead</span>&gt;</span>
+...
+...
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">table</span>&gt;</span></pre>
+</div>
+
+<p>A continuación se muestra cómo visualizan los navegadores el ejemplo anterior:</p>
+
+<div class="example">
+<div class="table" id="table_31_4">
+
+    <table style="caption-side: bottom" summary="Descripción de la tabla y su contenido">
+<caption style="text-align: center">Título de la tabla</caption>
+<tbody>
+  <tr>
+    <td>Celda 1 - 1</td>
+    <td>Celda 1 - 2</td>
+    <td>Celda 1 - 3</td>
+  </tr>
+  <tr>
+    <td>Celda 2 - 1</td>
+    <td>Celda 2 - 2</td>
+    <td>Celda 2 - 3</td>
+  </tr>
+  <tr>
+    <td>Celda 3 - 1</td>
+    <td>Celda 3 - 2</td>
+    <td>Celda 3 - 3</td>
+  </tr>
+</tbody>
+</table>
+</div>
+
+</div>
+
+<p>El estándar CSS 2.1 establece que los navegadores agrupan cada tabla y su título mediante un elemento <em>invisible</em>. Por ello, cuando se establecen las propiedades <code>position</code>, <code>float</code>, cualquier propiedad <code>margin</code>, <code>top</code>, <code>right</code>, <code>bottom</code> y <code>left</code> sobre la tabla, el elemento <code>&lt;caption&gt;</code> también se ve afectado porque en realidad esas propiedades se aplican sobre el elemento <em>invisible</em> que encierra a la tabla y su título.</p>
+
+<p>Además, los navegadores fusionan de forma automática los márgenes verticales de la tabla y su título. Si el título se encuentra en la parte superior de la tabla, se fusionan los <code>margin-top</code> de los elementos <code>&lt;table&gt;</code> y <code>&lt;caption&gt;</code>. Si el título se encuentra en la parte inferior de la tabla, se fusionan los <code>margin-bottom</code> de los elementos <code>&lt;table&gt;</code> y <code>&lt;caption&gt;</code>.</p>
+
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'caption-side (Referencia de CSS 2.1%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Referencia de CSS 2.1 : caption-side']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Propiedades relacionadas</span></h3>
+
+
+                                                    <ul class="toc">
+                    <li class="">
+                <a href="border-collapse.html">border-collapse</a>
+            </li>
+                    <li class="">
+                <a href="border-spacing.html">border-spacing</a>
+            </li>
+                    <li class="active">
+                <a href="caption-side.html">caption-side</a>
+            </li>
+                    <li class="">
+                <a href="empty-cells.html">empty-cells</a>
+            </li>
+                    <li class="">
+                <a href="table-layout.html">table-layout</a>
+            </li>
+                </ul>
+                        
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

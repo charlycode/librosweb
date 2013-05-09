@@ -1,0 +1,500 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>2.4. Enrutamiento (Silex, el manual oficial)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="inicializacion.html" />
+        <link rel="next" href="configuracion_global.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="2.4. Enrutamiento (Silex, el manual oficial)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page silex">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Silex, el manual oficial</a></li>
+  <li><a href="../capitulo_2.html">Capítulo 2. Primeros pasos</a></li>
+  <li class="current"><span>2.4.. Enrutamiento</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="enrutamiento"><span>2.4.</span> Enrutamiento</h1>
+    
+
+<p>Al definir una ruta en Silex también se define el código del controlador que se ejecuta cuando el usuario solicite esa ruta.</p>
+
+<p>Un ruta está formada por dos partes:</p>
+
+<ul>
+<li><em>Patrón</em>: define la ruta que apunta a un determinado recurso. Puede incluir partes variables e incluso se pueden restringir los posibles valores de esas variables.</li>
+<li><em>Método</em>: describe la interacción que tiene lugar con el recurso solicitado. Normalmente solo se utilizan los métodos <code>GET</code> y <code>POST</code> pero Silex también admite los métodos <code>PUT</code> y <code>DELETE</code>.</li>
+</ul>
+
+<p>El código del controlador se define en un <em>closure</em> como el siguiente:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">function</span> <span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="co1">// código de la función</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Los <em>closures</em> son funciones anónimas que pueden utilizar variables que se encuentran fuera de su código. La diferencia con las variables globales es que los <em>closures</em> no requieren que esas variables accedidas sean globales.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Los <em>closures</em> que no utilizan ninguna variable exterior también se conocen como <em>lambdas</em>. Como en PHP todas las funciones anónimas son una instancia de la clase <code>Closure</code>, no haremos distinciones entre los <em>closures</em> y las <em>lambdas</em>.</p></div>
+
+<p>El valor que devuelve la ejecución del <em>closure</em> se utiliza como contenido de la página que se devuelve al usuario.</p>
+
+<h3 id="una_ruta_get_de_ejemplo">2.4.1. Una ruta GET de ejemplo</h3>
+
+<p>A continuación se muestra la definición de una ruta <code>GET</code> de ejemplo:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$blogPosts</span> <span class="sy0">=</span> <span class="kw3">array</span><span class="br0">&#40;</span>
+    <span class="nu0">1</span> <span class="sy0">=&gt;</span> <span class="kw3">array</span><span class="br0">&#40;</span>
+        <span class="st_h">'date'</span>      <span class="sy0">=&gt;</span> <span class="st_h">'2011-03-29'</span><span class="sy0">,</span>
+        <span class="st_h">'author'</span>    <span class="sy0">=&gt;</span> <span class="st_h">'igorw'</span><span class="sy0">,</span>
+        <span class="st_h">'title'</span>     <span class="sy0">=&gt;</span> <span class="st_h">'Using Silex'</span><span class="sy0">,</span>
+        <span class="st_h">'body'</span>      <span class="sy0">=&gt;</span> <span class="st_h">'...'</span><span class="sy0">,</span>
+    <span class="br0">&#41;</span><span class="sy0">,</span>
+<span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="re0">$app</span><span class="sy0">-&gt;</span><span class="me1">get</span><span class="br0">&#40;</span><span class="st_h">'/blog'</span><span class="sy0">,</span> <span class="kw2">function</span> <span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="kw2">use</span> <span class="br0">&#40;</span><span class="re0">$blogPosts</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="re0">$output</span> <span class="sy0">=</span> <span class="st_h">''</span><span class="sy0">;</span>
+    <span class="kw1">foreach</span> <span class="br0">&#40;</span><span class="re0">$blogPosts</span> <span class="kw1">as</span> <span class="re0">$post</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+        <span class="re0">$output</span> <span class="sy0">.=</span> <span class="re0">$post</span><span class="br0">&#91;</span><span class="st_h">'title'</span><span class="br0">&#93;</span><span class="sy0">;</span>
+        <span class="re0">$output</span> <span class="sy0">.=</span> <span class="st_h">'&lt;br /&gt;'</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="kw1">return</span> <span class="re0">$output</span><span class="sy0">;</span>
+<span class="br0">&#125;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Si accedes a la URL <code>/blog</code> verás un listado con los títulos de los post de un blog. La instrucción <code>use</code> en este caso no tiene nada que ver con los <em>namespaces</em> de PHP. Se trata de la forma en la que se indica al <em>closure</em> que debe importar la variable exterior <code>$blogPosts</code>. Una vez importada, ya puedes utilizarla dentro de la función anónima como cualquier otra variable normal.</p>
+
+<h3 id="rutas_dinamicas">2.4.2. Rutas dinámicas</h3>
+
+<p>El siguiente ejemplo muestra el código de otro controlador que permite mostrar el contenido de un post individual del blog:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$app</span><span class="sy0">-&gt;</span><span class="me1">get</span><span class="br0">&#40;</span><span class="st_h">'/blog/show/{id}'</span><span class="sy0">,</span> <span class="kw2">function</span> <span class="br0">&#40;</span>Silex\Application <span class="re0">$app</span><span class="sy0">,</span> <span class="re0">$id</span><span class="br0">&#41;</span> <span class="kw2">use</span> <span class="br0">&#40;</span><span class="re0">$blogPosts</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="kw1">if</span> <span class="br0">&#40;</span><span class="sy0">!</span><span class="kw3">isset</span><span class="br0">&#40;</span><span class="re0">$blogPosts</span><span class="br0">&#91;</span><span class="re0">$id</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+        <span class="re0">$app</span><span class="sy0">-&gt;</span><span class="me1">abort</span><span class="br0">&#40;</span><span class="nu0">404</span><span class="sy0">,</span> <span class="st0">&quot;El post <span class="es4">$id</span> no existe.&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="re0">$post</span> <span class="sy0">=</span> <span class="re0">$blogPosts</span><span class="br0">&#91;</span><span class="re0">$id</span><span class="br0">&#93;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="kw1">return</span>  <span class="st0">&quot;&lt;h1&gt;<span class="es4">{$post['title']}</span>&lt;/h1&gt;&quot;</span><span class="sy0">.</span>
+            <span class="st0">&quot;&lt;p&gt;<span class="es4">{$post['body']}</span>&lt;/p&gt;&quot;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>La definición de esta ruta incluye una parte variable llamada <code>{id}</code>, cuyo valor se pasa como argumento al <em>closure</em>.</p>
+
+<p>Si el post solicitado no existe, se ejecuta el método <code>abort()</code> para detener la ejecución de la aplicación lo antes posible. En realidad, este método lanza una excepción, tal y como se explicará más adelante.</p>
+
+<h3 id="una_ruta_post_de_ejemplo">2.4.3. Una ruta POST de ejemplo</h3>
+
+<p>Las rutas de tipo <code>POST</code> se utilizan para crear nuevos recursos en el servidor. El típico ejemplo de estas rutas es un formulario de contacto, cuyos contenidos se envían por email haciendo uso de la función <code>mail()</code> de PHP:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">use</span> Symfony\Component\HttpFoundation\Request<span class="sy0">;</span>
+<span class="kw2">use</span> Symfony\Component\HttpFoundation\Response<span class="sy0">;</span>
+&nbsp;
+<span class="re0">$app</span><span class="sy0">-&gt;</span><span class="me1">post</span><span class="br0">&#40;</span><span class="st_h">'/feedback'</span><span class="sy0">,</span> <span class="kw2">function</span> <span class="br0">&#40;</span>Request <span class="re0">$request</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="re0">$message</span> <span class="sy0">=</span> <span class="re0">$request</span><span class="sy0">-&gt;</span><span class="me1">get</span><span class="br0">&#40;</span><span class="st_h">'message'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="kw3">mail</span><span class="br0">&#40;</span><span class="st_h">'feedback@yoursite.com'</span><span class="sy0">,</span> <span class="st_h">'[YourSite] Comentarios'</span><span class="sy0">,</span> <span class="re0">$message</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="kw1">return</span> <span class="kw2">new</span> Response<span class="br0">&#40;</span><span class="st_h">'Gracias por tus comentarios'</span><span class="sy0">,</span> <span class="nu0">201</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Su funcionamiento es realmente tan sencillo como parece.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Si en vez de la función <code>mail()</code> quieres utilizar un componente de envío de emails con más funcionalidades, puedes hacer uso del proveedor <code>SwiftmailerServiceProvider</code>.</p></div>
+
+<p>Una de las partes más importantes del código anterior es <code>function (Request $request)</code>. Esta instrucción hace que Silex pase automáticamente a la función un objeto de tipo <code>Request</code> que contiene toda la información de la petición del usuario.</p>
+
+<p>Internamente Silex utiliza lo que se conoce como <em>type hinting</em> para detectar que estás solicitando el objeto de la petición. ¿Cómo funciona? La clave está en añadir el tipo de argumento (<code>Request</code> en este caso). A partir del objeto <code>Request</code> pasado, puedes acceder directamente a cualquier variable de la petición con el método <code>get()</code>.</p>
+
+<p>Observa cómo el código anterior no devuelve una cadena de texto con el código HTML de la página sino un objeto de tipo <code>Response</code>. Aunque es un poco más larga de escribir, esta forma permite añadir cabeceras HTTP (como la que pone el código de estado de la respuesta a <code>201</code>).</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Silex <strong>siempre</strong> utiliza internamente un objeto de tipo <code>Response</code>, por lo que convierte tus cadenas de texto en objetos <code>Response</code> con el código de estado <code>200</code>.</p></div>
+
+<h3 id="otros_metodos">2.4.4. Otros métodos</h3>
+
+<p>Cada método HTTP puede definir sus propios controladores. Para ello solo debes utilizar los métodos: <code>get()</code>, <code>post()</code>, <code>put()</code> y <code>delete()</code>. También existe un método llamado <code>match()</code> que funciona para todos los métodos a la vez:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// esta ruta funciona para cualquier método HTTP</span>
+<span class="re0">$app</span><span class="sy0">-&gt;</span><span class="me1">match</span><span class="br0">&#40;</span><span class="st_h">'/blog'</span><span class="sy0">,</span> <span class="kw2">function</span> <span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="co1">// ...</span>
+<span class="br0">&#125;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Aunque utilices el método <code>match()</code>, puedes restringir los métodos HTTP para los que funciona:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// esta ruta solo funciona para el método PATCH de HTTP</span>
+<span class="re0">$app</span><span class="sy0">-&gt;</span><span class="me1">match</span><span class="br0">&#40;</span><span class="st_h">'/blog'</span><span class="sy0">,</span> <span class="kw2">function</span> <span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="co1">// ...</span>
+<span class="br0">&#125;</span><span class="br0">&#41;</span>
+<span class="sy0">-&gt;</span><span class="me1">method</span><span class="br0">&#40;</span><span class="st_h">'PATCH'</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Utiliza expresiones regulares para admitir más de un método HTTP:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// esta ruta funciona solo para los métodos PUT y POST de HTTP</span>
+<span class="re0">$app</span><span class="sy0">-&gt;</span><span class="me1">match</span><span class="br0">&#40;</span><span class="st_h">'/blog'</span><span class="sy0">,</span> <span class="kw2">function</span> <span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="co1">// ...</span>
+<span class="br0">&#125;</span><span class="br0">&#41;</span>
+<span class="sy0">-&gt;</span><span class="me1">method</span><span class="br0">&#40;</span><span class="st_h">'PUT|POST'</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> El orden en el que se definen las rutas dentro del archivo de la aplicación es muy importante. Silex siempre utiliza la primera ruta cuyo patrón coincida con la URL solicitada por el usuario, así que debes colocar las rutas genéricas lo más tarde posible.</p></div>
+
+<h3 id="variables_en_las_rutas">2.4.5. Variables en las rutas</h3>
+
+<p>Tal y como se mostró anteriormente, las rutas pueden contener partes variables en su patrón, que después se convierte en argumento de la función del controlador:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$app</span><span class="sy0">-&gt;</span><span class="me1">get</span><span class="br0">&#40;</span><span class="st_h">'/blog/show/{id}'</span><span class="sy0">,</span> <span class="kw2">function</span> <span class="br0">&#40;</span><span class="re0">$id</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="co1">// ...</span>
+<span class="br0">&#125;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Las rutas pueden contener más de una variable, pero siempre debes asegurarte de que los argumentos de la función coinciden con los de la ruta (tanto en número como en nombre):</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$app</span><span class="sy0">-&gt;</span><span class="me1">get</span><span class="br0">&#40;</span><span class="st_h">'/blog/show/{postId}/{commentId}'</span><span class="sy0">,</span> <span class="kw2">function</span> <span class="br0">&#40;</span><span class="re0">$postId</span><span class="sy0">,</span> <span class="re0">$commentId</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="co1">// ...</span>
+<span class="br0">&#125;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>No es muy recomendable hacerlo, pero puedes cambiar el orden de los argumentos si quieres (a Silex solo le importa su nombre):</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$app</span><span class="sy0">-&gt;</span><span class="me1">get</span><span class="br0">&#40;</span><span class="st_h">'/blog/show/{postId}/{commentId}'</span><span class="sy0">,</span> <span class="kw2">function</span> <span class="br0">&#40;</span><span class="re0">$commentId</span><span class="sy0">,</span> <span class="re0">$postId</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="co1">// ...</span>
+<span class="br0">&#125;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Además de las variables de la ruta, es posible acceder a los objetos <code>Request</code> y <code>Application</code>, algo imprescindible para las aplicaciones avanzadas:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$app</span><span class="sy0">-&gt;</span><span class="me1">get</span><span class="br0">&#40;</span><span class="st_h">'/blog/show/{id}'</span><span class="sy0">,</span> <span class="kw2">function</span> <span class="br0">&#40;</span>Application <span class="re0">$app</span><span class="sy0">,</span> Request <span class="re0">$request</span><span class="sy0">,</span> <span class="re0">$id</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="co1">// ...</span>
+<span class="br0">&#125;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Recuerda que como Silex utiliza el <em>type hinting</em>, para las variables especiales <code>Request</code> y <code>Application</code> solo importa que incluyas por delante el nombre de la clase. En otras palabras, el nombre de la variable no importa en absoluto, por lo que puedes cambiarlo si quieres:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$app</span><span class="sy0">-&gt;</span><span class="me1">get</span><span class="br0">&#40;</span><span class="st_h">'/blog/show/{id}'</span><span class="sy0">,</span> <span class="kw2">function</span> <span class="br0">&#40;</span>Application <span class="re0">$foo</span><span class="sy0">,</span> Request <span class="re0">$bar</span><span class="sy0">,</span> <span class="re0">$id</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="co1">// ...</span>
+<span class="br0">&#125;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p></p></div>
+
+<h3 id="modificando_las_variables_de_la_ruta">2.4.6. Modificando las variables de la ruta</h3>
+
+<p>Silex permite modificar el valor de las variables antes de pasarlas al controlador:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$app</span><span class="sy0">-&gt;</span><span class="me1">get</span><span class="br0">&#40;</span><span class="st_h">'/user/{id}'</span><span class="sy0">,</span> <span class="kw2">function</span> <span class="br0">&#40;</span><span class="re0">$id</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="co1">// ...</span>
+<span class="br0">&#125;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">convert</span><span class="br0">&#40;</span><span class="st_h">'id'</span><span class="sy0">,</span> <span class="kw2">function</span> <span class="br0">&#40;</span><span class="re0">$id</span><span class="br0">&#41;</span> <span class="br0">&#123;</span> <span class="kw1">return</span> <span class="br0">&#40;</span>int<span class="br0">&#41;</span> <span class="re0">$id</span><span class="sy0">;</span> <span class="br0">&#125;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Esta técnica es realmente útil para reutilizar en varios controladores el mismo código que convierte por ejemplo las variables de la ruta en objetos:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$userProvider</span> <span class="sy0">=</span> <span class="kw2">function</span> <span class="br0">&#40;</span><span class="re0">$id</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="kw1">return</span> <span class="kw2">new</span> User<span class="br0">&#40;</span><span class="re0">$id</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span><span class="sy0">;</span>
+&nbsp;
+<span class="re0">$app</span><span class="sy0">-&gt;</span><span class="me1">get</span><span class="br0">&#40;</span><span class="st_h">'/user/{user}'</span><span class="sy0">,</span> <span class="kw2">function</span> <span class="br0">&#40;</span>User <span class="re0">$user</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="co1">// ...</span>
+<span class="br0">&#125;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">convert</span><span class="br0">&#40;</span><span class="st_h">'user'</span><span class="sy0">,</span> <span class="re0">$userProvider</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="re0">$app</span><span class="sy0">-&gt;</span><span class="me1">get</span><span class="br0">&#40;</span><span class="st_h">'/user/{user}/edit'</span><span class="sy0">,</span> <span class="kw2">function</span> <span class="br0">&#40;</span>User <span class="re0">$user</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="co1">// ...</span>
+<span class="br0">&#125;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">convert</span><span class="br0">&#40;</span><span class="st_h">'user'</span><span class="sy0">,</span> <span class="re0">$userProvider</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>La función de <em>callback</em> que se ejecuta para modificar las variables también recibe el objeto <code>Request</code> como segundo argumento:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$callback</span> <span class="sy0">=</span> <span class="kw2">function</span> <span class="br0">&#40;</span><span class="re0">$post</span><span class="sy0">,</span> Request <span class="re0">$request</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="kw1">return</span> <span class="kw2">new</span> Post<span class="br0">&#40;</span><span class="re0">$request</span><span class="sy0">-&gt;</span><span class="me1">attributes</span><span class="sy0">-&gt;</span><span class="me1">get</span><span class="br0">&#40;</span><span class="st_h">'slug'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span><span class="sy0">;</span>
+&nbsp;
+<span class="re0">$app</span><span class="sy0">-&gt;</span><span class="me1">get</span><span class="br0">&#40;</span><span class="st_h">'/blog/{id}/{slug}'</span><span class="sy0">,</span> <span class="kw2">function</span> <span class="br0">&#40;</span>Post <span class="re0">$post</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="co1">// ...</span>
+<span class="br0">&#125;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">convert</span><span class="br0">&#40;</span><span class="st_h">'post'</span><span class="sy0">,</span> <span class="re0">$callback</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<h3 id="requisitos">2.4.7. Requisitos</h3>
+
+<p>Resulta muy común tener que restringir las rutas a unos determinados valores de sus variables. Estos requisitos se definen mediante expresines regulares pasadas al método <code>assert()</code> del controlador.</p>
+
+<p>El siguiente código muesta cómo asegurar que el valor de la variable <code>id</code> es un número (la expresión regular <code>\d+</code> se cumple para cualquier número entero positivo):</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$app</span><span class="sy0">-&gt;</span><span class="me1">get</span><span class="br0">&#40;</span><span class="st_h">'/blog/show/{id}'</span><span class="sy0">,</span> <span class="kw2">function</span> <span class="br0">&#40;</span><span class="re0">$id</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="co1">// ...</span>
+<span class="br0">&#125;</span><span class="br0">&#41;</span>
+<span class="sy0">-&gt;</span><span class="kw3">assert</span><span class="br0">&#40;</span><span class="st_h">'id'</span><span class="sy0">,</span> <span class="st_h">'\d+'</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Para establecer varios requisitos, encadena llamadas a este método:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$app</span><span class="sy0">-&gt;</span><span class="me1">get</span><span class="br0">&#40;</span><span class="st_h">'/blog/show/{postId}/{commentId}'</span><span class="sy0">,</span> <span class="kw2">function</span> <span class="br0">&#40;</span><span class="re0">$postId</span><span class="sy0">,</span> <span class="re0">$commentId</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="co1">// ...</span>
+<span class="br0">&#125;</span><span class="br0">&#41;</span>
+<span class="sy0">-&gt;</span><span class="kw3">assert</span><span class="br0">&#40;</span><span class="st_h">'postId'</span><span class="sy0">,</span> <span class="st_h">'\d+'</span><span class="br0">&#41;</span>
+<span class="sy0">-&gt;</span><span class="kw3">assert</span><span class="br0">&#40;</span><span class="st_h">'commentId'</span><span class="sy0">,</span> <span class="st_h">'\d+'</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<h3 id="valores_por_defecto">2.4.8. Valores por defecto</h3>
+
+<p>Los valores por defecto de las variables se pueden definir con el método <code>value()</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$app</span><span class="sy0">-&gt;</span><span class="me1">get</span><span class="br0">&#40;</span><span class="st_h">'/{pageName}'</span><span class="sy0">,</span> <span class="kw2">function</span> <span class="br0">&#40;</span><span class="re0">$pageName</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="co1">// ...</span>
+<span class="br0">&#125;</span><span class="br0">&#41;</span>
+<span class="sy0">-&gt;</span><span class="me1">value</span><span class="br0">&#40;</span><span class="st_h">'pageName'</span><span class="sy0">,</span> <span class="st_h">'index'</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>El código anterior hace que la ruta también se ejecute cuando el usuario solicite la URL <code>/</code>, en cuyo caso la variable <code>pageName</code> tomará el valor <code>index</code>.</p>
+
+<h3 id="rutas_con_nombre">2.4.9. Rutas con nombre</h3>
+
+<p>Como se verá más adelante, algunos proveedores (como por ejemplo <code>UrlGeneratorProvider</code>)utilizan nombres para referirse a las rutas. Silex asigna un nombre generado automáticamente a cada ruta, pero lo mejor es que emplees el método <code>bind()</code> para asignar tus propios nombres a las rutas:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$app</span><span class="sy0">-&gt;</span><span class="me1">get</span><span class="br0">&#40;</span><span class="st_h">'/'</span><span class="sy0">,</span> <span class="kw2">function</span> <span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="co1">// ...</span>
+<span class="br0">&#125;</span><span class="br0">&#41;</span>
+<span class="sy0">-&gt;</span><span class="me1">bind</span><span class="br0">&#40;</span><span class="st_h">'homepage'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="re0">$app</span><span class="sy0">-&gt;</span><span class="me1">get</span><span class="br0">&#40;</span><span class="st_h">'/blog/show/{id}'</span><span class="sy0">,</span> <span class="kw2">function</span> <span class="br0">&#40;</span><span class="re0">$id</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="co1">// ...</span>
+<span class="br0">&#125;</span><span class="br0">&#41;</span>
+<span class="sy0">-&gt;</span><span class="me1">bind</span><span class="br0">&#40;</span><span class="st_h">'blog_post'</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Solo tiene sentido añadir nombres a las rutas si utilizas algún proveedor que haga uso de la clase <code>RouteCollection</code>.</p></div>
+
+<h3 id="controladores_como_metodos_de_clases">2.4.10. Controladores como métodos de clases</h3>
+
+<p>Si no te gusta definir los controladores como funciones anónimas, también puedes definirlos como métodos dentro de una clase. Para ello utiliza la sintaxis <code>ClaseDelControlador::nombreDelMetodo</code>. Silex solo instanciará esa clase si se ejecuta el controlador, por lo que el rendimiento de la aplicación no se ve afectado:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$app</span><span class="sy0">-&gt;</span><span class="me1">get</span><span class="br0">&#40;</span><span class="st_h">'/'</span><span class="sy0">,</span> <span class="st_h">'Igorw\Foo::bar'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+&nbsp;
+<span class="kw2">use</span> Symfony\Component\HttpFoundation\Request<span class="sy0">;</span>
+&nbsp;
+<span class="kw2">namespace</span> Igorw
+<span class="br0">&#123;</span>
+    <span class="kw2">class</span> Foo
+    <span class="br0">&#123;</span>
+        <span class="kw2">public</span> <span class="kw2">function</span> bar<span class="br0">&#40;</span>Request <span class="re0">$request</span><span class="br0">&#41;</span>
+        <span class="br0">&#123;</span>
+            <span class="sy0">...</span>
+        <span class="br0">&#125;</span>
+    <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Cuando un usuario solicita la portada del sitio, el código anterior hace que Silex instancie la clase <code>Igorw\Foo</code> y ejecute el método <code>bar()</code> para obtener la respuesta enviada al usuario. Si necesitas acceso a la petición o a la aplicación, utiliza la técnica habitual de añadir las clases <code>Request</code> y <code>Silex\Application</code> como argumentos.</p>
+
+<p>Los controladores también se pueden definir como servicios, lo que permite independizarlos todavía más respecto a Silex.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="inicializacion.html">&larr; Anterior <span>2.3. Inicialización</span></a>
+            
+            <a class="span5 next" href="configuracion_global.html">Siguiente &rarr; <span>2.5. Configuración global</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Enrutamiento (Silex, el manual oficial%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Silex, el manual oficial : Enrutamiento']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_2.html">
+            <span>Capítulo 2.</span> Primeros pasos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="instalacion.html">
+            <span>2.1.</span> Instalación
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="actualizacion.html">
+            <span>2.2.</span> Actualización
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="inicializacion.html">
+            <span>2.3.</span> Inicialización
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="enrutamiento.html">
+            <span>2.4.</span> Enrutamiento
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="configuracion_global.html">
+            <span>2.5.</span> Configuración global
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="gestion_de_errores.html">
+            <span>2.6.</span> Gestión de errores
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="redirecciones.html">
+            <span>2.7.</span> Redirecciones
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="forwards.html">
+            <span>2.8.</span> Forwards
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="json.html">
+            <span>2.9.</span> JSON
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="streaming.html">
+            <span>2.10.</span> Streaming
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="traits.html">
+            <span>2.11.</span> Traits
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="seguridad.html">
+            <span>2.12.</span> Seguridad
+        </a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Middlewares</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Organizando los controladores</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Servicios</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Proveedores</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Tests</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Funcionamiento interno</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Silex y los servidores web</a>
+    </li>
+    <li class="level-1">
+        <span>A</span> <a href="../apendice_a.html"> Proveedores de servicios de Silex</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

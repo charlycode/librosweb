@@ -1,0 +1,378 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>20.5. Publicando tu plugin (El tutorial Jobeet)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="utilizando_los_plugins.html" />
+        <link rel="next" href="nos_vemos_manana.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="20.5. Publicando tu plugin (El tutorial Jobeet)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page jobeet_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">El tutorial Jobeet</a></li>
+  <li><a href="../capitulo_20.html">Capítulo 20. Plugins</a></li>
+  <li class="current"><span>20.5.. Publicando tu plugin</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="publicando_tu_plugin"><span>20.5.</span> Publicando tu plugin</h1>
+    
+
+<h3 id="creando_el_paquete_del_plugin">20.5.1. Creando el paquete del plugin</h3>
+
+<p>Si quieres crear el paquete del plugin, debes añadir algunos archivos obligatorios a la estructura de directorios del plugin. En primer lugar, crea un archivo llamado <code>README</code> en el directorio raíz del plugin que contenga las intrucciones de instalación del plugin y que explique lo que proporciona y lo que no. Este archivo <code>README</code> debe estar escrito en el <a href="http://daringfireball.net/projects/markdown/syntax">formato Markdown</a>. Además, este archivo es el que utiliza el sitio web de Symfony para mostrar la información y documentación del plugin. Si quieres probar cómo se transforma tu archivo <code>README</code> al formato HTML, puedes utilizar la herramienta <a href="http://www.symfony-project.org/plugins/markdown_dingus">Symfony plugin dingus</a>.</p>
+
+<div class="admonition sidebar"><p><strong class="title">Tareas para crear plugins</strong> Si creas muchos plugins públicos o privados, quizás te interese utilizar algunas de las tareas del plugin <a href="http://www.symfony-project.com/plugins/sfTaskExtraPlugin">sfTaskExtraPlugin</a>. Este plugin lo mantienen los propios creadores de Symfony e incluye varias tareas que facilitan la creación de plugins, como por ejemplo:</p>
+
+<ul>
+<li><code>generate:plugin</code></li>
+<li><code>plugin:package</code></li>
+</ul>
+
+<p></p></div>
+
+<p>Además del archivo <code>README</code>, también debes crear un archivo llamado <code>LICENSE</code>. Elegir la licencia adecuada para tu plugin no es algo sencillo, pero la sección de plugins del sitio web de Symfony sólo muestra los plugins que se publican con una licencia similar a la del propio framework (MIT, BSD, LGPL y PHP). El contenido del archivo <code>LICENSE</code> se muestra en la pestaña <em>"license"</em> de la página del plugin.</p>
+
+<p>El último archivo obligatorio se llama <code>package.xml</code> y debe estar en el directorio raíz del plugin. Este archivo <code>package.xml</code> se debe crear siguiendo la <a href="http://pear.php.net/manual/en/guide-developers.php">sintaxis de los paquetes PEAR</a>.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> La mejor forma de aprender la sintaxis del archivo <code>package.xml</code> consiste en copiar el archivo de cualquier otro plugin, como por ejemplo <a href="http://svn.symfony-project.com/plugins/sfGuardPlugin/branches/1.2/package.xml">el archivo package.xml de sfGuardPlugin</a>.</p></div>
+
+<p>La siguiente plantilla de ejemplo muestra las diferentes partes que componen el archivo <code>package.xml</code>:</p>
+
+<div class="code xml">
+<pre class="xml"><span class="sc-1">&lt;!-- plugins/sfJobeetPlugin/package.xml --&gt;</span>
+<span class="sc3"><span class="re1">&lt;?xml</span> <span class="re0">version</span>=<span class="st0">&quot;1.0&quot;</span> <span class="re0">encoding</span>=<span class="st0">&quot;UTF-8&quot;</span><span class="re2">?&gt;</span></span>
+<span class="sc3"><span class="re1">&lt;package</span> <span class="re0">packagerversion</span>=<span class="st0">&quot;1.4.1&quot;</span> <span class="re0">version</span>=<span class="st0">&quot;2.0&quot;</span></span>
+<span class="sc3">   <span class="re0">xmlns</span>=<span class="st0">&quot;http://pear.php.net/dtd/package-2.0&quot;</span></span>
+<span class="sc3">   <span class="re0">xmlns:tasks</span>=<span class="st0">&quot;http://pear.php.net/dtd/tasks-1.0&quot;</span></span>
+<span class="sc3">   <span class="re0">xmlns:xsi</span>=<span class="st0">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span>
+<span class="sc3">   <span class="re0">xsi:schemaLocation</span>=<span class="st0">&quot;http://pear.php.net/dtd/tasks-1.0</span>
+<span class="sc3">   http://pear.php.net/dtd/tasks-1.0.xsd http://pear.php.net/dtd/package-2.0</span>
+<span class="sc3">   http://pear.php.net/dtd/package-2.0.xsd&quot;</span></span>
+<span class="sc3"><span class="re2">&gt;</span></span>
+  <span class="sc3"><span class="re1">&lt;name<span class="re2">&gt;</span></span></span>sfJobeetPlugin<span class="sc3"><span class="re1">&lt;/name<span class="re2">&gt;</span></span></span>
+  <span class="sc3"><span class="re1">&lt;channel<span class="re2">&gt;</span></span></span>plugins.symfony-project.org<span class="sc3"><span class="re1">&lt;/channel<span class="re2">&gt;</span></span></span>
+  <span class="sc3"><span class="re1">&lt;summary<span class="re2">&gt;</span></span></span>A job board plugin.<span class="sc3"><span class="re1">&lt;/summary<span class="re2">&gt;</span></span></span>
+  <span class="sc3"><span class="re1">&lt;description<span class="re2">&gt;</span></span></span>A job board plugin.<span class="sc3"><span class="re1">&lt;/description<span class="re2">&gt;</span></span></span>
+  <span class="sc3"><span class="re1">&lt;lead<span class="re2">&gt;</span></span></span>
+    <span class="sc3"><span class="re1">&lt;name<span class="re2">&gt;</span></span></span>Fabien POTENCIER<span class="sc3"><span class="re1">&lt;/name<span class="re2">&gt;</span></span></span>
+    <span class="sc3"><span class="re1">&lt;user<span class="re2">&gt;</span></span></span>fabpot<span class="sc3"><span class="re1">&lt;/user<span class="re2">&gt;</span></span></span>
+    <span class="sc3"><span class="re1">&lt;email<span class="re2">&gt;</span></span></span>fabien.potencier@symfony-project.com<span class="sc3"><span class="re1">&lt;/email<span class="re2">&gt;</span></span></span>
+    <span class="sc3"><span class="re1">&lt;active<span class="re2">&gt;</span></span></span>yes<span class="sc3"><span class="re1">&lt;/active<span class="re2">&gt;</span></span></span>
+  <span class="sc3"><span class="re1">&lt;/lead<span class="re2">&gt;</span></span></span>
+  <span class="sc3"><span class="re1">&lt;date<span class="re2">&gt;</span></span></span>2008-12-20<span class="sc3"><span class="re1">&lt;/date<span class="re2">&gt;</span></span></span>
+  <span class="sc3"><span class="re1">&lt;version<span class="re2">&gt;</span></span></span>
+    <span class="sc3"><span class="re1">&lt;release<span class="re2">&gt;</span></span></span>1.0.0<span class="sc3"><span class="re1">&lt;/release<span class="re2">&gt;</span></span></span>
+    <span class="sc3"><span class="re1">&lt;api<span class="re2">&gt;</span></span></span>1.0.0<span class="sc3"><span class="re1">&lt;/api<span class="re2">&gt;</span></span></span>
+  <span class="sc3"><span class="re1">&lt;/version<span class="re2">&gt;</span></span></span>
+  <span class="sc3"><span class="re1">&lt;stability<span class="re2">&gt;</span></span></span>
+    <span class="sc3"><span class="re1">&lt;release<span class="re2">&gt;</span></span></span>stable<span class="sc3"><span class="re1">&lt;/release<span class="re2">&gt;</span></span></span>
+    <span class="sc3"><span class="re1">&lt;api<span class="re2">&gt;</span></span></span>stable<span class="sc3"><span class="re1">&lt;/api<span class="re2">&gt;</span></span></span>
+  <span class="sc3"><span class="re1">&lt;/stability<span class="re2">&gt;</span></span></span>
+  <span class="sc3"><span class="re1">&lt;license</span> <span class="re0">uri</span>=<span class="st0">&quot;http://www.symfony-project.com/license&quot;</span><span class="re2">&gt;</span></span>
+    MIT license
+  <span class="sc3"><span class="re1">&lt;/license<span class="re2">&gt;</span></span></span>
+  <span class="sc3"><span class="re1">&lt;notes</span> <span class="re2">/&gt;</span></span>
+&nbsp;
+  <span class="sc3"><span class="re1">&lt;contents<span class="re2">&gt;</span></span></span>
+    <span class="sc-1">&lt;!-- CONTENT --&gt;</span>
+  <span class="sc3"><span class="re1">&lt;/contents<span class="re2">&gt;</span></span></span>
+&nbsp;
+  <span class="sc3"><span class="re1">&lt;dependencies<span class="re2">&gt;</span></span></span>
+   <span class="sc-1">&lt;!-- DEPENDENCIES --&gt;</span>
+  <span class="sc3"><span class="re1">&lt;/dependencies<span class="re2">&gt;</span></span></span>
+&nbsp;
+  <span class="sc3"><span class="re1">&lt;phprelease<span class="re2">&gt;</span></span></span>
+<span class="sc3"><span class="re1">&lt;/phprelease<span class="re2">&gt;</span></span></span>
+&nbsp;
+<span class="sc3"><span class="re1">&lt;changelog<span class="re2">&gt;</span></span></span>
+  <span class="sc-1">&lt;!-- CHANGELOG --&gt;</span>
+<span class="sc3"><span class="re1">&lt;/changelog<span class="re2">&gt;</span></span></span>
+<span class="sc3"><span class="re1">&lt;/package<span class="re2">&gt;</span></span></span></pre>
+</div>
+
+<p>La etiqueta <code>&lt;contents&gt;</code> especifica los archivos que contiene el paquete:</p>
+
+<div class="code xml">
+<pre class="xml"><span class="sc3"><span class="re1">&lt;contents<span class="re2">&gt;</span></span></span>
+  <span class="sc3"><span class="re1">&lt;dir</span> <span class="re0">name</span>=<span class="st0">&quot;/&quot;</span><span class="re2">&gt;</span></span>
+    <span class="sc3"><span class="re1">&lt;file</span> <span class="re0">role</span>=<span class="st0">&quot;data&quot;</span> <span class="re0">name</span>=<span class="st0">&quot;README&quot;</span> <span class="re2">/&gt;</span></span>
+    <span class="sc3"><span class="re1">&lt;file</span> <span class="re0">role</span>=<span class="st0">&quot;data&quot;</span> <span class="re0">name</span>=<span class="st0">&quot;LICENSE&quot;</span> <span class="re2">/&gt;</span></span>
+&nbsp;
+    <span class="sc3"><span class="re1">&lt;dir</span> <span class="re0">name</span>=<span class="st0">&quot;config&quot;</span><span class="re2">&gt;</span></span>
+      <span class="sc3"><span class="re1">&lt;file</span> <span class="re0">role</span>=<span class="st0">&quot;data&quot;</span> <span class="re0">name</span>=<span class="st0">&quot;config.php&quot;</span> <span class="re2">/&gt;</span></span>
+      <span class="sc3"><span class="re1">&lt;file</span> <span class="re0">role</span>=<span class="st0">&quot;data&quot;</span> <span class="re0">name</span>=<span class="st0">&quot;schema.yml&quot;</span> <span class="re2">/&gt;</span></span>
+    <span class="sc3"><span class="re1">&lt;/dir<span class="re2">&gt;</span></span></span>
+&nbsp;
+    <span class="sc-1">&lt;!-- ... --&gt;</span>
+  <span class="sc3"><span class="re1">&lt;/dir<span class="re2">&gt;</span></span></span>
+<span class="sc3"><span class="re1">&lt;/contents<span class="re2">&gt;</span></span></span></pre>
+</div>
+
+<p>La etiqueta <code>&lt;dependencies&gt;</code> define todas las dependencias que tiene el plugin respecto a PHP, Symfony y/o el resto de plugins. Esta información es la que utiliza la tarea <code>plugin:install</code> para instalar la versión del plugin que mejor se adapta al entorno de trabajo y también para instalar todas las dependencias existentes con otros plugins.</p>
+
+<div class="code xml">
+<pre class="xml"><span class="sc3"><span class="re1">&lt;dependencies<span class="re2">&gt;</span></span></span>
+  <span class="sc3"><span class="re1">&lt;required<span class="re2">&gt;</span></span></span>
+    <span class="sc3"><span class="re1">&lt;php<span class="re2">&gt;</span></span></span>
+      <span class="sc3"><span class="re1">&lt;min<span class="re2">&gt;</span></span></span>5.0.0<span class="sc3"><span class="re1">&lt;/min<span class="re2">&gt;</span></span></span>
+    <span class="sc3"><span class="re1">&lt;/php<span class="re2">&gt;</span></span></span>
+    <span class="sc3"><span class="re1">&lt;pearinstaller<span class="re2">&gt;</span></span></span>
+      <span class="sc3"><span class="re1">&lt;min<span class="re2">&gt;</span></span></span>1.4.1<span class="sc3"><span class="re1">&lt;/min<span class="re2">&gt;</span></span></span>
+    <span class="sc3"><span class="re1">&lt;/pearinstaller<span class="re2">&gt;</span></span></span>
+    <span class="sc3"><span class="re1">&lt;package<span class="re2">&gt;</span></span></span>
+      <span class="sc3"><span class="re1">&lt;name<span class="re2">&gt;</span></span></span>symfony<span class="sc3"><span class="re1">&lt;/name<span class="re2">&gt;</span></span></span>
+      <span class="sc3"><span class="re1">&lt;channel<span class="re2">&gt;</span></span></span>pear.symfony-project.com<span class="sc3"><span class="re1">&lt;/channel<span class="re2">&gt;</span></span></span>
+      <span class="sc3"><span class="re1">&lt;min<span class="re2">&gt;</span></span></span>1.2.0<span class="sc3"><span class="re1">&lt;/min<span class="re2">&gt;</span></span></span>
+      <span class="sc3"><span class="re1">&lt;max<span class="re2">&gt;</span></span></span>1.3.0<span class="sc3"><span class="re1">&lt;/max<span class="re2">&gt;</span></span></span>
+      <span class="sc3"><span class="re1">&lt;exclude<span class="re2">&gt;</span></span></span>1.3.0<span class="sc3"><span class="re1">&lt;/exclude<span class="re2">&gt;</span></span></span>
+    <span class="sc3"><span class="re1">&lt;/package<span class="re2">&gt;</span></span></span>
+  <span class="sc3"><span class="re1">&lt;/required<span class="re2">&gt;</span></span></span>
+<span class="sc3"><span class="re1">&lt;/dependencies<span class="re2">&gt;</span></span></span></pre>
+</div>
+
+<p>Como se muestra en el ejemplo anterior, siempre deberías establecer la dependencia de tu plugin con Symfony. Al declarar la versión mínima y máxima de Symfony con las que el plugin es compatible, la tarea <code>plugin:install</code> puede determinar la versión de Symfony necesaria, ya que cada versión de Symfony contiene diferencias en su API.</p>
+
+<p>También puedes declarar dependencias con otros plugins:</p>
+
+<div class="code xml">
+<pre class="xml"><span class="sc3"><span class="re1">&lt;package<span class="re2">&gt;</span></span></span>
+  <span class="sc3"><span class="re1">&lt;name<span class="re2">&gt;</span></span></span>sfFooPlugin<span class="sc3"><span class="re1">&lt;/name<span class="re2">&gt;</span></span></span>
+  <span class="sc3"><span class="re1">&lt;channel<span class="re2">&gt;</span></span></span>plugins.symfony-project.org<span class="sc3"><span class="re1">&lt;/channel<span class="re2">&gt;</span></span></span>
+  <span class="sc3"><span class="re1">&lt;min<span class="re2">&gt;</span></span></span>1.0.0<span class="sc3"><span class="re1">&lt;/min<span class="re2">&gt;</span></span></span>
+  <span class="sc3"><span class="re1">&lt;max<span class="re2">&gt;</span></span></span>1.2.0<span class="sc3"><span class="re1">&lt;/max<span class="re2">&gt;</span></span></span>
+  <span class="sc3"><span class="re1">&lt;exclude<span class="re2">&gt;</span></span></span>1.2.0<span class="sc3"><span class="re1">&lt;/exclude<span class="re2">&gt;</span></span></span>
+<span class="sc3"><span class="re1">&lt;/package<span class="re2">&gt;</span></span></span></pre>
+</div>
+
+<p>La etiqueta <code>&lt;changelog&gt;</code> es opcional, pero proporciona información útil sobre los cambios realizados por cada versión del plugin. Esta información se muestra en la pestaña <em>"changelog"</em> del plugin y también está disponible en el <a href="http://www.symfony-project.org/plugins/recently.rss">canal RSS de los plugins de Symmfony</a>.</p>
+
+<div class="code xml">
+<pre class="xml"><span class="sc3"><span class="re1">&lt;changelog<span class="re2">&gt;</span></span></span>
+  <span class="sc3"><span class="re1">&lt;release<span class="re2">&gt;</span></span></span>
+    <span class="sc3"><span class="re1">&lt;version<span class="re2">&gt;</span></span></span>
+      <span class="sc3"><span class="re1">&lt;release<span class="re2">&gt;</span></span></span>1.0.0<span class="sc3"><span class="re1">&lt;/release<span class="re2">&gt;</span></span></span>
+      <span class="sc3"><span class="re1">&lt;api<span class="re2">&gt;</span></span></span>1.0.0<span class="sc3"><span class="re1">&lt;/api<span class="re2">&gt;</span></span></span>
+    <span class="sc3"><span class="re1">&lt;/version<span class="re2">&gt;</span></span></span>
+    <span class="sc3"><span class="re1">&lt;stability<span class="re2">&gt;</span></span></span>
+      <span class="sc3"><span class="re1">&lt;release<span class="re2">&gt;</span></span></span>stable<span class="sc3"><span class="re1">&lt;/release<span class="re2">&gt;</span></span></span>
+      <span class="sc3"><span class="re1">&lt;api<span class="re2">&gt;</span></span></span>stable<span class="sc3"><span class="re1">&lt;/api<span class="re2">&gt;</span></span></span>
+    <span class="sc3"><span class="re1">&lt;/stability<span class="re2">&gt;</span></span></span>
+    <span class="sc3"><span class="re1">&lt;license</span> <span class="re0">uri</span>=<span class="st0">&quot;http://www.symfony-project.com/license&quot;</span><span class="re2">&gt;</span></span>
+      MIT license
+    <span class="sc3"><span class="re1">&lt;/license<span class="re2">&gt;</span></span></span>
+    <span class="sc3"><span class="re1">&lt;date<span class="re2">&gt;</span></span></span>2008-12-20<span class="sc3"><span class="re1">&lt;/date<span class="re2">&gt;</span></span></span>
+    <span class="sc3"><span class="re1">&lt;license<span class="re2">&gt;</span></span></span>MIT<span class="sc3"><span class="re1">&lt;/license<span class="re2">&gt;</span></span></span>
+    <span class="sc3"><span class="re1">&lt;notes<span class="re2">&gt;</span></span></span>
+       * fabien: First release of the plugin
+    <span class="sc3"><span class="re1">&lt;/notes<span class="re2">&gt;</span></span></span>
+  <span class="sc3"><span class="re1">&lt;/release<span class="re2">&gt;</span></span></span>
+<span class="sc3"><span class="re1">&lt;/changelog<span class="re2">&gt;</span></span></span></pre>
+</div>
+
+<h3 id="publicar_un_plugin_en_el_sitio_web_de_symfony">20.5.2. Publicar un plugin en el sitio web de Symfony</h3>
+
+<p>Si has creado un plugin útil y quieres compartirlo con la comunidad de usuarios de Symfony, puedes <a href="http://www.symfony-project.org/user/new">crear una cuenta de usuario</a> en el sitio web de Symfony y después <a href="http://www.symfony-project.org/plugins/new">crear tu plugin</a>.</p>
+
+<p>Una vez creado, te conviertes automáticamente en el administrador del plugin y por tanto, verás una pestaña llamada <em>"admin"</em> en la página del plugin. Desde esta pestaña puedes gestionar toda la información del plugin y puedes subir los paquetes de las nuevas versiones.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> La página <a href="http://www.symfony-project.org/plugins/FAQ">plugin FAQ</a> contiene mucha más información útil para los desarrolladores de plugins.</p></div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="utilizando_los_plugins.html">&larr; Anterior <span>20.4. Utilizando los plugins</span></a>
+            
+            <a class="span5 next" href="nos_vemos_manana.html">Siguiente &rarr; <span>20.6. Nos vemos mañana</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Publicando tu plugin (El tutorial Jobeet%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'El tutorial Jobeet : Publicando tu plugin']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Comenzando el proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> El proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> El modelo de datos</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> El controlador y la vista</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> El sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Profundizando en el modelo</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Trabajando con la página de cada categoría</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Pruebas unitarias</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Pruebas funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Probando los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> El generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> El usuario</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> El día de descanso</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Canales Atom</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Servicios web</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> El buscador</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_20.html">
+            <span>Capítulo 20.</span> Plugins
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="plugins.html">
+            <span>20.1.</span> Plugins
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="estructura_de_archivos_de_los_plugins.html">
+            <span>20.2.</span> Estructura de archivos de los plugins
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_plugin_jobeet.html">
+            <span>20.3.</span> El plugin Jobeet
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="utilizando_los_plugins.html">
+            <span>20.4.</span> Utilizando los plugins
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="publicando_tu_plugin.html">
+            <span>20.5.</span> Publicando tu plugin
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="nos_vemos_manana.html">
+            <span>20.6.</span> Nos vemos mañana
+        </a>
+    </li>
+    <li class="level-1">
+        <span>21</span> <a href="../capitulo_21.html"> El día del diseño</a>
+    </li>
+    <li class="level-1">
+        <span>22</span> <a href="../capitulo_22.html"> La cache</a>
+    </li>
+    <li class="level-1">
+        <span>23</span> <a href="../capitulo_23.html"> Pasando a producción</a>
+    </li>
+    <li class="level-1">
+        <span>24</span> <a href="../capitulo_24.html"> Un repaso a Symfony</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

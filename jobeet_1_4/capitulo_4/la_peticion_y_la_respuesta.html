@@ -1,0 +1,375 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>4.8. La petición y la respuesta (El tutorial Jobeet)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="la_accion_de_la_pagina_de_una_oferta_de_trabajo.html" />
+        <link rel="next" href="nos_vemos_manana.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="4.8. La petición y la respuesta (El tutorial Jobeet)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page jobeet_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">El tutorial Jobeet</a></li>
+  <li><a href="../capitulo_4.html">Capítulo 4. El controlador y la vista</a></li>
+  <li class="current"><span>4.8.. La petición y la respuesta</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="la_peticion_y_la_respuesta"><span>4.8.</span> La petición y la respuesta</h1>
+    
+
+<p>Cuando accedes a la página <code>/job</code> o <code>/job/show/id/1</code> en tu navegador, estás interactuando con el servidor web. El navegador envía una <strong>petición</strong> y el servidor web devuelve una <strong>respuesta</strong>.</p>
+
+<p>Como ya se ha visto en el código de los ejemplos anteriores, Symfony encapsula la petición en un objeto de tipo <code>sfWebRequest</code> (como se puede ver por ejemplo en la declaración del método <code>executeShow()</code>). Como Symfony es un framework orientado a objetos, la respuesta también es un objeto, en este caso de tipo <code>sfWebResponse</code>. Si quieres acceder al objeto de la respuesta desde la acción, puedes llamar al método <code>$this-&gt;getResponse()</code>.</p>
+
+<p>Estos dos objetos incluyen muchos métodos útiles para acceder a la información desde funciones y variables globales de PHP.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> ¿Cuál es el motivo por el que Symfony añade una capa de abstracción sobre algunas funcionalidades de PHP? En primer lugar, los métodos de Symfony son mucho más poderosos que los métodos equivalentes de PHP. En segundo lugar, porque cuando pruebas una aplicación es mucho más fácil simular una petición o una respuesta mediante un objeto, en vez de utilizar variables globales o funciones de PHP como <code>header()</code>, que ocultan gran parte de su funcionamiento interno.</p></div>
+
+<h3 id="la_peticion">4.8.1. La petición</h3>
+
+<p>La clase <code>sfWebRequest</code> encapsula los arrays globales <code>$_SERVER</code>, <code>$_COOKIE</code>, <code>$_GET</code>, <code>$_POST</code> y <code>$_FILES</code>:</p>
+
+<div class="table" id="table_4_1">
+
+    <table>
+<thead>
+<tr>
+  <th>Nombre del método</th>
+  <th>Equivalente de PHP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>getMethod()</code></td>
+  <td><code>$_SERVER['REQUEST_METHOD']</code></td>
+</tr>
+<tr>
+  <td><code>getUri()</code></td>
+  <td><code>$_SERVER['REQUEST_URI']</code></td>
+</tr>
+<tr>
+  <td><code>getReferer()</code></td>
+  <td><code>$_SERVER['HTTP_REFERER']</code></td>
+</tr>
+<tr>
+  <td><code>getHost()</code></td>
+  <td><code>$_SERVER['HTTP_HOST']</code></td>
+</tr>
+<tr>
+  <td><code>getLanguages()</code></td>
+  <td><code>$_SERVER['HTTP_ACCEPT_LANGUAGE']</code></td>
+</tr>
+<tr>
+  <td><code>getCharsets()</code></td>
+  <td><code>$_SERVER['HTTP_ACCEPT_CHARSET']</code></td>
+</tr>
+<tr>
+  <td><code>isXmlHttpRequest()</code></td>
+  <td><code>$_SERVER['X_REQUESTED_WITH'] == 'XMLHttpRequest</code>'</td>
+</tr>
+<tr>
+  <td><code>getHttpHeader()</code></td>
+  <td><code>$_SERVER</code></td>
+</tr>
+<tr>
+  <td><code>getCookie()</code></td>
+  <td><code>$_COOKIE</code></td>
+</tr>
+<tr>
+  <td><code>isSecure()</code></td>
+  <td><code>$_SERVER['HTTPS']</code></td>
+</tr>
+<tr>
+  <td><code>getFiles()</code></td>
+  <td><code>$_FILES</code></td>
+</tr>
+<tr>
+  <td><code>getGetParameter()</code></td>
+  <td><code>$_GET</code></td>
+</tr>
+<tr>
+  <td><code>getPostParameter()</code></td>
+  <td><code>$_POST</code></td>
+</tr>
+<tr>
+  <td><code>getUrlParameter()</code></td>
+  <td><code>$_SERVER['PATH_INFO']</code></td>
+</tr>
+<tr>
+  <td><code>getRemoteAddress()</code></td>
+  <td><code>$_SERVER['REMOTE_ADDR']</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+<p>En el código de los ejemplos anteriores también se ha empleado el método <code>getParameter()</code>, que permite acceder a los parámetros de la petición. El valor que devuelve este método se obtiene de las variables globales <code>$_GET</code> y <code>$_POST</code> o de la variable <code>PATH_INFO</code>.</p>
+
+<p>Si quieres asegurarte de que un parámetro de la petición viene específicamente de una de esas variables, puedes utilizar respectivamente los métodos <code>getGetParameter()</code>, <code>getPostParameter()</code> y <code>getUrlParameter()</code>.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Si quieres restringir una acción a un método específico, por ejemplo para asegurar que un formulario se ha enviado con el método <code>POST</code>, puedes utilizar el método <code>isMethod()</code> de la siguiente manera: <code>$this-&gt;forwardUnless($request-&gt;isMethod('POST'));</code>.</p></div>
+
+<h3 id="la_respuesta">4.8.2. La respuesta</h3>
+
+<p>La clase <code>sfWebResponse</code> encapsula los métodos <code>header()</code> y <code>setrawcookie()</code> de PHP:</p>
+
+<div class="table" id="table_4_2">
+
+    <table>
+<thead>
+<tr>
+  <th>Nombre del método</th>
+  <th>Equivalente de PHP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>setCookie()</code></td>
+  <td><code>setrawcookie()</code></td>
+</tr>
+<tr>
+  <td><code>setStatusCode()</code></td>
+  <td><code>header()</code></td>
+</tr>
+<tr>
+  <td><code>setHttpHeader()</code></td>
+  <td><code>header()</code></td>
+</tr>
+<tr>
+  <td><code>setContentType()</code></td>
+  <td><code>header()</code></td>
+</tr>
+<tr>
+  <td><code>addVaryHttpHeader()</code></td>
+  <td><code>header()</code></td>
+</tr>
+<tr>
+  <td><code>addCacheControlHttpHeader()</code></td>
+  <td><code>header()</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+<p>Obviamente, la clase <code>sfWebResponse</code> también incluye un método para establecer el contenido de la respuesta (<code>setContent()</code>) y otro para enviarla al navegador (<code>send()</code>).</p>
+
+<p>En las secciones anteriores se ha mostrado cómo incluir hojas de estilos y archivos JavaScript tanto en el archivo <code>view.yml</code> como en las plantillas. En realidad, las dos técnicas utilizan los métodos <code>addStylesheet()</code> y <code>addJavascript()</code> del objeto de la respuesta.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Las clases <a href="http://www.symfony-project.org/api/1_2/sfAction">sfAction</a>, <a href="http://www.symfony-project.org/api/1_2/sfRequest">sfRequest</a> y <a href="http://www.symfony-project.org/api/1_2/sfResponse">sfResponse</a> incluyen muchos otros métodos útiles. Puedes consultar la <a href="http://www.symfony-project.org/api/1_2/">documentación de la API de Symfony 1.2</a> para aprenderlo todo sobre las clases internas de Symfony.</p></div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="la_accion_de_la_pagina_de_una_oferta_de_trabajo.html">&larr; Anterior <span>4.7. La acción de la página de una oferta de trabajo</span></a>
+            
+            <a class="span5 next" href="nos_vemos_manana.html">Siguiente &rarr; <span>4.9. Nos vemos mañana</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'La petición y la respuesta (El tutorial Jobeet%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'El tutorial Jobeet : La petición y la respuesta']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Comenzando el proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> El proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> El modelo de datos</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_4.html">
+            <span>Capítulo 4.</span> El controlador y la vista
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="la_arquitectura_mvc.html">
+            <span>4.1.</span> La arquitectura MVC
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_layout.html">
+            <span>4.2.</span> El layout
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="las_hojas_de_estilo_imagenes_y_archivos_javascript.html">
+            <span>4.3.</span> Las hojas de estilo, imágenes y archivos JavaScript
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="la_portada_del_modulo_de_las_ofertas_de_trabajo.html">
+            <span>4.4.</span> La portada del módulo de las ofertas de trabajo
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="la_plantilla_de_la_pagina_de_una_oferta_de_trabajo.html">
+            <span>4.5.</span> La plantilla de la página de una oferta de trabajo
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="slots.html">
+            <span>4.6.</span> Slots
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="la_accion_de_la_pagina_de_una_oferta_de_trabajo.html">
+            <span>4.7.</span> La acción de la página de una oferta de trabajo
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="la_peticion_y_la_respuesta.html">
+            <span>4.8.</span> La petición y la respuesta
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="nos_vemos_manana.html">
+            <span>4.9.</span> Nos vemos mañana
+        </a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> El sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Profundizando en el modelo</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Trabajando con la página de cada categoría</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Pruebas unitarias</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Pruebas funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Probando los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> El generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> El usuario</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> El día de descanso</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Canales Atom</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Servicios web</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> El buscador</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>20</span> <a href="../capitulo_20.html"> Plugins</a>
+    </li>
+    <li class="level-1">
+        <span>21</span> <a href="../capitulo_21.html"> El día del diseño</a>
+    </li>
+    <li class="level-1">
+        <span>22</span> <a href="../capitulo_22.html"> La cache</a>
+    </li>
+    <li class="level-1">
+        <span>23</span> <a href="../capitulo_23.html"> Pasando a producción</a>
+    </li>
+    <li class="level-1">
+        <span>24</span> <a href="../capitulo_24.html"> Un repaso a Symfony</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

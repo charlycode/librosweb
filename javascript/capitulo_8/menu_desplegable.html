@@ -1,0 +1,282 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>8.4. Menú desplegable (Introducción a JavaScript)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="tooltip.html" />
+        <link rel="next" href="galerias_de_imagenes_lightbox.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="8.4. Menú desplegable (Introducción a JavaScript)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page javascript">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Introducción a JavaScript</a></li>
+  <li><a href="../capitulo_8.html">Capítulo 8. Otras utilidades</a></li>
+  <li class="current"><span>8.4. Menú desplegable</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="menu_desplegable"><span>8.4.</span> Menú desplegable</h1>
+    
+
+<p>La navegación de algunas páginas web se realiza mediante menús desplegables, que disponen de varios niveles jerárquicos que se despliegan a medida que el usuario pasa el puntero del ratón por encima de cada elemento. Aunque CSS permite realizar menús desplegables horizontales y verticales de cualquier nivel de profundidad, los navegadores de la familia Internet Explorer versión 6.0 y anteriores no disponen del suficiente soporte de CSS como para crear este tipo de menús.</p>
+
+<p>De esta forma, la única forma de crear un menú desplegable que funcione correctamente en cualquier navegador consiste en utilizar JavaScript. A pesar de que realizar un menú desplegable sencillo con JavaScript no es una tarea muy compleja, se va a utilizar un componente ya realizado que pertenece a la librería de desarrollo web de Yahoo.</p>
+
+<p>La <em>Yahoo UI Library</em>, conocida como YUI, y que se puede traducir como <em>"Librería de componentes de interfaz de usuario de Yahoo"</em> es un conjunto de utilidades y controles escritos en JavaScript para el desarrollo rápido y sencillo de aplicaciones web complejas.</p>
+
+<p>La librería completa está dividida en módulos y componentes relacionados con CSS, DOM, eventos, AJAX, etc. Entre las utilidades disponibles se encuentran calendarios, <em>tooltips</em>, cuadros que autocompletan el texto, árboles jerárquicos, etc. Además de esas utilidades, la YUI incluye un completo módulo de menús que permite realizar decenas de tipos de menús diferentes: horizontales, verticales, desplegables, estáticos, menús contextuales, menús de aplicación, menús realizados con XHTML o con JavaScript, etc.</p>
+
+<p>La librería YUI se puede descargar gratuitamente en http://developer.yahoo.com/yui/, la información específica sobre los menús se puede encontrar en http://developer.yahoo.com/yui/menu/ y se pueden ver decenas de ejemplos de menús ya realizados en http://developer.yahoo.com/yui/examples/menu/.</p>
+
+<p>A continuación se indican los pasos necesarios para incluir un menú vertical desplegable:</p>
+
+<p>1) Enlazar los archivos JavaScript y CSS requeridos:</p>
+
+<p>La librería YUI se puede descargar gratuitamente con todos los archivos necesarios, toda la documentación y cientos de ejemplos (por lo que comprimida ya ocupa más de 11 MB). Aunque es posible utilizar los archivos CSS y JavaScript proporcionados por la librería desde nuestro servidor, Yahoo permite enlazar los archivos CSS y JavaScript desde sus propios servidores.</p>
+
+<p>De esta forma, todos los archivos requeridos por las utilidades de Yahoo se pueden servir directamente desde sus servidores, mucho más rápidos y fiables que cualquier servidor particular. Como el usuario se descarga los archivos desde los servidores de Yahoo, el ahorro de ancho de banda es total y la aplicación carga mucho más rápido.</p>
+
+<p>Para crear un menú vertical, se deben enlazar los siguientes archivos:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc-1">&lt;!-- Dependencias --&gt;</span> 
+<span class="sc2">&lt;<span class="kw2">link</span> <span class="kw3">rel</span><span class="sy0">=</span><span class="st0">&quot;stylesheet&quot;</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text/css&quot;</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;http://yui.yahooapis.com/2.3.0/build/menu/assets/skins/sam/menu.css&quot;</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">script</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text/javascript&quot;</span> <span class="kw3">src</span><span class="sy0">=</span><span class="st0">&quot;http://yui.yahooapis.com/2.3.0/build/yahoo-dom-event/yahoo-dom-event.js&quot;</span>&gt;&lt;<span class="sy0">/</span><span class="kw2">script</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">script</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text/javascript&quot;</span> <span class="kw3">src</span><span class="sy0">=</span><span class="st0">&quot;http://yui.yahooapis.com/2.3.0/build/container/container_core-min.js&quot;</span>&gt;&lt;<span class="sy0">/</span><span class="kw2">script</span>&gt;</span>
+&nbsp;
+<span class="sc-1">&lt;!-- Código para menús --&gt;</span>
+<span class="sc2">&lt;<span class="kw2">script</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text/javascript&quot;</span> <span class="kw3">src</span><span class="sy0">=</span><span class="st0">&quot;http://yui.yahooapis.com/2.3.0/build/menu/menu-min.js&quot;</span>&gt;&lt;<span class="sy0">/</span><span class="kw2">script</span>&gt;</span></pre>
+</div>
+
+<p>Si se opta por servir los archivos desde nuestro propio servidor, es recomendable enlazar las versiones comprimidas de cada archivo, que se pueden reconocer porque su nombre termina en <code>-min.js</code>.</p>
+
+<p>2) Definir el código XHTML de los elementos del menú:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">div</span> <span class="kw3">id</span><span class="sy0">=</span><span class="st0">&quot;menu_vertical&quot;</span> <span class="kw3">class</span><span class="sy0">=</span><span class="st0">&quot;yuimenu&quot;</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">div</span> <span class="kw3">class</span><span class="sy0">=</span><span class="st0">&quot;bd&quot;</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">ul</span> <span class="kw3">class</span><span class="sy0">=</span><span class="st0">&quot;first-of-type&quot;</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">li</span> <span class="kw3">class</span><span class="sy0">=</span><span class="st0">&quot;yuimenuitem&quot;</span>&gt;&lt;<span class="kw2">a</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;#&quot;</span>&gt;</span>Lorem ipsum<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">a</span>&gt;&lt;<span class="sy0">/</span><span class="kw2">li</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">li</span> <span class="kw3">class</span><span class="sy0">=</span><span class="st0">&quot;yuimenuitem&quot;</span>&gt;&lt;<span class="kw2">a</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;#&quot;</span>&gt;</span>Dolor sit amet<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">a</span>&gt;&lt;<span class="sy0">/</span><span class="kw2">li</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">li</span> <span class="kw3">class</span><span class="sy0">=</span><span class="st0">&quot;yuimenuitem&quot;</span>&gt;</span>Consectetuer
+    <span class="sc2">&lt;<span class="kw2">div</span> <span class="kw3">id</span><span class="sy0">=</span><span class="st0">&quot;consectetuer&quot;</span> <span class="kw3">class</span><span class="sy0">=</span><span class="st0">&quot;yuimenu&quot;</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">div</span> <span class="kw3">class</span><span class="sy0">=</span><span class="st0">&quot;bd&quot;</span>&gt;</span>
+      <span class="sc2">&lt;<span class="kw2">ul</span>&gt;</span>
+        <span class="sc2">&lt;<span class="kw2">li</span> <span class="kw3">class</span><span class="sy0">=</span><span class="st0">&quot;yuimenuitem&quot;</span>&gt;&lt;<span class="kw2">a</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;#&quot;</span>&gt;</span>Donec quis nunc<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">a</span>&gt;&lt;<span class="sy0">/</span><span class="kw2">li</span>&gt;</span>
+        <span class="sc2">&lt;<span class="kw2">li</span> <span class="kw3">class</span><span class="sy0">=</span><span class="st0">&quot;yuimenuitem&quot;</span>&gt;&lt;<span class="kw2">a</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;#&quot;</span>&gt;</span>Fusce eleifend<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">a</span>&gt;&lt;<span class="sy0">/</span><span class="kw2">li</span>&gt;</span>
+        <span class="sc2">&lt;<span class="kw2">li</span> <span class="kw3">class</span><span class="sy0">=</span><span class="st0">&quot;yuimenuitem&quot;</span>&gt;&lt;<span class="kw2">a</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;#&quot;</span>&gt;</span>Donec erat<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">a</span>&gt;&lt;<span class="sy0">/</span><span class="kw2">li</span>&gt;</span>
+        <span class="sc2">&lt;<span class="kw2">li</span> <span class="kw3">class</span><span class="sy0">=</span><span class="st0">&quot;yuimenuitem&quot;</span>&gt;&lt;<span class="kw2">a</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;#&quot;</span>&gt;</span>Faucibus orci<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">a</span>&gt;&lt;<span class="sy0">/</span><span class="kw2">li</span>&gt;</span>
+        <span class="sc2">&lt;<span class="kw2">li</span> <span class="kw3">class</span><span class="sy0">=</span><span class="st0">&quot;yuimenuitem&quot;</span>&gt;&lt;<span class="kw2">a</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;#&quot;</span>&gt;</span>Volutpat quam<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">a</span>&gt;&lt;<span class="sy0">/</span><span class="kw2">li</span>&gt;</span>
+      <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">ul</span>&gt;</span>
+    <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">div</span>&gt;</span>
+    <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">div</span>&gt;</span>
+  <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">li</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">li</span> <span class="kw3">class</span><span class="sy0">=</span><span class="st0">&quot;yuimenuitem&quot;</span>&gt;&lt;<span class="kw2">a</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;#&quot;</span>&gt;</span>Adipiscing elit<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">a</span>&gt;&lt;<span class="sy0">/</span><span class="kw2">li</span>&gt;</span>
+  <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">ul</span>&gt;</span>
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">div</span>&gt;</span>
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">div</span>&gt;</span></pre>
+</div>
+
+<p>La librería YUI dispone de muchos tipos diferentes de menús. Además, los menús se pueden construir completamente con JavaScript (en la página XHTML no aparecen los elementos del menú) o a partir del código XHTML de los elementos del menú incluido en la página.</p>
+
+<p>Este último método, definir el menú con XHTML y después aplicarle JavaScript, es la forma recomendada, ya que si el usuario no tiene JavaScript activado, el menú se visualiza correctamente. Por ese motivo, no se va a estudiar el método de construcción de un menú de YUI exclusivamente con JavaScript.</p>
+
+<p>Los elementos que forman los menús creados con YUI se construyen mediante listas no ordenadas con las etiquetas <code>&lt;ul&gt;</code> y <code>&lt;li&gt;</code>. Un pequeño inconveniente de los menús definidos con la librería YUI es que cada uno de los menús (el principal y todos los desplegables) debe encerrarse con dos elementos de tipo <code>&lt;div&gt;</code>. En otras palabras, el esquema de cada menú (y submenú desplegable) es el siguiente:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">div</span> <span class="kw3">id</span><span class="sy0">=</span><span class="st0">&quot;cualquier_identificador&quot;</span> <span class="kw3">class</span><span class="sy0">=</span><span class="st0">&quot;yuimenu&quot;</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">div</span> <span class="kw3">class</span><span class="sy0">=</span><span class="st0">&quot;bd&quot;</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">ul</span> <span class="kw3">class</span><span class="sy0">=</span><span class="st0">&quot;first-of-type&quot;</span>&gt;</span>
+      ...
+    <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">ul</span>&gt;</span>
+  <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">div</span>&gt;</span>
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">div</span>&gt;</span></pre>
+</div>
+
+<p>Los valores de los atributos <code>class</code> de los elementos <code>&lt;div&gt;</code> anteriores deben mantenerse para que el menú funcione correctamente.</p>
+
+<p>3) Construir el menú y mostrarlo en la página:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="sy0">&lt;</span>script type<span class="sy0">=</span><span class="st0">&quot;text/javascript&quot;</span><span class="sy0">&gt;</span>
+YAHOO.<span class="me1">util</span>.<span class="me1">Event</span>.<span class="me1">onContentReady</span><span class="br0">&#40;</span><span class="st0">&quot;menu_vertical&quot;</span><span class="sy0">,</span> <span class="kw1">function</span> <span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="kw1">var</span> elMenu <span class="sy0">=</span> <span class="kw1">new</span> YAHOO.<span class="me1">widget</span>.<span class="me1">Menu</span><span class="br0">&#40;</span><span class="st0">&quot;menu_vertical&quot;</span><span class="sy0">,</span> <span class="br0">&#123;</span> width<span class="sy0">:</span> <span class="st0">'150px'</span> <span class="br0">&#125;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  elMenu.<span class="me1">render</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  elMenu.<span class="me1">show</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span></pre>
+</div>
+
+<p>El código JavaScript que crea dinámicamente el menú requiere que el árbol DOM de la página se haya construido completamente, por lo que se utiliza la función <code>onContentReady()</code> que forma parte de las utilidades para eventos de la librería YUI.</p>
+
+<p>Para construir el menú se crea un nuevo objeto de tipo <code>YAHOO.widget.Menu</code> y se le pasan las opciones de inicialización (en este caso, que tenga una anchura de 150 píxel).:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> elMenu <span class="sy0">=</span> <span class="kw1">new</span> YAHOO.<span class="me1">widget</span>.<span class="me1">Menu</span><span class="br0">&#40;</span><span class="st0">&quot;menu_vertical&quot;</span><span class="sy0">,</span> <span class="br0">&#123;</span> width<span class="sy0">:</span> <span class="st0">'150px'</span> <span class="br0">&#125;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Una vez creado el objeto del menú, se construye mediante la instrucción <code>elMenu.render()</code> y se muestra en la página con la instrucción <code>elMenu.show()</code>.</p>
+
+<p>El resultado final es un menú vertical desplegable con el siguiente aspecto:</p>
+
+<div class="figure" id="figure_8_13">
+    <img src="../../img/javascript/f0813.gif" alt="Aspecto final del menú vertical desplegable creado con la librería Yahoo YUI" />
+
+    <p class="caption"><strong>Figura 8.13</strong> Aspecto final del menú vertical desplegable creado con la librería Yahoo YUI</p>
+</div>
+
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="tooltip.html">&larr; Anterior <span>8.3. Tooltip</span></a>
+            
+            <a class="span5 next" href="galerias_de_imagenes_lightbox.html">Siguiente &rarr; <span>8.5. Galerías de imágenes (Lightbox)</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Menú desplegable (Introducción a JavaScript%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a JavaScript : Menú desplegable']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> El primer script</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Programación básica</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Programación avanzada</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> DOM</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Eventos</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Formularios</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_8.html">
+            <span>Capítulo 8.</span> Otras utilidades
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="relojes_contadores_e_intervalos_de_tiempo.html">
+            <span>8.1.</span> Relojes, contadores e intervalos de tiempo
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="calendario.html">
+            <span>8.2.</span> Calendario
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="tooltip.html">
+            <span>8.3.</span> Tooltip
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="menu_desplegable.html">
+            <span>8.4.</span> Menú desplegable
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="galerias_de_imagenes_lightbox.html">
+            <span>8.5.</span> Galerías de imágenes (Lightbox)
+        </a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Detección y corrección de errores</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Recursos útiles</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

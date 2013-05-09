@@ -1,0 +1,156 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>outline-color (Referencia de CSS 2.1)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="outline-color (Referencia de CSS 2.1)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page referencia_css">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="index.html">Referencia de CSS 2.1</a></li>
+  <li class="current"><span>outline-color</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="outline_color">outline-color</h1>
+    <div class="table" id="table_72_1">
+
+    <table class="table property css" summary="Definición de la propiedad border-color de CSS"> 
+<tr><th>Definición</th><td>Establece el color del perfil de los elementos</td></tr><tr><th>Valores <br/> permitidos</th><td>Uno y sólo uno de los siguientes valores:<ul><li><a href="colores.html">color</a></li><li>:invert</li><li><a href="el-valor-inherit.html">inherit</a></li></ul></td></tr><tr><th>Valor inicial</th><td>:invert</td></tr><tr><th>Se aplica a</th><td>Todos los elementos</td></tr><tr><th>Válida en</th><td><a href="medios.html">medios visuales</a>, <a href="medios.html">medios interactivos</a></td></tr><tr><th>Se hereda</th><td>no</td></tr><tr class="nobottom"><th>Definición en<br/>el estándar</th><td><a href="http://www.w3.org/TR/CSS21/ui.html#propdef-outline-color">http://www.w3.org/TR/CSS21/ui.html#propdef-outline-color</a></td></tr>
+</table>
+</div>
+
+
+<h2 id="ejemplos_de_uso">Ejemplos de uso</h2>
+
+<p>La propiedad <code>outline-color</code> establece el color del perfil de un elemento. Al igual que sucede con la propiedad <a href="border-color.html">border-color</a>, el uso más sencillo de esta propiedad es el de indicar directamente el color mediante cualquiera de las <a href="colores.html">diferentes formas de indicar un color en CSS</a>:</p>
+
+<div class="example">
+<div class="box" style="outline-style: solid; outline-color: #080">div { outline-color: #080; }</div>
+<br/>
+<div class="box" style="outline-style: solid; outline-color: blue">div { outline-color: blue; }</div>
+<br/>
+<div class="box" style="outline-style: solid; outline-color: rgb(255, 0, 0)">div { outline-color: rgb(255, 0, 0); }</div>
+</div>
+
+<p>Además de utilizar colores <em>normales</em>, también es posible utilizar un valor especial llamado <code>invert</code>. El valor <code>invert</code> no equivale a ningún color concreto, sino que indica al navegador que debe utilizar el color que mayor contraste tenga con el color de fondo de la página.</p>
+
+<p>En el siguiente ejemplo, las dos cajas interiores tienen el mismo valor <code>invert</code> en la propiedad <code>outline-color</code>. Sin embargo, como las cajas que las encierran tienen colores de fondo muy diferentes, el color real de cada perfil es completamente diferente:</p>
+
+<div class="example">
+<div class="box" style="background-color: #FFF; width: 350px; height: 100px">
+  <div class="innerbox" style="border: none; background: #FFF; outline-style: solid; outline-color: invert">div { outline-color: invert; }</div>
+</div>
+<br/>
+<div class="box" style="background-color: #C00; width: 350px; height: 100px">
+  <div class="innerbox" style="border: none; background: #FFF; outline-style: solid; outline-color: invert">div { outline-color: invert; }</div>
+</div>
+</div>
+
+<p>Si visualizas esta página con un navegador que soporte correctamente la propiedad <code>outline-color</code>, el ejemplo anterior se muestra como la siguiente imagen:</p>
+
+<div class="example">
+<img src="../../img/referencia_css/outline-color_1.png" />
+</div>
+
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'outline-color (Referencia de CSS 2.1%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Referencia de CSS 2.1 : outline-color']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Propiedades relacionadas</span></h3>
+
+
+                            <ul class="toc">
+                    <li class="active">
+                <a href="outline-color.html">outline-color</a>
+            </li>
+                    <li class="">
+                <a href="outline-style.html">outline-style</a>
+            </li>
+                    <li class="">
+                <a href="outline-width.html">outline-width</a>
+            </li>
+                    <li class="">
+                <a href="outline.html">outline</a>
+            </li>
+                </ul>
+                                                
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

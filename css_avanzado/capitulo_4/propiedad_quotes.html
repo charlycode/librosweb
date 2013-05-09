@@ -1,0 +1,446 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>4.4. Propiedad quotes (CSS avanzado)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="propiedad_outline.html" />
+        <link rel="next" href="propiedad_counter_reset.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="4.4. Propiedad quotes (CSS avanzado)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page css_avanzado">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">CSS avanzado</a></li>
+  <li><a href="../capitulo_4.html">Capítulo 4. Propiedades avanzadas</a></li>
+  <li class="current"><span>4.4.. Propiedad quotes</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="propiedad_quotes"><span>4.4.</span> Propiedad quotes</h1>
+    
+
+<div class="table" id="table_4_5">
+
+    <table class="table property css" summary="Definición de la propiedad quotes de CSS"> 
+<tr><th>Definición</th><td>Establece los caracteres utilizados para mostrar las comillas</td></tr><tr><th>Valores <br/> permitidos</th><td>Uno y sólo uno de los siguientes valores:<ul><li>Un número par de cadenas de texto</li><li>none</li><li>inherit</li></ul></td></tr><tr><th>Valor inicial</th><td>Depende de cada navegador</td></tr><tr><th>Se aplica a</th><td>Todos los elementos</td></tr><tr><th>Válida en</th><td>medios visuales</td></tr><tr><th>Se hereda</th><td>si</td></tr><tr class="nobottom"><th>Definición en<br/>el estándar</th><td> http://www.w3.org/TR/CSS21/generate.html#propdef-quotes </td></tr>
+</table>
+</div>
+
+
+<p>La propiedad <code>quotes</code> sólo tiene sentido cuando se utiliza junto con la propiedad <code>content</code> y los <em>pseudo-elementos</em> <code>:after</code> y <code>:before</code>. La propiedad <code>quote</code> se puede emplear para establecer los caracteres que se utilizan al mostrar las comillas en un elemento.</p>
+
+<p>Por defecto, cuando se utiliza la propiedad <code>content</code> junto con los valores <code>open-quote</code> y <code>close-quote</code>, el navegador muestra unas determinadas comillas. Por tanto, si se considera el siguiente código HTML y CSS:</p>
+
+<div class="code css">
+<pre class="css">blockquote<span class="re2">:before </span><span class="br0">&#123;</span> <span class="kw1">content</span><span class="sy0">:</span> <span class="kw2">open-quote</span><span class="sy0">;</span> <span class="br0">&#125;</span>
+blockquote<span class="re2">:after  </span><span class="br0">&#123;</span> <span class="kw1">content</span><span class="sy0">:</span> <span class="kw2">close-quote</span><span class="sy0">;</span> <span class="br0">&#125;</span>
+&nbsp;
+&lt;blockquote<span class="sy0">&gt;</span>Lorem ipsum dolor sit amet...&lt;/blockquote<span class="sy0">&gt;</span></pre>
+</div>
+
+<p>El navegador muestra el ejemplo anterior de la siguiente forma:</p>
+
+<div class="example">
+<style type="text/css">
+blockquote#propiedad_quotes_1 { border: none; margin: 0; }
+blockquote#propiedad_quotes_1:before { content: open-quote; }
+blockquote#propiedad_quotes_1:after  { content: close-quote; }
+</style>
+<blockquote id="propiedad_quotes_1">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed non sem quis tellus vulputate lobortis. Vivamus fermentum, tortor id ornare ultrices, ligula ipsum tincidunt pede, et blandit sem pede suscipit pede. Nulla cursus porta sem. Donec mollis nunc in leo.</blockquote>
+</div>
+
+<p>Si utilizas un navegador moderno con soporte de la propiedad <code>quotes</code>, el ejemplo anterior se visualiza como muestra la siguiente imagen:</p>
+
+<div class="figure" id="figure_4_5">
+    <img src="../../img/css_avanzado/quotes_1.png" alt="Ejemplo de la propiedad quotes" />
+
+    <p class="caption"><strong>Figura 4.5</strong> Ejemplo de la propiedad quotes</p>
+</div>
+
+
+<p>La imagen anterior corresponde al navegador Firefox. Como el estándar CSS 2.1 no indica las comillas que se deben utilizar por defecto, se pueden producir diferencias visuales en cada navegador.</p>
+
+<p>La propiedad <code>quotes</code> se utiliza para establecer de forma explícita las comillas que debe utilizar el navegador y por tanto, neutraliza las posibles diferencias entre navegadores. Las comillas siempre se indican por pares, siendo la primera la comilla de apertura y la segunda la comilla de cierre.</p>
+
+<p>El siguiente ejemplo modifica el anterior para utilizar las comillas « y »:</p>
+
+<div class="code css">
+<pre class="css">blockquote <span class="br0">&#123;</span>
+  <span class="kw1">quotes</span><span class="sy0">:</span> <span class="st0">&quot;«&quot;</span> <span class="st0">&quot;»&quot;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+blockquote<span class="re2">:before </span><span class="br0">&#123;</span> <span class="kw1">content</span><span class="sy0">:</span> <span class="kw2">open-quote</span><span class="sy0">;</span> <span class="br0">&#125;</span>
+blockquote<span class="re2">:after  </span><span class="br0">&#123;</span> <span class="kw1">content</span><span class="sy0">:</span> <span class="kw2">close-quote</span><span class="sy0">;</span> <span class="br0">&#125;</span>
+&nbsp;
+&lt;blockquote<span class="sy0">&gt;</span>Lorem ipsum dolor sit amet...&lt;/blockquote<span class="sy0">&gt;</span></pre>
+</div>
+
+<p>Ahora, el navegador muestra el ejemplo anterior de la siguiente forma:</p>
+
+<div class="example">
+<style type="text/css">
+blockquote#propiedad_quotes_2 { border: none; margin: 0; quotes: "«" "»"; }
+blockquote#propiedad_quotes_2:before { content: open-quote;  }
+blockquote#propiedad_quotes_2:after  { content: close-quote; }
+</style>
+<blockquote id="propiedad_quotes_2">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed non sem quis tellus vulputate lobortis. Vivamus fermentum, tortor id ornare ultrices, ligula ipsum tincidunt pede, et blandit sem pede suscipit pede. Nulla cursus porta sem. Donec mollis nunc in leo.</blockquote>
+</div>
+
+<p>Si se visualiza esta página con un navegador que soporte la propiedad <code>quotes</code>, el ejemplo anterior se visualiza como muestra la siguiente imagen:</p>
+
+<div class="figure" id="figure_4_6">
+    <img src="../../img/css_avanzado/quotes_2.png" alt="Ejemplo de la propiedad quotes" />
+
+    <p class="caption"><strong>Figura 4.6</strong> Ejemplo de la propiedad quotes</p>
+</div>
+
+
+<p>La propiedad <code>quotes</code> permite indicar un número ilimitado de pares de comillas. Cuando sólo se define un par, se muestran siempre que se utilice <code>open-quote</code> y <code>close-quote</code>. Cuando se definen varios pares, se van alternando cada vez que se muestran unas comillas dentro de otro elemento que ya tiene comillas. Cada comilla se separa de las demás mediante un espacio en blanco, por lo que no debe utilizarse una coma o cualquier otro caracter de separación.</p>
+
+<p>El siguiente ejemplo define dos pares de comillas en cada elemento de modo que se alternan las comillas cada vez que un elemento se encuentra dentro de otro elemento que también muestra comillas:</p>
+
+<div class="code css">
+<pre class="css">blockquote<span class="sy0">,</span> span <span class="br0">&#123;</span>
+  <span class="kw1">quotes</span><span class="sy0">:</span> <span class="st0">&quot;«&quot;</span> <span class="st0">&quot;»&quot;</span> <span class="st0">'&quot;'</span> <span class="st0">'&quot;'</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+blockquote<span class="re2">:before</span><span class="sy0">,</span> span<span class="re2">:before </span><span class="br0">&#123;</span>
+  <span class="kw1">content</span><span class="sy0">:</span> <span class="kw2">open-quote</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+blockquote<span class="re2">:after</span><span class="sy0">,</span> span<span class="re2">:after </span><span class="br0">&#123;</span>
+  <span class="kw1">content</span><span class="sy0">:</span> <span class="kw2">close-quote</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+&lt;blockquote<span class="sy0">&gt;</span>Lorem ipsum dolor sit amet<span class="sy0">,</span> consectetuer adipiscing elit. Sed non sem quis tellus vulputate lobortis. &lt;span<span class="sy0">&gt;</span>Vivamus fermentum&lt;/span<span class="sy0">&gt;,</span> tortor id ornare ultrices<span class="sy0">,</span> ligula ipsum tincidunt pede<span class="sy0">,</span> et blandit &lt;span<span class="sy0">&gt;</span>sem pede suscipit pede.&lt;/span<span class="sy0">&gt;</span> Nulla cursus porta sem. Donec mollis nunc in leo.&lt;/blockquote<span class="sy0">&gt;</span></pre>
+</div>
+
+<p>Las reglas CSS anteriores indican que el navegador debe utilizar diferentes comillas cuando el nivel de anidamiento sea diferente:</p>
+
+<div class="example">
+<style type="text/css">
+blockquote#propiedad_quotes_3,
+blockquote#propiedad_quotes_3 span {
+  border: none;
+  margin: 0;
+  quotes: "«" "»" '"' '"';
+}
+
+blockquote#propiedad_quotes_3:before, 
+blockquote#propiedad_quotes_3 span:before {
+  content: open-quote;
+}
+blockquote#propiedad_quotes_3:after,
+blockquote#propiedad_quotes_3 span:after {
+  content: close-quote;
+}
+</style>
+
+<blockquote id="propiedad_quotes_3">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed non sem quis tellus vulputate lobortis. <span>Vivamus fermentum</span>, tortor id ornare ultrices, ligula ipsum tincidunt pede, et blandit <span>sem pede suscipit pede.</span> Nulla cursus porta sem. Donec mollis nunc in leo.</blockquote>
+</div>
+
+<p>En el ejemplo anterior, tanto <code>&lt;blockquote&gt;</code> como <code>&lt;abbr&gt;</code> establecen dos pares de comillas. Cuando uno de estos dos elementos se encuentre dentro de otro elemento que ya muestra comillas, la propiedad <code>quotes</code> indica que se debe utilizar el segundo par de comillas en vez del primero. Por lo tanto, si utilizas un navegador que soporta la propiedad <code>quotes</code>, el ejemplo anterior se visualiza de la siguiente forma:</p>
+
+<div class="figure" id="figure_4_7">
+    <img src="../../img/css_avanzado/quotes_3.png" alt="Ejemplo de la propiedad quotes" />
+
+    <p class="caption"><strong>Figura 4.7</strong> Ejemplo de la propiedad quotes</p>
+</div>
+
+
+<p>Los valores de la propiedad <code>quotes</code> se indican mediante cadenas de texto. Una cadena de texto es un conjunto de uno o más caracteres encerrados por las comillas dobles (<code>"</code>) o las comillas simples (``'). Si la cadena contiene comillas dobles, se encierra con las comillas simples y viceversa. Si una cadena de texto tiene tanto comillas simples como dobles, las comillas problemáticas se modifican y se les añade la barra invertida <code>\</code> por delante:</p>
+
+<div class="code css">
+<pre class="css"><span class="coMULTI">/* Comillas simples encerradas por comillas dobles */</span>
+<span class="re1">.selector</span> <span class="br0">&#123;</span> <span class="kw1">quotes</span><span class="sy0">:</span> <span class="st0">&quot;'&quot;</span> <span class="st0">&quot;'&quot;</span><span class="sy0">;</span> <span class="br0">&#125;</span>
+&nbsp;
+<span class="coMULTI">/* Comillas dobles encerradas por comillas simples */</span>
+<span class="re1">.selector</span> <span class="br0">&#123;</span> <span class="kw1">quotes</span><span class="sy0">:</span> <span class="st0">'&quot;'</span> <span class="st0">'&quot;'</span><span class="sy0">;</span> <span class="br0">&#125;</span>
+&nbsp;
+<span class="coMULTI">/* Comillas simples y dobles encerradas por comillas dobles */</span>
+<span class="re1">.selector</span> <span class="br0">&#123;</span> <span class="kw1">quotes</span><span class="sy0">:</span> <span class="st0">&quot;\&quot;</span><span class="st0">&quot; &quot;</span>\<span class="st0">&quot;&quot;</span> <span class="st0">&quot;'&quot;</span> <span class="st0">&quot;'&quot;</span><span class="sy0">;</span> <span class="br0">&#125;</span>
+&nbsp;
+<span class="coMULTI">/* Comillas simples y dobles encerradas por comillas simples */</span>
+<span class="re1">.selector</span> <span class="br0">&#123;</span> <span class="kw1">quotes</span><span class="sy0">:</span> <span class="st0">'&quot;'</span> <span class="st0">'&quot;'</span> <span class="st0">'\` '</span>\`<span class="sy0">;</span> <span class="br0">&#125;</span></pre>
+</div>
+
+<p>Como las comillas se indican mediante cadenas de texto, no están limitadas a un solo carácter. En el siguiente ejemplo se utilizan unas comillas poco habituales formadas por varios caracteres:</p>
+
+<div class="code css">
+<pre class="css">blockquote<span class="sy0">,</span> span <span class="br0">&#123;</span>
+  <span class="kw1">quotes</span><span class="sy0">:</span> <span class="st0">&quot;«««&quot;</span> <span class="st0">&quot;»»»&quot;</span> <span class="st0">&quot;--&quot;</span> <span class="st0">&quot;--&quot;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+blockquote<span class="re2">:before</span><span class="sy0">,</span> span<span class="re2">:before </span><span class="br0">&#123;</span>
+  <span class="kw1">content</span><span class="sy0">:</span> <span class="kw2">open-quote</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+blockquote<span class="re2">:after</span><span class="sy0">,</span> span<span class="re2">:after </span><span class="br0">&#123;</span>
+  <span class="kw1">content</span><span class="sy0">:</span> <span class="kw2">close-quote</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+&lt;blockquote<span class="sy0">&gt;</span>Lorem ipsum dolor sit amet<span class="sy0">,</span> consectetuer adipiscing elit. Sed non sem quis tellus vulputate lobortis. &lt;span<span class="sy0">&gt;</span>Vivamus fermentum&lt;/span<span class="sy0">&gt;,</span> tortor id ornare ultrices<span class="sy0">,</span> ligula ipsum tincidunt pede<span class="sy0">,</span> et blandit &lt;span<span class="sy0">&gt;</span>sem pede suscipit pede.&lt;/span<span class="sy0">&gt;</span> Nulla cursus porta sem. Donec mollis nunc in leo.&lt;/blockquote<span class="sy0">&gt;</span></pre>
+</div>
+
+<p>Las reglas CSS anteriores producen el siguiente resultado en el navegador:</p>
+
+<div class="example">
+<style type="text/css">
+blockquote#propiedad_quotes_4,
+blockquote#propiedad_quotes_4 span {
+  border: none;
+  margin: 0;
+  quotes: "«««" "»»»" "--" "--";
+}
+
+blockquote#propiedad_quotes_4:before, 
+blockquote#propiedad_quotes_4 span:before {
+  content: open-quote;
+}
+blockquote#propiedad_quotes_4:after,
+blockquote#propiedad_quotes_4 span:after {
+  content: close-quote;
+}
+</style>
+
+<blockquote id="propiedad_quotes_4">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed non sem quis tellus vulputate lobortis. <span>Vivamus fermentum</span>, tortor id ornare ultrices, ligula ipsum tincidunt pede, et blandit <span>sem pede suscipit pede.</span> Nulla cursus porta sem. Donec mollis nunc in leo.</blockquote>
+</div>
+
+<p>En un navegador con soporte de la propiedad <code>quotes</code>, el ejemplo anterior se visualiza de la siguiente forma:</p>
+
+<div class="figure" id="figure_4_8">
+    <img src="../../img/css_avanzado/quotes_4.png" alt="Ejemplo de la propiedad quotes" />
+
+    <p class="caption"><strong>Figura 4.8</strong> Ejemplo de la propiedad quotes</p>
+</div>
+
+
+<p>Utilizando el <em>pseudo-selector</em> <code>:lang()</code> es posible incluso definir diferentes tipos de comillas en función del idioma del contenido:</p>
+
+<div class="code css">
+<pre class="css">blockquote<span class="sy0">:</span>lang<span class="br0">&#40;</span>en<span class="br0">&#41;</span> <span class="br0">&#123;</span> <span class="kw1">quotes</span><span class="sy0">:</span> <span class="st0">'&quot;'</span> <span class="st0">'&quot;'</span> <span class="st0">&quot;'&quot;</span> <span class="st0">&quot;'&quot;</span> <span class="br0">&#125;</span> <span class="coMULTI">/* comillas para inglés */</span>
+blockquote<span class="sy0">:</span>lang<span class="br0">&#40;</span>es<span class="br0">&#41;</span> <span class="br0">&#123;</span> <span class="kw1">quotes</span><span class="sy0">:</span> <span class="st0">&quot;«&quot;</span> <span class="st0">&quot;»&quot;</span> <span class="st0">'&quot;'</span> <span class="st0">'&quot;'</span> <span class="br0">&#125;</span> <span class="coMULTI">/* comillas para español */</span></pre>
+</div>
+
+<p>La propiedad <code>quotes</code> define otro valor llamado <code>none</code> que hace que no se muestre ninguna comilla cuando se utiliza el valor <code>open-quote</code> y <code>close-quote</code> de la propiedad <code>content</code>.</p>
+
+<p>Por último, el estándar de CSS 2.1 recomienda utilizar directamente los códigos definidos en el estándar ISO 10646 para indicar la comilla que se quiere utilizar.</p>
+
+<p>De esta forma, las dos siguientes reglas CSS son equivalentes:</p>
+
+<div class="code css">
+<pre class="css">blockquote<span class="sy0">,</span> abbr <span class="br0">&#123;</span>
+  <span class="kw1">quotes</span><span class="sy0">:</span> <span class="st0">&quot;«&quot;</span> <span class="st0">&quot;»&quot;</span> <span class="st0">&quot;'&quot;</span> <span class="st0">&quot;'&quot;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+blockquote<span class="sy0">,</span> abbr <span class="br0">&#123;</span>
+  <span class="kw1">quotes</span><span class="sy0">:</span> <span class="st0">&quot;<span class="es2">\00AB</span>&quot;</span> <span class="st0">&quot;<span class="es2">\00BB</span>&quot;</span> <span class="st0">&quot;<span class="es2">\0027</span>&quot;</span> <span class="st0">&quot;<span class="es2">\0027</span>&quot;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>La siguiente tabla recoge las comillas más utilizadas y sus códigos correspondientes:</p>
+
+<div class="table" id="table_4_6">
+
+    <table>
+<thead>
+<tr>
+  <th>Carácter</th>
+  <th>Código ISO 10646</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>"</code></td>
+  <td><code>0022</code></td>
+</tr>
+<tr>
+  <td><code>'</code></td>
+  <td><code>0027</code></td>
+</tr>
+<tr>
+  <td><code>‹</code></td>
+  <td><code>2039</code></td>
+</tr>
+<tr>
+  <td><code>›</code></td>
+  <td><code>203A</code></td>
+</tr>
+<tr>
+  <td><code>«</code></td>
+  <td><code>00AB</code></td>
+</tr>
+<tr>
+  <td><code>»</code></td>
+  <td><code>00BB</code></td>
+</tr>
+<tr>
+  <td><code>‘</code></td>
+  <td><code>2018</code></td>
+</tr>
+<tr>
+  <td><code>’</code></td>
+  <td><code>2019</code></td>
+</tr>
+<tr>
+  <td><code>“</code></td>
+  <td><code>201C</code></td>
+</tr>
+<tr>
+  <td><code>”</code></td>
+  <td><code>201D</code></td>
+</tr>
+<tr>
+  <td><code>„</code></td>
+  <td><code>201E</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="propiedad_outline.html">&larr; Anterior <span>4.3. Propiedad outline</span></a>
+            
+            <a class="span5 next" href="propiedad_counter_reset.html">Siguiente &rarr; <span>4.5. Propiedad counter-reset</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Propiedad quotes (CSS avanzado%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'CSS avanzado : Propiedad quotes']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Técnicas imprescindibles</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Buenas prácticas</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Selectores</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_4.html">
+            <span>Capítulo 4.</span> Propiedades avanzadas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="propiedad_white_space.html">
+            <span>4.1.</span> Propiedad white-space
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="propiedad_display.html">
+            <span>4.2.</span> Propiedad display
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="propiedad_outline.html">
+            <span>4.3.</span> Propiedad outline
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="propiedad_quotes.html">
+            <span>4.4.</span> Propiedad quotes
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="propiedad_counter_reset.html">
+            <span>4.5.</span> Propiedad counter-reset
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="propiedad_counter_increment.html">
+            <span>4.6.</span> Propiedad counter-increment
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="propiedad_content.html">
+            <span>4.7.</span> Propiedad content
+        </a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Frameworks</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Técnicas avanzadas</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

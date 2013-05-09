@@ -1,0 +1,290 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>7.1. Creando un nuevo panel de depuración web (Más con Symfony)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="../capitulo_7.html" />
+        <link rel="next" href="los_tres_tipos_de_paneles_de_depuracion_web.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="7.1. Creando un nuevo panel de depuración web (Más con Symfony)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page mas_con_symfony">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Más con Symfony</a></li>
+  <li><a href="../capitulo_7.html">Capítulo 7. Mejorando la barra de depuración web</a></li>
+  <li class="current"><span>7.1.. Creando un nuevo panel de depuración web</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="creando_un_nuevo_panel_de_depuracion_web"><span>7.1.</span> Creando un nuevo panel de depuración web</h1>
+    
+
+<p>Los elementos que forman la barra de depuración web se denominan <em>paneles de
+depuración web</em> y son unas clases especiales que heredan de la clase
+<code>sfWebDebugPanel</code> class. En realidad, crear un nuevo panel es muy sencillo.
+Crea un nuevo archivo llamado <code>sfWebDebugPanelDocumentation.class.php</code> en el
+directorio <code>lib/debug/</code> de tu proyecto (el directorio no existe y por tanto
+tienes que crearlo):</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// lib/debug/sfWebDebugPanelDocumentation.class.php</span>
+<span class="kw2">class</span> acWebDebugPanelDocumentation <span class="kw2">extends</span> sfWebDebugPanel
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> getTitle<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="kw1">return</span> <span class="st_h">'&lt;img src=&quot;/images/documentation.png&quot; alt=&quot;Documentation Shortcuts&quot; height=&quot;16&quot; width=&quot;16&quot; /&gt; docs'</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="kw2">public</span> <span class="kw2">function</span> getPanelTitle<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="kw1">return</span> <span class="st_h">'Documentation'</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="kw2">public</span> <span class="kw2">function</span> getPanelContent<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$content</span> <span class="sy0">=</span> <span class="st_h">'Placeholder Panel Content'</span><span class="sy0">;</span>
+&nbsp;
+    <span class="kw1">return</span> <span class="re0">$content</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Como mínimo todos los paneles deben implementar los métodos <code>getTitle()</code>,
+<code>getPanelTitle()</code> y <code>getPanelContent()</code>.</p>
+
+<ul>
+<li><code>sfWebDebugPanel::getTitle()</code>: determina cómo se muestra inicialmente el
+panel en la barra de depuración web. Al igual que la mayoría de paneles,
+el panel que estamos creando se va a mostrar mediante un pequeño icono y
+un nombre corto.</li>
+<li><code>sfWebDebugPanel::getPanelTitle()</code>: su valor se muestra en la parte
+superior del contenido del panel mediante una etiqueta <code>&lt;h1&gt;</code>. También se
+utiliza como valor del atributo <code>title</code> del enlace que encierra el icono
+de la barra, por lo que no puede incluir ningún tipo de código HTML.</li>
+<li><code>sfWebDebugPanel::getPanelContent()</code>: genera el contenido HTML que se
+muestra al pulsar sobre el icono del panel.</li>
+</ul>
+
+<p>El último paso que falta consiste en notificar a la aplicación que se quiere
+incluir un nuevo panel en la barra. Para ello, añade un nuevo <em>listener</em> para
+el evento <code>debug.web.load_panels</code>, que se notifica cuando la barra de depuración
+obtiene los paneles que se van a mostrar. En primer lugar, modificar el archivo
+<code>config/ProjectConfiguration.class.php</code> para escuchar ese evento:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// config/ProjectConfiguration.class.php</span>
+<span class="kw2">public</span> <span class="kw2">function</span> setup<span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="co1">// ...</span>
+&nbsp;
+  <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">dispatcher</span><span class="sy0">-&gt;</span><span class="me1">connect</span><span class="br0">&#40;</span><span class="st_h">'debug.web.load_panels'</span><span class="sy0">,</span> <span class="kw3">array</span><span class="br0">&#40;</span>
+    <span class="st_h">'acWebDebugPanelDocumentation'</span><span class="sy0">,</span>
+    <span class="st_h">'listenToLoadDebugWebPanelEvent'</span>
+  <span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>A continuación, añade la función <code>listenToLoadDebugWebPanelEvent()</code> del
+<em>listener</em> a la clase <code>acWebDebugPanelDocumentation.class.php</code> para incluir el
+panel en la barra:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// lib/debug/sfWebDebugPanelDocumentation.class.php</span>
+<span class="kw2">public</span> static <span class="kw2">function</span> listenToLoadDebugWebPanelEvent<span class="br0">&#40;</span>sfEvent <span class="re0">$event</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="re0">$event</span><span class="sy0">-&gt;</span><span class="me1">getSubject</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">setPanel</span><span class="br0">&#40;</span>
+    <span class="st_h">'documentation'</span><span class="sy0">,</span>
+    <span class="kw2">new</span> <span class="kw2">self</span><span class="br0">&#40;</span><span class="re0">$event</span><span class="sy0">-&gt;</span><span class="me1">getSubject</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+  <span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>¡Y eso es todo! Refresca la página para ver el resultado de forma inmediata.</p>
+
+<div class="figure" id="figure_7_2">
+    <img src="../../img/mas_con_symfony/web_debug_02.png" alt="Barra de depuración web" title="La barra de depuración web con un panel propio" />
+
+    <p class="caption"><strong>Figura 7.2</strong> Barra de depuración web</p>
+</div>
+
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Desde Symfony 1.3, es posible utilizar en la URL un parámetro llamado
+<code>sfWebDebugPanel</code> para mostrar desplegado un determinado panel web al 
+cargar la página. Si por ejemplo se añade <code>?sfWebDebugPanel=documentation</code>
+al final de la URL, se abrirá automáticamente el panel que se acaba de crear.
+Esta característica puede ser muy útil cuando se crean paneles propios.</p></div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="../capitulo_7.html">&larr; Anterior <span>Capítulo 7. Mejorando la barra de depuración web</span></a>
+            
+            <a class="span5 next" href="los_tres_tipos_de_paneles_de_depuracion_web.html">Siguiente &rarr; <span>7.2. Los tres tipos de paneles de depuración web</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Creando un nuevo panel de depuración web (Más con Symfony%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Más con Symfony : Creando un nuevo panel de depuración web']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Enrutamiento avanzado</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Mejora tu productividad</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Emails</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Widgets y validadores propios</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Formularios avanzados</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_7.html">
+            <span>Capítulo 7.</span> Mejorando la barra de depuración web
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="creando_un_nuevo_panel_de_depuracion_web.html">
+            <span>7.1.</span> Creando un nuevo panel de depuración web
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="los_tres_tipos_de_paneles_de_depuracion_web.html">
+            <span>7.2.</span> Los tres tipos de paneles de depuración web
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="personalizando_el_contenido_del_panel.html">
+            <span>7.3.</span> Personalizando el contenido del panel
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="otros_trucos_de_la_barra_de_depuracion_web.html">
+            <span>7.4.</span> Otros trucos de la barra de depuración web
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ultimas_reflexiones.html">
+            <span>7.5.</span> Últimas reflexiones
+        </a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Uso avanzado de Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Utilizando la herencia de tablas de Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Funcionamiento interno de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Windows y Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Desarrollando aplicaciones Facebook</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Descubriendo el poder de la línea de comandos</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Jugando con la cache de configuración de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Trabajando con la comunidad Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>A</span> <a href="../apendice_a.html"> Código JavaScript de sfWidgetFormGMapAddress</a>
+    </li>
+    <li class="level-1">
+        <span>B</span> <a href="../apendice_b.html"> Ejemplo de instalador propio</a>
+    </li>
+    <li class="level-1">
+        <span>C</span> <a href="../apendice_c.html"> Licencia</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

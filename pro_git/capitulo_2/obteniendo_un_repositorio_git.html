@@ -1,0 +1,225 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>2.1. Obteniendo un repositorio Git (Pro Git, el libro oficial de Git)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="../capitulo_2.html" />
+        <link rel="next" href="guardando_cambios_en_el_repositorio.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="2.1. Obteniendo un repositorio Git (Pro Git, el libro oficial de Git)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page pro_git">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Pro Git, el libro oficial de Git</a></li>
+  <li><a href="../capitulo_2.html">Capítulo 2. Fundamentos de Git</a></li>
+  <li class="current"><span>2.1.. Obteniendo un repositorio Git</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="obteniendo_un_repositorio_git"><span>2.1.</span> Obteniendo un repositorio Git</h1>
+    
+
+<p>Puedes obtener un proyecto Git de dos maneras. La primera toma un proyecto o directorio existente y lo importa en Git. La segunda clona un repositorio Git existente desde otro servidor.</p>
+
+<h3 id="inicializando_un_repositorio_en_un_directorio_existente">2.1.1. Inicializando un repositorio en un directorio existente</h3>
+
+<p>Si estás empezando el seguimiento en Git de un proyecto existente, necesitas ir al directorio del proyecto y escribir:</p>
+
+<div class="code code">
+<pre class="code">$ git init</pre>
+</div>
+
+<p>Esto crea un nuevo subdirectorio llamado .git que contiene todos los archivos necesarios del repositorio — un esqueleto de un repositorio Git. Todavía no hay nada en tu proyecto que esté bajo seguimiento. (Véase el <a class="internal" href="../capitulo_9.html#capitulo9">Capítulo 9</a> para obtener más información sobre qué archivos están contenidos en el directorio <code>.git</code> que acabas de crear.)</p>
+
+<p>Si deseas empezar a controlar versiones de archivos existentes (a diferencia de un directorio vacío), probablemente deberías comenzar el seguimiento de esos archivos y hacer una confirmación inicial. Puedes conseguirlo con unos pocos comandos <code>git add</code> para especificar qué archivos quieres controlar, seguidos de un <code>commit</code> para confirmar los cambios:</p>
+
+<div class="code code">
+<pre class="code">$ git add *.c
+$ git add README
+$ git commit –m 'versión inicial del proyecto'</pre>
+</div>
+
+<p>Veremos lo que hacen estos comandos dentro de un minuto. En este momento, tienes un repositorio Git con archivos bajo seguimiento, y una confirmación inicial.</p>
+
+<h3 id="clonando_un_repositorio_existente">2.1.2. Clonando un repositorio existente</h3>
+
+<p>Si deseas obtener una copia de un repositorio Git existente — por ejemplo, un proyecto en el que te gustaría contribuir — el comando que necesitas es <code>git clone</code>. Si estás familizarizado con otros sistemas de control de versiones como Subversion, verás que el comando es <code>clone</code> y no <code>checkout</code>. Es una distinción importante, ya que Git recibe una copia de casi todos los datos que tiene el servidor. Cada versión de cada archivo de la historia del proyecto es descargado cuando ejecutas <code>git clone</code>. De hecho, si el disco de tu servidor se corrompe, puedes usar cualquiera de los clones en cualquiera de los clientes para devolver al servidor al estado en el que estaba cuando fue clonado (puede que pierdas algunos <em>hooks</em> del lado del servidor y demás, pero toda la información versionada estaría ahí — véase el <a class="internal" href="../capitulo_4.html#capitulo4">Capítulo 4</a> para más detalles —).</p>
+
+<p>Puedes clonar un repositorio con <code>git clone [url]</code>. Por ejemplo, si quieres clonar la librería Ruby llamada Grit, harías algo así:</p>
+
+<div class="code code">
+<pre class="code">$ git clone git://github.com/schacon/grit.git</pre>
+</div>
+
+<p>Esto crea un directorio llamado "grit", inicializa un directorio <code>.git</code> en su interior, descarga toda la información de ese repositorio, y saca una copia de trabajo de la última versión. Si te metes en el nuevo directorio <code>grit</code>, verás que están los archivos del proyecto, listos para ser utilizados. Si quieres clonar el repositorio a un directorio con otro nombre que no sea grit, puedes especificarlo con la siguiente opción de línea de comandos:</p>
+
+<div class="code code">
+<pre class="code">$ git clone git://github.com/schacon/grit.git mygrit</pre>
+</div>
+
+<p>Ese comando hace lo mismo que el anterior, pero el directorio de destino se llamará mygrit.</p>
+
+<p>Git te permite usar distintos protocolos de transferencia. El ejemplo anterior usa el protocolo <code>git://</code>, pero también te puedes encontrar con <code>http(s)://</code> o <code>usuario@servidor:/ruta.git</code>, que utiliza el protocolo de transferencia SSH. En el <a class="internal" href="../capitulo_4.html#capitulo4">Capítulo 4</a> se introducirán todas las opciones disponibles a la hora de configurar el acceso a tu repositorio Git, y las ventajas e inconvenientes de cada una.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="../capitulo_2.html">&larr; Anterior <span>Capítulo 2. Fundamentos de Git</span></a>
+            
+            <a class="span5 next" href="guardando_cambios_en_el_repositorio.html">Siguiente &rarr; <span>2.2. Guardando cambios en el repositorio</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Obteniendo un repositorio Git (Pro Git, el libro oficial de Git%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Pro Git, el libro oficial de Git : Obteniendo un repositorio Git']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Empezando</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_2.html">
+            <span>Capítulo 2.</span> Fundamentos de Git
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="obteniendo_un_repositorio_git.html">
+            <span>2.1.</span> Obteniendo un repositorio Git
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="guardando_cambios_en_el_repositorio.html">
+            <span>2.2.</span> Guardando cambios en el repositorio
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="viendo_el_historico_de_confirmaciones.html">
+            <span>2.3.</span> Viendo el histórico de confirmaciones
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="deshaciendo_cosas.html">
+            <span>2.4.</span> Deshaciendo cosas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="trabajando_con_repositorios_remotos.html">
+            <span>2.5.</span> Trabajando con repositorios remotos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="creando_etiquetas.html">
+            <span>2.6.</span> Creando etiquetas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="consejos_y_trucos.html">
+            <span>2.7.</span> Consejos y trucos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="resumen.html">
+            <span>2.8.</span> Resumen
+        </a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Trabajando con ramas en Git</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Git en un servidor</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Git en entornos distribuidos</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Las herramientas de Git</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Personalizando Git</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Git y otros sistemas</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Funcionamiento interno de Git</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

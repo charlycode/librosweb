@@ -1,0 +1,287 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>9.5. Las especificaciones para hacer referencia (refspec) (Pro Git, el libro oficial de Git)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="archivos_empaquetadores.html" />
+        <link rel="next" href="protocolos_de_transferencia.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="9.5. Las especificaciones para hacer referencia (refspec) (Pro Git, el libro oficial de Git)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page pro_git">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Pro Git, el libro oficial de Git</a></li>
+  <li><a href="../capitulo_9.html">Capítulo 9. Funcionamiento interno de Git</a></li>
+  <li class="current"><span>9.5.. Las especificaciones para hacer referencia (refspec)</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="las_especificaciones_para_hacer_referencia_refspec"><span>9.5.</span> Las especificaciones para hacer referencia (refspec)</h1>
+    
+
+<p>A lo largo del libro has utilizado sencillos mapeados entre ramas remotas y referencias locales; pero las cosas pueden ser bastante más complejas.
+Supón que añades un remoto tal que:</p>
+
+<div class="code code">
+<pre class="code">$ git remote add origin git@github.com:schacon/simplegit-progit.git</pre>
+</div>
+
+<p>Esto añade una nueva sección a tu archivo <code>.git/config</code>, indicando el nombre del remoto (<code>origin</code>), la ubicación (URL) del repositorio remoto y la referencia para recuperar (<em>fetch</em>) desde él:</p>
+
+<div class="code remote "origin"">
+<pre class="remoteorigin">       url = git@github.com:schacon/simplegit-progit.git
+       fetch = +refs/heads/*:refs/remotes/origin/*</pre>
+</div>
+
+<p>El formato para esta referencia es un signo <code>+</code> opcional, seguido de una sentencia <code>&lt;orig&gt;:&lt;dest&gt;</code>; donde  <code>&lt;orig&gt;</code> es la plantilla para referencias en el lado remoto y <code>&lt;dest&gt;</code> el lugar donde esas referencias se escribirán en el lado local. El  <code>+</code>, si está presente, indica a Git que debe actualizar la referencia incluso en los casos en que no se dé un avance rápido (<em>fast-forward</em>).</p>
+
+<p>En el caso por defecto en que es escrito por un comando <code>git remote add</code>, Git recupera del servidor todas las referencias bajo <code>refs/heads/</code>, y las escribe localmente en <code>refs/remotes/origin/</code>. De tal forma que, si existe una rama <code>master</code> en el servidor, puedes acceder a ella localmente a través de</p>
+
+<div class="code code">
+<pre class="code">$ git log origin/master
+$ git log remotes/origin/master
+$ git log refs/remotes/origin/master</pre>
+</div>
+
+<p>Todas estas sentencias son equivalentes, ya que Git expande cada una de ellas a <code>refs/remotes/origin/master</code>.</p>
+
+<p>Si, en cambio, quisieras hacer que Git recupere únicamente la rama <code>master</code> y no cualquier otra rama en el servidor remoto. Puedes cambiar la linea de recuperación a</p>
+
+<div class="code code">
+<pre class="code">fetch = +refs/heads/master:refs/remotes/origin/master</pre>
+</div>
+
+<p>Quedando así esta referencia como la referencia por defecto para el comando <code>git fetch</code> para ese remoto.  Para hacerlo puntualmente en un momento concreto, puedes especificar la referencia directamente en la linea de comando. Para recuperar la rama <code>master</code> del servidor remoto a tu rama <code>origin/mymaster</code> local, puedes lanzar el comando</p>
+
+<div class="code code">
+<pre class="code">$ git fetch origin master:refs/remotes/origin/mymaster</pre>
+</div>
+
+<p>Puedes incluso indicar multiples referencias en un solo comando. Escribiendo algo asi como:</p>
+
+<div class="code code">
+<pre class="code">$ git fetch origin master:refs/remotes/origin/mymaster \
+   topic:refs/remotes/origin/topic
+From git@github.com:schacon/simplegit
+ ! [rejected]        master     -&gt; origin/mymaster  (non fast forward)
+ * [new branch]      topic      -&gt; origin/topic</pre>
+</div>
+
+<p>En este ejemplo, se ha rechazado la recuperación de la rama master porque no era una referencia de avance rápido (<em>fast-forward</em>). Puedes forzarlo indicando el signo <code>+</code> delante de la referencia.</p>
+
+<p>Es posible asimismo indicar referencias multiples en el archivo de configuración. Si, por ejemplo, siempre recuperas las ramas <code>master</code> y <code>experiment</code>, puedes poner dos lineas:</p>
+
+<div class="code remote "origin"">
+<pre class="remoteorigin">       url = git@github.com:schacon/simplegit-progit.git
+       fetch = +refs/heads/master:refs/remotes/origin/master
+       fetch = +refs/heads/experiment:refs/remotes/origin/experiment</pre>
+</div>
+
+<p>Pero, en ningún caso puedes poner referencias genéricas parciales; por ejemplo, algo como esto sería erroneo:</p>
+
+<div class="code code">
+<pre class="code">fetch = +refs/heads/qa*:refs/remotes/origin/qa*</pre>
+</div>
+
+<p>Aunque, para conseguir algo similar, puedes utilizar los espacios de nombres . Si tienes un equipo QA que envia al servidor una serie de ramas. Y deseas recuperar la rama master y cualquiera otra de las ramas del equipo; pero no recuperar ninguna rama de otro equipo. Puedes utilizar una sección de configuración como esta:</p>
+
+<div class="code remote "origin"">
+<pre class="remoteorigin">       url = git@github.com:schacon/simplegit-progit.git
+       fetch = +refs/heads/master:refs/remotes/origin/master
+       fetch = +refs/heads/qa/*:refs/remotes/origin/qa/*</pre>
+</div>
+
+<p>De esta forma, puedes asignar facilmente espacios de nombres. Y resolver así complejos flujos de trabajo donde tengas simultáneamente , por ejemplo, un equipo QA enviando ramas, varios desarrolladores enviando ramas también y equipos integradores enviando y colaborando en ramas remotas.</p>
+
+<h3 id="enviando_push_referencias">9.5.1. Enviando (<em>push</em>) referencias</h3>
+
+<p>Es util poder recuperar (<em>fetch</em>) referencias relativas en espacios de nombres, tal y como hemos visto. Pero, ¿cómo pueden enviar (<em>push</em>) sus ramas al espacio de nombres <code>qa/</code> los miembros de equipo QA?. Pues utilizando las referencias (<em>refspecs</em>) para enviar.</p>
+
+<p>Si alguien del equipo QA quiere enviar su rama  <code>master</code> a la ubicación <code>qa/master</code> en el servidor remoto, puede lanzar algo asi como:</p>
+
+<div class="code code">
+<pre class="code">$ git push origin master:refs/heads/qa/master</pre>
+</div>
+
+<p>Y, para que se haga de forma automática cada vez que ejecute <code>git push origin</code>, puede añadir una entrada <code>push</code> a su archivo de configuración:</p>
+
+<div class="code remote "origin"">
+<pre class="remoteorigin">       url = git@github.com:schacon/simplegit-progit.git
+       fetch = +refs/heads/*:refs/remotes/origin/*
+       push = refs/heads/master:refs/heads/qa/master</pre>
+</div>
+
+<p>Esto hará que un simple comando <code>git push origin</code> envie por defecto la rama local  <code>master</code> a la rama remota <code>qa/master</code>,</p>
+
+<h3 id="borrando_referencias">9.5.2. Borrando referencias</h3>
+
+<p>Se pueden utilizar las referencias (<em>refspec</em>) para borrar en el servidor remoto. Por ejemplo, lanzando algo como:</p>
+
+<div class="code code">
+<pre class="code">$ git push origin :topic</pre>
+</div>
+
+<p>Se elimina la rama <code>topic</code> del servidor remoto, ya que la sustituimos or nada. (Al ser la referencia <code>&lt;origen&gt;:&lt;destino&gt;</code>, si no indicamos la parte  <code>&lt;origen&gt;</code>, realmente estamos diciendo que enviamos <em>nada</em> a <code>&lt;destino&gt;</code>.)</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="archivos_empaquetadores.html">&larr; Anterior <span>9.4. Archivos empaquetadores</span></a>
+            
+            <a class="span5 next" href="protocolos_de_transferencia.html">Siguiente &rarr; <span>9.6. Protocolos de transferencia</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Las especificaciones para hacer referencia (refspec) (Pro Git, el libro oficial de Git%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Pro Git, el libro oficial de Git : Las especificaciones para hacer referencia (refspec)']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Empezando</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Fundamentos de Git</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Trabajando con ramas en Git</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Git en un servidor</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Git en entornos distribuidos</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Las herramientas de Git</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Personalizando Git</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Git y otros sistemas</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_9.html">
+            <span>Capítulo 9.</span> Funcionamiento interno de Git
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="fontaneria_y_porcelana.html">
+            <span>9.1.</span> Fontaneria y porcelana
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="los_objetos_git.html">
+            <span>9.2.</span> Los objetos Git
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="referencias_git.html">
+            <span>9.3.</span> Referencias Git
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="archivos_empaquetadores.html">
+            <span>9.4.</span> Archivos empaquetadores
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="las_especificaciones_para_hacer_referencia_refspec.html">
+            <span>9.5.</span> Las especificaciones para hacer referencia (refspec)
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="protocolos_de_transferencia.html">
+            <span>9.6.</span> Protocolos de transferencia
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="mantenimiento_y_recuperacion_de_datos.html">
+            <span>9.7.</span> Mantenimiento y recuperación de datos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="resumen.html">
+            <span>9.8.</span> Resumen
+        </a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

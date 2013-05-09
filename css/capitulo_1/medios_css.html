@@ -1,0 +1,415 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>1.8. Medios CSS (Introducción a CSS)</title>
+        <link href="../main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="glosario_basico.html" />
+        <link rel="next" href="comentarios.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="1.8. Medios CSS (Introducción a CSS)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page css">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Introducción a CSS</a></li>
+  <li><a href="../capitulo_1.html">Capítulo 1. Introducción</a></li>
+  <li class="current"><span>1.8.. Medios CSS</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="medios_css"><span>1.8.</span> Medios CSS</h1>
+    
+
+<p>Una de las características más importantes de las hojas de estilos CSS es que permiten definir diferentes estilos para diferentes medios o dispositivos: pantallas, impresoras, móviles, proyectores, etc.</p>
+
+<p>Además, CSS define algunas propiedades específicamente para determinados medios, como por ejemplo la paginación y los saltos de página para los medios impresos o el volumen y tipo de voz para los medios de audio. La siguiente tabla muestra el nombre que CSS utiliza para identificar cada medio y su descripción:</p>
+
+<div class="table" id="table_1_2">
+
+    <table>
+<thead>
+<tr>
+  <th>Medio</th>
+  <th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>all</code></td>
+  <td>Todos los medios definidos</td>
+</tr>
+<tr>
+  <td><code>braille</code></td>
+  <td>Dispositivos táctiles que emplean el sistema braille</td>
+</tr>
+<tr>
+  <td><code>embosed</code></td>
+  <td>Impresoras braille</td>
+</tr>
+<tr>
+  <td><code>handheld</code></td>
+  <td>Dispositivos de mano: móviles, PDA, etc.</td>
+</tr>
+<tr>
+  <td><code>print</code></td>
+  <td>Impresoras y navegadores en el modo <em>"Vista Previa para Imprimir"</em></td>
+</tr>
+<tr>
+  <td><code>projection</code></td>
+  <td>Proyectores y dispositivos para presentaciones</td>
+</tr>
+<tr>
+  <td><code>screen</code></td>
+  <td>Pantallas de ordenador</td>
+</tr>
+<tr>
+  <td><code>speech</code></td>
+  <td>Sintetizadores para navegadores de voz utilizados por personas discapacitadas</td>
+</tr>
+<tr>
+  <td><code>tty</code></td>
+  <td>Dispositivos textuales limitados como teletipos y terminales de texto</td>
+</tr>
+<tr>
+  <td><code>tv</code></td>
+  <td>Televisores y dispositivos con resolución baja</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+<p>Los medios más utilizados actualmente son <code>screen</code> (para definir el aspecto de la página en pantalla) y <code>print</code> (para definir el aspecto de la página cuando se imprime), seguidos de <code>handheld</code> (que define el aspecto de la página cuando se visualiza mediante un dispositivo móvil).</p>
+
+<p>Además, CSS clasifica a los medios en diferentes grupos según sus características. La siguiente tabla resume todos los grupos definidos en el estándar:</p>
+
+<div class="table" id="table_1_3">
+
+    <table>
+<thead>
+<tr>
+  <th>Medio</th>
+  <th>Continuo / Paginado</th>
+  <th>Visual / Auditivo / Táctil / Vocal</th>
+  <th>Mapa de bits / Caracteres</th>
+  <th>Interactivo / Estático</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>braille</code></td>
+  <td>continuo</td>
+  <td>táctil</td>
+  <td>caracteres</td>
+  <td>ambos</td>
+</tr>
+<tr>
+  <td><code>embossed</code></td>
+  <td>paginado</td>
+  <td>táctil</td>
+  <td>caracteres</td>
+  <td>estático</td>
+</tr>
+<tr>
+  <td><code>handheld</code></td>
+  <td>ambos</td>
+  <td>visual, auditivo, vocal</td>
+  <td>ambos</td>
+  <td>ambos</td>
+</tr>
+<tr>
+  <td><code>print</code></td>
+  <td>paginado</td>
+  <td>visual</td>
+  <td>mapa de bits</td>
+  <td>estático</td>
+</tr>
+<tr>
+  <td><code>projection</code></td>
+  <td>paginado</td>
+  <td>visual</td>
+  <td>mapa de bits</td>
+  <td>interactivo</td>
+</tr>
+<tr>
+  <td><code>screen</code></td>
+  <td>continuo</td>
+  <td>visual, auditivo</td>
+  <td>mapa de bits</td>
+  <td>ambos</td>
+</tr>
+<tr>
+  <td><code>speech</code></td>
+  <td>continuo</td>
+  <td>vocal</td>
+  <td>(no tiene sentido)</td>
+  <td>ambos</td>
+</tr>
+<tr>
+  <td><code>tty</code></td>
+  <td>continuo</td>
+  <td>visual</td>
+  <td>caracteres</td>
+  <td>ambos</td>
+</tr>
+<tr>
+  <td><code>tv</code></td>
+  <td>ambos</td>
+  <td>visual, auditivo</td>
+  <td>mapa de bits</td>
+  <td>ambos</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+<p>La gran ventaja de CSS es que permite modificar los estilos de una página en función del medio en el que se visualiza. Existen cuatro formas diferentes de indicar el medio en el que se deben aplicar los estilos CSS.</p>
+
+<h3 id="medios_definidos_con_las_reglas_de_tipo_media">1.8.1. Medios definidos con las reglas de tipo @media</h3>
+
+<p>Las reglas <code>@media</code> son un tipo especial de regla CSS que permiten indicar de forma directa el medio o medios en los que se aplicarán los estilos incluidos en la regla. Para especificar el medio en el que se aplican los estilos, se incluye su nombre después de <code>@media</code>. Si los estilos se aplican a varios medios, se incluyen los nombres de todos los medios separados por comas.</p>
+
+<p>A continuación se muestra un ejemplo sencillo:</p>
+
+<div class="code css">
+<pre class="css"><span class="co1">@media print {</span>
+  body <span class="br0">&#123;</span> <span class="kw1">font-size</span><span class="sy0">:</span> <span class="re3">10pt</span> <span class="br0">&#125;</span>
+<span class="br0">&#125;</span>
+<span class="co1">@media screen {</span>
+  body <span class="br0">&#123;</span> <span class="kw1">font-size</span><span class="sy0">:</span> <span class="re3">13px</span> <span class="br0">&#125;</span>
+<span class="br0">&#125;</span>
+<span class="co1">@media screen, print {</span>
+  body <span class="br0">&#123;</span> <span class="kw1">line-height</span><span class="sy0">:</span> <span class="nu0">1.2</span> <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>El ejemplo anterior establece que el tamaño de letra de la página cuando se visualiza en una pantalla debe ser <code>13</code> píxel. Sin embargo, cuando se imprimen los contenidos de la página, su tamaño de letra debe ser de <code>10</code> puntos. Por último, tanto cuando la página se visualiza en una pantalla como cuando se imprimen sus contenidos, el interlineado del texto debe ser de <code>1.2</code> veces el tamaño de letra del texto.</p>
+
+<h3 id="medios_definidos_con_las_reglas_de_tipo_import">1.8.2. Medios definidos con las reglas de tipo @import</h3>
+
+<p>Cuando se utilizan reglas de tipo <code>@import</code> para enlazar archivos CSS externos, se puede especificar el medio en el que se aplican los estilos indicando el nombre del medio después de la URL del archivo CSS:</p>
+
+<div class="code css">
+<pre class="css"><span class="co1">@import url(&quot;estilos_basicos.css&quot;) screen;</span>
+<span class="co1">@import url(&quot;estilos_impresora.css&quot;) print;</span></pre>
+</div>
+
+<p>Las reglas del ejemplo anterior establecen que cuando la página se visualiza por pantalla, se cargan los estilos definidos en el primer archivo CSS. Por otra parte, cuando la página se imprime, se tienen en cuenta los estilos que define el segundo archivo CSS.</p>
+
+<p>Si los estilos del archivo CSS externo deben aplicarse en varios medios, se indican los nombres de todos los medios separados por comas. Si no se indica el medio en una regla de tipo <code>@import</code>, el navegador sobreentiende que el medio es <code>all</code>, es decir, que los estilos se aplican en todos los medios.</p>
+
+<h3 id="medios_definidos_con_la_etiqueta_">1.8.3. Medios definidos con la etiqueta <link></h3>
+
+<p>Si se utiliza la etiqueta <code>&lt;link&gt;</code> para enlazar los archivos CSS externos, se puede utilizar el atributo <code>media</code> para indicar el medio o medios en los que se aplican los estilos de cada archivo:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">link</span> <span class="kw3">rel</span><span class="sy0">=</span><span class="st0">&quot;stylesheet&quot;</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text/css&quot;</span> <span class="kw3">media</span><span class="sy0">=</span><span class="st0">&quot;screen&quot;</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;basico.css&quot;</span> <span class="sy0">/</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">link</span> <span class="kw3">rel</span><span class="sy0">=</span><span class="st0">&quot;stylesheet&quot;</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text/css&quot;</span> <span class="kw3">media</span><span class="sy0">=</span><span class="st0">&quot;print, handheld&quot;</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;especial.css&quot;</span> <span class="sy0">/</span>&gt;</span></pre>
+</div>
+
+<p>En este ejemplo, el primer archivo CSS se tiene en cuenta cuando la página se visualiza en la pantalla (<code>media="screen"</code>). Los estilos indicados en el segundo archivo CSS, se aplican al imprimir la página (<code>media="print"</code>) o al visualizarla en un dispositivo móvil (<code>media="handheld"</code>), como por ejemplo en un iPhone.</p>
+
+<p>Si la etiqueta <code>&lt;link&gt;</code> no indica el medio CSS, se sobreentiende que los estilos se deben aplicar a todos los medios, por lo que es equivalente a indicar <code>media="all"</code>.</p>
+
+<h3 id="medios_definidos_mezclando_varios_metodos">1.8.4. Medios definidos mezclando varios métodos</h3>
+
+<p>CSS también permite mezclar los tres métodos anteriores para indicar los medios en los que se aplica cada archivo CSS externo:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">link</span> <span class="kw3">rel</span><span class="sy0">=</span><span class="st0">&quot;stylesheet&quot;</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text/css&quot;</span>  <span class="kw3">media</span><span class="sy0">=</span><span class="st0">&quot;screen&quot;</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;basico.css&quot;</span> <span class="sy0">/</span>&gt;</span>
+@import url(&quot;estilos_seccion.css&quot;) screen;
+@media print {
+  /* Estilos específicos para impresora */
+}</pre>
+</div>
+
+<p>Los estilos CSS que se aplican cuando se visualiza la página en una pantalla se obtienen mediante el recurso enlazado con la etiqueta <code>&lt;link&gt;</code> y mediante el archivo CSS externo incluido con la regla de tipo <code>@import</code>. Además, los estilos aplicados cuando se imprime la página se indican directamente en la página HTML mediante la regla de tipo <code>@media</code>.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="glosario_basico.html">&larr; Anterior <span>1.7. Glosario básico</span></a>
+            
+            <a class="span5 next" href="comentarios.html">Siguiente &rarr; <span>1.9. Comentarios</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Medios CSS (Introducción a CSS%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a CSS : Medios CSS']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1 ">
+        <a href="../capitulo_1.html">
+            <span>Capítulo 1.</span> Introducción
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="breve_historia_de_css.html">
+            <span>1.2.</span> Breve historia de CSS
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="soporte_de_css_en_los_navegadores.html">
+            <span>1.3.</span> Soporte de CSS en los navegadores
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="especificacion_oficial.html">
+            <span>1.4.</span> Especificación oficial
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="funcionamiento_basico_de_css.html">
+            <span>1.5.</span> Funcionamiento básico de CSS
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="como_incluir_css_en_un_documento_xhtml.html">
+            <span>1.6.</span> Cómo incluir CSS en un documento XHTML
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="glosario_basico.html">
+            <span>1.7.</span> Glosario básico
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="medios_css.html">
+            <span>1.8.</span> Medios CSS
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="comentarios.html">
+            <span>1.9.</span> Comentarios
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="sintaxis_de_la_definicion_de_cada_propiedad_css.html">
+            <span>1.10.</span> Sintaxis de la definición de cada propiedad CSS
+        </a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Selectores</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Unidades de medida y colores</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Modelo de cajas</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Posicionamiento y visualización</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Texto</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Enlaces</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Imágenes</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Listas</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Tablas</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Layout</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Otros</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Recursos útiles</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Ejercicios</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

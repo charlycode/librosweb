@@ -1,0 +1,331 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>6.12. Aplicando estilos diferentes para los elementos con errores (Más con Symfony)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="eventos_de_formulario.html" />
+        <link rel="next" href="conclusion.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="6.12. Aplicando estilos diferentes para los elementos con errores (Más con Symfony)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page mas_con_symfony">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Más con Symfony</a></li>
+  <li><a href="../capitulo_6.html">Capítulo 6. Formularios avanzados</a></li>
+  <li class="current"><span>6.12.. Aplicando estilos diferentes para los elementos con errores</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="aplicando_estilos_diferentes_para_los_elementos_con_errores"><span>6.12.</span> Aplicando estilos diferentes para los elementos con errores</h1>
+    
+
+<p>Como práctica final, se muestra una utilidad muy sencilla relacionada con el
+estilo de los elementos de formulario. Imagina que el diseño de la página <code>Product</code>
+incluye estilos diferentes para los campos que tienen algún error de validación.</p>
+
+<div class="figure" id="figure_6_6">
+    <img src="../../img/mas_con_symfony/advanced_forms_02.png" alt="Formulario de producto con errores" title="Formulario de producto con estilos en los campos con errores" />
+
+    <p class="caption"><strong>Figura 6.6</strong> Formulario de producto con errores</p>
+</div>
+
+
+<p>Se supone que el diseñador ya ha creado la hoja de estilos que aplica estilos
+diferentes a los campos de tipo <code>&lt;input&gt;</code> que se encuentren dentro de cualquier
+elemento <code>&lt;div&gt;</code> con la clase <code>form_error_row</code>. ¿Cómo se pueden añadir fácilmente
+clases <code>form_row_error</code> en los campos que tengan errores?</p>
+
+<p>Para conseguirlo hay que hacer uso de un objeto especial llamado <em>formateador
+del esquema de formulario</em> (<em>"form schema formatter"</em>). Todos los formularios
+de Symfony utilizan este formateador para determinar el código HTML que se debe
+utilizar cuando se muestran los elementos de formulario. Por defecto Symfony
+emplea un formateador que hace uso de tablas HTML.</p>
+
+<p>En primer lugar se crea una nueva clase de tipo formateador de formulario que
+emplea una código HTML más simple al mostrar el formulario. Crea un nuevo
+archivo llamado <code>sfWidgetFormSchemaFormatterAc2009.class.php</code> y guárdalo en el
+directorio <code>lib/widget/</code> (debes crear este directorio a mano):</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">class</span> sfWidgetFormSchemaFormatterAc2009 <span class="kw2">extends</span> sfWidgetFormSchemaFormatter
+<span class="br0">&#123;</span>
+  <span class="kw2">protected</span>
+    <span class="re0">$rowFormat</span>       <span class="sy0">=</span> <span class="st0">&quot;&lt;div class=<span class="es1">\&quot;</span>form_row<span class="es1">\&quot;</span>&gt;
+                        %label% <span class="es1">\n</span> <span class="es6">%e</span>rror% &lt;br/&gt; <span class="es6">%f</span>ield%
+                        %help% %hidden_fields%<span class="es1">\n</span>&lt;/div&gt;<span class="es1">\n</span>&quot;</span><span class="sy0">,</span>
+    <span class="re0">$errorRowFormat</span>  <span class="sy0">=</span> <span class="st0">&quot;&lt;div&gt;<span class="es6">%e</span>rrors%&lt;/div&gt;&quot;</span><span class="sy0">,</span>
+    <span class="re0">$helpFormat</span>      <span class="sy0">=</span> <span class="st_h">'&lt;div class=&quot;form_help&quot;&gt;%help%&lt;/div&gt;'</span><span class="sy0">,</span>
+    <span class="re0">$decoratorFormat</span> <span class="sy0">=</span> <span class="st0">&quot;&lt;div&gt;<span class="es1">\n</span>  <span class="es6">%c</span>ontent%&lt;/div&gt;&quot;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Aunque el formato de esta clase es un poco raro, la idea básica es que el método
+<code>renderRow()</code> utiliza el código de <code>$rowFormat</code> para mostrar su información.
+Las clases de tipo formateador tienen muchas otras opciones que se pueden
+consultar en la 
+<a href="http://www.symfony-project.org/api/1_3/sfWidgetFormSchemaFormatter">API de symfony 1.3</a>.</p>
+
+<p>Para hacer uso del nuevo formateador en todos los formularios del proyecto, se
+puede añadir lo siguiente en la clase <code>ProjectConfiguration</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">class</span> ProjectConfiguration <span class="kw2">extends</span> sfProjectConfiguration
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> setup<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="co1">// ...</span>
+&nbsp;
+    sfWidgetFormSchema<span class="sy0">::</span><span class="me2">setDefaultFormFormatterName</span><span class="br0">&#40;</span><span class="st_h">'ac2009'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>El objetivo consiste en añadir una clase <code>form_row_error</code> dentro del elemento
+<code>form_row</code> solamente si ese campo tiene algún error de validación. Añade una
+variable <code>%row_class%</code> en la propiedad <code>$rowFormat</code> y redefine el método
+<code>sfWidgetFormSchemaFormatter::formatRow()</code> de la siguiente manera:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">class</span> sfWidgetFormSchemaFormatterAc2009 <span class="kw2">extends</span> sfWidgetFormSchemaFormatter
+<span class="br0">&#123;</span>
+  <span class="kw2">protected</span>
+    <span class="re0">$rowFormat</span>       <span class="sy0">=</span> <span class="st0">&quot;&lt;div class=<span class="es1">\&quot;</span>form_row%row_class%<span class="es1">\&quot;</span>&gt;
+                        %label% <span class="es1">\n</span> <span class="es6">%e</span>rror% &lt;br/&gt; <span class="es6">%f</span>ield%
+                        %help% %hidden_fields%<span class="es1">\n</span>&lt;/div&gt;<span class="es1">\n</span>&quot;</span><span class="sy0">,</span>
+    <span class="co1">// ...</span>
+&nbsp;
+  <span class="kw2">public</span> <span class="kw2">function</span> formatRow<span class="br0">&#40;</span><span class="re0">$label</span><span class="sy0">,</span> <span class="re0">$field</span><span class="sy0">,</span> <span class="re0">$errors</span> <span class="sy0">=</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="re0">$help</span> <span class="sy0">=</span> <span class="st_h">''</span><span class="sy0">,</span> <span class="re0">$hiddenFields</span> <span class="sy0">=</span> <span class="kw4">null</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$row</span> <span class="sy0">=</span> parent<span class="sy0">::</span><span class="me2">formatRow</span><span class="br0">&#40;</span>
+      <span class="re0">$label</span><span class="sy0">,</span>
+      <span class="re0">$field</span><span class="sy0">,</span>
+      <span class="re0">$errors</span><span class="sy0">,</span>
+      <span class="re0">$help</span><span class="sy0">,</span>
+      <span class="re0">$hiddenFields</span>
+    <span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="kw1">return</span> <span class="kw3">strtr</span><span class="br0">&#40;</span><span class="re0">$row</span><span class="sy0">,</span> <span class="kw3">array</span><span class="br0">&#40;</span>
+      <span class="st_h">'%row_class%'</span> <span class="sy0">=&gt;</span> <span class="br0">&#40;</span><span class="kw3">count</span><span class="br0">&#40;</span><span class="re0">$errors</span><span class="br0">&#41;</span> <span class="sy0">&gt;</span> <span class="nu0">0</span><span class="br0">&#41;</span> ? <span class="st_h">' form_row_error'</span> <span class="sy0">:</span> <span class="st_h">''</span><span class="sy0">,</span>
+    <span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Con este último cambio, cada elemento que se muestre con el método <code>renderRow()</code>
+será encerrado por un elemento <code>&lt;div&gt;</code> con la clase <code>form_row_error</code> si ese
+elemento tiene algún error de validación.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="eventos_de_formulario.html">&larr; Anterior <span>6.11. Eventos de formulario</span></a>
+            
+            <a class="span5 next" href="conclusion.html">Siguiente &rarr; <span>6.13. Conclusión</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Aplicando estilos diferentes para los elementos con errores (Más con Symfony%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Más con Symfony : Aplicando estilos diferentes para los elementos con errores']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Enrutamiento avanzado</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Mejora tu productividad</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Emails</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Widgets y validadores propios</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_6.html">
+            <span>Capítulo 6.</span> Formularios avanzados
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="mini_proyecto_productos_y_fotos.html">
+            <span>6.1.</span> Mini-proyecto: productos y fotos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="aprendiendo_mas_haciendo_los_ejemplos.html">
+            <span>6.2.</span> Aprendiendo más haciendo los ejemplos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="configuracion_basica_del_formulario.html">
+            <span>6.3.</span> Configuración básica del formulario
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="embebiendo_formularios.html">
+            <span>6.4.</span> Embebiendo formularios
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="refactorizando.html">
+            <span>6.5.</span> Refactorizando
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="diseccionando_el_objeto_sfform.html">
+            <span>6.6.</span> Diseccionando el objeto sfForm
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="mostrando_los_formularios_embebidos.html">
+            <span>6.7.</span> Mostrando los formularios embebidos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="guardando_formularios_de_objetos.html">
+            <span>6.8.</span> Guardando formularios de objetos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ignorando_los_formularios_embebidos.html">
+            <span>6.9.</span> Ignorando los formularios embebidos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="embebiendo_facilmente_formularios_relacionados_con_doctrine.html">
+            <span>6.10.</span> Embebiendo fácilmente formularios relacionados con Doctrine
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="eventos_de_formulario.html">
+            <span>6.11.</span> Eventos de formulario
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="aplicando_estilos_diferentes_para_los_elementos_con_errores.html">
+            <span>6.12.</span> Aplicando estilos diferentes para los elementos con errores
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="conclusion.html">
+            <span>6.13.</span> Conclusión
+        </a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Mejorando la barra de depuración web</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Uso avanzado de Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Utilizando la herencia de tablas de Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Funcionamiento interno de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Windows y Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Desarrollando aplicaciones Facebook</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Descubriendo el poder de la línea de comandos</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Jugando con la cache de configuración de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Trabajando con la comunidad Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>A</span> <a href="../apendice_a.html"> Código JavaScript de sfWidgetFormGMapAddress</a>
+    </li>
+    <li class="level-1">
+        <span>B</span> <a href="../apendice_b.html"> Ejemplo de instalador propio</a>
+    </li>
+    <li class="level-1">
+        <span>C</span> <a href="../apendice_c.html"> Licencia</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

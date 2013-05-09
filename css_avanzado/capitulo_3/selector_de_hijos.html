@@ -1,0 +1,205 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>3.1. Selector de hijos (CSS avanzado)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="../capitulo_3.html" />
+        <link rel="next" href="selector_adyacente.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="3.1. Selector de hijos (CSS avanzado)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page css_avanzado">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">CSS avanzado</a></li>
+  <li><a href="../capitulo_3.html">Capítulo 3. Selectores</a></li>
+  <li class="current"><span>3.1.. Selector de hijos</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="selector_de_hijos"><span>3.1.</span> Selector de hijos</h1>
+    
+
+<p>Se trata de un selector similar al selector descendente, pero muy diferente en su funcionamiento. Se utiliza para seleccionar un elemento que es <em>hijo</em> de otro elemento y se indica mediante el <em>"signo de mayor que"</em> (<code>&gt;</code>).</p>
+
+<p>Mientras que en el selector descendente sólo importa que un elemento esté dentro de otro, independientemente de lo profundo que se encuentre, en el selector de hijos el elemento debe ser <em>hijo directo</em> de otro elemento.</p>
+
+<div class="code css">
+<pre class="css">p <span class="sy0">&gt;</span> span <span class="br0">&#123;</span> <span class="kw1">color</span><span class="sy0">:</span> <span class="kw1">blue</span><span class="sy0">;</span> <span class="br0">&#125;</span>
+&nbsp;
+&lt;p<span class="sy0">&gt;</span>
+  &lt;span<span class="sy0">&gt;</span>Texto1&lt;/span<span class="sy0">&gt;</span>
+&lt;/p<span class="sy0">&gt;</span>
+&nbsp;
+&lt;p<span class="sy0">&gt;</span>
+  &lt;a href<span class="sy0">=</span><span class="st0">&quot;#&quot;</span><span class="sy0">&gt;</span>
+    &lt;span<span class="sy0">&gt;</span>Texto2&lt;/span<span class="sy0">&gt;</span>
+  &lt;/a<span class="sy0">&gt;</span>
+&lt;/p<span class="sy0">&gt;</span></pre>
+</div>
+
+<p>En el ejemplo anterior, el selector <code>p &gt; span</code> se interpreta como <em>"cualquier elemento <code>&lt;span&gt;</code> que sea hijo directo de un elemento <code>&lt;p&gt;</code>"</em>, por lo que el primer elemento <code>&lt;span&gt;</code> cumple la condición del selector. Sin embargo, el segundo elemento <code>&lt;span&gt;</code> no la cumple porque es descendiente pero no es hijo directo de un elemento <code>&lt;p&gt;</code>.</p>
+
+<p>Utilizando el mismo ejemplo anterior se pueden comparar las diferencias entre el selector descendente y el selector de hijos:</p>
+
+<div class="code css">
+<pre class="css">p a <span class="br0">&#123;</span> <span class="kw1">color</span><span class="sy0">:</span> <span class="kw2">red</span><span class="sy0">;</span> <span class="br0">&#125;</span>
+p <span class="sy0">&gt;</span> a <span class="br0">&#123;</span> <span class="kw1">color</span><span class="sy0">:</span> <span class="kw2">red</span><span class="sy0">;</span> <span class="br0">&#125;</span>
+&nbsp;
+&lt;p<span class="sy0">&gt;</span>
+  &lt;a href<span class="sy0">=</span><span class="st0">&quot;#&quot;</span><span class="sy0">&gt;</span>Enlace1&lt;/a<span class="sy0">&gt;</span>
+&lt;/p<span class="sy0">&gt;</span>
+&nbsp;
+&lt;p<span class="sy0">&gt;</span>
+  &lt;span<span class="sy0">&gt;</span>
+    &lt;a href<span class="sy0">=</span><span class="st0">&quot;#&quot;</span><span class="sy0">&gt;</span>Enlace2&lt;/a<span class="sy0">&gt;</span>
+  &lt;/span<span class="sy0">&gt;</span>
+&lt;/p<span class="sy0">&gt;</span></pre>
+</div>
+
+<p>El primer selector es de tipo descendente (<code>p a</code>) y por tanto se aplica a todos los elementos <code>&lt;a&gt;</code> que se encuentran dentro de elementos <code>&lt;p&gt;</code>. En este caso, los estilos de este selector se aplican a los dos enlaces.</p>
+
+<p>El segundo selector es de hijos (<code>p &gt; a</code>) por lo que obliga a que el elemento <code>&lt;a&gt;</code> sea hijo directo de un elemento <code>&lt;p&gt;</code>. Por tanto, los estilos del selector <code>p &gt; a</code> no se aplican al segundo enlace del ejemplo anterior.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="../capitulo_3.html">&larr; Anterior <span>Capítulo 3. Selectores</span></a>
+            
+            <a class="span5 next" href="selector_adyacente.html">Siguiente &rarr; <span>3.2. Selector adyacente</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Selector de hijos (CSS avanzado%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'CSS avanzado : Selector de hijos']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Técnicas imprescindibles</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Buenas prácticas</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_3.html">
+            <span>Capítulo 3.</span> Selectores
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="selector_de_hijos.html">
+            <span>3.1.</span> Selector de hijos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="selector_adyacente.html">
+            <span>3.2.</span> Selector adyacente
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="selector_de_atributos.html">
+            <span>3.3.</span> Selector de atributos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="pseudo_clases.html">
+            <span>3.4.</span> Pseudo-clases
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="pseudo_elementos.html">
+            <span>3.5.</span> Pseudo-elementos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="selectores_de_css_3.html">
+            <span>3.6.</span> Selectores de CSS 3
+        </a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Propiedades avanzadas</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Frameworks</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Técnicas avanzadas</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

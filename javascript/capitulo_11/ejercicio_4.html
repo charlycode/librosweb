@@ -1,0 +1,295 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>11.4. Ejercicio 4 (Introducción a JavaScript)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="ejercicio_3.html" />
+        <link rel="next" href="ejercicio_5.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="11.4. Ejercicio 4 (Introducción a JavaScript)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page javascript">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Introducción a JavaScript</a></li>
+  <li><a href="../capitulo_11.html">Capítulo 11. Ejercicios resueltos</a></li>
+  <li class="current"><span>11.4. Ejercicio 4</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="ejercicio_4"><span>11.4.</span> Ejercicio 4</h1>
+    
+
+<div class="code javascript">
+<pre class="javascript">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot; &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;
+&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
+&lt;head&gt;
+&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=iso-8859-1&quot; /&gt;
+&lt;title&gt;Ejercicio 4 - Operadores&lt;/title&gt;
+<span class="sy0">&lt;</span>script type<span class="sy0">=</span><span class="st0">&quot;text/javascript&quot;</span><span class="sy0">&gt;</span>
+<span class="kw1">var</span> valores <span class="sy0">=</span> <span class="br0">&#91;</span><span class="kw2">true</span><span class="sy0">,</span> <span class="nu0">5</span><span class="sy0">,</span> <span class="kw2">false</span><span class="sy0">,</span> <span class="st0">&quot;hola&quot;</span><span class="sy0">,</span> <span class="st0">&quot;adios&quot;</span><span class="sy0">,</span> <span class="nu0">2</span><span class="br0">&#93;</span><span class="sy0">;</span>
+&nbsp;
+<span class="co1">// Cual de los 2 elementos de texto es mayor</span>
+<span class="co1">// Si el resultado es true, el primer texto es mayor</span>
+<span class="kw1">var</span> resultado <span class="sy0">=</span> valores<span class="br0">&#91;</span><span class="nu0">3</span><span class="br0">&#93;</span> <span class="sy0">&gt;</span> valores<span class="br0">&#91;</span><span class="nu0">4</span><span class="br0">&#93;</span><span class="sy0">;</span>
+alert<span class="br0">&#40;</span>resultado<span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="co1">// Combinar valores booleanos</span>
+<span class="kw1">var</span> valor1 <span class="sy0">=</span> valores<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="sy0">;</span>
+<span class="kw1">var</span> valor2 <span class="sy0">=</span> valores<span class="br0">&#91;</span><span class="nu0">2</span><span class="br0">&#93;</span><span class="sy0">;</span>
+&nbsp;
+<span class="co1">// Obtener un resultado TRUE</span>
+<span class="kw1">var</span> resultado <span class="sy0">=</span> valor1 <span class="sy0">||</span> valor2<span class="sy0">;</span>
+alert<span class="br0">&#40;</span>resultado<span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="co1">// Obtener un resultado FALSE</span>
+resultado <span class="sy0">=</span> valor1 <span class="sy0">&amp;&amp;</span> valor2<span class="sy0">;</span>
+alert<span class="br0">&#40;</span>resultado<span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="co1">// Operaciones matemáticas</span>
+<span class="kw1">var</span> num1 <span class="sy0">=</span> valores<span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span><span class="sy0">;</span>
+<span class="kw1">var</span> num2 <span class="sy0">=</span> valores<span class="br0">&#91;</span><span class="nu0">5</span><span class="br0">&#93;</span><span class="sy0">;</span>
+&nbsp;
+<span class="kw1">var</span> suma <span class="sy0">=</span> num1 <span class="sy0">+</span> num2<span class="sy0">;</span>
+alert<span class="br0">&#40;</span>suma<span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="kw1">var</span> resta <span class="sy0">=</span> num1 <span class="sy0">-</span> num2<span class="sy0">;</span>
+alert<span class="br0">&#40;</span>resta<span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="kw1">var</span> multiplicacion <span class="sy0">=</span> num1 <span class="sy0">*</span> num2<span class="sy0">;</span>
+alert<span class="br0">&#40;</span>multiplicacion<span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="kw1">var</span> division <span class="sy0">=</span> num1 <span class="sy0">/</span> num2<span class="sy0">;</span>
+alert<span class="br0">&#40;</span>division<span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="kw1">var</span> modulo <span class="sy0">=</span> num1 <span class="sy0">%</span> num2<span class="sy0">;</span>
+alert<span class="br0">&#40;</span>modulo<span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&lt;/head&gt;
+&nbsp;
+&lt;body&gt;
+&lt;p&gt;Esta página muestra el uso básico de los operadores&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+</div>
+
+<p><a href="../../ejercicios/javascript/soluciones/ejercicio4/ejercicio4.html">Descargar solución completa</a></p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="ejercicio_3.html">&larr; Anterior <span>11.3. Ejercicio 3</span></a>
+            
+            <a class="span5 next" href="ejercicio_5.html">Siguiente &rarr; <span>11.5. Ejercicio 5</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Ejercicio 4 (Introducción a JavaScript%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a JavaScript : Ejercicio 4']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> El primer script</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Programación básica</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Programación avanzada</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> DOM</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Eventos</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Otras utilidades</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Detección y corrección de errores</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Recursos útiles</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_11.html">
+            <span>Capítulo 11.</span> Ejercicios resueltos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_2.html">
+            <span>11.2.</span> Ejercicio 2
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_3.html">
+            <span>11.3.</span> Ejercicio 3
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="ejercicio_4.html">
+            <span>11.4.</span> Ejercicio 4
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_5.html">
+            <span>11.5.</span> Ejercicio 5
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_6.html">
+            <span>11.6.</span> Ejercicio 6
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_7.html">
+            <span>11.7.</span> Ejercicio 7
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_8.html">
+            <span>11.8.</span> Ejercicio 8
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_9.html">
+            <span>11.9.</span> Ejercicio 9
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_10.html">
+            <span>11.10.</span> Ejercicio 10
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_11.html">
+            <span>11.11.</span> Ejercicio 11
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_12.html">
+            <span>11.12.</span> Ejercicio 12
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_13.html">
+            <span>11.13.</span> Ejercicio 13
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_14.html">
+            <span>11.14.</span> Ejercicio 14
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_15.html">
+            <span>11.15.</span> Ejercicio 15
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_16.html">
+            <span>11.16.</span> Ejercicio 16
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_17.html">
+            <span>11.17.</span> Ejercicio 17
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_18.html">
+            <span>11.18.</span> Ejercicio 18
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_19.html">
+            <span>11.19.</span> Ejercicio 19
+        </a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

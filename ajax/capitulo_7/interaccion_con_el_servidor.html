@@ -1,0 +1,469 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>7.5. Interacción con el servidor (Introducción a AJAX)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="utilidades_y_objetos_para_ajax.html" />
+        <link rel="next" href="aplicaciones_complejas.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="7.5. Interacción con el servidor (Introducción a AJAX)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page ajax">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Introducción a AJAX</a></li>
+  <li><a href="../capitulo_7.html">Capítulo 7. Primeros pasos con AJAX</a></li>
+  <li class="current"><span>7.5. Interacción con el servidor</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="interaccion_con_el_servidor"><span>7.5.</span> Interacción con el servidor</h1>
+    
+
+<h3 id="envio_de_parametros_con_la_peticion_http">7.5.1. Envío de parámetros con la petición HTTP</h3>
+
+<p>Hasta ahora, el objeto <code>XMLHttpRequest</code> se ha empleado para realizar peticiones HTTP sencillas. Sin embargo, las posibilidades que ofrece el objeto <code>XMLHttpRequest</code> son muy superiores, ya que también permite el envío de parámetros junto con la petición HTTP.</p>
+
+<p>El objeto <code>XMLHttpRequest</code> puede enviar parámetros tanto con el método GET como con el método POST de HTTP. En ambos casos, los parámetros se envían como una serie de pares clave/valor concatenados por símbolos <code>&amp;</code>. El siguiente ejemplo muestra una URL que envía parámetros al servidor mediante el método GET:</p>
+
+<div class="code code">
+<pre class="code">http://localhost/aplicacion?parametro1=valor1&amp;parametro2=valor2&amp;parametro3=valor3</pre>
+</div>
+
+<p>La principal diferencia entre ambos métodos es que mediante el método POST los parámetros se envían en el cuerpo de la petición y mediante el método GET los parámetros se concatenan a la URL accedida. El método GET se utiliza cuando se accede a un recurso que depende de la información proporcionada por el usuario. El método POST se utiliza en operaciones que crean, borran o actualizan información.</p>
+
+<p>Técnicamente, el método GET tiene un límite en la cantidad de datos que se pueden enviar. Si se intentan enviar más de 512 bytes mediante el método GET, el servidor devuelve un error con código <code>414</code> y mensaje <code>Request-URI Too Long</code>  <em>"La URI de la petición es demasiado larga"</em>).</p>
+
+<p>Cuando se utiliza un elemento <code>&lt;form&gt;</code> de HTML, al pulsar sobre el botón de envío del formulario, se crea automáticamente la cadena de texto que contiene todos los parámetros que se envían al servidor. Sin embargo, el objeto <code>XMLHttpRequest</code> no dispone de esa posibilidad y la cadena que contiene los parámetros se debe construir manualmente.</p>
+
+<p>A continuación se incluye un ejemplo del funcionamiento del envío de parámetros al servidor. Se trata de un formulario con tres campos de texto que se validan en el servidor mediante AJAX. El código HTML también incluye un elemento <code>&lt;div&gt;</code> vacío que se utiliza para mostrar la respuesta del servidor:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">form</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">label</span> <span class="kw3">for</span><span class="sy0">=</span><span class="st0">&quot;fecha_nacimiento&quot;</span>&gt;</span>Fecha de nacimiento:<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">label</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">input</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text&quot;</span> <span class="kw3">id</span><span class="sy0">=</span><span class="st0">&quot;fecha_nacimiento&quot;</span> <span class="kw3">name</span><span class="sy0">=</span><span class="st0">&quot;fecha_nacimiento&quot;</span> <span class="sy0">/</span>&gt;&lt;<span class="kw2">br</span><span class="sy0">/</span>&gt;</span>
+&nbsp;
+  <span class="sc2">&lt;<span class="kw2">label</span> <span class="kw3">for</span><span class="sy0">=</span><span class="st0">&quot;codigo_postal&quot;</span>&gt;</span>Codigo postal:<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">label</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">input</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text&quot;</span> <span class="kw3">id</span><span class="sy0">=</span><span class="st0">&quot;codigo_postal&quot;</span> <span class="kw3">name</span><span class="sy0">=</span><span class="st0">&quot;codigo_postal&quot;</span> <span class="sy0">/</span>&gt;&lt;<span class="kw2">br</span><span class="sy0">/</span>&gt;</span>
+&nbsp;
+  <span class="sc2">&lt;<span class="kw2">label</span> <span class="kw3">for</span><span class="sy0">=</span><span class="st0">&quot;telefono&quot;</span>&gt;</span>Telefono:<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">label</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">input</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text&quot;</span> <span class="kw3">id</span><span class="sy0">=</span><span class="st0">&quot;telefono&quot;</span> <span class="kw3">name</span><span class="sy0">=</span><span class="st0">&quot;telefono&quot;</span> <span class="sy0">/</span>&gt;&lt;<span class="kw2">br</span><span class="sy0">/</span>&gt;</span>
+&nbsp;
+  <span class="sc2">&lt;<span class="kw2">input</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;button&quot;</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;Validar datos&quot;</span> <span class="sy0">/</span>&gt;</span>
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">form</span>&gt;</span>
+&nbsp;
+<span class="sc2">&lt;<span class="kw2">div</span> <span class="kw3">id</span><span class="sy0">=</span><span class="st0">&quot;respuesta&quot;</span>&gt;&lt;<span class="sy0">/</span><span class="kw2">div</span>&gt;</span></pre>
+</div>
+
+<p>El código anterior produce la siguiente página:</p>
+
+<div class="figure" id="figure_7_3">
+    <img src="../../img/ajax/f0703.gif" alt="Formulario de ejemplo" />
+
+    <p class="caption"><strong>Figura 7.3</strong> Formulario de ejemplo</p>
+</div>
+
+
+<p>El código JavaScript necesario para realizar la validación de los datos en el servidor se muestra a continuación:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> READY_STATE_COMPLETE<span class="sy0">=</span><span class="nu0">4</span><span class="sy0">;</span>
+<span class="kw1">var</span> peticion_http <span class="sy0">=</span> <span class="kw2">null</span><span class="sy0">;</span>
+&nbsp;
+<span class="kw1">function</span> inicializa_xhr<span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="kw1">if</span><span class="br0">&#40;</span>window.<span class="me1">XMLHttpRequest</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="kw1">return</span> <span class="kw1">new</span> XMLHttpRequest<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span> 
+  <span class="br0">&#125;</span>
+  <span class="kw1">else</span> <span class="kw1">if</span><span class="br0">&#40;</span>window.<span class="me1">ActiveXObject</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="kw1">return</span> <span class="kw1">new</span> ActiveXObject<span class="br0">&#40;</span><span class="st0">&quot;Microsoft.XMLHTTP&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span> 
+<span class="br0">&#125;</span>
+&nbsp;
+<span class="kw1">function</span> crea_query_string<span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="kw1">var</span> fecha <span class="sy0">=</span> document.<span class="me1">getElementById</span><span class="br0">&#40;</span><span class="st0">&quot;fecha_nacimiento&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="kw1">var</span> cp <span class="sy0">=</span> document.<span class="me1">getElementById</span><span class="br0">&#40;</span><span class="st0">&quot;codigo_postal&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="kw1">var</span> telefono <span class="sy0">=</span> document.<span class="me1">getElementById</span><span class="br0">&#40;</span><span class="st0">&quot;telefono&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+  <span class="kw1">return</span> <span class="st0">&quot;fecha_nacimiento=&quot;</span> <span class="sy0">+</span> encodeURIComponent<span class="br0">&#40;</span>fecha.<span class="me1">value</span><span class="br0">&#41;</span> <span class="sy0">+</span>
+         <span class="st0">&quot;&amp;codigo_postal=&quot;</span> <span class="sy0">+</span> encodeURIComponent<span class="br0">&#40;</span>cp.<span class="me1">value</span><span class="br0">&#41;</span> <span class="sy0">+</span>
+         <span class="st0">&quot;&amp;telefono=&quot;</span> <span class="sy0">+</span> encodeURIComponent<span class="br0">&#40;</span>telefono.<span class="me1">value</span><span class="br0">&#41;</span> <span class="sy0">+</span>
+         <span class="st0">&quot;&amp;nocache=&quot;</span> <span class="sy0">+</span> <span class="kw4">Math</span>.<span class="me1">random</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+<span class="kw1">function</span> valida<span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  peticion_http <span class="sy0">=</span> inicializa_xhr<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="kw1">if</span><span class="br0">&#40;</span>peticion_http<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    peticion_http.<span class="me1">onreadystatechange</span> <span class="sy0">=</span> procesaRespuesta<span class="sy0">;</span>
+    peticion_http.<span class="me1">open</span><span class="br0">&#40;</span><span class="st0">&quot;POST&quot;</span><span class="sy0">,</span> <span class="st0">&quot;http://localhost/validaDatos.php&quot;</span><span class="sy0">,</span> <span class="kw2">true</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    peticion_http.<span class="me1">setRequestHeader</span><span class="br0">&#40;</span><span class="st0">&quot;Content-Type&quot;</span><span class="sy0">,</span> <span class="st0">&quot;application/x-www-form-urlencoded&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="kw1">var</span> query_string <span class="sy0">=</span> crea_query_string<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    peticion_http.<span class="me1">send</span><span class="br0">&#40;</span>query_string<span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+<span class="kw1">function</span> procesaRespuesta<span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="kw1">if</span><span class="br0">&#40;</span>peticion_http.<span class="me1">readyState</span> <span class="sy0">==</span> READY_STATE_COMPLETE<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="kw1">if</span><span class="br0">&#40;</span>peticion_http.<span class="me1">status</span> <span class="sy0">==</span> <span class="nu0">200</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+      document.<span class="me1">getElementById</span><span class="br0">&#40;</span><span class="st0">&quot;respuesta&quot;</span><span class="br0">&#41;</span>.<span class="me1">innerHTML</span> <span class="sy0">=</span> peticion_http.<span class="me1">responseText</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>La clave del ejemplo anterior se encuentra en estas dos líneas de código:</p>
+
+<div class="code javascript">
+<pre class="javascript">peticion_http.<span class="me1">setRequestHeader</span><span class="br0">&#40;</span><span class="st0">&quot;Content-Type&quot;</span><span class="sy0">,</span> <span class="st0">&quot;application/x-www-form-urlencoded&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+peticion_http.<span class="me1">send</span><span class="br0">&#40;</span>query_string<span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>En primer lugar, si no se establece la cabecera <code>Content-Type</code> correcta, el servidor descarta todos los datos enviados mediante el método POST. De esta forma, al programa que se ejecuta en el servidor no le llega ningún parámetro. Así, para enviar parámetros mediante el método POST, es obligatorio incluir la cabecera <code>Content-Type</code> mediante la siguiente instrucción:</p>
+
+<div class="code javascript">
+<pre class="javascript">peticion_http.<span class="me1">setRequestHeader</span><span class="br0">&#40;</span><span class="st0">&quot;Content-Type&quot;</span><span class="sy0">,</span> <span class="st0">&quot;application/x-www-form-urlencoded&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Por otra parte, el método <code>send()</code> es el que se encarga de enviar los parámetros al servidor. En todos los ejemplos anteriores se utilizaba la instrucción <code>send(null)</code> para indicar que no se envían parámetros al servidor. Sin embargo, en este caso la petición si que va a enviar los parámetros.</p>
+
+<p>Como ya se ha comentado, los parámetros se envían en forma de cadena de texto con las variables y sus valores concatenados mediante el símbolo <code>&amp;</code> (esta cadena normalmente se conoce como <em>"query string"</em>). La cadena con los parámetros se construye manualmente, para lo cual se utiliza la función <code>crea_query_string()</code>:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">function</span> crea_query_string<span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="kw1">var</span> fecha <span class="sy0">=</span> document.<span class="me1">getElementById</span><span class="br0">&#40;</span><span class="st0">&quot;fecha_nacimiento&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="kw1">var</span> cp <span class="sy0">=</span> document.<span class="me1">getElementById</span><span class="br0">&#40;</span><span class="st0">&quot;codigo_postal&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="kw1">var</span> telefono <span class="sy0">=</span> document.<span class="me1">getElementById</span><span class="br0">&#40;</span><span class="st0">&quot;telefono&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+  <span class="kw1">return</span> <span class="st0">&quot;fecha_nacimiento=&quot;</span> <span class="sy0">+</span> encodeURIComponent<span class="br0">&#40;</span>fecha.<span class="me1">value</span><span class="br0">&#41;</span> <span class="sy0">+</span>
+         <span class="st0">&quot;&amp;codigo_postal=&quot;</span> <span class="sy0">+</span> encodeURIComponent<span class="br0">&#40;</span>cp.<span class="me1">value</span><span class="br0">&#41;</span> <span class="sy0">+</span>
+         <span class="st0">&quot;&amp;telefono=&quot;</span> <span class="sy0">+</span> encodeURIComponent<span class="br0">&#40;</span>telefono.<span class="me1">value</span><span class="br0">&#41;</span> <span class="sy0">+</span>
+         <span class="st0">&quot;&amp;nocache=&quot;</span> <span class="sy0">+</span> <span class="kw4">Math</span>.<span class="me1">random</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>La función anterior obtiene el valor de todos los campos del formulario y los concatena junto con el nombre de cada parámetro para formar la cadena de texto que se envía al servidor. El uso de la función <code>encodeURIComponent()</code> es imprescindible para evitar problemas con algunos caracteres especiales.</p>
+
+<p>La función <code>encodeURIComponent()</code> reemplaza todos los caracteres que no se pueden utilizar de forma directa en las URL por su representación hexadecimal. Las letras, números y los caracteres <code>- _ . ! ~ * ' ( )</code> no se modifican, pero todos los demás caracteres se sustituyen por su equivalente hexadecimal.</p>
+
+<p>Las sustituciones más conocidas son las de los espacios en blanco por <code>%20</code>, y la del símbolo <code>&amp;</code> por <code>%26</code>. Sin embargo, como se muestra en el siguiente ejemplo, también se sustituyen todos los acentos y cualquier otro carácter que no se puede incluir directamente en una URL:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> cadena <span class="sy0">=</span> <span class="st0">&quot;cadena de texto&quot;</span><span class="sy0">;</span>
+<span class="kw1">var</span> cadena_segura <span class="sy0">=</span> encodeURIComponent<span class="br0">&#40;</span>cadena<span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="co1">// cadena_segura = &quot;cadena%20de%20texto&quot;;</span>
+&nbsp;
+<span class="kw1">var</span> cadena <span class="sy0">=</span> <span class="st0">&quot;otra cadena &amp; caracteres problemáticos / : =&quot;</span><span class="sy0">;</span>
+<span class="kw1">var</span> cadena_segura <span class="sy0">=</span> encodeURIComponent<span class="br0">&#40;</span>cadena<span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="co1">// cadena_segura = &quot;otra%20cadena%20%26%20caracteres%20problem%C3%A1ticos%20%2F%20%3A%20%3D&quot;;</span></pre>
+</div>
+
+<p>JavaScript incluye una función contraria llamada <code>decodeURIComponent()</code> y que realiza la transformación inversa. Además, también existen las funciones <code>encodeURI()</code> y <code>decodeURI()</code> que codifican/decodifican una URL completa. La principal diferencia entre <code>encodeURIComponent()</code> y <code>encodeURI()</code> es que esta última no codifica los caracteres <code>; / ? : @ &amp; = + $ , #</code>:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> cadena <span class="sy0">=</span> <span class="st0">&quot;http://www.ejemplo.com/ruta1/index.php?parametro=valor con ñ y &amp;&quot;</span><span class="sy0">;</span>
+<span class="kw1">var</span> cadena_segura <span class="sy0">=</span> encodeURIComponent<span class="br0">&#40;</span>cadena<span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="co1">// cadena_segura = &quot;http%3A%2F%2Fwww.ejemplo.com%2Fruta1%2Findex.php%3Fparametro%3Dvalor%20con%20%C3%B1%20y%20%26&quot;;</span>
+&nbsp;
+<span class="kw1">var</span> cadena_segura <span class="sy0">=</span> encodeURI<span class="br0">&#40;</span>cadena<span class="br0">&#41;</span><span class="sy0">;</span> <span class="co1">// cadena_segura = &quot;http://www.ejemplo.com/ruta1/index.php?parametro=valor%20con%20%C3%B1%20y%20&quot;;</span></pre>
+</div>
+
+<p>Por último, la función <code>crea_query_string()</code> añade al final de la cadena un parámetro llamado <code>nocache</code> y que contiene un número aleatorio (creado mediante el método <code>Math.random()</code>). Añadir un parámetro aleatorio adicional a las peticiones GET y POST es una de las estrategias más utilizadas para evitar problemas con la caché de los navegadores. Como cada petición varía al menos en el valor de uno de los parámetros, el navegador está obligado siempre a realizar la petición directamente al servidor y no utilizar su cache. A continuación se muestra un ejemplo de la <em>query string</em> creada por la función definida:</p>
+
+<div class="figure" id="figure_7_4">
+    <img src="../../img/ajax/f0704.gif" alt="Query String creada para el formulario de ejemplo" />
+
+    <p class="caption"><strong>Figura 7.4</strong> Query String creada para el formulario de ejemplo</p>
+</div>
+
+
+<p>En este ejemplo sencillo, el servidor simplemente devuelve el resultado de una supuesta validación de los datos enviados mediante AJAX:</p>
+
+<div class="figure" id="figure_7_5">
+    <img src="../../img/ajax/f0705.gif" alt="Mostrando el resultado devuelto por el servidor" />
+
+    <p class="caption"><strong>Figura 7.5</strong> Mostrando el resultado devuelto por el servidor</p>
+</div>
+
+
+<p>En las aplicaciones reales, las validaciones de datos mediante AJAX sólo se utilizan en el caso de validaciones complejas que no se pueden realizar mediante el uso de código JavaScript básico. En general, las validaciones complejas requieren el uso de bases de datos: comprobar que un nombre de usuario no esté previamente registrado, comprobar que la localidad se corresponde con el código postal indicado, etc.</p>
+
+<p><div class="exercise"><p class="title">Ejercicio 13</p> <p>Un ejemplo de validación compleja es la que consiste en comprobar si un nombre de usuario escogido está libre o ya lo utiliza otro usuario. Como es una validación que requiere el uso de una base de datos muy grande, no se puede realizar en el navegador del cliente. Utilizando las técnicas mostradas anteriormente y la página web que se proporciona:</p>
+
+<ol>
+<li>Crear un script que compruebe con AJAX y la ayuda del servidor si el nombre escogido por el usuario está libre o no.</li>
+<li>El script del servidor se llama <code>compruebaDisponibilidad.php</code> y el parámetro que contiene el nombre se llama <code>login</code>.</li>
+<li>La respuesta del servidor es <code>"si"</code> o <code>"no"</code>, en función de si el nombre de usuario está libre y se puede utilizar o ya ha sido ocupado por otro usuario.</li>
+<li>A partir de la respuesta del servidor, mostrar un mensaje al usuario indicando el resultado de la comprobación.</li>
+</ol>
+
+<p><a href="../../ejercicios/ajax/ejercicio13/ejercicio13.zip">Descargar ZIP con la página HTML y el script compruebaDisponibilidad.php</a></p>
+
+<p><a href="../capitulo14/ejercicio_13.html">Ver solución</a></p></div></p>
+
+<h3 id="refactorizando_la_utilidad_netcargadorcontenidos">7.5.2. Refactorizando la utilidad net.CargadorContenidos</h3>
+
+<p>La utilidad diseñada anteriormente para la carga de contenidos y recursos almacenados en el servidor, solamente está preparada para realizar peticiones HTTP sencillas mediante GET. A continuación se refactoriza esa utilidad para que permita las peticiones POST y el envío de parámetros al servidor.</p>
+
+<p>El primer cambio necesario es el de adaptar el constructor para que se puedan especificar los nuevos parámetros:</p>
+
+<div class="code javascript">
+<pre class="javascript">net.<span class="me1">CargadorContenidos</span> <span class="sy0">=</span> <span class="kw1">function</span><span class="br0">&#40;</span>url<span class="sy0">,</span> funcion<span class="sy0">,</span> funcionError<span class="sy0">,</span> metodo<span class="sy0">,</span> parametros<span class="sy0">,</span> contentType<span class="br0">&#41;</span> <span class="br0">&#123;</span></pre>
+</div>
+
+<p>Se han añadido tres nuevos parámetros: el método HTTP empleado, los parámetros que se envían al servidor junto con la petición y el valor de la cabecera <code>content-type</code>.</p>
+
+<p>A continuación, se sustituye la instrucción <code>this.req.open('GET', url, true);</code> por esta otra:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">this</span>.<span class="me1">req</span>.<span class="me1">open</span><span class="br0">&#40;</span>metodo<span class="sy0">,</span> url<span class="sy0">,</span> <span class="kw2">true</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>El siguiente paso es añadir (si así se indica) la cabecera <code>Content-Type</code> de la petición:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">if</span><span class="br0">&#40;</span>contentType<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="kw1">this</span>.<span class="me1">req</span>.<span class="me1">setRequestHeader</span><span class="br0">&#40;</span><span class="st0">&quot;Content-Type&quot;</span><span class="sy0">,</span> contentType<span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Por último, se sustituye la instrucción <code>this.req.send(null);</code> por esta otra:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">this</span>.<span class="me1">req</span>.<span class="me1">send</span><span class="br0">&#40;</span>parametros<span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Así, el código completo de la solución refactorizada es el siguiente:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> net <span class="sy0">=</span> <span class="kw1">new</span> <span class="kw4">Object</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+net.<span class="me1">READY_STATE_UNINITIALIZED</span><span class="sy0">=</span><span class="nu0">0</span><span class="sy0">;</span> 
+net.<span class="me1">READY_STATE_LOADING</span><span class="sy0">=</span><span class="nu0">1</span><span class="sy0">;</span> 
+net.<span class="me1">READY_STATE_LOADED</span><span class="sy0">=</span><span class="nu0">2</span><span class="sy0">;</span> 
+net.<span class="me1">READY_STATE_INTERACTIVE</span><span class="sy0">=</span><span class="nu0">3</span><span class="sy0">;</span> 
+net.<span class="me1">READY_STATE_COMPLETE</span><span class="sy0">=</span><span class="nu0">4</span><span class="sy0">;</span> 
+&nbsp;
+<span class="co1">// Constructor</span>
+net.<span class="me1">CargadorContenidos</span> <span class="sy0">=</span> <span class="kw1">function</span><span class="br0">&#40;</span>url<span class="sy0">,</span> funcion<span class="sy0">,</span> funcionError<span class="sy0">,</span> metodo<span class="sy0">,</span> parametros<span class="sy0">,</span> contentType<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="kw1">this</span>.<span class="me1">url</span> <span class="sy0">=</span> url<span class="sy0">;</span>
+  <span class="kw1">this</span>.<span class="me1">req</span> <span class="sy0">=</span> <span class="kw2">null</span><span class="sy0">;</span>
+  <span class="kw1">this</span>.<span class="me1">onload</span> <span class="sy0">=</span> funcion<span class="sy0">;</span>
+  <span class="kw1">this</span>.<span class="me1">onerror</span> <span class="sy0">=</span> <span class="br0">&#40;</span>funcionError<span class="br0">&#41;</span> <span class="sy0">?</span> funcionError <span class="sy0">:</span> <span class="kw1">this</span>.<span class="me1">defaultError</span><span class="sy0">;</span>
+  <span class="kw1">this</span>.<span class="me1">cargaContenidoXML</span><span class="br0">&#40;</span>url<span class="sy0">,</span> metodo<span class="sy0">,</span> parametros<span class="sy0">,</span> contentType<span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+net.<span class="me1">CargadorContenidos</span>.<span class="kw1">prototype</span> <span class="sy0">=</span> <span class="br0">&#123;</span>
+  cargaContenidoXML<span class="sy0">:</span> <span class="kw1">function</span><span class="br0">&#40;</span>url<span class="sy0">,</span> metodo<span class="sy0">,</span> parametros<span class="sy0">,</span> contentType<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="kw1">if</span><span class="br0">&#40;</span>window.<span class="me1">XMLHttpRequest</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+      <span class="kw1">this</span>.<span class="me1">req</span> <span class="sy0">=</span> <span class="kw1">new</span> XMLHttpRequest<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+    <span class="kw1">else</span> <span class="kw1">if</span><span class="br0">&#40;</span>window.<span class="me1">ActiveXObject</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+      <span class="kw1">this</span>.<span class="me1">req</span> <span class="sy0">=</span> <span class="kw1">new</span> ActiveXObject<span class="br0">&#40;</span><span class="st0">&quot;Microsoft.XMLHTTP&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="kw1">if</span><span class="br0">&#40;</span><span class="kw1">this</span>.<span class="me1">req</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+      <span class="kw1">try</span> <span class="br0">&#123;</span>
+        <span class="kw1">var</span> loader <span class="sy0">=</span> <span class="kw1">this</span><span class="sy0">;</span>
+        <span class="kw1">this</span>.<span class="me1">req</span>.<span class="me1">onreadystatechange</span> <span class="sy0">=</span> <span class="kw1">function</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+          loader.<span class="me1">onReadyState</span>.<span class="me1">call</span><span class="br0">&#40;</span>loader<span class="br0">&#41;</span><span class="sy0">;</span>
+        <span class="br0">&#125;</span>
+        <span class="kw1">this</span>.<span class="me1">req</span>.<span class="me1">open</span><span class="br0">&#40;</span>metodo<span class="sy0">,</span> url<span class="sy0">,</span> <span class="kw2">true</span><span class="br0">&#41;</span><span class="sy0">;</span>
+        <span class="kw1">if</span><span class="br0">&#40;</span>contentType<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+          <span class="kw1">this</span>.<span class="me1">req</span>.<span class="me1">setRequestHeader</span><span class="br0">&#40;</span><span class="st0">&quot;Content-Type&quot;</span><span class="sy0">,</span> contentType<span class="br0">&#41;</span><span class="sy0">;</span>
+        <span class="br0">&#125;</span>
+        <span class="kw1">this</span>.<span class="me1">req</span>.<span class="me1">send</span><span class="br0">&#40;</span>parametros<span class="br0">&#41;</span><span class="sy0">;</span>
+        <span class="br0">&#125;</span> <span class="kw1">catch</span><span class="br0">&#40;</span>err<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+          <span class="kw1">this</span>.<span class="me1">onerror</span>.<span class="me1">call</span><span class="br0">&#40;</span><span class="kw1">this</span><span class="br0">&#41;</span><span class="sy0">;</span>
+        <span class="br0">&#125;</span>
+    <span class="br0">&#125;</span>
+  <span class="br0">&#125;</span><span class="sy0">,</span>
+&nbsp;
+  onReadyState<span class="sy0">:</span> <span class="kw1">function</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="kw1">var</span> req <span class="sy0">=</span> <span class="kw1">this</span>.<span class="me1">req</span><span class="sy0">;</span> 
+    <span class="kw1">var</span> ready <span class="sy0">=</span> req.<span class="me1">readyState</span><span class="sy0">;</span> 
+    <span class="kw1">if</span><span class="br0">&#40;</span>ready <span class="sy0">==</span> net.<span class="me1">READY_STATE_COMPLETE</span><span class="br0">&#41;</span> <span class="br0">&#123;</span> 
+      <span class="kw1">var</span> httpStatus <span class="sy0">=</span> req.<span class="me1">status</span><span class="sy0">;</span> 
+      <span class="kw1">if</span><span class="br0">&#40;</span>httpStatus <span class="sy0">==</span> <span class="nu0">200</span> <span class="sy0">||</span> httpStatus <span class="sy0">==</span> <span class="nu0">0</span><span class="br0">&#41;</span> <span class="br0">&#123;</span> 
+        <span class="kw1">this</span>.<span class="me1">onload</span>.<span class="me1">call</span><span class="br0">&#40;</span><span class="kw1">this</span><span class="br0">&#41;</span><span class="sy0">;</span>
+      <span class="br0">&#125;</span>
+      <span class="kw1">else</span> <span class="br0">&#123;</span>
+        <span class="kw1">this</span>.<span class="me1">onerror</span>.<span class="me1">call</span><span class="br0">&#40;</span><span class="kw1">this</span><span class="br0">&#41;</span><span class="sy0">;</span>
+      <span class="br0">&#125;</span>
+    <span class="br0">&#125;</span>
+  <span class="br0">&#125;</span><span class="sy0">,</span>
+&nbsp;
+  defaultError<span class="sy0">:</span> <span class="kw1">function</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    alert<span class="br0">&#40;</span><span class="st0">&quot;Se ha producido un error al obtener los datos&quot;</span>
+      <span class="sy0">+</span> <span class="st0">&quot;<span class="es0">\n</span><span class="es0">\n</span>readyState:&quot;</span> <span class="sy0">+</span> <span class="kw1">this</span>.<span class="me1">req</span>.<span class="me1">readyState</span>
+      <span class="sy0">+</span> <span class="st0">&quot;<span class="es0">\n</span>status: &quot;</span> <span class="sy0">+</span> <span class="kw1">this</span>.<span class="me1">req</span>.<span class="me1">status</span>
+      <span class="sy0">+</span> <span class="st0">&quot;<span class="es0">\n</span>headers: &quot;</span> <span class="sy0">+</span> <span class="kw1">this</span>.<span class="me1">req</span>.<span class="me1">getAllResponseHeaders</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="utilidades_y_objetos_para_ajax.html">&larr; Anterior <span>7.4. Utilidades y objetos para AJAX</span></a>
+            
+            <a class="span5 next" href="aplicaciones_complejas.html">Siguiente &rarr; <span>7.6. Aplicaciones complejas</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Interacción con el servidor (Introducción a AJAX%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a AJAX : Interacción con el servidor']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción a AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> JavaScript básico</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> JavaScript avanzado</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> DOM (Document Object Model)</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> BOM (Browser Object Model)</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Eventos</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_7.html">
+            <span>Capítulo 7.</span> Primeros pasos con AJAX
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="la_primera_aplicacion.html">
+            <span>7.2.</span> La primera aplicación
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="metodos_y_propiedades_del_objeto_xmlhttprequest.html">
+            <span>7.3.</span> Métodos y propiedades del objeto XMLHttpRequest
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="utilidades_y_objetos_para_ajax.html">
+            <span>7.4.</span> Utilidades y objetos para AJAX
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="interaccion_con_el_servidor.html">
+            <span>7.5.</span> Interacción con el servidor
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="aplicaciones_complejas.html">
+            <span>7.6.</span> Aplicaciones complejas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="seguridad.html">
+            <span>7.7.</span> Seguridad
+        </a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Técnicas básicas con AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Técnicas avanzadas con AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Frameworks y librerías</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Otras utilidades</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Recursos útiles</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Bibliografía</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

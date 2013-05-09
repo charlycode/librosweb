@@ -1,0 +1,349 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>19.4. Cambiando de idioma (El tutorial Jobeet)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="probando_la_cultura.html" />
+        <link rel="next" href="internacionalizacion.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="19.4. Cambiando de idioma (El tutorial Jobeet)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page jobeet_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">El tutorial Jobeet</a></li>
+  <li><a href="../capitulo_19.html">Capítulo 19. Internacionalización y localización</a></li>
+  <li class="current"><span>19.4.. Cambiando de idioma</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="cambiando_de_idioma"><span>19.4.</span> Cambiando de idioma</h1>
+    
+
+<p>Para que el usuario pueda modificar su cultura, debemos incluir en el layout un formulario para cambiar de idioma. El framework de formularios de Symfony no incluye por defecto un formulario de este tipo, pero como se trata de algo bastante común para los sitios web disponibles en varios idiomas, los propios creadores de Symfony mantienen un plugin llamado <a href="http://www.symfony-project.org/plugins/sfFormExtraPlugin?tab=plugin_readme">sfFormExtraPlugin</a> que contiene validadores, widgets y formularios que son útiles pero que no se incluyen por defecto en Symfony porque son demasiado específicos o contienen dependencias externas.</p>
+
+<p>Instala el plugin mediante la tarea <code>plugin:install</code>:</p>
+
+<div class="code cli">
+<pre class="cli">$ php symfony plugin:install sfFormExtraPlugin</pre>
+</div>
+
+<p>No te olvides de borrar la cache de Symfony porque este plugin define clases nuevas:</p>
+
+<div class="code cli">
+<pre class="cli">$ php symfony cc</pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> El plugin <code>sfFormExtraPlugin</code> contiene widgets que incluyen dependencias externas con librerías de JavaScript. Entre otros, este plugin contiene un editor avanzado de fechas y un editor de textos WYSIWYG. Te recomendamos que leas la documentación del plugin para descubrir cosas muy interesantes.</p></div>
+
+<p>El plugin <code>sfFormExtraPlugin</code> incluye <code>sfFormLanguage</code>, un tipo de formulario que permite seleccionar el idioma de la aplicación. A continuación se muestra cómo puedes añadir el formulario del idioma en el layout:</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> El código que se muestra a continuación no es la forma más adecuada de incluir el formulario. Incluimos este código para mostrar la forma equivocada de incluir este formulario. Más adelante se muestra cómo incluir bien el formulario en la aplicación Symfony.</p></div>
+
+<div class="code php">
+<pre class="php">// apps/frontend/templates/layout.php
+&lt;div id=&quot;footer&quot;&gt;
+  &lt;div class=&quot;content&quot;&gt;
+    &lt;!-- footer content --&gt;
+&nbsp;
+    <span class="kw2">&lt;?php</span> <span class="re0">$form</span> <span class="sy0">=</span> <span class="kw2">new</span> sfFormLanguage<span class="br0">&#40;</span>
+      <span class="re0">$sf_user</span><span class="sy0">,</span>
+      <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'languages'</span> <span class="sy0">=&gt;</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'en'</span><span class="sy0">,</span> <span class="st_h">'fr'</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+      <span class="br0">&#41;</span>
+    <span class="sy1">?&gt;</span>
+    &lt;form action=&quot;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> url_for<span class="br0">&#40;</span><span class="st_h">'@change_language'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>&quot;&gt;
+      <span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$form</span> <span class="sy1">?&gt;</span>&lt;input type=&quot;submit&quot; value=&quot;ok&quot; /&gt;
+    &lt;/form&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+</div>
+
+<p>¿Te has dado cuenta del error? Efectivamente, crear el objeto del formulario no es algo propio de la capa de la vista. Este objeto se debe crear en la acción. Como el código se ha incluido en el layout, el formulario se crea en cada acción, algo que no es nada práctico. En estos casos, debes utilizar un <strong>componente</strong>. Los componentes son como los elementos parciales pero con código asociado. Se podría considerar que un componente es como una acción muy simplificada.</p>
+
+<p>Los componentes definidos por las plantillas se incluyen en el layout mediante el helper <code>include_component()</code>:</p>
+
+<div class="code php">
+<pre class="php">// apps/frontend/templates/layout.php
+&lt;div id=&quot;footer&quot;&gt;
+  &lt;div class=&quot;content&quot;&gt;
+    &lt;!-- footer content --&gt;
+&nbsp;
+    <span class="kw2">&lt;?php</span> include_component<span class="br0">&#40;</span><span class="st_h">'language'</span><span class="sy0">,</span> <span class="st_h">'language'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+</div>
+
+<p>Los argumentos del helper <code>include_component()</code> son el nombre del módulo y el nombre de la acción. Se puede utilizar un tercer argumento opcional para pasar parámetros al componente.</p>
+
+<p>Crea un módulo llamado <code>language</code> para poder definir el componente y la acción que van a modificar el idioma del usuario:</p>
+
+<div class="code cli">
+<pre class="cli">$ php symfony generate:module frontend language</pre>
+</div>
+
+<p>Los componentes se definen en el archivo <code>actions/components.class.php</code>. Crea ese archivo y añade lo siguiente:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// apps/frontend/modules/language/actions/components.class.php</span>
+<span class="kw2">class</span> languageComponents <span class="kw2">extends</span> sfComponents
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> executeLanguage<span class="br0">&#40;</span>sfWebRequest <span class="re0">$request</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">form</span> <span class="sy0">=</span> <span class="kw2">new</span> sfFormLanguage<span class="br0">&#40;</span>
+      <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getUser</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+      <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'languages'</span> <span class="sy0">=&gt;</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'en'</span><span class="sy0">,</span> <span class="st_h">'fr'</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+    <span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Como se puede observar en el código anterior, la clase de los componentes es muy similar a la clase de las acciones.</p>
+
+<p>Además, el nombre de la plantilla de un componente sigue las mismas convenciones que en los elementos parciales: un guión bajo (<code>_</code>) seguido por el nombre del componente:</p>
+
+<div class="code php">
+<pre class="php">// apps/frontend/modules/language/templates/_language.php
+&lt;form action=&quot;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> url_for<span class="br0">&#40;</span><span class="st_h">'@change_language'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>&quot;&gt;
+  <span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$form</span> <span class="sy1">?&gt;</span>&lt;input type=&quot;submit&quot; value=&quot;ok&quot; /&gt;
+&lt;/form&gt;</pre>
+</div>
+
+<p>Como el plugin no incluye la acción que realmente cambia la cultura del usuario, modifica el archivo <code>routing.yml</code> para crear una nueva ruta llamada <code>change_language</code>:</p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co1"># apps/frontend/config/routing.yml</span><span class="co4">
+change_language</span>:<span class="co3">
+  url</span><span class="sy2">: </span>  /change_language<span class="co3">
+  param</span><span class="sy2">: </span><span class="br0">&#123;</span> module<span class="sy2">: </span>language, action<span class="sy2">: </span>changeLanguage <span class="br0">&#125;</span></pre>
+</div>
+
+<p>Y después se crea la acción correspondiente:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// apps/frontend/modules/language/actions/actions.class.php</span>
+<span class="kw2">class</span> languageActions <span class="kw2">extends</span> sfActions
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> executeChangeLanguage<span class="br0">&#40;</span>sfWebRequest <span class="re0">$request</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$form</span> <span class="sy0">=</span> <span class="kw2">new</span> sfFormLanguage<span class="br0">&#40;</span>
+      <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getUser</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+      <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'languages'</span> <span class="sy0">=&gt;</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'en'</span><span class="sy0">,</span> <span class="st_h">'fr'</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+    <span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="re0">$form</span><span class="sy0">-&gt;</span><span class="me1">process</span><span class="br0">&#40;</span><span class="re0">$request</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="kw1">return</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">redirect</span><span class="br0">&#40;</span><span class="st_h">'@localized_homepage'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>El método <code>process()</code> del formulario <code>sfFormLanguage</code> se encarga de modificar la cultura del usuario en función de la información enviada por el usuario.</p>
+
+<div class="figure" id="figure_19_1">
+    <img src="../../img/jobeet_1_4/f1901.png" alt="Pie de página internacionalizado" />
+
+    <p class="caption"><strong>Figura 19.1</strong> Pie de página internacionalizado</p>
+</div>
+
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="probando_la_cultura.html">&larr; Anterior <span>19.3. Probando la cultura</span></a>
+            
+            <a class="span5 next" href="internacionalizacion.html">Siguiente &rarr; <span>19.5. Internacionalización</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Cambiando de idioma (El tutorial Jobeet%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'El tutorial Jobeet : Cambiando de idioma']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Comenzando el proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> El proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> El modelo de datos</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> El controlador y la vista</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> El sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Profundizando en el modelo</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Trabajando con la página de cada categoría</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Pruebas unitarias</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Pruebas funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Probando los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> El generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> El usuario</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> El día de descanso</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Canales Atom</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Servicios web</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> El buscador</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> AJAX</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_19.html">
+            <span>Capítulo 19.</span> Internacionalización y localización
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_usuario.html">
+            <span>19.1.</span> El usuario
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="incluyendo_la_cultura_en_la_url.html">
+            <span>19.2.</span> Incluyendo la cultura en la URL
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="probando_la_cultura.html">
+            <span>19.3.</span> Probando la cultura
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="cambiando_de_idioma.html">
+            <span>19.4.</span> Cambiando de idioma
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="internacionalizacion.html">
+            <span>19.5.</span> Internacionalización
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="localizacion.html">
+            <span>19.6.</span> Localización
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="nos_vemos_manana.html">
+            <span>19.7.</span> Nos vemos mañana
+        </a>
+    </li>
+    <li class="level-1">
+        <span>20</span> <a href="../capitulo_20.html"> Plugins</a>
+    </li>
+    <li class="level-1">
+        <span>21</span> <a href="../capitulo_21.html"> El día del diseño</a>
+    </li>
+    <li class="level-1">
+        <span>22</span> <a href="../capitulo_22.html"> La cache</a>
+    </li>
+    <li class="level-1">
+        <span>23</span> <a href="../capitulo_23.html"> Pasando a producción</a>
+    </li>
+    <li class="level-1">
+        <span>24</span> <a href="../capitulo_24.html"> Un repaso a Symfony</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

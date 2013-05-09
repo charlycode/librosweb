@@ -1,0 +1,237 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>6.3. Objetos (Introducción a XHTML)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="mapas_de_imagen.html" />
+        <link rel="next" href="../capitulo_7.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="6.3. Objetos (Introducción a XHTML)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page xhtml">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Introducción a XHTML</a></li>
+  <li><a href="../capitulo_6.html">Capítulo 6. Imágenes y objetos</a></li>
+  <li class="current"><span>6.3. Objetos</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="objetos"><span>6.3.</span> Objetos</h1>
+    
+
+<p>Además de las imágenes, HTML permite incluir en las páginas web otros elementos mucho más complejos, como <em>applets</em> de Java y vídeos en formato QuickTime o Flash. La mayoría de este tipo de contenidos no los interpreta el navegador directamente, sino que hace uso de pequeños programas llamados <em>plugins</em> y que se encargan de tratar con este tipo de elementos complejos.</p>
+
+<p>La etiqueta <code>&lt;object&gt;</code> es la que permite <em>"embeber"</em> o incluir en las páginas HTML cualquier tipo de contenido complejo:</p>
+
+<table class="property" summary="Definición y propiedades de la etiqueta object de XHTML"><thead><tr>  <th scope="row">Etiqueta</th>  <td><strong class="title"><span>&lt;</span>object<span>&gt;</span></strong></td></tr></thead><tbody><tr>  <th scope="row">Atributos comunes</th>  <td><a href="../capitulo_2/etiquetas_y_atributos.html#atributos_basicos">básicos</a>, <a href="../capitulo_2/etiquetas_y_atributos.html#atributos_para_internacionalizacion">internacionalización</a> y <a href="../capitulo_2/etiquetas_y_atributos.html#atributos_de_eventos">eventos</a></td></tr><tr>  <th scope="row">Atributos propios</th>  <td><ul><li><p><code>data = "url"</code> - Indica la URL de los datos que utiliza el objeto</p></li><li><p><code>classid, codebase, codetype</code> - Información específica que depende del tipo de objeto</p></li><li><p><code>type</code> - Indica el tipo de contenido de los datos</p></li><li><p><code>height = "unidad_de_medida"</code> - Indica la altura con la que se debe mostrar el objeto</p></li><li><p><code>width = "unidad_de_medida"</code> - Indica la anchura con la que se debe mostrar el objeto</p></li></ul></td></tr><tr>  <th scope="row">Tipo de elemento</th>  <td>Bloque y en línea</td></tr><tr>  <th scope="row">Descripción</th>  <td>Se emplea para embeber objetos en los documentos</td></tr></tbody></table>
+
+<p>El atributo <code>data</code> se emplea para indicar la URL del recurso que se va a incluir. El atributo <code>type</code> indica el tipo de contenido de los datos del objeto. Los posibles valores de <code>type</code> están estandarizados y coinciden con los del atributo <code>type</code> de la etiqueta <code>&lt;a&gt;</code> que se explicó anteriormente.</p>
+
+<p>El propio estándar de HTML incluye ejemplos de uso de esta etiqueta. Incluir un vídeo en formato MPEG:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">object</span> <span class="kw3">data</span><span class="sy0">=</span><span class="st0">&quot;PlanetaTierra.mpeg&quot;</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;application/mpeg&quot;</span> <span class="sy0">/</span>&gt;</span></pre>
+</div>
+
+<p>También se pueden incluir varias versiones alternativas de un mismo contenido. Así, si el navegador no es capaz de interpretar el formato por defecto, puede optar por cualquiera de los otros formatos alternativos:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">object</span> <span class="kw3">title</span><span class="sy0">=</span><span class="st0">&quot;La Tierra vista desde el espacio&quot;</span> <span class="kw3">classid</span><span class="sy0">=</span><span class="st0">&quot;http://www.observer.mars/TheEarth.py&quot;</span>&gt;</span>
+  <span class="sc-1">&lt;!-- Formato alternativo en forma de vídeo --&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">object</span> <span class="kw3">data</span><span class="sy0">=</span><span class="st0">&quot;PlanetaTierra.mpeg&quot;</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;application/mpeg&quot;</span>&gt;</span>
+    <span class="sc-1">&lt;!-- Otro formato alternativo mediante una imagen GIF --&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">object</span> <span class="kw3">data</span><span class="sy0">=</span><span class="st0">&quot;PlanetaTierra.gif&quot;</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;image/gif&quot;</span>&gt;</span>
+      <span class="sc-1">&lt;!-- Si el navegador no soporta ningún formato, se muestra el siguiente texto --&gt;</span>
+      La <span class="sc2">&lt;<span class="kw2">strong</span>&gt;</span>Tierra<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">strong</span>&gt;</span> vista desde el espacio.
+    <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">object</span>&gt;</span>
+  <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">object</span>&gt;</span>
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">object</span>&gt;</span></pre>
+</div>
+
+<p>A los objetos también se les puede pasar información adicional en forma de parámetros mediante la etiqueta <code>&lt;param&gt;</code>:</p>
+
+<table class="property" summary="Definición y propiedades de la etiqueta param de XHTML"><thead><tr>  <th scope="row">Etiqueta</th>  <td><strong class="title"><span>&lt;</span>param<span>&gt;</span></strong></td></tr></thead><tbody><tr>  <th scope="row">Atributos comunes</th>  <td>id</td></tr><tr>  <th scope="row">Atributos propios</th>  <td><ul><li><p><code>name = "texto"</code> - Indica el nombre del parámetro</p></li><li><p><code>value = "texto"</code> - Indica el valor del parámetro</p></li></ul></td></tr><tr>  <th scope="row">Tipo de elemento</th>  <td>Etiqueta vacía</td></tr><tr>  <th scope="row">Descripción</th>  <td>Se emplea para indicar el valor de los parámetros del objeto</td></tr></tbody></table>
+
+<p>Las etiquetas <code>&lt;param&gt;</code> siempre se incluyen en el interior de las etiquetas <code>&lt;object&gt;</code>:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">object</span> <span class="kw3">data</span><span class="sy0">=</span><span class="st0">&quot;...&quot;</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;...&quot;</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">param</span> <span class="kw3">name</span><span class="sy0">=</span><span class="st0">&quot;parametro1&quot;</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;40&quot;</span> <span class="sy0">/</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">param</span> <span class="kw3">name</span><span class="sy0">=</span><span class="st0">&quot;parametro2&quot;</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;20&quot;</span> <span class="sy0">/</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">param</span> <span class="kw3">name</span><span class="sy0">=</span><span class="st0">&quot;parametro3&quot;</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;texto de prueba&quot;</span> <span class="sy0">/</span>&gt;</span>
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">object</span>&gt;</span></pre>
+</div>
+
+<p>Uno de los principales inconvenientes de <code>&lt;object&gt;</code> es la forma de incluir vídeos en formato Flash en las páginas HTML. Si se utiliza el siguiente código:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">object</span> <span class="kw3">data</span><span class="sy0">=</span><span class="st0">&quot;nombre_video.swf&quot;</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;application/x-shockwave-flash&quot;</span>&gt;&lt;<span class="sy0">/</span><span class="kw2">object</span>&gt;</span></pre>
+</div>
+
+<p>El elemento anterior es correcto desde el punto de vista técnico, pero provoca que algunos navegadores como Internet Explorer no visualicen el vídeo hasta que se ha descargado completamente. Si se trata de un vídeo largo, esta solución no es válida para el usuario.</p>
+
+<p>Por este motivo, se utiliza una solución alternativa para incluir vídeos Flash en las páginas HTML: el uso de la etiqueta <code>&lt;embed&gt;</code>. Aunque esta solución funciona correctamente, no se trata de una solución válida desde el punto de vista del estándar de XHTML, por lo que las páginas que incluyan esta solución no pasarán correctamente el proceso de validación.</p>
+
+<table class="property" summary="Definición y propiedades de la etiqueta embed de XHTML"><thead><tr>  <th scope="row">Etiqueta</th>  <td><strong class="title"><span>&lt;</span>embed<span>&gt;</span></strong></td></tr></thead><tbody><tr>  <th scope="row">Atributos comunes</th>  <td><a href="../capitulo_2/etiquetas_y_atributos.html#atributos_basicos">básicos</a>, <a href="../capitulo_2/etiquetas_y_atributos.html#atributos_para_internacionalizacion">internacionalización</a> y <a href="../capitulo_2/etiquetas_y_atributos.html#atributos_de_eventos">eventos</a></td></tr><tr>  <th scope="row">Atributos propios</th>  <td><ul><li><p><code>src = "url"</code> - Indica la URL del archivo u objeto que se incluye en la página</p></li><li><p><code>type = "tipo_de_contenido"</code> - Indica el tipo de contenido del objeto (flash, quicktime, java, etc.)</p></li><li><p><code>height = "unidad_de_medida"</code> - Indica la altura con la que se debe mostrar el objeto</p></li><li><p><code>width = "unidad_de_medida"</code> - Indica la anchura con la que se debe mostrar el objeto</p></li></ul></td></tr><tr>  <th scope="row">Tipo de elemento</th>  <td>Bloque</td></tr><tr>  <th scope="row">Descripción</th>  <td>Se emplea para embeber objetos en los documentos</td></tr></tbody></table>
+
+<p>Este es el motivo por el que los sitios web más populares de vídeos en formato Flash proporcionan un código similar al siguiente para incluir sus vídeos en las páginas HTML:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">object</span> <span class="kw3">width</span><span class="sy0">=</span><span class="st0">&quot;425&quot;</span> <span class="kw3">height</span><span class="sy0">=</span><span class="st0">&quot;350&quot;</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">param</span> <span class="kw3">name</span><span class="sy0">=</span><span class="st0">&quot;movie&quot;</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;http://www.youtube.com/v/MsH0rBWCYjs&quot;</span>&gt;&lt;<span class="sy0">/</span><span class="kw2">param</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">param</span> <span class="kw3">name</span><span class="sy0">=</span><span class="st0">&quot;wmode&quot;</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;transparent&quot;</span>&gt;&lt;<span class="sy0">/</span><span class="kw2">param</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">embed</span> <span class="kw3">src</span><span class="sy0">=</span><span class="st0">&quot;http://www.youtube.com/v/MsH0rBWCYjs&quot;</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;application/x-shockwave-flash&quot;</span> wmode<span class="sy0">=</span><span class="st0">&quot;transparent&quot;</span> <span class="kw3">width</span><span class="sy0">=</span><span class="st0">&quot;425&quot;</span> <span class="kw3">height</span><span class="sy0">=</span><span class="st0">&quot;350&quot;</span>&gt;&lt;<span class="sy0">/</span><span class="kw2">embed</span>&gt;</span>
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">object</span>&gt;</span></pre>
+</div>
+
+<p>Una vez más, se debe tener en cuenta que la solución anterior de utilizar la etiqueta <code>&lt;embed&gt;</code> es correcta desde el punto de vista del usuario (no tiene que esperar a que el vídeo se descargue completamente para poder verlo) pero no es una solución técnicamente válida, ya que la etiqueta <code>&lt;embed&gt;</code> no es parte del estándar XHTML.</p>
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="mapas_de_imagen.html">&larr; Anterior <span>6.2. Mapas de imagen</span></a>
+            
+            <a class="span5 next" href="../capitulo_7.html">Siguiente &rarr; <span>Capítulo 7. Tablas</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Objetos (Introducción a XHTML%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a XHTML : Objetos']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Características básicas</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Texto</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Enlaces</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Listas</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_6.html">
+            <span>Capítulo 6.</span> Imágenes y objetos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="mapas_de_imagen.html">
+            <span>6.2.</span> Mapas de imagen
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="objetos.html">
+            <span>6.3.</span> Objetos
+        </a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Tablas</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Estructura y layout</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Metainformación</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Otras etiquetas importantes</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Accesibilidad</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Validación</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Fragmentos de código</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

@@ -1,0 +1,275 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>18.3. Optimizando la vista (Symfony 1.4, la guía definitiva)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="optimizando_el_modelo.html" />
+        <link rel="next" href="optimizando_la_cache.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="18.3. Optimizando la vista (Symfony 1.4, la guía definitiva)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page symfony_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Symfony 1.4, la guía definitiva</a></li>
+  <li><a href="../capitulo_18.html">Capítulo 18. Rendimiento</a></li>
+  <li class="current"><span>18.3.. Optimizando la vista</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="optimizando_la_vista"><span>18.3.</span> Optimizando la vista</h1>
+    
+
+<p>En función del diseño y la implementación realizada en la capa de la vista, se pueden producir mejoras o pérdidas de rendimiento en la aplicación. En esta sección se describen diferentes alternativas y sus inconvenientes.</p>
+
+<h3 id="utilizando_el_fragmento_de_codigo_mas_rapido">18.3.1. Utilizando el fragmento de código más rápido</h3>
+
+<p>Si no se utiliza el mecanismo de cache, se debe tener en cuenta que <code>include_component()</code> es un poco más lento que <code>include_partial()</code>, que a su vez, es un poco más lento que un simple <code>include</code> de PHP. El motivo es que Symfony instancia una vista para incluir un elemento parcial e instancia un objeto de tipo <code>sfComponent</code> para incluir un componente, que a su vez requiere un procesamiento ligeramente superior al necesario para incluir directamente un archivo.</p>
+
+<p>De todas formas, la pérdida de rendimiento es insignificante, a menos que se incluyan muchos elementos parciales o muchos componentes en una plantilla. Por tanto, este caso se puede dar en listados y en tablas o cuando se utiliza la llamada al <em>helper</em> <code>include_partial()</code> dentro de una sentencia <code>foreach</code>. Si se incluyen muchos elementos parciales o componentes en una plantilla y ello reduce notablemente el rendimiento de la página, se debería utilizar el mecanismo de cache (ver Capítulo 12) y si no es posible hacerlo, utilizar sentencias <code>include</code> de PHP.</p>
+
+<p>En lo que respecta a los <em>slots</em>, su diferencia de rendimiento sí que es apreciable. El tiempo de procesamiento necesario para incluir un <em>slot</em> es despreciable, ya que es equivalente al tiempo requerido para instanciar una variable. Los <em>slots</em> siempre se guardan en la cache junto con la plantilla que los incluye.</p>
+
+<h3 id="optimizando_el_sistema_de_enrutamiento">18.3.2. Optimizando el sistema de enrutamiento</h3>
+
+<p>Como se explica en el capítulo 9, todas las llamadas a los <em>helpers</em> de enlaces realizadas por las plantillas utilizan el sistema de enrutamiento para transformar una URI interna en una URL externa. El proceso consiste en encontrar un patrón en el archivo <code>routing.yml</code> que coincida con la URI indicada. Symfony realiza este proceso de forma muy sencilla: comprueba la primera regla del sistema de enrutamiento y si no coincide con la URI interna, continua probando las siguientes reglas. Como cada comprobación requiere el uso de expresiones regulares, puede ser un proceso que consume mucho tiempo de procesamiento.</p>
+
+<p>Afortunadamente, existe una solución muy sencilla: utilizar el nombre de la regla en vez de los pares <code>modulo/accion</code>. Con este método, se indica a Symfony qué regla debe utilizar y por tanto el sistema de enrutamiento no pierde tiempo intentando encontrar la regla que coincida con la URI.</p>
+
+<p>Si se considera por ejemplo la siguiente regla de enrutamiento definida en el archivo <code>routing.yml</code>:</p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co4">articulo_segun_id</span>:<span class="co3">
+  url</span><span class="sy2">: </span>         /articulo/:id<span class="co3">
+  param</span><span class="sy2">: </span>       <span class="br0">&#123;</span> module<span class="sy2">: </span>articulo, action<span class="sy2">: </span>leer <span class="br0">&#125;</span></pre>
+</div>
+
+<p>En este caso, en vez de utilizar el siguiente enlace:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">&lt;?php</span> <span class="kw1">echo</span> link_to<span class="br0">&#40;</span><span class="st_h">'mi articulo'</span><span class="sy0">,</span> <span class="st_h">'articulo/leer?id='</span><span class="sy0">.</span><span class="re0">$articulo</span><span class="sy0">-&gt;</span><span class="me1">getId</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span></pre>
+</div>
+
+<p>Se debería utilizar esta otra versión mucho más rápida:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">&lt;?php</span> <span class="kw1">echo</span> link_to<span class="br0">&#40;</span><span class="st_h">'mi articulo'</span><span class="sy0">,</span> <span class="st_h">'articulo_segun_id'</span><span class="sy0">,</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'id'</span> <span class="sy0">=&gt;</span> <span class="re0">$articulo</span><span class="sy0">-&gt;</span><span class="me1">getId</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span></pre>
+</div>
+
+<p>Cuando la página incluye docenas de enlaces creados con reglas de enrutamiento, las diferencias se hacen muy notables.</p>
+
+<h3 id="saltandose_la_plantilla">18.3.3. Saltándose la plantilla</h3>
+
+<p>Normalmente, la respuesta se compone de una serie de cabeceras y el contenido, aunque algunas respuestas no necesitan contenidos. Las interacciones Ajax por ejemplo, normalmente sólo requieren enviar unos pocos datos desde el servidor a un programa de JavaScript que se encarga de actualizar diferentes partes de la página. En este tipo de respuestas muy cortas, es mucho más rápido enviar sólo las cabeceras. Como se vio en el Capítulo 11, una acción puede devolver una sola cabecera JSON. El listado 18-12 muestra el ejemplo del Capítulo 11.</p>
+
+<p><strong>Listado 18-12 - Ejemplo de acción que devuelve una cabecera JSON</strong></p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">public</span> <span class="kw2">function</span> executeActualizar<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$salida</span> <span class="sy0">=</span> <span class="st_h">'{&quot;titulo&quot;:&quot;Título de la carta&quot;,&quot;nombre&quot;:&quot;Sr. Pérez&quot;}'</span><span class="sy0">;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getResponse</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">setHttpHeader</span><span class="br0">&#40;</span><span class="st0">&quot;X-JSON&quot;</span><span class="sy0">,</span> <span class="st_h">'('</span><span class="sy0">.</span><span class="re0">$salida</span><span class="sy0">.</span><span class="st_h">')'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="kw1">return</span> sfView<span class="sy0">::</span><span class="me2">HEADER_ONLY</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span></pre>
+</div>
+
+<p>El código anterior no utiliza ni plantillas ni layout y la respuesta se envía de una sola vez. Como sólo contiene cabeceras, la respuesta es mucho más corta y tarda mucho menos en llegar hasta el navegador del cliente.</p>
+
+<p>El Capítulo 6 explica otra forma de evitar el uso de las plantillas y devolver el contenido en forma de texto directamente desde la acción. Aunque esta técnica rompe con la separación impuesta por el modelo MVC, aumenta significativamente el capacidad de respuesta de una acción. El listado 18-13 muestra un ejemplo.</p>
+
+<p><strong>Listado 18-13 - Ejemplo de acción que devuelve el contenido directamente en forma de texto</strong></p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">public</span> <span class="kw2">function</span> executeAccionRapida<span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="kw1">return</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">renderText</span><span class="br0">&#40;</span><span class="st0">&quot;&lt;html&gt;&lt;body&gt;Hola Mundo&lt;/body&gt;&lt;/html&gt;&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="optimizando_el_modelo.html">&larr; Anterior <span>18.2. Optimizando el modelo</span></a>
+            
+            <a class="span5 next" href="optimizando_la_cache.html">Siguiente &rarr; <span>18.4. Optimizando la cache</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Optimizando la vista (Symfony 1.4, la guía definitiva%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Symfony 1.4, la guía definitiva : Optimizando la vista']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción a Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Explorando el interior de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Ejecutar aplicaciones Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Introducción a la creación de páginas</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Configurar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> El Controlador</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> La Vista</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> El modelo (Doctrine)</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Enlaces y sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Emails</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Uso de la cache</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Pruebas unitarias y funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Herramientas para la administración de aplicaciones</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> Personalizar Symfony</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_18.html">
+            <span>Capítulo 18.</span> Rendimiento
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="optimizando_el_servidor.html">
+            <span>18.1.</span> Optimizando el servidor
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="optimizando_el_modelo.html">
+            <span>18.2.</span> Optimizando el modelo
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="optimizando_la_vista.html">
+            <span>18.3.</span> Optimizando la vista
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="optimizando_la_cache.html">
+            <span>18.4.</span> Optimizando la cache
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="desactivando_las_caracteristicas_que_no_se_utilizan.html">
+            <span>18.5.</span> Desactivando las características que no se utilizan
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="optimizando_el_codigo_fuente.html">
+            <span>18.6.</span> Optimizando el código fuente
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="resumen.html">
+            <span>18.7.</span> Resumen
+        </a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Configuración avanzada</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

@@ -1,0 +1,332 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>2.6. Personalizando una colección de rutas de objeto (Más con Symfony)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="creando_una_coleccion_de_rutas_propia.html" />
+        <link rel="next" href="opciones_de_las_colecciones_de_rutas.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="2.6. Personalizando una colección de rutas de objeto (Más con Symfony)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page mas_con_symfony">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Más con Symfony</a></li>
+  <li><a href="../capitulo_2.html">Capítulo 2. Enrutamiento avanzado</a></li>
+  <li class="current"><span>2.6.. Personalizando una colección de rutas de objeto</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="personalizando_una_coleccion_de_rutas_de_objeto"><span>2.6.</span> Personalizando una colección de rutas de objeto</h1>
+    
+
+<p>Haciendo uso del framework de enrutamiento, hemos solucionado fácilmente los
+retos planteados al crear una aplicación como <em>Sympal Builder</em>. A medida que la
+aplicación crezca, podremos reutilizar las rutas propias en otros módulos del
+área de administración (para que los clientes puedan por ejemplo gestionar sus
+galerías de fotos).</p>
+
+<p>Otra razón para crear una colección de rutas propia es la posibilidad de añadir
+rutas adicionales usadas habitualmente. Imagina que por ejemplo un proyecto
+utiliza muchos modelos, cada uno de los cuales dispone de una columna <code>is_active</code>.
+El área de administración debe incluir una forma sencilla de activar o desactivar
+el valor <code>is_active</code> de un objeto. Para ello, en primer lugar modifica la clase
+<code>acClientObjectRouteCollection</code> para incluir una nueva ruta a la colección:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// lib/routing/acClientObjectRouteCollection.class.php</span>
+<span class="kw2">protected</span> <span class="kw2">function</span> generateRoutes<span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  parent<span class="sy0">::</span><span class="me2">generateRoutes</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+  <span class="kw1">if</span> <span class="br0">&#40;</span><span class="kw3">isset</span><span class="br0">&#40;</span><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">options</span><span class="br0">&#91;</span><span class="st_h">'with_is_active'</span><span class="br0">&#93;</span><span class="br0">&#41;</span> <span class="sy0">&amp;&amp;</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">options</span><span class="br0">&#91;</span><span class="st_h">'with_is_active'</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$routeName</span> <span class="sy0">=</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">options</span><span class="br0">&#91;</span><span class="st_h">'name'</span><span class="br0">&#93;</span><span class="sy0">.</span><span class="st_h">'_toggleActive'</span><span class="sy0">;</span>
+&nbsp;
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">routes</span><span class="br0">&#91;</span><span class="re0">$routeName</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getRouteForToggleActive</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>El método ~<code>sfObjectRouteCollection::generateRoutes()</code>~ se invoca al instanciar
+el objeto de la colección y se encarga de crear todas las rutas necesarias y de
+incluirlas en la propiedad <code>$routes</code> de la clase. En este caso, derivamos la
+creación de la ruta a un nuevo método protegido llamado <code>getRouteForToggleActive()</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">protected</span> <span class="kw2">function</span> getRouteForToggleActive<span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="re0">$url</span> <span class="sy0">=</span> <span class="kw3">sprintf</span><span class="br0">&#40;</span>
+    <span class="st_h">'%s/:%s/toggleActive.:sf_format'</span><span class="sy0">,</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">options</span><span class="br0">&#91;</span><span class="st_h">'prefix_path'</span><span class="br0">&#93;</span><span class="sy0">,</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">options</span><span class="br0">&#91;</span><span class="st_h">'column'</span><span class="br0">&#93;</span>
+  <span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+  <span class="re0">$params</span> <span class="sy0">=</span> <span class="kw3">array</span><span class="br0">&#40;</span>
+    <span class="st_h">'module'</span> <span class="sy0">=&gt;</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">options</span><span class="br0">&#91;</span><span class="st_h">'module'</span><span class="br0">&#93;</span><span class="sy0">,</span>
+    <span class="st_h">'action'</span> <span class="sy0">=&gt;</span> <span class="st_h">'toggleActive'</span><span class="sy0">,</span>
+    <span class="st_h">'sf_format'</span> <span class="sy0">=&gt;</span> <span class="st_h">'html'</span>
+  <span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+  <span class="re0">$requirements</span> <span class="sy0">=</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'sf_method'</span> <span class="sy0">=&gt;</span> <span class="st_h">'put'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+  <span class="re0">$options</span> <span class="sy0">=</span> <span class="kw3">array</span><span class="br0">&#40;</span>
+    <span class="st_h">'model'</span> <span class="sy0">=&gt;</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">options</span><span class="br0">&#91;</span><span class="st_h">'model'</span><span class="br0">&#93;</span><span class="sy0">,</span>
+    <span class="st_h">'type'</span> <span class="sy0">=&gt;</span> <span class="st_h">'object'</span><span class="sy0">,</span>
+    <span class="st_h">'method'</span> <span class="sy0">=&gt;</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">options</span><span class="br0">&#91;</span><span class="st_h">'model_methods'</span><span class="br0">&#93;</span><span class="br0">&#91;</span><span class="st_h">'object'</span><span class="br0">&#93;</span>
+  <span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+  <span class="kw1">return</span> <span class="kw2">new</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">routeClass</span><span class="br0">&#40;</span>
+    <span class="re0">$url</span><span class="sy0">,</span>
+    <span class="re0">$params</span><span class="sy0">,</span>
+    <span class="re0">$requirements</span><span class="sy0">,</span>
+    <span class="re0">$options</span>
+  <span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>El único paso que falta es configurar la colección de rutas en el archivo
+<code>routing.yml</code>. Como has podido observar, <code>generateRoutes()</code> busca una opción
+llamada <code>with_is_active</code> antes de añadir la nueva ruta. Incluir esta comprobación
+permite un mayor control en caso de que se quiera reutilizar la colección
+<code>acClientObjectRouteCollection</code> más adelante en algún lugar que no necesite
+la ruta <code>toggleActive</code>:</p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co1"># apps/frontend/config/routing.yml</span><span class="co4">
+pageAdmin</span>:<span class="co3">
+  class</span><span class="sy2">: </span>  acClientObjectRouteCollection<span class="co4">
+  options</span>:<span class="co3">
+    model</span><span class="sy2">: </span>         Page<span class="co3">
+    prefix_path</span><span class="sy2">: </span>   /pages<span class="co3">
+    module</span><span class="sy2">: </span>        pageAdmin<span class="co3">
+    with_is_active</span><span class="sy2">: </span>true</pre>
+</div>
+
+<p>Ejecuta la tarea <code>app:routes</code> y verifica que existe una nueva ruta llamada
+<code>toggleActive</code>. Lo único que falta es crear la acción encargada de realizar
+todo el trabajo. Como es posible que se reutilice en varios módulos esta colección
+de rutas y su acción asociada, crea un nuevo archivo <code>backendActions.class.php</code>
+en el directorio <code>apps/backend/lib/action</code> (debes crear a mano este directorio):</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// apps/backend/lib/action/backendActions.class.php</span>
+<span class="kw2">class</span> backendActions <span class="kw2">extends</span> sfActions
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> executeToggleActive<span class="br0">&#40;</span>sfWebRequest <span class="re0">$request</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$obj</span> <span class="sy0">=</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getRoute</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">getObject</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="re0">$obj</span><span class="sy0">-&gt;</span><span class="me1">is_active</span> <span class="sy0">=</span> <span class="sy0">!</span><span class="re0">$obj</span><span class="sy0">-&gt;</span><span class="me1">is_active</span><span class="sy0">;</span>
+&nbsp;
+    <span class="re0">$obj</span><span class="sy0">-&gt;</span><span class="me1">save</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">redirect</span><span class="br0">&#40;</span><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getModuleName</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">.</span><span class="st_h">'/index'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Por último, modifica la clase base de <code>pageAdminActions</code> para que herede de
+esta nueva clase <code>backendActions</code>.</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">class</span> pageAdminActions <span class="kw2">extends</span> backendActions
+<span class="br0">&#123;</span>
+  <span class="co1">// ...</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>¿Qué es lo que hemos conseguido? Añadir una ruta a la colección de rutas y una
+acción asociada permite que cualquier módulo pueda incluir automáticamente esta
+funcionalidad simplemente utilizando la colección <code>acClientObjectRouteCollection</code>
+y extendiendo la clase <code>backendActions</code>. De esta forma, es posible reutilizar
+las funcionalidades comunes entre varios módulos diferentes.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="creando_una_coleccion_de_rutas_propia.html">&larr; Anterior <span>2.5. Creando una colección de rutas propia</span></a>
+            
+            <a class="span5 next" href="opciones_de_las_colecciones_de_rutas.html">Siguiente &rarr; <span>2.7. Opciones de las colecciones de rutas</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Personalizando una colección de rutas de objeto (Más con Symfony%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Más con Symfony : Personalizando una colección de rutas de objeto']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_2.html">
+            <span>Capítulo 2.</span> Enrutamiento avanzado
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="preparacion_del_proyecto_un_cms_para_muchos_clientes.html">
+            <span>2.1.</span> Preparación del proyecto: un CMS para muchos clientes
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="como_funciona_el_sistema_de_enrutamiento.html">
+            <span>2.2.</span> Cómo funciona el sistema de enrutamiento
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="creando_una_clase_de_ruta_personalizada.html">
+            <span>2.3.</span> Creando una clase de ruta personalizada
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="colecciones_de_rutas.html">
+            <span>2.4.</span> Colecciones de rutas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="creando_una_coleccion_de_rutas_propia.html">
+            <span>2.5.</span> Creando una colección de rutas propia
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="personalizando_una_coleccion_de_rutas_de_objeto.html">
+            <span>2.6.</span> Personalizando una colección de rutas de objeto
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="opciones_de_las_colecciones_de_rutas.html">
+            <span>2.7.</span> Opciones de las colecciones de rutas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="conclusion.html">
+            <span>2.8.</span> Conclusión
+        </a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Mejora tu productividad</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Emails</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Widgets y validadores propios</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Formularios avanzados</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Mejorando la barra de depuración web</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Uso avanzado de Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Utilizando la herencia de tablas de Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Funcionamiento interno de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Windows y Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Desarrollando aplicaciones Facebook</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Descubriendo el poder de la línea de comandos</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Jugando con la cache de configuración de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Trabajando con la comunidad Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>A</span> <a href="../apendice_a.html"> Código JavaScript de sfWidgetFormGMapAddress</a>
+    </li>
+    <li class="level-1">
+        <span>B</span> <a href="../apendice_b.html"> Ejemplo de instalador propio</a>
+    </li>
+    <li class="level-1">
+        <span>C</span> <a href="../apendice_c.html"> Licencia</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

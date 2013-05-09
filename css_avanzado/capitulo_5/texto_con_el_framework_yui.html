@@ -1,0 +1,319 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>5.4. Texto con el framework YUI (CSS avanzado)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="inicializando_estilos_con_el_framework_yui.html" />
+        <link rel="next" href="layouts_con_el_framework_yui.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="5.4. Texto con el framework YUI (CSS avanzado)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page css_avanzado">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">CSS avanzado</a></li>
+  <li><a href="../capitulo_5.html">Capítulo 5. Frameworks</a></li>
+  <li class="current"><span>5.4.. Texto con el framework YUI</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="texto_con_el_framework_yui"><span>5.4.</span> Texto con el framework YUI</h1>
+    
+
+<p>El manejo del texto es una de las grandes ventajas aportadas por el uso del framework. Definir las propiedades del texto de la forma que indica YUI asegura que tus páginas se ven exactamente igual en cualquier versión de cualquier navegador. Además, garantiza que las propiedades del texto de tus páginas serán consistentes y que los contenidos de texto se adaptan perfectamente a cualquier medio y/o dispositivo.</p>
+
+<p>En primer lugar, el tercer componente CSS de YUI es <code>fonts.css</code>, una hoja de estilos tan sencilla como se muestra a continuación:</p>
+
+<div class="code css">
+<pre class="css"><span class="coMULTI">/*
+Copyright (c) 2008, Yahoo! Inc. All rights reserved.
+Code licensed under the BSD License:
+http://developer.yahoo.net/yui/license.txt
+version: 2.5.2
+*/</span>
+body <span class="br0">&#123;</span><span class="kw1">font</span><span class="sy0">:</span><span class="re3">13px</span>/<span class="nu0">1.231</span> arial<span class="sy0">,</span>helvetica<span class="sy0">,</span>clean<span class="sy0">,</span><span class="kw2">sans-serif</span><span class="sy0">;*</span><span class="kw1">font-size</span><span class="sy0">:</span>small<span class="sy0">;*</span><span class="kw1">font</span><span class="sy0">:</span><span class="kw2">x-small</span><span class="sy0">;</span><span class="br0">&#125;</span>
+table <span class="br0">&#123;</span><span class="kw1">font-size</span><span class="sy0">:</span><span class="kw2">inherit</span><span class="sy0">;</span><span class="kw1">font</span><span class="sy0">:</span><span class="re3">100%</span><span class="sy0">;</span><span class="br0">&#125;</span>
+pre<span class="sy0">,</span>code<span class="sy0">,</span>kbd<span class="sy0">,</span>samp<span class="sy0">,</span>tt <span class="br0">&#123;</span><span class="kw1">font-family</span><span class="sy0">:</span><span class="kw2">monospace</span><span class="sy0">;*</span><span class="kw1">font-size</span><span class="sy0">:</span><span class="re3">108%</span><span class="sy0">;</span><span class="kw1">line-height</span><span class="sy0">:</span><span class="re3">100%</span><span class="sy0">;</span><span class="br0">&#125;</span></pre>
+</div>
+
+<p>Después de aplicar <code>reset.css</code>, <code>base.css</code> y <code>fonts.css</code>, las páginas muestran el texto normal con un tamaño de letra de <code>13px</code> y un interlineado de <code>16px</code>. Los títulos <code>&lt;h1&gt;</code> se muestran con un tamaño de <code>18px</code>, los títulos <code>&lt;h2&gt;</code> con un tamaño de <code>16px</code> y los títulos <code>&lt;h3&gt;</code> con un tamaño de <code>14px</code>. Además, todos los elementos de texto se muestran con el tipo de letra <code>Arial</code> o similar, salvo los elementos <code>&lt;code&gt;</code> y <code>&lt;pre&gt;</code> que se muestran con una fuente de ancho fijo.</p>
+
+<p>YUI recomienda establecer todos los tamaños de letra utilizando el porcentaje como unidad de medida, porque asegura que el texto se muestra de forma más consistente que al utilizar la unidad <code>em</code>. Como el tamaño de letra base establecido por <code>fonts.css</code> es <code>13px</code>, esta medida es la que corresponde al valor <code>100%</code>. Utilizando una sencilla operación se puede obtener el porcentaje correspondiente a cualquier tamaño en píxeles. La siguiente tabla muestra algunos de los valores más comunes:</p>
+
+<div class="table" id="table_5_1">
+
+    <table>
+<thead>
+<tr>
+  <th>Para obtener este tamaño en píxeles...</th>
+  <th>...utiliza el siguiente valor de porcentaje</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>10px</code></td>
+  <td><code>77%</code></td>
+</tr>
+<tr>
+  <td><code>11px</code></td>
+  <td><code>85%</code></td>
+</tr>
+<tr>
+  <td><code>12px</code></td>
+  <td><code>93%</code></td>
+</tr>
+<tr>
+  <td><code>13px</code></td>
+  <td><code>100%</code></td>
+</tr>
+<tr>
+  <td><code>14px</code></td>
+  <td><code>108%</code></td>
+</tr>
+<tr>
+  <td><code>15px</code></td>
+  <td><code>116%</code></td>
+</tr>
+<tr>
+  <td><code>16px</code></td>
+  <td><code>123.1%</code></td>
+</tr>
+<tr>
+  <td><code>17px</code></td>
+  <td><code>131%</code></td>
+</tr>
+<tr>
+  <td><code>18px</code></td>
+  <td><code>138.5%</code></td>
+</tr>
+<tr>
+  <td><code>19px</code></td>
+  <td><code>146.5%</code></td>
+</tr>
+<tr>
+  <td><code>20px</code></td>
+  <td><code>153.9%</code></td>
+</tr>
+<tr>
+  <td><code>21px</code></td>
+  <td><code>161.6%</code></td>
+</tr>
+<tr>
+  <td><code>22px</code></td>
+  <td><code>167%</code></td>
+</tr>
+<tr>
+  <td><code>23px</code></td>
+  <td><code>174%</code></td>
+</tr>
+<tr>
+  <td><code>24px</code></td>
+  <td><code>182%</code></td>
+</tr>
+<tr>
+  <td><code>25px</code></td>
+  <td><code>189%</code></td>
+</tr>
+<tr>
+  <td><code>26px</code></td>
+  <td><code>197%</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+<p>Por lo tanto, si se quiere modificar por ejemplo el tamaño de letra de los párrafos y de los títulos de sección <code>&lt;h1&gt;</code> y <code>&lt;h2&gt;</code>, debes utilizar las siguientes reglas en tu hoja de estilos propia:</p>
+
+<div class="code css">
+<pre class="css">p <span class="br0">&#123;</span>
+  <span class="kw1">font-size</span><span class="sy0">:</span> <span class="re3">123.1%</span><span class="sy0">;</span>  <span class="coMULTI">/* equivale a 16px */</span>
+<span class="br0">&#125;</span>
+h1 <span class="br0">&#123;</span>
+  <span class="kw1">font-size</span><span class="sy0">:</span> <span class="re3">182%</span><span class="sy0">;</span>    <span class="coMULTI">/* equivale a 24px */</span>
+<span class="br0">&#125;</span>
+h2 <span class="br0">&#123;</span>
+  <span class="kw1">font-size</span><span class="sy0">:</span> <span class="re3">167%</span><span class="sy0">;</span>    <span class="coMULTI">/* equivale a 22px */</span>
+<span class="br0">&#125;</span>
+h3 <span class="br0">&#123;</span>
+  <span class="kw1">font-size</span><span class="sy0">:</span> <span class="re3">153.9%</span><span class="sy0">;</span>  <span class="coMULTI">/* equivale a 20px */</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>De la misma forma, también es posible modificar el tipo de letra de cualquier elemento de la página. Las siguientes reglas hacen que los párrafos se muestren con un tipo de letra <code>Georgia</code> o similar y los títulos de sección con un tipo de letra <code>Verdana</code> o similar:</p>
+
+<div class="code css">
+<pre class="css">p <span class="br0">&#123;</span>
+  <span class="kw1">font-family</span><span class="sy0">:</span> Georgia<span class="sy0">,</span> <span class="st0">&quot;Times New Roman&quot;</span><span class="sy0">,</span> Times<span class="sy0">,</span> <span class="kw2">serif</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+h1<span class="sy0">,</span> h2<span class="sy0">,</span> h3<span class="sy0">,</span> h4<span class="sy0">,</span> h5<span class="sy0">,</span> h6 <span class="br0">&#123;</span>
+  <span class="kw1">font-family</span><span class="sy0">:</span> Verdana<span class="sy0">,</span> Arial<span class="sy0">,</span> Helvetica<span class="sy0">,</span> <span class="kw2">sans-serif</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Para hacer uso de los estilos proporcionados por el componente <code>fonts.css</code> es necesario que las páginas enlacen esa hoja de estilos:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">link</span> <span class="kw3">rel</span><span class="sy0">=</span><span class="st0">&quot;stylesheet&quot;</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text/css&quot;</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;css/fonts-min.css&quot;</span>&gt;</span></pre>
+</div>
+
+<p>Recuerda que también puedes enlazar esta misma hoja de estilos directamente desde los servidores de Yahoo!:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">link</span> <span class="kw3">rel</span><span class="sy0">=</span><span class="st0">&quot;stylesheet&quot;</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text/css&quot;</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;http://yui.yahooapis.com/2.5.2/build/fonts/fonts-min.css&quot;</span>&gt;</span></pre>
+</div>
+
+<p>Por último, como es muy común utilizar todos los componentes CSS de forma simultánea, YUI incluye una hoja de estilos que combina todas las hojas de estilos individuales. Además de reducir el tamaño total de los archivos, disponer de una sola hoja de estilos reduce el número de peticiones realizadas al servidor. Para utilizar la hoja de estilos completa sólo es necesario utilizar la siguiente etiqueta <code>&lt;link&gt;</code>:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">link</span> <span class="kw3">rel</span><span class="sy0">=</span><span class="st0">&quot;stylesheet&quot;</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text/css&quot;</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;css/reset-fonts-grids.css&quot;</span>&gt;</span></pre>
+</div>
+
+<p>La hoja de estilos completa también se puede enlazar directamente desde los servidores de Yahoo!:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">link</span> <span class="kw3">rel</span><span class="sy0">=</span><span class="st0">&quot;stylesheet&quot;</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text/css&quot;</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;http://yui.yahooapis.com/2.5.2/build/reset-fonts-grids/reset-fonts-grids.css&quot;</span>&gt;</span></pre>
+</div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="inicializando_estilos_con_el_framework_yui.html">&larr; Anterior <span>5.3. Inicializando estilos con el framework YUI</span></a>
+            
+            <a class="span5 next" href="layouts_con_el_framework_yui.html">Siguiente &rarr; <span>5.5. Layouts con el framework YUI</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Texto con el framework YUI (CSS avanzado%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'CSS avanzado : Texto con el framework YUI']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Técnicas imprescindibles</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Buenas prácticas</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Selectores</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Propiedades avanzadas</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_5.html">
+            <span>Capítulo 5.</span> Frameworks
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_framework_yui.html">
+            <span>5.1.</span> El framework YUI
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="primeros_pasos_con_el_framework_yui.html">
+            <span>5.2.</span> Primeros pasos con el framework YUI
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="inicializando_estilos_con_el_framework_yui.html">
+            <span>5.3.</span> Inicializando estilos con el framework YUI
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="texto_con_el_framework_yui.html">
+            <span>5.4.</span> Texto con el framework YUI
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="layouts_con_el_framework_yui.html">
+            <span>5.5.</span> Layouts con el framework YUI
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="otros_frameworks.html">
+            <span>5.6.</span> Otros frameworks
+        </a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Técnicas avanzadas</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

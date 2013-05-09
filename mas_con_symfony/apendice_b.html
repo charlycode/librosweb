@@ -1,0 +1,227 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>Apéndice B. Ejemplo de instalador propio (Más con Symfony)</title>
+        <link href="../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="apendice_a.html" />
+        <link rel="next" href="apendice_c.html" />
+        <link rel="start" href="index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Apéndice B. Ejemplo de instalador propio (Más con Symfony)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page mas_con_symfony">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../index.html">Inicio</a></li>
+  <li><a href="index.html">Más con Symfony</a></li>
+  <li class="current"><span>Apéndice B.. Ejemplo de instalador propio</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="apendice_b"><span>Apéndice B.</span> Ejemplo de instalador propio</h1>
+    <p>El siguiente código PHP muestra el instalador propio utilizado en el <a class="internal" href="../capitulo_6.html#advanced-forms">Capítulo 06</a>:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">&lt;?php</span>
+&nbsp;
+<span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">logSection</span><span class="br0">&#40;</span><span class="st_h">'install'</span><span class="sy0">,</span> <span class="st_h">'default to sqlite'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">runTask</span><span class="br0">&#40;</span><span class="st_h">'configure:database'</span><span class="sy0">,</span> <span class="kw3">sprintf</span><span class="br0">&#40;</span><span class="st0">&quot;'sqlite:<span class="es6">%s</span>/database.db'&quot;</span><span class="sy0">,</span> sfConfig<span class="sy0">::</span><span class="me2">get</span><span class="br0">&#40;</span><span class="st_h">'sf_data_dir'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">logSection</span><span class="br0">&#40;</span><span class="st_h">'install'</span><span class="sy0">,</span> <span class="st_h">'create an application'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">runTask</span><span class="br0">&#40;</span><span class="st_h">'generate:app'</span><span class="sy0">,</span> <span class="st_h">'frontend'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">setConfiguration</span><span class="br0">&#40;</span><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">createConfiguration</span><span class="br0">&#40;</span><span class="st_h">'frontend'</span><span class="sy0">,</span> <span class="st_h">'dev'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">logSection</span><span class="br0">&#40;</span><span class="st_h">'install'</span><span class="sy0">,</span> <span class="st_h">'publish assets'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">runTask</span><span class="br0">&#40;</span><span class="st_h">'plugin:publish-assets'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="kw1">if</span> <span class="br0">&#40;</span><span class="kw3">file_exists</span><span class="br0">&#40;</span><span class="re0">$dir</span> <span class="sy0">=</span> sfConfig<span class="sy0">::</span><span class="me2">get</span><span class="br0">&#40;</span><span class="st_h">'sf_symfony_lib_dir'</span><span class="br0">&#41;</span><span class="sy0">.</span><span class="st_h">'/../data'</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">installDir</span><span class="br0">&#40;</span><span class="re0">$dir</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+<span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">logSection</span><span class="br0">&#40;</span><span class="st_h">'install'</span><span class="sy0">,</span> <span class="st_h">'create the database schema'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="kw3">file_put_contents</span><span class="br0">&#40;</span>sfConfig<span class="sy0">::</span><span class="me2">get</span><span class="br0">&#40;</span><span class="st_h">'sf_config_dir'</span><span class="br0">&#41;</span><span class="sy0">.</span><span class="st_h">'/doctrine/schema.yml'</span><span class="sy0">,</span> <span class="co3">&lt;&lt;&lt;EOF
+Product:
+  columns:
+    name:           { type: string(255), notnull: true }
+    price:          { type: decimal, notnull: true }
+&nbsp;
+ProductPhoto:
+  columns:
+    product_id:     { type: integer }
+    filename:       { type: string(255) }
+    caption:        { type: string(255), notnull: true }
+  relations:
+    Product:
+      alias:        Product
+      foreignType:  many
+      foreignAlias: Photos
+      onDelete:     cascade
+EOF</span>
+<span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">logSection</span><span class="br0">&#40;</span><span class="st_h">'install'</span><span class="sy0">,</span> <span class="st_h">'add some fixtures'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="kw3">file_put_contents</span><span class="br0">&#40;</span>sfConfig<span class="sy0">::</span><span class="me2">get</span><span class="br0">&#40;</span><span class="st_h">'sf_data_dir'</span><span class="br0">&#41;</span><span class="sy0">.</span><span class="st_h">'/fixtures/fixtures.yml'</span><span class="sy0">,</span> <span class="co3">&lt;&lt;&lt;EOF
+Product:
+  product_1:
+    name:  Product Name
+    price: 25.95
+EOF</span>
+<span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">logSection</span><span class="br0">&#40;</span><span class="st_h">'install'</span><span class="sy0">,</span> <span class="st_h">'build the model'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">runTask</span><span class="br0">&#40;</span><span class="st_h">'doctrine:build'</span><span class="sy0">,</span> <span class="st_h">'--all --and-load --no-confirmation'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">logSection</span><span class="br0">&#40;</span><span class="st_h">'install'</span><span class="sy0">,</span> <span class="st_h">'create a simple CRUD module'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">runTask</span><span class="br0">&#40;</span><span class="st_h">'doctrine:generate-module'</span><span class="sy0">,</span> <span class="st_h">'frontend product Product --non-verbose-templates'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">logSection</span><span class="br0">&#40;</span><span class="st_h">'install'</span><span class="sy0">,</span> <span class="st_h">'fix sqlite database permissions'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="kw3">chmod</span><span class="br0">&#40;</span>sfConfig<span class="sy0">::</span><span class="me2">get</span><span class="br0">&#40;</span><span class="st_h">'sf_data_dir'</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="nu8">0777</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="kw3">chmod</span><span class="br0">&#40;</span>sfConfig<span class="sy0">::</span><span class="me2">get</span><span class="br0">&#40;</span><span class="st_h">'sf_data_dir'</span><span class="br0">&#41;</span><span class="sy0">.</span><span class="st_h">'/database.db'</span><span class="sy0">,</span> <span class="nu8">0777</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="apendice_a.html">&larr; Anterior <span>Apéndice A. Código JavaScript de sfWidgetFormGMapAddress</span></a>
+            
+            <a class="span5 next" href="apendice_c.html">Siguiente &rarr; <span>Apéndice C. Licencia</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Ejemplo de instalador propio (Más con Symfony%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Más con Symfony : Ejemplo de instalador propio']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="capitulo_2.html"> Enrutamiento avanzado</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="capitulo_3.html"> Mejora tu productividad</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="capitulo_4.html"> Emails</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="capitulo_5.html"> Widgets y validadores propios</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="capitulo_6.html"> Formularios avanzados</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="capitulo_7.html"> Mejorando la barra de depuración web</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="capitulo_8.html"> Uso avanzado de Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="capitulo_9.html"> Utilizando la herencia de tablas de Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="capitulo_10.html"> Funcionamiento interno de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="capitulo_11.html"> Windows y Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="capitulo_12.html"> Desarrollando aplicaciones Facebook</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="capitulo_13.html"> Descubriendo el poder de la línea de comandos</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="capitulo_14.html"> Jugando con la cache de configuración de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="capitulo_15.html"> Trabajando con la comunidad Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>A</span> <a href="apendice_a.html"> Código JavaScript de sfWidgetFormGMapAddress</a>
+    </li>
+    <li class="level-1 active">
+        <a href="apendice_b.html">
+            <span>Apéndice B.</span> Ejemplo de instalador propio
+        </a>
+    </li>
+    <li class="level-1">
+        <span>C</span> <a href="apendice_c.html"> Licencia</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

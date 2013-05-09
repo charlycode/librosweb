@@ -1,0 +1,195 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>9.1. Corrección de errores con Internet Explorer (Introducción a JavaScript)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="../capitulo_9.html" />
+        <link rel="next" href="correccion_de_errores_con_firefox.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="9.1. Corrección de errores con Internet Explorer (Introducción a JavaScript)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page javascript">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Introducción a JavaScript</a></li>
+  <li><a href="../capitulo_9.html">Capítulo 9. Detección y corrección de errores</a></li>
+  <li class="current"><span>9.1. Corrección de errores con Internet Explorer</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="correccion_de_errores_con_internet_explorer"><span>9.1.</span> Corrección de errores con Internet Explorer</h1>
+    
+
+<p>Dependiendo de su configuración, el navegador Internet Explorer puede tener desactivada la notificación de errores de JavaScript. Por este motivo, en primer lugar puede ser necesario activar los mensajes de aviso sobre los errores de JavaScript. Para activar las notificaciones, se accede al menú <code>Herramientas &gt; Opciones</code>, pestaña <code>Opciones Avanzadas</code> y se activa la opción <code>Mostrar una notificación sobre cada error de secuencia de comandos</code>, como se muestra en la siguiente imagen:</p>
+
+<div class="figure" id="figure_9_1">
+    <img src="../../img/javascript/f0901.gif" alt="Opciones avanzadas en Internet Explorer necesarias para activar la notificación de errores de JavaScript" />
+
+    <p class="caption"><strong>Figura 9.1</strong> Opciones avanzadas en Internet Explorer necesarias para activar la notificación de errores de JavaScript</p>
+</div>
+
+
+<p>Una vez activado, se mostrará un mensaje de error cada vez que se produzcan errores de JavaScript en una página. Además, en la esquina inferior izquierda se muestra un pequeño mensaje indicando que la página contiene errores:</p>
+
+<div class="figure" id="figure_9_2">
+    <img src="../../img/javascript/f0902.gif" alt="Mensaje de aviso de Internet Explorer sobre los errores de JavaScript" />
+
+    <p class="caption"><strong>Figura 9.2</strong> Mensaje de aviso de Internet Explorer sobre los errores de JavaScript</p>
+</div>
+
+
+<p>Pulsando sobre el botón <code>Mostrar Detalles &gt;&gt;</code> es posible acceder a cierta información adicional sobre el error producido:</p>
+
+<div class="figure" id="figure_9_3">
+    <img src="../../img/javascript/f0903.gif" alt="Información adicional proporcionada por Internet Explorer sobre los errores de JavaScript" />
+
+    <p class="caption"><strong>Figura 9.3</strong> Información adicional proporcionada por Internet Explorer sobre los errores de JavaScript</p>
+</div>
+
+
+<p>Internet Explorer es el navegador que menos información proporciona. Además, cuando se produce un error no siempre indica correctamente la posición del posible error.</p>
+
+<p>El tipo de mensajes (muy breves y en ocasiones ambiguos) y la falta de precisión sobre el lugar en el que se ha producido realmente el error, hacen que depurar un script en Internet Explorer sea una tarea excesivamente complicada.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="../capitulo_9.html">&larr; Anterior <span>Capítulo 9. Detección y corrección de errores</span></a>
+            
+            <a class="span5 next" href="correccion_de_errores_con_firefox.html">Siguiente &rarr; <span>9.2. Corrección de errores con Firefox</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Corrección de errores con Internet Explorer (Introducción a JavaScript%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a JavaScript : Corrección de errores con Internet Explorer']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> El primer script</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Programación básica</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Programación avanzada</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> DOM</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Eventos</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Otras utilidades</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_9.html">
+            <span>Capítulo 9.</span> Detección y corrección de errores
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="correccion_de_errores_con_internet_explorer.html">
+            <span>9.1.</span> Corrección de errores con Internet Explorer
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="correccion_de_errores_con_firefox.html">
+            <span>9.2.</span> Corrección de errores con Firefox
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="correccion_de_errores_con_opera.html">
+            <span>9.3.</span> Corrección de errores con Opera
+        </a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Recursos útiles</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

@@ -1,0 +1,259 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>4.3. Propiedad outline (CSS avanzado)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="propiedad_display.html" />
+        <link rel="next" href="propiedad_quotes.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="4.3. Propiedad outline (CSS avanzado)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page css_avanzado">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">CSS avanzado</a></li>
+  <li><a href="../capitulo_4.html">Capítulo 4. Propiedades avanzadas</a></li>
+  <li class="current"><span>4.3.. Propiedad outline</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="propiedad_outline"><span>4.3.</span> Propiedad outline</h1>
+    
+
+<div class="table" id="table_4_4">
+
+    <table class="table property css" summary="Definición de la propiedad outline de CSS"> 
+<tr><th>Definición</th><td>Establece algunas o todas las propiedades de todos los perfiles de los elementos</td></tr><tr><th>Valores <br/> permitidos</th><td>Alguno o todos los siguientes valores y en cualquier orden:<ul><li>outline-color</li><li>outline-style</li><li>outline-width</li></ul></td></tr><tr><th>Valor inicial</th><td>Cada propiedad define su propio valor por defecto</td></tr><tr><th>Se aplica a</th><td>Todos los elementos</td></tr><tr><th>Válida en</th><td>medios visuales, interactive</td></tr><tr><th>Se hereda</th><td>no</td></tr><tr class="nobottom"><th>Definición en<br/>el estándar</th><td> http://www.w3.org/TR/CSS21/ui.html#propdef-outline </td></tr>
+</table>
+</div>
+
+
+<p>La propiedad <code>outline</code> es una de las <em>"propiedades shorthand"</em> que define CSS y que se utilizan para establecer de forma abreviada el valor de una o más propiedades individuales. En este caso, se utiliza para establecer el mismo grosor, estilo y/o anchura de todos los perfiles de un elemento.</p>
+
+<p>Aunque es cierto que guarda muchas similitudes con la propiedad <code>border</code>, en realidad se diferencian en algunos aspectos muy importantes:</p>
+
+<ol>
+<li>Los perfiles no ocupan espacio, mientras que los bordes normales sí.</li>
+<li>Los perfiles pueden tener formas no rectangulares.</li>
+</ol>
+
+<p>Desde el punto de vista del diseño, la primera característica es la más importante. Los perfiles u <em>outline</em> siempre se dibujan "por encima del elemento", por lo que no modifican la posición o el tamaño total de los elementos.</p>
+
+<p>En el siguiente ejemplo se muestran dos cajas; la primera muestra un borde muy grueso y la segunda muestra un perfil de la misma anchura:</p>
+
+<div class="example">
+<div class="box" style="border: 5px solid #369;">div { border: 5px solid #369; }</div>
+<br/>
+<div class="box" style="outline: 5px solid #369;">div { outline: 5px solid #369; }</div>
+</div>
+
+<p>El perfil de la segunda caja se dibuja justo por el exterior de su borde. Aunque visualmente no lo parece, el perfil y el borde no se encuentran en el mismo plano. De esta forma, el perfil no se tiene en cuenta para calcular la anchura total de un elemento y no influye en el resto de elementos cercanos.</p>
+
+<p>La segunda característica importante de los perfiles pueden tener formas no rectangulares. En el siguiente ejemplo se muestra un texto muy largo encerrado en una caja muy estrecha, lo que provoca que el texto se muestre en varias líneas:</p>
+
+<div class="example">
+<div style="width:100px"><span style="border: 2px solid #369;">span { border: 2px solid #369; }  Ejemplo de texto largo que ocupa varias líneas</span></div>
+<br/>
+<div style="width:100px"><span style="outline: 2px solid #369;">span { outline: 2px solid #369; }  Ejemplo de texto largo que ocupa varias líneas</span></div>
+</div>
+
+<p>El primer texto se encierra con un borde que produce un resultado estético poco afortunado. Cada línea muestra un borde superior e inferior, aunque sólo la primera y última líneas cierran el borde lateralmente.</p>
+
+<p>Mientras tanto, el segundo texto se encierra con un perfil. Como indica su nombre, la propiedad <code>outline</code> perfila los contenidos del elemento y los encierra con una forma no rectangular. No obstante, si visualizas esta misma página en diferentes navegadores, verás que todos los navegadores dibujan el perfil de forma diferente, al contrario de lo que sucede con el borde.</p>
+
+<p>Por este motivo, al contrario que los bordes, no existe el concepto de <em>perfil izquierdo</em> o <em>perfil superior</em>. El perfil de un elemento es único y sus propiedades son idénticas para cada uno de los cuatro lados.</p>
+
+<p>Como sucede con muchas propiedades de tipo <em>shorthand</em>, el orden en el que se indican los valores de la propiedd <code>outline</code> es indiferente:</p>
+
+<div class="example">
+<div class="box" style="outline: 1px solid #C00;">div { outline: 1px solid #C00; }</div>
+<div class="box" style="outline: solid 1px #C00;">div { outline: solid 1px #C00; }</div>
+<div class="box" style="outline: #C00 1px solid;">div { outline: #C00 1px solid; }</div>
+<div class="box" style="outline: #C00 solid 1px;">div { outline: #C00 solid 1px; }</div>
+</div>
+
+<p>La propiedad <code>outline</code> no requiere que se indiquen las tres propiedades que definen el estilo de los perfiles. Si no se indica alguna propiedad, su valor se obtiene mediante el valor por defecto de esa propiedad.</p>
+
+<p>En el siguiente ejemplo sólo se indica el estilo del perfil, por lo que el navegador asigna automáticamente el valor <code>medium</code> a su grosor y el color se escoge para que tenga el máximo contraste con el fondo de la página:</p>
+
+<div class="example">
+<div class="box" style="outline: solid;">div { outline: solid; }</div>
+</div>
+
+<p>En el siguiente ejemplo se omite el grosor del perfil, por lo que el navegador le asigna automáticamente el valor <code>medium</code>:</p>
+
+<div class="example">
+<div class="box" style="outline: solid blue;">div { outline: solid blue; }</div>
+</div>
+
+<p>No obstante, como el valor por defecto del estilo de un perfil es <code>none</code>, si no se indica explícitamente el estilo del perfil, el resultado es que el navegador no muestra ese perfil:</p>
+
+<div class="example">
+<div class="box" style="outline: 2px blue;">div { outline: 2px blue; }</div>
+</div>
+
+<p>El grosor del perfil se puede establecer de cualquiera de las diferentes formas de indicar una medida en CSS. El color también se puede establecer de alguna de las diferentes formas de indicar un color en CSS, con la particularidad del valor <code>invert</code> que selecciona el color que tenga más contraste con el color de fondo. Por último, el estilo del perfil se establece con los mismos valores que los que se utilizan en la propiedad <code>border-style</code>.</p>
+
+<p>Aunque la propiedad <code>outline</code> es infinitamente menos utilizada que la propiedad <code>border</code>, la has visto muchas más veces de las que crees. Si pulsas repetidamente la tecla del tabulador en una página web, el navegador va seleccionando de forma secuencial todos los elementos <em>pinchables</em> o <em>seleccionables</em>: enlaces, botones, controles de formulario, etc.</p>
+
+<p>Para indicar el elemento que está seleccionado, el navegador muestra un perfil muy fino de <code>1px</code> de ancho, de estilo punteado y del color que más contrasta con el color de fondo de la página. En la mayoría de las páginas web, el perfil que se muestra por defecto es <code>outline: 1px dotted #000</code>.</p>
+
+<p>Los navegadores más avanzados incluyen una <em>pseudo-clase</em> llamada <code>:focus</code> que permite establecer el estilo de los elementos seleccionados. Utilizando la propiedad <code>outline</code> junto con <code>:focus</code> se puede modificar el estilo por defecto del navegador:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">style</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text/css&quot;</span>&gt;</span>
+:focus { outline: 2px solid red; }
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">style</span>&gt;</span></pre>
+</div>
+
+<p>Si pruebas a pulsar repetidamente la tecla <code>Tabulador</code> en una página que incluya la regla CSS anterior, verás que el navegador selecciona secuencialmente los enlaces de la página y muestra un perfil continuo de color rojo para indicar el elemento que está seleccionado en cada momento.</p>
+
+<p>De hecho, según el estándar oficial, ese es el propósito para el que se crearon los perfiles: indicar de forma clara el elemento (botón, enlace, otros controles de formulario) que está seleccionado en cada momento.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="propiedad_display.html">&larr; Anterior <span>4.2. Propiedad display</span></a>
+            
+            <a class="span5 next" href="propiedad_quotes.html">Siguiente &rarr; <span>4.4. Propiedad quotes</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Propiedad outline (CSS avanzado%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'CSS avanzado : Propiedad outline']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Técnicas imprescindibles</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Buenas prácticas</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Selectores</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_4.html">
+            <span>Capítulo 4.</span> Propiedades avanzadas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="propiedad_white_space.html">
+            <span>4.1.</span> Propiedad white-space
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="propiedad_display.html">
+            <span>4.2.</span> Propiedad display
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="propiedad_outline.html">
+            <span>4.3.</span> Propiedad outline
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="propiedad_quotes.html">
+            <span>4.4.</span> Propiedad quotes
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="propiedad_counter_reset.html">
+            <span>4.5.</span> Propiedad counter-reset
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="propiedad_counter_increment.html">
+            <span>4.6.</span> Propiedad counter-increment
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="propiedad_content.html">
+            <span>4.7.</span> Propiedad content
+        </a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Frameworks</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Técnicas avanzadas</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

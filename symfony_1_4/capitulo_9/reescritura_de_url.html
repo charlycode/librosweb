@@ -1,0 +1,277 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>9.2. Reescritura de URL (Symfony 1.4, la guía definitiva)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="que_es_el_enrutamiento.html" />
+        <link rel="next" href="helpers_de_enlaces.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="9.2. Reescritura de URL (Symfony 1.4, la guía definitiva)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page symfony_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Symfony 1.4, la guía definitiva</a></li>
+  <li><a href="../capitulo_9.html">Capítulo 9. Enlaces y sistema de enrutamiento</a></li>
+  <li class="current"><span>9.2.. Reescritura de URL</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="reescritura_de_url"><span>9.2.</span> Reescritura de URL</h1>
+    
+
+<p>Antes de adentrarse en el funcionamiento interno del sistema de enrutamiento, se debe aclarar una cuestión importante. En los ejemplos mostrados en las secciones anteriores, las URI internas no incluyen el controlador frontal (<code>index.php</code> o <code>frontend_dev.php</code>). Como se sabe, es el controlador frontal y no otros elementos de la aplicación, el que decide el entorno de ejecución. Por este motivo, todos los enlaces deben ser independientes del entorno de ejecución y el nombre del controlador frontal nunca aparece en las URI internas.</p>
+
+<p>Además, tampoco se muestra el nombre del script PHP en las URL generadas en los ejemplos anteriores. La razón es que, por defecto, las URL no contienen el nombre de ningún script de PHP en el entorno de producción. El parámetro <code>no_script_name</code> del archivo <code>settings.yml</code> controla la aparición del nombre del controlador frontal en las URL generadas. Si se establece su valor a <code>false</code>, como se muestra en el listado 9-5, las URL generadas por los <em>helpers</em> incluirán el nombre del script del controlador frontal en cada enlace.</p>
+
+<p><strong>Listado 9-5 - Mostrando el nombre del controlador frontal en las URL, en <code>apps/frontend/config/settings.yml</code></strong></p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co4">prod</span>:<span class="co4">
+  .settings</span>:<span class="co3">
+    no_script_name</span><span class="sy2">: </span> false</pre>
+</div>
+
+<p>Ahora, las URL generadas tienen este aspecto:</p>
+
+<div class="code code">
+<pre class="code">http://www.ejemplo.com/index.php/articulos/economia/2010/sectores-actividad.html</pre>
+</div>
+
+<p>En todos los entornos salvo en el de producción, el parámetro <code>no_script_name</code> tiene un valor igual a <code>false</code> por defecto. Si se prueba la aplicación en el entorno de desarrollo, el nombre del controlador frontal siempre aparece en las URL.</p>
+
+<div class="code code">
+<pre class="code">http://www.ejemplo.com/frontend_dev.php/articulos/economia/2010/sectores-actividad.html</pre>
+</div>
+
+<p>En el entorno de producción, la opción <code>no_script_name</code> tiene el valor de <code>true</code>, por lo que las URL solo muestran la información necesaria para el enrutamiento y son más sencillas para los usuarios. No se muestra ningún tipo de información técnica.</p>
+
+<div class="code code">
+<pre class="code">http://www.ejemplo.com/articulos/economia/2010/sectores-actividad.html</pre>
+</div>
+
+<p>¿Cómo sabe la aplicación el nombre del script del controlador frontal que tiene que ejecutar? En este punto es donde comienza la reescritura de URL. El servidor web se puede configurar para que se llame siempre a un mismo script cuando la URL no indica el nombre de ningún script.</p>
+
+<p>En el servidor web Apache se debe tener activado previamente el módulo <code>mode_rewrite</code>. Todos los proyectos de Symfony incluyen un archivo llamado <code>.htaccess</code> que añade las opciones necesarias para el <code>mod_rewrite</code> de Apache en el directorio <code>web/</code>. El contenido por defecto de este archivo se muestra en el listado 9-6.</p>
+
+<p><strong>Listado 9-6 - Reglas de reescritura de URL por defecto para Apache, en <code>miproyecto/web/.htaccess</code></strong></p>
+
+<div class="code code">
+<pre class="code">&lt;IfModule mod_rewrite.c&gt;
+  RewriteEngine On
+&nbsp;
+  # uncomment the following line, if you are having trouble
+  # getting no_script_name to work
+  #RewriteBase /
+&nbsp;
+  # we skip all files with .something
+  #RewriteCond %{REQUEST_URI} \..+$
+  #RewriteCond %{REQUEST_URI} !\.html$
+  #RewriteRule .* - [L]
+&nbsp;
+  # we check if the .html version is here (caching)
+  RewriteRule ^$ index.html [QSA]
+  RewriteRule ^([^.]+)$ $1.html [QSA]
+  RewriteCond %{REQUEST_FILENAME} !-f
+&nbsp;
+  # no, so we redirect to our front web controller
+  RewriteRule ^(.*)$ index.php [QSA,L]
+&lt;/IfModule&gt;</pre>
+</div>
+
+<p>El servidor web analiza la estructura de las URL entrantes. Si la URL no contiene ningún sufijo (esta condición está desactivada por defecto) y si no existe ninguna versión cacheada de la página disponible (el Capítulo 12 detalla el sistema de cache), la petición se redirige al script <code>index.php</code>.</p>
+
+<p>No obstante, el directorio <code>web/</code> de un proyecto Symfony lo comparten todas las aplicaciones y todos los entornos de ejecución del proyecto. Por este motivo, es habitual que exista más de un controlador frontal en el directorio web. Por ejemplo, si un proyecto tiene dos aplicaciones llamadas <code>frontend</code> y <code>backend</code> y dos entornos de ejecución llamados <code>dev</code> y <code>prod</code>, el directorio <code>web/</code> contiene 4 controladores frontales:</p>
+
+<div class="code code">
+<pre class="code">index.php         // frontend en el entorno prod
+frontend_dev.php  // frontend en el entorno dev
+backend.php       // backend en el entorno prod
+backend_dev.php   // backend en el entorno dev</pre>
+</div>
+
+<p>Las opciones de <code>mod_rewrite</code> solo permiten especificar un script por defecto. Si se establece el valor <code>true</code> a la opción <code>no_script_name</code> de todas las aplicaciones y todos los entornos, todas las URL se interpretan como si fueran peticiones al controlador frontal de la aplicación <code>frontend</code> en el entorno de producción (<code>prod</code>). Esta es la razón por la que en un mismo proyecto, solo se pueden aprovechar del sistema de enrutamiento una aplicación y un entorno de ejecución concretos.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Existe una forma de acceder a más de una aplicación sin indicar el nombre del script. Para ello, se crean subdirectorios en el directorio <code>web/</code> y se mueven los controladores frontales a cada subdirectorio. Después, se modifica la ruta a cada archivo de configuración <code>ProjectConfiguration</code> y se crea el archivo <code>.htaccess</code> de configuración para cada aplicación.</p></div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="que_es_el_enrutamiento.html">&larr; Anterior <span>9.1. ¿Qué es el enrutamiento?</span></a>
+            
+            <a class="span5 next" href="helpers_de_enlaces.html">Siguiente &rarr; <span>9.3. Helpers de enlaces</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Reescritura de URL (Symfony 1.4, la guía definitiva%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Symfony 1.4, la guía definitiva : Reescritura de URL']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción a Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Explorando el interior de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Ejecutar aplicaciones Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Introducción a la creación de páginas</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Configurar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> El Controlador</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> La Vista</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> El modelo (Doctrine)</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_9.html">
+            <span>Capítulo 9.</span> Enlaces y sistema de enrutamiento
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="que_es_el_enrutamiento.html">
+            <span>9.1.</span> ¿Qué es el enrutamiento?
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="reescritura_de_url.html">
+            <span>9.2.</span> Reescritura de URL
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="helpers_de_enlaces.html">
+            <span>9.3.</span> Helpers de enlaces
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="configuracion_del_sistema_de_enrutamiento.html">
+            <span>9.4.</span> Configuración del sistema de enrutamiento
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="trabajando_con_rutas_en_las_acciones.html">
+            <span>9.5.</span> Trabajando con rutas en las acciones
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="resumen.html">
+            <span>9.6.</span> Resumen
+        </a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Emails</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Uso de la cache</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Pruebas unitarias y funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Herramientas para la administración de aplicaciones</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> Personalizar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> Rendimiento</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Configuración avanzada</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

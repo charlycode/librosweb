@@ -1,0 +1,254 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>4.1. La arquitectura MVC (El tutorial Jobeet)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="../capitulo_4.html" />
+        <link rel="next" href="el_layout.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="4.1. La arquitectura MVC (El tutorial Jobeet)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page jobeet_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">El tutorial Jobeet</a></li>
+  <li><a href="../capitulo_4.html">Capítulo 4. El controlador y la vista</a></li>
+  <li class="current"><span>4.1.. La arquitectura MVC</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="la_arquitectura_mvc"><span>4.1.</span> La arquitectura MVC</h1>
+    
+
+<p>Si has desarrollado sitios web con PHP sin utilizar ningún framework, seguramente sigues el razonamiento de crear un archivo PHP por cada página HTML del sitio. Además, todos esos archivos PHP contienen seguramente la misma estructura: inicialización y configuración global, lógica de negocio relacionada con la página solicitada, obtención de registros de la base de datos y por último, el código PHP que se emplea para generar la página.</p>
+
+<p>También es posible que utilices un sistema de plantillas para separar el código PHP y las etiquetas HTML. Puede que también utilices una capa de abstracción de base de datos para separar la lógica de negocio y la interacción con el modelo de datos. A pesar de estas mejoras, la mayoría de las veces te encuentras con una gran cantidad de código que es muy difícil de mantener. Programar la aplicación de esa manera quizás te costó muy poco tiempo, pero modificarla y añadirle nuevas características se convierte en una pesadilla, sobre todo porque nadie más que tu sabe cómo está construida y cómo funciona.</p>
+
+<p>Para cada problema siempre hay buenas soluciones y para la programación web, la solución más utilizada actualmente para organizar el código es el <a href="http://es.wikipedia.org/wiki/Modelo_Vista_Controlador">patrón de diseño MVC</a>. En pocas palabras, el patrón de diseño MVC organiza el código en base a su función. De hecho, este patrón separa el código en tres capas:</p>
+
+<ul>
+<li>La capa del <strong>modelo</strong> define la lógica de negocio (la base de datos pertenece a esta capa). Como ya sabes, Symfony guarda todas las clases y archivos relacionados con el modelo en el directorio <code>lib/model/</code>.</li>
+<li>La <strong>vista</strong> es lo que utilizan los usuarios para interactuar con la aplicación (los gestores de plantillas pertenecen a esta capa). En Symfony la capa de la vista está formada principalmente por plantillas en PHP. Estas plantillas se guardan en varios directorios llamados <code>templates/</code> repartidos por todo el proyecto, tal y como veremos hoy mismo.</li>
+<li>El <strong>controlador</strong> es un bloque de código que realiza llamadas al modelo para obtener los datos y se los pasa a la vista para que los muestre al usuario. Cuando instalamos Symfony el primer día, explicamos que todas las peticiones se canalizan a través de los controladores frontales (<code>index.php</code> y <code>frontend_dev.php</code>). Estos controladores frontales realmente delegan todo el trabajo en las <strong>acciones</strong>. Como vimos ayer, las agrupaciones lógicas de acciones se denominan <strong>módulos</strong>.</li>
+</ul>
+
+<div class="figure" id="figure_4_1">
+    <img src="../../img/jobeet_1_4/f0401.png" alt="Arquitectura MVC" />
+
+    <p class="caption"><strong>Figura 4.1</strong> Arquitectura MVC</p>
+</div>
+
+
+<p>Hoy vamos a utilizar los bocetos gráficos que definimos el segundo día para personalizar y hacer más dinámicas la portada y las páginas que muestran cada oferta de trabajo. Al mismo tiempo, vamos a modificar muchas cosas en muchos archivos diferentes para explicar la estructura de directorios de Symfony y su forma de separar el código en capas.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="../capitulo_4.html">&larr; Anterior <span>Capítulo 4. El controlador y la vista</span></a>
+            
+            <a class="span5 next" href="el_layout.html">Siguiente &rarr; <span>4.2. El layout</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'La arquitectura MVC (El tutorial Jobeet%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'El tutorial Jobeet : La arquitectura MVC']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Comenzando el proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> El proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> El modelo de datos</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_4.html">
+            <span>Capítulo 4.</span> El controlador y la vista
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="la_arquitectura_mvc.html">
+            <span>4.1.</span> La arquitectura MVC
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_layout.html">
+            <span>4.2.</span> El layout
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="las_hojas_de_estilo_imagenes_y_archivos_javascript.html">
+            <span>4.3.</span> Las hojas de estilo, imágenes y archivos JavaScript
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="la_portada_del_modulo_de_las_ofertas_de_trabajo.html">
+            <span>4.4.</span> La portada del módulo de las ofertas de trabajo
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="la_plantilla_de_la_pagina_de_una_oferta_de_trabajo.html">
+            <span>4.5.</span> La plantilla de la página de una oferta de trabajo
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="slots.html">
+            <span>4.6.</span> Slots
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="la_accion_de_la_pagina_de_una_oferta_de_trabajo.html">
+            <span>4.7.</span> La acción de la página de una oferta de trabajo
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="la_peticion_y_la_respuesta.html">
+            <span>4.8.</span> La petición y la respuesta
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="nos_vemos_manana.html">
+            <span>4.9.</span> Nos vemos mañana
+        </a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> El sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Profundizando en el modelo</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Trabajando con la página de cada categoría</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Pruebas unitarias</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Pruebas funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Probando los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> El generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> El usuario</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> El día de descanso</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Canales Atom</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Servicios web</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> El buscador</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>20</span> <a href="../capitulo_20.html"> Plugins</a>
+    </li>
+    <li class="level-1">
+        <span>21</span> <a href="../capitulo_21.html"> El día del diseño</a>
+    </li>
+    <li class="level-1">
+        <span>22</span> <a href="../capitulo_22.html"> La cache</a>
+    </li>
+    <li class="level-1">
+        <span>23</span> <a href="../capitulo_23.html"> Pasando a producción</a>
+    </li>
+    <li class="level-1">
+        <span>24</span> <a href="../capitulo_24.html"> Un repaso a Symfony</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

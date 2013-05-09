@@ -1,0 +1,409 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>4.2. Propiedad display (CSS avanzado)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="propiedad_white_space.html" />
+        <link rel="next" href="propiedad_outline.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="4.2. Propiedad display (CSS avanzado)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page css_avanzado">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">CSS avanzado</a></li>
+  <li><a href="../capitulo_4.html">Capítulo 4. Propiedades avanzadas</a></li>
+  <li class="current"><span>4.2.. Propiedad display</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="propiedad_display"><span>4.2.</span> Propiedad display</h1>
+    
+
+<div class="table" id="table_4_3">
+
+    <table class="table property css" summary="Definición de la propiedad display de CSS"> 
+<tr><th>Definición</th><td>Establece el tipo de caja generada por un elemento</td></tr><tr><th>Valores <br/> permitidos</th><td>Uno y sólo uno de los siguientes valores:<ul><li style="float:left;width:25%;margin-right:5%">inline</li><li style="float:left;width:25%;margin-right:5%">block</li><li style="float:left;width:25%;margin-right:5%">list-item</li><li style="float:left;width:25%;margin-right:5%">run-in</li><li style="float:left;width:25%;margin-right:5%">inline-block</li><li style="float:left;width:25%;margin-right:5%">table</li><li style="float:left;width:25%;margin-right:5%">inline-table</li><li style="float:left;width:25%;margin-right:5%">table-row-group</li><li style="float:left;width:25%;margin-right:5%">table-header-group</li><li style="float:left;width:25%;margin-right:5%">table-footer-group</li><li style="float:left;width:25%;margin-right:5%">table-row</li><li style="float:left;width:25%;margin-right:5%">table-column-group</li><li style="float:left;width:25%;margin-right:5%">table-column</li><li style="float:left;width:25%;margin-right:5%">table-cell</li><li style="float:left;width:25%;margin-right:5%">table-caption</li><li style="float:left;width:25%;margin-right:5%">none</li><li style="float:left;width:25%;margin-right:5%">inherit</li></ul></td></tr><tr><th>Valor inicial</th><td>iinline</td></tr><tr><th>Se aplica a</th><td>Todos los elementos</td></tr><tr><th>Válida en</th><td>all</td></tr><tr><th>Se hereda</th><td>no</td></tr><tr class="nobottom"><th>Definición en<br/>el estándar</th><td> http://www.w3.org/TR/CSS21/visuren.html#propdef-display </td></tr>
+</table>
+</div>
+
+
+<p>La propiedad <code>display</code> es una de las propiedades CSS más infrautilizadas. Aunque todos los diseñadores conocen esta propiedad y utilizan sus valores <code>inline</code>, <code>block</code> y <code>none</code>, las posibilidades de <code>display</code> son mucho más avanzadas.</p>
+
+<p>De hecho, la propiedad <code>display</code> es una de las más complejas de CSS 2.1, ya que establece el tipo de la caja que genera cada elemento. La propiedad <code>display</code> es tan compleja que casi ningún navegador es capaz de mostrar correctamente todos sus valores.</p>
+
+<p>El valor más sencillo de <code>display</code> es <code>none</code> que hace que el elemento no genere ninguna caja. El resultado es que el elemento desaparece por completo de la página y no ocupa sitio, por lo que los elementos adyacentes ocupan su lugar. Si se utiliza la propiedad <code>display: none</code> sobre un elemento, todos sus descendientes también desaparecen por completo de la página.</p>
+
+<p>Si se quiere hacer un elemento invisible, es decir, que no se vea pero que siga ocupando el mismo sitio, se debe utilizar la propiedad <code>visibility</code>. La propiedad <code>display: none</code> se utiliza habitualmente en aplicaciones web dinámicas creadas con JavaScript y que muestran/ocultan contenidos cuando el usuario realiza alguna acción como pulsar un botón o un enlace.</p>
+
+<p>Los otros dos valores más utilizados son <code>block</code> e <code>inline</code> que hacen que la caja de un elemento sea de bloque o en línea respectivamente. El siguiente ejemplo muestra un párrafo y varios enlaces a los que se les ha añadido un borde para mostrar el espacio ocupado por cada caja:</p>
+
+<div class="example">
+<p style="border: 2px solid #000; padding: 3px;">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
+
+<a style="border: 2px dashed #C00; padding: 3px;" href="#">Lorem ipsum</a>
+<a style="border: 2px dashed #C00; padding: 3px;" href="#">Donec mollis nunc in leo</a>
+<a style="border: 2px dashed #C00; padding: 3px;" href="#">Vivamus fermentum</a>
+</div>
+
+<p>Como el párrafo es por defecto un elemento de bloque (<em>"block element"</em>), ocupa todo el espacio disponible hasta el final de su línea, aunque sus contenidos no ocupen todo el sitio. Por su parte, los enlaces por defecto son elementos en línea (<em>"inline element"</em>), por lo que su caja sólo ocupa el espacio necesario para mostrar sus contenidos.</p>
+
+<p>Si se aplica la propiedad <code>display: inline</code> al párrafo del ejemplo anterior, su caja se convierte en un elemento en línea y por tanto sólo ocupa el espacio necesario para mostrar sus contenidos:</p>
+
+<div class="example">
+<p style="border: 2px solid #000; display: inline; padding: 3px;"><strong>[display: inline]</strong> Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
+
+<a style="border: 2px dashed #C00; padding: 3px;" href="#">Lorem ipsum</a>
+<a style="border: 2px dashed #C00; padding: 3px;" href="#">Donec mollis nunc in leo</a>
+<a style="border: 2px dashed #C00; padding: 3px;" href="#">Vivamus fermentum</a>
+</div>
+
+<p>Para visualizar más claramente el cambio en el tipo de caja, el siguiente ejemplo muestra un mismo párrafo largo con <code>display: block</code> y <code>display: inline</code>:</p>
+
+<div class="example">
+<p style="border: 2px solid #000; display: block; padding: 3px;"><strong>[display: block]</strong> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed non sem quis tellus vulputate lobortis. Vivamus fermentum, tortor id ornare ultrices, ligula ipsum tincidunt pede, et blandit sem pede suscipit pede. Nulla cursus porta sem. Donec mollis nunc in leo.</p>
+
+<p style="border: 2px solid #000; display: inline; padding: 3px;"><strong>[display: inline]</strong> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed non sem quis tellus vulputate lobortis. Vivamus fermentum, tortor id ornare ultrices, ligula ipsum tincidunt pede, et blandit sem pede suscipit pede. Nulla cursus porta sem. Donec mollis nunc in leo.</p>
+</div>
+
+<p>De la misma forma, si en los enlaces del ejemplo anterior se emplea la propiedad <code>display: block</code> se transforman en elementos de bloque, por lo que siempre empiezan en una nueva línea y siempre ocupan todo el espacio disponible en la línea, aunque sus contenidos no ocupen todo el sitio:</p>
+
+<div class="example">
+<p style="border: 2px solid #000; padding: 3px;">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
+
+<a style="border: 2px dashed #C00; padding: 3px; margin: 3px 0; display: block;" href="#"><strong>[display: block]</strong> Lorem ipsum</a>
+<a style="border: 2px dashed #C00; padding: 3px; margin: 3px 0; display: block;" href="#"><strong>[display: block]</strong> Donec mollis nunc in leo</a>
+<a style="border: 2px dashed #C00; padding: 3px; margin: 3px 0; display: block;" href="#"><strong>[display: block]</strong> Vivamus fermentum</a>
+</div>
+
+<p>Uno de los valores más curiosos de <code>display</code> es <code>inline-block</code>, que crea cajas que son de bloque y en línea de forma simultánea. Una caja de tipo <code>inline-block</code> se comporta como si fuera de bloque, pero respecto a los elementos que la rodean es una caja en línea.</p>
+
+<p>El enlace del siguiente ejemplo es de tipo <code>inline-block</code>, lo que permite por ejemplo establecerle un tamaño mediante la propiedad <code>width</code>:</p>
+
+<div class="example">
+<p style="border: 2px solid #000; padding: 3px;">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed non sem quis tellus vulputate lobortis. Vivamus fermentum, tortor id ornare ultrices, ligula ipsum tincidunt pede, et blandit sem pede suscipit pede. Nulla cursus porta sem. Donec mollis nunc in leo. <a class="internal" href="../index.html" style="display: inline-block; border: 2px dashed #C00; width: 25%; padding: 3px; margin: 5px;"><strong>[display: inline-block, width: 25%]</strong> Quisque semper, magna sed pharetra tincidunt, quam urna dapibus dolor, a dignissim sem neque id purus. Etiam luctus viverra nisi.</a> Integer lobortis accumsan felis. Cras venenatis. Morbi cursus, tellus vitae iaculis pulvinar, turpis nibh posuere nisl, sed vehicula massa orci at dui. Morbi pede ipsum, porta quis, venenatis et, ullamcorper in, metus. Nulla facilisi. Quisque laoreet molestie mi. Ut mollis elit eget urna.</p>
+</div>
+
+<p>Si tu navegador soporta el valor <code>inline-block</code>, el ejemplo anterior se debe visualizar de forma similar a la siguiente imagen:</p>
+
+<div class="figure" id="figure_4_1">
+    <img src="../../img/css_avanzado/display_1.png" alt="Ejemplo del valor inline-block de la propiedad display" />
+
+    <p class="caption"><strong>Figura 4.1</strong> Ejemplo del valor inline-block de la propiedad display</p>
+</div>
+
+
+<p>Otro de los valores definidos por la propiedad <code>display</code> es <code>list-item</code>, que hace que cualquier elemento de cualquier tipo se muestre como si fuera un elemento de una lista (elemento <code>&lt;li&gt;</code>). El siguiente ejemplo muestra tres párrafos que utilizan la propiedad <code>display: list-item</code> para simular que son una lista de elementos de tipo <code>&lt;ul&gt;</code>:</p>
+
+<div class="example">
+<p style="display: list-item; margin-left: 2em">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
+<p style="display: list-item; margin-left: 2em">Sed non sem quis tellus vulputate lobortis.</p>
+<p style="display: list-item; margin-left: 2em">Vivamus fermentum, tortor id ornare ultrices, ligula ipsum tincidunt pede, et blandit sem pede suscipit pede.</p>
+</div>
+
+<p>A continuación se muestra el código HTML del ejemplo anterior:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">p</span> <span class="kw3">style</span><span class="sy0">=</span><span class="st0">&quot;display: list-item; margin-left: 2em&quot;</span>&gt;</span>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">p</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">p</span> <span class="kw3">style</span><span class="sy0">=</span><span class="st0">&quot;display: list-item; margin-left: 2em&quot;</span>&gt;</span>Sed non sem quis tellus vulputate lobortis.<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">p</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">p</span> <span class="kw3">style</span><span class="sy0">=</span><span class="st0">&quot;display: list-item; margin-left: 2em&quot;</span>&gt;</span>Vivamus fermentum, tortor id ornare ultrices, ligula ipsum tincidunt pede, et blandit sem pede suscipit pede.<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">p</span>&gt;</span></pre>
+</div>
+
+<p>Los elementos con la propiedad <code>display: list-item</code> son exactamente iguales que los elementos <code>&lt;li&gt;</code> a efectos de su visualización, por lo que se pueden utilizar las propiedades de listas como <code>list-style-type</code>, <code>list-style-image</code>, <code>list-style-position</code> y <code>list-style</code>.</p>
+
+<p>Otro de los valores curiosos de la propiedad <code>display</code> es <code>run-in</code>, que genera una caja de bloque o una caja en línea dependiendo del contexto, es decir, dependiendo de sus elementos adyacentes. El comportamiento de las cajas de tipo <code>run-in</code> se rige por las siguientes reglas:</p>
+
+<ul>
+<li>Si la caja <code>run-in</code> contiene una caja de bloque, la caja <code>run-in</code> se convierte en una caja de bloque.</li>
+<li>Si después de la caja <code>run-in</code> se encuentra una caja de bloque (que no esté posicionada de forma absoluta y tampoco esté posicionada de forma flotante), la caja <code>run-in</code> se convierte en una caja en línea en el interior de la caja de bloque.</li>
+<li>En cualquier otro caso, la caja <code>run-in</code> se convierte en una caja de bloque.</li>
+</ul>
+
+<p>El siguiente ejemplo muestra una misma caja de tipo <code>run-in</code> que se visualiza de forma muy diferente en función del tipo de caja que existe a continuación:</p>
+
+<div class="example">
+<p style="display: run-in; border: 2px dashed #C00; padding: 3px;"><strong>[display: run-in]</strong> Lorem ipsum</p>
+<p style="display: block; border: 2px solid #000; padding: 3px;"><strong>[display: block]</strong> dolor sit amet, consectetuer adipiscing elit.</p>
+
+<p style="display: run-in; border: 2px dashed #C00; padding: 3px;"><strong>[display: run-in]</strong> Lorem ipsum</p>
+<p style="display: inline; border: 2px solid #000; padding: 3px;"><strong>[display: inline]</strong> dolor sit amet, consectetuer adipiscing elit.</p>
+</div>
+
+<p>El código HTML y CSS del ejemplo anterior se muestra a continuación:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">p</span> <span class="kw3">style</span><span class="sy0">=</span><span class="st0">&quot;display: run-in; border: 2px dashed #C00;&quot;</span>&gt;&lt;<span class="kw2">strong</span>&gt;</span>[display: run-in]<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">strong</span>&gt;</span> Lorem ipsum<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">p</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">p</span> <span class="kw3">style</span><span class="sy0">=</span><span class="st0">&quot;display: block; border: 2px solid #000;&quot;</span>&gt;&lt;<span class="kw2">strong</span>&gt;</span>[display: block]<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">strong</span>&gt;</span> dolor sit amet, consectetuer adipiscing elit.<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">p</span>&gt;</span>
+&nbsp;
+<span class="sc2">&lt;<span class="kw2">p</span> <span class="kw3">style</span><span class="sy0">=</span><span class="st0">&quot;display: run-in; border: 2px dashed #C00;&quot;</span>&gt;&lt;<span class="kw2">strong</span>&gt;</span>[display: run-in]<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">strong</span>&gt;</span> Lorem ipsum<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">p</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">p</span> <span class="kw3">style</span><span class="sy0">=</span><span class="st0">&quot;display: inline; border: 2px solid #000;&quot;</span>&gt;&lt;<span class="kw2">strong</span>&gt;</span>[display: inline]<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">strong</span>&gt;</span> dolor sit amet, consectetuer adipiscing elit.<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">p</span>&gt;</span></pre>
+</div>
+
+<p>En la actualidad sólo la última versión del navegador Opera es capaz de mostrar correctamente el ejemplo anterior, tal y como muestra la siguiente imagen:</p>
+
+<div class="figure" id="figure_4_2">
+    <img src="../../img/css_avanzado/display_2.png" alt="Ejemplo del valor run-in de la propiedad display" />
+
+    <p class="caption"><strong>Figura 4.2</strong> Ejemplo del valor run-in de la propiedad display</p>
+</div>
+
+
+<p>El estándar CSS 2.1 incluye un ejemplo del posible uso del valor <code>run-in</code>. En este ejemplo, un título de sección <code>&lt;h3&gt;</code> crea una caja <code>run-in</code>, de forma que cuando va seguido de un párrafo, el titular <em>se mete</em> dentro del párrafo:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">h3</span> <span class="kw3">style</span><span class="sy0">=</span><span class="st0">&quot;display: run-in&quot;</span>&gt;</span>Lorem ipsum dolor sit amet<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">h3</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">p</span>&gt;</span>Sed non sem quis tellus vulputate lobortis. Vivamus fermentum, tortor id ornare ultrices, ligula ipsum tincidunt pede, et blandit sem pede suscipit pede. Nulla cursus porta sem. Donec mollis nunc in leo. Integer lobortis accumsan felis.<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">p</span>&gt;</span></pre>
+</div>
+
+<p>El resto de valores de la propiedad <code>display</code> están relacionados con las tablas y hacen que un elemento se muestre como si fuera una parte de una tabla: fila, columna, celda o grupos de filas/columnas. Los valores definidos por la propiedad <code>display</code> son <code>inline-table</code>, <code>table-row-group</code>, <code>table-header-group</code>, <code>table-footer-group</code>, <code>table-row</code>, <code>table-column-group</code>, <code>table-column</code>, <code>table-cell</code>, <code>table-caption</code>.</p>
+
+<p>Aunque los valores relacionados con las tablas son los más avanzados, también son los que peor soportan los navegadores. A continuación se muestra un ejemplo con tres párrafos de texto que establecen la propiedad <code>display: table-cell</code>:</p>
+
+<div class="example">
+<p style="display: table-cell; padding: 5px;"><strong>[display: table-cell]</strong> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas non tortor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed fermentum lorem a velit.</p>
+
+<p style="display: table-cell; padding: 5px;"><strong>[display: table-cell]</strong> In molestie suscipit libero. Cras sem. Nunc non tellus et urna mattis tempor. Nulla nec tellus a quam hendrerit venenatis. Suspendisse pellentesque odio et est. Morbi sed nisl sed dui consequat sodales.</p>
+
+<p style="display: table-cell; padding: 5px;"><strong>[display: table-cell]</strong> Morbi sed nisl sed dui consequat sodales. Vivamus ornare felis nec est. Phasellus massa justo, ornare sed, malesuada a, dignissim a, nibh. Vestibulum vitae nunc at lectus euismod feugiat. Nullam eleifend. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. In ut ipsum.</p>
+</div>
+
+<p>La propiedad <code>display: table-cell</code> hace que cualquier elemento se muestre como si fuera una celda de una tabla. Como en el ejemplo anterior los tres elementos <code>&lt;p&gt;</code> utilizan la propiedad <code>display: table-cell</code>, el resultado es visualmente idéntico a utilizar una tabla y tres elementos <code>&lt;td&gt;</code>.</p>
+
+<p>Si utilizas un navegador con soporte completo de CSS 2.1, el ejemplo anterior se visualiza tal y como muestra la siguiente imagen:</p>
+
+<div class="figure" id="figure_4_3">
+    <img src="../../img/css_avanzado/display_3.png" alt="Ejemplo del valor table-cell de la propiedad display" />
+
+    <p class="caption"><strong>Figura 4.3</strong> Ejemplo del valor table-cell de la propiedad display</p>
+</div>
+
+
+<p>Como los valores relacionados con las tablas hacen que cualquier elemento que no sea una tabla se muestre y comporte como si lo fuera, se pueden utilizar para crear los <em>layouts</em> de las páginas. Hace años, la estructura de las páginas se definía mediante tablas, filas y columnas. Esta solución tiene innumerables desventajas y por eso todos los diseñadores web profesionales crean la estructura de sus páginas mediante CSS y elementos <code>&lt;div&gt;</code>.</p>
+
+<p>No obstante, las tablas tienen algunas ventajas en su comportamiento respecto a los elementos <code>&lt;div&gt;</code> posicionados de forma absoluta o flotante. La principal ventaja es que todas las celdas de una fila siempre tienen la misma altura, por lo que si se utilizan tablas no se sufre el problema de las columnas de página con diferente altura.</p>
+
+<p>Además, la estructura creada con una tabla nunca se rompe, ya que las celdas de datos nunca se visualizan una debajo de otra cuando la ventana del navegador se hace muy pequeña. Sin embargo, cuando se define la estructura mediante elementos <code>&lt;div&gt;</code> posicionados es posible que la página se rompa y alguna columna se muestre debajo de otros contenidos.</p>
+
+<p>Utilizando la propiedad <code>display</code> de forma avanzada es posible crear una estructura de página que sea semánticamente correcta, esté diseñada exclusivamente con CSS y que se comporte exactamente igual que como lo hacen las tablas.</p>
+
+<p>El siguiente código HTML corresponde a la estructura de una página con tres columnas:</p>
+
+<div class="code html">
+<pre class="html5">...
+<span class="sc2">&lt;<span class="kw2">div</span> <span class="kw3">id</span><span class="sy0">=</span><span class="st0">&quot;contenedor&quot;</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">div</span> <span class="kw3">id</span><span class="sy0">=</span><span class="st0">&quot;contenidos&quot;</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">div</span> <span class="kw3">id</span><span class="sy0">=</span><span class="st0">&quot;secundario&quot;</span>&gt;</span>
+      Curabitur rutrum...
+    <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">div</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">div</span> <span class="kw3">id</span><span class="sy0">=</span><span class="st0">&quot;principal&quot;</span>&gt;</span>
+      Lorem ipsum dolor sit amet... 
+    <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">div</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">div</span> <span class="kw3">id</span><span class="sy0">=</span><span class="st0">&quot;lateral&quot;</span>&gt;</span>
+      Nam erat massa...
+    <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">div</span>&gt;</span>
+  <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">div</span>&gt;</span>
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">div</span>&gt;</span>
+...</pre>
+</div>
+
+<p>Utilizando las siguientes reglas CSS y la propiedad <code>display</code> es posible hacer que los elementos <code>&lt;div&gt;</code> anteriores se comporten como si fueran elementos <code>&lt;tr&gt;</code> y <code>&lt;td&gt;</code>:</p>
+
+<div class="code css">
+<pre class="css"><span class="re0">#contenedor</span> <span class="br0">&#123;</span>
+  <span class="kw1">display</span><span class="sy0">:</span> table<span class="sy0">;</span>
+  <span class="kw1">border-spacing</span><span class="sy0">:</span> <span class="re3">5px</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+<span class="re0">#contenidos</span> <span class="br0">&#123;</span>
+  <span class="kw1">display</span><span class="sy0">:</span> <span class="kw2">table-row</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+<span class="re0">#principal</span><span class="sy0">,</span> <span class="re0">#secundario</span><span class="sy0">,</span> <span class="re0">#lateral</span> <span class="br0">&#123;</span>
+  <span class="kw1">display</span><span class="sy0">:</span> <span class="kw2">table-cell</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+<span class="re0">#principal</span> <span class="br0">&#123;</span>
+  <span class="kw1">width</span><span class="sy0">:</span> <span class="re3">60%</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+<span class="re0">#secundario</span><span class="sy0">,</span> <span class="re0">#lateral</span> <span class="br0">&#123;</span>
+  <span class="kw1">width</span><span class="sy0">:</span> <span class="re3">20%</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>El elemento <code>#contenedor</code> se visualiza como una tabla porque se le aplica la propiedad <code>display: table</code>. De esta forma, se pueden aplicar al elemento <code>#contenedor</code> propiedades exclusivas de las tablas como <code>border-spacing</code>. El elemento <code>#contenidos</code> se visualiza como si fuese una fila de tabla (etiqueta <code>&lt;tr&gt;</code>). En su interior se encuentran las tres columnas de la página que se visualizan como si fueran tres elementos <code>&lt;td&gt;</code> gracias a la propiedad <code>display: table-cell</code>.</p>
+
+<p>A continuación se muestra el resultado obtenido al aplicar estas reglas CSS al código HTML anterior:</p>
+
+<div class="example">
+<div id="contenedor" style="display: table; border-spacing: 5px; background: #CCC; width: 90%; margin: 10px auto; border: 1px solid #333;">
+  <div id="contenidos" style="display: table-row; background: #FCFCFC;">
+    <div id="secundario" style="width: 20%; display: table-cell; border: 1px solid #FFF; padding: .5em;">
+      Curabitur rutrum eros a risus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. In molestie suscipit libero. Cras sem. Nunc non tellus et urna mattis tempor. Nulla nec tellus a quam hendrerit venenatis. Suspendisse pellentesque odio et est.
+    </div>
+    <div id="principal" style="width: 60%; display: table-cell; border: 1px solid #FFF; padding: .5em;">
+      Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas non tortor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed fermentum lorem a velit. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin sodales, enim in volutpat vehicula, leo turpis vehicula magna, ut rutrum arcu lorem ac pede. Curabitur rutrum eros a risus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. In molestie suscipit libero. Cras sem. Nunc non tellus et urna mattis tempor. Nulla nec tellus a quam hendrerit venenatis. Suspendisse pellentesque odio et est. Morbi sed nisl sed dui consequat sodales. Donec porta porta ligula. Nam erat massa, blandit in, dapibus sit amet, vestibulum et, augue. Suspendisse ac risus. Duis semper fringilla sem. Praesent augue arcu, scelerisque nec, ornare malesuada, posuere a, neque. Nullam nulla nisi, ultrices quis, adipiscing non, varius ut, dui. Nulla viverra pellentesque sem. 
+    </div>
+    <div id="lateral" style="width: 20%; display: table-cell; border: 1px solid #FFF; padding: .5em;">
+      Nam erat massa, blandit in, dapibus sit amet, vestibulum et, augue. Suspendisse ac risus.
+    </div>
+  </div>
+</div>
+</div>
+
+<p>La estructura de la página del ejemplo anterior está diseñada exclusivamente con CSS pero se comporta como si fuera una tabla. Todas las columnas de la página tienen la misma altura sin necesidad de recurrir a ningún truco y la página nunca se rompe por muy pequeña que se haga la ventana del navegador.</p>
+
+<p>Si visualizas esta página con un navegador que soporte correctamente la propiedad <code>display</code> de CSS 2.1, el ejemplo anterior se ve tal y como muestra la siguiente imagen:</p>
+
+<div class="figure" id="figure_4_4">
+    <img src="../../img/css_avanzado/display_4.png" alt="Ejemplo de los valores table, table-row y table-cell de la propiedad display" />
+
+    <p class="caption"><strong>Figura 4.4</strong> Ejemplo de los valores table, table-row y table-cell de la propiedad display</p>
+</div>
+
+
+<p>Por último, aunque el estándar CSS 2.1 establece que el valor por defecto de la propiedad <code>display</code> es <code>inline</code>, todos los navegadores obvian esta recomendación y asignan por defecto el valor <code>block</code> a los elementos de bloque y el valor <code>inline</code> a los elementos en línea.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="propiedad_white_space.html">&larr; Anterior <span>4.1. Propiedad white-space</span></a>
+            
+            <a class="span5 next" href="propiedad_outline.html">Siguiente &rarr; <span>4.3. Propiedad outline</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Propiedad display (CSS avanzado%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'CSS avanzado : Propiedad display']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Técnicas imprescindibles</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Buenas prácticas</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Selectores</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_4.html">
+            <span>Capítulo 4.</span> Propiedades avanzadas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="propiedad_white_space.html">
+            <span>4.1.</span> Propiedad white-space
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="propiedad_display.html">
+            <span>4.2.</span> Propiedad display
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="propiedad_outline.html">
+            <span>4.3.</span> Propiedad outline
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="propiedad_quotes.html">
+            <span>4.4.</span> Propiedad quotes
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="propiedad_counter_reset.html">
+            <span>4.5.</span> Propiedad counter-reset
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="propiedad_counter_increment.html">
+            <span>4.6.</span> Propiedad counter-increment
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="propiedad_content.html">
+            <span>4.7.</span> Propiedad content
+        </a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Frameworks</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Técnicas avanzadas</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

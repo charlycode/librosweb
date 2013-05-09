@@ -1,0 +1,203 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>table-layout (Referencia de CSS 2.1)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="table-layout (Referencia de CSS 2.1)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page referencia_css">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="index.html">Referencia de CSS 2.1</a></li>
+  <li class="current"><span>table-layout</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="table_layout">table-layout</h1>
+    <div class="table" id="table_100_1">
+
+    <table class="table property css" summary="Definición de la propiedad table-layout de CSS"> 
+<tr><th>Definición</th><td>Establece el algoritmo utilizado para mostrar la tabla</td></tr><tr><th>Valores <br/> permitidos</th><td>Uno y sólo uno de los siguientes valores:<ul><li>auto</li><li>fixed</li><li><a href="el-valor-inherit.html">inherit</a></li></ul></td></tr><tr><th>Valor inicial</th><td>auto</td></tr><tr><th>Se aplica a</th><td>Los elementos de tipo tabla</td></tr><tr><th>Válida en</th><td><a href="medios.html">medios visuales</a></td></tr><tr><th>Se hereda</th><td>no</td></tr><tr class="nobottom"><th>Definición en<br/>el estándar</th><td><a href="http://www.w3.org/TR/CSS21/tables.html#propdef-table_layout">http://www.w3.org/TR/CSS21/tables.html#propdef-table_layout</a></td></tr>
+</table>
+</div>
+
+
+<h2 id="ejemplos_de_uso">Ejemplos de uso</h2>
+
+<p>La propiedad <code>table-layout</code> indica el algoritmo que debe utilizar el navegador para mostrar la tabla. En el estándar CSS 2.1 sólo se definen dos algoritmos: automático y fijo.</p>
+
+<p>En el modelo de tabla fijo (valor <code>fixed</code>) la anchura de la tabla y de cada columna es independiente de su contenido. El navegador sólo tiene en cuenta las propiedades <code>width</code>, <code>padding</code>, <code>border</code> y <code>border-spacing</code> para determinar la anchura de cada columna y de la tabla completa.</p>
+
+<p>En el modelo de tabla automático (valor <code>auto</code>) la anchura de las columnas depende de su contenido. El navegador debe disponer de todos los contenidos de la tabla entera para poder aplicar un cálculo complejo que determina la anchura de cada columna.</p>
+
+<p>El siguiente ejemplo muestra dos tablas idénticas que utilizan algoritmos diferentes:</p>
+
+<div class="example">
+<div class="table" id="table_100_2">
+
+    <table style="table-layout: auto; border: medium solid #999; border-collapse: separate; border-spacing: 5px;" summary="Descripción de la tabla y su contenido">
+<tbody>
+  <tr>
+    <td>Celda 1 - 1</td>
+    <td>Celda 1 - 2</td>
+    <td>Celda 1 - 3</td>
+  </tr>
+  <tr>
+    <td>Celda 2 - 1</td>
+    <td>Celda 2 - 2 - Esta celda tiene un contenido mucho más largo que las demás</td>
+    <td>Celda 2 - 3</td>
+  </tr>
+  <tr>
+    <td>Celda 3 - 1</td>
+    <td>Celda 3 - 2</td>
+    <td>Celda 3 - 3</td>
+  </tr>
+</tbody>
+</table>
+</div>
+
+
+<div class="table" id="table_100_3">
+
+    <table style="table-layout: fixed; border: medium solid #999; border-collapse: separate; border-spacing: 5px;" summary="Descripción de la tabla y su contenido">
+<tbody>
+  <tr>
+    <td>Celda 1 - 1</td>
+    <td>Celda 1 - 2</td>
+    <td>Celda 1 - 3</td>
+  </tr>
+  <tr>
+    <td>Celda 2 - 1</td>
+    <td>Celda 2 - 2 - Esta celda tiene un contenido mucho más largo que las demás</td>
+    <td>Celda 2 - 3</td>
+  </tr>
+  <tr>
+    <td>Celda 3 - 1</td>
+    <td>Celda 3 - 2</td>
+    <td>Celda 3 - 3</td>
+  </tr>
+</tbody>
+</table>
+</div>
+
+
+</div>
+
+<p>La primera tabla del ejemplo anterior sigue el algoritmo <code>auto</code>. Como el contenido de una celda de datos es mucho más largo que el resto, la anchura de esa columna es más grande que el resto de columnas.</p>
+
+<p>Por su parte, la segunda tabla del ejemplo anterior sigue el algoritmo <code>fixed</code>. Como la anchura de las columnas es independiente de su contenido y como ninguna columna ha establecido explícitamente su anchura, el navegador reparte la anchura de la tabla a partes iguales entre las tres columnas. Por ese motivo, la segunda tabla presenta una estructura de rejilla mucho más regular que la primera.</p>
+
+<p>El modelo <code>fixed</code> requiere muchos menos cálculos que el modelo <code>auto</code>. Además, como tampoco es necesario descargar todos los contenidos de la tabla antes de mostrarla, el modelo <code>fixed</code> es más rápido que el modelo <code>auto</code>, sobre todo en las tablas muy complejas.</p>
+
+<p>En el modelo <code>fixed</code>, la estructura de la tabla está determinada por la estructura de su primera fila. Si las siguientes filas tienen más columnas que la primera, los navegadores ignoran todas las columnas sobrantes y no las muestran.</p>
+
+<p>En el estándar CSS 2.1 se detallan los cálculos completos de cada algoritmo:</p>
+
+<ul>
+<li><a href="http://www.w3.org/TR/CSS21/tables.html#fixed-table-layout">Algoritmo para el diseño fijo de las tablas</a></li>
+<li><a href="http://www.w3.org/TR/CSS21/tables.html#auto-table-layout">Algoritmo para el diseño automático de las tablas</a></li>
+</ul>
+
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'table-layout (Referencia de CSS 2.1%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Referencia de CSS 2.1 : table-layout']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Propiedades relacionadas</span></h3>
+
+
+                                                    <ul class="toc">
+                    <li class="">
+                <a href="border-collapse.html">border-collapse</a>
+            </li>
+                    <li class="">
+                <a href="border-spacing.html">border-spacing</a>
+            </li>
+                    <li class="">
+                <a href="caption-side.html">caption-side</a>
+            </li>
+                    <li class="">
+                <a href="empty-cells.html">empty-cells</a>
+            </li>
+                    <li class="active">
+                <a href="table-layout.html">table-layout</a>
+            </li>
+                </ul>
+                        
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

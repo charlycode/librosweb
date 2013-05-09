@@ -1,0 +1,624 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>8.1. Creando un comportamiento de Doctrine (Más con Symfony)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="../capitulo_8.html" />
+        <link rel="next" href="utilizando_la_cache_de_resultados_de_doctrine.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="8.1. Creando un comportamiento de Doctrine (Más con Symfony)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page mas_con_symfony">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Más con Symfony</a></li>
+  <li><a href="../capitulo_8.html">Capítulo 8. Uso avanzado de Doctrine</a></li>
+  <li class="current"><span>8.1.. Creando un comportamiento de Doctrine</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="creando_un_comportamiento_de_doctrine"><span>8.1.</span> Creando un comportamiento de Doctrine</h1>
+    
+
+<p>En esta sección se explica cómo crear un nuevo comportamiento haciendo uso de 
+Doctrine 1.2. El ejemplo utilizado permitirá mantener una cache del número
+de relaciones de un registro para no tener que hacer esa consulta todo el rato.</p>
+
+<p>La funcionalidad es realmente simple: en todas las relaciones en las que quieras
+controlar su número, el comportamiento añade una columna a su modelo para almacenar
+un contador.</p>
+
+<h3 id="el_esquema">8.2.1. El esquema</h3>
+
+<p>Inicialmente se va a utilizar el siguiente esquema. Más adelante se modifica
+para añadir la definición <code>actAs</code> del comportamiento que se va a crear:</p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co1"># config/doctrine/schema.yml</span><span class="co4">
+Thread</span>:<span class="co4">
+  columns</span>:<span class="co4">
+    title</span>:<span class="co3">
+      type</span><span class="sy2">: </span>string<span class="br0">&#40;</span><span class="nu0">255</span><span class="br0">&#41;</span><span class="co3">
+      notnull</span><span class="sy2">: </span>true
+<span class="co4">
+Post</span>:<span class="co4">
+  columns</span>:<span class="co4">
+    thread_id</span>:<span class="co3">
+      type</span><span class="sy2">: </span>integer<span class="co3">
+      notnull</span><span class="sy2">: </span>true<span class="co4">
+    body</span>:<span class="co3">
+      type</span><span class="sy2">: </span>clob<span class="co3">
+      notnull</span><span class="sy2">: </span>true<span class="co4">
+  relations</span>:<span class="co4">
+    Thread</span>:<span class="co3">
+      onDelete</span><span class="sy2">: </span>CASCADE<span class="co3">
+      foreignAlias</span><span class="sy2">: </span>Posts</pre>
+</div>
+
+<p>Seguidamente se construyen todas las clases del esquema:</p>
+
+<div class="code cli">
+<pre class="cli">$ php symfony doctrine:build --all</pre>
+</div>
+
+<h3 id="la_plantilla">8.1.2. La plantilla</h3>
+
+<p>En primer lugar se crea la clase básica de tipo <code>Doctrine_Template</code> que será
+la responsable de añadir las columnas al modelo que guardará los contadores.</p>
+
+<p>Añade la siguiente clase dentro de cualquier directorio <code>lib/</code> del proyecto 
+para que symfony pueda cargarla de forma automática:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// lib/count_cache/CountCache.class.php</span>
+<span class="kw2">class</span> CountCache <span class="kw2">extends</span> Doctrine_Template
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> setTableDefinition<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="kw2">public</span> <span class="kw2">function</span> setUp<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>A continuación se modifica el modelo <code>Post</code> para añadir el comportamiento
+<code>CountCache</code> mediante <code>actAs</code>:</p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co1"># config/doctrine/schema.yml</span><span class="co4">
+Post</span>:<span class="co4">
+  actAs</span>:<span class="co3">
+    CountCache</span><span class="sy2">: </span>~
+  <span class="co1"># ...</span></pre>
+</div>
+
+<p>Ahora que el modelo <code>Post</code> hace uso del comportamiento <code>CountCache</code>, su
+funcionamiento es el siguiente: cuando se instancia la información de mapeo de
+un modelo, se invocan los métodos <code>setTableDefinition()</code> y <code>setUp()</code> de todos
+sus comportamientos asociados. Esto es lo mismo que sucede con la clase 
+<code>BasePost</code> en <code>lib/model/doctrine/base/BasePost.class.php</code>. Esta característica
+permite añadir elementos de todo tipo a un modelo, como columnas, relaciones,
+eventos, etc.</p>
+
+<p>Ahora que está más claro su funcionamiento interno, se añade toda la lógica
+interna del comportamiento <code>CountCache</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">class</span> CountCache <span class="kw2">extends</span> Doctrine_Template
+<span class="br0">&#123;</span>
+  <span class="kw2">protected</span> <span class="re0">$_options</span> <span class="sy0">=</span> <span class="kw3">array</span><span class="br0">&#40;</span>
+    <span class="st_h">'relations'</span> <span class="sy0">=&gt;</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+  <span class="kw2">public</span> <span class="kw2">function</span> setTableDefinition<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="kw1">foreach</span> <span class="br0">&#40;</span><span class="re0">$this</span><span class="sy0">-&gt;</span>_options<span class="br0">&#91;</span><span class="st_h">'relations'</span><span class="br0">&#93;</span> <span class="kw1">as</span> <span class="re0">$relation</span> <span class="sy0">=&gt;</span> <span class="re0">$options</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="co1">// si no se dispone del nombre de la columna, se crea</span>
+      <span class="kw1">if</span> <span class="br0">&#40;</span><span class="sy0">!</span><span class="kw3">isset</span><span class="br0">&#40;</span><span class="re0">$options</span><span class="br0">&#91;</span><span class="st_h">'columnName'</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+      <span class="br0">&#123;</span>
+        <span class="re0">$this</span><span class="sy0">-&gt;</span>_options<span class="br0">&#91;</span><span class="st_h">'relations'</span><span class="br0">&#93;</span><span class="br0">&#91;</span><span class="re0">$relation</span><span class="br0">&#93;</span><span class="br0">&#91;</span><span class="st_h">'columnName'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="st_h">'num_'</span><span class="sy0">.</span>Doctrine_Inflector<span class="sy0">::</span><span class="me2">tableize</span><span class="br0">&#40;</span><span class="re0">$relation</span><span class="br0">&#41;</span><span class="sy0">;</span>
+      <span class="br0">&#125;</span>
+&nbsp;
+      <span class="co1">// añadir la columna al modelo relacionado</span>
+      <span class="re0">$columnName</span> <span class="sy0">=</span> <span class="re0">$this</span><span class="sy0">-&gt;</span>_options<span class="br0">&#91;</span><span class="st_h">'relations'</span><span class="br0">&#93;</span><span class="br0">&#91;</span><span class="re0">$relation</span><span class="br0">&#93;</span><span class="br0">&#91;</span><span class="st_h">'columnName'</span><span class="br0">&#93;</span><span class="sy0">;</span>
+      <span class="re0">$relatedTable</span> <span class="sy0">=</span> <span class="re0">$this</span><span class="sy0">-&gt;</span>_table<span class="sy0">-&gt;</span><span class="me1">getRelation</span><span class="br0">&#40;</span><span class="re0">$relation</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">getTable</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+      <span class="re0">$this</span><span class="sy0">-&gt;</span>_options<span class="br0">&#91;</span><span class="st_h">'relations'</span><span class="br0">&#93;</span><span class="br0">&#91;</span><span class="re0">$relation</span><span class="br0">&#93;</span><span class="br0">&#91;</span><span class="st_h">'className'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="re0">$relatedTable</span><span class="sy0">-&gt;</span><span class="me1">getOption</span><span class="br0">&#40;</span><span class="st_h">'name'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+      <span class="re0">$relatedTable</span><span class="sy0">-&gt;</span><span class="me1">setColumn</span><span class="br0">&#40;</span><span class="re0">$columnName</span><span class="sy0">,</span> <span class="st_h">'integer'</span><span class="sy0">,</span> <span class="kw4">null</span><span class="sy0">,</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'default'</span> <span class="sy0">=&gt;</span> <span class="nu0">0</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>El código superior añade columnas para mantener los contadores de los modelos
+relacionados. Por tanto, en este caso se añade el comportamiento en el modelo
+<code>Post</code> para su relación <code>Thread</code>. De esta forma, el número de posts de cualquier 
+<code>Thread</code> se almacena en una columna llamada <code>num_posts</code>. A continuación, 
+modifica el esquema YAML para definir las opciones adicionales del comportamiento:</p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co1"># ...</span>
+<span class="co4">
+Post</span>:<span class="co4">
+  actAs</span>:<span class="co4">
+    CountCache</span>:<span class="co4">
+      relations</span>:<span class="co4">
+        Thread</span>:<span class="co3">
+          columnName</span><span class="sy2">: </span>num_posts<span class="co3">
+          foreignAlias</span><span class="sy2">: </span>Posts
+  <span class="co1"># ...</span></pre>
+</div>
+
+<p>Ahora el modelo <code>Thread</code> dispone de una columna llamada <code>num_posts</code> y que 
+guardará de forma actualizada el número de posts que tiene cada hilo de discusión.</p>
+
+<h3 id="el_event_listener">8.1.3. El event listener</h3>
+
+<p>El siguiente paso consiste en crear un <em>event listener</em> de registro que será el
+que se encargue de mantener actualizado el contador cuando se creen nuevos
+registros y cuando se borren registros de forma individual o en bloque.</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">class</span> CountCache <span class="kw2">extends</span> Doctrine_Template
+<span class="br0">&#123;</span>
+  <span class="co1">// ...</span>
+&nbsp;
+  <span class="kw2">public</span> <span class="kw2">function</span> setTableDefinition<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="co1">// ...</span>
+&nbsp;
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">addListener</span><span class="br0">&#40;</span><span class="kw2">new</span> CountCacheListener<span class="br0">&#40;</span><span class="re0">$this</span><span class="sy0">-&gt;</span>_options<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Antes de continuar es necesario definir la clase <code>CountCacheListener</code> que 
+extiende la clase <code>Doctrine_Record_Listener</code> y que acepta un array de opciones
+que simplemente se pasan al <em>listener</em> de la plantilla:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// lib/model/count_cache/CountCacheListener.class.php</span>
+&nbsp;
+<span class="kw2">class</span> CountCacheListener <span class="kw2">extends</span> Doctrine_Record_Listener
+<span class="br0">&#123;</span>
+  <span class="kw2">protected</span> <span class="re0">$_options</span><span class="sy0">;</span>
+&nbsp;
+  <span class="kw2">public</span> <span class="kw2">function</span> __construct<span class="br0">&#40;</span><span class="kw3">array</span> <span class="re0">$options</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span>_options <span class="sy0">=</span> <span class="re0">$options</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Para mantener los contadores actualizados es preciso utilizar los siguientes
+eventos:</p>
+
+<ul>
+<li><strong>postInsert()</strong>: incrementa el contador cuando se inserta un nuevo objeto</li>
+<li><strong>postDelete()</strong>: decrementa el contador cuando se borra un objeto</li>
+<li><strong>preDqlDelete()</strong>: decrementa el contador cuando se borrar varios 
+objetos mediante un borrado DQL.</li>
+</ul>
+
+<p>En primer lugar se define el método <code>postInsert()</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">class</span> CountCacheListener <span class="kw2">extends</span> Doctrine_Record_Listener
+<span class="br0">&#123;</span>
+  <span class="co1">// ...</span>
+&nbsp;
+  <span class="kw2">public</span> <span class="kw2">function</span> postInsert<span class="br0">&#40;</span>Doctrine_Event <span class="re0">$event</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$invoker</span> <span class="sy0">=</span> <span class="re0">$event</span><span class="sy0">-&gt;</span><span class="me1">getInvoker</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="kw1">foreach</span> <span class="br0">&#40;</span><span class="re0">$this</span><span class="sy0">-&gt;</span>_options<span class="br0">&#91;</span><span class="st_h">'relations'</span><span class="br0">&#93;</span> <span class="kw1">as</span> <span class="re0">$relation</span> <span class="sy0">=&gt;</span> <span class="re0">$options</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="re0">$table</span> <span class="sy0">=</span> Doctrine<span class="sy0">::</span><span class="me2">getTable</span><span class="br0">&#40;</span><span class="re0">$options</span><span class="br0">&#91;</span><span class="st_h">'className'</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+      <span class="re0">$relation</span> <span class="sy0">=</span> <span class="re0">$table</span><span class="sy0">-&gt;</span><span class="me1">getRelation</span><span class="br0">&#40;</span><span class="re0">$options</span><span class="br0">&#91;</span><span class="st_h">'foreignAlias'</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+      <span class="re0">$table</span>
+        <span class="sy0">-&gt;</span><span class="me1">createQuery</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+        <span class="sy0">-&gt;</span><span class="me1">update</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+        <span class="sy0">-&gt;</span><span class="me1">set</span><span class="br0">&#40;</span><span class="re0">$options</span><span class="br0">&#91;</span><span class="st_h">'columnName'</span><span class="br0">&#93;</span><span class="sy0">,</span> <span class="re0">$options</span><span class="br0">&#91;</span><span class="st_h">'columnName'</span><span class="br0">&#93;</span><span class="sy0">.</span><span class="st_h">' + 1'</span><span class="br0">&#41;</span>
+        <span class="sy0">-&gt;</span><span class="me1">where</span><span class="br0">&#40;</span><span class="re0">$relation</span><span class="br0">&#91;</span><span class="st_h">'local'</span><span class="br0">&#93;</span><span class="sy0">.</span><span class="st_h">' = ?'</span><span class="sy0">,</span> <span class="re0">$invoker</span><span class="sy0">-&gt;</span><span class="re0">$relation</span><span class="br0">&#91;</span><span class="st_h">'foreign'</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+        <span class="sy0">-&gt;</span><span class="me1">execute</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>El código anterior incrementa en una unidad, mediante una consulta de tipo 
+DQL UPDATE, los contadores de todas las relaciones configuradas cada vez que 
+se inserta un nuevo objeto, como por ejemplo el siguiente:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$post</span> <span class="sy0">=</span> <span class="kw2">new</span> Post<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$post</span><span class="sy0">-&gt;</span><span class="me1">thread_id</span> <span class="sy0">=</span> <span class="nu0">1</span><span class="sy0">;</span>
+<span class="re0">$post</span><span class="sy0">-&gt;</span><span class="me1">body</span> <span class="sy0">=</span> <span class="st_h">'contenido del post'</span><span class="sy0">;</span>
+<span class="re0">$post</span><span class="sy0">-&gt;</span><span class="me1">save</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>El <code>Thread</code> cuyo <code>id</code> valga <code>1</code> incrementará en una unidad el valor de su
+columna <code>num_posts</code>.</p>
+
+<p>Ahora que los contadores ya se incrementan al insertar nuevos objetos, es necesario
+decrementarlos cuando se borre algún objeto. Para ello se define el siguiente
+método <code>postDelete()</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">class</span> CountCacheListener <span class="kw2">extends</span> Doctrine_Record_Listener
+<span class="br0">&#123;</span>
+  <span class="co1">// ...</span>
+&nbsp;
+  <span class="kw2">public</span> <span class="kw2">function</span> postDelete<span class="br0">&#40;</span>Doctrine_Event <span class="re0">$event</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$invoker</span> <span class="sy0">=</span> <span class="re0">$event</span><span class="sy0">-&gt;</span><span class="me1">getInvoker</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="kw1">foreach</span> <span class="br0">&#40;</span><span class="re0">$this</span><span class="sy0">-&gt;</span>_options<span class="br0">&#91;</span><span class="st_h">'relations'</span><span class="br0">&#93;</span> <span class="kw1">as</span> <span class="re0">$relation</span> <span class="sy0">=&gt;</span> <span class="re0">$options</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="re0">$table</span> <span class="sy0">=</span> Doctrine<span class="sy0">::</span><span class="me2">getTable</span><span class="br0">&#40;</span><span class="re0">$options</span><span class="br0">&#91;</span><span class="st_h">'className'</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+      <span class="re0">$relation</span> <span class="sy0">=</span> <span class="re0">$table</span><span class="sy0">-&gt;</span><span class="me1">getRelation</span><span class="br0">&#40;</span><span class="re0">$options</span><span class="br0">&#91;</span><span class="st_h">'foreignAlias'</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+      <span class="re0">$table</span>
+        <span class="sy0">-&gt;</span><span class="me1">createQuery</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+        <span class="sy0">-&gt;</span><span class="me1">update</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+        <span class="sy0">-&gt;</span><span class="me1">set</span><span class="br0">&#40;</span><span class="re0">$options</span><span class="br0">&#91;</span><span class="st_h">'columnName'</span><span class="br0">&#93;</span><span class="sy0">,</span> <span class="re0">$options</span><span class="br0">&#91;</span><span class="st_h">'columnName'</span><span class="br0">&#93;</span><span class="sy0">.</span><span class="st_h">' - 1'</span><span class="br0">&#41;</span>
+        <span class="sy0">-&gt;</span><span class="me1">where</span><span class="br0">&#40;</span><span class="re0">$relation</span><span class="br0">&#91;</span><span class="st_h">'local'</span><span class="br0">&#93;</span><span class="sy0">.</span><span class="st_h">' = ?'</span><span class="sy0">,</span> <span class="re0">$invoker</span><span class="sy0">-&gt;</span><span class="re0">$relation</span><span class="br0">&#91;</span><span class="st_h">'foreign'</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+        <span class="sy0">-&gt;</span><span class="me1">execute</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>El método <code>postDelete()</code> superior es casi idéntico al método <code>postInsert()</code>,
+siendo la única diferencia que en este caso el valor de la columna <code>num_posts</code>
+se decrementa en una unidad. Si ahora se borra el registro creado anteriormente,
+el contador se actualiza correctamente:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$post</span><span class="sy0">-&gt;</span><span class="me1">delete</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>La última parte del comportamiento debe encargarse de los borrados masivos
+realizados con una consulta de tipo DQL. La solución consiste en crear un 
+método <code>preDqlDelete()</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">class</span> CountCacheListener <span class="kw2">extends</span> Doctrine_Record_Listener
+<span class="br0">&#123;</span>
+  <span class="co1">// ...</span>
+&nbsp;
+  <span class="kw2">public</span> <span class="kw2">function</span> preDqlDelete<span class="br0">&#40;</span>Doctrine_Event <span class="re0">$event</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="kw1">foreach</span> <span class="br0">&#40;</span><span class="re0">$this</span><span class="sy0">-&gt;</span>_options<span class="br0">&#91;</span><span class="st_h">'relations'</span><span class="br0">&#93;</span> <span class="kw1">as</span> <span class="re0">$relation</span> <span class="sy0">=&gt;</span> <span class="re0">$options</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="re0">$table</span> <span class="sy0">=</span> Doctrine<span class="sy0">::</span><span class="me2">getTable</span><span class="br0">&#40;</span><span class="re0">$options</span><span class="br0">&#91;</span><span class="st_h">'className'</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+      <span class="re0">$relation</span> <span class="sy0">=</span> <span class="re0">$table</span><span class="sy0">-&gt;</span><span class="me1">getRelation</span><span class="br0">&#40;</span><span class="re0">$options</span><span class="br0">&#91;</span><span class="st_h">'foreignAlias'</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+      <span class="re0">$q</span> <span class="sy0">=</span> clone <span class="re0">$event</span><span class="sy0">-&gt;</span><span class="me1">getQuery</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+      <span class="re0">$q</span><span class="sy0">-&gt;</span><span class="me1">select</span><span class="br0">&#40;</span><span class="re0">$relation</span><span class="br0">&#91;</span><span class="st_h">'foreign'</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+      <span class="re0">$ids</span> <span class="sy0">=</span> <span class="re0">$q</span><span class="sy0">-&gt;</span><span class="me1">execute</span><span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span> Doctrine<span class="sy0">::</span><span class="me2">HYDRATE_NONE</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+      <span class="kw1">foreach</span> <span class="br0">&#40;</span><span class="re0">$ids</span> <span class="kw1">as</span> <span class="re0">$id</span><span class="br0">&#41;</span>
+      <span class="br0">&#123;</span>
+        <span class="re0">$id</span> <span class="sy0">=</span> <span class="re0">$id</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="sy0">;</span>
+&nbsp;
+        <span class="re0">$table</span>
+          <span class="sy0">-&gt;</span><span class="me1">createQuery</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+          <span class="sy0">-&gt;</span><span class="me1">update</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+          <span class="sy0">-&gt;</span><span class="me1">set</span><span class="br0">&#40;</span><span class="re0">$options</span><span class="br0">&#91;</span><span class="st_h">'columnName'</span><span class="br0">&#93;</span><span class="sy0">,</span> <span class="re0">$options</span><span class="br0">&#91;</span><span class="st_h">'columnName'</span><span class="br0">&#93;</span><span class="sy0">.</span><span class="st_h">' - 1'</span><span class="br0">&#41;</span>
+          <span class="sy0">-&gt;</span><span class="me1">where</span><span class="br0">&#40;</span><span class="re0">$relation</span><span class="br0">&#91;</span><span class="st_h">'local'</span><span class="br0">&#93;</span><span class="sy0">.</span><span class="st_h">' = ?'</span><span class="sy0">,</span> <span class="re0">$id</span><span class="br0">&#41;</span>
+          <span class="sy0">-&gt;</span><span class="me1">execute</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+      <span class="br0">&#125;</span>
+    <span class="br0">&#125;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>El código anterior clona la consulta de tipo <code>DQL DELETE</code> y la transforma en
+una consulta <code>SELECT</code> que permite obtener los <code>ID</code> de los registros que se 
+van a borrar, de forma que se pueda actualizar correctamente el contador.</p>
+
+<p>Ahora ya es posible manejar consultas como la siguiente actualizando de forma
+correcta el valor de los contadores:</p>
+
+<div class="code php">
+<pre class="php">Doctrine<span class="sy0">::</span><span class="me2">getTable</span><span class="br0">&#40;</span><span class="st_h">'Post'</span><span class="br0">&#41;</span>
+  <span class="sy0">-&gt;</span><span class="me1">createQuery</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="sy0">-&gt;</span><span class="me1">delete</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="sy0">-&gt;</span><span class="me1">where</span><span class="br0">&#40;</span><span class="st_h">'id = ?'</span><span class="sy0">,</span> <span class="nu0">1</span><span class="br0">&#41;</span>
+  <span class="sy0">-&gt;</span><span class="me1">execute</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>El valor de los contadores se actualiza correctamente incluso cuando se borran
+varios registros a la vez:</p>
+
+<div class="code php">
+<pre class="php">Doctrine<span class="sy0">::</span><span class="me2">getTable</span><span class="br0">&#40;</span><span class="st_h">'Post'</span><span class="br0">&#41;</span>
+  <span class="sy0">-&gt;</span><span class="me1">createQuery</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="sy0">-&gt;</span><span class="me1">delete</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="sy0">-&gt;</span><span class="me1">where</span><span class="br0">&#40;</span><span class="st_h">'body LIKE ?'</span><span class="sy0">,</span> <span class="st_h">'%cool%'</span><span class="br0">&#41;</span>
+  <span class="sy0">-&gt;</span><span class="me1">execute</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Para invocar el método <code>preDqlDelete()</code> es necesario activar un atributo.
+El motivo es que los <em>callbacks</em> de DQL están desactivados por defecto porque
+penalizan ligeramente el rendimiento. Por tanto, para utilizarlos es necesario
+activarlos:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$manager</span><span class="sy0">-&gt;</span><span class="me1">setAttribute</span><span class="br0">&#40;</span>Doctrine_Core<span class="sy0">::</span><span class="me2">ATTR_USE_DQL_CALLBACKS</span><span class="sy0">,</span> <span class="kw4">true</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p></p></div>
+
+<p>¡Y eso es todo! El nuevo comportamiento ya está terminado. Lo último que falta 
+por hacer es añadir algunas pruebas unitarias.</p>
+
+<h3 id="pruebas">8.1.4. Pruebas</h3>
+
+<p>Ahora que el código ya está completado, se va a probar con los siguientes datos
+de prueba:</p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co1"># data/fixtures/data.yml</span>
+<span class="co4">
+Thread</span>:<span class="co4">
+  thread1</span>:<span class="co3">
+    title</span><span class="sy2">: </span>Test Thread<span class="co4">
+    Posts</span>:<span class="co4">
+      post1</span>:<span class="co3">
+        body</span><span class="sy2">: </span>This is the body of my test thread<span class="co4">
+      post2</span>:<span class="co3">
+        body</span><span class="sy2">: </span>This is really cool<span class="co4">
+      post3</span>:<span class="co3">
+        body</span><span class="sy2">: </span>Ya it is pretty cool</pre>
+</div>
+
+<p>A continuación se ejecuta la siguiente tarea para volver a crear todas las 
+clases y para cargar todos los datos de prueba:</p>
+
+<div class="code cli">
+<pre class="cli">$ php symfony doctrine:build --all --and-load</pre>
+</div>
+
+<p>Después de volver a crear y cargar todo, se realiza la siguiente prueba para
+comprobar que los contadores se actualizan correctamente:</p>
+
+<div class="code cli">
+<pre class="cli">$ php symfony doctrine:dql &quot;FROM Thread t, t.Posts p&quot;
+doctrine - executing: &quot;FROM Thread t, t.Posts p&quot; ()
+doctrine -   id: '1'
+doctrine -   title: 'Test Thread'
+doctrine -   num_posts: '3'
+doctrine -   Posts:
+doctrine -     -
+doctrine -       id: '1'
+doctrine -       thread_id: '1'
+doctrine -       body: 'This is the body of my test thread'
+doctrine -     -
+doctrine -       id: '2'
+doctrine -       thread_id: '1'
+doctrine -       body: 'This is really cool'
+doctrine -     -
+doctrine -       id: '3'
+doctrine -       thread_id: '1'
+doctrine -       body: 'Ya it is pretty cool'</pre>
+</div>
+
+<p>El valor de la columna <code>num_posts</code> del modelo <code>Thread</code> vale tres. Si se borra
+un post mediante el siguiente comando, el contador debe decrementarse:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$post</span> <span class="sy0">=</span> Doctrine_Core<span class="sy0">::</span><span class="me2">getTable</span><span class="br0">&#40;</span><span class="st_h">'Post'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">find</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$post</span><span class="sy0">-&gt;</span><span class="me1">delete</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Como se puede comprobar, el registro se ha borrado y el contador se ha actualizado.</p>
+
+<div class="code cli">
+<pre class="cli">$ php symfony doctrine:dql &quot;FROM Thread t, t.Posts p&quot;
+doctrine - executing: &quot;FROM Thread t, t.Posts p&quot; ()
+doctrine -   id: '1'
+doctrine -   title: 'Test Thread'
+doctrine -   num_posts: '2'
+doctrine -   Posts:
+doctrine -     -
+doctrine -       id: '2'
+doctrine -       thread_id: '1'
+doctrine -       body: 'This is really cool'
+doctrine -     -
+doctrine -       id: '3'
+doctrine -       thread_id: '1'
+doctrine -       body: 'Ya it is pretty cool'</pre>
+</div>
+
+<p>También funciona correctamente cuando se borran los otros dos registros 
+restantes mediante una consulta de tipo DQL.</p>
+
+<div class="code php">
+<pre class="php">Doctrine_Core<span class="sy0">::</span><span class="me2">getTable</span><span class="br0">&#40;</span><span class="st_h">'Post'</span><span class="br0">&#41;</span>
+  <span class="sy0">-&gt;</span><span class="me1">createQuery</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="sy0">-&gt;</span><span class="me1">delete</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="sy0">-&gt;</span><span class="me1">where</span><span class="br0">&#40;</span><span class="st_h">'body LIKE ?'</span><span class="sy0">,</span> <span class="st_h">'%cool%'</span><span class="br0">&#41;</span>
+  <span class="sy0">-&gt;</span><span class="me1">execute</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Ahora que se han borrado todos los posts relacionados, el valor de la columna
+<code>num_posts</code> debería ser cero.</p>
+
+<div class="code cli">
+<pre class="cli">$ php symfony doctrine:dql &quot;FROM Thread t, t.Posts p&quot;
+doctrine - executing: &quot;FROM Thread t, t.Posts p&quot; ()
+doctrine -   id: '1'
+doctrine -   title: 'Test Thread'
+doctrine -   num_posts: '0'
+doctrine -   Posts: {  }</pre>
+</div>
+
+<p>¡Y eso es todo! Confiamos que este artículo te haya sido útil tanto por haber
+aprendido a crear comportamientos como por el propio comportamiento creado.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="../capitulo_8.html">&larr; Anterior <span>Capítulo 8. Uso avanzado de Doctrine</span></a>
+            
+            <a class="span5 next" href="utilizando_la_cache_de_resultados_de_doctrine.html">Siguiente &rarr; <span>8.2. Utilizando la cache de resultados de Doctrine</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Creando un comportamiento de Doctrine (Más con Symfony%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Más con Symfony : Creando un comportamiento de Doctrine']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Enrutamiento avanzado</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Mejora tu productividad</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Emails</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Widgets y validadores propios</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Formularios avanzados</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Mejorando la barra de depuración web</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_8.html">
+            <span>Capítulo 8.</span> Uso avanzado de Doctrine
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="creando_un_comportamiento_de_doctrine.html">
+            <span>8.1.</span> Creando un comportamiento de Doctrine
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="utilizando_la_cache_de_resultados_de_doctrine.html">
+            <span>8.2.</span> Utilizando la cache de resultados de Doctrine
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="creando_un_hydrator_de_doctrine.html">
+            <span>8.3.</span> Creando un hydrator de Doctrine
+        </a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Utilizando la herencia de tablas de Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Funcionamiento interno de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Windows y Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Desarrollando aplicaciones Facebook</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Descubriendo el poder de la línea de comandos</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Jugando con la cache de configuración de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Trabajando con la comunidad Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>A</span> <a href="../apendice_a.html"> Código JavaScript de sfWidgetFormGMapAddress</a>
+    </li>
+    <li class="level-1">
+        <span>B</span> <a href="../apendice_b.html"> Ejemplo de instalador propio</a>
+    </li>
+    <li class="level-1">
+        <span>C</span> <a href="../apendice_c.html"> Licencia</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

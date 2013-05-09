@@ -1,0 +1,383 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>3.6. Codificación de caracteres (Introducción a XHTML)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="espacios_en_blanco_y_nuevas_lineas.html" />
+        <link rel="next" href="../capitulo_4.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="3.6. Codificación de caracteres (Introducción a XHTML)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page xhtml">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Introducción a XHTML</a></li>
+  <li><a href="../capitulo_3.html">Capítulo 3. Texto</a></li>
+  <li class="current"><span>3.6. Codificación de caracteres</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="codificacion_de_caracteres"><span>3.6.</span> Codificación de caracteres</h1>
+    
+
+<p>Una consideración importante directamente relacionada con el texto de las páginas HTML es la codificación de los caracteres y la inserción de caracteres <em>especiales</em>. Algunos de los caracteres que se utilizan habitualmente en los textos no se pueden incluir directamente en las páginas web:</p>
+
+<ul>
+<li>Los caracteres que utiliza HTML para definir sus etiquetas (<code>&lt;</code>, <code>&gt;</code> y <code>"</code>) no se pueden utilizar libremente.</li>
+<li>Los caracteres propios de los idiomas que no son el inglés (<code>ñ</code>, <code>á</code>, <code>ç</code>, <code>¿</code>, <code>¡</code>, etc.) pueden ser problemáticos dependiendo de la codificación de caracteres utilizada.</li>
+</ul>
+
+<p>La solución a la primera limitación consiste en sustituir los caracteres reservados de HTML por unas expresiones llamadas <em>entidades HTML</em> y que representan a cada carácter:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Entidad</th>
+  <th>Carácter</th>
+  <th>Descripción</th>
+  <th>Traducción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>&amp;lt;</code></td>
+  <td><code>&lt;</code></td>
+  <td>less than</td>
+  <td>signo de menor que</td>
+</tr>
+<tr>
+  <td><code>&amp;gt;</code></td>
+  <td><code>&gt;</code></td>
+  <td>more than</td>
+  <td>signo de mayor que</td>
+</tr>
+<tr>
+  <td><code>&amp;amp;</code></td>
+  <td><code>&amp;</code></td>
+  <td>ampersand</td>
+  <td>ampersand</td>
+</tr>
+<tr>
+  <td><code>&amp;quot;</code></td>
+  <td><code>"</code></td>
+  <td>quotation mark</td>
+  <td>comillas</td>
+</tr>
+<tr>
+  <td><code>&amp;nbsp;</code></td>
+  <td><code></code> (espacio en blanco)</td>
+  <td>non-breaking space</td>
+  <td>espacio en blanco</td>
+</tr>
+<tr>
+  <td><code>&amp;apos;</code></td>
+  <td><code>'</code></td>
+  <td>apostrophe</td>
+  <td>apóstrofo</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+<p>De esta forma, si se considera el siguiente texto:</p>
+
+<div class="code code">
+<pre class="code">Los caracteres &lt;, &gt;, &quot; y &amp; pueden dar problemas con los textos en HTML</pre>
+</div>
+
+<p>Para mostrar correctamente el texto anterior en una página HTML, se debe sustituir cada carácter especial por su entidad HTML:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">p</span>&gt;</span>Los caracteres <span class="sc1">&amp;lt;</span>, <span class="sc1">&amp;gt;</span>, <span class="sc1">&amp;quot;</span> y <span class="sc1">&amp;amp;</span> pueden dar problemas con los textos en HTML<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">p</span>&gt;</span></pre>
+</div>
+
+<p><div class="exercise"><p class="title">Ejercicio 5</p> <p>Determinar el código HTML que corresponde al siguiente documento:</p>
+
+<div class="figure" id="figure_3_19">
+    <img src="../../img/xhtml/e0501.gif" alt="Texto HTML que incluye caracteres especiales" />
+
+    <p class="caption"><strong>Figura 3.19</strong> Texto HTML que incluye caracteres especiales</p>
+</div>
+
+
+<p><a href="http://librosweb.es/xhtml/capitulo_15/ejercicio_5.html">Ver solución</a></p></div></p>
+
+<p>Por otra parte, los caracteres propios de los idiomas diferentes al inglés también pueden ser problemáticos. El motivo es que desde que se crea una página web hasta que llega al navegador del usuario, intervienen numerosos procesos:</p>
+
+<ul>
+<li>El diseñador crea la página web con su editor HTML (por ejemplo Dreamweaver).</li>
+<li>Si se trata de una aplicación dinámica, el programador recorta la página HTML del diseñador y la mezcla con el resto del código de la aplicación (por ejemplo PHP).</li>
+<li>El servidor web almacena las páginas HTML estáticas o el código de la aplicación web y sirve las páginas solicitadas por los usuarios.</li>
+<li>El usuario solicita y visualiza las páginas web a través de su navegador.</li>
+</ul>
+
+<p>Si en todos los procesos anteriores se utiliza la misma codificación de caracteres, los caracteres propios de los idiomas se pueden escribir directamente:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">p</span>&gt;</span>Este párrafo contiene caracteres acentuados y se almacena en formato UTF-8<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">p</span>&gt;</span></pre>
+</div>
+
+<p>La palabra <code>párrafo</code> del ejemplo anterior incluye la letra <code>á</code>. Si el editor HTML del diseñador utiliza la codificación UTF-8, el entorno de desarrollo del programador también utiliza UTF-8, el servidor web sirve las páginas con esa codificación y el navegador del usuario es capaz de visualizar las páginas con formato UTF-8, el texto anterior se verá correctamente en el navegador del usuario.</p>
+
+<p>Sin embargo, muchas veces no es posible que todos los procesos involucrados utilicen la misma codificación de caracteres. Por limitaciones técnicas o por decisiones de los diseñadores y programadores, los textos pueden pasar de codificación UTF-8 a codificación ISO-8859 en cualquier momento. Si se produce este cambio sin realizar una conversión correcta, el navegador del usuario mostrará caracteres extraños en todos los acentos y en todas las letras como la <code>ñ</code>.</p>
+
+<p>La solución más sencilla para asegurar que todos estos caracteres potencialmente problemáticos se van a visualizar correctamente en el navegador del usuario consiste en sustituir cada carácter problemático por su entidad HTML:</p>
+
+<div class="table" id="table_3_2">
+
+    <table>
+<thead>
+<tr>
+  <th>Entidad</th>
+  <th>Carácter</th>
+  <th>Descripción oficial</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>&amp;ntilde;</code></td>
+  <td>ñ</td>
+  <td>latin letter n with tilde</td>
+</tr>
+<tr>
+  <td><code>&amp;Ntilde;</code></td>
+  <td>Ñ</td>
+  <td>latin capital n letter with tilde</td>
+</tr>
+<tr>
+  <td><code>&amp;aacute;</code></td>
+  <td>á</td>
+  <td>a acute</td>
+</tr>
+<tr>
+  <td><code>&amp;eacute;</code></td>
+  <td>é</td>
+  <td>e acute</td>
+</tr>
+<tr>
+  <td><code>&amp;iacute;</code></td>
+  <td>í</td>
+  <td>i acute</td>
+</tr>
+<tr>
+  <td><code>&amp;oacute;</code></td>
+  <td>ó</td>
+  <td>o acute</td>
+</tr>
+<tr>
+  <td><code>&amp;uacute;</code></td>
+  <td>ú</td>
+  <td>u acute</td>
+</tr>
+<tr>
+  <td><code>&amp;Aacute;</code></td>
+  <td>Á</td>
+  <td>A acute</td>
+</tr>
+<tr>
+  <td><code>&amp;Eacute;</code></td>
+  <td>É</td>
+  <td>E acute</td>
+</tr>
+<tr>
+  <td><code>&amp;Iacute;</code></td>
+  <td>Í</td>
+  <td>I acute</td>
+</tr>
+<tr>
+  <td><code>&amp;Oacute;</code></td>
+  <td>Ó</td>
+  <td>O acute</td>
+</tr>
+<tr>
+  <td><code>&amp;Uacute;</code></td>
+  <td>Ú</td>
+  <td>U acute</td>
+</tr>
+<tr>
+  <td><code>&amp;euro;</code></td>
+  <td>€</td>
+  <td>euro</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+<p>Así, el párrafo de texto del ejemplo anterior, se podría escribir de la siguiente manera:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">p</span>&gt;</span>Este p<span class="sc1">&amp;aacute;</span>rrafo contiene caracteres acentuados y se almacena en formato UTF-8<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">p</span>&gt;</span></pre>
+</div>
+
+<p>Si se utilizan las entidades HTML en vez de los caracteres problemáticos, es indiferente pasar de una codificación de caracteres a otra diferente. En la Wikipedia se puede consultar <a href="http://en.wikipedia.org/wiki/List_of_XML_and_HTML_character_entity_references">la lista completa de las 252 entidades HTML definidas</a>.</p>
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="espacios_en_blanco_y_nuevas_lineas.html">&larr; Anterior <span>3.5. Espacios en blanco y nuevas líneas</span></a>
+            
+            <a class="span5 next" href="../capitulo_4.html">Siguiente &rarr; <span>Capítulo 4. Enlaces</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Codificación de caracteres (Introducción a XHTML%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a XHTML : Codificación de caracteres']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Características básicas</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_3.html">
+            <span>Capítulo 3.</span> Texto
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="estructurar.html">
+            <span>3.1.</span> Estructurar
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="marcado_basico_de_texto.html">
+            <span>3.2.</span> Marcado básico de texto
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="marcado_avanzado_de_texto.html">
+            <span>3.3.</span> Marcado avanzado de texto
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="marcado_generico_de_texto.html">
+            <span>3.4.</span> Marcado genérico de texto
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="espacios_en_blanco_y_nuevas_lineas.html">
+            <span>3.5.</span> Espacios en blanco y nuevas líneas
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="codificacion_de_caracteres.html">
+            <span>3.6.</span> Codificación de caracteres
+        </a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Enlaces</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Listas</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Imágenes y objetos</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Tablas</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Estructura y layout</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Metainformación</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Otras etiquetas importantes</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Accesibilidad</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Validación</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Fragmentos de código</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

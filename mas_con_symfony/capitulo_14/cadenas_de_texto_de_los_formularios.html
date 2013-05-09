@@ -1,0 +1,337 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>14.1. Cadenas de texto de los formularios (Más con Symfony)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="../capitulo_14.html" />
+        <link rel="next" href="la_solucion_yaml.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="14.1. Cadenas de texto de los formularios (Más con Symfony)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page mas_con_symfony">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Más con Symfony</a></li>
+  <li><a href="../capitulo_14.html">Capítulo 14. Jugando con la cache de configuración de Symfony</a></li>
+  <li class="current"><span>14.1.. Cadenas de texto de los formularios</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="cadenas_de_texto_de_los_formularios"><span>14.1.</span> Cadenas de texto de los formularios</h1>
+    
+
+<p>Un buen ejemplo de lo comentado anteriormente es el framework de formularios.
+Se trata de uno de los componentes más poderosos de Symfony y te proporciona un
+gran control sobre los formularios gracias al uso de objetos PHP tanto para
+mostrarlos como para validarlos. Lo mejor de los formularios de Symfony es que
+el programador puede encapsular una gran cantidad de lógica compleja dentro de
+una clase de formulario para reutilizarla y extenderla después en muchos otros
+proyectos.</p>
+
+<p>No obstante, desde el punto de vista del diseñador de las plantillas de la
+aplicación puede resultar muy complicado tratar de entender esta abstracción
+encargada de mostrar los formularios. Si se considera el siguiente formulario:</p>
+
+<div class="figure" id="figure_14_1">
+    <img src="../../img/mas_con_symfony/config_cache_form_default.png" alt="Formulario en su estado inicial" />
+
+    <p class="caption"><strong>Figura 14.1</strong> Formulario en su estado inicial</p>
+</div>
+
+
+<p>A continuación se muestra el código de la clase que crea ese formulario:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// lib/form/CommentForm.class.php</span>
+<span class="kw2">class</span> CommentForm <span class="kw2">extends</span> BaseForm
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> configure<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">setWidget</span><span class="br0">&#40;</span><span class="st_h">'body'</span><span class="sy0">,</span> <span class="kw2">new</span> sfWidgetFormTextarea<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">setValidator</span><span class="br0">&#40;</span><span class="st_h">'body'</span><span class="sy0">,</span> <span class="kw2">new</span> sfValidatorString<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span>
+      <span class="st_h">'min_length'</span> <span class="sy0">=&gt;</span> <span class="nu0">12</span><span class="sy0">,</span>
+    <span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>El formulario se muestra en la plantilla PHP de la siguiente forma:</p>
+
+<div class="code php">
+<pre class="php">&lt;!-- apps/frontend/modules/main/templates/indexSuccess.php --&gt;
+&lt;form action=&quot;#&quot; method=&quot;post&quot;&gt;
+  &lt;ul&gt;
+    &lt;li&gt;
+      <span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$form</span><span class="br0">&#91;</span><span class="st_h">'body'</span><span class="br0">&#93;</span><span class="sy0">-&gt;</span><span class="me1">renderLabel</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+      <span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$form</span><span class="br0">&#91;</span><span class="st_h">'body'</span><span class="br0">&#93;</span> <span class="sy1">?&gt;</span>
+      <span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$form</span><span class="br0">&#91;</span><span class="st_h">'body'</span><span class="br0">&#93;</span><span class="sy0">-&gt;</span><span class="me1">renderError</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+    &lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;p&gt;&lt;button type=&quot;submit&quot;&gt;Post your comment now&lt;/button&gt;&lt;/p&gt;
+&lt;/form&gt;</pre>
+</div>
+
+<p>El diseñador de las plantillas tiene bastante control sobre cómo se muestra el
+formulario. Puede modificar por ejemplo los títulos por defecto para que sean
+un poco más apropiados:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$form</span><span class="br0">&#91;</span><span class="st_h">'body'</span><span class="br0">&#93;</span><span class="sy0">-&gt;</span><span class="me1">renderLabel</span><span class="br0">&#40;</span><span class="st_h">'Please enter your comment'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span></pre>
+</div>
+
+<p>También puede añadir una clase CSS en los campos del formulario:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$form</span><span class="br0">&#91;</span><span class="st_h">'body'</span><span class="br0">&#93;</span><span class="sy0">-&gt;</span><span class="me1">render</span><span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'class'</span> <span class="sy0">=&gt;</span> <span class="st_h">'comment'</span><span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span></pre>
+</div>
+
+<p>Estas modificaciones son sencillas y bastante intuitivas. Sin embargo, ¿qué
+sucede si el diseñador quiere modificar un mensaje de error?</p>
+
+<div class="figure" id="figure_14_2">
+    <img src="../../img/mas_con_symfony/config_cache_form_error.png" alt="Formulario con errores" />
+
+    <p class="caption"><strong>Figura 14.2</strong> Formulario con errores</p>
+</div>
+
+
+<p>El método <code>-&gt;renderError()</code> no admite ningún argumento, así que el diseñador
+debería acceder a la clase del formulario, buscar el código asociado al validador
+correspondiente y modificar su constructor para asociar los nuevos mensajes de
+error con los códigos de error adecuados.</p>
+
+<p>En este ejemplo, el diseñador de las plantillas debería hacer el siguiente
+cambio:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// antes</span>
+<span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">setValidator</span><span class="br0">&#40;</span><span class="st_h">'body'</span><span class="sy0">,</span> <span class="kw2">new</span> sfValidatorString<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span>
+  <span class="st_h">'min_length'</span> <span class="sy0">=&gt;</span> <span class="nu0">12</span><span class="sy0">,</span>
+<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="co1">// después</span>
+<span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">setValidator</span><span class="br0">&#40;</span><span class="st_h">'body'</span><span class="sy0">,</span> <span class="kw2">new</span> sfValidatorString<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span>
+  <span class="st_h">'min_length'</span> <span class="sy0">=&gt;</span> <span class="nu0">12</span><span class="sy0">,</span>
+<span class="br0">&#41;</span><span class="sy0">,</span> <span class="kw3">array</span><span class="br0">&#40;</span>
+  <span class="st_h">'min_length'</span> <span class="sy0">=&gt;</span> <span class="st_h">'You haven\'t written enough'</span><span class="sy0">,</span>
+<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>¿Has visto el error? Hemos escrito una comilla simple dentro de una cadena de
+texto delimitada por esas mismas comillas. Evidentemente un programador como
+tu nunca cometería ese error, pero es muy posible que un diseñador de plantillas
+cometa este tipo de errores.</p>
+
+<p>De hecho, ¿crees que un diseñador de plantillas es capaz de encontrar el lugar
+exacto en el que se definen los mensajes de error? ¿Es realista pensar que un
+diseñador va a saber los parámetros que se deben pasar al constructor de un
+validador?</p>
+
+<p>Obviamente la respuesta a todas las preguntas anteriores es negativa. Los
+diseñadores hacen un trabajo muy valioso pero no es razonable esperar que alguien
+que no es programador aprenda el funcionamiento interno del framework de
+formularios de Symfony.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="../capitulo_14.html">&larr; Anterior <span>Capítulo 14. Jugando con la cache de configuración de Symfony</span></a>
+            
+            <a class="span5 next" href="la_solucion_yaml.html">Siguiente &rarr; <span>14.2. La solución YAML</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Cadenas de texto de los formularios (Más con Symfony%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Más con Symfony : Cadenas de texto de los formularios']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Enrutamiento avanzado</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Mejora tu productividad</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Emails</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Widgets y validadores propios</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Formularios avanzados</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Mejorando la barra de depuración web</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Uso avanzado de Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Utilizando la herencia de tablas de Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Funcionamiento interno de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Windows y Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Desarrollando aplicaciones Facebook</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Descubriendo el poder de la línea de comandos</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_14.html">
+            <span>Capítulo 14.</span> Jugando con la cache de configuración de Symfony
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="cadenas_de_texto_de_los_formularios.html">
+            <span>14.1.</span> Cadenas de texto de los formularios
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="la_solucion_yaml.html">
+            <span>14.2.</span> La solución YAML
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="filtrando_las_variables_de_la_plantilla.html">
+            <span>14.3.</span> Filtrando las variables de la plantilla
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="aplicando_la_configuracion_yaml.html">
+            <span>14.4.</span> Aplicando la configuración YAML
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="la_cache_de_configuracion.html">
+            <span>14.5.</span> La cache de configuración
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="anadiendo_pruebas_unitarias.html">
+            <span>14.6.</span> Añadiendo pruebas unitarias
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="gestores_de_configuracion_propios.html">
+            <span>14.7.</span> Gestores de configuración propios
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="haciendo_uso_de_formularios_embebidos.html">
+            <span>14.8.</span> Haciendo uso de formularios embebidos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="comparando_el_rendimiento.html">
+            <span>14.9.</span> Comparando el rendimiento
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="creando_un_plugin.html">
+            <span>14.10.</span> Creando un plugin
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="conclusion.html">
+            <span>14.11.</span> Conclusión
+        </a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Trabajando con la comunidad Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>A</span> <a href="../apendice_a.html"> Código JavaScript de sfWidgetFormGMapAddress</a>
+    </li>
+    <li class="level-1">
+        <span>B</span> <a href="../apendice_b.html"> Ejemplo de instalador propio</a>
+    </li>
+    <li class="level-1">
+        <span>C</span> <a href="../apendice_c.html"> Licencia</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

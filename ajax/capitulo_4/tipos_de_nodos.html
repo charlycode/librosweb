@@ -1,0 +1,233 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>4.2. Tipos de nodos (Introducción a AJAX)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="../capitulo_4.html" />
+        <link rel="next" href="la_interfaz_node.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="4.2. Tipos de nodos (Introducción a AJAX)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page ajax">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Introducción a AJAX</a></li>
+  <li><a href="../capitulo_4.html">Capítulo 4. DOM (Document Object Model)</a></li>
+  <li class="current"><span>4.2. Tipos de nodos</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="tipos_de_nodos"><span>4.2.</span> Tipos de nodos</h1>
+    
+
+<p>Los documentos XML y HTML tratados por DOM se convierten en una jerarquía de nodos. Los nodos que representan los documentos pueden ser de diferentes tipos. A continuación se detallan los tipos más importantes:</p>
+
+<ul>
+<li><code>Document</code>: es el nodo raíz de todos los documentos HTML y XML. Todos los demás nodos derivan de él.</li>
+<li><code>DocumentType</code>: es el nodo que contiene la representación del DTD empleado en la página (indicado mediante el <code>DOCTYPE</code>).</li>
+<li><code>Element</code>: representa el contenido definido por un par de etiquetas de apertura y cierre (<code>&lt;etiqueta&gt;...&lt;/etiqueta&gt;</code>) o de una etiqueta <em>abreviada</em> que se abre y se cierra a la vez (<code>&lt;etiqueta/&gt;</code>). Es el único nodo que puede tener tanto nodos hijos como atributos.</li>
+<li><code>Attr</code>: representa el par nombre-de-atributo/valor.</li>
+<li><code>Text</code>: almacena el contenido del texto que se encuentra entre una etiqueta de apertura y una de cierre. También almacena el contenido de una sección de tipo CDATA.</li>
+<li><code>CDataSection</code>: es el nodo que representa una sección de tipo <code>&lt;![CDATA[ ]]&gt;</code>.</li>
+<li><code>Comment</code>: representa un comentario de XML.</li>
+</ul>
+
+<p>Se han definido otros tipos de nodos pero que no son empleados habitualmente: <code>DocumentFragment</code>, <code>Entity</code>, <code>EntityReference</code>, <code>ProcessingInstruction</code> y <code>Notation</code>.</p>
+
+<p>El siguiente ejemplo de documento sencillo de XML muestra algunos de los nodos más habituales:</p>
+
+<div class="code xml">
+<pre class="xml"><span class="sc3"><span class="re1">&lt;?xml</span> <span class="re0">version</span>=<span class="st0">&quot;1.0&quot;</span><span class="re2">?&gt;</span></span>
+<span class="sc3"><span class="re1">&lt;clientes<span class="re2">&gt;</span></span></span>
+  <span class="sc-1">&lt;!-- El primer cliente --&gt;</span>
+  <span class="sc3"><span class="re1">&lt;cliente<span class="re2">&gt;</span></span></span>
+    <span class="sc3"><span class="re1">&lt;nombre<span class="re2">&gt;</span></span></span>Empresa SA<span class="sc3"><span class="re1">&lt;/nombre<span class="re2">&gt;</span></span></span>
+    <span class="sc3"><span class="re1">&lt;sector<span class="re2">&gt;</span></span></span>Tecnologia<span class="sc3"><span class="re1">&lt;/sector<span class="re2">&gt;</span></span></span>
+    <span class="sc3"><span class="re1">&lt;notas<span class="re2">&gt;</span></span></span><span class="sc2">&lt;![CDATA[</span>
+<span class="sc2">    Llamar la proxima semana</span>
+<span class="sc2">    ]]&gt;</span><span class="sc3"><span class="re1">&lt;/notas<span class="re2">&gt;</span></span></span>
+  <span class="sc3"><span class="re1">&lt;/cliente<span class="re2">&gt;</span></span></span>
+<span class="sc3"><span class="re1">&lt;/clientes<span class="re2">&gt;</span></span></span></pre>
+</div>
+
+<p>Su representación como árbol de nodos DOM es la siguiente:</p>
+
+<div class="figure" id="figure_4_2">
+    <img src="../../img/ajax/f0402.gif" alt="Representación en forma de árbol del archivo XML de ejemplo" />
+
+    <p class="caption"><strong>Figura 4.2</strong> Representación en forma de árbol del archivo XML de ejemplo</p>
+</div>
+
+
+<p>El nodo raíz siempre es el nodo de tipo <code>Document</code>, del que derivan todos los demás nodos del documento. Este nodo es común para todas las páginas HTML y todos los documentos XML. A continuación se incluye la etiqueta <code>&lt;clientes&gt;...&lt;/clientes&gt;</code>. Como se trata de una etiqueta, DOM la transforma en un nodo de tipo <code>Element</code>. Además, como la etiqueta encierra a todos los demás elementos de la página, el nodo <code>Clientes</code> de tipo <code>Element</code> deriva directamente de <code>Document</code> y todos los demás nodos del documento derivan de ese nodo.</p>
+
+<p>El comentario es el primer texto que se incluye dentro de la etiqueta <code>&lt;clientes&gt;</code>, por lo que se transforma en el primer subnodo del nodo <code>clientes</code>. Al ser un comentario de XML, se trata de un nodo de tipo <code>Comment</code>.</p>
+
+<p>Al mismo nivel que el comentario, se encuentra la etiqueta <code>&lt;cliente&gt;</code> que define las características del primer cliente y forma el segundo subnodo del nodo <code>clientes</code>. Todas las demás etiquetas del documento XML se encuentran encerradas por la etiqueta <code>&lt;cliente&gt;...&lt;/cliente&gt;</code>, por lo que todos los nodos restantes derivarán del nodo <code>cliente</code>.</p>
+
+<p>Cada etiqueta simple de tipo <code>&lt;etiqueta&gt;texto&lt;/etiqueta&gt;</code> se transforma en un par de nodos: el primero de tipo <code>Element</code> (que contiene la etiqueta en sí) y el segundo, un nodo hijo de tipo <code>Text</code> que contiene el contenido definido entre la etiqueta de apertura y la de cierre.</p>
+
+<div class="figure" id="figure_4_3">
+    <img src="../../img/ajax/f0403.gif" alt="Nodos generados por una etiqueta HTML" />
+
+    <p class="caption"><strong>Figura 4.3</strong> Nodos generados por una etiqueta HTML</p>
+</div>
+
+
+<p>La etiqueta <code>&lt;notas&gt;</code> se transforma en tres nodos, ya que contiene una sección de tipo <code>CData</code>, que a su vez se transforma en un nodo del que deriva el contenido propio de la sección <code>CData</code>.</p>
+
+<p>Un buen método para comprobar la transformación que sufren las páginas web y visualizar la jerarquía de nodos creada por DOM es utilizar la utilidad <em>"Inspector DOM"</em> (o <em>"DOM Inspector"</em>) del navegador Mozilla Firefox.</p>
+
+<p>La utilidad se puede encontrar en el menú <em>Herramientas</em> y además de mostrar visualmente la jerarquía de nodos, permite acceder fácilmente a toda la información de cada nodo y muestra en la página web el contenido al que hace referencia el nodo actual.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="../capitulo_4.html">&larr; Anterior <span>Capítulo 4. DOM (Document Object Model)</span></a>
+            
+            <a class="span5 next" href="la_interfaz_node.html">Siguiente &rarr; <span>4.3. La interfaz Node</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Tipos de nodos (Introducción a AJAX%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a AJAX : Tipos de nodos']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción a AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> JavaScript básico</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> JavaScript avanzado</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_4.html">
+            <span>Capítulo 4.</span> DOM (Document Object Model)
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="tipos_de_nodos.html">
+            <span>4.2.</span> Tipos de nodos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="la_interfaz_node.html">
+            <span>4.3.</span> La interfaz Node
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="html_y_dom.html">
+            <span>4.4.</span> HTML y DOM
+        </a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> BOM (Browser Object Model)</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Eventos</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Primeros pasos con AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Técnicas básicas con AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Técnicas avanzadas con AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Frameworks y librerías</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Otras utilidades</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Recursos útiles</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Bibliografía</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

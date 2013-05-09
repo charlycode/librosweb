@@ -1,0 +1,390 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>5.6. La clase para las rutas basadas en objetos (El tutorial Jobeet)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="la_clase_sfroute.html" />
+        <link rel="next" href="enrutamiento_en_acciones_y_plantillas.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="5.6. La clase para las rutas basadas en objetos (El tutorial Jobeet)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page jobeet_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">El tutorial Jobeet</a></li>
+  <li><a href="../capitulo_5.html">Capítulo 5. El sistema de enrutamiento</a></li>
+  <li class="current"><span>5.6.. La clase para las rutas basadas en objetos</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="la_clase_para_las_rutas_basadas_en_objetos"><span>5.6.</span> La clase para las rutas basadas en objetos</h1>
+    
+
+<p>La URI interna de la página de una oferta de trabajo es muy larga y bastante aburrida de escribir (<code>url_for('job/show?id='.$job-&gt;getId().'&amp;company='.$job-&gt;getCompany().'&amp;location='.$job-&gt;getLocation().'&amp;position='.$job-&gt;getPosition())</code>). Como se ha comentado en la sección anterior, es posible modificar la clase que utiliza cada ruta. En el caso de la ruta llamada <code>job_show_user</code>, se va a emplear <a href="http://www.symfony-project.org/api/1_2/sfPropelRoute">la clase sfPropelRoute</a>, ya que es una clase optimizada para las rutas que representan objetos Propel o colecciones de objetos Propel:</p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co4">job_show_user</span>:<span class="co3">
+  url</span><span class="sy2">: </span>    /job/:company/:location/:id/:position<span class="co3">
+  class</span><span class="sy2">: </span>  sfPropelRoute<span class="co3">
+  options</span><span class="sy2">: </span><span class="br0">&#123;</span> model<span class="sy2">: </span>JobeetJob, type<span class="sy2">: </span>object <span class="br0">&#125;</span><span class="co3">
+  param</span><span class="sy2">: </span>  <span class="br0">&#123;</span> module<span class="sy2">: </span>job, action<span class="sy2">: </span>show <span class="br0">&#125;</span><span class="co4">
+  requirements</span>:<span class="co3">
+    id</span><span class="sy2">: </span>\d+<span class="co3">
+    sf_method</span><span class="sy2">: </span><span class="br0">&#91;</span>get<span class="br0">&#93;</span></pre>
+</div>
+
+<p>La opción <code>options</code> establece el comportamiento de la ruta. La opción <code>model</code> define la clase del modelo de Propel relacionada con la ruta (en este caso, <code>JobeetJob</code>) y la opción <code>type</code> indica que esta ruta está relacionada con un solo objeto. Si la ruta representara una colección de objetos, se debería utilizar el valor <code>list</code> en esta opción <code>type</code>.</p>
+
+<p>Como la ruta <code>job_show_user</code> ahora está relacionada con <code>JobeetJob</code>, se puede simplificar la llamanda al helper <code>url_for()</code> de la siguiente manera:</p>
+
+<div class="code php">
+<pre class="php">url_for<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'sf_route'</span> <span class="sy0">=&gt;</span> <span class="st_h">'job_show_user'</span><span class="sy0">,</span> <span class="st_h">'sf_subject'</span> <span class="sy0">=&gt;</span> <span class="re0">$job</span><span class="br0">&#41;</span><span class="br0">&#41;</span></pre>
+</div>
+
+<p>Incluso se puede simplificar todavía más:</p>
+
+<div class="code php">
+<pre class="php">url_for<span class="br0">&#40;</span><span class="st_h">'job_show_user'</span><span class="sy0">,</span> <span class="re0">$job</span><span class="br0">&#41;</span></pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> La primera forma es útil cuando tienes que pasar más argumentos aparte del objeto.</p></div>
+
+<p>Todo esto es posible porque todas las variables de la ruta tienen un método para acceder a su valor dentro de la clase <code>JobeetJob</code>. La variable <code>company</code> por ejemplo se sustituye por el valor devuelto por el método <code>getCompany()</code>.</p>
+
+<p>Si observas el aspecto de las URL generadas, verás que todavía no son exactamente como queríamos:</p>
+
+<div class="code code">
+<pre class="code">http://jobeet.localhost/frontend_dev.php/job/Sensio+Labs/Paris%2C+France/1/Web+Developer</pre>
+</div>
+
+<p>El siguiente paso consiste en preparar los valores de cada columna para que se muestren correctamente en la URL, proceso que se conoce con el nombre de <em>slugify</em>, por lo que debemos sustituir todos los caracteres que no sean ASCII por un guión medio <code>-</code>. Para ello, abre el archivo <code>JobeetJob</code> y añade los siguientes métodos en la clase:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// lib/model/JobeetJob.php</span>
+<span class="kw2">public</span> <span class="kw2">function</span> getCompanySlug<span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="kw1">return</span> Jobeet<span class="sy0">::</span><span class="me2">slugify</span><span class="br0">&#40;</span><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getCompany</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+<span class="kw2">public</span> <span class="kw2">function</span> getPositionSlug<span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="kw1">return</span> Jobeet<span class="sy0">::</span><span class="me2">slugify</span><span class="br0">&#40;</span><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getPosition</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+<span class="kw2">public</span> <span class="kw2">function</span> getLocationSlug<span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="kw1">return</span> Jobeet<span class="sy0">::</span><span class="me2">slugify</span><span class="br0">&#40;</span><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getLocation</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>A continuación, crea un archivo llamado <code>lib/Jobeet.class.php</code> y añade el método <code>slugify</code> a la nueva clase:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// lib/Jobeet.class.php</span>
+<span class="kw2">class</span> Jobeet
+<span class="br0">&#123;</span>
+  static <span class="kw2">public</span> <span class="kw2">function</span> slugify<span class="br0">&#40;</span><span class="re0">$text</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="co1">// replace all non letters or digits by -</span>
+    <span class="re0">$text</span> <span class="sy0">=</span> <span class="kw3">preg_replace</span><span class="br0">&#40;</span><span class="st_h">'/\W+/'</span><span class="sy0">,</span> <span class="st_h">'-'</span><span class="sy0">,</span> <span class="re0">$text</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="co1">// trim and lowercase</span>
+    <span class="re0">$text</span> <span class="sy0">=</span> <span class="kw3">strtolower</span><span class="br0">&#40;</span><span class="kw3">trim</span><span class="br0">&#40;</span><span class="re0">$text</span><span class="sy0">,</span> <span class="st_h">'-'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="kw1">return</span> <span class="re0">$text</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Para optimizar un poco el sitio disponible, este tutorial no muestra la instrucción <code>&lt;?php</code> en los trozos de código que sólo incluyen PHP. Obviamente no te olvides de incluir esa instrucción cada vez que crees un archivo PHP.</p></div>
+
+<p>Los cambios anteriores han creado tres métodos accesores <em>virtuales</em>: <code>getCompanySlug()</code>,
+<code>getPositionSlug()</code> y <code>getLocationSlug()</code>. Los tres métodos devuelven el valor original de la columna de datos después de aplicarle el método <code>slugify()</code>. Por tanto, ahora la ruta <code>job_show_user</code> también puede hacer uso de estos métodos accesores para reemplazar los valores originales de cada columna por sus valores virtuales:</p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co4">job_show_user</span>:<span class="co3">
+  url</span><span class="sy2">: </span>    /job/:company_slug/:location_slug/:id/:position_slug<span class="co3">
+  class</span><span class="sy2">: </span>  sfPropelRoute<span class="co3">
+  options</span><span class="sy2">: </span><span class="br0">&#123;</span> model<span class="sy2">: </span>JobeetJob, type<span class="sy2">: </span>object <span class="br0">&#125;</span><span class="co3">
+  param</span><span class="sy2">: </span>  <span class="br0">&#123;</span> module<span class="sy2">: </span>job, action<span class="sy2">: </span>show <span class="br0">&#125;</span><span class="co4">
+  requirements</span>:<span class="co3">
+    id</span><span class="sy2">: </span>\d+<span class="co3">
+    sf_method</span><span class="sy2">: </span><span class="br0">&#91;</span>get<span class="br0">&#93;</span></pre>
+</div>
+
+<p>Como acabamos de añadir una nueva clase, antes de refrescar la portada de Jobeet es necesario que borres la cache de Symfony:</p>
+
+<div class="code cli">
+<pre class="cli">$ php symfony cc</pre>
+</div>
+
+<p>Si vuelves a acceder a la portada de Jobeet, verás que las URL ahora sí que son tal y como las queríamos:</p>
+
+<div class="code code">
+<pre class="code">http://jobeet.localhost/frontend_dev.php/job/sensio-labs/paris-france/1/web-developer</pre>
+</div>
+
+<p>Todo lo anterior es sólo parte de lo que son capaces las rutas de Symfony. Las rutas pueden generar una URL en función de un objeto, pero también pueden obtener el objeto relacionado con una URL. El objeto relacionado se puede obtener mediante el método <code>getObject()</code> del objeto de la ruta. Cuando procesa una petición, el sistema de enrutamiento guarda el objeto relacionado con la ruta para que lo utilices en las acciones. Por tanto, modifica el método <code>executeShow()</code> para obtener el objeto <code>Jobeet</code> mediante el objeto de la ruta:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">class</span> jobActions <span class="kw2">extends</span> sfActions
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> executeShow<span class="br0">&#40;</span>sfWebRequest <span class="re0">$request</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">job</span> <span class="sy0">=</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getRoute</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">getObject</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">forward404Unless</span><span class="br0">&#40;</span><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">job</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="co1">// ...</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Si tratas de obtener la oferta de trabajo relacionada con un <code>id</code> desconocido, verás una página de error 404, pero esta vez el mensaje ha cambiado:</p>
+
+<div class="figure" id="figure_5_1">
+    <img src="../../img/jobeet_1_4/f0501.png" alt="Mensaje de error 404 cuando se utiliza sfPropelRoute" />
+
+    <p class="caption"><strong>Figura 5.1</strong> Mensaje de error 404 cuando se utiliza sfPropelRoute</p>
+</div>
+
+
+<p>El motivo es que la excepción del error 404 se ha lanzado automáticamente desde el método <code>getRoute()</code>. Por tanto, puedes simplificar todavía más el método <code>executeShow</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">class</span> jobActions <span class="kw2">extends</span> sfActions
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> executeShow<span class="br0">&#40;</span>sfWebRequest <span class="re0">$request</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">job</span> <span class="sy0">=</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getRoute</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">getObject</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="co1">// ...</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Si no quieres que la ruta muestre un error de tipo 404, establece la opción <code>allow_empty</code> a <code>true</code> en la definición de esa ruta.</p></div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> El objeto relacionado con la ruta no se carga de forma automática. Este objeto sólo se obtiene de la base de datos cuando se invoca el método <code>getRoute()</code>.</p></div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="la_clase_sfroute.html">&larr; Anterior <span>5.5. La clase sfRoute</span></a>
+            
+            <a class="span5 next" href="enrutamiento_en_acciones_y_plantillas.html">Siguiente &rarr; <span>5.7. Enrutamiento en acciones y plantillas</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'La clase para las rutas basadas en objetos (El tutorial Jobeet%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'El tutorial Jobeet : La clase para las rutas basadas en objetos']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Comenzando el proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> El proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> El modelo de datos</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> El controlador y la vista</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_5.html">
+            <span>Capítulo 5.</span> El sistema de enrutamiento
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="urls.html">
+            <span>5.1.</span> URLs
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="configurando_el_enrutamiento.html">
+            <span>5.2.</span> Configurando el enrutamiento
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="personalizando_el_enrutamiento.html">
+            <span>5.3.</span> Personalizando el enrutamiento
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="requisitos.html">
+            <span>5.4.</span> Requisitos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="la_clase_sfroute.html">
+            <span>5.5.</span> La clase sfRoute
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="la_clase_para_las_rutas_basadas_en_objetos.html">
+            <span>5.6.</span> La clase para las rutas basadas en objetos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="enrutamiento_en_acciones_y_plantillas.html">
+            <span>5.7.</span> Enrutamiento en acciones y plantillas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="la_clase_para_las_colecciones_de_rutas.html">
+            <span>5.8.</span> La clase para las colecciones de rutas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="depurando_las_rutas.html">
+            <span>5.9.</span> Depurando las rutas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="rutas_por_defecto.html">
+            <span>5.10.</span> Rutas por defecto
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="nos_vemos_manana.html">
+            <span>5.11.</span> Nos vemos mañana
+        </a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Profundizando en el modelo</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Trabajando con la página de cada categoría</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Pruebas unitarias</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Pruebas funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Probando los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> El generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> El usuario</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> El día de descanso</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Canales Atom</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Servicios web</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> El buscador</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>20</span> <a href="../capitulo_20.html"> Plugins</a>
+    </li>
+    <li class="level-1">
+        <span>21</span> <a href="../capitulo_21.html"> El día del diseño</a>
+    </li>
+    <li class="level-1">
+        <span>22</span> <a href="../capitulo_22.html"> La cache</a>
+    </li>
+    <li class="level-1">
+        <span>23</span> <a href="../capitulo_23.html"> Pasando a producción</a>
+    </li>
+    <li class="level-1">
+        <span>24</span> <a href="../capitulo_24.html"> Un repaso a Symfony</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

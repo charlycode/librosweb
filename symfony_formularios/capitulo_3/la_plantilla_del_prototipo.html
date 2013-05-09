@@ -1,0 +1,289 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>3.2. La plantilla del prototipo (Los formularios de Symfony 1.4)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="antes_de_comenzar.html" />
+        <link rel="next" href="personalizando_la_plantilla_del_prototipo.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="3.2. La plantilla del prototipo (Los formularios de Symfony 1.4)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page symfony_formularios">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Los formularios de Symfony 1.4</a></li>
+  <li><a href="../capitulo_3.html">Capítulo 3. Formularios para diseñadores web</a></li>
+  <li class="current"><span>3.2.. La plantilla del prototipo</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="la_plantilla_del_prototipo"><span>3.2.</span> La plantilla del prototipo</h1>
+    
+
+<p>Por el momento, para generar el código HTML que muestra el formulario se ha empleado la instrucción <code>&lt;?php echo $formulario ?&gt;</code> en la plantilla del prototipo.</p>
+
+<p>Los formularios están compuestos por campos. A su vez, en la plantilla cada campo está formado por tres elementos:</p>
+
+<ul>
+<li>El título del campo o <em>label</em></li>
+<li>La etiqueta del campo (<code>&lt;input&gt;</code>, <code>&lt;select&gt;</code>, etc.)</li>
+<li>Opcionalmente, los mensajes de error del campo</li>
+</ul>
+
+<p>La instrucción <code>&lt;?php echo $formulario ?&gt;</code> genera automáticamente el código HTML de todos esos elementos, como muestra el listado 3-2 en el caso de un formulario enviado con datos no válidos.</p>
+
+<p><strong>Listado 3-2 - Plantilla generada automáticamente cuando se envía un formulario con datos no válidos</strong></p>
+
+<div class="code php">
+<pre class="php"><span class="sy0">&lt;</span>form action<span class="sy0">=</span><span class="st0">&quot;/frontend_dev.php/contacto&quot;</span> method<span class="sy0">=</span><span class="st0">&quot;POST&quot;</span><span class="sy0">&gt;</span>
+  <span class="sy0">&lt;</span>table<span class="sy0">&gt;</span>
+    <span class="sy0">&lt;</span>tr<span class="sy0">&gt;</span>
+      <span class="sy0">&lt;</span>th<span class="sy0">&gt;&lt;</span>label <span class="kw1">for</span><span class="sy0">=</span><span class="st0">&quot;contacto_nombre&quot;</span><span class="sy0">&gt;</span>Nombre<span class="sy0">&lt;/</span>label<span class="sy0">&gt;&lt;/</span>th<span class="sy0">&gt;</span>
+      <span class="sy0">&lt;</span>td<span class="sy0">&gt;&lt;</span>input type<span class="sy0">=</span><span class="st0">&quot;text&quot;</span> nombre<span class="sy0">=</span><span class="st0">&quot;contacto[nombre]&quot;</span> id<span class="sy0">=</span><span class="st0">&quot;contacto_nombre&quot;</span> <span class="sy0">/&gt;&lt;/</span>td<span class="sy0">&gt;</span>
+    <span class="sy0">&lt;/</span>tr<span class="sy0">&gt;</span>
+    <span class="sy0">&lt;</span>tr<span class="sy0">&gt;</span>
+      <span class="sy0">&lt;</span>th<span class="sy0">&gt;&lt;</span>label <span class="kw1">for</span><span class="sy0">=</span><span class="st0">&quot;contacto_email&quot;</span><span class="sy0">&gt;</span>Email<span class="sy0">&lt;/</span>label<span class="sy0">&gt;&lt;/</span>th<span class="sy0">&gt;</span>
+      <span class="sy0">&lt;</span>td<span class="sy0">&gt;</span>
+        <span class="sy0">&lt;</span>ul <span class="kw2">class</span><span class="sy0">=</span><span class="st0">&quot;error_list&quot;</span><span class="sy0">&gt;</span>
+          <span class="sy0">&lt;</span>li<span class="sy0">&gt;</span>This email address is invalid<span class="sy0">.&lt;/</span>li<span class="sy0">&gt;</span>
+        <span class="sy0">&lt;/</span>ul<span class="sy0">&gt;</span>
+        <span class="sy0">&lt;</span>input type<span class="sy0">=</span><span class="st0">&quot;text&quot;</span> nombre<span class="sy0">=</span><span class="st0">&quot;contacto[email]&quot;</span> value<span class="sy0">=</span><span class="st0">&quot;fabien&quot;</span> id<span class="sy0">=</span><span class="st0">&quot;contacto_email&quot;</span> <span class="sy0">/&gt;</span>
+      <span class="sy0">&lt;/</span>td<span class="sy0">&gt;</span>
+    <span class="sy0">&lt;/</span>tr<span class="sy0">&gt;</span>
+    <span class="sy0">&lt;</span>tr<span class="sy0">&gt;</span>
+      <span class="sy0">&lt;</span>th<span class="sy0">&gt;&lt;</span>label <span class="kw1">for</span><span class="sy0">=</span><span class="st0">&quot;contacto_asunto&quot;</span><span class="sy0">&gt;</span>Asunto<span class="sy0">&lt;/</span>label<span class="sy0">&gt;&lt;/</span>th<span class="sy0">&gt;</span>
+      <span class="sy0">&lt;</span>td<span class="sy0">&gt;</span>
+        <span class="sy0">&lt;</span>select nombre<span class="sy0">=</span><span class="st0">&quot;contacto[asunto]&quot;</span> id<span class="sy0">=</span><span class="st0">&quot;contacto_asunto&quot;</span><span class="sy0">&gt;</span>
+          <span class="sy0">&lt;</span>option value<span class="sy0">=</span><span class="st0">&quot;0&quot;</span> selected<span class="sy0">=</span><span class="st0">&quot;selected&quot;</span><span class="sy0">&gt;</span>Asunto A<span class="sy0">&lt;/</span>option<span class="sy0">&gt;</span>
+          <span class="sy0">&lt;</span>option value<span class="sy0">=</span><span class="st0">&quot;1&quot;</span><span class="sy0">&gt;</span>Asunto B<span class="sy0">&lt;/</span>option<span class="sy0">&gt;</span>
+          <span class="sy0">&lt;</span>option value<span class="sy0">=</span><span class="st0">&quot;2&quot;</span><span class="sy0">&gt;</span>Asunto C<span class="sy0">&lt;/</span>option<span class="sy0">&gt;</span>
+        <span class="sy0">&lt;/</span>select<span class="sy0">&gt;</span>
+      <span class="sy0">&lt;/</span>td<span class="sy0">&gt;</span>
+    <span class="sy0">&lt;/</span>tr<span class="sy0">&gt;</span>
+    <span class="sy0">&lt;</span>tr<span class="sy0">&gt;</span>
+      <span class="sy0">&lt;</span>th<span class="sy0">&gt;&lt;</span>label <span class="kw1">for</span><span class="sy0">=</span><span class="st0">&quot;contacto_mensaje&quot;</span><span class="sy0">&gt;</span>Mensaje<span class="sy0">&lt;/</span>label<span class="sy0">&gt;&lt;/</span>th<span class="sy0">&gt;</span>
+      <span class="sy0">&lt;</span>td<span class="sy0">&gt;</span>
+        <span class="sy0">&lt;</span>ul <span class="kw2">class</span><span class="sy0">=</span><span class="st0">&quot;error_list&quot;</span><span class="sy0">&gt;</span>
+          <span class="sy0">&lt;</span>li<span class="sy0">&gt;</span>The mensaje <span class="st0">&quot;foo&quot;</span> is too short<span class="sy0">.</span> It must be of <span class="nu0">4</span> characters at least<span class="sy0">.&lt;/</span>li<span class="sy0">&gt;</span>
+        <span class="sy0">&lt;/</span>ul<span class="sy0">&gt;</span>
+        <span class="sy0">&lt;</span>textarea rows<span class="sy0">=</span><span class="st0">&quot;4&quot;</span> cols<span class="sy0">=</span><span class="st0">&quot;30&quot;</span> nombre<span class="sy0">=</span><span class="st0">&quot;contacto[mensaje]&quot;</span> id<span class="sy0">=</span><span class="st0">&quot;contacto_mensaje&quot;</span><span class="sy0">&gt;</span>foo<span class="sy0">&lt;/</span>textarea<span class="sy0">&gt;</span>
+      <span class="sy0">&lt;/</span>td<span class="sy0">&gt;</span>
+    <span class="sy0">&lt;/</span>tr<span class="sy0">&gt;</span>
+    <span class="sy0">&lt;</span>tr<span class="sy0">&gt;</span>
+      <span class="sy0">&lt;</span>td colspan<span class="sy0">=</span><span class="st0">&quot;2&quot;</span><span class="sy0">&gt;</span>
+        <span class="sy0">&lt;</span>input type<span class="sy0">=</span><span class="st0">&quot;submit&quot;</span> <span class="sy0">/&gt;</span>
+      <span class="sy0">&lt;/</span>td<span class="sy0">&gt;</span>
+    <span class="sy0">&lt;/</span>tr<span class="sy0">&gt;</span>
+  <span class="sy0">&lt;/</span>table<span class="sy0">&gt;</span>
+<span class="sy0">&lt;/</span>form<span class="sy0">&gt;</span></pre>
+</div>
+
+<p>A continuación se explica de forma detallada el código anterior. La figura 3-2 muestra las filas de tabla (etiqueta <code>&lt;tr&gt;</code>) que se generan por cada campo.</p>
+
+<div class="figure" id="figure_3_2">
+    <img src="../../img/symfony_formularios/f0302.png" alt="Código HTML generado para cada campo del formulario" />
+
+    <p class="caption"><strong>Figura 3.2</strong> Código HTML generado para cada campo del formulario</p>
+</div>
+
+
+<p>Para cada campo de la figura 3-3 se generan tres trozos de código HTML, correspondientes a los tres elementos que forman cada campo. Para el campo <code>email</code> se generan por ejemplo el siguiente código HTML:</p>
+
+<ul>
+<li>El título o <em>label</em>:</li>
+</ul>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">label</span> <span class="kw3">for</span><span class="sy0">=</span><span class="st0">&quot;contact_email&quot;</span>&gt;</span>Email<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">label</span>&gt;</span></pre>
+</div>
+
+<ul>
+<li>La etiqueta del campo:</li>
+</ul>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">input</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text&quot;</span> nombre<span class="sy0">=</span><span class="st0">&quot;contacto[email]&quot;</span> <span class="kw3">value</span><span class="sy0">=</span><span class="st0">&quot;fabien&quot;</span> <span class="kw3">id</span><span class="sy0">=</span><span class="st0">&quot;contacto_email&quot;</span> <span class="sy0">/</span>&gt;</span></pre>
+</div>
+
+<ul>
+<li>Los mensajes de error:</li>
+</ul>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">ul</span> <span class="kw3">class</span><span class="sy0">=</span><span class="st0">&quot;error_list&quot;</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">li</span>&gt;</span>The email address is invalid.<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">li</span>&gt;</span>
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">ul</span>&gt;</span></pre>
+</div>
+
+<div class="figure" id="figure_3_3">
+    <img src="../../img/symfony_formularios/f0303.png" alt="Descomposición del campo del email" />
+
+    <p class="caption"><strong>Figura 3.3</strong> Descomposición del campo del email</p>
+</div>
+
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Todos los campos disponen de un atributo <code>id</code> generado automáticamente, lo que permite a los programadores añadirles estilos CSS o comportamientos JavaScript de forma muy sencilla.</p></div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="antes_de_comenzar.html">&larr; Anterior <span>3.1. Antes de comenzar</span></a>
+            
+            <a class="span5 next" href="personalizando_la_plantilla_del_prototipo.html">Siguiente &rarr; <span>3.3. Personalizando la plantilla del prototipo</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'La plantilla del prototipo (Los formularios de Symfony 1.4%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Los formularios de Symfony 1.4 : La plantilla del prototipo']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Creación de formularios</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Validación de formularios</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_3.html">
+            <span>Capítulo 3.</span> Formularios para diseñadores web
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="antes_de_comenzar.html">
+            <span>3.1.</span> Antes de comenzar
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="la_plantilla_del_prototipo.html">
+            <span>3.2.</span> La plantilla del prototipo
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="personalizando_la_plantilla_del_prototipo.html">
+            <span>3.3.</span> Personalizando la plantilla del prototipo
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="personalizando_el_diseno.html">
+            <span>3.4.</span> Personalizando el diseño
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="internacionalizacion.html">
+            <span>3.5.</span> Internacionalización
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="trabajando_con_el_programador.html">
+            <span>3.6.</span> Trabajando con el programador
+        </a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Integración con Propel</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Integrando Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Referencia de Widgets</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Validadores</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

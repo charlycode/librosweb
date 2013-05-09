@@ -1,0 +1,485 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>2.2. Organización del código (Symfony 1.4, la guía definitiva)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="el_patron_mvc.html" />
+        <link rel="next" href="herramientas_comunes.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="2.2. Organización del código (Symfony 1.4, la guía definitiva)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page symfony_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Symfony 1.4, la guía definitiva</a></li>
+  <li><a href="../capitulo_2.html">Capítulo 2. Explorando el interior de Symfony</a></li>
+  <li class="current"><span>2.2.. Organización del código</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="organizacion_del_codigo"><span>2.2.</span> Organización del código</h1>
+    
+
+<p>Ahora que ya conoces los componentes que forman una aplicación de Symfony, a lo mejor te estás preguntando sobre cómo están organizados. Symfony organiza el código fuente en una estructura de tipo proyecto y almacena los archivos del proyecto en una estructura estandarizada de tipo árbol.</p>
+
+<h3 id="estructura_del_proyecto_aplicaciones_modulos_y_acciones">2.2.1. Estructura del proyecto: Aplicaciones, Módulos y Acciones</h3>
+
+<p>Symfony considera un proyecto como <em>"un conjunto de servicios y operaciones disponibles bajo un determinado nombre de dominio y que comparten el mismo modelo de objetos"</em>.</p>
+
+<p>Dentro de un proyecto, las operaciones se agrupan de forma lógica en aplicaciones. Normalmente, una aplicación se ejecuta de forma independiente respecto de otras aplicaciones del mismo proyecto.  Lo habitual es que un proyecto contenga dos aplicaciones: una para la parte pública y otra para la parte de gestión, compartiendo ambas la misma base de datos. También es posible definir proyectos que estén formados por varios sitios web pequeños, cada uno de ellos considerado como una aplicación. En este caso, es importante tener en cuenta que los enlaces entre aplicaciones se deben indicar de forma absoluta.</p>
+
+<p>Cada aplicación está formada por uno o más módulos. Un módulo normalmente representa a una página web o a un grupo de páginas con un propósito relacionado. Por ejemplo, una aplicación podría tener módulos como <code>home</code>, <code>articulos</code>, <code>ayuda</code>, <code>carritoCompra</code>, <code>cuenta</code>, etc.</p>
+
+<p>Los módulos almacenan las acciones, que representan cada una de las operaciones que se puede realizar en un módulo. Por ejemplo el módulo <code>carritoCompra</code> puede definir acciones como <code>anadir</code>, <code>mostrar</code> y <code>actualizar</code>. Normalmente las acciones se describen mediante verbos. Trabajar con acciones es muy similar a trabajar con las páginas de una aplicación web tradicional, aunque en este caso dos acciones diferentes pueden acabar mostrando la misma página (como por ejemplo la acción de añadir un comentario a una entrada de un blog, que acaba volviendo a mostrar la página de la entrada con el nuevo comentario).</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> <strong>Nota del traductor</strong> En el párrafo anterior, la acción del carrito se llama <code>anadir</code> y no <code>añadir</code>, ya que el nombre de una acción también se utiliza como parte del nombre de un fichero y como parte del nombre de una función, por lo que se recomienda utilizar exclusivamente caracteres ASCII, y por tanto, no debería utilizarse la letra <code>ñ</code>.</p></div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Si crees que todo esto es demasiado complicado para tu primer proyecto con Symfony, puedes agrupar todas las acciones en un único módulo, para simplificar la estructura de archivos. Cuando la aplicación se complique, puedes reorganizar las acciones en diferentes módulos. Como se comenta en el capítulo 1, la acción de reescribir el código para mejorar su estructura o hacerlo más sencillo (manteniendo siempre su comportamiento original) se llama refactorización, y es algo muy común cuando se aplican los principios del RAD  <em>"desarrollo rápido de aplicaciones"</em>).</p></div>
+
+<p>La figura 2-3 muestra un ejemplo de organización del código para un proyecto de un blog, siguiendo la estructura de proyecto / aplicación / módulo / acción. No obstante, la estructura de directorios real del proyecto es diferente al esquema mostrado por esa figura.</p>
+
+<div class="figure" id="figure_2_3">
+    <img src="../../img/symfony_1_4/f0203.png" alt="Ejemplo de organización del código" />
+
+    <p class="caption"><strong>Figura 2.3</strong> Ejemplo de organización del código</p>
+</div>
+
+
+<h3 id="estructura_del_arbol_de_archivos">2.2.2. Estructura del árbol de archivos</h3>
+
+<p>Normalmente, todos los proyectos web comparten el mismo tipo de contenidos, como por ejemplo:</p>
+
+<ul>
+<li>Una base de datos, como MySQL o PostgreSQL</li>
+<li>Archivo estáticos (HTML, imágenes, archivos de JavaScript, hojas de estilos, etc.)</li>
+<li>Archivos subidos al sitio web por parte de los usuarios o los administradores</li>
+<li>Clases y librerías PHP</li>
+<li>Librerías externas (scripts desarrollados por terceros)</li>
+<li>Archivos que se ejecutan por lotes  <em>batch files</em>) que normalmente son scripts que se ejecutan vía línea de comandos o mediante cron</li>
+<li>Archivos de log (las trazas que generan las aplicaciones y/o el servidor)</li>
+<li>Archivos de configuración</li>
+</ul>
+
+<p>Symfony proporciona una estructura en forma de árbol de archivos para organizar de forma lógica todos esos contenidos, además de ser consistente con la arquitectura MVC utilizada y con la agrupación proyecto / aplicación / módulo. Cada vez que se crea un nuevo proyecto, aplicación o módulo, se genera de forma automática la parte correspondiente de esa estructura. Además, la estructura se puede personalizar completamente, para reorganizar los archivos y directorios o para cumplir con las exigencias de organización de un cliente.</p>
+
+<h4 id="estructura_de_la_raiz_del_proyecto">2.2.2.1. Estructura de la raíz del proyecto</h4>
+
+<p>La raíz de cualquier proyecto Symfony contiene los siguientes directorios:</p>
+
+<div class="code code">
+<pre class="code">apps/
+  frontend/
+  backend/
+cache/
+config/
+data/
+  sql/
+doc/
+lib/
+  model/
+log/
+plugins/
+test/
+  bootstrap/
+  unit/
+  functional/
+web/
+  css/
+  images/
+  js/
+  uploads/</pre>
+</div>
+
+<p>La tabla 2-1 describe los contenidos de estos directorios</p>
+
+<p><strong>Tabla 2-1. Directorios en la raíz de los proyectos Symfony</strong></p>
+
+<div class="table" id="table_2_1">
+
+    <table>
+<thead>
+<tr>
+  <th>Directorio</th>
+  <th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>apps/</code></td>
+  <td>Contiene un directorio por cada aplicación del proyecto (normalmente, <code>frontend</code> y <code>backend</code> para la parte pública y la parte de gestión respectivamente)</td>
+</tr>
+<tr>
+  <td><code>cache/</code></td>
+  <td>Contiene la versión cacheada de la configuración y (si está activada) la versión cacheada de las acciones y plantillas del proyecto. El mecanismo de cache (que se explica en el Capítulo 12) utiliza los archivos de este directorio para acelerar la respuesta a las peticiones web. Cada aplicación contiene un subdirectorio que guarda todos los archivos PHP y HTML preprocesados</td>
+</tr>
+<tr>
+  <td><code>config/</code></td>
+  <td>Almacena la configuración general del proyecto</td>
+</tr>
+<tr>
+  <td><code>data/</code></td>
+  <td>En este directorio se almacenan los archivos relacionados con los datos, como por ejemplo el esquema de una base de datos, el archivo que contiene las instrucciones SQL para crear las tablas e incluso un archivo de bases de datos de SQLite</td>
+</tr>
+<tr>
+  <td><code>doc/</code></td>
+  <td>El directorio en el que se almacena por defecto toda la documentación del proyecto</td>
+</tr>
+<tr>
+  <td><code>lib/</code></td>
+  <td>Almacena las clases y librerías externas. Se suele guardar todo el código común a todas las aplicaciones del proyecto. El subdirectorio <code>model/</code> guarda el modelo de objetos del proyecto (como se describe en el Capítulo 8)</td>
+</tr>
+<tr>
+  <td><code>log/</code></td>
+  <td>Guarda todos los archivos de log generados por Symfony. También se puede utilizar para guardar los logs del servidor web, de la base de datos o de cualquier otro componente del proyecto. Symfony crea un archivo de log por cada aplicación y por cada entorno (los archivos de log se ven detalladamente en el Capítulo 16)</td>
+</tr>
+<tr>
+  <td><code>plugins/</code></td>
+  <td>Almacena los plugins instalados en la aplicación (el Capítulo 17 aborda el tema de los plugins)</td>
+</tr>
+<tr>
+  <td><code>test/</code></td>
+  <td>Contiene las pruebas unitarias y funcionales escritas en PHP y compatibles con el framework de pruebas de Symfony (que se explica en el capítulo 15). Cuando se crea un proyecto, Symfony crea algunos pruebas básicas</td>
+</tr>
+<tr>
+  <td><code>web/</code></td>
+  <td>La raíz del servidor web. Los únicos archivos accesibles desde Internet son los que se encuentran en este directorio</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+<h4 id="estructura_de_cada_aplicacion">2.2.2.2. Estructura de cada aplicación</h4>
+
+<p>Todas las aplicaciones de Symfony tienen la misma estructura de archivos y directorios:</p>
+
+<div class="code code">
+<pre class="code">apps/
+  [nombre aplicacion]/
+    config/
+    i18n/
+    lib/
+    modules/
+    templates/
+      layout.php</pre>
+</div>
+
+<p>La tabla 2-2 describe los subdirectorios de una aplicación</p>
+
+<p><strong>Tabla 2-2. Subdirectorios de cada aplicación Symfony</strong></p>
+
+<div class="table" id="table_2_2">
+
+    <table>
+<thead>
+<tr>
+  <th>Directorio</th>
+  <th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>config/</code></td>
+  <td>Contiene un montón de archivos de configuración creados con YAML. Aquí se almacena la mayor parte de la configuración de la aplicación, salvo los parámetros propios del framework. También es posible redefinir en este directorio los parámetros por defecto si es necesario. El Capítulo 5 contiene más detalles sobre la configuración de las aplicaciones</td>
+</tr>
+<tr>
+  <td><code>i18n/</code></td>
+  <td>Contiene todos los archivos utilizados para la internacionalización de la aplicación, sobre todo los archivos que traducen la interfaz (el Capítulo 13 detalla la internacionalización). La internacionalización también se puede realizar con una base de datos, en cuyo caso este directorio no se utilizaría</td>
+</tr>
+<tr>
+  <td><code>lib/</code></td>
+  <td>Contiene las clases y librerías utilizadas exclusivamente por la aplicación</td>
+</tr>
+<tr>
+  <td><code>modules/</code></td>
+  <td>Almacena los módulos que definen las características de la aplicación</td>
+</tr>
+<tr>
+  <td><code>templates/</code></td>
+  <td>Contiene las plantillas globales de la aplicación, es decir, las que utilizan todos los módulos. Por defecto contiene un archivo llamado <code>layout.php</code>, que es el layout principal con el que se muestran las plantillas de los módulos</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+<div class="admonition note"><p><strong class="title">Nota</strong> En las aplicaciones recién creadas, los directorios <code>i18n/</code>, <code>lib/</code> y <code>modules/</code> están vacíos.</p></div>
+
+<p>Las clases de una aplicación no pueden acceder a los métodos o atributos de otras aplicaciones del mismo proyecto. Además, los enlaces entre 2 aplicaciones de un mismo proyecto se deben indicar de forma absoluta. Esta última restricción es importante durante la inicialización del proyecto, que es cuando debes elegir como dividir el proyecto en aplicaciones.</p>
+
+<h4 id="estructura_de_cada_modulo">2.2.2.3. Estructura de cada módulo</h4>
+
+<p>Cada aplicación contiene uno o más módulos. Cada módulo tiene su propio subdirectorio dentro del directorio <code>modules</code> y el nombre del directorio es el que se elige durante la creación del módulo.</p>
+
+<p>Esta es la estructura de directorios típica de un módulo:</p>
+
+<div class="code code">
+<pre class="code">apps/
+  [nombre aplicacion]/
+    modules/
+      [nombre modulo]/
+          actions/
+            actions.class.php
+          config/
+          lib/
+          templates/
+            indexSuccess.php</pre>
+</div>
+
+<p>La tabla 2-3 describe los subirectorios de un módulo.</p>
+
+<p><strong>Tabla 2-3. Subdirectorios de cada módulo</strong></p>
+
+<div class="table" id="table_2_3">
+
+    <table>
+<thead>
+<tr>
+  <th>Directorio</th>
+  <th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>actions/</code></td>
+  <td>Normalmente contiene un único archivo llamado <code>actions.class.php</code> y que corresponde a la clase que almacena todas las acciones del módulo. También es posible crear un archivo diferente para cada acción del módulo</td>
+</tr>
+<tr>
+  <td><code>config/</code></td>
+  <td>Puede contener archivos de configuración adicionales con parámetros exclusivos del módulo</td>
+</tr>
+<tr>
+  <td><code>lib/</code></td>
+  <td>Almacena las clases y librerías utilizadas exclusivamente por el módulo</td>
+</tr>
+<tr>
+  <td><code>templates/</code></td>
+  <td>Contiene las plantillas correspondientes a las acciones del módulo. Cuando se crea un nuevo módulo, automáticamente se crea la plantilla llamada <code>indexSuccess.php</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Los módulos recién creados no contienen los directorios <code>config/</code> y <code>lib/</code>, por lo que debes crearlos manualmente si los necesitas.</p></div>
+
+<h4 id="estructura_del_sitio_web">2.2.2.4. Estructura del sitio web</h4>
+
+<p>Existen pocas restricciones sobre la estructura del directorio <code>web</code>, que es el directorio que contiene los archivos que se pueden acceder de forma pública. Si se utilizan algunas convenciones básicas en los nombres de los subdirectorios, se pueden simplificar las plantillas. La siguiente es una estructura típica del directorio <code>web</code>:</p>
+
+<div class="code code">
+<pre class="code">web/
+  css/
+  images/
+  js/
+  uploads/</pre>
+</div>
+
+<p>Normalmente, los archivos estáticos se organizan según los directorios de la tabla 2-4.</p>
+
+<p><strong>Tabla 2-4. Subdirectorios habituales en la carpeta <code>web</code></strong></p>
+
+<div class="table" id="table_2_4">
+
+    <table>
+<thead>
+<tr>
+  <th>Directorio</th>
+  <th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>css/</code></td>
+  <td>Contiene los archivos de hojas de estilo creados con CSS (archivos con extensión <code>.css</code></td>
+</tr>
+<tr>
+  <td><code>images/</code></td>
+  <td>Contiene las imágenes del sitio con formato <code>.jpg</code>, <code>.png</code> o <code>.gif</code></td>
+</tr>
+<tr>
+  <td><code>js/</code></td>
+  <td>Contiene los archivos de JavaScript con extensión <code>.js</code></td>
+</tr>
+<tr>
+  <td><code>uploads/</code></td>
+  <td>Se pueden almacenar los archivos subidos por los usuarios. Aunque normalmente este directorio contiene imágenes, no se debe confundir con el directorio que almacena las imágenes del sitio (<code>images/</code>). Esta distinción permite sincronizar los servidores de desarrollo y de producción sin afectar a las imágenes subidas por los usuarios</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Aunque es muy recomendable mantener la estructura definida por defecto, es posible modificarla para adaptarse a las necesidades específicas de cada proyecto, como por ejemplo los proyectos que se ejecutan en servidores con sus propias estructuras de directorios definidas y con otras políticas para el desarrollo de las aplicaciones. El Capítulo 19 explica en detalle cómo modificar la estructura de directorios definida por Symfony.</p></div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="el_patron_mvc.html">&larr; Anterior <span>2.1. El patrón MVC</span></a>
+            
+            <a class="span5 next" href="herramientas_comunes.html">Siguiente &rarr; <span>2.3. Herramientas comunes</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Organización del código (Symfony 1.4, la guía definitiva%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Symfony 1.4, la guía definitiva : Organización del código']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción a Symfony</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_2.html">
+            <span>Capítulo 2.</span> Explorando el interior de Symfony
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_patron_mvc.html">
+            <span>2.1.</span> El patrón MVC
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="organizacion_del_codigo.html">
+            <span>2.2.</span> Organización del código
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="herramientas_comunes.html">
+            <span>2.3.</span> Herramientas comunes
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="resumen.html">
+            <span>2.4.</span> Resumen
+        </a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Ejecutar aplicaciones Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Introducción a la creación de páginas</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Configurar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> El Controlador</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> La Vista</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> El modelo (Doctrine)</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Enlaces y sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Emails</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Uso de la cache</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Pruebas unitarias y funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Herramientas para la administración de aplicaciones</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> Personalizar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> Rendimiento</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Configuración avanzada</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

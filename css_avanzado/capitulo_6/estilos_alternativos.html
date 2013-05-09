@@ -1,0 +1,245 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>6.4. Estilos alternativos (CSS avanzado)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="variables_en_las_hojas_de_estilos.html" />
+        <link rel="next" href="comentarios_condicionales_filtros_y_hacks.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="6.4. Estilos alternativos (CSS avanzado)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page css_avanzado">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">CSS avanzado</a></li>
+  <li><a href="../capitulo_6.html">Capítulo 6. Técnicas avanzadas</a></li>
+  <li class="current"><span>6.4.. Estilos alternativos</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="estilos_alternativos"><span>6.4.</span> Estilos alternativos</h1>
+    
+
+<p>La mayoría de sitios web disponen de una o varias hojas de estilos CSS que se aplican automáticamente al cargar cada página en el navegador. En realidad, el estándar HTML/XHTML permite definir varias hojas de estilos CSS alternativas en una misma página.</p>
+
+<p>De esta forma, el usuario puede seleccionar el estilo con el que se muestra la página entre una serie de estilos definidos por el diseñador web. En ocasiones los estilos alternativos se emplean por pura estética, por ejemplo para ofrecer <em>temas</em> y esquemas de colores diferentes en un sitio web. Sin embargo, el uso más adecuado de los estilos alternativos es la mejora de la accesibilidad ofreciendo hojas de estilos que faciliten el acceso a los contenidos para las personas discapacitadas.</p>
+
+<p>Las hojas de estilos CSS que se enlazan en una página HTML mediante la etiqueta <code>&lt;link&gt;</code> pueden ser de tres tipos:</p>
+
+<ul>
+<li>Permanentes (<em>"persistent"</em>): las hojas de estilos que se aplican siempre.</li>
+<li>Preferentes (<em>"preferred"</em>): las hojas de estilos alternativas que se aplican por defecto.</li>
+<li>Alternativas (<em>"alternate"</em>): las hojas de estilos alternativas que el usuario puede seleccionar.</li>
+</ul>
+
+<p>Las hojas de estilos permanentes se aplican siempre independientemente del resto de hojas de estilos definidas o de la hoja de estilo alternativa utilizada por el usuario. Para indicar que una hoja de estilos CSS es permanente, se utiliza el atributo <code>rel="stylesheet"</code> y no se establece el atributo <code>title</code> en la etiqueta <code>&lt;link&gt;</code>:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">link</span> <span class="kw3">rel</span><span class="sy0">=</span><span class="st0">&quot;stylesheet&quot;</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text/css&quot;</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;css/estilos.css&quot;</span> <span class="sy0">/</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">link</span> <span class="kw3">rel</span><span class="sy0">=</span><span class="st0">&quot;stylesheet&quot;</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text/css&quot;</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;css/otros_estilos.css&quot;</span> <span class="sy0">/</span>&gt;</span></pre>
+</div>
+
+<p>En el ejemplo anterior, las dos hojas de estilos CSS se aplican siempre independientemente del medio y de otras posibles hojas de estilos definidas por la página.</p>
+
+<p>Las hojas de estilos preferentes son las hojas de estilos alternativas que se aplican por defecto. Por lo tanto, si el usuario no selecciona explícitamente otra CSS alternativa, en la página también se aplican las hojas de estilos preferentes. Para indicar que una hoja de estilos CSS es preferente, se utiliza el atributo <code>rel="stylesheet"</code> y se establece el atributo <code>title</code> en la etiqueta <code>&lt;link&gt;</code>:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">link</span> <span class="kw3">rel</span><span class="sy0">=</span><span class="st0">&quot;stylesheet&quot;</span> <span class="kw3">title</span><span class="sy0">=</span><span class="st0">&quot;Estilo alternativo&quot;</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text/css&quot;</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;css/estilos.css&quot;</span> <span class="sy0">/</span>&gt;</span></pre>
+</div>
+
+<p>La hoja de estilos enlazada en el ejemplo anterior se aplica en la página siempre que el usuario no seleccione otra hoja de estilos alternativa. El estándar HTML/XHTML permite crear grupos de hojas de estilos preferentes. Si dos o más hojas de estilos enlazadas tienen el mismo título, el navegador considera que forman parte de un grupo y las aplica de forma conjunta:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">link</span> <span class="kw3">rel</span><span class="sy0">=</span><span class="st0">&quot;stylesheet&quot;</span> <span class="kw3">title</span><span class="sy0">=</span><span class="st0">&quot;Estilo alternativo&quot;</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text/css&quot;</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;css/estilos1.css&quot;</span> <span class="sy0">/</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">link</span> <span class="kw3">rel</span><span class="sy0">=</span><span class="st0">&quot;stylesheet&quot;</span> <span class="kw3">title</span><span class="sy0">=</span><span class="st0">&quot;Estilo alternativo&quot;</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text/css&quot;</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;css/estilos2.css&quot;</span> <span class="sy0">/</span>&gt;</span></pre>
+</div>
+
+<p>Las etiquetas <code>&lt;link&gt;</code> del ejemplo anterior enlazan dos hojas de estilos diferentes con el mismo valor en su atributo <code>title</code>, por lo que el navegador considera que forman un grupo. Como se trata de hojas de estilos preferentes (porque tienen un atributo <code>rel="stylesheet"</code> y un atributo <code>title</code> no vacío) el navegador aplica todas las hojas de estilos del grupo a no ser que el usuario seleccione explícitamente otra hoja de estilos alternativa.</p>
+
+<p>El siguiente ejemplo incluye hojas de estilos permanentes y preferentes:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">link</span> <span class="kw3">rel</span><span class="sy0">=</span><span class="st0">&quot;stylesheet&quot;</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text/css&quot;</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;css/estilos1.css&quot;</span> <span class="sy0">/</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">link</span> <span class="kw3">rel</span><span class="sy0">=</span><span class="st0">&quot;stylesheet&quot;</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text/css&quot;</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;css/estilos2.css&quot;</span> <span class="sy0">/</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">link</span> <span class="kw3">rel</span><span class="sy0">=</span><span class="st0">&quot;stylesheet&quot;</span> <span class="kw3">title</span><span class="sy0">=</span><span class="st0">&quot;Estilo alternativo&quot;</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text/css&quot;</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;css/estilos3.css&quot;</span> <span class="sy0">/</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">link</span> <span class="kw3">rel</span><span class="sy0">=</span><span class="st0">&quot;stylesheet&quot;</span> <span class="kw3">title</span><span class="sy0">=</span><span class="st0">&quot;Estilo alternativo&quot;</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text/css&quot;</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;css/estilos4.css&quot;</span> <span class="sy0">/</span>&gt;</span></pre>
+</div>
+
+<p>Las dos primeras hojas de estilos del ejemplo anterior son de tipo permanente, por lo que el navegador las aplica siempre. Las otras dos hojas de estilos son de tipo preferente, por lo que el navegador también las aplica a menos que el usuario seleccione otras hojas de estilo alternativas.</p>
+
+<p>El último tipo de hojas de estilos son las alternativas, que sólo se aplican si el usuario las selecciona explícitamente. Para indicar que una hoja de estilos CSS es alternativa, se utiliza el atributo <code>rel="alternate stylesheet"</code> y se establece el atributo <code>title</code> en la etiqueta <code>&lt;link&gt;</code>:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">link</span> <span class="kw3">rel</span><span class="sy0">=</span><span class="st0">&quot;alternate stylesheet&quot;</span> <span class="kw3">title</span><span class="sy0">=</span><span class="st0">&quot;Estilo alternativo&quot;</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text/css&quot;</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;css/estilos.css&quot;</span> <span class="sy0">/</span>&gt;</span></pre>
+</div>
+
+<p>La hoja de estilos del ejemplo anterior no se aplica en la página a menos que el usuario la seleccione entre todas las hojas de estilos alternativas. Esta característica no está disponible en todos los navegadores, por lo que los diseñadores no deben suponer que el usuario podrá utilizarla.</p>
+
+<p>En los navegadores como Firefox y Opera, cuando una página dispone de varias hojas de estilos alternativas, el usuario puede acceder a todas ellas y seleccionar la que desee a través del menú <code>Ver &gt; Estilo</code> o <code>Ver &gt; Estilo de página</code>.</p>
+
+<p>Si se considera una página HTML que enlaza las siete hojas de estilos siguientes:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">link</span> <span class="kw3">rel</span><span class="sy0">=</span><span class="st0">&quot;stylesheet&quot;</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text/css&quot;</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;css/estilos1.css&quot;</span> <span class="sy0">/</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">link</span> <span class="kw3">rel</span><span class="sy0">=</span><span class="st0">&quot;stylesheet&quot;</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text/css&quot;</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;css/estilos2.css&quot;</span> <span class="sy0">/</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">link</span> <span class="kw3">rel</span><span class="sy0">=</span><span class="st0">&quot;stylesheet&quot;</span> <span class="kw3">title</span><span class="sy0">=</span><span class="st0">&quot;Estilo alternativo 1&quot;</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text/css&quot;</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;css/estilos3.css&quot;</span> <span class="sy0">/</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">link</span> <span class="kw3">rel</span><span class="sy0">=</span><span class="st0">&quot;stylesheet&quot;</span> <span class="kw3">title</span><span class="sy0">=</span><span class="st0">&quot;Estilo alternativo 1&quot;</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text/css&quot;</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;css/estilos4.css&quot;</span> <span class="sy0">/</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">link</span> <span class="kw3">rel</span><span class="sy0">=</span><span class="st0">&quot;stylesheet&quot;</span> <span class="kw3">title</span><span class="sy0">=</span><span class="st0">&quot;Estilo alternativo 2&quot;</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text/css&quot;</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;css/estilos5.css&quot;</span> <span class="sy0">/</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">link</span> <span class="kw3">rel</span><span class="sy0">=</span><span class="st0">&quot;stylesheet&quot;</span> <span class="kw3">title</span><span class="sy0">=</span><span class="st0">&quot;Estilo alternativo 2&quot;</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text/css&quot;</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;css/estilos6.css&quot;</span> <span class="sy0">/</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">link</span> <span class="kw3">rel</span><span class="sy0">=</span><span class="st0">&quot;stylesheet&quot;</span> <span class="kw3">title</span><span class="sy0">=</span><span class="st0">&quot;Estilo alternativo 3&quot;</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text/css&quot;</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;css/estilos7.css&quot;</span> <span class="sy0">/</span>&gt;</span></pre>
+</div>
+
+<p>Inicialmente, las hojas de estilos que se aplican en la página son:</p>
+
+<ul>
+<li>Las dos primeras hojas de estilos (<code>estilos1.css</code> y <code>estilos2.css</code>) por ser de tipo permanente y que por tanto, se aplican bajo cualquier circunstancia.</li>
+<li>Las dos siguientes hojas de estilos (<code>estilos3.css</code> y <code>estilos4.css</code>) por ser de tipo preferente y que por tanto, se aplican siempre que el usuario no seleccione explícitamente otro tipo de hoja de estilos alternativa.</li>
+</ul>
+
+<p>Si el usuario utiliza un navegador avanzado (Firefox, Opera) y pulsa sobre el menú <code>Ver &gt; Estilo</code>, se muestran las siguientes opciones:</p>
+
+<ul>
+<li><code>Estilo alternativo 1</code>, seleccionado por defecto y que hace que se apliquen las hojas de estilos <code>estilos3.css</code> y <code>estilos4.css</code> y se dejen de aplicar el resto de hojas de estilos alternativas.</li>
+<li><code>Estilo alternativo 2</code>, que hace que se apliquen las hojas de estilos <code>estilos5.css</code> y <code>estilos6.css</code> y se dejen de aplicar el resto de hojas de estilos alternativas, incluyendo las hojas de estilos preferentes <code>estilos3.css</code> y <code>estilos4.css</code>.</li>
+<li><code>Estilo alternativo 3</code>, que hace que se aplique la hoja de estilos <code>estilos7.css</code> y se dejen de aplicar el resto de hojas de estilos alternativas, incluyendo las hojas de estilos preferentes <code>estilos3.css</code> y <code>estilos4.css</code>.</li>
+</ul>
+
+<p>Por último, recuerda que independientemente del tipo de hoja de estilos enlazada, los navegadores también tienen en cuenta los medios (atributo <code>media</code>) al aplicar cada hoja de estilos en cada dispositivo con el que accede el usuario.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="variables_en_las_hojas_de_estilos.html">&larr; Anterior <span>6.3. Variables en las hojas de estilos</span></a>
+            
+            <a class="span5 next" href="comentarios_condicionales_filtros_y_hacks.html">Siguiente &rarr; <span>6.5. Comentarios condicionales, filtros y hacks</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Estilos alternativos (CSS avanzado%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'CSS avanzado : Estilos alternativos']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Técnicas imprescindibles</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Buenas prácticas</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Selectores</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Propiedades avanzadas</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Frameworks</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_6.html">
+            <span>Capítulo 6.</span> Técnicas avanzadas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="mapas_de_imagen.html">
+            <span>6.2.</span> Mapas de imagen
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="variables_en_las_hojas_de_estilos.html">
+            <span>6.3.</span> Variables en las hojas de estilos
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="estilos_alternativos.html">
+            <span>6.4.</span> Estilos alternativos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="comentarios_condicionales_filtros_y_hacks.html">
+            <span>6.5.</span> Comentarios condicionales, filtros y hacks
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="selector_de_navegador.html">
+            <span>6.6.</span> Selector de navegador
+        </a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

@@ -1,0 +1,202 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>11.4. Iframes (Introducción a XHTML)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="css.html" />
+        <link rel="next" href="otras_etiquetas.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="11.4. Iframes (Introducción a XHTML)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page xhtml">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Introducción a XHTML</a></li>
+  <li><a href="../capitulo_11.html">Capítulo 11. Otras etiquetas importantes</a></li>
+  <li class="current"><span>11.4. Iframes</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="iframes"><span>11.4.</span> Iframes</h1>
+    
+
+<p>Aunque su uso no es muy común, la etiqueta <code>&lt;iframe&gt;</code> puede ser muy útil en determinadas ocasiones, ya que permite insertar un documento HTML dentro de otro documento HTML. Un <code>iframe</code> puede considerarse como un <em>agujero</em> que se abre en una página web y a través del cual se muestra otra página web.</p>
+
+<p>En ocasiones se utiliza para mostrar contenidos externos al sitio web como si fueran parte del mismo sitio. Otra veces se emplea para incluir una aplicación común a varios sitios web de una misma empresa.</p>
+
+<p>La página principal de <strong>Google Analytics</strong> emplea un <code>&lt;iframe&gt;</code> para incluir en un pequeño recuadro la página correspondiente a la validación de usuario.</p>
+
+<div class="figure" id="figure_11_3">
+    <img src="../../img/xhtml/f1103.gif" alt="Ejemplo de página con un iframe" />
+
+    <p class="caption"><strong>Figura 11.3</strong> Ejemplo de página con un iframe</p>
+</div>
+
+
+<table class="property" summary="Definición y propiedades de la etiqueta iframe de XHTML"><thead><tr>  <th scope="row">Etiqueta</th>  <td><strong class="title"><span>&lt;</span>iframe<span>&gt;</span></strong></td></tr></thead><tbody><tr>  <th scope="row">Atributos comunes</th>  <td><a href="../capitulo_2/etiquetas_y_atributos.html#atributos_basicos">básicos</a></td></tr><tr>  <th scope="row">Atributos propios</th>  <td><ul><li><p><code>src = "url"</code> - URL del documento HTML que se visualiza en el iframe</p></li><li><p><code>height = "longitud"</code> - Altura que ocupará el iframe en el documento</p></li><li><p><code>width = "longitud"</code> - Anchura que ocupará el iframe en el documento</p></li><li><p><code>name = "texto"</code> - Nombre que identifica al iframe</p></li><li><p><code>longdesc = "url"</code> - Dirección en la que puede encontrarse una descripción larga del contenido del iframe</p></li><li><p><code>scrolling = "yes | no | auto"</code> - Indica si el iframe debe mostrar barras de scroll (horizontal y vertical) cuando el contenido incluido no cabe en el iframe</p></li></ul></td></tr><tr>  <th scope="row">Tipo de elemento</th>  <td>Bloque y en línea</td></tr><tr>  <th scope="row">Descripción</th>  <td>Se emplea para incluir en la página un marco que muestra otro documento HTML</td></tr></tbody></table>
+
+<p>El siguiente ejemplo define la altura y anchura del <code>iframe</code>, indica la URL que se debe mostrar y mediante el atributo <code>scrolling</code> se indica que el <code>iframe</code> no debe mostrar barras de <em>scroll</em> ni siquiera en el caso de que el contenido mostrado no quepa en el <code>iframe</code> definido:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">iframe</span> <span class="kw3">src</span><span class="sy0">=</span><span class="st0">&quot;/ruta/documento.html&quot;</span> <span class="kw3">width</span><span class="sy0">=</span><span class="st0">&quot;250&quot;</span> <span class="kw3">height</span><span class="sy0">=</span><span class="st0">&quot;250&quot;</span> <span class="kw3">scrolling</span><span class="sy0">=</span><span class="st0">&quot;no&quot;</span> <span class="sy0">/</span>&gt;</span></pre>
+</div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="css.html">&larr; Anterior <span>11.3. CSS</span></a>
+            
+            <a class="span5 next" href="otras_etiquetas.html">Siguiente &rarr; <span>11.5. Otras etiquetas</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Iframes (Introducción a XHTML%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a XHTML : Iframes']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Características básicas</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Texto</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Enlaces</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Listas</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Imágenes y objetos</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Tablas</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Estructura y layout</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Metainformación</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_11.html">
+            <span>Capítulo 11.</span> Otras etiquetas importantes
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="javascript.html">
+            <span>11.2.</span> JavaScript
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="css.html">
+            <span>11.3.</span> CSS
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="iframes.html">
+            <span>11.4.</span> Iframes
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="otras_etiquetas.html">
+            <span>11.5.</span> Otras etiquetas
+        </a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Accesibilidad</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Validación</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Fragmentos de código</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

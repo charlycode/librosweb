@@ -1,0 +1,558 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>6.2. Acciones (Symfony 1.4, la guía definitiva)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="el_controlador_frontal.html" />
+        <link rel="next" href="accediendo_a_la_peticion.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="6.2. Acciones (Symfony 1.4, la guía definitiva)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page symfony_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Symfony 1.4, la guía definitiva</a></li>
+  <li><a href="../capitulo_6.html">Capítulo 6. El Controlador</a></li>
+  <li class="current"><span>6.2.. Acciones</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="acciones"><span>6.2.</span> Acciones</h1>
+    
+
+<p>Las acciones son el corazón de la aplicación, puesto que contienen toda la lógica de la aplicación. Las acciones realizan llamadas al modelo y definen variables para la vista. Cuando se realiza una petición web en una aplicación Symfony, la URL define una acción y los parámetros de la petición.</p>
+
+<h3 id="la_clase_de_la_accion">6.2.1. La clase de la acción</h3>
+
+<p>Las acciones son métodos con el nombre <code>executeNombreAccion</code> de una clase llamada <code>nombreModuloActions</code> que hereda de la clase <code>sfActions</code> y se encuentran agrupadas por módulos. La clase que representa las acciones de un módulo se encuentra en el archivo <code>actions.class.php</code>, en el directorio <code>actions/</code> del módulo.</p>
+
+<p>El listado 6-3 muestra un ejemplo de un archivo <code>actions.class.php</code> con una única acción <code>index</code> para todo el módulo <code>mimodulo</code>.</p>
+
+<p><strong>Listado 6-3 - Ejemplo de la clase de la acción, en <code>app/frontend/modules/mimodulo/actions/actions.class.php</code></strong></p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">class</span> mimoduloActions <span class="kw2">extends</span> sfActions
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> executeIndex<span class="br0">&#40;</span><span class="re0">$request</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="co1">// ...</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Aunque en PHP no se distinguen las mayúsculas y minúsculas de los nombres de los métodos, Symfony si los distingue. Así que se debe tener presente que los métodos de las acciones deben comenzar con <code>execute</code> en minúscula, seguido por el nombre exacto de la acción con la primera letra en mayúscula.</p></div>
+
+<p>Para ejecutar un acción, se debe llamar al script del controlador frontal con el nombre del módulo y de la acción como parámetros. Por defecto, se añade <code>nombre_modulo/nombre_accion</code> al script. Esto significa que la acción del listado 6-3 se puede ejecutar llamándola con la siguiente URL:</p>
+
+<div class="code code">
+<pre class="code">http://localhost/index.php/mimodulo/index</pre>
+</div>
+
+<p>Añadir más acciones simplemente significa agregar más métodos <code>execute</code> al objeto <code>sfActions</code>, como se muestra en el listado 6-4.</p>
+
+<p><strong>Listado 6-4 - Clase con dos acciones, en <code>frontend/modules/mimodulo/actions/actions.class.php</code></strong></p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">class</span> mimoduloActions <span class="kw2">extends</span> sfActions
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> executeIndex<span class="br0">&#40;</span><span class="re0">$request</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="co1">// ...</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="kw2">public</span> <span class="kw2">function</span> executeListar<span class="br0">&#40;</span><span class="re0">$request</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="co1">// ...</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Si el tamaño de la clase de la acción crece demasiado, probablemente tendrás que refactorizar la clase para mover algo de codigo a la capa del modelo. El código de las acciones debería ser muy corto (no mas que una pocas líneas), y toda la lógica del negocio debería encontrarse en el modelo.</p>
+
+<p>Aun así, el número de acciones en un módulo puede llegar a ser tan importante que sea necesario dividirlas en 2 módulos.</p>
+
+<div class="admonition sidebar"><p><strong class="title">Normas del código de Symfony</strong> En los ejemplos de código dados en este libro, probablemente has notado que la apertura y cierre de llaves (<code>{</code> y <code>}</code>) ocupan una línea cada una. Este estándar hace al código más fácil de leer.</p>
+
+<p>Entre otras normas que sigue el código de Symfony, la indentación se realiza siempre con 2 espacios en blanco; nunca se utilizan los tabuladores. La razón es que los tabuladores se muestran con distinta anchura en función del editor de textos utilizado, y porque el código que mezcla tabuladores con espacios en blanco es bastante difícil de leer.</p>
+
+<p>Los archivos PHP del núcleo de Symfony y los archivos generados no terminan con la etiqueta de cierre habitual <code>?&gt;</code>. La razón es que esta etiqueta no es obligatoria y puede provocar problemas con la salida producida si se incluyen por error espacios en blanco después de la etiqueta de cierre.</p>
+
+<p>Y si eres de los que te fijas en los detalles, verás que ninguna línea de código de Symfony termina con un espacio en blanco. En esta ocasión la razón no es técnica, sino que simplemente las líneas de código que terminan con espacios en blancos se ven feas en el editor de texto de Fabien.</p></div>
+
+<h3 id="sintaxis_alternativa_para_las_clases_de_las_acciones">6.2.2. Sintaxis alternativa para las clases de las Acciones</h3>
+
+<p>Se puede utilizar una sintaxis alternativa para distribuir las acciones en archivos separados, un archivo por acción. En este caso, cada clase acción extiende <code>sfAction</code> (en lugar de <code>sfActions</code>) y su nombre es <code>nombreAccionAction</code>. El nombre del método es simplemente <code>execute</code>. El nombre del archivo es el mismo que el de la clase. Esto significa que el equivalente del Listado 6-4 puede ser escrito en dos archivos mostrados en los listados 6-5 y 6-6.</p>
+
+<p><strong>Listado 6-5 - Archivo de una sola acción, en <code>frontend/modules/mimodulo/actions/indexAction.class.php</code></strong></p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">class</span> indexAction <span class="kw2">extends</span> sfAction
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> execute<span class="br0">&#40;</span><span class="re0">$request</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="co1">// ...</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p><strong>Listado 6-6 - Archivo de una sola acción, en  <code>frontend/modules/mimodulo/actions/listAction.class.php</code></strong></p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">class</span> listarAction <span class="kw2">extends</span> sfAction
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> execute<span class="br0">&#40;</span><span class="re0">$request</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="co1">// ...</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<h3 id="obteniendo_informacion_en_las_acciones">6.2.3. Obteniendo Información en las Acciones</h3>
+
+<p>Las clases  de las acciones ofrecen un método para acceder a la información relacionada con el controlador y los objetos del núcleo de Symfony. El listado 6-7 muestra como utilizarlos.</p>
+
+<p><strong>Listado 6-7 - Métodos comunes de <code>sfActions</code></strong></p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">class</span> mimoduloActions <span class="kw2">extends</span> sfActions
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> executeIndex<span class="br0">&#40;</span>sfWebRequest <span class="re0">$request</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="co1">// Obteniendo parametros de la petición</span>
+    <span class="re0">$password</span>      <span class="sy0">=</span> <span class="re0">$request</span><span class="sy0">-&gt;</span><span class="me1">getParameter</span><span class="br0">&#40;</span><span class="st_h">'password'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="co1">// Obteniendo información del controlador</span>
+    <span class="re0">$nombreModulo</span>  <span class="sy0">=</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getModuleName</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$nombreAccion</span>  <span class="sy0">=</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getActionName</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="co1">// Obteniendo objetos del núcleo del framework</span>
+    <span class="re0">$sesionUsuario</span> <span class="sy0">=</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getUser</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$respuesta</span>     <span class="sy0">=</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getResponse</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$controlador</span>   <span class="sy0">=</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getController</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$contexto</span>      <span class="sy0">=</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getContext</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="co1">// Creando variables de la acción para pasar información a la plantilla</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">setVar</span><span class="br0">&#40;</span><span class="st_h">'parametro'</span><span class="sy0">,</span> <span class="st_h">'valor'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">parametro</span> <span class="sy0">=</span> <span class="st_h">'valor'</span><span class="sy0">;</span>           <span class="co1">// Versión corta.</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<div class="admonition sidebar"><p><strong class="title">El "singleton" del contexto</strong> En el controlador frontal ya se ha visto una llamada a <code>sfContext::createInstance()</code>. En una acción, el método <code>getContext()</code> devuelve el mismo <em>singleton</em>. Se trata de un objeto muy útil que guarda una referencia a todos los objetos del núcleo de Symfony relacionados con una petición dada, y ofrece un método accesor para cada uno de ellos:</p>
+
+<ul>
+<li><code>sfController</code>: El objeto controlador (<code>-&gt;getController()</code>)</li>
+<li><code>sfRequest</code>: El objeto de la petición (<code>-&gt;getRequest()</code>)</li>
+<li><code>sfResponse</code>: El objeto de la respuesta (<code>-&gt;getResponse()</code>)</li>
+<li><code>sfUser</code>: El objeto de la sesión del usuario (<code>-&gt;getUser()</code>)</li>
+<li><code>sfRouting</code>: El objeto del enrutamiento (<code>-&gt;getRouting()</code>)</li>
+<li><code>sfMailer</code>: El objeto <em>mailer</em> para enviar emails (<code>-&gt;getMailer()</code>)</li>
+<li><code>sfI18N</code>: El objeto de internacionalización (<code>-&gt;getI18N()</code>)</li>
+<li><code>sfLogger</code>: El objeto para los logs (<code>-&gt;getLogger()</code>)</li>
+<li><code>sfDatabaseConnection</code>: La conexión a la base de datos (<code>-&gt;getDatabaseConnection()</code>)</li>
+</ul>
+
+<p>Todos estos objetos del núcleo de Symfony se pueden obtener en cualquier parte de la aplicación a través del <em>singleton</em> <code>sfContext::getInstance()</code>. No obstante, se trata de una mala práctica porque crea dependencias muy profundas en tu código, lo que dificulta las pruebas, el mantenimiento y la reutilización del código. En este libro se explican las técnicas necesarias para evitar el uso de <code>sfContext::getInstance()</code>.</p></div>
+
+<h3 id="terminacion_de_las_acciones">6.2.4. Terminación de las Acciones</h3>
+
+<p>Existen varias alternativas posibles cuando se termina la ejecución de una acción. El valor retornado por el método de la acción determina como será producida la vista. Para especificar la plantilla que se utiliza al mostrar el resultado de la acción, se emplean las constantes de la clase <code>sfView</code>.</p>
+
+<p>Si existe una vista por defecto que se debe llamar (este es el caso más común), la acción debería terminar de la siguiente manera:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw1">return</span> sfView<span class="sy0">::</span><span class="me2">SUCCESS</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Symfony buscará entonces una plantilla llamada <code>nombreAccionSuccess.php</code>. Este comportamiento se ha definido como el comportamiento por defecto, por lo que si omites la sentencia <code>return</code> en el método de la acción, Symfony también buscará una plantilla llamada <code>nombreAccionSuccess.php</code>. Las acciones vacías también siguen este comportamiento. El listado 6-8 muestra un ejemplo de terminaciones exitosas de acciones.</p>
+
+<p><strong>Listado 6-8 - Acciones que llaman a las plantillas <code>indexSuccess.php</code> y <code>listarSuccess.php</code></strong></p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">public</span> <span class="kw2">function</span> executeIndex<span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="kw1">return</span> sfView<span class="sy0">::</span><span class="me2">SUCCESS</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+<span class="kw2">public</span> <span class="kw2">function</span> executeListar<span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Si existe una vista de error que se debe llamar, la acción deberá terminar de la siguiente manera:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw1">return</span> sfView<span class="sy0">::</span><span class="me2">ERROR</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Symonfy entonces buscará un plantilla llamada <code>nombreAccionError.php</code>.</p>
+
+<p>Para utilizar una vista personalizada, se debe utilizar el siguiente valor de retorno:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw1">return</span> <span class="st_h">'MiResultado'</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Symfony entonces buscará una plantilla llamada <code>nombreAccionMiResultado.php</code>.</p>
+
+<p>Si no se utiliza ninguna vista --por ejemplo, en el caso de una acción ejecutada en un archivo de lotes-- la acción debe terminar de la siguiente forma:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw1">return</span> sfView<span class="sy0">::</span><span class="me2">NONE</span><span class="sy0">;</span></pre>
+</div>
+
+<p>En este caso, no se ejecuta ninguna plantilla. De esta forma, se evita por completo la capa de vista y se establece directamente el código HTML producido por la acción. Como muestra el Listado 6-9, Symfony provee un método <code>renderText()</code> específico para este caso. Este método puede ser útil cuando se necesita una respuesta muy rápida en una acción, como por ejemplo para las interacciones creadas con Ajax, como se verá en el Capítulo 11.</p>
+
+<p><strong>Listado 6-9 - Evitando la vista mediante una respuesta directa y un valor de retorno <code>sfView::NONE</code></strong></p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">public</span> <span class="kw2">function</span> executeIndex<span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getResponse</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">setContent</span><span class="br0">&#40;</span><span class="st0">&quot;&lt;html&gt;&lt;body&gt;¡Hola Mundo!&lt;/body&gt;&lt;/html&gt;&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+  <span class="kw1">return</span> sfView<span class="sy0">::</span><span class="me2">NONE</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+<span class="co1">// Es equivalente a</span>
+<span class="kw2">public</span> <span class="kw2">function</span> executeIndex<span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="kw1">return</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">renderText</span><span class="br0">&#40;</span><span class="st0">&quot;&lt;html&gt;&lt;body&gt;¡Hola Mundo!&lt;/body&gt;&lt;/html&gt;&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>En algunos casos, se necesita una respuesta vacía pero con algunas cabeceras definidas (sobre todo la cabecera <code>X-JSON</code>). Para conseguirlo, se definen las cabeceras con el objeto <code>sfResponse</code>, que se ve en el próximo capítulo, y se devuelve como valor de retorno la constante <code>sfView::HEADER_ONLY</code>, como muestra el Listado 6-10.</p>
+
+<p><strong>Listado 6-10 - Evitando la producción de la vista y enviando solo cabeceras</strong></p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">public</span> <span class="kw2">function</span> executeActualizar<span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="re0">$salida</span> <span class="sy0">=</span> <span class="st_h">'&lt;&quot;titulo&quot;,&quot;Mi carta sencilla&quot;],[&quot;nombre&quot;,&quot;Sr. Pérez&quot;&gt;'</span><span class="sy0">;</span>
+  <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getResponse</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">setHttpHeader</span><span class="br0">&#40;</span><span class="st0">&quot;X-JSON&quot;</span><span class="sy0">,</span> <span class="st_h">'('</span><span class="sy0">.</span><span class="re0">$salida</span><span class="sy0">.</span><span class="st_h">')'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+  <span class="kw1">return</span> sfView<span class="sy0">::</span><span class="me2">HEADER_ONLY</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Si la acción debe ser producida por una plantilla específica, se debe prescindir de la sentencia <code>return</code> y se debe utilizar el método <code>setTemplate()</code> en su lugar.</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">public</span> <span class="kw2">function</span> executeIndex<span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">setTemplate</span><span class="br0">&#40;</span><span class="st_h">'miPlantillaPersonalizada'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>El código anterior hace que Symfony busque un archivo llamado <code>miPlantillaPersonalizada.php</code> en vez del archivo estándar <code>indexSuccess.php</code>.</p>
+
+<h3 id="saltando_a_otra_accion">6.2.5. Saltando a Otra Acción</h3>
+
+<p>En algunos casos, la ejecución de un acción termina solicitando la ejecución de otra acción. Por ejemplo, una acción que maneja el envío de un formulario en una solicitud POST normalmente redirecciona a otra acción después de actualizar la base de datos.</p>
+
+<p>La clase de la acción provee dos métodos para ejecutar otra acción:</p>
+
+<ul>
+<li>Si la acción pasa la llamada hacia otra acción  <em>forward</em>):</li>
+</ul>
+
+<div class="code php">
+<pre class="php"><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">forward</span><span class="br0">&#40;</span><span class="st_h">'otroModulo'</span><span class="sy0">,</span> <span class="st_h">'index'</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<ul>
+<li>Si la acción produce un redireccionamiento web  <em>redirect</em>):</li>
+</ul>
+
+<div class="code php">
+<pre class="php"><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">redirect</span><span class="br0">&#40;</span><span class="st_h">'otroModulo/index'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">redirect</span><span class="br0">&#40;</span><span class="st_h">'http://www.google.com/'</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> El código que se encuentra después de una llamada a los métodos <code>forward</code> o <code>redirect</code> en una acción nunca se ejecuta. Se puede considerar que estas llamadas son equivalentes a la sentencia <code>return</code>. Estos métodos lanzan una excepción <code>sfStopException</code> para detener la ejecución de la acción; esta excepción es interceptada más adelante por Symfony y simplemente se ignora.</p></div>
+
+<p>La elección entre <code>redirect</code> y <code>forward</code> es a veces engañosa. Para elegir la mejor solución, ten en cuenta que un <code>forward</code> es una llamada interna a la aplicación y transparente para el usuario. En lo que concierne al usuario, la URL mostrada es la misma que la solicitada. Por el contrario, un <code>redirect</code> resulta en un mensaje al navegador del usuario, involucrando una nueva petición por parte del mismo y un cambio en la URL final resultante.</p>
+
+<p>Si la acción es llamada desde un formulario enviado con <code>method="post"</code>, deberías <strong>siempre</strong> realizar un <code>redirect</code>. La principal ventaja es que si el usuario recarga la página resultante, el formulario no será enviado nuevamente; además, el botón de retroceder funciona como se espera, ya que muestra el formulario y no una alerta preguntando al usuario si desea reenviar una petición POST.</p>
+
+<p>Existe un tipo especial de <code>forward</code> que se utiliza comúnmente. El método <code>forward404()</code> redirecciona a una acción de <code>Página no encontrada</code>. Este método se utiliza normalmente cuando un parámetro necesario para la ejecución de la acción no está presente en la petición (por tanto detectando una URL mal escrita). El Listado 6-11 muestra un ejemplo de una acción <code>mostrar</code> que espera un parámetro llamado <code>id</code>.</p>
+
+<p><strong>Listado 6-11 - Uso del método <code>forward404()</code></strong></p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">public</span> <span class="kw2">function</span> executeVer<span class="br0">&#40;</span>sfWebRequest <span class="re0">$request</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="co1">// Doctrine</span>
+  <span class="re0">$articulo</span> <span class="sy0">=</span> Doctrine<span class="sy0">::</span><span class="me2">getTable</span><span class="br0">&#40;</span><span class="st_h">'Articulo'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">find</span><span class="br0">&#40;</span><span class="re0">$request</span><span class="sy0">-&gt;</span><span class="me1">getParameter</span><span class="br0">&#40;</span><span class="st_h">'id'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+  <span class="co1">// Propel</span>
+  <span class="re0">$articulo</span> <span class="sy0">=</span> ArticuloPeer<span class="sy0">::</span><span class="me2">retrieveByPK</span><span class="br0">&#40;</span><span class="re0">$request</span><span class="sy0">-&gt;</span><span class="me1">getParameter</span><span class="br0">&#40;</span><span class="st_h">'id'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+  <span class="kw1">if</span> <span class="br0">&#40;</span><span class="sy0">!</span><span class="re0">$articulo</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">forward404</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Si estás buscando la acción y la plantilla del error 404, las puedes encontrar en el directorio <code>$sf_symfony_lib_dir/controller/default/</code>. Se puede personalizar esta página agregado un módulo <code>default</code> a la aplicación, sobrescribiendo el del framework, y definiendo una acción <code>error404</code> y una plantilla <code>error404Success</code> dentro del nuevo módulo. Otro método alternativo es el de establecer las constantes <code>error_404_module</code> y <code>error_404_action</code> en el archivo <code>settings.yml</code> para utilizar una acción existente.</p></div>
+
+<p>La experiencia muestra que, la mayoría de las veces, una acción hace un <code>redirect</code> o un <code>forward</code> después de probar algo, como en el listado 6-12. Por este motivo, la clase <code>sfActions</code> tiene algunos métodos más, llamados <code>forwardIf()</code>, <code>forwardUnless()</code>, <code>forward404If()</code>, <code>forward404Unless()</code>, <code>redirectIf()</code> y <code>redirectUnless()</code>. Estos métodos simplemente requieren un parámetro que representa la condición cuyo resultado se emplea para ejecutar el método. El método se ejecuta si el resultado de la condición es <code>true</code> y el método es de tipo <code>xxxIf()</code> o si el resultado de la condición es <code>false</code> y el método es de tipo <code>xxxUnless()</code>, como se muestra en el listado 6-12.</p>
+
+<p><strong>Listado 6-12 - Uso del método <code>forward404If()</code></strong></p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// Esta acción es equivalente a la mostrada en el Listado 6-11</span>
+<span class="kw2">public</span> <span class="kw2">function</span> executeVer<span class="br0">&#40;</span>sfWebRequest <span class="re0">$request</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="re0">$articulo</span> <span class="sy0">=</span> Doctrine<span class="sy0">::</span><span class="me2">getTable</span><span class="br0">&#40;</span><span class="st_h">'Articulo'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">find</span><span class="br0">&#40;</span><span class="re0">$request</span><span class="sy0">-&gt;</span><span class="me1">getParameter</span><span class="br0">&#40;</span><span class="st_h">'id'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">forward404If</span><span class="br0">&#40;</span><span class="sy0">!</span><span class="re0">$articulo</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+<span class="co1">// Esta acción también es equivalente</span>
+<span class="kw2">public</span> <span class="kw2">function</span> executeVer<span class="br0">&#40;</span>sfWebRequest <span class="re0">$request</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="re0">$articulo</span> <span class="sy0">=</span> Doctrine<span class="sy0">::</span><span class="me2">getTable</span><span class="br0">&#40;</span><span class="st_h">'Articulo'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">find</span><span class="br0">&#40;</span><span class="re0">$peticion</span><span class="sy0">-&gt;</span><span class="me1">getParameter</span><span class="br0">&#40;</span><span class="st_h">'id'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">forward404Unless</span><span class="br0">&#40;</span><span class="re0">$articulo</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>El uso de estos métodos permite mantener el código de las acciones muy corto y también lo hacen más fácil de leer.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Cuando la acción llama al método <code>forward404()</code> o alguno de sus similares, Symfony lanza una excepción <code>sfError404Exception</code> que maneja la respuesta al error <code>404</code>. Esto significa que si se quiere mostrar un mensaje de error de tipo 404 desde cualquier parte del código desde donde no se quiere acceder al controlador, se puede lanzar una excepción similar.</p></div>
+
+<h3 id="repitiendo_codigo_para_varias_acciones_de_un_modulo">6.2.6. Repitiendo Código para varias Acciones de un Módulo</h3>
+
+<p>La convención en el nombre de las acciones <code>executeNombreAccion()</code> (en el caso de una clase de tipo <code>sfActions</code>) o <code>execute()</code> (en el caso de una clase <code>sfAction</code>) garantiza que Symfony encontrará el método de la acción. Además, permite crear métodos propios que no serán considerados como acciones, siempre que su nombre no empiece con <code>execute</code>.</p>
+
+<p>Existe otra convención útil cuando se necesita ejecutar repetidamente en cada acción una serie de sentencias antes de ejecutar la propia acción. Esas sentencias comunes se pueden colocar en el método <code>preExecute()</code> de la clase de la acción. De forma análoga, se pueden definir sentencias que se ejecuten después de cada acción añadiéndolas al método <code>postExecute()</code>. La sintaxis de estos métodos se muestra en el Listado 6-13.</p>
+
+<p><strong>Listado 6-13 - Usando los métodos <code>preExecute()</code>, <code>postExecute()</code> y otros métodos propios en la clase de la acción</strong></p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">class</span> mimoduloActions <span class="kw2">extends</span> sfActions
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> preExecute<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="co1">// El código insertado aquí se ejecuta al principio de cada llamada a una acción</span>
+    <span class="co1">// ...</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="kw2">public</span> <span class="kw2">function</span> executeIndex<span class="br0">&#40;</span><span class="re0">$request</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="co1">// ...</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="kw2">public</span> <span class="kw2">function</span> executeListar<span class="br0">&#40;</span><span class="re0">$request</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="co1">// ...</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">miPropioMetodo</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>  <span class="co1">// Se puede acceder a cualquier método de la clase acción</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="kw2">public</span> <span class="kw2">function</span> postExecute<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="co1">// El código insertado aquí se ejecuta al final de cada llamada a la acción</span>
+    <span class="sy0">...</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="kw2">protected</span> <span class="kw2">function</span> miPropioMetodo<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="co1">// Se pueden crear métodos propios, siempre que su nombre no comience por &quot;execute&quot; </span>
+    <span class="co1">// En ese case, es mejor declarar los métodos como protected o private</span>
+    <span class="co1">// ...</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Como los métodos preExecute y postExecute se ejecutan para <strong>todas</strong> las acciones del módulo, asegúrate de que realmente necesitas ejecutar ese código para <strong>todas</strong> ellas.</p></div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="el_controlador_frontal.html">&larr; Anterior <span>6.1. El Controlador Frontal</span></a>
+            
+            <a class="span5 next" href="accediendo_a_la_peticion.html">Siguiente &rarr; <span>6.3. Accediendo a la petición</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Acciones (Symfony 1.4, la guía definitiva%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Symfony 1.4, la guía definitiva : Acciones']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción a Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Explorando el interior de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Ejecutar aplicaciones Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Introducción a la creación de páginas</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Configurar Symfony</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_6.html">
+            <span>Capítulo 6.</span> El Controlador
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_controlador_frontal.html">
+            <span>6.1.</span> El Controlador Frontal
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="acciones.html">
+            <span>6.2.</span> Acciones
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="accediendo_a_la_peticion.html">
+            <span>6.3.</span> Accediendo a la petición
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="sesiones_de_usuario.html">
+            <span>6.4.</span> Sesiones de Usuario
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="seguridad_de_la_accion.html">
+            <span>6.5.</span> Seguridad de la Acción
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="filtros.html">
+            <span>6.6.</span> Filtros
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="configuracion_del_modulo.html">
+            <span>6.7.</span> Configuración del Módulo
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="resumen.html">
+            <span>6.8.</span> Resumen
+        </a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> La Vista</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> El modelo (Doctrine)</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Enlaces y sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Emails</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Uso de la cache</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Pruebas unitarias y funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Herramientas para la administración de aplicaciones</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> Personalizar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> Rendimiento</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Configuración avanzada</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

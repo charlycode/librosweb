@@ -1,0 +1,396 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>list-style-type (Referencia de CSS 2.1)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="list-style-type (Referencia de CSS 2.1)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page referencia_css">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="index.html">Referencia de CSS 2.1</a></li>
+  <li class="current"><span>list-style-type</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="list_style_type">list-style-type</h1>
+    <div class="table" id="table_60_1">
+
+    <table class="table property css" summary="Definición de la propiedad list-style-type de CSS"> 
+<tr><th>Definición</th><td>Establece el marcador de los elementos de la lista</td></tr><tr><th>Valores <br/> permitidos</th><td>Uno y sólo uno de los siguientes valores:<ul><li style="float:left;width:25%;margin-right:5%">disc</li><li style="float:left;width:25%;margin-right:5%">circle</li><li style="float:left;width:25%;margin-right:5%">square</li><li style="float:left;width:25%;margin-right:5%">decimal</li><li style="float:left;width:25%;margin-right:5%">decimal-leading-zero</li><li style="float:left;width:25%;margin-right:5%">lower-roman</li><li style="float:left;width:25%;margin-right:5%">upper-roman</li><li style="float:left;width:25%;margin-right:5%">lower-greek</li><li style="float:left;width:25%;margin-right:5%">lower-latin</li><li style="float:left;width:25%;margin-right:5%">upper-latin</li><li style="float:left;width:25%;margin-right:5%">armenian</li><li style="float:left;width:25%;margin-right:5%">georgian</li><li style="float:left;width:25%;margin-right:5%">lower-alpha</li><li style="float:left;width:25%;margin-right:5%">upper-alpha</li><li style="float:left;width:25%;margin-right:5%">none</li><li style="float:left;width:25%;margin-right:5%"><a href="el-valor-inherit.html">inherit</a></li></ul></td></tr><tr><th>Valor inicial</th><td>disc</td></tr><tr><th>Se aplica a</th><td>Todos los elementos de tipo elemento de lista</td></tr><tr><th>Válida en</th><td><a href="medios.html">medios visuales</a></td></tr><tr><th>Se hereda</th><td>si</td></tr><tr class="nobottom"><th>Definición en<br/>el estándar</th><td><a href="http://www.w3.org/TR/CSS21/generate.html#propdef-list-style-type">http://www.w3.org/TR/CSS21/generate.html#propdef-list-style-type</a></td></tr>
+</table>
+</div>
+
+
+<h2 id="ejemplos_de_uso">Ejemplos de uso</h2>
+
+<p>La propiedad <code>list-style-type</code> establece el marcador que muestra cada elemento de las listas HTML. Por defecto, los navegadores muestran unos pequeños círculos rellenos para cada elemento de las listas no ordenadas <code>&lt;ul&gt;</code> y una numeración decimal para los elementos de las listas ordenadas <code>&lt;ol&gt;</code>:</p>
+
+<div class="example">
+<div style="width:50%; float:left">
+<ul>
+  <li style="list-style: disc">Lorem ipsum dolor sit amet</li>
+  <li style="list-style: disc">Consectetuer adipiscing elit</li>
+  <li style="list-style: disc">Nullam quis felis</li>
+  <li style="list-style: disc">Aliquam erat volutpat</li>
+  <li style="list-style: disc">Aenean non mauris</li>
+</ul>
+</div>
+<div style="width:50%; float:left">
+<ol>
+  <li style="list-style: decimal">Lorem ipsum dolor sit amet</li>
+  <li style="list-style: decimal">Consectetuer adipiscing elit</li>
+  <li style="list-style: decimal">Nullam quis felis</li>
+  <li style="list-style: decimal">Aliquam erat volutpat</li>
+  <li style="list-style: decimal">Aenean non mauris</li>
+</ol>
+</div>
+<div class="clear"></div>
+</div>
+
+<p>La propiedad <code>list-style-type</code> permite modificar este comportamiento por defecto y elegir el marcador de los elementos de la lista entre los 14 valores disponibles. Los valores se clasifican en tres grupos según sus características: gráficos, numéricos y alfabéticos.</p>
+
+<p>El primer grupo es el de los marcadores gráficos, que muestran pequeños dibujos o iconos en cada elemento de la lista:
+  * <code>disc</code>: círculo relleno.
+  * <code>circle</code>: círculo vacío.
+  * <code>square</code>: cuadrado.</p>
+
+<p>El aspecto gráfico de cada uno de estos marcadores depende del navegador. Por lo tanto, si visualizas esta página con diferentes navegadores, es posible que observes diferencias gráficas en las listas del siguiente ejemplo:</p>
+
+<div class="example">
+<div style="width:33%; float:left">
+<ul>
+  <li style="list-style: disc"><strong>list-style-type: disc</strong></li>
+  <li style="list-style: disc">Lorem ipsum dolor sit amet</li>
+  <li style="list-style: disc">Consectetuer adipiscing elit</li>
+  <li style="list-style: disc">Nullam quis felis</li>
+  <li style="list-style: disc">Aliquam erat volutpat</li>
+  <li style="list-style: disc">Aenean non mauris</li>
+</ul>
+</div>
+<div style="width:33%; float:left">
+<ul>
+  <li style="list-style: circle"><strong>list-style-type: circle</strong></li>
+  <li style="list-style: circle">Lorem ipsum dolor sit amet</li>
+  <li style="list-style: circle">Consectetuer adipiscing elit</li>
+  <li style="list-style: circle">Nullam quis felis</li>
+  <li style="list-style: circle">Aliquam erat volutpat</li>
+  <li style="list-style: circle">Aenean non mauris</li>
+</ul>
+</div>
+<div style="width:33%; float:left">
+<ul>
+  <li style="list-style: square"><strong>list-style-type: square</strong></li>
+  <li style="list-style: square">Lorem ipsum dolor sit amet</li>
+  <li style="list-style: square">Consectetuer adipiscing elit</li>
+  <li style="list-style: square">Nullam quis felis</li>
+  <li style="list-style: square">Aliquam erat volutpat</li>
+  <li style="list-style: square">Aenean non mauris</li>
+</ul>
+</div>
+<div class="clear"></div>
+</div>
+
+<p>A continuación se muestra como ejemplo la regla CSS necesaria para mostrar los cuadrados como marcador de los elementos de la lista:</p>
+
+<div class="code css">
+<pre class="css">ul li <span class="br0">&#123;</span>
+  <span class="kw1">list-style-type</span><span class="sy0">:</span> <span class="kw2">square</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>La principal limitación de los marcadores gráficos es que sólo se pueden utilizar los tres dibujos predefinidos y no se puede modificar ni su tamaño ni su color. De hecho, los marcadores gráficos siempre se muestran del mismo color y tamaño que el texto de cada elemento de la lista:</p>
+
+<div class="example">
+<ul>
+  <li style="list-style: square"><strong>list-style-type: square</strong></li>
+  <li style="list-style: square; color: red; font-size: 1.3em">Lorem ipsum dolor sit amet</li>
+  <li style="list-style: square; color: navy;">Consectetuer adipiscing elit</li>
+  <li style="list-style: square; color: orange; font-size: 2em">Nullam quis felis</li>
+  <li style="list-style: square; color: blue; font-size: 1.5em">Aliquam erat volutpat</li>
+  <li style="list-style: square; color: teal; font-size: 3em">Aenean non mauris</li>
+</ul>
+
+</div>
+
+<p>Si se quieren utilizar imágenes propias en los marcadores de una lista, se debe utilizar la propiedad <a href="list-style.html">list-style</a> o <a href="list-style-image.html">list-style-image</a>. No obstante, si no se puede visualizar la imagen establecida, siempre se muestra alguno de los marcadores predefinidos.</p>
+
+<p>El segundo grupo de marcadores es el numérico, compuesto por los siguientes valores:
+  * <code>decimal</code>: números decimales empezando por el número <code>1</code>.
+  * <code>decimal-leading-zero</code>: números decimales con tantos ceros a la izquierda como sean necesarios para que todos los números ocupen el mismo espacio (<code>01</code>, <code>02,</code>, <code>03</code>, ..., <code>98</code>, <code>99</code>).
+  * <code>lower-roman</code>: números romanos en minúsculas (<code>i</code>, <code>ii</code>, <code>iii</code>, <code>iv</code>, ...)
+  * <code>upper-roman</code>: números romanos en mayúsculas (<code>I</code>, <code>II</code>, <code>III</code>, <code>IV</code>, ...)
+  * <code>georgian</code>: números georgianos.
+  * <code>armenian</code>: números armenios.</p>
+
+<p>A continuación se muestran ejemplos de todos los marcadores de tipo numérico:</p>
+
+<div class="example">
+<div style="width:50%; float:left">
+<ol>
+  <li style="list-style: decimal"><strong>list-style-type: decimal</strong></li>
+  <li style="list-style: decimal">Lorem ipsum dolor sit amet</li>
+  <li style="list-style: decimal">Consectetuer adipiscing elit</li>
+  <li style="list-style: decimal">Nullam quis felis</li>
+  <li style="list-style: decimal">Aliquam erat volutpat</li>
+  <li style="list-style: decimal">Aenean non mauris</li>
+</ol>
+</div>
+<div style="width:50%; float:left">
+<ol>
+  <li style="list-style: decimal-leading-zero"><strong>list-style-type: decimal-leading-zero</strong></li>
+  <li style="list-style: decimal-leading-zero">Lorem ipsum dolor sit amet</li>
+  <li style="list-style: decimal-leading-zero">Consectetuer adipiscing elit</li>
+  <li style="list-style: decimal-leading-zero">Nullam quis felis</li>
+  <li style="list-style: decimal-leading-zero">Aliquam erat volutpat</li>
+  <li style="list-style: decimal-leading-zero">Aenean non mauris</li>
+</ol>
+</div>
+<div class="clear"></div>
+<div style="width:50%; float:left">
+<ol>
+  <li style="list-style: lower-roman"><strong>list-style-type: lower-roman</strong></li>
+  <li style="list-style: lower-roman">Lorem ipsum dolor sit amet</li>
+  <li style="list-style: lower-roman">Consectetuer adipiscing elit</li>
+  <li style="list-style: lower-roman">Nullam quis felis</li>
+  <li style="list-style: lower-roman">Aliquam erat volutpat</li>
+  <li style="list-style: lower-roman">Aenean non mauris</li>
+</ol>
+</div>
+<div style="width:50%; float:left">
+<ol>
+  <li style="list-style: upper-roman"><strong>list-style-type: upper-roman</strong></li>
+  <li style="list-style: upper-roman">Lorem ipsum dolor sit amet</li>
+  <li style="list-style: upper-roman">Consectetuer adipiscing elit</li>
+  <li style="list-style: upper-roman">Nullam quis felis</li>
+  <li style="list-style: upper-roman">Aliquam erat volutpat</li>
+  <li style="list-style: upper-roman">Aenean non mauris</li>
+</ol>
+</div>
+<div class="clear"></div>
+<div style="width:50%; float:left">
+<ol>
+  <li style="list-style: georgian"><strong>list-style-type: georgian</strong></li>
+  <li style="list-style: georgian">Lorem ipsum dolor sit amet</li>
+  <li style="list-style: georgian">Consectetuer adipiscing elit</li>
+  <li style="list-style: georgian">Nullam quis felis</li>
+  <li style="list-style: georgian">Aliquam erat volutpat</li>
+  <li style="list-style: georgian">Aenean non mauris</li>
+</ol>
+</div>
+<div style="width:50%; float:left">
+<ol>
+  <li style="list-style: armenian"><strong>list-style-type: armenian</strong></li>
+  <li style="list-style: armenian">Lorem ipsum dolor sit amet</li>
+  <li style="list-style: armenian">Consectetuer adipiscing elit</li>
+  <li style="list-style: armenian">Nullam quis felis</li>
+  <li style="list-style: armenian">Aliquam erat volutpat</li>
+  <li style="list-style: armenian">Aenean non mauris</li>
+</ol>
+</div>
+<div class="clear"></div>
+</div>
+
+<p>A continuación se muestra como ejemplo la regla CSS necesaria para mostrar los números romanos en mayúscula como marcador de los elementos de la lista:</p>
+
+<div class="code css">
+<pre class="css">ol li <span class="br0">&#123;</span>
+  <span class="kw1">list-style-type</span><span class="sy0">:</span> <span class="kw2">upper-roman</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>El navegador Internet Explorer 7 y sus versiones anteriores no soportan los valores <code>georgian</code> y <code>armenian</code> y los sustituyen por los marcadores por defecto de las listas.</p>
+
+<p>El último grupo de marcadores predefinidos es el de los marcadores alfabéticos:
+  * <code>lower-latin</code> y <code>lower-alpha</code>: letras minúsculas del alfabeto occidental (<code>a</code>, <code>b</code>, ... <code>z</code>, <code>aa</code>, <code>ab</code>, ..., <code>az</code>).
+  * <code>upper-latin</code> y <code>upper-alpha</code>: letras mayúsculas del alfabeto occidental (<code>A</code>, <code>B</code>, ... <code>Z</code>, <code>AA</code>, <code>AB</code>, ..., <code>AZ</code>).
+  * <code>lower-greek</code>: letras minúsculas del alfabeto griego.</p>
+
+<p>A continuación se muestran ejemplos de todos los marcadores de tipo alfabético:</p>
+
+<div class="example">
+<div style="width:33%; float:left">
+<ol>
+  <li style="list-style: lower-latin"><strong>list-style-type: lower-latin</strong></li>
+  <li style="list-style: lower-latin">Lorem ipsum dolor sit amet</li>
+  <li style="list-style: lower-latin">Consectetuer adipiscing elit</li>
+  <li style="list-style: lower-latin">Nullam quis felis</li>
+  <li style="list-style: lower-latin">Aliquam erat volutpat</li>
+  <li style="list-style: lower-latin">Aenean non mauris</li>
+</ol>
+</div>
+<div style="width:33%; float:left">
+<ol>
+  <li style="list-style: upper-latin"><strong>list-style-type: upper-latin</strong></li>
+  <li style="list-style: upper-latin">Lorem ipsum dolor sit amet</li>
+  <li style="list-style: upper-latin">Consectetuer adipiscing elit</li>
+  <li style="list-style: upper-latin">Nullam quis felis</li>
+  <li style="list-style: upper-latin">Aliquam erat volutpat</li>
+  <li style="list-style: upper-latin">Aenean non mauris</li>
+</ol>
+</div>
+<div style="width:33%; float:left">
+<ol>
+  <li style="list-style: lower-greek"><strong>list-style-type: lower-greek</strong></li>
+  <li style="list-style: lower-greek">Lorem ipsum dolor sit amet</li>
+  <li style="list-style: lower-greek">Consectetuer adipiscing elit</li>
+  <li style="list-style: lower-greek">Nullam quis felis</li>
+  <li style="list-style: lower-greek">Aliquam erat volutpat</li>
+  <li style="list-style: lower-greek">Aenean non mauris</li>
+</ol>
+</div>
+<div class="clear"></div>
+</div>
+
+<p>A continuación se muestra como ejemplo la regla CSS necesaria para mostrar las letras griegas como marcador de los elementos de la lista:</p>
+
+<div class="code css">
+<pre class="css">ol li <span class="br0">&#123;</span>
+  <span class="kw1">list-style-type</span><span class="sy0">:</span> <span class="kw2">lower-greek</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Los marcadores de cualquier tipo se visualizan correctamente tanto en las listas ordenadas (<code>&lt;ol&gt;</code>) como en las listas no ordenadas (<code>&lt;ul&gt;</code>). No obstante, por la propia definición de cada tipo de lista, lo más correcto es utilizar marcadores gráficos sólo en las listas no ordenadas y los marcadores numéricos y alfabéticos sólo en las listas ordenadas.</p>
+
+<p>Para no mostrar ningún marcador en una lista de elementos, se utiliza el valor <code>none</code> tanto en las listas ordenadas como en las no ordenadas:</p>
+
+<div class="example">
+<div style="width:50%; float:left">
+<ul>
+  <li style="list-style: none"><strong>Lista &lt;ul&gt;, list-style-type: none</strong></li>
+  <li style="list-style: none">Lorem ipsum dolor sit amet</li>
+  <li style="list-style: none">Consectetuer adipiscing elit</li>
+  <li style="list-style: none">Nullam quis felis</li>
+  <li style="list-style: none">Aliquam erat volutpat</li>
+  <li style="list-style: none">Aenean non mauris</li>
+</ul>
+</div>
+<div style="width:50%; float:left">
+<ol>
+  <li style="list-style: none"><strong>Lista &lt;ol&gt;, list-style-type: none</strong></li>
+  <li style="list-style: none">Lorem ipsum dolor sit amet</li>
+  <li style="list-style: none">Consectetuer adipiscing elit</li>
+  <li style="list-style: none">Nullam quis felis</li>
+  <li style="list-style: none">Aliquam erat volutpat</li>
+  <li style="list-style: none">Aenean non mauris</li>
+</ol>
+</div>
+<div class="clear"></div>
+</div>
+
+<p>Por último, los marcadores de las listas también forman parte de uno de los errores más conocidos y molestos del navegador Internet Explorer 7 y sus versiones anteriores. Si se posicionan de forma flotante los elementos de una lista mediante la propiedad <a href="float.html">float</a>, los marcadores de los elementos desaparecen en los navegadores Internet Explorer 7 y versiones anteriores.</p>
+
+<p>La lista del siguiente ejemplo utiliza el valor <code>square</code> como marcador de todos sus elementos. No obstante, como los elementos de la lista están posicionados de forma flotante, en el navegador Internet Explorer 7 no se visualizan los marcadores:</p>
+
+<div class="example">
+<ul>
+  <li style="list-style: square; float: left; width: 50%">list-style-type: square</li>
+  <li style="list-style: square; float: left; width: 50%">Lorem ipsum dolor sit amet</li>
+  <li style="list-style: square; float: left; width: 50%">Consectetuer adipiscing elit</li>
+  <li style="list-style: square; float: left; width: 50%">Nullam quis felis</li>
+  <li style="list-style: square; float: left; width: 50%">Aliquam erat volutpat</li>
+  <li style="list-style: square; float: left; width: 50%">Aenean non mauris</li>
+</ul>
+<div class="clear"></div>
+</div>
+
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'list-style-type (Referencia de CSS 2.1%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Referencia de CSS 2.1 : list-style-type']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Propiedades relacionadas</span></h3>
+
+
+                                                        <ul class="toc">
+                    <li class="">
+                <a href="list-style-image.html">list-style-image</a>
+            </li>
+                    <li class="">
+                <a href="list-style-position.html">list-style-position</a>
+            </li>
+                    <li class="active">
+                <a href="list-style-type.html">list-style-type</a>
+            </li>
+                    <li class="">
+                <a href="list-style.html">list-style</a>
+            </li>
+                </ul>
+                    
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

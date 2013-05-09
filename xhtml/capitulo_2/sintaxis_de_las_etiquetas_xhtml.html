@@ -1,0 +1,274 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>2.5. Sintaxis de las etiquetas XHTML (Introducción a XHTML)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="elementos_html.html" />
+        <link rel="next" href="../capitulo_3.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="2.5. Sintaxis de las etiquetas XHTML (Introducción a XHTML)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page xhtml">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Introducción a XHTML</a></li>
+  <li><a href="../capitulo_2.html">Capítulo 2. Características básicas</a></li>
+  <li class="current"><span>2.5. Sintaxis de las etiquetas XHTML</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="sintaxis_de_las_etiquetas_xhtml"><span>2.5.</span> Sintaxis de las etiquetas XHTML</h1>
+    
+
+<p>El lenguaje HTML original era muy permisivo en su sintaxis, por lo que era posible escribir sus etiquetas y atributos de muchas formas diferentes. Las etiquetas por ejemplo podían escribirse en mayúsculas, en minúsculas e incluso combinando mayúsculas y minúsculas. El valor de los atributos de las etiquetas se podían indicar con y sin comillas (<code>"</code>). Además, el orden en el que se abrían y cerraban las etiquetas no era importante.</p>
+
+<p>La flexibilidad de HTML puede parecer un aspecto positivo, pero el resultado final son páginas con un código HTML desordenado, difícil de mantener y muy poco profesional. Afortunadamente, XHTML soluciona estos problemas añadiendo ciertas normas en la forma de escribir las etiquetas y atributos.</p>
+
+<p>A continuación se muestran las cinco restricciones básicas que introduce XHTML respecto a HTML en la sintaxis de sus etiquetas:</p>
+
+<p>1) <strong>Las etiquetas se tienen que cerrar de acuerdo a como se abren</strong>:</p>
+
+<p>Ejemplo correcto en XHTML:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">p</span>&gt;</span>Este es un párrafo con <span class="sc2">&lt;<span class="kw2">a</span>&gt;</span>un enlace<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">a</span>&gt;&lt;<span class="sy0">/</span><span class="kw2">p</span>&gt;</span></pre>
+</div>
+
+<p>Ejemplo incorrecto en XHTML (pero correcto en HTML):</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">p</span>&gt;</span>Este es un párrafo con <span class="sc2">&lt;<span class="kw2">a</span>&gt;</span>un enlace<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">p</span>&gt;&lt;<span class="sy0">/</span><span class="kw2">a</span>&gt;</span></pre>
+</div>
+
+<p>2) <strong>Los nombres de las etiquetas y atributos siempre se escriben en minúsculas</strong>:</p>
+
+<p>Ejemplo correcto en XHTML:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">p</span>&gt;</span>Este es un párrafo con <span class="sc2">&lt;<span class="kw2">a</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;http://www.google.com&quot;</span>&gt;</span>un enlace<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">a</span>&gt;&lt;<span class="sy0">/</span><span class="kw2">p</span>&gt;</span></pre>
+</div>
+
+<p>Ejemplo incorrecto en XHTML (pero correcto en HTML):</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">P</span>&gt;</span>Este es un párrafo con <span class="sc2">&lt;<span class="kw2">A</span> <span class="kw3">HREF</span><span class="sy0">=</span><span class="st0">&quot;http://www.google.com&quot;</span>&gt;</span>un enlace<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">A</span>&gt;&lt;<span class="sy0">/</span><span class="kw2">P</span>&gt;</span></pre>
+</div>
+
+<p>3) <strong>El valor de los atributos siempre se encierra con comillas</strong>:</p>
+
+<p>Ejemplo correcto en XHTML:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">p</span>&gt;</span>Este es un párrafo con <span class="sc2">&lt;<span class="kw2">a</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;http://www.google.com&quot;</span>&gt;</span>un enlace<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">a</span>&gt;&lt;<span class="sy0">/</span><span class="kw2">p</span>&gt;</span></pre>
+</div>
+
+<p>Ejemplo incorrecto en XHTML (pero correcto en HTML):</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">p</span>&gt;</span>Este es un párrafo con <span class="sc2">&lt;<span class="kw2">a</span> <span class="kw3">href</span><span class="sy0">=</span>http:<span class="sy0">//</span>www.google.com&gt;</span>un enlace<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">a</span>&gt;&lt;<span class="sy0">/</span><span class="kw2">p</span>&gt;</span></pre>
+</div>
+
+<p>4) <strong>Los atributos no se pueden comprimir</strong>:</p>
+
+<p>Ejemplo correcto en XHTML:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">dl</span> <span class="kw3">compact</span><span class="sy0">=</span><span class="st0">&quot;compact&quot;</span>&gt;</span>...<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">dl</span>&gt;</span></pre>
+</div>
+
+<p>Ejemplo incorrecto en XHTML (pero correcto en HTML):</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">dl</span> compact&gt;</span>...<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">dl</span>&gt;</span></pre>
+</div>
+
+<p>Este tipo de atributos en los que el nombre coincide con su valor no son muy habituales.</p>
+
+<p>5) <strong>Todas las etiquetas deben cerrarse siempre</strong>:</p>
+
+<p>La mayoría de etiquetas HTML encierran un contenido de texto entre la etiqueta de apertura y la etiqueta de cierre. Sin embargo, algunas etiquetas especiales llamadas <em>"etiquetas vacías"</em> no necesitan encerrar ningún texto.</p>
+
+<p>La etiqueta <code>&lt;br&gt;</code> por ejemplo, se utiliza para indicar el comienzo de una nueva línea, tal y como se verá más adelante. Por sus características, la etiqueta <code>&lt;br&gt;</code> nunca encierra ningún contenido de texto.</p>
+
+<p>Como el estándar XHTML obliga a cerrar todas las etiquetas abiertas, siempre que se incluya la etiqueta <code>&lt;br&gt;</code> se debería cerrar de forma seguida: <code>&lt;br&gt;&lt;/br&gt;</code>. Para que el código resulte más cómodo de escribir, XHTML permite en estos casos escribir de forma abreviada una etiqueta que se abre y se cierra de forma consecutiva.</p>
+
+<p>En lugar de abrir y cerrar de forma consecutiva la etiqueta (<code>&lt;br&gt;&lt;/br&gt;</code>) se puede utilizar la sintaxis <code>&lt;br/&gt;</code> para indicar que es una etiqueta vacía que se abre y se cierra en ese mismo punto. En la forma compacta es habitual equivocarse con la posición del carácter <code>/</code>.</p>
+
+<p>Ejemplo correcto en XHTML:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">br</span><span class="sy0">/</span>&gt;</span></pre>
+</div>
+
+<p>Ejemplo incorrecto en XHTML (pero correcto en HTML):</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">br</span>&gt;</span></pre>
+</div>
+
+<p>Además de estas cinco restricciones básicas, XHTML incluye otros cambios más avanzados respecto a HTML:</p>
+
+<ol>
+<li>Antes de acceder al valor de un atributo, se eliminan todos los espacios en blanco que se encuentran antes y después del valor. Además, se eliminan todos los espacios en blanco sobrantes dentro del valor de un atributo. En otras palabras, si en el interior de un atributo se incluyen varios espacios en blanco seguidos, se eliminan todos salvo un único espacio en blanco utilizado para separar las diferentes palabras.</li>
+<li>Como se explicará más adelante al hablar de la etiqueta <code>&lt;script&gt;</code>, el código JavaScript debe encerrarse entre unas etiquetas especiales (<code>&lt;![CDATA[</code> y <code>]]&gt;</code>) para evitar que el navegador interprete de forma errónea caracteres como <code>&amp;</code> y <code>&lt;</code>.</li>
+<li>Las páginas XHTML deben prescindir del atributo <code>name</code> para identificar de forma única a los elementos. En su lugar, siempre debe utilizarse el atributo <code>id</code>. De hecho, en la versión 1.0 del estándar XHTML, el atributo <code>name</code> se ha declarado obsoleto para las etiquetas <code>a</code>, <code>applet</code>, <code>form</code>, <code>frame</code>, <code>iframe</code>, <code>img</code> y <code>map</code>.</li>
+</ol>
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="elementos_html.html">&larr; Anterior <span>2.4. Elementos HTML</span></a>
+            
+            <a class="span5 next" href="../capitulo_3.html">Siguiente &rarr; <span>Capítulo 3. Texto</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Sintaxis de las etiquetas XHTML (Introducción a XHTML%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a XHTML : Sintaxis de las etiquetas XHTML']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_2.html">
+            <span>Capítulo 2.</span> Características básicas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_primer_documento_html.html">
+            <span>2.2.</span> El primer documento HTML
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="etiquetas_y_atributos.html">
+            <span>2.3.</span> Etiquetas y atributos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="elementos_html.html">
+            <span>2.4.</span> Elementos HTML
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="sintaxis_de_las_etiquetas_xhtml.html">
+            <span>2.5.</span> Sintaxis de las etiquetas XHTML
+        </a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Texto</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Enlaces</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Listas</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Imágenes y objetos</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Tablas</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Estructura y layout</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Metainformación</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Otras etiquetas importantes</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Accesibilidad</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Validación</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Fragmentos de código</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

@@ -1,0 +1,250 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>11.4. Ejecutando PHP desde la línea de comandos (Más con Symfony)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="instalando_php_en_unos_pocos_clicks.html" />
+        <link rel="next" href="instalacion_y_uso_del_sandbox_de_symfony.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="11.4. Ejecutando PHP desde la línea de comandos (Más con Symfony)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page mas_con_symfony">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Más con Symfony</a></li>
+  <li><a href="../capitulo_11.html">Capítulo 11. Windows y Symfony</a></li>
+  <li class="current"><span>11.4.. Ejecutando PHP desde la línea de comandos</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="ejecutando_php_desde_la_linea_de_comandos"><span>11.4.</span> Ejecutando PHP desde la línea de comandos</h1>
+    
+
+<p>Para poder ejecutar las tareas de la línea de comandos de Symfony, debemos
+asegurarnos de que se puede acceder a <code>PHP.EXE</code> desde la consola de comandos
+y que se ejecuta correctamente:</p>
+
+<p>Abre la consola de comandos, entra en <code>C:\inetpub\wwwroot</code> y ejecuta lo siguiente:</p>
+
+<div class="code cli">
+<pre class="cli">PHP phpinfo.php</pre>
+</div>
+
+<p>Debería aparecer el siguiente mensaje de error:</p>
+
+<div class="figure" id="figure_11_20">
+    <img src="../../img/mas_con_symfony/windows_20.png" alt="PHP - No se ha encontrado MSVCR71.DLL." />
+
+    <p class="caption"><strong>Figura 11.20</strong> PHP - No se ha encontrado MSVCR71.DLL.</p>
+</div>
+
+
+<p>Si no se hace nada, la ejecución de <code>PHP.EXE</code> no es posible porque le falta la
+librería MSVCR71.DLL. Por tanto, debemos encontrar ese archivo DLL e instalarlo
+en el lugar adecuado.</p>
+
+<p>El archivo <code>MSVCR71.DLL</code> es una vieja versión del <em>runtime</em> de Microsoft Visual
+C++, que data del año 2003. Este archivo forma parte del paquete de <em>.Net
+Framework 1.1</em>, que se puede <a href="http://msdn.microsoft.com/en-us/netframework/aa569264.aspx">descargar desde el sitio MSDN</a>.</p>
+
+<p>El archivo que necesitamos se encuentra instalado en el siguiente directorio:
+<code>C:\Windows\Microsoft.NET\Framework\v1.1.4322</code></p>
+
+<p>Así que copia el archivo y pégalo en alguno de los siguientes directorios:</p>
+
+<ul>
+<li>en sistemas x64: directorio <code>C:\windows\syswow64</code></li>
+<li>en sistemas x86: directorio <code>C:\windows\system32</code></li>
+</ul>
+
+<p>Si quieres ya puedes desinstalar el <em>.Net Framework 1.1</em>.</p>
+
+<p>El archivo <code>PHP.EXE</code> ya se puede ejecutar en cualquier consola de comandos sin
+que muestre ningún error:</p>
+
+<div class="code cli">
+<pre class="cli">PHP phpinfo.php
+PHP check_configuration.php</pre>
+</div>
+
+<p>Más adelante, comprobaremos que el archivo <code>SYMFONY.BAT</code> incluido en el <em>sandbox</em>
+también se ejecuta correctamente, ya que es la línea de comandos de Symfony.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="instalando_php_en_unos_pocos_clicks.html">&larr; Anterior <span>11.3. Instalando PHP en unos pocos clicks</span></a>
+            
+            <a class="span5 next" href="instalacion_y_uso_del_sandbox_de_symfony.html">Siguiente &rarr; <span>11.5. Instalación y uso del sandbox de Symfony</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Ejecutando PHP desde la línea de comandos (Más con Symfony%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Más con Symfony : Ejecutando PHP desde la línea de comandos']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Enrutamiento avanzado</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Mejora tu productividad</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Emails</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Widgets y validadores propios</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Formularios avanzados</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Mejorando la barra de depuración web</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Uso avanzado de Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Utilizando la herencia de tablas de Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Funcionamiento interno de Symfony</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_11.html">
+            <span>Capítulo 11.</span> Windows y Symfony
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="introduccion.html">
+            <span>11.1.</span> Introducción
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="comprobaciones_iniciales_servidor_dedicado_en_internet.html">
+            <span>11.2.</span> Comprobaciones iniciales - Servidor dedicado en Internet
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="instalando_php_en_unos_pocos_clicks.html">
+            <span>11.3.</span> Instalando PHP en unos pocos clicks
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="ejecutando_php_desde_la_linea_de_comandos.html">
+            <span>11.4.</span> Ejecutando PHP desde la línea de comandos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="instalacion_y_uso_del_sandbox_de_symfony.html">
+            <span>11.5.</span> Instalación y uso del sandbox de Symfony
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="creando_un_nuevo_proyecto_symfony.html">
+            <span>11.6.</span> Creando un nuevo proyecto Symfony
+        </a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Desarrollando aplicaciones Facebook</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Descubriendo el poder de la línea de comandos</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Jugando con la cache de configuración de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Trabajando con la comunidad Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>A</span> <a href="../apendice_a.html"> Código JavaScript de sfWidgetFormGMapAddress</a>
+    </li>
+    <li class="level-1">
+        <span>B</span> <a href="../apendice_b.html"> Ejemplo de instalador propio</a>
+    </li>
+    <li class="level-1">
+        <span>C</span> <a href="../apendice_c.html"> Licencia</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

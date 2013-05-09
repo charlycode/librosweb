@@ -1,0 +1,288 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>18.4. Informando al usuario (El tutorial Jobeet)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="anadiendo_los_comportamientos.html" />
+        <link rel="next" href="ajax_en_las_acciones.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="18.4. Informando al usuario (El tutorial Jobeet)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page jobeet_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">El tutorial Jobeet</a></li>
+  <li><a href="../capitulo_18.html">Capítulo 18. AJAX</a></li>
+  <li class="current"><span>18.4.. Informando al usuario</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="informando_al_usuario"><span>18.4.</span> Informando al usuario</h1>
+    
+
+<p>Cuando se realizan peticiones AJAX, las páginas no se actualizan instantáneamente. El navegador espera la respuesta del servidor antes de poder actualizar los contenidos de la página. Por tanto, durante ese periodo de tiempo debemos mostrar algún tipo de indicación visual para informar al usuario de que ya se ha realizado la petición.</p>
+
+<p>Una práctica muy extendida consiste en mostrar durante la petición AJAX un pequeño icono en movimiento. Por tanto, añade en el layout la imagen del icono y ocultala por defecto:</p>
+
+<div class="code php">
+<pre class="php">&lt;!-- apps/frontend/templates/layout.php --&gt;
+&lt;div class=&quot;search&quot;&gt;
+  &lt;h2&gt;Ask for a job&lt;/h2&gt;
+  &lt;form action=&quot;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> url_for<span class="br0">&#40;</span><span class="st_h">'@job_search'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>&quot; method=&quot;get&quot;&gt;
+    &lt;input type=&quot;text&quot; name=&quot;query&quot; value=&quot;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$sf_request</span><span class="sy0">-&gt;</span><span class="me1">getParameter</span><span class="br0">&#40;</span><span class="st_h">'query'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>&quot; id=&quot;search_keywords&quot; /&gt;
+    &lt;input type=&quot;submit&quot; value=&quot;search&quot; /&gt;
+    &lt;img id=&quot;loader&quot; src=&quot;/images/loader.gif&quot; style=&quot;vertical-align: middle; display: none&quot; /&gt;
+    &lt;div class=&quot;help&quot;&gt;
+      Enter some keywords (city, country, position, ...)
+    &lt;/div&gt;
+  &lt;/form&gt;
+&lt;/div&gt;</pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> El icono está preparado para que quede bien en el layout actual de Jobeet. Si quieres crear tu propio icono, existen muchos sitios web que permiten hacerlo, como por ejemplo http://www.ajaxload.info/</p></div>
+
+<p>Ahora que ya disponemos del código HTML completo para que el buscador en tiempo real funcione, crea un archivo llamado <code>search.js</code> que contenga todo el código JavaScript que hemos creado hasta el momento:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="co1">// web/js/search.js</span>
+$<span class="br0">&#40;</span>document<span class="br0">&#41;</span>.<span class="me1">ready</span><span class="br0">&#40;</span><span class="kw1">function</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  $<span class="br0">&#40;</span><span class="st0">'.search input[type=&quot;submit&quot;]'</span><span class="br0">&#41;</span>.<span class="me1">hide</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+  $<span class="br0">&#40;</span><span class="st0">'#search_keywords'</span><span class="br0">&#41;</span>.<span class="me1">keyup</span><span class="br0">&#40;</span><span class="kw1">function</span><span class="br0">&#40;</span>key<span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="kw1">if</span> <span class="br0">&#40;</span><span class="kw1">this</span>.<span class="me1">value</span>.<span class="me1">length</span> <span class="sy0">&gt;=</span> <span class="nu0">3</span> <span class="sy0">||</span> <span class="kw1">this</span>.<span class="me1">value</span> <span class="sy0">==</span> <span class="st0">''</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      $<span class="br0">&#40;</span><span class="st0">'#loader'</span><span class="br0">&#41;</span>.<span class="me1">show</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+      $<span class="br0">&#40;</span><span class="st0">'#jobs'</span><span class="br0">&#41;</span>.<span class="me1">load</span><span class="br0">&#40;</span>
+        $<span class="br0">&#40;</span><span class="kw1">this</span><span class="br0">&#41;</span>.<span class="me1">parents</span><span class="br0">&#40;</span><span class="st0">'form'</span><span class="br0">&#41;</span>.<span class="me1">attr</span><span class="br0">&#40;</span><span class="st0">'action'</span><span class="br0">&#41;</span><span class="sy0">,</span>
+        <span class="br0">&#123;</span> query<span class="sy0">:</span> <span class="kw1">this</span>.<span class="me1">value</span> <span class="sy0">+</span> <span class="st0">'*'</span> <span class="br0">&#125;</span><span class="sy0">,</span>
+        <span class="kw1">function</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span> $<span class="br0">&#40;</span><span class="st0">'#loader'</span><span class="br0">&#41;</span>.<span class="me1">hide</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span> <span class="br0">&#125;</span>
+      <span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+  <span class="br0">&#125;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>También debes actualizar el layout para incluir este nuevo archivo JavaScript:</p>
+
+<div class="code php">
+<pre class="php">&lt;!-- apps/frontend/templates/layout.php --&gt;
+<span class="kw2">&lt;?php</span> use_javascript<span class="br0">&#40;</span><span class="st_h">'search.js'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span></pre>
+</div>
+
+<div class="admonition sidebar"><p><strong class="title">JavaScript como acción</strong> Aunque el código JavaScript que hemos utilizado para el buscador es estático, en ocasiones los archivos JavaScript deben ser dinámicos para poder incluir algo de código PHP (como por ejemplo para utilizar el helper <code>url_for()</code>).</p>
+
+<p>JavaScript no es más que otro formato y, como vimos hace algunos días, Symfony te permite trabajar con los formatos de forma sencilla. Como el archivo JavaScript contiene el comportamiento dinámico de una página, puedes utilizar la misma URL tanto para la página como para el archivo JavaScript (utilizando en este último caso la extensión <code>.js</code>). Si por ejemplo quieres crear un archivo JavaScript para definir el comportamiento del buscador, puedes modificar la ruta <code>job_search</code> de la siguiente forma y puedes crear una plantilla llamada <code>searchSuccess.js.php</code>:</p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co4">job_search</span>:<span class="co3">
+  url</span><span class="sy2">: </span>  /search.:sf_format<span class="co3">
+  param</span><span class="sy2">: </span><span class="br0">&#123;</span> module<span class="sy2">: </span>job, action<span class="sy2">: </span>search, sf_format<span class="sy2">: </span>html <span class="br0">&#125;</span><span class="co4">
+  requirements</span>:<span class="co3">
+    sf_format</span><span class="sy2">: </span><span class="br0">&#40;</span>?:html|js<span class="br0">&#41;</span></pre>
+</div>
+
+<p></p></div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="anadiendo_los_comportamientos.html">&larr; Anterior <span>18.3. Añadiendo los comportamientos</span></a>
+            
+            <a class="span5 next" href="ajax_en_las_acciones.html">Siguiente &rarr; <span>18.5. AJAX en las acciones</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Informando al usuario (El tutorial Jobeet%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'El tutorial Jobeet : Informando al usuario']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Comenzando el proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> El proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> El modelo de datos</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> El controlador y la vista</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> El sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Profundizando en el modelo</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Trabajando con la página de cada categoría</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Pruebas unitarias</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Pruebas funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Probando los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> El generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> El usuario</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> El día de descanso</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Canales Atom</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Servicios web</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> El buscador</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_18.html">
+            <span>Capítulo 18.</span> AJAX
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="instalando_jquery.html">
+            <span>18.1.</span> Instalando jQuery
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="incluyendo_jquery.html">
+            <span>18.2.</span> Incluyendo jQuery
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="anadiendo_los_comportamientos.html">
+            <span>18.3.</span> Añadiendo los comportamientos
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="informando_al_usuario.html">
+            <span>18.4.</span> Informando al usuario
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ajax_en_las_acciones.html">
+            <span>18.5.</span> AJAX en las acciones
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="probando_ajax.html">
+            <span>18.6.</span> Probando AJAX
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="nos_vemos_manana.html">
+            <span>18.7.</span> Nos vemos mañana
+        </a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>20</span> <a href="../capitulo_20.html"> Plugins</a>
+    </li>
+    <li class="level-1">
+        <span>21</span> <a href="../capitulo_21.html"> El día del diseño</a>
+    </li>
+    <li class="level-1">
+        <span>22</span> <a href="../capitulo_22.html"> La cache</a>
+    </li>
+    <li class="level-1">
+        <span>23</span> <a href="../capitulo_23.html"> Pasando a producción</a>
+    </li>
+    <li class="level-1">
+        <span>24</span> <a href="../capitulo_24.html"> Un repaso a Symfony</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

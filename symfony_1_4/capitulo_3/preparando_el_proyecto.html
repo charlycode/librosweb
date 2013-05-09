@@ -1,0 +1,293 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>3.3. Preparando el proyecto (Symfony 1.4, la guía definitiva)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="instalando_symfony.html" />
+        <link rel="next" href="configurar_el_servidor_web.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="3.3. Preparando el proyecto (Symfony 1.4, la guía definitiva)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page symfony_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Symfony 1.4, la guía definitiva</a></li>
+  <li><a href="../capitulo_3.html">Capítulo 3. Ejecutar aplicaciones Symfony</a></li>
+  <li class="current"><span>3.3.. Preparando el proyecto</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="preparando_el_proyecto"><span>3.3.</span> Preparando el proyecto</h1>
+    
+
+<p>En Symfony, las <strong>aplicaciones</strong> que comparten el mismo modelo de datos se agrupan en <strong>proyectos</strong>. Normalmente, los proyectos tienen como mínimo dos aplicaciones: <code>frontend</code> (encargada de la parte pública del sitio) y <code>backend</code> (que es la parte de administración).</p>
+
+<h3 id="crear_el_proyecto">3.3.1. Crear el Proyecto</h3>
+
+<p>Accede al directorio en el que has creado el directorio del proyecto (en los ejemplos anteriores es el directorio <code>sfproject</code>) y ejecuta la tarea <code>generate_project</code> para crear tu primer proyecto Symfony:</p>
+
+<div class="code cli">
+<pre class="cli">$ php lib/vendor/symfony/data/bin/symfony generate:project NOMBRE_PROYECTO</pre>
+</div>
+
+<p>Si usas Windows:</p>
+
+<div class="code cli">
+<pre class="cli">c:\&gt; php lib\vendor\symfony\data\bin\symfony generate:project NOMBRE_PROYECTO</pre>
+</div>
+
+<p>La tarea <code>generate:project</code> genera toda la estructura de archivos y directorios que forman un proyecto Symfony.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> ¿Por qué Symfony genera tantos archivos? Una de las principales ventajas de utilizar un framework completo es que puedes estandarizar tus desarrollos. Gracias a la estructura de archivos y directorios de Symfony, cualquier programador con ciertos conocimientos de Symfony es capaz de continuar el desarrollo de cualquier proyecto Symfony. En cuestión de minutos será capaz de profundizar en el código, solucionar errores y añadir nuevas características.</p></div>
+
+<p>La tarea <code>generate:project</code> también crea un script llamado <code>symfony</code> en el directorio raíz del proyecto. Este script es en realidad un atajo que permite ejecutar comandos Symfony escribiendo muchos menos caracteres.</p>
+
+<p>Así que a partir de ahora, en vez de escribir <code>php lib\vendor\symfony\data\bin\symfony</code> para ejecutar comandos Symfony, puedes escribir simplemente <code>php symfony</code>.</p>
+
+<h3 id="configurar_la_base_de_datos">3.3.2. Configurar la base de datos</h3>
+
+<p>Symfony es compatible con cualquier base de datos que soporte <a href="http://www.php.net/PDO">PDO</a>, entre otras, MySQL, PostgreSQL, SQLite, Oracle, MSSQL, etc. Además de PDO, Symfony incluye dos herramientas de tipo ORM: Propel y Doctrine.</p>
+
+<p>Cuando creas un proyecto nuevo, por defecto se activa Doctrine. Para configurar la conexión con la base de datos, utiliza la tarea <code>configure:database</code>:</p>
+
+<div class="code cli">
+<pre class="cli">$ php symfony configure:database &quot;mysql:host=localhost;dbname=dbname&quot; root mi_password</pre>
+</div>
+
+<p>La tarea <code>configure:database</code> requiere tres argumentos: el <a href="http://www.php.net/manual/en/pdo.drivers.php">DSN de PDO</a>, el nombre de usuario y la contraseña para acceder a la base de datos. Si no utilizas contraseña de acceso, simplemente no añadas este tercer argumento.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Si prefieres utilizar Propel en vez de Doctrine, añade la opción <code>--orm=Propel</code> al crear el proyecto con la tarea <code>generate:project</code>. Si no quieres utilizar ningún ORM, simplemente añade la opción <code>--orm=none</code>.</p></div>
+
+<h3 id="crear_la_aplicacion">3.3.3. Crear la aplicación</h3>
+
+<p>A continuación, crea la aplicación <code>frontend</code> con la tarea <code>generate:app</code>:</p>
+
+<div class="code cli">
+<pre class="cli">$ php symfony generate:app frontend</pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Como el atajo <code>symfony</code> utilizado para ejecutar las tareas es un archivo ejecutable, si tu sistema operativo es de tipo Unix, puedes reemplazar todos los comandos <code>php symfony</code> por <code>./symfony</code> a partir de ahora.</p>
+
+<p>Si utilizas Windows, puedes copiar el archivo <code>symfony.bat</code> a tu proyecto para ejecutar <code>symfony</code> en vez de <code>php symfony</code>:</p>
+
+<div class="code cli">
+<pre class="cli">c:\&gt; copy lib\vendor\symfony\data\bin\symfony.bat .</pre>
+</div>
+
+<p></p></div>
+
+<p>A partir del nombre de aplicación indicado como argumento, la tarea <code>generate:app</code> crea la estructura inicial de directorios que necesitan las aplicaciones Symfony. Siguiendo con el ejemplo anterior, esta estructura se crea dentro del directorio <code>apps/frontend/</code>.</p>
+
+<p>Cuando se ejecuta la tarea <code>generate:app</code>, se han incluido dos opciones relacionadas con la seguridad:</p>
+
+<ul>
+<li><code>--escaping-strategy</code>: activa el mecanismo de escape para evitar ataques de tipo XSS  <em>Cross Site Scripting</em>).</li>
+<li><code>--csrf-secret</code>: activa los tokens de sesión en los formularios para evitar ataques de tipo CSRF  <em>Cross Site Request Forgery</em>).</li>
+</ul>
+
+<p>Utilizando estos dos argumentos opcionales en la tarea <code>generate:app</code>, hemos añadido la seguridad necesaria para contrarrestar las dos vulnerabilidades más extendidas en la web. En efecto, .</p>
+
+<div class="admonition sidebar"><p><strong class="title">Seguridad</strong> Symfony se encarga de proteger automáticamente nuestra aplicación frente a los dos tipos de vulnerabilidades más extendidas en Internet. En efecto, Symfony aplica por nosotros las medidas de seguridad adecuadas.</p>
+
+<p>Para prevenir ataques de tipo XSS, se activa el mecanismo de escape y para evitar ataques de tipo CSRF, se genera una clave o <em>token</em> secreto aleatorio.</p>
+
+<p>Si quieres configurar estas dos protecciones, utiliza las siguientes opciones:</p>
+
+<ul>
+<li><code>--escaping-strategy</code>: activa o desactiva el mecanismo de escape.</li>
+<li><code>--csrf-secret</code>: activa el uso de <em>tokens</em> de sesión en los formularios.</li>
+</ul>
+
+<p>Si desconoces los ataques de tipo <a href="http://es.wikipedia.org/wiki/XSS">XSS</a> o <a href="http://en.wikipedia.org/wiki/CSRF">CSRF</a>, puede ser interesante que dediques un tiempo a estudiar el funcionamiento de estas vulnerabilidades.</p></div>
+
+<h3 id="permisos_de_los_directorios">3.3.4. Permisos de los directorios</h3>
+
+<p>Antes de poder utilizar tu proyecto, es necesario que establezcas los permisos de escritura adecuados en los directorios <code>cache/</code> y <code>log/</code>. La siguiente tarea hace que tanto el servidor web como la herramienta de la línea de comandos puedan escribir en ellos:</p>
+
+<div class="code cli">
+<pre class="cli">$ symfony project:permissions</pre>
+</div>
+
+<div class="admonition sidebar"><p><strong class="title">Consejo para los que utilizan una herramienta SCM</strong> Symfony sólo escribe en dos directorios del proyecto, <code>cache/</code> y <code>log/</code>. Si utilizas una herramienta de tipo SCM, ignora el contenido de esos dos directorios. Si haces uso de Subversion por ejemplo, modifica el valor de la propiedad <code>svn:ignore</code>.</p></div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="instalando_symfony.html">&larr; Anterior <span>3.2. Instalando Symfony</span></a>
+            
+            <a class="span5 next" href="configurar_el_servidor_web.html">Siguiente &rarr; <span>3.4. Configurar el servidor web</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Preparando el proyecto (Symfony 1.4, la guía definitiva%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Symfony 1.4, la guía definitiva : Preparando el proyecto']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción a Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Explorando el interior de Symfony</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_3.html">
+            <span>Capítulo 3.</span> Ejecutar aplicaciones Symfony
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="pre_requisitos.html">
+            <span>3.1.</span> Pre-requisitos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="instalando_symfony.html">
+            <span>3.2.</span> Instalando Symfony
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="preparando_el_proyecto.html">
+            <span>3.3.</span> Preparando el proyecto
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="configurar_el_servidor_web.html">
+            <span>3.4.</span> Configurar el servidor web
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="utilizando_el_sandbox.html">
+            <span>3.5.</span> Utilizando el <em>sandbox</em>
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="resumen.html">
+            <span>3.6.</span> Resumen
+        </a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Introducción a la creación de páginas</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Configurar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> El Controlador</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> La Vista</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> El modelo (Doctrine)</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Enlaces y sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Emails</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Uso de la cache</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Pruebas unitarias y funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Herramientas para la administración de aplicaciones</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> Personalizar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> Rendimiento</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Configuración avanzada</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

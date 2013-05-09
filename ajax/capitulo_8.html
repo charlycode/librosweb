@@ -1,0 +1,250 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>Capítulo 8. Técnicas básicas con AJAX (Introducción a AJAX)</title>
+        <link href="../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="capitulo_7/seguridad.html" />
+        <link rel="next" href="capitulo_8/teclado_virtual.html" />
+        <link rel="start" href="index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Capítulo 8. Técnicas básicas con AJAX (Introducción a AJAX)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page ajax">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../index.html">Inicio</a></li>
+  <li><a href="index.html">Introducción a AJAX</a></li>
+  <li class="current"><span>Capítulo 8. Técnicas básicas con AJAX</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="capitulo_8"><span>Capítulo 8.</span> Técnicas básicas con AJAX</h1>
+    <h2 id="listas_desplegables_encadenadas">8.1. Listas desplegables encadenadas</h2>
+
+
+<h3 id="contexto">8.3.1. Contexto</h3>
+
+<p>Algunas aplicaciones web disponen de varias listas desplegables encadenadas. En este tipo de listas, cuando se selecciona un elemento de la primera lista desplegable, se cargan en la segunda lista unos valores que dependen del valor seleccionado en la primera lista.</p>
+
+<p>El mayor inconveniente de este tipo de listas se produce cuando existen un gran número de opciones posibles. Si se considera por ejemplo el caso de una tienda, en la primera lista desplegable se pueden mostrar decenas de productos y en la segunda lista se muestran los diferentes modelos de cada producto y sus precios.</p>
+
+<p>Si todos los elementos de las listas desplegables se almacenan mediante arrays de JavaScript en la propia página, los tiempos de carga se pueden disparar y hacerlo completamente inviable.</p>
+
+<p>Por otra parte, se puede optar por recargar completamente la página cada vez que se selecciona un valor diferente en la primera lista desplegable. Sin embargo, recargar la página entera cada vez que se selecciona un valor, aumenta la carga en el servidor y el tiempo de espera del usuario.</p>
+
+<p>Una posible solución intermedia consiste en actualizar las listas desplegables mediante AJAX. Los valores de la primera lista se incluyen en la página web y cuando se selecciona un valor de esta lista, se realiza una consulta al servidor que devuelve los valores que se deben mostrar en la otra lista desplegable.</p>
+
+<h3 id="solucion_propuesta">8.3.2. Solución propuesta</h3>
+
+<p>A continuación se muestra el esquema gráfico del funcionamiento de la solución propuesta:</p>
+
+<div class="figure left" id="figure_8_1">
+    <img src="../img/ajax/f0801.gif" alt="Solución propuesta para las listas encadenadas con AJAX" />
+
+    <p class="caption"><strong>Figura 8.1</strong> Solución propuesta para las listas encadenadas con AJAX</p>
+</div>
+
+
+<p><div class="exercise"><p class="title">Ejercicio 16</p> <p>Crear un script que cargue de forma dinámica mediante AJAX la lista de provincias de un país y la lista de los municipios de cada provincia seleccionada.</p>
+
+<p>1) Definir el código HTML de las dos listas desplegables vacías.</p>
+
+<p>2) Cuando se cargue la página, cargar la lista de provincias en la primera lista desplegable. El script del servidor se llama <code>cargaProvinciasXML.php</code>. El formato de la respuesta es XML, con la siguiente estructura:</p>
+
+<div class="code xml">
+<pre class="xml"><span class="sc3"><span class="re1">&lt;provincias<span class="re2">&gt;</span></span></span>
+  <span class="sc3"><span class="re1">&lt;provincia<span class="re2">&gt;</span></span></span>
+    <span class="sc3"><span class="re1">&lt;codigo<span class="re2">&gt;</span></span></span>01<span class="sc3"><span class="re1">&lt;/codigo<span class="re2">&gt;</span></span></span>
+    <span class="sc3"><span class="re1">&lt;nombre<span class="re2">&gt;</span></span></span>Álava<span class="sc3"><span class="re1">&lt;/nombre<span class="re2">&gt;</span></span></span>
+  <span class="sc3"><span class="re1">&lt;/provincia<span class="re2">&gt;</span></span></span>
+  ...
+<span class="sc3"><span class="re1">&lt;/provincias<span class="re2">&gt;</span></span></span></pre>
+</div>
+
+<p>Para insertar las opciones en la lista desplegable, se pueden utilizar dos técnicas:</p>
+
+<ol>
+<li>Propiedad <code>innerHTML</code> de la lista y código HTML de cada etiqueta <code>&lt;option&gt;</code>.</li>
+<li>Crear elementos de tipo opción (<code>new Option(nombre, valor)</code>) y añadirlo al array <code>options[]</code> de la lista desplegable.</li>
+</ol>
+
+<p>3) Añadir de forma semántica el evento adecuado a la lista de provincias para que cuando se seleccione una provincia, se carguen automáticamente todos sus municipios en la otra lista.</p>
+
+<p>4) Cuando se seleccione una determinada provincia, se carga mediante AJAX la lista completa de municipios en la otra lista desplegable. El script del servidor se llama <code>cargaMunicipiosXML.php</code>. El parámetro que se debe enviar al servidor es el código de la provincia y el parámetro se llama <code>provincia</code>. El método que espera el servidor es <code>POST</code>. El formato de la respuesta es XML, con la siguiente estructura:</p>
+
+<div class="code xml">
+<pre class="xml"><span class="sc3"><span class="re1">&lt;municipios<span class="re2">&gt;</span></span></span>
+  <span class="sc3"><span class="re1">&lt;municipio<span class="re2">&gt;</span></span></span>
+    <span class="sc3"><span class="re1">&lt;codigo<span class="re2">&gt;</span></span></span>0014<span class="sc3"><span class="re1">&lt;/codigo<span class="re2">&gt;</span></span></span>
+    <span class="sc3"><span class="re1">&lt;nombre<span class="re2">&gt;</span></span></span>Alegría-Dulantzi<span class="sc3"><span class="re1">&lt;/nombre<span class="re2">&gt;</span></span></span>
+  <span class="sc3"><span class="re1">&lt;/municipio<span class="re2">&gt;</span></span></span>
+  ...
+<span class="sc3"><span class="re1">&lt;/municipios<span class="re2">&gt;</span></span></span></pre>
+</div>
+
+<p><a href="../ejercicios/ajax/ejercicio16/ejercicio16.zip">Descargar archivo ZIP con los scripts cargaProvinciasXML.php y cargaMunicipiosXML.php</a></p>
+
+<p><a href="capitulo14/ejercicio_16.html">Ver solución</a></p></div></p>
+
+<p><div class="exercise"><p class="title">Ejercicio 17</p> <p>Modificar el ejercicio anterior para soportar las respuestas del servidor en formato JSON. Los cambios introducidos son los siguientes:</p>
+
+<p>1) El script del servidor utilizado para cargar las provincias se llama <code>cargaProvinciasJSON.php</code> y la respuesta del servidor tiene el siguiente formato:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="br0">&#123;</span> <span class="st0">&quot;01&quot;</span><span class="sy0">:</span> <span class="st0">&quot;Álava/Araba&quot;</span><span class="sy0">,</span>  <span class="st0">&quot;02&quot;</span><span class="sy0">:</span> <span class="st0">&quot;Albacete&quot;</span><span class="sy0">,</span>  <span class="st0">&quot;03&quot;</span><span class="sy0">:</span> <span class="st0">&quot;Alicante/Alacant&quot;</span><span class="sy0">,</span> ...  <span class="br0">&#125;</span></pre>
+</div>
+
+<p>2) El script del servidor utilizado para cargar los municipios se llama <code>cargaMunicipiosJSON.php</code> y la respuesta del servidor tiene el siguiente formato:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="br0">&#123;</span> <span class="st0">&quot;0014&quot;</span><span class="sy0">:</span> <span class="st0">&quot;Alegría-Dulantzi&quot;</span><span class="sy0">,</span>  <span class="st0">&quot;0029&quot;</span><span class="sy0">:</span> <span class="st0">&quot;Amurrio&quot;</span><span class="sy0">,</span>  ...  <span class="br0">&#125;</span></pre>
+</div>
+
+<p><a href="../ejercicios/ajax/ejercicio17/ejercicio17.zip">Descargar archivo ZIP con los scripts cargaProvinciasJSON.php y cargaMunicipiosJSON.php</a></p>
+
+<p><a href="capitulo14/ejercicio_17.html">Ver solución</a></p></div></p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="capitulo_7/seguridad.html">&larr; Anterior <span>7.7. Seguridad</span></a>
+            
+            <a class="span5 next" href="capitulo_8/teclado_virtual.html">Siguiente &rarr; <span>8.2. Teclado virtual</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Técnicas básicas con AJAX (Introducción a AJAX%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a AJAX : Técnicas básicas con AJAX']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="capitulo_1.html"> Introducción a AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="capitulo_2.html"> JavaScript básico</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="capitulo_3.html"> JavaScript avanzado</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="capitulo_4.html"> DOM (Document Object Model)</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="capitulo_5.html"> BOM (Browser Object Model)</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="capitulo_6.html"> Eventos</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="capitulo_7.html"> Primeros pasos con AJAX</a>
+    </li>
+    <li class="level-1 active">
+        <a href="capitulo_8.html">
+            <span>Capítulo 8.</span> Técnicas básicas con AJAX
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="capitulo_8/teclado_virtual.html">
+            <span>8.2.</span> Teclado virtual
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="capitulo_8/autocompletar.html">
+            <span>8.3.</span> Autocompletar
+        </a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="capitulo_9.html"> Técnicas avanzadas con AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="capitulo_10.html"> Frameworks y librerías</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="capitulo_11.html"> Otras utilidades</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="capitulo_12.html"> Recursos útiles</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="capitulo_13.html"> Bibliografía</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="capitulo_14.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

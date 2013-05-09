@@ -1,0 +1,456 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>3.2. Procedimientos básicos para ramificar y fusionar (Pro Git, el libro oficial de Git)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="que_es_una_rama.html" />
+        <link rel="next" href="gestion_de_ramificaciones.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="3.2. Procedimientos básicos para ramificar y fusionar (Pro Git, el libro oficial de Git)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page pro_git">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Pro Git, el libro oficial de Git</a></li>
+  <li><a href="../capitulo_3.html">Capítulo 3. Trabajando con ramas en Git</a></li>
+  <li class="current"><span>3.2.. Procedimientos básicos para ramificar y fusionar</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="procedimientos_basicos_para_ramificar_y_fusionar"><span>3.2.</span> Procedimientos básicos para ramificar y fusionar</h1>
+    
+
+<p>Vamos a presentar un ejemplo simple de ramificar y de fusionar, con un flujo de trabajo que se podría presentar en la realidad. Imagina que sigues los siquientes pasos:</p>
+
+<ol>
+<li>Trabajas en un sitio web.</li>
+<li>Creas una rama para un nuevo tema sobre el que quieres trabajar.</li>
+<li>Realizas algo de trabajo en esa rama.</li>
+</ol>
+
+<p>En este momento, recibes una llamada avisandote de un problema crítico que has de resolver. Y sigues los siguientes pasos:</p>
+
+<ol>
+<li>Vuelves a la rama de producción original.</li>
+<li>Creas una nueva rama para el problema crítico y lo resuelves trabajando en ella.</li>
+<li>Tras las pertinentes pruebas, fusionas (<em>merge</em>) esa rama y la envias (<em>push</em>) a la rama de producción.</li>
+<li>Vuelves a la rama del tema en que andabas antes de la llamada y continuas tu trabajo.</li>
+</ol>
+
+<h3 id="procedimientos_basicos_de_ramificacion">3.2.1. Procedimientos básicos de ramificación</h3>
+
+<p>Imagina que estas trabajando en un proyecto, y tienes un par de confirmaciones (<em>commit</em>) ya realizadas. (ver Figura 3-10)</p>
+
+<div class="figure" id="figure_3_10">
+    <img src="../../img/pro_git/18333fig0310.png" alt="Un registro de confirmaciones simple y corto" />
+
+    <p class="caption"><strong>Figura 3.10</strong> Un registro de confirmaciones simple y corto</p>
+</div>
+
+
+<p>Decides trabajar el problema o error <code>#53</code> (en inglés, <em>issue #53</em>), del sistema que tu empresa utiliza para llevar seguimiento de los problemas. Aunque, por supuesto, Git no está ligado a ningún sistema de seguimiento de problemas concreto. Como el problema <code>#53</code> es un tema concreto y puntual en el que vas a trabajar, creas una nueva rama para él. Para crear una nueva rama y saltar a ella, en un solo paso, puedes utilizar el comando <code>git checkout</code> con la opción <code>-b</code>:</p>
+
+<div class="code code">
+<pre class="code">$ git checkout -b iss53
+Switched to a new branch &quot;iss53&quot;</pre>
+</div>
+
+<p>Esto es un atajo a:</p>
+
+<div class="code code">
+<pre class="code">$ git branch iss53
+$ git checkout iss53</pre>
+</div>
+
+<p>Figura 3-11 muestra el resultado.</p>
+
+<div class="figure" id="figure_3_11">
+    <img src="../../img/pro_git/18333fig0311.png" alt="Creación de un apuntador a la nueva rama" />
+
+    <p class="caption"><strong>Figura 3.11</strong> Creación de un apuntador a la nueva rama</p>
+</div>
+
+
+<p>Trabajas en el sitio web y haces algunas confirmaciones de cambios (<em>commits</em>). Con ello avanzas la rama <code>iss53</code>, que es la que tienes activada (<em>checked out</em>) en este momento (es decir, a la que apunta <code>HEAD</code>; ver Figura 3-12):</p>
+
+<div class="code code">
+<pre class="code">$ vim index.html
+$ git commit -a -m 'added a new footer [issue 53]'</pre>
+</div>
+
+<div class="figure" id="figure_3_12">
+    <img src="../../img/pro_git/18333fig0312.png" alt="La rama 'iss53' ha avanzado con tu trabajo" />
+
+    <p class="caption"><strong>Figura 3.12</strong> La rama 'iss53' ha avanzado con tu trabajo</p>
+</div>
+
+
+<p>Entonces, recibes una llamada avisándote de otro problema urgente en el sitio web. Problema que has de resolver inmediatamente. Usando Git, no necesitas mezclar el nuevo problema con los cambios que ya habias realizado sobre el problema <code>#53</code>; ni tampoco perder tiempo revirtiendo esos cambios para poder trabajar sobre el contenido que está en producción. Basta con saltar de nuevo a la rama <code>master</code> y continuar trabajando a partir de ella.</p>
+
+<p>Pero, antes de poder hacer eso, hemos de tener en cuenta  que teniendo cambios aún no confirmados en la carpeta de trabajo o en el área de preparación, Git no nos permitirá saltar a otra rama con la que podríamos tener conflictos.  Lo mejor es tener siempre un estado de trabajo limpio y despejado antes de saltar entre ramas. Y, para ello, tenemos algunos procedimientos (<em>stash</em> y <em>commit ammend</em>), que vamos a ver más adelante. Por ahora, como tenemos confirmados todos los cambios, podemos saltar a la rama <code>master</code> sin problemas:</p>
+
+<div class="code code">
+<pre class="code">$ git checkout master
+Switched to branch &quot;master&quot;</pre>
+</div>
+
+<p>Tras esto, tendrás la carpeta de trabajo exactamente igual a como estaba antes de comenzar a trabajar sobre el problema <code>#53</code>. Y podrás concentrarte en el nuevo problema urgente. Es importante recordar que Git revierte la carpeta de trabajo exactamente al estado en que estaba en la confirmación (<em>commit</em>)  apuntada por la rama que activamos (<em>checkout</em>) en cada momento. Git añade, quita y modifica archivos automáticamente. Para asegurarte que tu copia de trabajo es exactamente tal y como era la rama en la última confirmación de cambios realizada sobre ella.</p>
+
+<p>Volviendo al problema urgente. Vamos a crear una nueva rama <code>hotfix</code>, sobre la que trabajar hasta resolverlo (ver Figura 3-13):</p>
+
+<div class="code code">
+<pre class="code">$ git checkout -b 'hotfix'
+Switched to a new branch &quot;hotfix&quot;
+$ vim index.html
+$ git commit -a -m 'fixed the broken email address'
+[hotfix]: created 3a0874c: &quot;fixed the broken email address&quot;
+ 1 files changed, 0 insertions(+), 1 deletions(-)</pre>
+</div>
+
+<div class="figure" id="figure_3_13">
+    <img src="../../img/pro_git/18333fig0313.png" alt="Rama 'hotfix' basada en la rama <code>master</code> original" />
+
+    <p class="caption"><strong>Figura 3.13</strong> Rama 'hotfix' basada en la rama <code>master</code> original</p>
+</div>
+
+
+<p>Puedes realizar las pruebas oportunas, asegurarte que la solución es correcta, e incorporar los cambios a la rama <code>master</code> para ponerlos en producción. Esto se hace con el comando <code>git merge</code>:</p>
+
+<div class="code code">
+<pre class="code">$ git checkout master
+$ git merge hotfix
+Updating f42c576..3a0874c
+Fast forward
+ README |    1 -
+ 1 files changed, 0 insertions(+), 1 deletions(-)</pre>
+</div>
+
+<p>Merece destacar la frase <em>"Avance rápido"</em> (<em>"Fast forward"</em>) que aparece en la respuesta al comando. Git ha movido el apuntador hacia adelante, ya que la confirmación apuntada en la rama donde has fusionado estaba directamente por delante respecto de la confirmación actual. Dicho de otro modo: cuando intentas fusionar una confirmación con otra confirmación accesible siguiendo directamente el registro de la primera; Git simplifica las cosas avanzando el puntero, ya que no hay ningûn otro trabajo divergente a fusionar. Esto es lo que se denomina <em>"avance rápido"</em> (<em>"fast forward"</em>).</p>
+
+<p>Ahora, los cambios realizados están ya en la instantánea (<em>snapshot</em>) de la confirmación (<em>commit</em>) apuntada por la rama <code>master</code>. Y puedes desplegarlos (ver Figura 3-14)</p>
+
+<div class="figure" id="figure_3_14">
+    <img src="../../img/pro_git/18333fig0314.png" alt="Tras la fusión (*merge*), la rama <code>master</code> apunta al mismo sitio que la rama <code>hotfix</code>" />
+
+    <p class="caption"><strong>Figura 3.14</strong> Tras la fusión (*merge*), la rama <code>master</code> apunta al mismo sitio que la rama <code>hotfix</code></p>
+</div>
+
+
+<p>Tras haber resuelto el problema urgente que te habia interrumpido tu trabajo, puedes volver a donde estabas. Pero antes, es interesante borrar la rama <code>hotfix</code>. Ya que no la vamos a necesitar más, puesto que apunta exactamente al mismo sitio que la rama <code>master</code>. Esto lo puedes hacer con la opción <code>-d</code> del comando <code>git branch</code>:</p>
+
+<div class="code code">
+<pre class="code">$ git branch -d hotfix
+Deleted branch hotfix (3a0874c).</pre>
+</div>
+
+<p>Y, con esto, ya estas dispuesto para regresar al trabajo sobre el problema <code>#53</code> (ver Figura 3-15):</p>
+
+<div class="code code">
+<pre class="code">$ git checkout iss53
+Switched to branch &quot;iss53&quot;
+$ vim index.html
+$ git commit -a -m 'finished the new footer [issue 53]'
+[iss53]: created ad82d7a: &quot;finished the new footer [issue 53]&quot;
+ 1 files changed, 1 insertions(+), 0 deletions(-)</pre>
+</div>
+
+<div class="figure" id="figure_3_15">
+    <img src="../../img/pro_git/18333fig0315.png" alt="La rama 'iss53' puede avanzar independientemente" />
+
+    <p class="caption"><strong>Figura 3.15</strong> La rama 'iss53' puede avanzar independientemente</p>
+</div>
+
+
+<p>Cabe indicar que todo el trabajo realizado en la rama <code>hotfix</code> no está en los archivos de la rama <code>iss53</code>. Si fuera necesario agregarlos, puedes fusionar (<em>merge</em>) la rama <code>master</code> sobre la rama <code>iss53</code> utilizando el comando <code>git merge master</code>. O puedes esperar hasta que decidas llevar (<em>pull</em>) la rama <code>iss53</code> a la rama <code>master</code>.</p>
+
+<h3 id="procedimientos_basicos_de_fusion">3.2.2. Procedimientos básicos de fusión</h3>
+
+<p>Supongamos que tu trabajo con el problema <code>#53</code> está ya completo y listo para fusionarlo (<em>merge</em>) con la rama <code>master</code>. Para ello, de forma similar a como antes has hecho con la rama <code>hotfix</code>, vas a fusionar la rama <code>iss53</code>. Simplemente, activando (<em>checkout</em>) la rama donde deseas fusionar y lanzando el comando <code>git merge</code>:</p>
+
+<div class="code code">
+<pre class="code">$ git checkout master
+$ git merge iss53
+Merge made by recursive.
+ README |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)</pre>
+</div>
+
+<p>Es algo diferente de la fusión realizada anteriormente con <code>hotfix</code>. En este caso, el registro de desarrollo habia divergido en un punto anterior. Debido a que la confirmación en la rama actual no es ancestro directo de la rama que pretendes fusionar, Git tiene cierto trabajo extra que hacer. Git realizará una fusión a tres bandas, utilizando las dos instantáneas apuntadas por el extremo de cada una de las ramas y por el ancestro común a ambas dos. La figura 3-16 ilustra las tres instantáneas que Git utiliza para realizar la fusión en este caso.</p>
+
+<div class="figure" id="figure_3_16">
+    <img src="../../img/pro_git/18333fig0316.png" alt="Git identifica automáticamente el mejor ancestro común para realizar la fusión de las ramas" />
+
+    <p class="caption"><strong>Figura 3.16</strong> Git identifica automáticamente el mejor ancestro común para realizar la fusión de las ramas</p>
+</div>
+
+
+<p>En lugar de simplemente avanzar el apuntador de la rama, Git crea una nueva instantánea (<em>snapshot</em>) resultante de la fusión a tres bandas; y crea automáticamente una nueva confirmación de cambios (<em>commit</em>) que apunta a ella. Nos referimos a este proceso como <em>"fusión confirmada"</em>. Y se diferencia en que tiene más de un padre.</p>
+
+<p>Merece la pena destacar el hecho de que es el propio Git quien determina automáticamente el mejor ancestro común para realizar la fusión. Diferenciandose de otros sistemas tales como CVS o Subversion, donde es el desarrollador quien ha de imaginarse cuál puede ser dicho mejor ancestro común. Esto hace que en Git sea mucho más facil el realizar fusiones.</p>
+
+<div class="figure" id="figure_3_17">
+    <img src="../../img/pro_git/18333fig0317.png" alt="Git crea automáticamente una nueva confirmación para la fusión" />
+
+    <p class="caption"><strong>Figura 3.17</strong> Git crea automáticamente una nueva confirmación para la fusión</p>
+</div>
+
+
+<p>Ahora que todo tu trabajo está ya fusionado con la rama principal, ya no tienes necesidad de la rama <code>iss53</code>. Por lo que puedes borrarla. Y cerrar manualmente el problema en el sistema de seguimiento de problemas de tu empresa.</p>
+
+<div class="code code">
+<pre class="code">$ git branch -d iss53</pre>
+</div>
+
+<h3 id="principales_conflictos_que_pueden_surgir_en_las_fusiones">3.2.3. Principales conflictos que pueden surgir en las fusiones</h3>
+
+<p>En algunas ocasiones, los procesos de fusión no suelen ser fluidos. Si hay modificaciones dispares en una misma porción de un mismo archivo en las dos ramas distintas que pretendes fusionar, Git no será capaz de fusionarlas directamente. Por ejemplo, si en tu trabajo del problema <code>#53</code> has modificado una misma porción que también ha sido modificada en el problema <code>hotfix</code>. Puedes obtener un conflicto de fusión tal que:</p>
+
+<div class="code code">
+<pre class="code">$ git merge iss53
+Auto-merging index.html
+CONFLICT (content): Merge conflict in index.html
+Automatic merge failed; fix conflicts and then commit the result.</pre>
+</div>
+
+<p>Git no crea automáticamente una nueva fusión confirmada (<em>merge commit</em>). Sino que hace una pausa en el proceso, esperando a que tu resuelvas el conflicto. Para ver qué archivos permanecen sin fusionar en un determinado momento conflictivo de una fusión, puedes usar el comando <code>git status</code>:</p>
+
+<div class="code code">
+<pre class="code">[master*]$ git status
+index.html: needs merge
+# On branch master
+# Changed but not updated:
+#   (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)
+#   (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)
+#
+#   unmerged:   index.html
+#</pre>
+</div>
+
+<p>Todo aquello que sea conflictivo y no se haya podido resolver, se marca como <em>"sin fusionar"</em> (<em>unmerged</em>). Git añade a los archivos conflictivos unas marcas especiales de resolución de conflictos. Estas marcas o marcadores te ayudan cuando abres los archivos implicados y los editas manualmente para corregirlos. El archivo conflictivo contendrá algo como:</p>
+
+<div class="code code">
+<pre class="code">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD:index.html
+&lt;div id=&quot;footer&quot;&gt;contact : email.support@github.com&lt;/div&gt;
+=======
+&lt;div id=&quot;footer&quot;&gt;
+  please contact us at support@github.com
+&lt;/div&gt;
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; iss53:index.html</pre>
+</div>
+
+<p>Donde nos dice que la versión en <code>HEAD</code> (la rama <code>master</code>, la que habias activado antes de lanzar el comando de fusión), contiene lo indicado en la parte superior del bloque (todo lo que está encima de <code>=======</code>). Y que la versión en <code>iss53</code> contiene el resto, lo indicado en la parte inferior del bloque. Para resolver el conflicto, has de elegir manualmente contenido de uno o de otro lado. Por ejemplo, puedes optar por cambiar el bloque, dejandolo tal que:</p>
+
+<div class="code code">
+<pre class="code">&lt;div id=&quot;footer&quot;&gt;
+please contact us at email.support@github.com
+&lt;/div&gt;</pre>
+</div>
+
+<p>Esta corrección contiene un poco de ambas partes. Y se han eliminado completamente las líneas <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code> , <code>=======</code> y <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code> Tras resolver todos los bloques conflictivos, has de lanzar comandos <code>git add</code> para marcar cada archivo modificado. Marcar archivos como preparados (<em>staging</em>), indica a Git que sus conflictos han sido resueltos.</p>
+
+<p>Si, en lugar de resolver directamente, prefieres utilizar una herramienta gráfica. Puedes usar el comando <code>git mergetool</code>. Esto arrancará la correspondiente herramienta de visualización y te permirá ir resolviendo conflictos con ella.</p>
+
+<div class="code code">
+<pre class="code">$ git mergetool
+merge tool candidates: kdiff3 tkdiff xxdiff meld gvimdiff opendiff emerge vimdiff
+Merging the files: index.html</pre>
+</div>
+
+<div class="code code">
+<pre class="code">Normal merge conflict for 'index.html':
+  {local}: modified
+  {remote}: modified
+Hit return to start merge resolution tool (opendiff):</pre>
+</div>
+
+<p>Si deseas usar una herramienta distinta de la escogida por defecto (en mi caso <code>opendiff</code>, porque estoy lanzando el comando en un Mac), puedes escogerla entre la lista de herramientas soportadas mostradas al principio (<em>"merge tool candidates"</em>). Tecleando el nombre de dicha herramienta. En el capítulo 7 se verá cómo cambiar este valor por defecto de tu entorno de trabajo.</p>
+
+<p>Tras salir de la herramienta de fusionado, Git preguntará a ver si hemos resuelto todos los conflictos y la fusión ha sido satisfactoria. Si le indicas que así ha sido, Git marca como preparado (<em>staged</em>) el archivo que acabamos de modificar.</p>
+
+<p>En cualquier momento, puedes lanzar el comando <code>git status</code> para ver si ya has resuelto todos los conflictos:</p>
+
+<div class="code code">
+<pre class="code">$ git status
+# On branch master
+# Changes to be committed:
+#   (use &quot;git reset HEAD &lt;file&gt;...&quot; to unstage)
+#
+#   modified:   index.html
+#</pre>
+</div>
+
+<p>Si todo ha ido correctamente, y ves que todos los archivos conflictivos están marcados como preparados, puedes lanzar el comando <code>git commit</code> para terminar de confirmar la fusión. El mensaje de confirmación por defecto será algo parecido a:</p>
+
+<div class="code code">
+<pre class="code">Merge branch 'iss53'</pre>
+</div>
+
+<div class="code code">
+<pre class="code">Conflicts:
+  index.html
+#
+# It looks like you may be committing a MERGE.
+# If this is not correct, please remove the file
+# .git/MERGE_HEAD
+# and try again.
+#</pre>
+</div>
+
+<p>Puedes modificar este mensaje añadiendo detalles sobre cómo has resuelto la fusión, si lo consideras útil para que otros entiendan esta fusión en un futuro. Se trata de indicar porqué has hecho lo que has hecho; a no ser que resulte obvio, claro está.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="que_es_una_rama.html">&larr; Anterior <span>3.1. ¿Qué es una rama?</span></a>
+            
+            <a class="span5 next" href="gestion_de_ramificaciones.html">Siguiente &rarr; <span>3.3. Gestión de ramificaciones</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Procedimientos básicos para ramificar y fusionar (Pro Git, el libro oficial de Git%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Pro Git, el libro oficial de Git : Procedimientos básicos para ramificar y fusionar']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Empezando</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Fundamentos de Git</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_3.html">
+            <span>Capítulo 3.</span> Trabajando con ramas en Git
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="que_es_una_rama.html">
+            <span>3.1.</span> ¿Qué es una rama?
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="procedimientos_basicos_para_ramificar_y_fusionar.html">
+            <span>3.2.</span> Procedimientos básicos para ramificar y fusionar
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="gestion_de_ramificaciones.html">
+            <span>3.3.</span> Gestión de ramificaciones
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="flujos_de_trabajo_ramificados.html">
+            <span>3.4.</span> Flujos de trabajo ramificados
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ramas_remotas.html">
+            <span>3.5.</span> Ramas Remotas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="reorganizando_el_trabajo_realizado.html">
+            <span>3.6.</span> Reorganizando el trabajo realizado
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="resumen.html">
+            <span>3.7.</span> Resumen
+        </a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Git en un servidor</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Git en entornos distribuidos</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Las herramientas de Git</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Personalizando Git</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Git y otros sistemas</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Funcionamiento interno de Git</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

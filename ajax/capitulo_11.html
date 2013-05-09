@@ -1,0 +1,507 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>Capítulo 11. Otras utilidades (Introducción a AJAX)</title>
+        <link href="../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="capitulo_10/otros_frameworks_importantes.html" />
+        <link rel="next" href="capitulo_11/mejorar_el_rendimiento_de_las_aplicaciones_complejas.html" />
+        <link rel="start" href="index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Capítulo 11. Otras utilidades (Introducción a AJAX)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page ajax">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../index.html">Inicio</a></li>
+  <li><a href="index.html">Introducción a AJAX</a></li>
+  <li class="current"><span>Capítulo 11. Otras utilidades</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="capitulo_11"><span>Capítulo 11.</span> Otras utilidades</h1>
+    <h2 id="detener_las_peticiones_http_erroneas">11.1. Detener las peticiones HTTP erróneas</h2>
+
+
+<p>La creación de aplicaciones AJAX implica la aparición de nuevos tipos de errores y excepciones. Probablemente, el problema más importante sea el de realizar una petición al servidor y que este no responda en un periodo de tiempo razonable.</p>
+
+<p>Aunque las peticiones se realizan de forma asíncrona y el usuario puede continuar utilizando la aplicación mientras se realiza la petición al servidor en un segundo plano, normalmente es necesario disponer de una respuesta rápida del servidor.</p>
+
+<p>La función <code>setTimeout()</code> se puede emplear para establecer una cuenta atrás al iniciar una nueva petición. Si el servidor responde antes de que expire la cuenta atrás, se elimina esa cuenta atrás y se continúa con la ejecución normal de la aplicación. Si el servidor no responde y la cuenta atrás finaliza, se ejecuta una función encargada de detener la petición, reintentarla, mostrar un mensaje al usuario, etc.</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="co1">// Variable global que almacena el identificador de la cuenta atrás</span>
+<span class="kw1">var</span> cuentaAtras <span class="sy0">=</span> <span class="kw2">null</span><span class="sy0">;</span>
+<span class="kw1">var</span> tiempoMaximo <span class="sy0">=</span> <span class="nu0">5000</span><span class="sy0">;</span> <span class="co1">// 5000 = 5 segundos</span>
+&nbsp;
+<span class="kw1">function</span> cargaContenido<span class="br0">&#40;</span>url<span class="sy0">,</span> metodo<span class="sy0">,</span> funcion<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  peticion_http <span class="sy0">=</span> inicializa_xhr<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="kw1">if</span><span class="br0">&#40;</span>peticion_http<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="co1">// Establecer la cuenta atrás al realizar la petición HTTP</span>
+    cuentraAtras <span class="sy0">=</span> setTimeout<span class="br0">&#40;</span>expirada<span class="sy0">,</span> tiempoMaximo<span class="br0">&#41;</span><span class="sy0">;</span>
+    peticion_http.<span class="me1">onreadystatechange</span> <span class="sy0">=</span> funcion<span class="sy0">;</span>
+    peticion_http.<span class="me1">open</span><span class="br0">&#40;</span>metodo<span class="sy0">,</span> url<span class="sy0">,</span> <span class="kw2">true</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    peticion_http.<span class="me1">send</span><span class="br0">&#40;</span><span class="kw2">null</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>    
+<span class="br0">&#125;</span>
+&nbsp;
+<span class="kw1">function</span> muestraMensaje<span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  ...
+  <span class="kw1">if</span><span class="br0">&#40;</span>peticion_http.<span class="me1">readyState</span> <span class="sy0">==</span> READY_STATE_COMPLETE<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="kw1">if</span><span class="br0">&#40;</span>peticion_http.<span class="me1">status</span> <span class="sy0">==</span> <span class="nu0">200</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+      <span class="co1">// Si se ha recibido la respuesta del servidor, eliminar la cuenta atrás</span>
+      clearTimeout<span class="br0">&#40;</span>cuentaAtras<span class="br0">&#41;</span><span class="sy0">;</span>
+      ...            
+    <span class="br0">&#125;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+<span class="kw1">function</span> expirada<span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="co1">// La cuentra atrás se ha cumplido, detener la petición HTTP pendiente</span>
+  peticion_http.<span class="me1">abort</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  alert<span class="br0">&#40;</span><span class="st0">&quot;Se ha producido un error en la comunicación con el servidor. Inténtalo un poco más adelante.&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Además de la falta de respuesta del servidor, las aplicaciones AJAX deben estar preparadas para otros tipos de respuestas que pueden generar los servidores. El tipo de respuesta se comprueba mediante el valor del atributo <code>status</code> del objeto XMLHTTPRequest.</p>
+
+<p>A continuación se muestran las tablas de los códigos de estado más comunes que pueden devolver los servidores:</p>
+
+<p><strong>Códigos de información</strong></p>
+
+<div class="table" id="table_11_1">
+
+    <table>
+<thead>
+<tr>
+  <th>status</th>
+  <th>statusText</th>
+  <th>Explicación</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>100</code></td>
+  <td>Continue</td>
+  <td>Una parte de la petición (normalmente la primera) se ha recibido sin problemas y se puede enviar el resto de la petición</td>
+</tr>
+<tr>
+  <td><code>101</code></td>
+  <td>Switching protocols</td>
+  <td>El servidor va a cambiar el protocolo con el que se envía la información de la respuesta. En la cabecera <code>Upgrade</code> indica el nuevo protocolo</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+<p><strong>Códigos de petición y respuesta correctas</strong></p>
+
+<div class="table" id="table_11_2">
+
+    <table>
+<thead>
+<tr>
+  <th>status</th>
+  <th>statusText</th>
+  <th>Explicación</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>200</code></td>
+  <td>OK</td>
+  <td>La petición se ha recibido correctamente y se está enviando la respuesta. Este código es con mucha diferencia el que mas devuelven los servidores</td>
+</tr>
+<tr>
+  <td><code>201</code></td>
+  <td>Created</td>
+  <td>Se ha creado un nuevo recurso (por ejemplo una página web o un archivo) como parte de la respuesta</td>
+</tr>
+<tr>
+  <td><code>202</code></td>
+  <td>Accepted</td>
+  <td>La petición se ha recibido correctamente y se va a responder, pero no de forma inmediata</td>
+</tr>
+<tr>
+  <td><code>203</code></td>
+  <td>Non-Authoritative Information</td>
+  <td>La respuesta que se envía la ha generado un servidor externo. A efectos prácticos, es muy parecido al código <code>200</code></td>
+</tr>
+<tr>
+  <td><code>204</code></td>
+  <td>No Content</td>
+  <td>La petición se ha recibido de forma correcta pero no es necesaria una respuesta</td>
+</tr>
+<tr>
+  <td><code>205</code></td>
+  <td>Reset Content</td>
+  <td>El servidor solicita al navegador que inicialice el documento desde el que se realizó la petición, como por ejemplo un formulario</td>
+</tr>
+<tr>
+  <td><code>206</code></td>
+  <td>Partial Content</td>
+  <td>La respuesta contiene sólo la parte concreta del documento que se ha solicitado en la petición</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+<p><strong>Códigos de redirección</strong></p>
+
+<div class="table" id="table_11_3">
+
+    <table>
+<thead>
+<tr>
+  <th>status</th>
+  <th>statusText</th>
+  <th>Explicación</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>300</code></td>
+  <td>Multiple Choices</td>
+  <td>El contenido original ha cambiado de sitio y se devuelve una lista con varias direcciones alternativas en las que se puede encontrar el contenido</td>
+</tr>
+<tr>
+  <td><code>301</code></td>
+  <td>Moved Permanently</td>
+  <td>El contenido original ha cambiado de sitio y el servidor devuelve la nueva URL del contenido. La próxima vez que solicite el contenido, el navegador utiliza la nueva URL</td>
+</tr>
+<tr>
+  <td><code>302</code></td>
+  <td>Found</td>
+  <td>El contenido original ha cambiado de sitio de forma temporal. El servidor devuelve la nueva URL, pero el navegador debe seguir utilizando la URL original en las próximas peticiones</td>
+</tr>
+<tr>
+  <td><code>303</code></td>
+  <td>See Other</td>
+  <td>El contenido solicitado se puede obtener en la URL alternativa devuelta por el servidor. Este código no implica que el contenido original ha cambiado de sitio</td>
+</tr>
+<tr>
+  <td><code>304</code></td>
+  <td>Not Modified</td>
+  <td>Normalmente, el navegador guarda en su caché los contenidos accedidos frecuentemente. Cuando el navegador solicita esos contenidos, incluye la condición de que no hayan cambiado desde la última vez que los recibió. Si el contenido no ha cambiado, el servidor devuelve este código para indicar que la respuesta sería la misma que la última vez</td>
+</tr>
+<tr>
+  <td><code>305</code></td>
+  <td>Use Proxy</td>
+  <td>El recurso solicitado sólo se puede obtener a través de un proxy, cuyos datos se incluyen en la respuesta</td>
+</tr>
+<tr>
+  <td><code>307</code></td>
+  <td>Temporary Redirect</td>
+  <td>Se trata de un código muy similar al <code>302</code>, ya que indica que el recurso solicitado se encuentra de forma temporal en otra URL</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+<p><strong>Códigos de error del navegador</strong></p>
+
+<div class="table" id="table_11_4">
+
+    <table>
+<thead>
+<tr>
+  <th>status</th>
+  <th>statusText</th>
+  <th>Explicación</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>400</code></td>
+  <td>Bad Request</td>
+  <td>El servidor no entiende la petición porque no ha sido creada de forma correcta</td>
+</tr>
+<tr>
+  <td><code>401</code></td>
+  <td>Unauthorized</td>
+  <td>El recurso solicitado requiere autorización previa</td>
+</tr>
+<tr>
+  <td><code>402</code></td>
+  <td>Payment Required</td>
+  <td>Código reservado para su uso futuro</td>
+</tr>
+<tr>
+  <td><code>403</code></td>
+  <td>Forbidden</td>
+  <td>No se puede acceder al recurso solicitado por falta de permisos o porque el usuario y contraseña indicados no son correctos</td>
+</tr>
+<tr>
+  <td><code>404</code></td>
+  <td>Not Found</td>
+  <td>El recurso solicitado no se encuentra en la URL indicada. Se trata de uno de los códigos más utilizados y responsable de los típicos errores de <em>Página no encontrada</em></td>
+</tr>
+<tr>
+  <td><code>405</code></td>
+  <td>Method Not Allowed</td>
+  <td>El servidor no permite el uso del método utilizado por la petición, por ejemplo por utilizar el método <code>GET</code> cuando el servidor sólo permite el método <code>POST</code></td>
+</tr>
+<tr>
+  <td><code>406</code></td>
+  <td>Not Acceptable</td>
+  <td>El tipo de contenido solicitado por el navegador no se encuentra entre la lista de tipos de contenidos que admite, por lo que no se envía en la respuesta</td>
+</tr>
+<tr>
+  <td><code>407</code></td>
+  <td>Proxy Authentication Required</td>
+  <td>Similar al código <code>401</code>, indica que el navegador debe obtener autorización del proxy antes de que se le pueda enviar el contenido solicitado</td>
+</tr>
+<tr>
+  <td><code>408</code></td>
+  <td>Request Timeout</td>
+  <td>El navegador ha tardado demasiado tiempo en realizar la petición, por lo que el servidor la descarta</td>
+</tr>
+<tr>
+  <td><code>409</code></td>
+  <td>Conflict</td>
+  <td>El navegador no puede procesar la petición, ya que implica realizar una operación no permitida (como por ejemplo crear, modificar o borrar un archivo)</td>
+</tr>
+<tr>
+  <td><code>410</code></td>
+  <td>Gone</td>
+  <td>Similar al código <code>404</code>. Indica que el recurso solicitado ha cambiado para siempre su localización, pero no se proporciona su nueva URL</td>
+</tr>
+<tr>
+  <td><code>411</code></td>
+  <td>Length Required</td>
+  <td>El servidor no procesa la petición porque no se ha indicado de forma explícita el tamaño del contenido de la petición</td>
+</tr>
+<tr>
+  <td><code>412</code></td>
+  <td>Precondition Failed</td>
+  <td>No se cumple una de las condiciones bajo las que se realizó la petición</td>
+</tr>
+<tr>
+  <td><code>413</code></td>
+  <td>Request Entity Too Large</td>
+  <td>La petición incluye más datos de los que el servidor es capaz de procesar. Normalmente este error se produce cuando se adjunta en la petición un archivo con un tamaño demasiado grande</td>
+</tr>
+<tr>
+  <td><code>414</code></td>
+  <td>Request-URI Too Long</td>
+  <td>La URL de la petición es demasiado grande, como cuando se incluyen más de 512 bytes en una petición realizada con el método GET</td>
+</tr>
+<tr>
+  <td><code>415</code></td>
+  <td>Unsupported Media Type</td>
+  <td>Al menos una parte de la petición incluye un formato que el servidor no es capaz procesar</td>
+</tr>
+<tr>
+  <td><code>416</code></td>
+  <td>Requested Range Not Suitable</td>
+  <td>El trozo de documento solicitado no está disponible, como por ejemplo cuando se solicitan bytes que están por encima del tamaño total del contenido</td>
+</tr>
+<tr>
+  <td><code>417</code></td>
+  <td>Expectation Failed</td>
+  <td>El servidor no puede procesar la petición porque al menos uno de los valores incluidos en la cabecera <code>Expect</code> no se pueden cumplir</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+<p><strong>Códigos de error del servidor</strong></p>
+
+<div class="table" id="table_11_5">
+
+    <table>
+<thead>
+<tr>
+  <th>status</th>
+  <th>statusText</th>
+  <th>Explicación</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>500</code></td>
+  <td>Internal Server Error</td>
+  <td>Se ha producido algún error en el servidor que impide procesar la petición</td>
+</tr>
+<tr>
+  <td><code>501</code></td>
+  <td>Not Implemented</td>
+  <td>Procesar la respuesta requiere ciertas características no soportadas por el servidor</td>
+</tr>
+<tr>
+  <td><code>502</code></td>
+  <td>Bad Gateway</td>
+  <td>El servidor está actuando de proxy entre el navegador y un servidor externo del que ha obtenido una respuesta no válida</td>
+</tr>
+<tr>
+  <td><code>503</code></td>
+  <td>Service Unavailable</td>
+  <td>El servidor está sobrecargado de peticiones y no puede procesar la petición realizada</td>
+</tr>
+<tr>
+  <td><code>504</code></td>
+  <td>Gateway Timeout</td>
+  <td>El servidor está actuando de proxy entre el navegador y un servidor externo que ha tardado demasiado tiempo en responder</td>
+</tr>
+<tr>
+  <td><code>505</code></td>
+  <td>HTTP Version Not Supported</td>
+  <td>El servidor no es capaz de procesar la versión HTTP utilizada en la petición. La respuesta indica las versiones de HTTP que soporta el servidor</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="capitulo_10/otros_frameworks_importantes.html">&larr; Anterior <span>10.4. Otros frameworks importantes</span></a>
+            
+            <a class="span5 next" href="capitulo_11/mejorar_el_rendimiento_de_las_aplicaciones_complejas.html">Siguiente &rarr; <span>11.2. Mejorar el rendimiento de las aplicaciones complejas</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Otras utilidades (Introducción a AJAX%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a AJAX : Otras utilidades']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="capitulo_1.html"> Introducción a AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="capitulo_2.html"> JavaScript básico</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="capitulo_3.html"> JavaScript avanzado</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="capitulo_4.html"> DOM (Document Object Model)</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="capitulo_5.html"> BOM (Browser Object Model)</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="capitulo_6.html"> Eventos</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="capitulo_7.html"> Primeros pasos con AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="capitulo_8.html"> Técnicas básicas con AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="capitulo_9.html"> Técnicas avanzadas con AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="capitulo_10.html"> Frameworks y librerías</a>
+    </li>
+    <li class="level-1 active">
+        <a href="capitulo_11.html">
+            <span>Capítulo 11.</span> Otras utilidades
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="capitulo_11/mejorar_el_rendimiento_de_las_aplicaciones_complejas.html">
+            <span>11.2.</span> Mejorar el rendimiento de las aplicaciones complejas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="capitulo_11/ofuscar_el_codigo_javascript.html">
+            <span>11.3.</span> Ofuscar el código JavaScript
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="capitulo_11/evitar_el_problema_de_los_dominios_diferentes.html">
+            <span>11.4.</span> Evitar el problema de los dominios diferentes
+        </a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="capitulo_12.html"> Recursos útiles</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="capitulo_13.html"> Bibliografía</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="capitulo_14.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

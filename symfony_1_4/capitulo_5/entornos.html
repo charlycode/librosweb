@@ -1,0 +1,340 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>5.3. Entornos (Symfony 1.4, la guía definitiva)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="un_vistazo_general_a_los_archivos_de_configuracion.html" />
+        <link rel="next" href="la_cache_de_configuracion.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="5.3. Entornos (Symfony 1.4, la guía definitiva)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page symfony_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Symfony 1.4, la guía definitiva</a></li>
+  <li><a href="../capitulo_5.html">Capítulo 5. Configurar Symfony</a></li>
+  <li class="current"><span>5.3.. Entornos</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="entornos"><span>5.3.</span> Entornos</h1>
+    
+
+<p>Cuando se desarrolla una aplicación, es habitual disponer de varias configuraciones distintas pero relacionadas. Por ejemplo durante el desarrollo se tiene un archivo de configuración con los datos de conexión a la base de datos de pruebas, mientras que en el servidor de producción los datos de conexión necesarios son los de la base de datos de producción. Symfony permite definir diferentes entornos de ejecución para poder manejar de forma sencilla las diferentes configuraciones.</p>
+
+<h3 id="que_es_un_entorno">5.3.1. ¿Qué es un entorno?</h3>
+
+<p>Las aplicaciones de Symfony se pueden ejecutar en diferentes entornos. Todos los entornos comparten el mismo código PHP (salvo el código del controlador frontal) pero pueden tener configuraciones completamente diferentes. Cuando se crea una aplicación, Symfony crea por defecto 3 entornos: producción (<code>prod</code>), pruebas (<code>test</code>) y desarrollo (<code>dev</code>). También es posible añadir cualquier nuevo entorno que se considere necesario.</p>
+
+<p>En cierta forma, un entorno y una configuración son sinónimos. Por ejemplo el entorno de pruebas registra las alertas y los errores en el archivo de log, mientras que el entorno de producción solamente registra los errores. En el entorno de desarrollo se suele desactivar la cache, pero está activa en los entornos de pruebas y de producción. Los entornos de pruebas y desarrollo normalmente trabajan con una base de datos que contiene datos de prueba, mientras que el servidor de producción trabaja con la base de datos <em>buena</em>. En este caso, la configuración de la base de datos varía en los diferentes entornos. Todos los entornos pueden ejecutarse en una misma máquina, aunque en los servidores de producción normalmente solo se instala el entorno de producción.</p>
+
+<p>El entorno de desarrollo tiene activadas las opciones de log y de depuración de aplicaciones, ya que es más importante el mantenimiento de la aplicación que su rendimiento. Sin embargo, en el entorno de producción se ajustan las opciones de configuración para obtener el máximo rendimiento, por lo que muchas características están desactivadas por defecto. Una buena regla general suele ser la de utilizar el entorno de desarrollo hasta que consideres que la funcionalidad de la aplicación en la que estás trabajando se encuentra terminada y después pasarse al entorno de producción para comprobar su rendimiento.</p>
+
+<p>El entorno de pruebas varía respecto del de desarrollo y el de producción. La única forma de interactuar con este entorno es mediante la línea de comandos para realizar pruebas funcionales y ejecutar scripts. De esta forma, el entorno de pruebas es parecido al de producción, pero no se accede a través de un navegador. De todas formas, simula el uso de <em>cookies</em> y otros componentes específicos de HTTP.</p>
+
+<p>Para ejecutar la aplicación en otro entorno, solamente es necesario cambiar de controlador frontal. Hasta ahora, en todos los ejemplos se accedía al entorno de desarrollo, ya que las URL utilizadas llamaban al controlador frontal de desarrollo:</p>
+
+<div class="code code">
+<pre class="code">http://localhost/frontend_dev.php/mimodulo/index</pre>
+</div>
+
+<p>Sin embargo, si se quiere acceder a la aplicación en el entorno de producción, es necesario modificar la URL para llamar al controlador frontal de producción:</p>
+
+<div class="code code">
+<pre class="code">http://localhost/index.php/mimodulo/index</pre>
+</div>
+
+<p>Si el servidor web tiene habilitado el <code>mod_rewrite</code>, es posible utilizar las reglas de reescritura de URL de Symfony, que se encuentran en <code>web/.htaccess</code>. Estas reglas definen que el controlador frontal de producción es el script que se ejecuta por defecto en las peticiones, por lo que se pueden utilizar URL como la siguiente:</p>
+
+<div class="code code">
+<pre class="code">http://localhost/mimodulo/index</pre>
+</div>
+
+<div class="admonition sidebar"><p><strong class="title">Entornos y servidores</strong> No se deben confundir los entornos con los servidores. En Symfony, un entorno diferente es en realidad una configuración diferente, que se corresponde con un controlador frontal determinado (que es el script que se encarga de procesar la petición). Sin embargo, un servidor diferente se corresponde con un nombre de dominio diferente en la dirección.</p>
+
+<div class="code code">
+<pre class="code">http://localhost/frontend_dev.php/mimodulo/index
+&nbsp;
+Servidor = localhost
+Entorno  = frontend_dev.php  (es decir, entorno de desarrollo)</pre>
+</div>
+
+<p>Normalmente, los desarrolladores programan y prueban sus aplicaciones en servidores de desarrollo, que no son accesibles desde Internet y donde se puede modificar cualquier configuración de PHP o del propio servidor. Cuando la aplicación se va a lanzar de forma pública, se transfieren los archivos de la aplicación al servidor de producción y se permite el acceso a los usuarios.</p>
+
+<p>Por tanto, en cada servidor existen varios entornos de ejecución. Se puede ejecutar por ejemplo la aplicación en el entorno de producción aunque el servidor sea el de desarrollo. No obstante, suele ser habitual que en el servidor de producción solamente estén disponibles los entornos de ejecución de producción, para evitar que los usuarios puedan ver la configuración del servidor o puedan comprometer la seguridad del sistema.</p>
+
+<p>Para evitar la exposición accidental en producción de los controladores frontales que no son de producción, Symfony añade una sencilla comprobación de la IP desde la que se accede a estos controladores frontales, de forma que sólo se pueda acceder a ellos desde <code>localhost</code>. Si quieres acceder a ellos desde cualquier otra IP, puedes eliminar esta comprobación, pero es un riesgo que puede comprometer la seguridad de tu proyecto y que por tanto está completamente desaconsejado. De hecho, como el nombre más común de las aplicaciones es <code>frontend</code>, cualquier usuario malintencionado tratará de acceder a <code>frontend_dev.php</code> para obtener la mayor información posible sobre tu sistema.</p>
+
+<p>Para crear un nuevo entorno de ejecución, no es necesario recurrir a la línea de comandos o crear nuevos directorios. Lo único que hay que hacer es crear un nuevo archivo de tipo controlador frontal (puedes copiar uno de los existentes) y modificar el nombre de su entorno de ejecución. Este nuevo entorno hereda todas las configuraciones por defecto del framework y todas las opciones comunes a todos los entornos. En el siguiente capítulo se detalla como realizar esta operación.</p></div>
+
+<h3 id="configuration_en_cascada">5.3.2. Configuration en cascada</h3>
+
+<p>Una misma opción de configuración puede estar definida más de una vez en archivos diferentes. De esta forma es posible por ejemplo definir que el tipo MIME de las páginas de la aplicación sea <code>text/html</code>, pero que las páginas creadas con el módulo que se encarga del RSS tengan un tipo MIME igual a <code>text/xml</code>. Symfony permite establecer el primer valor en <code>frontend/config/view.yml</code> y el segundo en <code>frontend/modules/rss/config/view.yml</code>. El sistema de configuración se encarga de que una opción establecida a nivel de módulo tenga más prioridad que la opción definida a nivel de aplicación.</p>
+
+<p>De hecho, Symfony define varios niveles de configuración:</p>
+
+<ul>
+<li>Niveles de granularidad:
+
+<ul>
+<li>Configuración por defecto establecida por el framework</li>
+<li>Configuración global del proyecto (en <code>miproyecto/config/</code>)</li>
+<li>Configuración local de cada aplicación (en <code>miproyecto/apps/frontend/config/</code>)</li>
+<li>Configuración local de cada módulo (en <code>miproyecto/apps/frontend/modules/mimodulo/config/</code>)</li>
+</ul></li>
+<li>Niveles de entornos de ejecución:
+
+<ul>
+<li>Específico para un solo entorno</li>
+<li>Para todos los entornos</li>
+</ul></li>
+</ul>
+
+<p>Muchas de las opciones que se pueden establecer dependen del entorno de ejecución. Por este motivo, los archivos de configuración YAML están divididos por entornos, además de incluir una sección que se aplica a todos los entornos. De esta forma, un archivo de configuración típico de Symfony se parece al que se muestra en el listado 5-12.</p>
+
+<p><strong>Listado 5-12 - La estructura típica de los archivos de configuración de Symfony</strong></p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co1"># Opciones para el entorno de producción</span><span class="co4">
+prod</span><span class="sy2">:
+</span>  <span class="sy1">...</span>
+&nbsp;
+<span class="co1"># Opciones para el entorno de desarrollo</span><span class="co4">
+dev</span><span class="sy2">:
+</span>  <span class="sy1">...</span>
+&nbsp;
+<span class="co1"># Opciones para el entorno de pruebas</span><span class="co4">
+test</span><span class="sy2">:
+</span>  <span class="sy1">...</span>
+&nbsp;
+<span class="co1"># Opciones para un entorno creado a medida</span><span class="co4">
+mientorno</span><span class="sy2">:
+</span>  <span class="sy1">...</span>
+&nbsp;
+<span class="co1"># Opciones para todos los entornos</span><span class="co4">
+all</span><span class="sy2">:
+</span>  <span class="sy1">...</span></pre>
+</div>
+
+<p>Además de estas opciones, el propio framework define otros valores por defecto en archivos que no se encuentran en la estructura de directorios del proyecto, sino que se encuentran en el directorio <code>sfConfig::get('sf_symfony_lib_dir')/config/config/</code> de la instalación de Symfony. El listado 5-13 muestra la configuración por defecto de estos archivos. Todas las aplicaciones heredan estas opciones.</p>
+
+<p><strong>Listado 5-13 - La configuración por defecto, en <code>sfConfig::get('sf_symfony_lib_dir')/config/config/settings.yml</code></strong></p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co1"># Opciones por defecto:</span><span class="co4">
+default</span>:<span class="co4">
+  .actions</span>:<span class="co3">
+    default_module</span><span class="sy2">: </span>        default<span class="co3">
+    default_action</span><span class="sy2">: </span>        index
+    <span class="sy1">...</span></pre>
+</div>
+
+<p>Las opciones de estos archivos se incluyen como opciones comentadas en los archivos de configuración del proyecto, la aplicación y los módulos, como se muestra en el listado 5-14. De esta forma, se puede conocer el valor por defecto de algunas opciones y modificarlo si es necesario.</p>
+
+<p><strong>Listado 5-14 - La configuración por defecto, repetida en varios archivos para conocer fácilmente su valor, en <code>frontend/config/settings.yml</code></strong></p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co1">#all:</span>
+<span class="co1">#  .actions:</span>
+<span class="co1">#    default_module:         default</span>
+<span class="co1">#    default_action:         index</span>
+<span class="co1">#    ...</span></pre>
+</div>
+
+<p>El resultado final es que una misma opción puede ser definida varias veces y el valor que se considera en cada momento se genera mediante la configuración en cascada. Una opción definida en un entorno de ejecución específico tiene más prioridad sobre la misma opción definida para todos los entornos, que también tiene preferencia sobre las opciones definidas por defecto. Las opciones definidas a nivel de módulo tienen preferencia sobre las mismas opciones definidas a nivel de aplicación, que a su vez tienen preferencia sobre las definidas a nivel de proyecto. Todas estas prioridades se resumen en la siguiente lista de prioridades, en el que el primer valor es el más prioritario de todos:</p>
+
+<ol>
+<li>Módulo</li>
+<li>Aplicación</li>
+<li>Proyecto</li>
+<li>Entorno específico</li>
+<li>Todos los entornos</li>
+<li>Opciones por defecto</li>
+</ol>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="un_vistazo_general_a_los_archivos_de_configuracion.html">&larr; Anterior <span>5.2. Un vistazo general a los archivos de configuración</span></a>
+            
+            <a class="span5 next" href="la_cache_de_configuracion.html">Siguiente &rarr; <span>5.4. La cache de configuración</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Entornos (Symfony 1.4, la guía definitiva%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Symfony 1.4, la guía definitiva : Entornos']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción a Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Explorando el interior de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Ejecutar aplicaciones Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Introducción a la creación de páginas</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_5.html">
+            <span>Capítulo 5.</span> Configurar Symfony
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_sistema_de_configuracion.html">
+            <span>5.1.</span> El sistema de configuración
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="un_vistazo_general_a_los_archivos_de_configuracion.html">
+            <span>5.2.</span> Un vistazo general a los archivos de configuración
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="entornos.html">
+            <span>5.3.</span> Entornos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="la_cache_de_configuracion.html">
+            <span>5.4.</span> La cache de configuración
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="accediendo_a_la_configuracion_desde_la_aplicacion.html">
+            <span>5.5.</span> Accediendo a la configuración desde la aplicación
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="trucos_para_los_archivos_de_configuracion.html">
+            <span>5.6.</span> Trucos para los archivos de configuración
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="resumen.html">
+            <span>5.7.</span> Resumen
+        </a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> El Controlador</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> La Vista</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> El modelo (Doctrine)</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Enlaces y sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Emails</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Uso de la cache</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Pruebas unitarias y funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Herramientas para la administración de aplicaciones</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> Personalizar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> Rendimiento</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Configuración avanzada</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

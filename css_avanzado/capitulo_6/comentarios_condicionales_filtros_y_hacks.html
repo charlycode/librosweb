@@ -1,0 +1,347 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>6.5. Comentarios condicionales, filtros y hacks (CSS avanzado)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="estilos_alternativos.html" />
+        <link rel="next" href="selector_de_navegador.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="6.5. Comentarios condicionales, filtros y hacks (CSS avanzado)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page css_avanzado">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">CSS avanzado</a></li>
+  <li><a href="../capitulo_6.html">Capítulo 6. Técnicas avanzadas</a></li>
+  <li class="current"><span>6.5.. Comentarios condicionales, filtros y hacks</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="comentarios_condicionales_filtros_y_hacks"><span>6.5.</span> Comentarios condicionales, filtros y hacks</h1>
+    
+
+<h3 id="comentarios_condicionales">6.5.1. Comentarios condicionales</h3>
+
+<p>En ocasiones, cuando se diseña un sitio web, es preciso aplicar diferentes reglas y estilos en función del navegador. De esta forma, se pueden corregir los errores y limitaciones de un navegador sin afectar al resto de navegadores.</p>
+
+<p>Microsoft introdujo en su navegador Internet Explorer 5 un mecanismo llamado <em>"comentarios condicionales"</em>, que todavía incluyen las versiones más recientes como Internet Explorer 8, y que permite aplicar diferentes estilos CSS según la versión del navegador.</p>
+
+<p>La sintaxis de los comentarios condicionales se basa en la de los comentarios <em>normales</em> de HTML:</p>
+
+<div class="code code">
+<pre class="code">&lt;!-- Comentario normal de HTML --&gt;
+&nbsp;
+&lt;!--[if expresion]&gt; Comentario condicional &lt;![endif]--&gt;</pre>
+</div>
+
+<p>La sintaxis de los comentarios condicionales permite que su contenido se ignore en cualquier navegador que no sea de la familia Internet Explorer.</p>
+
+<p>Las expresiones se crean combinando identificadores, operadores y valores. El único identificador definido es <code>IE</code>, que permite crear el comentario condicional más simple:</p>
+
+<div class="code code">
+<pre class="code">&lt;!--[if IE]&gt;
+  Este navegador es cualquier versión de Internet Explorer
+&lt;![endif]--&gt;</pre>
+</div>
+
+<p>El operador más sencillo definido por los comentarios condicionales es el operador de negación (<code>!</code>), que se indica delante de una expresión para obtener el resultado contrario:</p>
+
+<div class="code code">
+<pre class="code">&lt;!--[if !IE]&gt;&lt;!--&gt;
+  Este navegador es cualquiera salvo Internet Explorer
+&lt;!--&lt;![endif]--&gt;</pre>
+</div>
+
+<p>Si se quiere restringir el alcance del comentario condicional a una única versión de Internet Explorer, se puede indicar directamente el número de la versión:</p>
+
+<div class="code code">
+<pre class="code">&lt;!--[if IE 5.5]&gt;
+  Este navegador es Internet Explorer 5.5
+&lt;![endif]--&gt;
+&nbsp;
+&lt;!--[if IE 6]&gt;
+  Este navegador es Internet Explorer 6
+&lt;![endif]--&gt;
+&nbsp;
+&lt;!--[if IE 8]&gt;
+  Este navegador es Internet Explorer 8
+&lt;![endif]--&gt;</pre>
+</div>
+
+<p>Además de las versiones específicas, también es posible restringir los comentarios condicionales a un grupo de versiones de Internet Explorer mediante los operadores <em>"menor que"</em> (<code>lt</code>), <em>"mayor que"</em> (<code>gt</code>), <em>"menor o igual que"</em> (<code>lte</code>), <em>"mayor o igual que"</em> (<code>gte</code>).</p>
+
+<div class="code code">
+<pre class="code">&lt;!--[if lt IE 7]&gt;
+  Este navegador es cualquier versión anterior a Internet Explorer 7
+&lt;![endif]--&gt;
+&nbsp;
+&lt;!--[if lte IE 6]&gt;
+  Este navegador es Internet Explorer 6 o cualquier versión anterior
+&lt;![endif]--&gt;
+&nbsp;
+&lt;!--[if gt IE 7]&gt;
+  Este navegador es cualquier versión más reciente que Internet Explorer 7
+&lt;![endif]--&gt;
+&nbsp;
+&lt;!--[if gte IE 8]&gt;
+  Este navegador es Internet Explorer 8 o cualquier versión más reciente
+&lt;![endif]--&gt;</pre>
+</div>
+
+<p>Por último, también se pueden utilizar otros operadores más complejos similares a los que se pueden encontrar en los lenguajes de programación. El operador AND (<code>&amp;</code>) combina dos expresiones para crear una condición que sólo se cumple si se cumplen las dos expresiones. El operador OR (<code>|</code>) también combina dos expresiones y crea condiciones que se cumplen cuando al menos una de las dos expresiones se cumple. También se pueden utilizar paréntesis para crear expresiones avanzadas:</p>
+
+<div class="code code">
+<pre class="code">&lt;!--[if !(IE 7)]&gt;
+  Este navegador es cualquier versión diferente a Internet Explorer 7
+&lt;![endif]--&gt;
+&nbsp;
+&lt;!--[if (IE 7) | (IE 8)]&gt;
+  Este navegador es Internet Explorer 7 o Internet Explorer 8
+&lt;![endif]--&gt;
+&nbsp;
+&lt;!--[if (gt IE 5) &amp; !(IE 8)]&gt;
+  Este navegador es cualquier versión más reciente que Internet Explorer 5 pero que no sea Internet Explorer 8
+&lt;![endif]--&gt;
+&nbsp;
+&lt;!--[if (gte IE 5) &amp; (lt IE 8)]&gt;
+  Este navegador es Internet Explorer 5 o cualquier versión más reciente que sea anterior a Internet Explorer 8
+&lt;![endif]--&gt;</pre>
+</div>
+
+<p>Las principales ventajas de los comentarios condicionales son:</p>
+
+<ul>
+<li>Compatibilidad con cualquier navegador, ya que el resto de navegadores consideran que los comentarios condicionales son comentarios normales de HTML e ignoran su contenido.</li>
+<li>No requiere el uso de lenguajes de programación como JavaScript, aunque se puede combinar con este tipo de técnicas para detectar dinámicamente el tipo y versión de navegador.</li>
+</ul>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Basándose en la idea de los comentarios condicionales, se ha desarrollado una técnica que permite crear hojas de estilos condicionales que aplican diferentes propiedades en función de la versión del navegador. Esta técnica se denomina <em><a href="http://www.conditional-css.com/">Conditional CSS</a></em> y requiere procesar las hojas de estilos en el servidor antes de servirlas a los usuarios. Los lenguajes de programación de servidor soportados son PHP, C y C++.</p></div>
+
+<h3 id="filtros_y_hacks">6.5.2. Filtros y hacks</h3>
+
+<p>Los filtros y hacks es otra de las técnicas disponibles para aplicar diferentes estilos y reglas CSS en función del navegador que visualiza los contenidos. Al contrario que los comentarios condicionales, los filtros y hacks constituyen una forma poco elegante y técnica de solucionar este problema.</p>
+
+<p>La idea de los filtros y hacks consiste en aprovechar los errores y carencias de los navegadores para ocultar los estilos CSS que no se deben aplicar en ese navegador. El siguiente ejemplo muestra uno de los hacks más antiguos y conocidos que aprovecha un error en las versiones obsoletas de Internet Explorer:</p>
+
+<div class="code css">
+<pre class="css"><span class="re0">#elemento</span> <span class="br0">&#123;</span>
+  <span class="kw1">width</span><span class="sy0">:</span> <span class="re3">300px</span><span class="sy0">;</span>
+  <span class="kw1">voice-family</span><span class="sy0">:</span> <span class="st0">&quot;\&quot;</span><span class="br0">&#125;</span>\<span class="st0">&quot;&quot;</span><span class="sy0">;</span>
+  <span class="kw1">voice-family</span><span class="sy0">:</span> <span class="kw2">inherit</span><span class="sy0">;</span>
+  <span class="kw1">width</span><span class="sy0">:</span> <span class="re3">250px</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+html <span class="sy0">&gt;</span> body <span class="re0">#elemento</span> <span class="br0">&#123;</span>
+  <span class="kw1">width</span><span class="sy0">:</span> <span class="re3">300px</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Internet Explorer 5 y 5.5 no interpretan correctamente el modelo de cajas de CSS, por lo que no muestran los elementos con la misma anchura que el resto de navegadores. Si se quiere realizar un diseño con el mismo aspecto en cualquier navegador, es preciso utilizar propiedades diferentes para Internet Explorer 5/5.5 y el resto de navegadores.</p>
+
+<p>Entre los muchos errores de Internet Explorer 5/5.5 se encuentra la imposibilidad de procesar correctamente la declaración <code>voice-family: "\"}\"";</code>. Por tanto, las reglas CSS anteriores se interpretan de la siguiente forma en cada navegador:</p>
+
+<div class="code css">
+<pre class="css"><span class="coMULTI">/* Internet Explorer 5/5.5 */</span>
+<span class="re0">#elemento</span> <span class="br0">&#123;</span>
+  <span class="kw1">width</span><span class="sy0">:</span> <span class="re3">300px</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+<span class="coMULTI">/* Internet Explorer 6 */</span>
+<span class="re0">#elemento</span> <span class="br0">&#123;</span>
+  <span class="kw1">width</span><span class="sy0">:</span> <span class="re3">300px</span><span class="sy0">;</span>
+  <span class="kw1">width</span><span class="sy0">:</span> <span class="re3">250px</span><span class="sy0">;</span> 
+<span class="br0">&#125;</span>
+&nbsp;
+<span class="coMULTI">/* Resto de navegadores */</span>
+<span class="re0">#elemento</span> <span class="br0">&#123;</span>
+  <span class="kw1">width</span><span class="sy0">:</span> <span class="re3">300px</span><span class="sy0">;</span>
+  <span class="kw1">width</span><span class="sy0">:</span> <span class="re3">250px</span><span class="sy0">;</span> 
+<span class="br0">&#125;</span>
+&nbsp;
+html <span class="sy0">&gt;</span> body <span class="re0">#elemento</span> <span class="br0">&#123;</span>
+  <span class="kw1">width</span><span class="sy0">:</span> <span class="re3">250px</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>El resultado final del hack anterior es que Internet Explorer 5/5.5 aplica un valor de <code>300px</code> a la propiedad <code>width</code> y el resto de navegadores aplican un valor de <code>250px</code>. Si se tienen en cuenta los márgenes, bordes y rellenos, el elemento se muestra con el mismo aspecto en cualquier navegador.</p>
+
+<p>Algunos filtros y hacks son mucho más sencillos que el mostrado anteriormente. De hecho, existen tres filtros muy simples que se utilizan para aplicar diferentes estilos a cada versión de Internet Explorer. El primer filtro es <code>* html</code>, que aplica las reglas CSS a las versiones de Internet Explorer anteriores a la 7:</p>
+
+<div class="code css">
+<pre class="css">p <span class="br0">&#123;</span>
+  <span class="kw1">color</span><span class="sy0">:</span> <span class="kw2">red</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+<span class="sy0">*</span> html p <span class="br0">&#123;</span>
+  <span class="kw1">color</span><span class="sy0">:</span> <span class="kw1">blue</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Si se añade <code>* html</code> delante del selector de cualquier regla CSS, esa regla sólo se aplica a los navegadores de la familia Internet Explorer anteriores a la versión 7. De esta forma, en el ejemplo anterior los párrafos de la página se muestran de color azul en los navegadores Internet Explorer 5, 5.5 y 6, mientras que se muestran de color rojo en el resto de navegadores.</p>
+
+<p>Otro de los hacks más utilizados es <code>_</code> (guión bajo) que hace que una propiedad sólo se aplique a los navegadores de la familia Internet Explorer anteriores a la versión 7:</p>
+
+<div class="code css">
+<pre class="css">p <span class="br0">&#123;</span>
+  <span class="kw1">color</span><span class="sy0">:</span> <span class="kw2">red</span><span class="sy0">;</span>
+  _color<span class="sy0">:</span> <span class="kw1">blue</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>La regla CSS anterior muestra los párrafos de la página de color rojo en cualquier navegador salvo en los navegadores Internet Explorer 5, 5.5 y 6, donde se muestran de color azul.</p>
+
+<p>Por último, también existe el hack <code>*</code> (asterisco) que hace que una propiedad sólo se aplique en los navegadores de la familia Internet Explorer anteriores a la versión 8:</p>
+
+<div class="code css">
+<pre class="css">p <span class="br0">&#123;</span>
+  <span class="kw1">color</span><span class="sy0">:</span> <span class="kw2">red</span><span class="sy0">;</span>
+  <span class="sy0">*</span><span class="kw1">color</span><span class="sy0">:</span> <span class="kw1">blue</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>En el ejemplo anterior, los párrafos de la página se muestran de color azul en cualquier navegador de la familia Internet Explorer cuya versión sea anterior a la 8 y se muestran de color rojo en cualquier otro navegador.</p>
+
+<p>Se puede consultar la lista completa de filtros y hacks para cada navegador y cada versión en el sitio web http://centricle.com/ref/css/filters/</p>
+
+<p>El uso de los filtros y hacks siempre debe considerarse como el último recurso para conseguir que los diseños tengan el mismo aspecto en cualquier navegador. Como los filtros y hacks se basan en aprovechar errores de los navegadores, su principal problema es que no garantizan su funcionamiento con las versiones más modernas de los navegadores. Además, los filtros y hacks complican el código CSS y lo hacen más difícil de leer y de mantener.</p>
+
+<p>La mejor alternativa a los filtros y hacks es el uso de comentarios condicionales. Si no es posible el uso de comentarios condicionales, es preferible que el diseño de la página muestre ligeras diferencias visuales en cada navegador.</p>
+
+<p>Afortunadamente, la importancia de los filtros y hacks es cada vez menor, ya que todos los navegadores modernos solucionan los graves errores de sus versiones anteriores e introducen menos errores nuevos.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="estilos_alternativos.html">&larr; Anterior <span>6.4. Estilos alternativos</span></a>
+            
+            <a class="span5 next" href="selector_de_navegador.html">Siguiente &rarr; <span>6.6. Selector de navegador</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Comentarios condicionales, filtros y hacks (CSS avanzado%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'CSS avanzado : Comentarios condicionales, filtros y hacks']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Técnicas imprescindibles</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Buenas prácticas</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Selectores</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Propiedades avanzadas</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Frameworks</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_6.html">
+            <span>Capítulo 6.</span> Técnicas avanzadas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="mapas_de_imagen.html">
+            <span>6.2.</span> Mapas de imagen
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="variables_en_las_hojas_de_estilos.html">
+            <span>6.3.</span> Variables en las hojas de estilos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="estilos_alternativos.html">
+            <span>6.4.</span> Estilos alternativos
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="comentarios_condicionales_filtros_y_hacks.html">
+            <span>6.5.</span> Comentarios condicionales, filtros y hacks
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="selector_de_navegador.html">
+            <span>6.6.</span> Selector de navegador
+        </a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

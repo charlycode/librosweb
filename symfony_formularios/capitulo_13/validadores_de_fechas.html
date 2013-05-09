@@ -1,0 +1,410 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>13.4. Validadores de fechas (Los formularios de Symfony 1.4)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="validadores_simples.html" />
+        <link rel="next" href="validador_de_archivos.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="13.4. Validadores de fechas (Los formularios de Symfony 1.4)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page symfony_formularios">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Los formularios de Symfony 1.4</a></li>
+  <li><a href="../capitulo_13.html">Capítulo 13. Validadores</a></li>
+  <li class="current"><span>13.4.. Validadores de fechas</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="validadores_de_fechas"><span>13.4.</span> Validadores de fechas</h1>
+    
+
+<h3 id="sfvalidatordate">13.4.1. sfValidatorDate</h3>
+
+<p><code>sfValidatorDate</code> valida fechas y fechas + horas (para utilizar fechas + horas, se debe activar la opción <code>with_time</code>). Además de validar el formato de una fecha, puede forzar a que la fecha sea anterior o posterior a una fecha indicada.</p>
+
+<p>Este validador acepta como valor original diferentes tipos de variables:</p>
+
+<ul>
+<li>Array con las siguientes claves: <code>year</code>, <code>month</code>, <code>day</code>, <code>hour</code>, <code>minute</code> y <code>second</code></li>
+<li>Cadena de texto que cumpla opcionalmente con la expresión regular indicada en la opción <code>date_format</code></li>
+<li>Cadena de texto que se pueda procesar por la función <code>strtotime()</code> de PHP</li>
+<li>Número entero que representa un timestamp</li>
+</ul>
+
+<p>El valor original se convierte en una fecha aplicando el formato <code>date_output</code> o <code>datetime_output</code></p>
+
+<div class="table" id="table_13_13">
+
+    <table>
+<thead>
+<tr>
+  <th>Opción</th>
+  <th>Error</th>
+  <th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>date_format</code></td>
+  <td><code>bad_format</code></td>
+  <td>Expresión regular que deben cumplir las fechas</td>
+</tr>
+<tr>
+  <td><code>with_time</code></td>
+  <td>-</td>
+  <td><code>true</code> si el validador debe devolver también la hora, <code>false</code> en cualquier otro caso</td>
+</tr>
+<tr>
+  <td><code>date_output</code></td>
+  <td>-</td>
+  <td>El formato que se utiliza al devolver sólo una fecha (por defecto es <code>Y-m-d</code>)</td>
+</tr>
+<tr>
+  <td><code>datetime_output</code></td>
+  <td>-</td>
+  <td>El formato que se utiliza al devolver una fecha y una hora (por defecto es <code>Y-m-d H:i:s</code>)</td>
+</tr>
+<tr>
+  <td><code>date_format_error</code></td>
+  <td>-</td>
+  <td>The date format to use when displaying an error for a <code>bad_format</code> error (use <code>date_format</code> if not provided)</td>
+</tr>
+<tr>
+  <td><code>max</code></td>
+  <td><code>max</code></td>
+  <td>La fecha máxima permitida (se indica como timestamp)</td>
+</tr>
+<tr>
+  <td><code>min</code></td>
+  <td><code>min</code></td>
+  <td>La fecha mínima permitida (se indica como timestamp)</td>
+</tr>
+<tr>
+  <td><code>date_format_range_error</code></td>
+  <td>-</td>
+  <td>El formato de fecha que se utiliza al mostrar un error de tipo <code>max</code> o <code>min</code> (por defecto es <code>d/m/Y H:i:s</code>)</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Las opciones <code>date_output</code> y <code>datetime_output</code> pueden emplear cualquier formato que entienda la función <code>date()</code> de PHP.</p></div>
+
+<div class="table" id="table_13_14">
+
+    <table>
+<thead>
+<tr>
+  <th>Error</th>
+  <th>Variables</th>
+  <th>Valor por defecto (se muestra en inglés)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>bad_format</code></td>
+  <td><code>date_format</code></td>
+  <td>"%value%" does not match the date format (%date_format%).</td>
+</tr>
+<tr>
+  <td><code>min</code></td>
+  <td><code>min</code></td>
+  <td>The date must be after %min%.</td>
+</tr>
+<tr>
+  <td><code>max</code></td>
+  <td><code>max</code></td>
+  <td>The date must be before %max%.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+<h3 id="sfvalidatortime">13.4.2. sfValidatorTime</h3>
+
+<p><code>sfValidatorTime</code> valida que el valor original sea una hora.</p>
+
+<p>Este validador acepta como valor original diferentes tipos de variables:</p>
+
+<ul>
+<li>Array con las siguientes claves: <code>hour</code>, <code>minute</code> y <code>second</code></li>
+<li>Cadena de texto que cumpla opcionalmente con la expresión regular indicada en la opción <code>time_format</code></li>
+<li>Cadena de texto que se pueda procesar por la función <code>strtotime()</code> de PHP</li>
+<li>Número entero que representa un timestamp</li>
+</ul>
+
+<p>El valor original se convierte en una hora aplicando el formato <code>date_output</code> o <code>datetime_output</code></p>
+
+<div class="table" id="table_13_15">
+
+    <table>
+<thead>
+<tr>
+  <th>Opción</th>
+  <th>Error</th>
+  <th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>time_format</code></td>
+  <td><code>bad_format</code></td>
+  <td>Expresión regular que deben cumplir las horas</td>
+</tr>
+<tr>
+  <td><code>time_output</code></td>
+  <td>-</td>
+  <td>El formato que se utiliza al devolver una fecha con la hora (por defecto es <code>H:i:s</code>)</td>
+</tr>
+<tr>
+  <td><code>time_format_error</code></td>
+  <td>-</td>
+  <td>El formato de fecha que se utiliza al mostrar un error de tipo <code>bad_format</code>. Si no se indica, se utiliza el formato <code>date_format</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+<div class="admonition note"><p><strong class="title">Nota</strong> La opción <code>time_output</code> puede emplear cualquier formato que entienda la función <code>date()</code> de PHP.</p></div>
+
+<div class="table" id="table_13_16">
+
+    <table>
+<thead>
+<tr>
+  <th>Error</th>
+  <th>Variables</th>
+  <th>Valor por defecto (se muestra en inglés)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>bad_format</code></td>
+  <td><code>date_format</code></td>
+  <td>"%value%" does not match the time format (%time_format%).</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+<h3 id="sfvalidatordatetime">13.4.3. sfValidatorDateTime</h3>
+
+<p><code>sfValidatorDateTime</code> valida las fechas que incluyen la hora. En realidad, este validador es un atajo del siguiente código:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$v</span> <span class="sy0">=</span> <span class="kw2">new</span> sfValidatorDate<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'with_time'</span> <span class="sy0">=&gt;</span> <span class="kw4">true</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<h3 id="sfvalidatordaterange">13.4.4. sfValidatorDateRange</h3>
+
+<p><code>sfValidatorDateTime</code> valida un rango de fechas.</p>
+
+<div class="table" id="table_13_17">
+
+    <table>
+<thead>
+<tr>
+  <th>Opción</th>
+  <th>Error</th>
+  <th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>from_date</code></td>
+  <td><code>invalid</code></td>
+  <td>El validador de la fecha inicial (obligatorio)</td>
+</tr>
+<tr>
+  <td><code>to_date</code></td>
+  <td><code>invalid</code></td>
+  <td>El validador de la fecha final (obligatorio)</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+<p>Los validadores de <code>from_date</code> y <code>to_date</code> deben ser instancias de la clase <code>sfValidatorDate</code>.</p>
+
+<p>El mensaje por defecto del error de tipo <code>invalid</code> es <code>"%value%" does not match the time format (%time_format%).</code></p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="validadores_simples.html">&larr; Anterior <span>13.3. Validadores simples</span></a>
+            
+            <a class="span5 next" href="validador_de_archivos.html">Siguiente &rarr; <span>13.5. Validador de archivos</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Validadores de fechas (Los formularios de Symfony 1.4%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Los formularios de Symfony 1.4 : Validadores de fechas']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Creación de formularios</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Validación de formularios</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Formularios para diseñadores web</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Integración con Propel</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Integrando Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Referencia de Widgets</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_13.html">
+            <span>Capítulo 13.</span> Validadores
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="validadores.html">
+            <span>13.2.</span> Validadores
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="validadores_simples.html">
+            <span>13.3.</span> Validadores simples
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="validadores_de_fechas.html">
+            <span>13.4.</span> Validadores de fechas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="validador_de_archivos.html">
+            <span>13.5.</span> Validador de archivos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="validadores_logicos.html">
+            <span>13.6.</span> Validadores lógicos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="validadores_de_internacionalizacion.html">
+            <span>13.7.</span> Validadores de internacionalización
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="validadores_de_propel.html">
+            <span>13.8.</span> Validadores de Propel
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="validadores_de_doctrine.html">
+            <span>13.9.</span> Validadores de Doctrine
+        </a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

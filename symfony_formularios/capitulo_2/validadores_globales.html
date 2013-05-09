@@ -1,0 +1,261 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>2.6. Validadores globales (Los formularios de Symfony 1.4)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="validadores_logicos.html" />
+        <link rel="next" href="subiendo_archivos.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="2.6. Validadores globales (Los formularios de Symfony 1.4)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page symfony_formularios">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Los formularios de Symfony 1.4</a></li>
+  <li><a href="../capitulo_2.html">Capítulo 2. Validación de formularios</a></li>
+  <li class="current"><span>2.6.. Validadores globales</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="validadores_globales"><span>2.6.</span> Validadores globales</h1>
+    
+
+<p>Los validadores mostrados hasta el momento siempre están asociados a un campo específico del formulario y sólo permite validar un valor. Además, estos validadores son independientes del resto de información enviada por el usuario. No obstante, en ocasiones la validación de un campo depende del contexto o depende del valor de muchos otros campos. Los ejemplos típicos de validadores globales son los dos campos de contraseña que deben ser iguales o el campo de fecha de inicio que debe ser anterior que la fecha de finalización.</p>
+
+<p>En cualquiera de estos casos, se debe utilizar un validador global que valide los datos introducidos teniendo en cuenta su contexto. Los validadores globales se pueden establecer antes o después de la validación individual de los campos mediante los pre-validadores y los post-validadores respectivamente. Normalmente es mejor utilizar un post-validador porque así los datos ya están validados y limpios, por lo que su formato también se ha normalizado. El listado 2-13 muestra cómo comparar el valor de dos contraseñas mediante el validador <code>sfValidatorSchemaCompare</code>.</p>
+
+<p><strong>Listado 2-13 - Utilizando el validador <code>sfValidatorSchemaCompare</code></strong></p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">validatorSchema</span><span class="sy0">-&gt;</span><span class="me1">setPostValidator</span><span class="br0">&#40;</span><span class="kw2">new</span> sfValidatorSchemaCompare<span class="br0">&#40;</span><span class="st_h">'password1'</span><span class="sy0">,</span> sfValidatorSchemaCompare<span class="sy0">::</span><span class="me2">EQUAL</span><span class="sy0">,</span> <span class="st_h">'password2'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>A partir de Symfony 1.2, también puedes utilizar los operadores habituales de PHP para realizar las comparaciones en vez de las constantes de la clase <code>sfValidatorSchemaCompare</code>. Por tanto, el ejemplo anterior es equivalente a:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">validatorSchema</span><span class="sy0">-&gt;</span><span class="me1">setPostValidator</span><span class="br0">&#40;</span><span class="kw2">new</span> sfValidatorSchemaCompare<span class="br0">&#40;</span><span class="st_h">'password1'</span><span class="sy0">,</span> <span class="st_h">'=='</span><span class="sy0">,</span> <span class="st_h">'password2'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Al igual que el resto de validadores globales, la clase <code>sfValidatorSchemaCompare</code> hereda del validador <code>sfValidatorSchema</code>. De hecho, el propio <code>sfValidatorSchema</code> es un validador global, ya que valida todos los datos introducidos por el usuario pasando el valor de cada campo a su validador asociado.</p></div>
+
+<p>El listado 2-14 muestra cómo emplear un único validador para validar que una fecha de inicio sea anterior a la fecha de finalización y además añade un mensaje de error personalizado.</p>
+
+<p><strong>Listado 2-14 - Utilizando el validador <code>sfValidatorSchemaCompare</code></strong></p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">validatorSchema</span><span class="sy0">-&gt;</span><span class="me1">setPostValidator</span><span class="br0">&#40;</span>
+  <span class="kw2">new</span> sfValidatorSchemaCompare<span class="br0">&#40;</span><span class="st_h">'fecha_inicio'</span><span class="sy0">,</span> sfValidatorSchemaCompare<span class="sy0">::</span><span class="me2">LESS_THAN_EQUAL</span><span class="sy0">,</span> <span class="st_h">'fecha_fin'</span><span class="sy0">,</span>
+    <span class="kw3">array</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+    <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'invalid'</span> <span class="sy0">=&gt;</span> <span class="st_h">'La fecha de inicio (&quot;%left_field%&quot;) debe ser anterior a la fecha de finalización (&quot;%right_field%&quot;)'</span><span class="br0">&#41;</span>
+  <span class="br0">&#41;</span>
+<span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Utilizar un post-validador asegura que la comparación entre las dos fechas es precisa. Independientemente del formato en el que se introduce cada fecha, la validación de los campos <code>fecha_inicio</code> y <code>fecha_fin</code> asegura que sus valores se convierten en un formato fácilmente comparable (<code>Y-m-d H:i:s</code> por defecto).</p>
+
+<p>Por defecto, los pre-validadores y los post-validadores devuelven errores de tipo global al formulario. No obstante, algunos de esos validadores pueden asociar un error a un campo determinado. La opción <code>throw_global_error</code> por ejemplo del validador <code>sfValidatorSchemaCompare</code> permite elegir entre un error global (figura 2-10) y un error asociado al primer campo (figura 2-11). El listado 2-15 muestra cómo utilizar la opción <code>throw_global_error</code>.</p>
+
+<p><strong>Listado 2-15 - Utilizando la opción <code>throw_global_error</code></strong></p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">validatorSchema</span><span class="sy0">-&gt;</span><span class="me1">setPostValidator</span><span class="br0">&#40;</span>
+  <span class="kw2">new</span> sfValidatorSchemaCompare<span class="br0">&#40;</span><span class="st_h">'fecha_inicio'</span><span class="sy0">,</span> sfValidatorSchemaCompare<span class="sy0">::</span><span class="me2">LESS_THAN_EQUAL</span><span class="sy0">,</span> <span class="st_h">'fecha_fin'</span><span class="sy0">,</span>
+    <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'throw_global_error'</span> <span class="sy0">=&gt;</span> <span class="kw4">true</span><span class="br0">&#41;</span><span class="sy0">,</span>
+    <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'invalid'</span> <span class="sy0">=&gt;</span> <span class="st_h">'La fecha de inicio (&quot;%left_field%&quot;)  debe ser anterior a la fecha de finalización (&quot;%right_field%&quot;)'</span><span class="br0">&#41;</span>
+  <span class="br0">&#41;</span>
+<span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<div class="figure" id="figure_2_10">
+    <img src="../../img/symfony_formularios/f0210.png" alt="Error global de un validador global" />
+
+    <p class="caption"><strong>Figura 2.10</strong> Error global de un validador global</p>
+</div>
+
+
+<div class="figure" id="figure_2_11">
+    <img src="../../img/symfony_formularios/f0211.png" alt="Error local de un validador global" />
+
+    <p class="caption"><strong>Figura 2.11</strong> Error local de un validador global</p>
+</div>
+
+
+<p>Por último, si se utiliza un validador lógico es posible combinar varios post-validadores como muestra el listado 2-16.</p>
+
+<p><strong>Listado 2-16 - Combinando varios post-validadores mediante un validador lógico</strong></p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">validatorSchema</span><span class="sy0">-&gt;</span><span class="me1">setPostValidator</span><span class="br0">&#40;</span><span class="kw2">new</span> sfValidatorAnd<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span>
+  <span class="kw2">new</span> sfValidatorSchemaCompare<span class="br0">&#40;</span><span class="st_h">'fecha_inicio'</span><span class="sy0">,</span> sfValidatorSchemaCompare<span class="sy0">::</span><span class="me2">LESS_THAN_EQUAL</span><span class="sy0">,</span> <span class="st_h">'fecha_fin'</span><span class="br0">&#41;</span><span class="sy0">,</span>
+  <span class="kw2">new</span> sfValidatorSchemaCompare<span class="br0">&#40;</span><span class="st_h">'password1'</span><span class="sy0">,</span> sfValidatorSchemaCompare<span class="sy0">::</span><span class="me2">EQUAL</span><span class="sy0">,</span> <span class="st_h">'password2'</span><span class="br0">&#41;</span><span class="sy0">,</span>
+<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="validadores_logicos.html">&larr; Anterior <span>2.5. Validadores lógicos</span></a>
+            
+            <a class="span5 next" href="subiendo_archivos.html">Siguiente &rarr; <span>2.7. Subiendo archivos</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Validadores globales (Los formularios de Symfony 1.4%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Los formularios de Symfony 1.4 : Validadores globales']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Creación de formularios</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_2.html">
+            <span>Capítulo 2.</span> Validación de formularios
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="antes_de_comenzar.html">
+            <span>2.1.</span> Antes de comenzar
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="validadores.html">
+            <span>2.2.</span> Validadores
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="personalizando_los_validadores.html">
+            <span>2.3.</span> Personalizando los validadores
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="seguridad_de_los_validadores.html">
+            <span>2.4.</span> Seguridad de los validadores
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="validadores_logicos.html">
+            <span>2.5.</span> Validadores lógicos
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="validadores_globales.html">
+            <span>2.6.</span> Validadores globales
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="subiendo_archivos.html">
+            <span>2.7.</span> Subiendo archivos
+        </a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Formularios para diseñadores web</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Integración con Propel</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Integrando Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Referencia de Widgets</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Validadores</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

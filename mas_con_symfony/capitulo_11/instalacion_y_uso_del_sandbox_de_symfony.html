@@ -1,0 +1,451 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>11.5. Instalación y uso del sandbox de Symfony (Más con Symfony)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="ejecutando_php_desde_la_linea_de_comandos.html" />
+        <link rel="next" href="creando_un_nuevo_proyecto_symfony.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="11.5. Instalación y uso del sandbox de Symfony (Más con Symfony)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page mas_con_symfony">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Más con Symfony</a></li>
+  <li><a href="../capitulo_11.html">Capítulo 11. Windows y Symfony</a></li>
+  <li class="current"><span>11.5.. Instalación y uso del sandbox de Symfony</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="instalacion_y_uso_del_sandbox_de_symfony"><span>11.5.</span> Instalación y uso del sandbox de Symfony</h1>
+    
+
+<p>El siguiente párrafo está extraído de la guía de inicio rápido de Symfony:
+"El sandbox es un proyecto Symfony muy sencillo de instalar y preparado con las
+opciones de configuración más habituales. Se trata de la mejor forma de probar
+Symfony sin tener que realizar una instalación correcta que se adecue a las
+mejores prácticas en el mundo web".</p>
+
+<p>El sandbox está configurado para utilizar SQLite como base de datos. En Windows
+no es necesario instalar nada para que funcione, ya que el soporte de SQLite lo
+proporciona la extensión PDO de PHP que se instaló durante la instalación de
+PHP. Por tanto, este requisito ya se cubrió al instalar las librerías de PHP
+mediante el Microsoft Web PI.</p>
+
+<p>Simplemente comprueba que la extensión SQLite está correctamente referenciada
+en el archivo de configuración PHP.INI que se encuentra en el directorio
+<code>C:\Program Files (x86)\PHP</code>. Además, comprueba que la DLL que implementa el
+soporte PDO de SQLite sea <code>C:\Program Files (x86)\PHP\ext\php_pdo_sqlite.dll</code>.</p>
+
+<div class="figure" id="figure_11_21">
+    <img src="../../img/mas_con_symfony/windows_21.png" alt="PHP - Localización del archivo de configuración php.ini." />
+
+    <p class="caption"><strong>Figura 11.21</strong> PHP - Localización del archivo de configuración php.ini.</p>
+</div>
+
+
+<h3 id="descargar_crear_el_directorio_y_copiar_los_archivos">11.6.1. Descargar, crear el directorio y copiar los archivos</h3>
+
+<p>El proyecto del sandbox de Symfony ya viene preparado para ser ejecutado, pero
+se encuentra dentro de un archivo comprimido <code>.zip</code>.</p>
+
+<p><a href="http://www.symfony-project.org/get/sf_sandbox_1_3.zip">Descarga el archivo del sandbox</a>
+y extrae sus contenidos a un directorio temporal, como por ejemplo el directorio
+<em>downloads</em> que se encuentra dentro del directorio <code>C:\Users\Administrator</code>.</p>
+
+<div class="figure" id="figure_11_22">
+    <img src="../../img/mas_con_symfony/windows_22.png" alt="sandbox - Descargar y descomprimir el archivo." />
+
+    <p class="caption"><strong>Figura 11.22</strong> sandbox - Descargar y descomprimir el archivo.</p>
+</div>
+
+
+<p>Crea un directorio para instalar el sandbox, como por ejemplo <code>F:\dev\sfsandbox</code>:</p>
+
+<div class="figure" id="figure_11_23">
+    <img src="../../img/mas_con_symfony/windows_23.png" alt="sandbox - Crea el directorio sfsandbox." />
+
+    <p class="caption"><strong>Figura 11.23</strong> sandbox - Crea el directorio sfsandbox.</p>
+</div>
+
+
+<p>Selecciona todos los archivos del directorio en el que descomprimiste el sandbox
+y copialos en el nuevo directorio <code>F:\dev\sfsandbox</code>.</p>
+
+<p>Si todo funciona bien, verás que se están copiando 2599 archivos:</p>
+
+<div class="figure" id="figure_11_24">
+    <img src="../../img/mas_con_symfony/windows_24.png" alt="sandbox - Copiar 2599 archivos." />
+
+    <p class="caption"><strong>Figura 11.24</strong> sandbox - Copiar 2599 archivos.</p>
+</div>
+
+
+<h3 id="probando_la_ejecucion">11.5.2. Probando la ejecución</h3>
+
+<p>Abre una consola de comandos, entra en el directorio <code>F:\dev\sfsandbox</code> y
+ejecuta el siguiente comando:</p>
+
+<div class="code cli">
+<pre class="cli">PHP symfony -V</pre>
+</div>
+
+<p>El resultado del comando anterior debería ser:</p>
+
+<div class="code cli">
+<pre class="cli">symfony version 1.3.0 (F:\dev\sfsandbox\lib\symfony)</pre>
+</div>
+
+<p>En la misma consola de comandos, ejecuta:</p>
+
+<div class="code cli">
+<pre class="cli">SYMFONY.BAT -V</pre>
+</div>
+
+<p>El resultado de este nuevo comando debería ser exactamente el mismo que antes:</p>
+
+<div class="code cli">
+<pre class="cli">symfony version 1.3.0 (F:\dev\sfsandbox\lib\symfony)</pre>
+</div>
+
+<div class="figure" id="figure_11_25">
+    <img src="../../img/mas_con_symfony/windows_25.png" alt="sandbox - Probando correctamente la línea de comandos." />
+
+    <p class="caption"><strong>Figura 11.25</strong> sandbox - Probando correctamente la línea de comandos.</p>
+</div>
+
+
+<h3 id="creando_la_aplicacion_web">11.6.4. Creando la aplicación web</h3>
+
+<p>Para crear la aplicación web en el servidor local, se va a utilizar el gestor
+de IIS7, que es una interfaz gráfica que hace las veces de panel de control
+para todas las actividades relacionadas con IIS. En realidad, cualquier cambio
+que se realiza en la interfaz gráfica se ejecuta en segundo plando mediante la
+línea de comandos.</p>
+
+<p>La consola del IIS Manager se puede acceder a través de Inicio > <em>Programs</em> >
+<em>Administrative Tools</em> > <em>Internet Information Server (IIS) Manager</em>.</p>
+
+<h4 id="configurar_el_sitio_web_por_defecto_para_que_no_interfiera_en_el_puerto_80">11.5.3.1. Configurar el sitio web por defecto para que no interfiera en el puerto 80</h4>
+
+<p>Para asegurarnos de que solamente nuestro sandbox de Symfony responde en el
+puerto 80 (HTTP), modifica el puerto del <em>"Default Web Site"</em> existente al 8080.</p>
+
+<div class="figure" id="figure_11_26">
+    <img src="../../img/mas_con_symfony/windows_26.png" alt="IIS Manager - Configurando el &quot;Default Web Site&quot;." />
+
+    <p class="caption"><strong>Figura 11.26</strong> IIS Manager - Configurando el &quot;Default Web Site&quot;.</p>
+</div>
+
+
+<p>Si el firewall de Windows está activo, es posible que debas crear una excepción
+para el puerto 8080 de forma que todavía se pueda acceder al <em>"Default Web Site"</em>.
+Para ello, accede al panel de control de Windows, pincha sobre <em>Windows Firewall</em>
+selecciona la opción <em>"Allow a program through Windows Firewall"</em>, pulsa sobre
+<em>"Add port"</em> y crea la excepción. Después de crearla, pulsa sobre el cuadrado
+para activarla.</p>
+
+<div class="figure" id="figure_11_27">
+    <img src="../../img/mas_con_symfony/windows_27.png" alt="Windows Firewall - Crear una excepción para el puerto 8080." />
+
+    <p class="caption"><strong>Figura 11.27</strong> Windows Firewall - Crear una excepción para el puerto 8080.</p>
+</div>
+
+
+<h4 id="anadir_un_nuevo_sitio_web_al_sandbox">11.5.3.2. Añadir un nuevo sitio web al sandbox</h4>
+
+<p>Accede a las <em>Administration Tools</em> y abre el <em>IIS Manager</em>. En la parte de la
+izquierda, selecciona el icono <em>"Sites"</em> y pulsa el botón derecho. Selecciona
+la opción <em>Add Web Site</em> e introduce como nombre del sitio "Symfony Sandbox".
+En la opción <em>Physical Path</em> selecciona <code>D:\dev\sfsandbox</code> y deja el resto de
+opciones sin cambiar. Deberías ver la siguiente ventana de diálogo:</p>
+
+<div class="figure" id="figure_11_28">
+    <img src="../../img/mas_con_symfony/windows_28.png" alt="IIS Manager - Añadir un nuevo sitio web." />
+
+    <p class="caption"><strong>Figura 11.28</strong> IIS Manager - Añadir un nuevo sitio web.</p>
+</div>
+
+
+<p>Pincha sobre el botón OK. Si se muestra una pequeña <code>x</code> en el icono del sitio
+web (dentro de <em>Features View / Sites</em>) puedes hacerla desaparecer pinchando
+sobre el <em>"Restart"</em> que se muestra a la derecha.</p>
+
+<h4 id="comprobando_que_el_sitio_web_responde">11.5.3.3. Comprobando que el sitio web responde</h4>
+
+<p>Desde el <em>IIS Manager</em>, selecciona el sitio <em>"Symfony Sandbox"</em> y pulsa sobre
+la opción <em>"Browse *.80 (http)"</em> del panel derecho.</p>
+
+<div class="figure" id="figure_11_29">
+    <img src="../../img/mas_con_symfony/windows_29.png" alt="IIS Manager - Pincha en Browse port 80." />
+
+    <p class="caption"><strong>Figura 11.29</strong> IIS Manager - Pincha en Browse port 80.</p>
+</div>
+
+
+<p>Si todo funciona bien, deberías ver el siguiente mensaje de error: <code>HTTP Error
+403.14 - Forbidden</code>. El servidor web está configurado para no mostrar un listado
+de los contenidos del directorio.</p>
+
+<p>El origen del error es que la configuración por defecto del servidor web impide
+mostrar un listado con todos los contenidos de los directorios. Como no existe
+ningún archivo llamado <code>index.php</code> o <code>index.html</code> en <code>D:\dev\sfsandbox</code>, el
+servidor muestra correctamente el error de tipo <em>"Forbidden"</em>.</p>
+
+<div class="figure" id="figure_11_30">
+    <img src="../../img/mas_con_symfony/windows_30.png" alt="Internet Explorer - Error normal." />
+
+    <p class="caption"><strong>Figura 11.30</strong> Internet Explorer - Error normal.</p>
+</div>
+
+
+<p>Accede a la URL <code>http://localhost/web</code> en tu navegador (en vez de simplemente
+<code>http://localhost</code>). Ahora si que deberías ver en tu navegador la famosa página
+<em>"Symfony Project Created"</em>:</p>
+
+<div class="figure" id="figure_11_31">
+    <img src="../../img/mas_con_symfony/windows_31.png" alt="IIS Manager - Accediendo a la URL http://localhost/web." />
+
+    <p class="caption"><strong>Figura 11.31</strong> IIS Manager - Accediendo a la URL http://localhost/web.</p>
+</div>
+
+
+<p>En la parte superior de la página verás una barra de color amarillo claro con
+el mensaje <em>"Intranet settings are now turned off by default. Intranet settings
+are less secure than Internet settings. Click for options."</em>.</p>
+
+<p>No te preocupes por ese mensaje. Si quieres cerrarlo permanentemente, pincha el
+botón derecho sobre la barra amarilla y selecciona la opción apropiada.</p>
+
+<p>Visualizar la página anterior confirma que la página <code>index.php</code> se ha cargado
+correctamente desde <code>D:\dev\sfsandbox\web\index.php</code>, que se ha ejecutado bien
+y que las librerías de Symfony están correctamente configuradas.</p>
+
+<p>Antes de empezar a <em>jugar</em> con el sandbox de Symfony tenemos que realizar una
+última tarea: configurar la página web del frontend mediante las reglas de
+reescritura de URL. Estas reglas se encuentran en un archivo <code>.htaccess</code> y se
+pueden incorporar fácilmente al IIS Manager.</p>
+
+<h3 id="configuracion_del_frontend_del_sandbox">11.5.4. Configuración del frontend del sandbox</h3>
+
+<p>Para empezar a probar todas las opciones de Symfony, es necesario configurar
+la aplicación frontend del sandbox. Inicialmente la portada del frontend se
+puede acceder y se ejecuta correctamente cuando se accede desde el propio
+ordenador donde se encuentra el servidor (es decir, desde <code>localhost</code> o desde
+<code>127.0.0.1</code>).</p>
+
+<div class="figure" id="figure_11_32">
+    <img src="../../img/mas_con_symfony/windows_32.png" alt="Internet Explorer - La página frontend_dev.php se puede acceder bien desde el localhost." />
+
+    <p class="caption"><strong>Figura 11.32</strong> Internet Explorer - La página frontend_dev.php se puede acceder bien desde el localhost.</p>
+</div>
+
+
+<p>Para comprobar que el sandbox funciona correctamente bajo Windows Server 2008,
+pincha sobre las secciones <em>"configuration"</em>, <em>"logs"</em> y <em>"timers"</em> de la barra
+de depuración web.</p>
+
+<div class="figure" id="figure_11_33">
+    <img src="../../img/mas_con_symfony/windows_33.png" alt="Configuración del sandbox." />
+
+    <p class="caption"><strong>Figura 11.33</strong> Configuración del sandbox.</p>
+</div>
+
+
+<div class="figure" id="figure_11_34">
+    <img src="../../img/mas_con_symfony/windows_34.png" alt="Mensajes de log del sandbox." />
+
+    <p class="caption"><strong>Figura 11.34</strong> Mensajes de log del sandbox.</p>
+</div>
+
+
+<div class="figure" id="figure_11_35">
+    <img src="../../img/mas_con_symfony/windows_35.png" alt="Control del tiempo del sandbox." />
+
+    <p class="caption"><strong>Figura 11.35</strong> Control del tiempo del sandbox.</p>
+</div>
+
+
+<p>Aunque podríamos intentar acceder al sandbox desde Internet o desde cualquier
+dirección IP remota, el sandbox está pensado como una herramienta para aprender
+a utilizar Symfony en una máquina local. Por tanto, los detalles sobre el acceso
+remoto se mostrarán en la última sección de este capítulo.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="ejecutando_php_desde_la_linea_de_comandos.html">&larr; Anterior <span>11.4. Ejecutando PHP desde la línea de comandos</span></a>
+            
+            <a class="span5 next" href="creando_un_nuevo_proyecto_symfony.html">Siguiente &rarr; <span>11.6. Creando un nuevo proyecto Symfony</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Instalación y uso del sandbox de Symfony (Más con Symfony%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Más con Symfony : Instalación y uso del sandbox de Symfony']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Enrutamiento avanzado</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Mejora tu productividad</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Emails</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Widgets y validadores propios</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Formularios avanzados</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Mejorando la barra de depuración web</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Uso avanzado de Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Utilizando la herencia de tablas de Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Funcionamiento interno de Symfony</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_11.html">
+            <span>Capítulo 11.</span> Windows y Symfony
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="introduccion.html">
+            <span>11.1.</span> Introducción
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="comprobaciones_iniciales_servidor_dedicado_en_internet.html">
+            <span>11.2.</span> Comprobaciones iniciales - Servidor dedicado en Internet
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="instalando_php_en_unos_pocos_clicks.html">
+            <span>11.3.</span> Instalando PHP en unos pocos clicks
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejecutando_php_desde_la_linea_de_comandos.html">
+            <span>11.4.</span> Ejecutando PHP desde la línea de comandos
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="instalacion_y_uso_del_sandbox_de_symfony.html">
+            <span>11.5.</span> Instalación y uso del sandbox de Symfony
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="creando_un_nuevo_proyecto_symfony.html">
+            <span>11.6.</span> Creando un nuevo proyecto Symfony
+        </a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Desarrollando aplicaciones Facebook</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Descubriendo el poder de la línea de comandos</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Jugando con la cache de configuración de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Trabajando con la comunidad Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>A</span> <a href="../apendice_a.html"> Código JavaScript de sfWidgetFormGMapAddress</a>
+    </li>
+    <li class="level-1">
+        <span>B</span> <a href="../apendice_b.html"> Ejemplo de instalador propio</a>
+    </li>
+    <li class="level-1">
+        <span>C</span> <a href="../apendice_c.html"> Licencia</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

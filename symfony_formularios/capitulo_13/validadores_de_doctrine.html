@@ -1,0 +1,297 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>13.9. Validadores de Doctrine (Los formularios de Symfony 1.4)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="validadores_de_propel.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="13.9. Validadores de Doctrine (Los formularios de Symfony 1.4)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page symfony_formularios">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Los formularios de Symfony 1.4</a></li>
+  <li><a href="../capitulo_13.html">Capítulo 13. Validadores</a></li>
+  <li class="current"><span>13.9.. Validadores de Doctrine</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="validadores_de_doctrine"><span>13.9.</span> Validadores de Doctrine</h1>
+    
+
+<h3 id="sfvalidatordoctrinechoice">13.9.1. sfValidatorDoctrineChoice</h3>
+
+<p><code>sfValidatorDoctrineChoice</code> valida que el valor original se encuentre en la lista de registros asociada a un modelo de Doctrine. Esta lista de registros se puede restringir utilizando la opción <code>query</code>.</p>
+
+<p>Por defecto se comprueba que el valor original sea la clave primaria del registro, pero se puede comprobar cualquier otra columna indicada mediante la opción <code>column</code>.</p>
+
+<div class="table" id="table_13_28">
+
+    <table>
+<thead>
+<tr>
+  <th>Opción</th>
+  <th>Error</th>
+  <th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>model</code></td>
+  <td>-</td>
+  <td>La clase del modelo (esta opción es obligatoria)</td>
+</tr>
+<tr>
+  <td><code>alias</code></td>
+  <td>-</td>
+  <td>El alias del componente principal utilizado en la consulta</td>
+</tr>
+<tr>
+  <td><code>query</code></td>
+  <td>-</td>
+  <td>Consulta que se utiliza para obtener los objetos</td>
+</tr>
+<tr>
+  <td><code>column</code></td>
+  <td>-</td>
+  <td>El nombre de la columna que se comprueba. Por defecto vale <code>null</code>, lo que significa que se emplea la clave primaria. El nombre de la columna se indica con el formato del nombre de los campos.</td>
+</tr>
+<tr>
+  <td><code>connection</code></td>
+  <td>-</td>
+  <td>La conexión Propel que se utiliza (por defecto vale <code>null</code>)</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Este validador no funciona con los modelos que utilizan claves primarias compuestas.</p></div>
+
+<h3 id="sfvalidatordoctrinechoicemany">13.9.2. sfValidatorDoctrineChoiceMany</h3>
+
+<p><code>sfValidatorDoctrineChoiceMany</code> valida que los valores originales se encuentren en la lista de registros asociada a un modelo de Doctrine.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Este validador utiliza como argumento un array, por lo que si se le pasa una cadena de texto, esta se convierte automáticamente en un array.</p></div>
+
+<p>Este validador hereda todas las opciones del validador <code>sfValidatorDoctrineChoice</code>.</p>
+
+<h3 id="sfvalidatordoctrineunique">13.9.3. sfValidatorDoctrineUnique</h3>
+
+<p><code>sfValidatorDoctrineUnique</code> valida que el valor de una columna o grupo de columnas (mediante la opción <code>column</code>) sea único dentro de un modelo de Doctrine.</p>
+
+<p>Si se comprueban varias columnas, se puede lanzar un error global utilizando la opción <code>throw_global_error</code>.</p>
+
+<div class="table" id="table_13_29">
+
+    <table>
+<thead>
+<tr>
+  <th>Opción</th>
+  <th>Error</th>
+  <th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>model</code></td>
+  <td>-</td>
+  <td>La clase del modelo (esta opción es obligatoria)</td>
+</tr>
+<tr>
+  <td><code>column</code></td>
+  <td>-</td>
+  <td>El nombre de la columna cuyo valor debe ser único. El nombre se indica siguiendo el formato de Doctrine para el nombre de los campos (esta opción es obligatoria). Si se comprueba el valor de varias columnas, se pasa un array con el nombre de los campos</td>
+</tr>
+<tr>
+  <td><code>primary_key</code></td>
+  <td>-</td>
+  <td>El nombre de la columna de la clave primaria (es opcional, por lo que si no se indica, Symfony intenta adivinarlo). También se puede pasar un array si la tabla tiene varias claves primarias</td>
+</tr>
+<tr>
+  <td><code>connection</code></td>
+  <td>-</td>
+  <td>La conexión Doctrine que se utiliza (por defecto vale <code>null</code>)</td>
+</tr>
+<tr>
+  <td><code>throw_global_error</code></td>
+  <td>-</td>
+  <td>Indica si se lanza un error global (por defecto vale <code>false</code>) o un error asociado con el primer campo indicado en la opción <code>column</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="validadores_de_propel.html">&larr; Anterior <span>13.8. Validadores de Propel</span></a>
+            
+            <p class="span5 next disabled">Siguiente &rarr; <span></span></p>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Validadores de Doctrine (Los formularios de Symfony 1.4%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Los formularios de Symfony 1.4 : Validadores de Doctrine']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Creación de formularios</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Validación de formularios</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Formularios para diseñadores web</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Integración con Propel</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Integrando Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Referencia de Widgets</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_13.html">
+            <span>Capítulo 13.</span> Validadores
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="validadores.html">
+            <span>13.2.</span> Validadores
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="validadores_simples.html">
+            <span>13.3.</span> Validadores simples
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="validadores_de_fechas.html">
+            <span>13.4.</span> Validadores de fechas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="validador_de_archivos.html">
+            <span>13.5.</span> Validador de archivos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="validadores_logicos.html">
+            <span>13.6.</span> Validadores lógicos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="validadores_de_internacionalizacion.html">
+            <span>13.7.</span> Validadores de internacionalización
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="validadores_de_propel.html">
+            <span>13.8.</span> Validadores de Propel
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="validadores_de_doctrine.html">
+            <span>13.9.</span> Validadores de Doctrine
+        </a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

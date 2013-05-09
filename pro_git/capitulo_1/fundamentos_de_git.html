@@ -1,0 +1,257 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>1.3. Fundamentos de Git (Pro Git, el libro oficial de Git)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="una_breve_historia_de_git.html" />
+        <link rel="next" href="instalando_git.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="1.3. Fundamentos de Git (Pro Git, el libro oficial de Git)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page pro_git">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Pro Git, el libro oficial de Git</a></li>
+  <li><a href="../capitulo_1.html">Capítulo 1. Empezando</a></li>
+  <li class="current"><span>1.3.. Fundamentos de Git</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="fundamentos_de_git"><span>1.3.</span> Fundamentos de Git</h1>
+    
+
+<p>Entonces, ¿qué es Git en pocas palabras? Es muy importante asimilar esta sección, porque si entiendes lo que es Git y los fundamentos de cómo funciona, probablemente te sea mucho más fácil usar Git de manera eficaz. A medida que aprendas Git, intenta olvidar todo lo que puedas saber sobre otros VCSs, como Subversion y Perforce; hacerlo te ayudará a evitar confusiones sutiles a la hora de utilizar la herramienta. Git almacena y modela la información de forma muy diferente a esos otros sistemas, a pesar de que su interfaz sea bastante similar; comprender esas diferencias ayudará a evitar que te confundas a la hora de usarlo.</p>
+
+<h3 id="instantaneas_no_diferencias">1.3.1. Instantáneas, no diferencias</h3>
+
+<p>La principal diferencia entre Git y cualquier otro VCS (Subversion y compañía incluidos) es cómo Git modela sus datos. Conceptualmente, la mayoría de los demás sistemas almacenan la información como una lista de cambios en los archivos. Estos sistemas (CVS, Subversion, Perforce, Bazaar, etc.) modelan la información que almacenan como un conjunto de archivos y las modificaciones hechas sobre cada uno de ellos a lo largo del tiempo, como ilustra la Figura 1-4.</p>
+
+<div class="figure" id="figure_1_4">
+    <img src="../../img/pro_git/18333fig0104.png" alt="Otros sistemas tienden a almacenar los datos como cambios de cada archivo respecto a una versión base" />
+
+    <p class="caption"><strong>Figura 1.4</strong> Otros sistemas tienden a almacenar los datos como cambios de cada archivo respecto a una versión base</p>
+</div>
+
+
+<p>Git no modela ni almacena sus datos de este modo. En cambio, Git modela sus datos más como un conjunto de instantáneas de un mini sistema de archivos. Cada vez que confirmas un cambio, o guardas el estado de tu proyecto en Git, él básicamente hace una foto del aspecto de todos tus archivos en ese momento, y guarda una referencia a esa instantánea. Para ser eficiente, si los archivos no se han modificado, Git no almacena el archivo de nuevo — sólo un enlace al archivo anterior idéntico que ya tiene almacenado —. Git modela sus datos más como en la Figura 1-5.</p>
+
+<div class="figure" id="figure_1_5">
+    <img src="../../img/pro_git/18333fig0105.png" alt="Git almacena la información como instantáneas del proyecto a lo largo del tiempo" />
+
+    <p class="caption"><strong>Figura 1.5</strong> Git almacena la información como instantáneas del proyecto a lo largo del tiempo</p>
+</div>
+
+
+<p>Esta es una diferencia muy importante entre Git y prácticamente todos los demás VCSs. Hace que Git reconsidere casi todos los aspectos del control de versiones que muchos de los demás sistemas copiaron de la generación anterior. Esto hace a Git más como un mini sistema de archivos con algunas herramientas tremendamente potentes construidas sobre él, más que como un VCS. Exploraremos algunos de los beneficios que obtienes al modelar tus datos de esta manera cuando veamos las ramas (<em>branching</em>) en Git en el <a class="internal" href="../capitulo_3.html#capitulo3">Capítulo 3</a>.</p>
+
+<h3 id="casi_cualquier_operacion_es_local">1.3.2. Casi cualquier operación es local</h3>
+
+<p>La mayoría de las operaciones en Git sólo necesitan archivos y recursos locales para operar — por lo general no se necesita información de ningún otro ordenador de tu red —. Si estás acostumbrado a un CVCS donde la mayoría de las operaciones tienen esa sobrecarga del retardo de la red, este aspecto de Git te va a hacer pensar que los dioses de la velocidad han bendecido Git con poderes sobrenaturales. Como tienes toda la historia del proyecto ahí mismo, en tu disco local, la mayoría de las operaciones parecen prácticamente inmediatas.</p>
+
+<p>Por ejemplo, para navegar por la historia del proyecto, Git no necesita acceder al servidor para obtener la historia y mostrártela — simplemente la lee directamente de tu base de datos local —. Esto significa que ves la historia del proyecto casi al instante. Si quieres ver los cambios introducidos entre la versión actual de un archivo y ese archivo hace un mes, Git puede buscar el archivo hace un mes y hacer un cálculo de diferencias localmente, en lugar de tener que pedirle a un servidor remoto que lo haga, u obtener una versión antigua del archivo del servidor remoto y hacerlo de manera local.</p>
+
+<p>Esto también significa que hay muy poco que no puedas hacer si estás desconectado o sin VPN. Si te subes a un avión o a un tren y quieres trabajar un poco, puedes hacer tus cambios sin problemas hasta que consigas una conexión de red para subirlos. Si te vas a casa y no consigues que tu cliente VPN funcione correctamente, puedes seguir trabajando. En muchos otros sistemas, esto es imposible o muy costoso. En Perforce, por ejemplo, no puedes hacer mucho cuando no estás conectado al servidor; y en Subversion y CVS, puedes editar archivos, pero no puedes subir los cambios a tu base de datos (porque tu base de datos no tiene conexión). Esto puede no parecer gran cosa, pero te sorprendería la diferencia que puede suponer.</p>
+
+<h3 id="git_tiene_integridad">1.3.3. Git tiene integridad</h3>
+
+<p>Todo en Git es verificado mediante una suma de comprobación antes de ser almacenado, y es identificado a partir de ese momento mediante dicha suma (<em>checksum</em> en inglés). Esto significa que es imposible cambiar los contenidos de cualquier archivo o directorio sin que Git lo sepa. Esta funcionalidad está integrada en Git al más bajo nivel y es parte integral de su filosofía. No puedes perder información durante su transmisión o sufrir corrupción de archivos sin que Git sea capaz de detectarlo.</p>
+
+<p>El mecanismo que usa Git para generar esta suma de comprobación se conoce como hash SHA-1. Se trata de una cadena de 40 caracteres hexadecimales (0-9 y a-f), y se calcula en base a los contenidos del archivo o estructura de directorios en Git. Un hash SHA-1 tiene esta pinta:</p>
+
+<div class="code code">
+<pre class="code">24b9da6552252987aa493b52f8696cd6d3b00373</pre>
+</div>
+
+<p>Verás estos valores hash por todos lados en Git, ya que los usa con mucha frecuencia. De hecho, Git guarda todo no por nombre de archivo, sino en la base de datos de Git por el valor <em>hash</em> de sus contenidos.</p>
+
+<h3 id="git_generalmente_solo_anade_informacion">1.3.4. Git generalmente sólo añade información</h3>
+
+<p>Cuando realizas acciones en Git, casi todas ellas sólo añaden información a la base de datos de Git. Es muy difícil conseguir que el sistema haga algo que no se pueda deshacer, o que de algún modo borre información. Como en cualquier VCS, puedes perder o estropear cambios que no has confirmado todavía; pero después de confirmar una instantánea en Git, es muy difícil de perder, especialmente si envías (<em>push</em>) tu base de datos a otro repositorio con regularidad.</p>
+
+<p>Esto hace que usar Git sea un placer, porque sabemos que podemos experimentar sin peligro de fastidiar gravemente las cosas. Para un análisis más exhaustivo de cómo almacena Git su información y cómo puedes recuperar datos aparentemente perdidos, ver “Entre bambalinas” en el <a class="internal" href="../capitulo_9.html#capitulo9">Capítulo 9</a>.</p>
+
+<h3 id="los_tres_estados">1.3.5. Los tres estados</h3>
+
+<p>Ahora presta atención. Esto es lo más importante a recordar acerca de Git si quieres que el resto de tu proceso de aprendizaje prosiga sin problemas. Git tiene tres estados principales en los que se pueden encontrar tus archivos: confirmado (<em>committed</em>), modificado (<em>modified</em>), y preparado (<em>staged</em>). Confirmado significa que los datos están almacenados de manera segura en tu base de datos local. Modificado significa que has modificado el archivo pero todavía no lo has confirmado a tu base de datos. Preparado significa que has marcado un archivo modificado en su versión actual para que vaya en tu próxima confirmación.</p>
+
+<p>Esto nos lleva a las tres secciones principales de un proyecto de Git: el directorio de Git (<em>Git directory</em>), el directorio de trabajo (<em>working directory</em>), y el área de preparación (<em>staging area</em>).</p>
+
+<div class="figure" id="figure_1_6">
+    <img src="../../img/pro_git/18333fig0106.png" alt="Directorio de trabajo, área de preparación, y directorio de Git" />
+
+    <p class="caption"><strong>Figura 1.6</strong> Directorio de trabajo, área de preparación, y directorio de Git</p>
+</div>
+
+
+<p>El directorio de Git es donde Git almacena los metadatos y la base de datos de objetos para tu proyecto. Es la parte más importante de Git, y es lo que se copia cuando clonas un repositorio desde otro ordenador.</p>
+
+<p>El directorio de trabajo es una copia de una versión del proyecto. Estos archivos se sacan de la base de datos comprimida en el directorio de Git, y se colocan en disco para que los puedas usar o modificar.</p>
+
+<p>El área de preparación es un sencillo archivo, generalmente contenido en tu directorio de Git, que almacena información acerca de lo que va a ir en tu próxima confirmación. A veces se denomina el índice, pero se está convirtiendo en estándar el referirse a ello como el área de preparación.</p>
+
+<p>El flujo de trabajo básico en Git es algo así:</p>
+
+<ol>
+<li>Modificas una serie de archivos en tu directorio de trabajo.</li>
+<li>Preparas los archivos, añadiendo instantáneas de ellos a tu área de preparación.</li>
+<li>Confirmas los cambios, lo que toma los archivos tal y como están en el área de preparación, y almacena esa instantánea de manera permanente en tu directorio de Git.</li>
+</ol>
+
+<p>Si una versión concreta de un archivo está en el directorio de Git, se considera confirmada (<em>committed</em>). Si ha sufrido cambios desde que se obtuvo del repositorio, pero ha sido añadida al área de preparación, está preparada (<em>staged</em>). Y si ha sufrido cambios desde que se obtuvo del repositorio, pero no se ha preparado, está modificada (<em>modified</em>). En el <a class="internal" href="../capitulo_2.html#capitulo2">Capítulo 2</a> aprenderás más acerca de estos estados, y de cómo puedes aprovecharte de ellos o saltarte toda la parte de preparación.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="una_breve_historia_de_git.html">&larr; Anterior <span>1.2. Una breve historia de Git</span></a>
+            
+            <a class="span5 next" href="instalando_git.html">Siguiente &rarr; <span>1.4. Instalando Git</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Fundamentos de Git (Pro Git, el libro oficial de Git%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Pro Git, el libro oficial de Git : Fundamentos de Git']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1 ">
+        <a href="../capitulo_1.html">
+            <span>Capítulo 1.</span> Empezando
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="acerca_del_control_de_versiones.html">
+            <span>1.1.</span> Acerca del control de versiones
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="una_breve_historia_de_git.html">
+            <span>1.2.</span> Una breve historia de Git
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="fundamentos_de_git.html">
+            <span>1.3.</span> Fundamentos de Git
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="instalando_git.html">
+            <span>1.4.</span> Instalando Git
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="configurando_git_por_primera_vez.html">
+            <span>1.5.</span> Configurando Git por primera vez
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="obteniendo_ayuda.html">
+            <span>1.6.</span> Obteniendo ayuda
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="resumen.html">
+            <span>1.7.</span> Resumen
+        </a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Fundamentos de Git</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Trabajando con ramas en Git</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Git en un servidor</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Git en entornos distribuidos</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Las herramientas de Git</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Personalizando Git</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Git y otros sistemas</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Funcionamiento interno de Git</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

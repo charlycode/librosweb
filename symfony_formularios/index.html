@@ -1,0 +1,304 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>Los formularios de Symfony 1.4 (LibrosWeb.es)</title>
+        <link href="../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Los formularios de Symfony 1.4 (LibrosWeb.es)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <div class="span12">
+<h1 class="title">Los formularios de Symfony 1.4</h1>
+
+<div class="item toc">
+    <h2 class="underline"><span>Índice de contenidos</span></h2>
+    <ul>
+            <li class="chapter level-1">
+            <span>Capítulo 1.</span> 
+            <a href="capitulo_1.html">Creación de formularios</a>
+        </li>
+            <li class=" level-2">
+            <span>1.1.</span> 
+            <a href="capitulo_1/antes_de_empezar.html">Antes de empezar</a>
+        </li>
+            <li class=" level-2">
+            <span>1.2.</span> 
+            <a href="capitulo_1/widgets.html">Widgets</a>
+        </li>
+            <li class=" level-2">
+            <span>1.3.</span> 
+            <a href="capitulo_1/configurando_los_widgets.html">Configurando los widgets</a>
+        </li>
+            <li class="chapter level-1">
+            <span>Capítulo 2.</span> 
+            <a href="capitulo_2.html">Validación de formularios</a>
+        </li>
+            <li class=" level-2">
+            <span>2.1.</span> 
+            <a href="capitulo_2/antes_de_comenzar.html">Antes de comenzar</a>
+        </li>
+            <li class=" level-2">
+            <span>2.2.</span> 
+            <a href="capitulo_2/validadores.html">Validadores</a>
+        </li>
+            <li class=" level-2">
+            <span>2.3.</span> 
+            <a href="capitulo_2/personalizando_los_validadores.html">Personalizando los validadores</a>
+        </li>
+            <li class=" level-2">
+            <span>2.4.</span> 
+            <a href="capitulo_2/seguridad_de_los_validadores.html">Seguridad de los validadores</a>
+        </li>
+            <li class=" level-2">
+            <span>2.5.</span> 
+            <a href="capitulo_2/validadores_logicos.html">Validadores lógicos</a>
+        </li>
+            <li class=" level-2">
+            <span>2.6.</span> 
+            <a href="capitulo_2/validadores_globales.html">Validadores globales</a>
+        </li>
+            <li class=" level-2">
+            <span>2.7.</span> 
+            <a href="capitulo_2/subiendo_archivos.html">Subiendo archivos</a>
+        </li>
+            <li class="chapter level-1">
+            <span>Capítulo 3.</span> 
+            <a href="capitulo_3.html">Formularios para diseñadores web</a>
+        </li>
+            <li class=" level-2">
+            <span>3.1.</span> 
+            <a href="capitulo_3/antes_de_comenzar.html">Antes de comenzar</a>
+        </li>
+            <li class=" level-2">
+            <span>3.2.</span> 
+            <a href="capitulo_3/la_plantilla_del_prototipo.html">La plantilla del prototipo</a>
+        </li>
+            <li class=" level-2">
+            <span>3.3.</span> 
+            <a href="capitulo_3/personalizando_la_plantilla_del_prototipo.html">Personalizando la plantilla del prototipo</a>
+        </li>
+            <li class=" level-2">
+            <span>3.4.</span> 
+            <a href="capitulo_3/personalizando_el_diseno.html">Personalizando el diseño</a>
+        </li>
+            <li class=" level-2">
+            <span>3.5.</span> 
+            <a href="capitulo_3/internacionalizacion.html">Internacionalización</a>
+        </li>
+            <li class=" level-2">
+            <span>3.6.</span> 
+            <a href="capitulo_3/trabajando_con_el_programador.html">Trabajando con el programador</a>
+        </li>
+            <li class="chapter level-1">
+            <span>Capítulo 4.</span> 
+            <a href="capitulo_4.html">Integración con Propel</a>
+        </li>
+            <li class=" level-2">
+            <span>4.1.</span> 
+            <a href="capitulo_4/antes_de_comenzar.html">Antes de comenzar</a>
+        </li>
+            <li class=" level-2">
+            <span>4.2.</span> 
+            <a href="capitulo_4/generando_las_clases_del_formulario.html">Generando las clases del formulario</a>
+        </li>
+            <li class=" level-2">
+            <span>4.3.</span> 
+            <a href="capitulo_4/el_generador_crud.html">El generador CRUD</a>
+        </li>
+            <li class=" level-2">
+            <span>4.4.</span> 
+            <a href="capitulo_4/personalizando_los_formularios_generados_automaticamente.html">Personalizando los formularios generados automáticamente</a>
+        </li>
+            <li class=" level-2">
+            <span>4.5.</span> 
+            <a href="capitulo_4/configurando_los_validadores_y_los_widgets.html">Configurando los validadores y los widgets</a>
+        </li>
+            <li class=" level-2">
+            <span>4.6.</span> 
+            <a href="capitulo_4/serializando_formularios.html">Serializando formularios</a>
+        </li>
+            <li class="chapter level-1">
+            <span>Capítulo 5.</span> 
+            <a href="capitulo_5.html">Sin título</a>
+        </li>
+            <li class="chapter level-1">
+            <span>Capítulo 6.</span> 
+            <a href="capitulo_6.html">Sin título</a>
+        </li>
+            <li class="chapter level-1">
+            <span>Capítulo 7.</span> 
+            <a href="capitulo_7.html">Sin título</a>
+        </li>
+            <li class="chapter level-1">
+            <span>Capítulo 8.</span> 
+            <a href="capitulo_8.html">Internacionalización y localización</a>
+        </li>
+            <li class=" level-2">
+            <span>8.1.</span> 
+            <a href="capitulo_8/internacionalizacion_de_formularios.html">Internacionalización de formularios</a>
+        </li>
+            <li class=" level-2">
+            <span>8.2.</span> 
+            <a href="capitulo_8/personalizando_el_objeto_traductor.html">Personalizando el objeto traductor</a>
+        </li>
+            <li class=" level-2">
+            <span>8.3.</span> 
+            <a href="capitulo_8/internacionalizacion_de_los_objetos_propel.html">Internacionalización de los objetos Propel</a>
+        </li>
+            <li class=" level-2">
+            <span>8.4.</span> 
+            <a href="capitulo_8/traduccion_de_widgets.html">Traducción de Widgets</a>
+        </li>
+            <li class="chapter level-1">
+            <span>Capítulo 9.</span> 
+            <a href="capitulo_9.html">Sin título</a>
+        </li>
+            <li class="chapter level-1">
+            <span>Capítulo 10.</span> 
+            <a href="capitulo_10.html">Sin título</a>
+        </li>
+            <li class="chapter level-1">
+            <span>Capítulo 11.</span> 
+            <a href="capitulo_11.html">Integrando Doctrine</a>
+        </li>
+            <li class=" level-2">
+            <span>11.1.</span> 
+            <a href="capitulo_11/antes_de_comenzar.html">Antes de comenzar</a>
+        </li>
+            <li class=" level-2">
+            <span>11.2.</span> 
+            <a href="capitulo_11/generando_las_clases_del_formulario.html">Generando las clases del formulario</a>
+        </li>
+            <li class=" level-2">
+            <span>11.3.</span> 
+            <a href="capitulo_11/el_generador_crud.html">El generador CRUD</a>
+        </li>
+            <li class=" level-2">
+            <span>11.4.</span> 
+            <a href="capitulo_11/personalizando_los_formularios_generados.html">Personalizando los formularios generados</a>
+        </li>
+            <li class=" level-2">
+            <span>11.5.</span> 
+            <a href="capitulo_11/serializacion_de_formularios.html">Serialización de formularios</a>
+        </li>
+            <li class="chapter level-1">
+            <span>Capítulo 12.</span> 
+            <a href="capitulo_12.html">Referencia de Widgets</a>
+        </li>
+            <li class=" level-2">
+            <span>12.2.</span> 
+            <a href="capitulo_12/widgets.html">Widgets</a>
+        </li>
+            <li class=" level-2">
+            <span>12.3.</span> 
+            <a href="capitulo_12/widgets_de_tipo_input.html">Widgets de tipo input</a>
+        </li>
+            <li class=" level-2">
+            <span>12.4.</span> 
+            <a href="capitulo_12/widgets_para_elecciones.html">Widgets para elecciones</a>
+        </li>
+            <li class=" level-2">
+            <span>12.5.</span> 
+            <a href="capitulo_12/widgets_para_fechas.html">Widgets para fechas</a>
+        </li>
+            <li class=" level-2">
+            <span>12.6.</span> 
+            <a href="capitulo_12/widgets_de_internacionalizacion.html">Widgets de internacionalización</a>
+        </li>
+            <li class=" level-2">
+            <span>12.7.</span> 
+            <a href="capitulo_12/widget_para_captcha.html">Widget para CAPTCHA</a>
+        </li>
+            <li class=" level-2">
+            <span>12.8.</span> 
+            <a href="capitulo_12/widgets_para_filtros.html">Widgets para filtros</a>
+        </li>
+            <li class=" level-2">
+            <span>12.9.</span> 
+            <a href="capitulo_12/sfwidgetformschema.html">sfWidgetFormSchema</a>
+        </li>
+            <li class="chapter level-1">
+            <span>Capítulo 13.</span> 
+            <a href="capitulo_13.html">Validadores</a>
+        </li>
+            <li class=" level-2">
+            <span>13.2.</span> 
+            <a href="capitulo_13/validadores.html">Validadores</a>
+        </li>
+            <li class=" level-2">
+            <span>13.3.</span> 
+            <a href="capitulo_13/validadores_simples.html">Validadores simples</a>
+        </li>
+            <li class=" level-2">
+            <span>13.4.</span> 
+            <a href="capitulo_13/validadores_de_fechas.html">Validadores de fechas</a>
+        </li>
+            <li class=" level-2">
+            <span>13.5.</span> 
+            <a href="capitulo_13/validador_de_archivos.html">Validador de archivos</a>
+        </li>
+            <li class=" level-2">
+            <span>13.6.</span> 
+            <a href="capitulo_13/validadores_logicos.html">Validadores lógicos</a>
+        </li>
+            <li class=" level-2">
+            <span>13.7.</span> 
+            <a href="capitulo_13/validadores_de_internacionalizacion.html">Validadores de internacionalización</a>
+        </li>
+            <li class=" level-2">
+            <span>13.8.</span> 
+            <a href="capitulo_13/validadores_de_propel.html">Validadores de Propel</a>
+        </li>
+            <li class=" level-2">
+            <span>13.9.</span> 
+            <a href="capitulo_13/validadores_de_doctrine.html">Validadores de Doctrine</a>
+        </li>
+        </ul>
+</div>
+
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

@@ -1,0 +1,362 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>16.4. Administrando los afiliados (El tutorial Jobeet)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="el_formulario_para_darse_de_alta_como_afiliado.html" />
+        <link rel="next" href="enviando_emails.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="16.4. Administrando los afiliados (El tutorial Jobeet)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page jobeet_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">El tutorial Jobeet</a></li>
+  <li><a href="../capitulo_16.html">Capítulo 16. Servicios web</a></li>
+  <li class="current"><span>16.4.. Administrando los afiliados</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="administrando_los_afiliados"><span>16.4.</span> Administrando los afiliados</h1>
+    
+
+<p>Como el administrador debe activar a cada afiliado, tenemos que crear en la aplicación <code>backend</code> un nuevo módulo llamado <code>affiliate</code>:</p>
+
+<div class="code cli">
+<pre class="cli">$ php symfony propel:generate-admin backend JobeetAffiliate --module=affiliate</pre>
+</div>
+
+<p>Para que el administrador pueda acceder al nuevo módulo, añade un enlace en el menú principal que indique el número de afiliados que están pendientes de activar:</p>
+
+<div class="code php">
+<pre class="php">&lt;!-- apps/backend/templates/layout.php --&gt;
+&lt;li&gt;
+  &lt;a href=&quot;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> url_for<span class="br0">&#40;</span><span class="st_h">'@jobeet_affiliate'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>&quot;&gt;
+    Affiliates - &lt;strong&gt;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> JobeetAffiliatePeer<span class="sy0">::</span><span class="me2">countToBeActivated</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>&lt;/strong&gt;
+  &lt;/a&gt;
+&lt;/li&gt;</pre>
+</div>
+
+<div class="code php">
+<pre class="php"><span class="co1">// lib/model/JobeetAffiliatePeer.php</span>
+<span class="kw2">class</span> JobeetAffiliatePeer <span class="kw2">extends</span> BaseJobeetAffiliatePeer
+<span class="br0">&#123;</span>
+  static <span class="kw2">public</span> <span class="kw2">function</span> countToBeActivated<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$criteria</span> <span class="sy0">=</span> <span class="kw2">new</span> Criteria<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$criteria</span><span class="sy0">-&gt;</span><span class="me1">add</span><span class="br0">&#40;</span><span class="kw2">self</span><span class="sy0">::</span><span class="me2">IS_ACTIVE</span><span class="sy0">,</span> <span class="nu0">0</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="kw1">return</span> <span class="kw2">self</span><span class="sy0">::</span><span class="me2">doCount</span><span class="br0">&#40;</span><span class="re0">$criteria</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="co1">// ...</span>
+&nbsp;
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>La única acción que necesitamos en el <code>backend</code> es la de activar o desactivar cuentas de afiliados, así que puedes modificar la sección <code>config</code> creada automáticamente por la tarea <code>propel:generate-admin</code> para simplificar un poco la interfaz y para añadir al listado un enlace que permita activar cuentas directamente:</p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co1"># apps/backend/modules/affiliate/config/generator.yml</span><span class="co4">
+config</span>:<span class="co4">
+  fields</span>:<span class="co3">
+    is_active</span><span class="sy2">: </span><span class="br0">&#123;</span> label<span class="sy2">: </span>Active? <span class="br0">&#125;</span><span class="co4">
+  list</span>:<span class="co3">
+    title</span><span class="sy2">: </span>  Affiliate Management<span class="co3">
+    display</span><span class="sy2">: </span><span class="br0">&#91;</span>is_active, url, email, token<span class="br0">&#93;</span><span class="co3">
+    sort</span><span class="sy2">: </span>   <span class="br0">&#91;</span>is_active<span class="br0">&#93;</span><span class="co4">
+    object_actions</span>:<span class="co3">
+      activate</span><span class="sy2">: </span>  ~<span class="co3">
+      deactivate</span><span class="sy2">: </span>~<span class="co4">
+    batch_actions</span>:<span class="co3">
+      activate</span><span class="sy2">: </span>  ~<span class="co3">
+      deactivate</span><span class="sy2">: </span>~<span class="co3">
+    actions</span><span class="sy2">: </span><span class="br0">&#123;</span><span class="br0">&#125;</span><span class="co4">
+  filter</span>:<span class="co3">
+    display</span><span class="sy2">: </span><span class="br0">&#91;</span>url, email, is_active<span class="br0">&#93;</span></pre>
+</div>
+
+<p>Si quieres mejorar la productividad de los administradores, modifica los filtros por defecto para que muestren sólo los afiliados pendientes de activar:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// apps/backend/modules/affiliate/lib/affiliateGeneratorConfiguration.class.php</span>
+<span class="kw2">class</span> affiliateGeneratorConfiguration <span class="kw2">extends</span> BaseAffiliateGeneratorConfiguration
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> getFilterDefaults<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="kw1">return</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'is_active'</span> <span class="sy0">=&gt;</span> <span class="st_h">'0'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>El único código que tienes que escribir es el correspondiente a las acciones <code>activate</code> y <code>deactivate</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// apps/backend/modules/affiliate/actions/actions.class.php</span>
+<span class="kw2">class</span> affiliateActions <span class="kw2">extends</span> autoAffiliateActions
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> executeListActivate<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getRoute</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">getObject</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">activate</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">redirect</span><span class="br0">&#40;</span><span class="st_h">'@jobeet_affiliate'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="kw2">public</span> <span class="kw2">function</span> executeListDeactivate<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getRoute</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">getObject</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">deactivate</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">redirect</span><span class="br0">&#40;</span><span class="st_h">'@jobeet_affiliate'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="kw2">public</span> <span class="kw2">function</span> executeBatchActivate<span class="br0">&#40;</span>sfWebRequest <span class="re0">$request</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$affiliates</span> <span class="sy0">=</span> JobeetAffiliatePeer<span class="sy0">::</span><span class="me2">retrieveByPks</span><span class="br0">&#40;</span><span class="re0">$request</span><span class="sy0">-&gt;</span><span class="me1">getParameter</span><span class="br0">&#40;</span><span class="st_h">'ids'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="kw1">foreach</span> <span class="br0">&#40;</span><span class="re0">$affiliates</span> <span class="kw1">as</span> <span class="re0">$affiliate</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="re0">$affiliate</span><span class="sy0">-&gt;</span><span class="me1">activate</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">redirect</span><span class="br0">&#40;</span><span class="st_h">'@jobeet_affiliate'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="kw2">public</span> <span class="kw2">function</span> executeBatchDeactivate<span class="br0">&#40;</span>sfWebRequest <span class="re0">$request</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$affiliates</span> <span class="sy0">=</span> JobeetAffiliatePeer<span class="sy0">::</span><span class="me2">retrieveByPks</span><span class="br0">&#40;</span><span class="re0">$request</span><span class="sy0">-&gt;</span><span class="me1">getParameter</span><span class="br0">&#40;</span><span class="st_h">'ids'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="kw1">foreach</span> <span class="br0">&#40;</span><span class="re0">$affiliates</span> <span class="kw1">as</span> <span class="re0">$affiliate</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="re0">$affiliate</span><span class="sy0">-&gt;</span><span class="me1">deactivate</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">redirect</span><span class="br0">&#40;</span><span class="st_h">'@jobeet_affiliate'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<div class="code php">
+<pre class="php"><span class="co1">// lib/model/JobeetAffiliate.php</span>
+<span class="kw2">class</span> JobeetAffiliate <span class="kw2">extends</span> BaseJobeetAffiliate
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> activate<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">setIsActive</span><span class="br0">&#40;</span><span class="kw4">true</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="kw1">return</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">save</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="kw2">public</span> <span class="kw2">function</span> deactivate<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">setIsActive</span><span class="br0">&#40;</span><span class="kw4">false</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="kw1">return</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">save</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="co1">// ...</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<div class="figure" id="figure_16_3">
+    <img src="../../img/jobeet_1_4/f1603.png" alt="La parte de administración de los afiliados" />
+
+    <p class="caption"><strong>Figura 16.3</strong> La parte de administración de los afiliados</p>
+</div>
+
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="el_formulario_para_darse_de_alta_como_afiliado.html">&larr; Anterior <span>16.3. El formulario para darse de alta como afiliado</span></a>
+            
+            <a class="span5 next" href="enviando_emails.html">Siguiente &rarr; <span>16.5. Enviando emails</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Administrando los afiliados (El tutorial Jobeet%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'El tutorial Jobeet : Administrando los afiliados']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Comenzando el proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> El proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> El modelo de datos</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> El controlador y la vista</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> El sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Profundizando en el modelo</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Trabajando con la página de cada categoría</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Pruebas unitarias</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Pruebas funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Probando los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> El generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> El usuario</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> El día de descanso</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Canales Atom</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_16.html">
+            <span>Capítulo 16.</span> Servicios web
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="los_afiliados.html">
+            <span>16.1.</span> Los afiliados
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="probando_los_servicios_web.html">
+            <span>16.2.</span> Probando los servicios web
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_formulario_para_darse_de_alta_como_afiliado.html">
+            <span>16.3.</span> El formulario para darse de alta como afiliado
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="administrando_los_afiliados.html">
+            <span>16.4.</span> Administrando los afiliados
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="enviando_emails.html">
+            <span>16.5.</span> Enviando emails
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="nos_vemos_manana.html">
+            <span>16.6.</span> Nos vemos mañana
+        </a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> El buscador</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>20</span> <a href="../capitulo_20.html"> Plugins</a>
+    </li>
+    <li class="level-1">
+        <span>21</span> <a href="../capitulo_21.html"> El día del diseño</a>
+    </li>
+    <li class="level-1">
+        <span>22</span> <a href="../capitulo_22.html"> La cache</a>
+    </li>
+    <li class="level-1">
+        <span>23</span> <a href="../capitulo_23.html"> Pasando a producción</a>
+    </li>
+    <li class="level-1">
+        <span>24</span> <a href="../capitulo_24.html"> Un repaso a Symfony</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

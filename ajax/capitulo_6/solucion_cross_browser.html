@@ -1,0 +1,285 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>6.6. Solución cross browser (Introducción a AJAX)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="tipos_de_eventos.html" />
+        <link rel="next" href="../capitulo_7.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="6.6. Solución cross browser (Introducción a AJAX)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page ajax">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Introducción a AJAX</a></li>
+  <li><a href="../capitulo_6.html">Capítulo 6. Eventos</a></li>
+  <li class="current"><span>6.6. Solución cross browser</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="solucion_cross_browser"><span>6.6.</span> Solución cross browser</h1>
+    
+
+<p>Las diferencias existentes entre los navegadores disponibles en la actualidad complican en exceso el desarrollo de aplicaciones compatibles con todos los navegadores, llamadas aplicaciones <em>"cross browser"</em> en inglés.</p>
+
+<p>Por ese motivo, se va a diseñar una utilidad que permit unificar la asociación/desasociación de manejadores de eventos, la obtención del objeto event y todas sus propiedades. La utilidad que se muestra se ha obtenido del excelente libro <em>"Professional JavaScript for Web Developers"</em>, escrito por Nicholas C. Zakas y publicado por la editorial Wrox.</p>
+
+<h3 id="asignacion_de_manejadores_de_eventos">6.6.1. Asignación de manejadores de eventos</h3>
+
+<p>En primer lugar, se crea el objeto que va a englobar todas las propiedades y métodos relacionados con los eventos:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> EventUtil <span class="sy0">=</span> <span class="kw1">new</span> <span class="kw4">Object</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>El primer método relacionado con los eventos que es necesario estandarizar es el de la asignación y eliminación de manejadores de eventos:</p>
+
+<div class="code javascript">
+<pre class="javascript">EventUtil.<span class="me1">addEventHandler</span> <span class="sy0">=</span> <span class="kw1">function</span><span class="br0">&#40;</span>elemento<span class="sy0">,</span> tipoEvento<span class="sy0">,</span> funcion<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="kw1">if</span><span class="br0">&#40;</span>elemento.<span class="me1">addEventListener</span><span class="br0">&#41;</span> <span class="br0">&#123;</span> <span class="co1">// navegadores DOM</span>
+    elemento.<span class="me1">addEventListener</span><span class="br0">&#40;</span>tipoEvento<span class="sy0">,</span> funcion<span class="sy0">,</span> <span class="kw2">false</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+  <span class="kw1">else</span> <span class="kw1">if</span><span class="br0">&#40;</span>elemento.<span class="me1">attachEvent</span><span class="br0">&#41;</span> <span class="br0">&#123;</span> <span class="co1">// Internet Explorer</span>
+    elemento.<span class="me1">attachEvent</span><span class="br0">&#40;</span><span class="st0">&quot;on&quot;</span><span class="sy0">+</span>tipoEvento<span class="sy0">,</span> funcion<span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+  <span class="kw1">else</span> <span class="br0">&#123;</span> <span class="co1">// resto de navegadores</span>
+    elemento<span class="br0">&#91;</span><span class="st0">&quot;on&quot;</span><span class="sy0">+</span>tipoEvento<span class="br0">&#93;</span> <span class="sy0">=</span> funcion<span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span><span class="sy0">;</span>
+&nbsp;
+EventUtil.<span class="me1">removeEventHandler</span> <span class="sy0">=</span> <span class="kw1">function</span><span class="br0">&#40;</span>elemento<span class="sy0">,</span> tipoEvento<span class="sy0">,</span> funcion<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="kw1">if</span><span class="br0">&#40;</span>elemento.<span class="me1">removeEventListener</span><span class="br0">&#41;</span> <span class="br0">&#123;</span> <span class="co1">// navegadores DOM</span>
+    elemento.<span class="me1">removeEventListener</span><span class="br0">&#40;</span>tipoEvento<span class="sy0">,</span> funcion<span class="sy0">,</span> <span class="kw2">false</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+  <span class="kw1">else</span> <span class="kw1">if</span><span class="br0">&#40;</span>elemento.<span class="me1">detachEvent</span><span class="br0">&#41;</span> <span class="br0">&#123;</span> <span class="co1">// Internet Explorer</span>
+    elemento.<span class="me1">detachEvent</span><span class="br0">&#40;</span><span class="st0">&quot;on&quot;</span><span class="sy0">+</span>tipoEvento<span class="sy0">,</span> funcion<span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+  <span class="kw1">else</span> <span class="br0">&#123;</span> <span class="co1">// resto de navegadores</span>
+    elemento<span class="br0">&#91;</span><span class="st0">&quot;on&quot;</span><span class="sy0">+</span>tipoEvento<span class="br0">&#93;</span> <span class="sy0">=</span> <span class="kw2">null</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span><span class="sy0">;</span></pre>
+</div>
+
+<h3 id="obtencion_del_objeto_event">6.6.2. Obtención del objeto Event</h3>
+
+<p>Para obtener el objeto <code>event</code>, se crea un nuevo método en la utilidad llamado <code>getEvent()</code>:</p>
+
+<div class="code javascript">
+<pre class="javascript">EventUtil.<span class="me1">getEvent</span> <span class="sy0">=</span> <span class="kw1">function</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="kw1">if</span><span class="br0">&#40;</span>window.<span class="me1">event</span><span class="br0">&#41;</span> <span class="br0">&#123;</span> <span class="co1">// Internet Explorer</span>
+    <span class="kw1">return</span> <span class="kw1">this</span>.<span class="me1">formatEvent</span><span class="br0">&#40;</span>window.<span class="me1">event</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+  <span class="kw1">else</span> <span class="br0">&#123;</span> <span class="co1">// navegadores DOM</span>
+    <span class="kw1">return</span> EventUtil.<span class="me1">getEvent</span>.<span class="me1">caller</span>.<span class="me1">arguments</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>El método <code>getEvent()</code> es un método que no acepta parámetros y que devuelve el objeto <code>event</code> convenientemente adaptado para permitir un comportamiento homogéneo entre diferentes navegadores.</p>
+
+<p>En el caso de Internet Explorer, el objeto <code>event</code> se obtiene directamente a partir del objeto <code>window</code>. Sin embargo, antes de devolver el objeto, se modifica añadiendo las propiedades que no dispone en comparación con el objeto <code>event</code> de los navegadores DOM.</p>
+
+<p>En el caso de los navegadores DOM, el objeto <code>event</code> se obtiene como el primer argumento de la función que actúa como manejador del evento. Como ya se vio en el capítulo de JavaScript básico, la propiedad <code>caller</code> de una función siempre almacena una referencia a la función que la invocó.</p>
+
+<p>Así, si en el interior de un manejador de eventos se hace la llamada al método <code>EventUtil.getEvent()</code>, la propiedad <code>caller</code> será el propio manejador de eventos y su primer argumento será el objeto <code>event</code>. Parece muy abstracto, pero si se piensa detenidamente se comprende fácilmente la solución tan concisa y elegante que se ha utilizado.</p>
+
+<h3 id="estandarizacion_del_objeto_event">6.6.3. Estandarización del objeto Event</h3>
+
+<p>El objeto <code>event</code> presenta unas propiedades y métodos muy diferentes en función del tipo de navegador en el que se ejecuta la aplicación JavaScript. Para estandarizar el objeto <code>event</code>, se crea un método que añade al objeto <code>event</code> de Internet Explorer todas las propiedades que le faltan.</p>
+
+<p>El código completo de este método se muestra a continuación:</p>
+
+<div class="code javascript">
+<pre class="javascript">EventUtil.<span class="me1">formatEvent</span> <span class="sy0">=</span> <span class="kw1">function</span><span class="br0">&#40;</span>elEvento<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="co1">// Detectar si el navegador actual es Internet Explorer</span>
+  <span class="kw1">var</span> esIE <span class="sy0">=</span> navigator.<span class="me1">userAgent</span>.<span class="me1">toLowerCase</span><span class="br0">&#40;</span><span class="br0">&#41;</span>.<span class="me1">indexOf</span><span class="br0">&#40;</span><span class="st0">'msie'</span><span class="br0">&#41;</span><span class="sy0">!=-</span><span class="nu0">1</span><span class="sy0">;</span>
+  <span class="kw1">if</span><span class="br0">&#40;</span>esIE<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    elEvento.<span class="me1">charCode</span> <span class="sy0">=</span> <span class="br0">&#40;</span>elEvento.<span class="me1">type</span><span class="sy0">==</span><span class="st0">&quot;keypress&quot;</span><span class="br0">&#41;</span> <span class="sy0">?</span> elEvento.<span class="me1">keyCode</span> <span class="sy0">:</span> <span class="nu0">0</span><span class="sy0">;</span>
+    elEvento.<span class="me1">eventPhase</span> <span class="sy0">=</span> <span class="nu0">2</span><span class="sy0">;</span>
+    elEvento.<span class="me1">isChar</span> <span class="sy0">=</span> <span class="br0">&#40;</span>elEvento.<span class="me1">charCode</span> <span class="sy0">&gt;</span> <span class="nu0">0</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    elEvento.<span class="me1">pageX</span> <span class="sy0">=</span> elEvento.<span class="me1">clientX</span> <span class="sy0">+</span> document.<span class="me1">body</span>.<span class="me1">scrollLeft</span><span class="sy0">;</span>
+    elEvento.<span class="me1">pageY</span> <span class="sy0">=</span> elEvento.<span class="me1">clientY</span> <span class="sy0">+</span> document.<span class="me1">body</span>.<span class="me1">scrollTop</span><span class="sy0">;</span>
+    elEvento.<span class="me1">preventDefault</span> <span class="sy0">=</span> <span class="kw1">function</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+      <span class="kw1">this</span>.<span class="me1">returnValue</span> <span class="sy0">=</span> <span class="kw2">false</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span><span class="sy0">;</span>
+    <span class="kw1">if</span><span class="br0">&#40;</span>elEvento.<span class="me1">type</span> <span class="sy0">==</span> <span class="st0">&quot;mouseout&quot;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+      elEvento.<span class="me1">relatedTarget</span> <span class="sy0">=</span> elEvento.<span class="me1">toElement</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+    <span class="kw1">else</span> <span class="kw1">if</span><span class="br0">&#40;</span>elEvento.<span class="me1">type</span> <span class="sy0">==</span> <span class="st0">&quot;mouseover&quot;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+      elEvento.<span class="me1">relatedTarget</span> <span class="sy0">=</span> elEvento.<span class="me1">fromElement</span>
+    <span class="br0">&#125;</span>
+    elEvento.<span class="me1">stopPropagation</span> <span class="sy0">=</span> <span class="kw1">function</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+      <span class="kw1">this</span>.<span class="me1">cancelBubble</span> <span class="sy0">=</span> <span class="kw2">true</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span><span class="sy0">;</span>
+    elEvento.<span class="me1">target</span> <span class="sy0">=</span> elEvento.<span class="me1">srcElement</span><span class="sy0">;</span>
+    elEvento.<span class="me1">time</span> <span class="sy0">=</span> <span class="br0">&#40;</span><span class="kw1">new</span> <span class="kw4">Date</span><span class="br0">&#41;</span>.<span class="me1">getTime</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+  <span class="kw1">return</span> elEvento<span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="tipos_de_eventos.html">&larr; Anterior <span>6.5. Tipos de eventos</span></a>
+            
+            <a class="span5 next" href="../capitulo_7.html">Siguiente &rarr; <span>Capítulo 7. Primeros pasos con AJAX</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Solución cross browser (Introducción a AJAX%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a AJAX : Solución cross browser']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción a AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> JavaScript básico</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> JavaScript avanzado</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> DOM (Document Object Model)</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> BOM (Browser Object Model)</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_6.html">
+            <span>Capítulo 6.</span> Eventos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="modelo_basico_de_eventos.html">
+            <span>6.1.</span> Modelo básico de eventos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_flujo_de_eventos.html">
+            <span>6.2.</span> El flujo de eventos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="handlers_y_listeners.html">
+            <span>6.3.</span> Handlers y listeners
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_objeto_event.html">
+            <span>6.4.</span> El objeto event
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="tipos_de_eventos.html">
+            <span>6.5.</span> Tipos de eventos
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="solucion_cross_browser.html">
+            <span>6.6.</span> Solución cross browser
+        </a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Primeros pasos con AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Técnicas básicas con AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Técnicas avanzadas con AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Frameworks y librerías</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Otras utilidades</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Recursos útiles</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Bibliografía</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

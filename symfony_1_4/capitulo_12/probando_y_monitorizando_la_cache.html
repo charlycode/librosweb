@@ -1,0 +1,261 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>12.3. Probando y monitorizando la cache (Symfony 1.4, la guía definitiva)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="eliminando_elementos_de_la_cache.html" />
+        <link rel="next" href="http_11_y_la_cache_del_lado_del_cliente.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="12.3. Probando y monitorizando la cache (Symfony 1.4, la guía definitiva)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page symfony_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Symfony 1.4, la guía definitiva</a></li>
+  <li><a href="../capitulo_12.html">Capítulo 12. Uso de la cache</a></li>
+  <li class="current"><span>12.3.. Probando y monitorizando la cache</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="probando_y_monitorizando_la_cache"><span>12.3.</span> Probando y monitorizando la cache</h1>
+    
+
+<p>La cache de HTML puede provocar incoherencias en los datos mostrados si no se gestiona correctamente. Cada vez que se activa la cache para un elemento, se debe probar y monitorizar la mejora obtenida en el rendimiento de su ejecución.</p>
+
+<h3 id="creando_un_entorno_de_ejecucion_intermedio">12.3.1. Creando un entorno de ejecución intermedio</h3>
+
+<p>El sistema de cache es propenso a crear errores en el entorno de producción que no se pueden detectar en el entorno de desarrollo, ya que en este último entorno la cache HTML está deshabilitada por defecto. Si se habilita la cache de HTML para algunas acciones, se debería crear un nuevo entorno de ejecución llamado <code>staging</code> en este capítulo y con las mismas opciones que el entorno <code>prod</code> (por lo tanto con la cache activada) pero con la opción <code>web_debug</code> activada (valor <code>true</code>).</p>
+
+<p>Para crear el nuevo entorno, se deben añadir las líneas mostradas en el listado 12-12 al archivo <code>settings.yml</code> de la aplicación.</p>
+
+<p><strong>Listado 12-12 - Opciones del entorno  <code>staging</code>, en <code>frontend/config/settings.yml</code></strong></p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co4">staging</span>:<span class="co4">
+  .settings</span>:<span class="co3">
+    web_debug</span><span class="sy2">: </span> true<span class="co3">
+    cache</span><span class="sy2">: </span>     true</pre>
+</div>
+
+<p>Además, se debe crear un nuevo controlador frontal copiando el de producción (que seguramente se llamará <code>miproyecto/web/index.php</code>) en un archivo llamado <code>frontend_staging.php</code>. En este archivo copiado es necesario modificar los argumentos que se pasan al método <code>getApplicationConfiguration()</code>, tal y como se muestra a continuación:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$configuration</span> <span class="sy0">=</span> ProjectConfiguration<span class="sy0">::</span><span class="me2">getApplicationConfiguration</span><span class="br0">&#40;</span><span class="st_h">'frontend'</span><span class="sy0">,</span> <span class="st_h">'staging'</span><span class="sy0">,</span> <span class="kw4">true</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Y sólo con esos cambios ya se dispone de un nuevo entorno de ejecución. Para probarlo, se añade el nombre del controlador frontal a la URL después del nombre de dominio:</p>
+
+<div class="code code">
+<pre class="code">http://miaplicacion.ejemplo.com/frontend_staging.php/usuario/listado</pre>
+</div>
+
+<h3 id="monitorizando_el_rendimiento">12.3.2. Monitorizando el rendimiento</h3>
+
+<p>El Capítulo 16 describe en detalle la barra de depuración de aplicaciones y sus contenidos. No obstante, como esa barra también contiene información relacionada con los elementos guardados en la cache, se incluye ahora una breve descripción de sus características relacionadas con la cache.</p>
+
+<p>Cuando se accede a una página que contiene elementos susceptibles de estar en la cache (acciones, elementos parciales, fragmentos, etc.) la barra de depuración web (que aparece en la esquina superior izquierda) muestra un botón para ignorar la cache (una flecha curvada verde), como se puede ver en la figura 12-4. Este botón se emplea para recargar la página y forzar a que se procesen todos los elementos que estaban en la cache. Se debe tener en cuenta que este botón no borra la cache.</p>
+
+<p>El último número que se muestra en la derecha de la barra es el tiempo que ha durado la ejecución de la petición. Si se habilita la cache en una página, este número debería ser muy inferior al recargar la página, ya que Symfony utilizará los datos de la cache en vez de volver a ejecutar por completo los scripts. Este indicador se puede utilizar para monitorizar fácilmente las mejoras introducidas por la cache.</p>
+
+<div class="figure" id="figure_12_4">
+    <img src="../../img/symfony_1_4/f1204.png" alt="Barra de depuración web en las páginas que utilizan la cache" />
+
+    <p class="caption"><strong>Figura 12.4</strong> Barra de depuración web en las páginas que utilizan la cache</p>
+</div>
+
+
+<p>La barra de depuración también muestra el número de consultas de base de datos que se han ejecutado para la petición, el detalle del tiempo de ejecución de cada categoría (se muestra al pulsar sobre el tiempo de ejecución total). Monitorizando esta información es sencillo medir las mejoras en el rendimiento que son debidas a la cache.</p>
+
+<h3 id="pruebas_de_rendimiento_benchmarking">12.3.3. Pruebas de rendimiento (benchmarking)</h3>
+
+<p>La depuración de las aplicaciones reduce notablemente la velocidad de ejecución de la aplicación, ya que se genera mucha información para que esté disponible en la barra de depuración web. De esta forma, el tiempo total de ejecución que se muestra cuando se accede a la aplicación en el entorno <code>staging</code> no es representativo del tiempo que se empleará en producción, donde la depuración está deshabilitada.</p>
+
+<p>Para obtener información sobre el tiempo de ejecución de cada petición, deberían utilizarse herramientas para realizar pruebas de rendimiento, como Apache Bench o JMeter. Estas herramientas permiten realizar pruebas de carga y calculan dos parámetros muy importantes: el tiempo de carga medio de una página y la capacidad máxima del servidor. El tiempo medio de carga es esencial para monitorizar las mejoras de rendimiento introducidas por la activación de la cache.</p>
+
+<h3 id="identificando_elementos_de_la_cache">12.3.4. Identificando elementos de la cache</h3>
+
+<p>Cuando la barra de depuración web está activada, los elementos de la página que se encuentran en la cache se identifican mediante un recuadro rojo, además de que cada uno dispone de una caja de información sobre la cache en la esquina superior izquierda del elemento, como muestra la figura 12-5. La caja muestra un fondo azul si el elemento se ha ejecutado y un fondo de color amarillo si se ha obtenido directamente de la cache. Al pulsar sobre el enlace de información de la cache se muestra el identificador del elemento en la cache, su tiempo de vida y el tiempo que ha transcurrido desde su última modificación. Esta información es útil para resolver problemas con elementos fuera de contexto, para ver cuando se crearon los elementos y para visualizar las partes de la plantilla que se pueden guardar en la cache.</p>
+
+<div class="figure" id="figure_12_5">
+    <img src="../../img/symfony_1_4/f1205.png" alt="Identificación de los elementos de la página que se guardan en la cache" />
+
+    <p class="caption"><strong>Figura 12.5</strong> Identificación de los elementos de la página que se guardan en la cache</p>
+</div>
+
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="eliminando_elementos_de_la_cache.html">&larr; Anterior <span>12.2. Eliminando elementos de la cache</span></a>
+            
+            <a class="span5 next" href="http_11_y_la_cache_del_lado_del_cliente.html">Siguiente &rarr; <span>12.4. HTTP 1.1 y la cache del lado del cliente</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Probando y monitorizando la cache (Symfony 1.4, la guía definitiva%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Symfony 1.4, la guía definitiva : Probando y monitorizando la cache']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción a Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Explorando el interior de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Ejecutar aplicaciones Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Introducción a la creación de páginas</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Configurar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> El Controlador</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> La Vista</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> El modelo (Doctrine)</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Enlaces y sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Emails</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_12.html">
+            <span>Capítulo 12.</span> Uso de la cache
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="guardando_la_respuesta_en_la_cache.html">
+            <span>12.1.</span> Guardando la respuesta en la cache
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="eliminando_elementos_de_la_cache.html">
+            <span>12.2.</span> Eliminando elementos de la cache
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="probando_y_monitorizando_la_cache.html">
+            <span>12.3.</span> Probando y monitorizando la cache
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="http_11_y_la_cache_del_lado_del_cliente.html">
+            <span>12.4.</span> HTTP 1.1 y la cache del lado del cliente
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="resumen.html">
+            <span>12.5.</span> Resumen
+        </a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Pruebas unitarias y funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Herramientas para la administración de aplicaciones</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> Personalizar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> Rendimiento</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Configuración avanzada</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

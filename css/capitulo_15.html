@@ -1,0 +1,280 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>Capítulo 15. Ejercicios (Introducción a CSS)</title>
+        <link href="main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="capitulo_14/referencias_y_colecciones_de_recursos.html" />
+        <link rel="next" href="capitulo_15/ejercicio_2.html" />
+        <link rel="start" href="index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Capítulo 15. Ejercicios (Introducción a CSS)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page css">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../index.html">Inicio</a></li>
+  <li><a href="index.html">Introducción a CSS</a></li>
+  <li class="current"><span>Capítulo 15.. Ejercicios</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="capitulo_15"><span>Capítulo 15.</span> Ejercicios</h1>
+    <h2 id="ejercicio_1">15.1. Ejercicio 1</h2>
+
+
+<p>A partir del código HTML y CSS que se muestra, añadir los selectores CSS que faltan para aplicar los estilos deseados. Cada regla CSS incluye un comentario en el que se explica los elementos a los que debe aplicarse:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc0">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot; &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;</span>
+<span class="sc2">&lt;<span class="kw2">html</span> xmlns<span class="sy0">=</span><span class="st0">&quot;http://www.w3.org/1999/xhtml&quot;</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">head</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">meta</span> <span class="kw3">http-equiv</span><span class="sy0">=</span><span class="st0">&quot;Content-Type&quot;</span> <span class="kw3">content</span><span class="sy0">=</span><span class="st0">&quot;text/html; charset=iso-8859-1&quot;</span> <span class="sy0">/</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">title</span>&gt;</span>Ejercicio de selectores<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">title</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">style</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text/css&quot;</span>&gt;</span>
+/* Todos los elementos de la pagina */
+{ font: 1em/1.3 Arial, Helvetica, sans-serif; }
+&nbsp;
+/* Todos los parrafos de la pagina */
+{ color: #555; }
+&nbsp;
+/* Todos los párrafos contenidos en #primero */
+{ color: #336699; }
+&nbsp;
+/* Todos los enlaces la pagina */
+{ color: #CC3300; }
+&nbsp;
+/* Los elementos &quot;em&quot; contenidos en #primero */
+{ background: #FFFFCC; padding: .1em; }
+&nbsp;
+/* Todos los elementos &quot;em&quot; de clase &quot;especial&quot; en toda la pagina */
+{ background: #FFCC99; border: 1px solid #FF9900; padding: .1em; }
+&nbsp;
+/* Elementos &quot;span&quot; contenidos en .normal */
+{ font-weight: bold; }
+&nbsp;
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">style</span>&gt;</span>
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">head</span>&gt;</span>
+&nbsp;
+<span class="sc2">&lt;<span class="kw2">body</span>&gt;</span>
+&nbsp;
+<span class="sc2">&lt;<span class="kw2">div</span> <span class="kw3">id</span><span class="sy0">=</span><span class="st0">&quot;primero&quot;</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">p</span>&gt;</span>Lorem ipsum dolor sit amet, <span class="sc2">&lt;<span class="kw2">a</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;#&quot;</span>&gt;</span>consectetuer adipiscing elit<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">a</span>&gt;</span>. Praesent blandit nibh at felis. Sed nec diam in dolor vestibulum aliquet. Duis ullamcorper, nisi non facilisis molestie, <span class="sc2">&lt;<span class="kw2">em</span>&gt;</span>lorem sem aliquam nulla<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">em</span>&gt;</span>, id lacinia velit mi vestibulum enim.<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">p</span>&gt;</span>
+&nbsp;
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">div</span>&gt;</span>
+&nbsp;
+<span class="sc2">&lt;<span class="kw2">div</span> <span class="kw3">class</span><span class="sy0">=</span><span class="st0">&quot;normal&quot;</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">p</span>&gt;</span>Phasellus eu velit sed lorem sodales egestas. Ut feugiat. <span class="sc2">&lt;<span class="kw2">span</span>&gt;&lt;<span class="kw2">a</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;#&quot;</span>&gt;</span>Donec porttitor<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">a</span>&gt;</span>, magna eu varius luctus,<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">span</span>&gt;</span> metus massa tristique massa, in imperdiet est velit vel magna. Phasellus erat. Duis risus. <span class="sc2">&lt;<span class="kw2">a</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;#&quot;</span>&gt;</span>Maecenas dictum<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">a</span>&gt;</span>, nibh vitae pellentesque auctor, tellus velit consectetuer tellus, tempor pretium felis tellus at metus.<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">p</span>&gt;</span>
+&nbsp;
+<span class="sc2">&lt;<span class="kw2">p</span>&gt;</span>Cum sociis natoque <span class="sc2">&lt;<span class="kw2">em</span> <span class="kw3">class</span><span class="sy0">=</span><span class="st0">&quot;especial&quot;</span>&gt;</span>penatibus et magnis<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">em</span>&gt;</span> dis parturient montes, nascetur ridiculus mus. Proin aliquam convallis ante. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc aliquet. Sed eu metus. Duis justo.<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">p</span>&gt;</span>
+&nbsp;
+<span class="sc2">&lt;<span class="kw2">p</span>&gt;</span>Donec facilisis blandit velit. Vestibulum nisi. Proin volutpat, <span class="sc2">&lt;<span class="kw2">em</span> <span class="kw3">class</span><span class="sy0">=</span><span class="st0">&quot;especial&quot;</span>&gt;</span>enim id iaculis congue<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">em</span>&gt;</span>, orci justo ultrices tortor, <span class="sc2">&lt;<span class="kw2">a</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;#&quot;</span>&gt;</span>quis lacinia eros libero in eros<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">a</span>&gt;</span>. Sed malesuada dui vel quam. Integer at eros.<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">p</span>&gt;</span>
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">div</span>&gt;</span>
+&nbsp;
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">body</span>&gt;</span>
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">html</span>&gt;</span></pre>
+</div>
+
+<p><a href="../ejercicios/css/ejercicio1/ejercicio1.html">Descargar enunciado</a></p>
+
+<p><a href="http://librosweb.es/css/capitulo_16/solucion_ejercicio_1.html">Ver solución</a></p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="capitulo_14/referencias_y_colecciones_de_recursos.html">&larr; Anterior <span>14.4. Referencias y colecciones de recursos</span></a>
+            
+            <a class="span5 next" href="capitulo_15/ejercicio_2.html">Siguiente &rarr; <span>15.2. Ejercicio 2</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Ejercicios (Introducción a CSS%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a CSS : Ejercicios']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="capitulo_2.html"> Selectores</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="capitulo_3.html"> Unidades de medida y colores</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="capitulo_4.html"> Modelo de cajas</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="capitulo_5.html"> Posicionamiento y visualización</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="capitulo_6.html"> Texto</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="capitulo_7.html"> Enlaces</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="capitulo_8.html"> Imágenes</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="capitulo_9.html"> Listas</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="capitulo_10.html"> Tablas</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="capitulo_11.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="capitulo_12.html"> Layout</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="capitulo_13.html"> Otros</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="capitulo_14.html"> Recursos útiles</a>
+    </li>
+    <li class="level-1 active">
+        <a href="capitulo_15.html">
+            <span>Capítulo 15.</span> Ejercicios
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="capitulo_15/ejercicio_2.html">
+            <span>15.2.</span> Ejercicio 2
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="capitulo_15/ejercicio_3.html">
+            <span>15.3.</span> Ejercicio 3
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="capitulo_15/ejercicio_4.html">
+            <span>15.4.</span> Ejercicio 4
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="capitulo_15/ejercicio_5.html">
+            <span>15.5.</span> Ejercicio 5
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="capitulo_15/ejercicio_6.html">
+            <span>15.6.</span> Ejercicio 6
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="capitulo_15/ejercicio_7.html">
+            <span>15.7.</span> Ejercicio 7
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="capitulo_15/ejercicio_8.html">
+            <span>15.8.</span> Ejercicio 8
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="capitulo_15/ejercicio_9.html">
+            <span>15.9.</span> Ejercicio 9
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="capitulo_15/ejercicio_10.html">
+            <span>15.10.</span> Ejercicio 10
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="capitulo_15/ejercicio_11.html">
+            <span>15.11.</span> Ejercicio 11
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="capitulo_15/ejercicio_12.html">
+            <span>15.12.</span> Ejercicio 12
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="capitulo_15/ejercicio_13.html">
+            <span>15.13.</span> Ejercicio 13
+        </a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="capitulo_16.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

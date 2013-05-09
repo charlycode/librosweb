@@ -1,0 +1,426 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>16.3. El formulario para darse de alta como afiliado (El tutorial Jobeet)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="probando_los_servicios_web.html" />
+        <link rel="next" href="administrando_los_afiliados.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="16.3. El formulario para darse de alta como afiliado (El tutorial Jobeet)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page jobeet_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">El tutorial Jobeet</a></li>
+  <li><a href="../capitulo_16.html">Capítulo 16. Servicios web</a></li>
+  <li class="current"><span>16.3.. El formulario para darse de alta como afiliado</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="el_formulario_para_darse_de_alta_como_afiliado"><span>16.3.</span> El formulario para darse de alta como afiliado</h1>
+    
+
+<p>Después de haber preparado el servicio web, el siguiente paso consiste en crear el formulario con el que los afiliados se van a dar de alta. Una vez más, vamos a describir paso a paso cómo añadir una nueva característica a la aplicación.</p>
+
+<h3 id="sistema_de_enrutamiento">16.3.1. Sistema de enrutamiento</h3>
+
+<p>Como ya habrás adivinado, lo primero que hacemos es pensar en la URL de la nueva funcionalidad:</p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co1"># apps/frontend/config/routing.yml</span><span class="co4">
+affiliate</span>:<span class="co3">
+  class</span><span class="sy2">: </span>  sfPropelRouteCollection<span class="co4">
+  options</span>:<span class="co3">
+    model</span><span class="sy2">: </span>JobeetAffiliate<span class="co3">
+    actions</span><span class="sy2">: </span><span class="br0">&#91;</span>new, create<span class="br0">&#93;</span><span class="co3">
+    object_actions</span><span class="sy2">: </span><span class="br0">&#123;</span> wait<span class="sy2">: </span>get <span class="br0">&#125;</span></pre>
+</div>
+
+<p>La ruta anterior es una colección de rutas de Propel que utiliza una nueva opción llamada <code>actions</code>. Como en este caso no necesitamos las siete acciones que define este tipo de ruta, la opción <code>actions</code> permite indicar las acciones para las que esta ruta debe funcionar (en el ejemplo anterior, sólo las acciones <code>new</code> y <code>create</code>). La ruta <code>wait</code> adicional se va a emplear para informar al afiliado sobre el estado de su cuenta.</p>
+
+<h3 id="inicializacion">16.3.2. Inicialización</h3>
+
+<p>A continuación, se genera automáticamente el módulo llamado <code>affiliate</code>:</p>
+
+<div class="code cli">
+<pre class="cli">$ php symfony propel:generate-module frontend affiliate JobeetAffiliate --non-verbose-templates</pre>
+</div>
+
+<h3 id="plantillas">16.3.3. Plantillas</h3>
+
+<p>La tarea <code>propel:generate-module</code> genera las acciones y plantillas de las siete acciones clásicas de las colecciones de rutas de Propel. Por tanto, entra en el directorio <code>templates/</code> del módulo y elimina todos los archivos salvo <code>_form.php</code> y <code>newSuccess.php</code>. En estos dos archivos, reemplaza su contenido por el siguiente código:</p>
+
+<div class="code php">
+<pre class="php">&lt;!-- apps/frontend/modules/affiliate/templates/newSuccess.php --&gt;
+<span class="kw2">&lt;?php</span> use_stylesheet<span class="br0">&#40;</span><span class="st_h">'job.css'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+&nbsp;
+&lt;h1&gt;Become an Affiliate&lt;/h1&gt;
+&nbsp;
+<span class="kw2">&lt;?php</span> include_partial<span class="br0">&#40;</span><span class="st_h">'form'</span><span class="sy0">,</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'form'</span> <span class="sy0">=&gt;</span> <span class="re0">$form</span><span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span></pre>
+</div>
+
+<div class="code php">
+<pre class="php">&lt;!-- apps/frontend/modules/affiliate/templates/_form.php --&gt;
+<span class="kw2">&lt;?php</span> include_stylesheets_for_form<span class="br0">&#40;</span><span class="re0">$form</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+<span class="kw2">&lt;?php</span> include_javascripts_for_form<span class="br0">&#40;</span><span class="re0">$form</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+&nbsp;
+<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> form_tag_for<span class="br0">&#40;</span><span class="re0">$form</span><span class="sy0">,</span> <span class="st_h">'affiliate'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+  &lt;table id=&quot;job_form&quot;&gt;
+    &lt;tfoot&gt;
+      &lt;tr&gt;
+        &lt;td colspan=&quot;2&quot;&gt;
+          &lt;input type=&quot;submit&quot; value=&quot;Submit&quot; /&gt;
+        &lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/tfoot&gt;
+    &lt;tbody&gt;
+      <span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$form</span> <span class="sy1">?&gt;</span>
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/form&gt;</pre>
+</div>
+
+<p>A continuación, crea la plantilla <code>waitSuccess.php</code> para la acción <code>wait</code> adicional:</p>
+
+<div class="code php">
+<pre class="php"><span class="sy0">&lt;!--</span> apps<span class="sy0">/</span>frontend<span class="sy0">/</span>modules<span class="sy0">/</span>affiliate<span class="sy0">/</span>templates<span class="sy0">/</span>waitSuccess<span class="sy0">.</span>php <span class="sy0">--&gt;</span>
+<span class="sy0">&lt;</span>h1<span class="sy0">&gt;</span>Your affiliate account has been created<span class="sy0">&lt;/</span>h1<span class="sy0">&gt;</span>
+&nbsp;
+<span class="sy0">&lt;</span>div style<span class="sy0">=</span><span class="st0">&quot;padding: 20px&quot;</span><span class="sy0">&gt;</span>
+  Thank you<span class="sy0">!</span>
+  You will receive an email with your affiliate token
+  <span class="kw1">as</span> soon <span class="kw1">as</span> your account will be activated<span class="sy0">.</span>
+<span class="sy0">&lt;/</span>div<span class="sy0">&gt;</span></pre>
+</div>
+
+<p>Por último, modifica el enlace del pie de página para que apunte al nuevo módulo <code>affiliate</code>:</p>
+
+<div class="code php">
+<pre class="php">// apps/frontend/templates/layout.php
+&lt;li class=&quot;last&quot;&gt;
+  &lt;a href=&quot;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> url_for<span class="br0">&#40;</span><span class="st_h">'@affiliate_new'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>&quot;&gt;Become an affiliate&lt;/a&gt;
+&lt;/li&gt;</pre>
+</div>
+
+<h3 id="acciones">16.3.4. Acciones</h3>
+
+<p>De nuevo, como sólo vamos a utilizar el formulario para crear nuevos afiliados, abre el archivo <code>actions.class.php</code> y elimina todos los métodos salvo <code>executeNew()</code>, <code>executeCreate()</code> y <code>processForm()</code>.</p>
+
+<p>En la acción <code>processForm()</code>, modifica la URL de la redirección para que apunte a la acción <code>wait</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// apps/frontend/modules/affiliate/actions/actions.class.php</span>
+<span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">redirect</span><span class="br0">&#40;</span><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">generateUrl</span><span class="br0">&#40;</span><span class="st_h">'affiliate_wait'</span><span class="sy0">,</span> <span class="re0">$jobeet_affiliate</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>La propia acción <code>wait</code> es muy sencilla porque no tenemos que pasar ninguna variable a la plantilla:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// apps/frontend/modules/affiliate/actions/actions.class.php</span>
+<span class="kw2">public</span> <span class="kw2">function</span> executeWait<span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Ahora mismo el usuario afiliado no puede ni elegir su token ni activar su cuenta. Por tanto, abre el archivo <code>JobeetAffiliateForm</code> para personalizar el formulario:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// lib/form/JobeetAffiliateForm.class.php</span>
+<span class="kw2">class</span> JobeetAffiliateForm <span class="kw2">extends</span> BaseJobeetAffiliateForm
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> configure<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="kw3">unset</span><span class="br0">&#40;</span><span class="re0">$this</span><span class="br0">&#91;</span><span class="st_h">'is_active'</span><span class="br0">&#93;</span><span class="sy0">,</span> <span class="re0">$this</span><span class="br0">&#91;</span><span class="st_h">'token'</span><span class="br0">&#93;</span><span class="sy0">,</span> <span class="re0">$this</span><span class="br0">&#91;</span><span class="st_h">'created_at'</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">widgetSchema</span><span class="br0">&#91;</span><span class="st_h">'jobeet_category_affiliate_list'</span><span class="br0">&#93;</span><span class="sy0">-&gt;</span><span class="me1">setOption</span><span class="br0">&#40;</span><span class="st_h">'expanded'</span><span class="sy0">,</span> <span class="kw4">true</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">widgetSchema</span><span class="br0">&#91;</span><span class="st_h">'jobeet_category_affiliate_list'</span><span class="br0">&#93;</span><span class="sy0">-&gt;</span><span class="me1">setLabel</span><span class="br0">&#40;</span><span class="st_h">'Categories'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">validatorSchema</span><span class="br0">&#91;</span><span class="st_h">'jobeet_category_affiliate_list'</span><span class="br0">&#93;</span><span class="sy0">-&gt;</span><span class="me1">setOption</span><span class="br0">&#40;</span><span class="st_h">'required'</span><span class="sy0">,</span> <span class="kw4">true</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">widgetSchema</span><span class="br0">&#91;</span><span class="st_h">'url'</span><span class="br0">&#93;</span><span class="sy0">-&gt;</span><span class="me1">setLabel</span><span class="br0">&#40;</span><span class="st_h">'Your website URL'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">widgetSchema</span><span class="br0">&#91;</span><span class="st_h">'url'</span><span class="br0">&#93;</span><span class="sy0">-&gt;</span><span class="me1">setAttribute</span><span class="br0">&#40;</span><span class="st_h">'size'</span><span class="sy0">,</span> <span class="nu0">50</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">widgetSchema</span><span class="br0">&#91;</span><span class="st_h">'email'</span><span class="br0">&#93;</span><span class="sy0">-&gt;</span><span class="me1">setAttribute</span><span class="br0">&#40;</span><span class="st_h">'size'</span><span class="sy0">,</span> <span class="nu0">50</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">validatorSchema</span><span class="br0">&#91;</span><span class="st_h">'email'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="kw2">new</span> sfValidatorEmail<span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'required'</span> <span class="sy0">=&gt;</span> <span class="kw4">true</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>El framework de formularios soporta las relaciones muchos-a-muchos. Por defecto, este tipo de relaciones se muestran en forma de lista desplegable mediante el widget <code>sfWidgetFormChoice</code>. Como ya vimos durante el tutorial del día 10, hemos cambiado la forma en la que se muestra este widget mediante la opción <code>expanded</code>.</p>
+
+<p>Como los campos en los que se escriben emails y URL suelen ser más largos que el tamaño por defecto de la etiqueta <code>&lt;ìnput&gt;</code>, hemos establecido nuevos atributos HTML con el método <code>setAttribute()</code>.</p>
+
+<div class="figure" id="figure_16_2">
+    <img src="../../img/jobeet_1_4/f1602.png" alt="El formulario de los afiliados" />
+
+    <p class="caption"><strong>Figura 16.2</strong> El formulario de los afiliados</p>
+</div>
+
+
+<h3 id="pruebas">16.3.5. Pruebas</h3>
+
+<p>Como siempre que añadimos una nueva característica a la aplicación, no te olvides de crear las pruebas funcionales correspondientes.</p>
+
+<p>Reemplaza el contenido de las pruebas generadas automáticamente para el módulo <code>affiliate</code> por el siguiente código:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// test/functional/frontend/affiliateActionsTest.php</span>
+<span class="kw1">include</span><span class="br0">&#40;</span><span class="kw3">dirname</span><span class="br0">&#40;</span><span class="kw4">__FILE__</span><span class="br0">&#41;</span><span class="sy0">.</span><span class="st_h">'/../../bootstrap/functional.php'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="re0">$browser</span> <span class="sy0">=</span> <span class="kw2">new</span> JobeetTestFunctional<span class="br0">&#40;</span><span class="kw2">new</span> sfBrowser<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$browser</span><span class="sy0">-&gt;</span><span class="me1">loadData</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="re0">$browser</span><span class="sy0">-&gt;</span>
+  <span class="me1">info</span><span class="br0">&#40;</span><span class="st_h">'1 - An affiliate can create an account'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+&nbsp;
+  <span class="me1">get</span><span class="br0">&#40;</span><span class="st_h">'/affiliate/new'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+  <span class="me1">click</span><span class="br0">&#40;</span><span class="st_h">'Submit'</span><span class="sy0">,</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'jobeet_affiliate'</span> <span class="sy0">=&gt;</span> <span class="kw3">array</span><span class="br0">&#40;</span>
+    <span class="st_h">'url'</span>                            <span class="sy0">=&gt;</span> <span class="st_h">'http://www.example.com/'</span><span class="sy0">,</span>
+    <span class="st_h">'email'</span>                          <span class="sy0">=&gt;</span> <span class="st_h">'foo@example.com'</span><span class="sy0">,</span>
+    <span class="st_h">'jobeet_category_affiliate_list'</span> <span class="sy0">=&gt;</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="re0">$browser</span><span class="sy0">-&gt;</span><span class="me1">getProgrammingCategory</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">getId</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+  <span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+  <span class="me1">isRedirected</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+  <span class="me1">followRedirect</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+  <span class="me1">with</span><span class="br0">&#40;</span><span class="st_h">'response'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">checkElement</span><span class="br0">&#40;</span><span class="st_h">'#content h1'</span><span class="sy0">,</span> <span class="st_h">'Your affiliate account has been created'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+&nbsp;
+  <span class="me1">info</span><span class="br0">&#40;</span><span class="st_h">'2 - An affiliate must at least select one category'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+&nbsp;
+  <span class="me1">get</span><span class="br0">&#40;</span><span class="st_h">'/affiliate/new'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+  <span class="me1">click</span><span class="br0">&#40;</span><span class="st_h">'Submit'</span><span class="sy0">,</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'jobeet_affiliate'</span> <span class="sy0">=&gt;</span> <span class="kw3">array</span><span class="br0">&#40;</span>
+    <span class="st_h">'url'</span>   <span class="sy0">=&gt;</span> <span class="st_h">'http://www.example.com/'</span><span class="sy0">,</span>
+    <span class="st_h">'email'</span> <span class="sy0">=&gt;</span> <span class="st_h">'foo@example.com'</span><span class="sy0">,</span>
+  <span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+  <span class="me1">with</span><span class="br0">&#40;</span><span class="st_h">'form'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">isError</span><span class="br0">&#40;</span><span class="st_h">'jobeet_category_affiliate_list'</span><span class="br0">&#41;</span>
+<span class="sy0">;</span></pre>
+</div>
+
+<p>Para simular la selección de elementos de tipo <em>checkbox</em>, se pasa un array con los identificadores de los elementos que se quieren seleccionar. Para simplificar un poco más la tarea, hemos creado un método llamado <code>getProgrammingCategory()</code> en la clase <code>JobeetTestFunctional</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// lib/model/JobeetTestFunctional.class.php</span>
+<span class="kw2">class</span> JobeetTestFunctional <span class="kw2">extends</span> sfTestFunctional
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> getProgrammingCategory<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$criteria</span> <span class="sy0">=</span> <span class="kw2">new</span> Criteria<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$criteria</span><span class="sy0">-&gt;</span><span class="me1">add</span><span class="br0">&#40;</span>JobeetCategoryPeer<span class="sy0">::</span><span class="me2">SLUG</span><span class="sy0">,</span> <span class="st_h">'programming'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="kw1">return</span> JobeetCategoryPeer<span class="sy0">::</span><span class="me2">doSelectOne</span><span class="br0">&#40;</span><span class="re0">$criteria</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="co1">// ...</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>No obstante, quizás recuerdes que ya tenemos este mismo código en el método <code>getMostRecentProgrammingJob()</code>, por lo que vamos a refactorizar ese código en un nuevo método llamado <code>getForSlug()</code> en la clase <code>JobeetCategoryPeer</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// lib/model/JobeetCategoryPeer.php</span>
+static <span class="kw2">public</span> <span class="kw2">function</span> getForSlug<span class="br0">&#40;</span><span class="re0">$slug</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="re0">$criteria</span> <span class="sy0">=</span> <span class="kw2">new</span> Criteria<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="re0">$criteria</span><span class="sy0">-&gt;</span><span class="me1">add</span><span class="br0">&#40;</span><span class="kw2">self</span><span class="sy0">::</span><span class="me2">SLUG</span><span class="sy0">,</span> <span class="re0">$slug</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+  <span class="kw1">return</span> <span class="kw2">self</span><span class="sy0">::</span><span class="me2">doSelectOne</span><span class="br0">&#40;</span><span class="re0">$criteria</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>No te olvides de modificar en la clase <code>JobeetTestFunctional</code> las dos veces que aparece el código anterior.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="probando_los_servicios_web.html">&larr; Anterior <span>16.2. Probando los servicios web</span></a>
+            
+            <a class="span5 next" href="administrando_los_afiliados.html">Siguiente &rarr; <span>16.4. Administrando los afiliados</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'El formulario para darse de alta como afiliado (El tutorial Jobeet%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'El tutorial Jobeet : El formulario para darse de alta como afiliado']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Comenzando el proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> El proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> El modelo de datos</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> El controlador y la vista</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> El sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Profundizando en el modelo</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Trabajando con la página de cada categoría</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Pruebas unitarias</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Pruebas funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Probando los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> El generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> El usuario</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> El día de descanso</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Canales Atom</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_16.html">
+            <span>Capítulo 16.</span> Servicios web
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="los_afiliados.html">
+            <span>16.1.</span> Los afiliados
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="probando_los_servicios_web.html">
+            <span>16.2.</span> Probando los servicios web
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="el_formulario_para_darse_de_alta_como_afiliado.html">
+            <span>16.3.</span> El formulario para darse de alta como afiliado
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="administrando_los_afiliados.html">
+            <span>16.4.</span> Administrando los afiliados
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="enviando_emails.html">
+            <span>16.5.</span> Enviando emails
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="nos_vemos_manana.html">
+            <span>16.6.</span> Nos vemos mañana
+        </a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> El buscador</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>20</span> <a href="../capitulo_20.html"> Plugins</a>
+    </li>
+    <li class="level-1">
+        <span>21</span> <a href="../capitulo_21.html"> El día del diseño</a>
+    </li>
+    <li class="level-1">
+        <span>22</span> <a href="../capitulo_22.html"> La cache</a>
+    </li>
+    <li class="level-1">
+        <span>23</span> <a href="../capitulo_23.html"> Pasando a producción</a>
+    </li>
+    <li class="level-1">
+        <span>24</span> <a href="../capitulo_24.html"> Un repaso a Symfony</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

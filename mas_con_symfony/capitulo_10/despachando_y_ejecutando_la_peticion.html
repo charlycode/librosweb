@@ -1,0 +1,340 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>10.4. Despachando y ejecutando la petición (Más con Symfony)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="gestores_de_configuracion_o_config_handlers.html" />
+        <link rel="next" href="la_cadena_de_filtros.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="10.4. Despachando y ejecutando la petición (Más con Symfony)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page mas_con_symfony">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Más con Symfony</a></li>
+  <li><a href="../capitulo_10.html">Capítulo 10. Funcionamiento interno de Symfony</a></li>
+  <li class="current"><span>10.4.. Despachando y ejecutando la petición</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="despachando_y_ejecutando_la_peticion"><span>10.4.</span> Despachando y ejecutando la petición</h1>
+    
+
+<p>Una vez presentadas las factorías, volvemos a la explicación del proceso que
+despacha las peticiones. Tras la inicialización de <code>sfContext</code>, se invoca el
+método <code>dispatch()</code> del controlador,
+<a href="http://www.symfony-project.org/api/1_3/sfFrontWebController#method_dispatch"><code>sfFrontWebController::dispatch()</code></a>.</p>
+
+<p>En Symfony el proceso que despacha las peticiones es muy sencillo. De hecho,
+<code>sfFrontWebController::dispatch()</code> simplemente obtiene el nombre del módulo y
+de la acción a partir de los parámetros de la petición y redirige la aplicación
+mediante <a href="http://www.symfony-project.org/api/1_3/sfController#method_forward"><code>sfController::forward()</code></a>.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> En este punto, si el enrutamiento no puede encontrar ningún módulo o acción
+a partir de la URL, se lanza una excepción de tipo
+<a href="http://trac.symfony-project.org/browser/branches/1.3/lib/exception/sfError404Exception.class.php"><code>sfError404Exception</code></a>,
+que redirige la petición al módulo encargado de procesar la respuesta del
+error 404 (ver información sobre <a href="http://www.symfony-project.org/reference/1_3/en/04-Settings#chapter_04_sub_error_404"><code>sf_error_404_module</code> y
+<code>sf_error_404_action</code></a>).
+Si quieres mostrar un error de tipo 404 en cualquier punto de la aplicación,
+tu también puedes lanzar esta excepción.</p></div>
+
+<p>El método <code>forward</code> realiza muchas comprobaciones previas a la ejecución, además
+de preparar la configuración y los datos para la acción se que va a ejecutar.</p>
+
+<p>En primer lugar el controlador comprueba si existe un archivo llamado
+<a href="http://trac.symfony-project.org/browser/branches/1.3/lib/config/config/generator.yml"><code>generator.yml</code></a>
+en el módulo actual. Esta comprobación es la primera que se realiza (después de
+una limpieza básica del nombre del módulo y de la acción) porque el archivo de
+configuración <code>generator.yml</code> (si existe) se encarga de generar la clase base
+de las acciones del módulo (mediante su
+<a href="http://trac.symfony-project.org/browser/branches/1.3/lib/config/sfGeneratorConfigHandler.class.php">gestor de configuración, <code>sfGeneratorConfigHandler</code></a>).
+Esta comprobación es necesaria para el siguiente paso, que comprueba si existen
+el módulo y la acción. La comprobación se delega en el controlador, a través
+de su método
+<a href="http://www.symfony-project.org/api/1_3/sfController#method_actionexists"><code>sfController::actionExists()</code></a>,
+que después invoca el método
+<a href="http://www.symfony-project.org/api/1_3/sfController#method_controllerexists"><code>sfController::controllerExists()</code></a>.
+Una vez más, si el método <code>actionExists()</code> falla, se lanza una excepción de tipo
+<code>sfError404Exception</code>.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> El gestor de configuración
+<a href="http://trac.symfony-project.org/browser/branches/1.3/lib/config/sfGeneratorConfigHandler.class.php"><code>sfGeneratorConfigHandler</code></a>
+es un tipo especial de gestor que se encarga de instanciar la clase generadora
+correcta para tu módulo y la ejecuta. Si quieres conocer más detalladamente los
+gestores de configuración, puedes leer la sección anterior de este mismo
+capítulo y también el
+<a href="http://www.symfony-project.org/reference/1_3/en/06-Admin-Generator">capítulo 6 de la Referencia de Symfony</a>.</p></div>
+
+<p>En este punto no hay mucho que hacer salvo redefinir el método
+<a href="http://www.symfony-project.org/api/1_3/sfApplicationConfiguration#method_getcontrollerdirs"><code>sfApplicationConfiguration::getControllerDirs()</code></a>
+en la clase de configuración de la aplicación. Este método devuelve un array
+con los directorios en los que residen los controladores, además de un parámetro
+adicional que le indica a Symfony si debe comprobar que los controladores estén
+activados mediante la opción de configuración <code>sf_enabled_modules</code> del archivo
+<code>settings.yml</code>. El método <code>getControllerDirs()</code> podría tener por ejemplo el
+siguiente aspecto:</p>
+
+<div class="code php">
+<pre class="php"><span class="co4">/**
+ * Controllers in /tmp/myControllers won't need to be enabled
+ * to be detected
+ */</span>
+<span class="kw2">public</span> <span class="kw2">function</span> getControllerDirs<span class="br0">&#40;</span><span class="re0">$moduleName</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="kw1">return</span> <span class="kw3">array_merge</span><span class="br0">&#40;</span>parent<span class="sy0">::</span><span class="me2">getControllerDirs</span><span class="br0">&#40;</span><span class="re0">$moduleName</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="kw3">array</span><span class="br0">&#40;</span>
+    <span class="st_h">'/tmp/myControllers/'</span><span class="sy0">.</span><span class="re0">$moduleName</span> <span class="sy0">=&gt;</span> <span class="kw4">false</span>
+  <span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Si la acción no existe, se lanza una excepción de tipo <code>sfError404Exception</code>.</p></div>
+
+<p>El siguiente paso consiste en obtener una instancia del controlador que contiene
+la acción. De ello se encarga el método
+<a href="http://www.symfony-project.org/api/1_3/sfController#method_getaction"><code>sfController::getAction()</code></a>,
+que al igual que <code>actionExists()</code> es un intermediario del método
+<a href="http://www.symfony-project.org/api/1_3/sfController#method_getcontroller"><code>sfController::getController()</code></a>.
+Finalmente, la instancia del controlador se añade al conjunto de acciones o
+<em>action stack</em>.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> El conjunto de acciones es una pila de tipo FIFO (<em>First In First Out</em>) que
+contiene todas las acciones que se ejecutan durante la petición. Cada elemento
+de la pila se representa con un objeto de tipo <code>sfActionStackEntry</code>. La pila
+siempre está accesible mediante <code>sfContext::getInstance()-&gt;getActionStack()</code>
+o a través de <code>$this-&gt;getController()-&gt;getActionStack()</code> dentro de una acción.</p></div>
+
+<p>Después de cargar algo más de configuración, ya será posible ejecutar la acción.
+De hecho, es necesario cargar la configuración específica del módulo, que se
+puede encontrar en dos lugares diferentes. Primero Symfony busca el archivo
+<code>module.yml</code> (que se encuentra normalmente en <code>apps/frontend/modules/miModulo/config/module.yml</code>),
+que como es un archivo de configuración YAML, utiliza la cache de configuración.
+Además, este archivo de configuración puede declarar el módulo como <em>interno</em>,
+utilizando la opción <code>mod_miModulo_is_internal</code> que hace que la petición produzca
+in error, ya que los módulos internos no se pueden acceder públicamente.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Los módulos internos se utilizaban antes para generar el contenido de los emails
+(por ejemplo mediante <code>getPresentationFor()</code>). Ahora se utilizan otras técnicas,
+como los elementos parciales (<code>$this-&gt;renderPartial()</code>).</p></div>
+
+<p>Después de cargar el archivo <code>module.yml</code>, se comprueba por segunda vez que el
+módulo actual está activado. Efectivamente, puedes establecer la opción
+<code>mod_$moduleName_enabled</code> a <code>false</code> si quieres deshabilitar el módulo en este
+punto.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Como se ha mencionado, existen dos formas diferentes de activar o desactivar
+un módulo. La diferencia reside en lo que sucede cuando se deshabilita el
+módulo. En el primer caso, cuando está activada la opción <code>sf_enabled_modules</code>,
+un módulo desactivado provoca que se lance una excepción de tipo
+<a href="http://trac.symfony-project.org/browser/branches/1.3/lib/exception/sfConfigurationException.class.php"><code>sfConfigurationException</code></a>.
+Esta opción debería utilizarse cuando se deshabilita un módulo permanentemente.
+En el segundo caso, mediante la opción <code>mod_$moduleName_enabled</code>, el módulo
+deshabilitado provocará que la aplicación se redirija al módulo deshabilitado
+(ver las opciones <a href="http://www.symfony-project.org/reference/1_3/en/04-Settings#chapter_04_sub_module_disabled"><code>sf_module_disabled_module</code> y
+<code>sf_module_disabled_action</code></a>).
+Esta es la opción que debes utilizar cuando se deshabilita temporalmente un
+módulo.</p></div>
+
+<p>La última oportunidad para configurar un módulo se encuentra en el archivo
+<code>config.php</code> (<code>apps/frontend/modules/yourModule/config/config.php</code>) donde puedes
+incluir cualquier código PHP que quieras que se ejecute dentro del contexto del
+método <a href="http://www.symfony-project.org/api/1_3/sfController#method_forward"><code>sfController::forward()</code></a>
+(es decir, que tienes acceso a la instancia de <code>sfController</code> mediante la
+variable <code>$this</code>, ya que el código se ejecuta literalmente dentro de la clase
+<code>sfController</code>).</p>
+
+<h3 id="resumen_de_como_se_despacha_la_peticion">10.4.1. Resumen de cómo se despacha la petición</h3>
+
+<ol>
+<li>Se invoca <a href="http://www.symfony-project.org/api/1_3/sfFrontWebController#method_dispatch"><code>sfFrontWebController::dispatch()</code></a></li>
+<li>Se invoca <a href="http://www.symfony-project.org/api/1_3/sfController#method_forward"><code>sfController::forward()</code></a></li>
+<li>Se busca un archivo <code>generator.yml</code></li>
+<li>Se comprueba que el módulo y la acción existen</li>
+<li>Se obtiene la lista de directorios de los controladores</li>
+<li>Se obtiene una instancia de la acción</li>
+<li>Se carga la configuración del módulo mediante <code>module.yml</code> y/o <code>config.php</code></li>
+</ol>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="gestores_de_configuracion_o_config_handlers.html">&larr; Anterior <span>10.3. Gestores de configuración o <em>Config Handlers</em></span></a>
+            
+            <a class="span5 next" href="la_cadena_de_filtros.html">Siguiente &rarr; <span>10.5. La cadena de filtros</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Despachando y ejecutando la petición (Más con Symfony%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Más con Symfony : Despachando y ejecutando la petición']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Enrutamiento avanzado</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Mejora tu productividad</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Emails</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Widgets y validadores propios</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Formularios avanzados</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Mejorando la barra de depuración web</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Uso avanzado de Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Utilizando la herencia de tablas de Doctrine</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_10.html">
+            <span>Capítulo 10.</span> Funcionamiento interno de Symfony
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_inicio.html">
+            <span>10.1.</span> El inicio
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="sfcontext_y_las_factorias.html">
+            <span>10.2.</span> <code>sfContext</code> y las factorías
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="gestores_de_configuracion_o_config_handlers.html">
+            <span>10.3.</span> Gestores de configuración o <em>Config Handlers</em>
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="despachando_y_ejecutando_la_peticion.html">
+            <span>10.4.</span> Despachando y ejecutando la petición
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="la_cadena_de_filtros.html">
+            <span>10.5.</span> La cadena de filtros
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="resumen_general.html">
+            <span>10.6.</span> Resumen general
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="conclusion.html">
+            <span>10.7.</span> Conclusión
+        </a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Windows y Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Desarrollando aplicaciones Facebook</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Descubriendo el poder de la línea de comandos</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Jugando con la cache de configuración de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Trabajando con la comunidad Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>A</span> <a href="../apendice_a.html"> Código JavaScript de sfWidgetFormGMapAddress</a>
+    </li>
+    <li class="level-1">
+        <span>B</span> <a href="../apendice_b.html"> Ejemplo de instalador propio</a>
+    </li>
+    <li class="level-1">
+        <span>C</span> <a href="../apendice_c.html"> Licencia</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

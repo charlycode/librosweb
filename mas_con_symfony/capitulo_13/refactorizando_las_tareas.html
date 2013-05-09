@@ -1,0 +1,358 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>13.8. Refactorizando las tareas (Más con Symfony)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="accediendo_al_sistema_de_internacionalizacion.html" />
+        <link rel="next" href="ejecutando_una_tarea_dentro_de_otra_tarea.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="13.8. Refactorizando las tareas (Más con Symfony)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page mas_con_symfony">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Más con Symfony</a></li>
+  <li><a href="../capitulo_13.html">Capítulo 13. Descubriendo el poder de la línea de comandos</a></li>
+  <li class="current"><span>13.8.. Refactorizando las tareas</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="refactorizando_las_tareas"><span>13.8.</span> Refactorizando las tareas</h1>
+    
+
+<p>Como enviar emails (y crear su contenido) y generar URL son dos actividades muy
+comunes, puede ser una buena idea crear una tarea base que proporcione estas
+dos características a cualquier tarea que las necesite. Para conseguirlo, crea
+una clase base en tu proyecto en el archivo <code>lib/task/sfBaseEmailTask.class.php</code>.</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">class</span> sfBaseEmailTask <span class="kw2">extends</span> sfBaseTask
+<span class="br0">&#123;</span>
+  <span class="kw2">protected</span> <span class="kw2">function</span> registerDecorator<span class="br0">&#40;</span><span class="re0">$replacements</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getMailer</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">registerPlugin</span><span class="br0">&#40;</span><span class="kw2">new</span> Swift_Plugins_DecoratorPlugin<span class="br0">&#40;</span><span class="re0">$replacements</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="kw2">protected</span> <span class="kw2">function</span> getMessageBody<span class="br0">&#40;</span><span class="re0">$template</span><span class="sy0">,</span> <span class="re0">$vars</span> <span class="sy0">=</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$engine</span> <span class="sy0">=</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getTemplateEngine</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="kw1">return</span> <span class="re0">$engine</span><span class="sy0">-&gt;</span><span class="me1">render</span><span class="br0">&#40;</span><span class="re0">$template</span><span class="sy0">,</span> <span class="re0">$vars</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="kw2">protected</span> <span class="kw2">function</span> getTemplateEngine<span class="br0">&#40;</span><span class="re0">$replacements</span> <span class="sy0">=</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="kw1">if</span> <span class="br0">&#40;</span><span class="kw3">is_null</span><span class="br0">&#40;</span><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">templateEngine</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="re0">$loader</span> <span class="sy0">=</span> <span class="kw2">new</span> sfTemplateLoaderFilesystem<span class="br0">&#40;</span>sfConfig<span class="sy0">::</span><span class="me2">get</span><span class="br0">&#40;</span><span class="st_h">'sf_app_template_dir'</span><span class="br0">&#41;</span><span class="sy0">.</span><span class="st_h">'/templates/emails/%s.php'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+      <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">templateEngine</span> <span class="sy0">=</span> <span class="kw2">new</span> sfTemplateEngine<span class="br0">&#40;</span><span class="re0">$loader</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="kw1">return</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">templateEngine</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Ya que estamos en ello, vamos a automatizar también la creación de las opciones
+de la tarea. Para ello, añade los siguientes métodos en la clase <code>sfBaseEmailTask</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">public</span> <span class="kw2">function</span> configure<span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">addOption</span><span class="br0">&#40;</span><span class="st_h">'application'</span><span class="sy0">,</span> <span class="kw4">null</span><span class="sy0">,</span> sfCommandOption<span class="sy0">::</span><span class="me2">PARAMETER_REQUIRED</span><span class="sy0">,</span> <span class="st_h">'The application'</span><span class="sy0">,</span> <span class="st_h">'frontend'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+<span class="kw2">protected</span> <span class="kw2">function</span> generateUrl<span class="br0">&#40;</span><span class="re0">$route</span><span class="sy0">,</span> <span class="re0">$params</span> <span class="sy0">=</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="kw1">return</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getRouting</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">generate</span><span class="br0">&#40;</span><span class="re0">$route</span><span class="sy0">,</span> <span class="re0">$params</span><span class="sy0">,</span> <span class="kw4">true</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Utilizando el método <code>configure()</code> se pueden añadir opciones comunes a todas
+las tareas que hereden de esta clase. El único inconveniente es que cualquier
+clase que herede de <code>sfBaseEmailTask</code> obligatoriamente tendrá que invocar el
+método <code>parent::configure</code> dentro de su propio método <code>configure()</code>. De todas
+formas, se trata de un inconveniente menor en comparación de todo lo que se
+gana a cambio.</p>
+
+<p>Vamos a refactorizar a continuación el código de acceso a la internacionalización
+que se utilizó en la sección anterior:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">public</span> <span class="kw2">function</span> configure<span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">addOption</span><span class="br0">&#40;</span><span class="st_h">'application'</span><span class="sy0">,</span> <span class="kw4">null</span><span class="sy0">,</span> sfCommandOption<span class="sy0">::</span><span class="me2">PARAMETER_REQUIRED</span><span class="sy0">,</span> <span class="st_h">'The application'</span><span class="sy0">,</span> <span class="st_h">'frontend'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">addOption</span><span class="br0">&#40;</span><span class="st_h">'culture'</span><span class="sy0">,</span> <span class="kw4">null</span><span class="sy0">,</span> sfCommandOption<span class="sy0">::</span><span class="me2">PARAMETER_REQUIRED</span><span class="sy0">,</span> <span class="st_h">'The culture'</span><span class="sy0">,</span> <span class="st_h">'en'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+<span class="kw2">protected</span> <span class="kw2">function</span> getI18N<span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="kw1">if</span> <span class="br0">&#40;</span><span class="sy0">!</span><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">i18n</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$config</span> <span class="sy0">=</span> sfFactoryConfigHandler<span class="sy0">::</span><span class="me2">getConfiguration</span><span class="br0">&#40;</span><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">configuration</span><span class="sy0">-&gt;</span><span class="me1">getConfigPaths</span><span class="br0">&#40;</span><span class="st_h">'config/factories.yml'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$class</span>  <span class="sy0">=</span> <span class="re0">$config</span><span class="br0">&#91;</span><span class="st_h">'i18n'</span><span class="br0">&#93;</span><span class="br0">&#91;</span><span class="st_h">'class'</span><span class="br0">&#93;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">i18n</span> <span class="sy0">=</span> <span class="kw2">new</span> <span class="re0">$class</span><span class="br0">&#40;</span><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">configuration</span><span class="sy0">,</span> <span class="kw4">null</span><span class="sy0">,</span> <span class="re0">$config</span><span class="br0">&#91;</span><span class="st_h">'i18n'</span><span class="br0">&#93;</span><span class="br0">&#91;</span><span class="st_h">'param'</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">i18n</span><span class="sy0">-&gt;</span><span class="me1">setCulture</span><span class="br0">&#40;</span><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">commandManager</span><span class="sy0">-&gt;</span><span class="me1">getOptionValue</span><span class="br0">&#40;</span><span class="st_h">'culture'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="kw1">return</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">i18n</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+<span class="kw2">protected</span> <span class="kw2">function</span> changeCulture<span class="br0">&#40;</span><span class="re0">$culture</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getI18N</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">setCulture</span><span class="br0">&#40;</span><span class="re0">$culture</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+<span class="kw2">protected</span> <span class="kw2">function</span> process<span class="br0">&#40;</span>sfCommandManager <span class="re0">$commandManager</span><span class="sy0">,</span> <span class="re0">$options</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  parent<span class="sy0">::</span><span class="me2">process</span><span class="br0">&#40;</span><span class="re0">$commandManager</span><span class="sy0">,</span> <span class="re0">$options</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">commandManager</span> <span class="sy0">=</span> <span class="re0">$commandManager</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>El problema que debemos resolver es que no se pueden acceder a las opciones y
+argumentos fuera del contexto del método <code>execute()</code>. Por tanto, se redefine el
+método <code>process()</code> para incluir el gestor de opciones dentro de la clase. El
+gestor de opciones se encarga, como su propio nombre indica, de gestionar los
+argumentos y opciones de la tarea. Para obtener por ejemplo el valor de una
+opción, se utiliza el método <code>getOptionValue()</code>.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="accediendo_al_sistema_de_internacionalizacion.html">&larr; Anterior <span>13.7. Accediendo al sistema de internacionalización</span></a>
+            
+            <a class="span5 next" href="ejecutando_una_tarea_dentro_de_otra_tarea.html">Siguiente &rarr; <span>13.9. Ejecutando una tarea dentro de otra tarea</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Refactorizando las tareas (Más con Symfony%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Más con Symfony : Refactorizando las tareas']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Enrutamiento avanzado</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Mejora tu productividad</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Emails</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Widgets y validadores propios</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Formularios avanzados</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Mejorando la barra de depuración web</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Uso avanzado de Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Utilizando la herencia de tablas de Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Funcionamiento interno de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Windows y Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Desarrollando aplicaciones Facebook</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_13.html">
+            <span>Capítulo 13.</span> Descubriendo el poder de la línea de comandos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="las_tareas_en_pocas_palabras.html">
+            <span>13.1.</span> Las tareas en pocas palabras
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="creando_tus_propias_tareas.html">
+            <span>13.2.</span> Creando tus propias tareas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_sistema_de_opciones.html">
+            <span>13.3.</span> El sistema de opciones
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="accediendo_a_la_base_de_datos.html">
+            <span>13.4.</span> Accediendo a la base de datos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="enviando_emails.html">
+            <span>13.5.</span> Enviando emails
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="generando_url.html">
+            <span>13.6.</span> Generando URL
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="accediendo_al_sistema_de_internacionalizacion.html">
+            <span>13.7.</span> Accediendo al sistema de internacionalización
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="refactorizando_las_tareas.html">
+            <span>13.8.</span> Refactorizando las tareas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejecutando_una_tarea_dentro_de_otra_tarea.html">
+            <span>13.9.</span> Ejecutando una tarea dentro de otra tarea
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="manipulando_el_sistema_de_archivos.html">
+            <span>13.10.</span> Manipulando el sistema de archivos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="generando_archivos_mediante_esqueletos.html">
+            <span>13.11.</span> Generando archivos mediante <em>esqueletos</em>
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="utilizando_la_opcion_dry_run.html">
+            <span>13.12.</span> Utilizando la opción dry-run
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="creando_pruebas_unitarias.html">
+            <span>13.13.</span> Creando pruebas unitarias
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="metodos_utiles_para_mostrar_mensajes.html">
+            <span>13.14.</span> Métodos útiles para mostrar mensajes
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="metodos_utiles_para_interactuar_con_el_usuario.html">
+            <span>13.15.</span> Métodos útiles para interactuar con el usuario
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="utilizando_las_tareas_con_un_crontab.html">
+            <span>13.16.</span> Utilizando las tareas con un Crontab
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="utilizando_stdin.html">
+            <span>13.17.</span> Utilizando STDIN
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="conclusion.html">
+            <span>13.18.</span> Conclusión
+        </a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Jugando con la cache de configuración de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Trabajando con la comunidad Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>A</span> <a href="../apendice_a.html"> Código JavaScript de sfWidgetFormGMapAddress</a>
+    </li>
+    <li class="level-1">
+        <span>B</span> <a href="../apendice_b.html"> Ejemplo de instalador propio</a>
+    </li>
+    <li class="level-1">
+        <span>C</span> <a href="../apendice_c.html"> Licencia</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

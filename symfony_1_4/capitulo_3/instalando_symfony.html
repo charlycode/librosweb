@@ -1,0 +1,321 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>3.2. Instalando Symfony (Symfony 1.4, la guía definitiva)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="pre_requisitos.html" />
+        <link rel="next" href="preparando_el_proyecto.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="3.2. Instalando Symfony (Symfony 1.4, la guía definitiva)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page symfony_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Symfony 1.4, la guía definitiva</a></li>
+  <li><a href="../capitulo_3.html">Capítulo 3. Ejecutar aplicaciones Symfony</a></li>
+  <li class="current"><span>3.2.. Instalando Symfony</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="instalando_symfony"><span>3.2.</span> Instalando Symfony</h1>
+    
+
+<h3 id="creando_el_directorio_del_proyecto">3.2.1. Creando el directorio del proyecto</h3>
+
+<p>Antes de instalar Symfony, crea el directorio donde se guardarán todos los archivos de tu proyecto:</p>
+
+<div class="code cli">
+<pre class="cli">$ mkdir -p /home/sfproject
+$ cd /home/sfproject</pre>
+</div>
+
+<p>Si utilizas Windows:</p>
+
+<div class="code cli">
+<pre class="cli">c:\&gt; mkdir c:\dev\sfproject
+c:\&gt; cd c:\dev\sfproject</pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Se recomienda a los usuarios de Windows que la ruta del proyecto no contenga espacios en blanco. Evita el uso del directorio <code>Documents and Settings</code> y también <code>Mis Documentos</code>.</p></div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Si has creado el directorio del proyecto Symfony directamente dentro del directorio web raíz, ya no tendrás que configurar tu servidor web. Obviamente, desaconsejamos esta práctica en los servidores de producción, donde deberías configurar tu servidor web tal y como se explica más adelante.</p></div>
+
+<h3 id="eligiendo_la_version_de_symfony">3.2.2. Eligiendo la versión de Symfony</h3>
+
+<p>Symfony dispone de varias versiones estables, así que antes de nada debes elegir qué versión vas a instalar. La <a href="http://www.symfony-project.org/installation">página de instalación de Symfony</a> explica todo lo que debes saber sobre cada versión. Si eres nuevo en Symfony, te aconsejamos que utilices la versión 1.4.</p>
+
+<h3 id="elige_el_directorio_de_instalacion_de_symfony">3.2.3. Elige el directorio de instalación de Symfony</h3>
+
+<p>Puedes instalar Symfony de forma global en tu servidor o incluirlo en cada uno de tus proyectos. Esta última forma es la recomendada, ya que así cada proyecto es independiente y puedes actualizar la versión de Symfony en un proyecto sin afectar a los demás. Además, de esta forma puedes utilizar diferentes versiones de Symfony en un mismo servidor.</p>
+
+<p>Una buena práctica consiste en instalar los archivos del framework Symfony dentro del directorio <code>lib/vendor</code> del proyecto. Por tanto, crea este directorio:</p>
+
+<div class="code cli">
+<pre class="cli">$ mkdir -p lib/vendor</pre>
+</div>
+
+<h3 id="instalando_symfony_desde_un_archivo">3.2.4. Instalando Symfony desde un archivo</h3>
+
+<p>La forma más sencilla de instalar Symfony consiste en descargar el archivo correspondiente a la versión que vas a utilizar. Si has elegido por ejemplo la versión 1.4, accede al sitio http://www.symfony-project.org/installation/1_4 para descargarlo.</p>
+
+<p>Localiza la sección <em>"Source Download"</em> y descarga el archivo comprimido en formato <code>.tgz</code> o <code>.zip</code>. Coloca el archivo dentro del directorio <code>lib/vendor/</code> recién creado, descomprímelo y cambia su nombre a <code>symfony</code>:</p>
+
+<div class="code cli">
+<pre class="cli">$ cd lib/vendor
+$ tar zxpf symfony-1.4.0.tgz
+$ mv symfony-1.4.0 symfony
+$ rm symfony-1.4.0.tgz</pre>
+</div>
+
+<p>Si usas Windows, puedes descomprimir el archivo <code>.zip</code> directamente desde el explorador de archivos. Después de renombrar el directorio a <code>symfony</code>, deberías tener una estructura de archivos similar a <code>c:\dev\sfproject\lib\vendor\symfony</code>.</p>
+
+<h3 id="instalando_symfony_con_subversion">3.2.5. Instalando Symfony con Subversion</h3>
+
+<p>Esta forma de instalación es la recomendada oficialmente por los creadores de Symfony. Si utilizas Subversion en tu proyecto, lo mejor es hacer uso de la propiedad <code>svn:externals</code> para incluir Symfony dentro del directorio <code>lib/vendor/</code> del proyecto:</p>
+
+<div class="code cli">
+<pre class="cli">$ svn pe svn:externals lib/vendor/</pre>
+</div>
+
+<p>Si el comando anterior se ejecuta correctamente, se muestra tu editor de textos favorito para que establezcas el valor de la propiedad <code>svn:externals</code>.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> En Windows puedes utilizar la aplicación <a href="http://tortoisesvn.net/">TortoiseSVN</a> para hacer todo esto sin necesidad de ejecutar comandos de consola.</p></div>
+
+<p>Si quieres tener un control absoluto de tu proyecto, es mejor indicar la versión específica de Symfony que quieres utilizar. Para ello, escribe lo siguiente cuando se muestre el editor de textos que permite editar la propiedad <code>svn:externals</code>:</p>
+
+<div class="code code">
+<pre class="code">symfony http://svn.symfony-project.com/tags/RELEASE_1_4_0</pre>
+</div>
+
+<p>Cada que se publique una nueva versión de Symfony, tendrás que cambiar el valor de la propiedad <code>svn:externals</code> por su valor correspondiente: <code>RELEASE_1_4_1</code>, <code>RELEASE_1_4_2</code>, etc.</p>
+
+<p>Si en vez de un control absoluto prefieres estar siempre a la última, puedes utilizar simplemente la rama de desarrollo 1.4, que siempre apunta a la versión más reciente:</p>
+
+<div class="code code">
+<pre class="code">symfony http://svn.symfony-project.com/branches/1.4/</pre>
+</div>
+
+<p>Utilizar la rama 1.4 en vez de una versión específica hace que Symfony se actualice automáticamente cada vez que ejecutas el comando <code>svn update</code>.</p>
+
+<h3 id="verificando_la_instalacion">3.2.6. Verificando la instalación</h3>
+
+<p>Después de instalar Symfony, comprueba que todo funciona correctamente ejecutando el comando Symfony que muestra la versión instalada (no olvides que la letra <code>V</code> es mayúscula):</p>
+
+<div class="code cli">
+<pre class="cli">$ cd ../..
+$ php lib/vendor/symfony/data/bin/symfony -V</pre>
+</div>
+
+<p>Si usas Windows:</p>
+
+<div class="code cli">
+<pre class="cli">c:\&gt; cd ..\..
+c:\&gt; php lib\vendor\symfony\data\bin\symfony -V</pre>
+</div>
+
+<p>Después de crear el proyecto Symfony (tal y como se explica más adelante), este comando también muestra la ruta al directorio de instalación de Symfony, que se configura en la clase <code>config/ProjectConfiguration.class.php</code>.</p>
+
+<p>Si al realizar esta comprobación observas que la ruta es absoluta (no debería serlo si sigues estas instrucciones), modifica su valor por lo siguiente para hacer que tu proyecto sea más portable:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// config/ProjectConfiguration.class.php</span>
+<span class="kw1">require_once</span> <span class="kw3">dirname</span><span class="br0">&#40;</span><span class="kw4">__FILE__</span><span class="br0">&#41;</span><span class="sy0">.</span><span class="st_h">'/../lib/vendor/symfony/lib/autoload/sfCoreAutoload.class.php'</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Después de hacer este cambio, si te llevas tu proyecto Symfony a otro directorio o a otro servidor, todo seguirá funcionando bien.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Si sientes curiosidad por todas las utilidades que incluye la línea de comandos de Symfony, ejecuta el comando sin ninguna opción para que muestre todas las taras y opciones disponibles:</p>
+
+<div class="code cli">
+<pre class="cli">$ php lib/vendor/symfony/data/bin/symfony</pre>
+</div>
+
+<p>Si usas Windows:</p>
+
+<div class="code cli">
+<pre class="cli">c:\&gt; php lib\vendor\symfony\data\bin\symfony</pre>
+</div>
+
+<p>La línea de comandos de Symfony es la mejor ayuda para los programadores. Incluye un montón de utilidades que mejoran tu productividad en tareas cotidianas como borrar la cache, generar código automáticamente y mucho más.</p></div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="pre_requisitos.html">&larr; Anterior <span>3.1. Pre-requisitos</span></a>
+            
+            <a class="span5 next" href="preparando_el_proyecto.html">Siguiente &rarr; <span>3.3. Preparando el proyecto</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Instalando Symfony (Symfony 1.4, la guía definitiva%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Symfony 1.4, la guía definitiva : Instalando Symfony']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción a Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Explorando el interior de Symfony</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_3.html">
+            <span>Capítulo 3.</span> Ejecutar aplicaciones Symfony
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="pre_requisitos.html">
+            <span>3.1.</span> Pre-requisitos
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="instalando_symfony.html">
+            <span>3.2.</span> Instalando Symfony
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="preparando_el_proyecto.html">
+            <span>3.3.</span> Preparando el proyecto
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="configurar_el_servidor_web.html">
+            <span>3.4.</span> Configurar el servidor web
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="utilizando_el_sandbox.html">
+            <span>3.5.</span> Utilizando el <em>sandbox</em>
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="resumen.html">
+            <span>3.6.</span> Resumen
+        </a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Introducción a la creación de páginas</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Configurar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> El Controlador</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> La Vista</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> El modelo (Doctrine)</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Enlaces y sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Emails</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Uso de la cache</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Pruebas unitarias y funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Herramientas para la administración de aplicaciones</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> Personalizar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> Rendimiento</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Configuración avanzada</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

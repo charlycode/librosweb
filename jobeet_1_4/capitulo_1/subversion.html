@@ -1,0 +1,334 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>1.12. Subversion (El tutorial Jobeet)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="configurar_correctamente_el_servidor_web.html" />
+        <link rel="next" href="nos_vemos_manana.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="1.12. Subversion (El tutorial Jobeet)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page jobeet_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">El tutorial Jobeet</a></li>
+  <li><a href="../capitulo_1.html">Capítulo 1. Comenzando el proyecto</a></li>
+  <li class="current"><span>1.12.. Subversion</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="subversion"><span>1.12.</span> Subversion</h1>
+    
+
+<p>Una buena práctica cuando se desarrollan aplicaciones web consiste en emplear un sistema de control de versiones del código fuente. Este tipo de herramientas permiten:</p>
+
+<ul>
+<li>Trabajar con más confianza</li>
+<li>Volver a una versión anterior en caso de que un cambio rompa la aplicación</li>
+<li>Permitir a dos o más personas trabajar simultáneamente sobre un mismo proyecto de forma eficiente</li>
+<li>Disponer de acceso directo a todas las versiones de la aplicación</li>
+</ul>
+
+<p>En esta sección se describe cómo utilizar <a href="http://subversion.tigris.org/">Subversion</a> con Symfony. Si utilizas cualquier otra herramienta para el versionado del código fuente, seguramente no será complicado adaptar las siguientes explicaciones para Subversion.</p>
+
+<p>Para seguir el resto de la sección es imprescindible contar con un servidor de Subversion correctamente instalado y configurado y que pueda ser accedido mediante HTTP.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Si no dispones de un servidor de Subversion, puedes solicitar uno gratuitamente en <a href="http://code.google.com/hosting/">Google Code</a>. También puedes buscar <em>"free subversion repository"</em> en Google para encontrar muchas otras opciones disponibles.</p></div>
+
+<p>En primer lugar, crea un repositorio para el proyecto <code>jobeet</code> en tu servidor de repositorios:</p>
+
+<div class="code cli">
+<pre class="cli">$ svnadmin create /ruta/hasta/el/repositorio/jobeet</pre>
+</div>
+
+<p>Después, crea la estructura básica de directorios en tu ordenador:</p>
+
+<div class="code cli">
+<pre class="cli">$ svn mkdir -m &quot;Creación de la estructura de directorios inicial&quot; http://svn.ejemplo.com/jobeet/trunk http://svn.ejemplo.com/jobeet/tags http://svn.ejemplo.com/jobeet/branches</pre>
+</div>
+
+<p>A continuación, realiza el <em>checkout</em> del directorio <code>trunk/</code> vacío:</p>
+
+<div class="code cli">
+<pre class="cli">$ cd /home/sfprojects/jobeet
+$ svn co http://svn.example.com/jobeet/trunk/ .</pre>
+</div>
+
+<p>Después, borra el contenido de los directorios <code>cache/</code> y <code>log/</code> ya que no tiene sentido añadirlos al repositorio:</p>
+
+<div class="code cli">
+<pre class="cli">$ rm -rf cache/* log/*</pre>
+</div>
+
+<p>Asegúrate de establecer los permisos adecuados en los directorios <code>cache/</code> y <code>log/</code> para que el servidor web pueda escribir en ellos:</p>
+
+<div class="code cli">
+<pre class="cli">$ chmod 777 cache log</pre>
+</div>
+
+<p>Seguidamente, importa todos los archivos y directorios al repositorio:</p>
+
+<div class="code cli">
+<pre class="cli">$ svn add *</pre>
+</div>
+
+<p>Como no vamos a importar los archivos de los directorios <code>cache/</code> y <code>log/</code>, debes añadirlos a la lista de archivos ignorados:</p>
+
+<div class="code cli">
+<pre class="cli">$ svn propedit svn:ignore cache</pre>
+</div>
+
+<p>Después de ejecutar el comando anterior se abre el editor de archivos de texto configurado por defecto. Como queremos ignorar todos los contenidos de este directorio, escribe simplemente un asterisco:</p>
+
+<div class="code code">
+<pre class="code">*</pre>
+</div>
+
+<p>Guarda el archivo y cierra el editor de textos para concluir el proceso.</p>
+
+<p>Repite los pasos anteriores para el directorio <code>log/</code>:</p>
+
+<div class="code cli">
+<pre class="cli">$ svn propedit svn:ignore log</pre>
+</div>
+
+<p>Vuelve a escribir un asterisco, guarda los cambios y cierra el editor:</p>
+
+<div class="code code">
+<pre class="code">*</pre>
+</div>
+
+<p>Por último, sube estos cambios al repositorio:</p>
+
+<div class="code cli">
+<pre class="cli">$ svn import -m &quot;Primera importación&quot; . /ruta/hasta/el/repositorio/jobeet/trunk</pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Si utilizas Windows, puedes emplear una aplicación genial llamada <a href="http://tortoisesvn.tigris.org/">TortoiseSVN</a> como herramienta para gestionar el repositorio de Subversion.</p></div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="configurar_correctamente_el_servidor_web.html">&larr; Anterior <span>1.11. Configurar correctamente el servidor web</span></a>
+            
+            <a class="span5 next" href="nos_vemos_manana.html">Siguiente &rarr; <span>1.13. Nos vemos mañana</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Subversion (El tutorial Jobeet%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'El tutorial Jobeet : Subversion']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1 ">
+        <a href="../capitulo_1.html">
+            <span>Capítulo 1.</span> Comenzando el proyecto
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_desafio.html">
+            <span>1.2.</span> El desafío
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="este_tutorial_es_diferente.html">
+            <span>1.3.</span> Este tutorial es diferente
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_proyecto.html">
+            <span>1.4.</span> El proyecto
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="que_haremos_hoy.html">
+            <span>1.5.</span> ¿Que haremos hoy?
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="prerrequisitos.html">
+            <span>1.6.</span> Prerrequisitos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="instalacion_de_symfony.html">
+            <span>1.7.</span> Instalación de Symfony
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="preparar_el_proyecto.html">
+            <span>1.8.</span> Preparar el proyecto
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="los_entornos.html">
+            <span>1.9.</span> Los entornos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="configurar_mal_el_servidor_web.html">
+            <span>1.10.</span> Configurar mal el servidor web
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="configurar_correctamente_el_servidor_web.html">
+            <span>1.11.</span> Configurar correctamente el servidor web
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="subversion.html">
+            <span>1.12.</span> Subversion
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="nos_vemos_manana.html">
+            <span>1.13.</span> Nos vemos mañana
+        </a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> El proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> El modelo de datos</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> El controlador y la vista</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> El sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Profundizando en el modelo</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Trabajando con la página de cada categoría</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Pruebas unitarias</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Pruebas funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Probando los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> El generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> El usuario</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> El día de descanso</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Canales Atom</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Servicios web</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> El buscador</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>20</span> <a href="../capitulo_20.html"> Plugins</a>
+    </li>
+    <li class="level-1">
+        <span>21</span> <a href="../capitulo_21.html"> El día del diseño</a>
+    </li>
+    <li class="level-1">
+        <span>22</span> <a href="../capitulo_22.html"> La cache</a>
+    </li>
+    <li class="level-1">
+        <span>23</span> <a href="../capitulo_23.html"> Pasando a producción</a>
+    </li>
+    <li class="level-1">
+        <span>24</span> <a href="../capitulo_24.html"> Un repaso a Symfony</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

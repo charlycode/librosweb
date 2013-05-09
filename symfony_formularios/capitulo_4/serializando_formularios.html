@@ -1,0 +1,519 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>4.6. Serializando formularios (Los formularios de Symfony 1.4)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="4.6. Serializando formularios (Los formularios de Symfony 1.4)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page symfony_formularios">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Los formularios de Symfony 1.4</a></li>
+  <li><a href="../capitulo_4.html">Capítulo 4. Integración con Propel</a></li>
+  <li class="current"><span>4.6. Serializando formularios</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="serializando_formularios"><span>4.6.</span> Serializando formularios</h1>
+    
+
+<p>La sección anterior explica cómo personalizar los formularios generados automáticamente con la tarea <code>propel:build-forms</code>. En esta sección se personaliza el flujo de trabajo del formulario, empezando por el código generado mediante la tarea <code>propel:generate-crud</code>.</p>
+
+<h3 id="valores_por_defecto">4.6.1 Valores por defecto</h3>
+
+<p>Una instancia de un formulario Propel siempre está asociada a un objeto Propel. Este objeto asociado siempre es de la clase devuelta por el método <code>getModelName()</code>. El formulario <code>AutorForm</code> por ejemplo sólo puede estar asociado a objetos que sean de la clase <code>Autor</code>. Este objeto puede ser un objeto vacío (una nueva instancia de la clase <code>Autor</code>) o el objeto que se indica como primer argumento del constructor. A diferencia del constructor de un formulario <em>normal</em>, al que se le pasa como primer argumento un array de valores, al constructor de un formulario Propel se le pasa un objeto Propel. Este objeto se utiliza para determinar el valor por defecto de cada campo del formulario. El método <code>getObject()</code> devuelve el objeto relacionado con la actual instancia del formulario y el método <code>isNew()</code> permite descubrir si el objeto se ha obtenido a través del constructor:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// Crear un nuevo objeto</span>
+<span class="re0">$autorForm</span> <span class="sy0">=</span> <span class="kw2">new</span> AutorForm<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="kw1">print</span> <span class="re0">$autorForm</span><span class="sy0">-&gt;</span><span class="me1">getObject</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">getId</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span> <span class="co1">// Muestra null</span>
+<span class="kw1">print</span> <span class="re0">$autorForm</span><span class="sy0">-&gt;</span><span class="me1">isNew</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>              <span class="co1">// Muestra true</span>
+&nbsp;
+<span class="co1">// Modificar un objeto existente</span>
+<span class="re0">$autor</span> <span class="sy0">=</span> AutorPeer<span class="sy0">::</span><span class="me2">retrieveByPk</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$autorForm</span> <span class="sy0">=</span> <span class="kw2">new</span> AutorForm<span class="br0">&#40;</span><span class="re0">$autor</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="kw1">print</span> <span class="re0">$autorForm</span><span class="sy0">-&gt;</span><span class="me1">getObject</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">getId</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span> <span class="co1">// Muestra 1</span>
+<span class="kw1">print</span> <span class="re0">$autorForm</span><span class="sy0">-&gt;</span><span class="me1">isNew</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>              <span class="co1">// Muestra false</span></pre>
+</div>
+
+<h3 id="modificar_el_flujo_de_trabajo">4.6.2 Modificar el flujo de trabajo</h3>
+
+<p>Como se explica al principio de este capítulo, la acción <code>edit</code> mostrada en el listado 4-23 gestiona el flujo de trabajo del formulario.</p>
+
+<p><strong>Listado 4-23 - El método <code>executeEdit</code> del módulo <code>autor</code></strong></p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// apps/frontend/modules/autor/actions/actions.class.php</span>
+<span class="kw2">class</span> autorActions <span class="kw2">extends</span> sfActions
+<span class="br0">&#123;</span>
+  <span class="co1">// ...</span>
+&nbsp;
+  <span class="kw2">public</span> <span class="kw2">function</span> executeEdit<span class="br0">&#40;</span><span class="re0">$request</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$autor</span> <span class="sy0">=</span> AutorPeer<span class="sy0">::</span><span class="me2">retrieveByPk</span><span class="br0">&#40;</span><span class="re0">$request</span><span class="sy0">-&gt;</span><span class="me1">getParameter</span><span class="br0">&#40;</span><span class="st_h">'id'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">form</span> <span class="sy0">=</span> <span class="kw2">new</span> AutorForm<span class="br0">&#40;</span><span class="re0">$autor</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="kw1">if</span> <span class="br0">&#40;</span><span class="re0">$request</span><span class="sy0">-&gt;</span><span class="me1">isMethod</span><span class="br0">&#40;</span><span class="st_h">'post'</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">form</span><span class="sy0">-&gt;</span><span class="me1">bind</span><span class="br0">&#40;</span><span class="re0">$request</span><span class="sy0">-&gt;</span><span class="me1">getParameter</span><span class="br0">&#40;</span><span class="st_h">'autor'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+      <span class="kw1">if</span> <span class="br0">&#40;</span><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">form</span><span class="sy0">-&gt;</span><span class="me1">isValid</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+      <span class="br0">&#123;</span>
+        <span class="re0">$autor</span> <span class="sy0">=</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">form</span><span class="sy0">-&gt;</span><span class="me1">save</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+        <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">redirect</span><span class="br0">&#40;</span><span class="st_h">'autor/edit?id='</span><span class="sy0">.</span><span class="re0">$autor</span><span class="sy0">-&gt;</span><span class="me1">getId</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+      <span class="br0">&#125;</span>
+    <span class="br0">&#125;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Aunque la acción <code>edit</code> se parece a las acciones mostradas en los capítulos anteriores, en realidad presenta diferencias importantes:</p>
+
+<ul>
+<li>El primer argumento del constructor del formulario es un objeto Propel de la clase <code>Autor</code>:</li>
+</ul>
+
+<div class="code php">
+<pre class="php"><span class="re0">$autor</span> <span class="sy0">=</span> AutorPeer<span class="sy0">::</span><span class="me2">retrieveByPk</span><span class="br0">&#40;</span><span class="re0">$request</span><span class="sy0">-&gt;</span><span class="me1">getParameter</span><span class="br0">&#40;</span><span class="st_h">'id'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">form</span> <span class="sy0">=</span> <span class="kw2">new</span> AutorForm<span class="br0">&#40;</span><span class="re0">$autor</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<ul>
+<li>El formato del atributo <code>name</code> de los widgets se modifica automáticamente para que sea posible obtener la información del usuario en un array PHP que se llama igual que la tabla relacionada (<code>autor</code> en este caso):</li>
+</ul>
+
+<div class="code php">
+<pre class="php"><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">form</span><span class="sy0">-&gt;</span><span class="me1">bind</span><span class="br0">&#40;</span><span class="re0">$request</span><span class="sy0">-&gt;</span><span class="me1">getParameter</span><span class="br0">&#40;</span><span class="st_h">'autor'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<ul>
+<li>Si el formulario es válido, sólo es necesario ejecutar el método <code>save()</code> para crear o actualizar el objeto Propel relacionado con el formulario:</li>
+</ul>
+
+<div class="code php">
+<pre class="php"><span class="re0">$autor</span> <span class="sy0">=</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">form</span><span class="sy0">-&gt;</span><span class="me1">save</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<h3 id="creando_y_modificando_objetos_propel">4.6.3 Creando y modificando objetos Propel</h3>
+
+<p>El listado 4-23 utiliza un solo método para crear y modificar objetos de la clase <code>Autor</code>:</p>
+
+<ul>
+<li>Crear un nuevo objeto de tipo <code>Autor</code>:
+
+<ul>
+<li>Se ejecuta la acción <code>index</code> sin un parámetro <code>id</code> (<code>$request-&gt;getParameter('id')</code> es <code>null</code>)</li>
+<li>La llamada al método <code>retrieveByPk()</code> devuelve <code>null</code></li>
+<li>El objeto <code>form</code> se asocia con un objeto Propel vacío de tipo <code>Autor</code>.</li>
+<li>La instrucción <code>$this-&gt;form-&gt;save()</code> crea por tanto un nuevo objeto de tipo <code>Autor</code> siempre que los datos del formulario sean válidos.</li>
+</ul></li>
+<li>Modificar un objeto de tipo <code>Autor</code>:
+
+<ul>
+<li>Se ejecuta la acción <code>index</code> con un parámetro <code>id</code> obtenido mediante la instrucción <code>$request-&gt;getParameter('id')</code> y que representa la clave primaria del objeto <code>Autor</code> que se va a modificar.</li>
+<li>La llamada al método <code>retriveByPk()</code> devuelve el objeto de tipo <code>Autor</code> relacionado con la clave primaria indicada.</li>
+<li>El objeto <code>form</code> se asocia al objeto de tipo <code>Autor</code> que se ha obtenido de la base de datos.</li>
+<li>La instrucción <code>$this-&gt;form-&gt;save()</code> actualiza los datos del objeto <code>Autor</code> siempre que los datos del formulario sean válidos.</li>
+</ul></li>
+</ul>
+
+<h3 id="el_metodo_save">4.6.4 El método save()</h3>
+
+<p>Cuando los datos de un formulario Propel son válidos, el método <code>save()</code> actualiza el objeto asociado y lo almacena en la base de datos. Este método no sólo guarda el objeto principal, sino que también guarda todos los objetos relacionados. El formulario <code>ArticuloForm</code> por ejemplo actualiza las etiquetas relacionadas con el artículo. La relación entre las tablas <code>articulo</code> y <code>etiqueta</code> es de tipo n-n y las etiquetas relacionadas con un artículo se guardan en la tabla <code>articulo_etiqueta</code> utilizando el método <code>saveArticuloEtiquetaList()</code>.</p>
+
+<p>Para asegurar que los datos guardados son consistentes, el método <code>save()</code> realiza todas las actualizaciones en una transacción.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> En el capítulo 9 se explica que el método <code>save()</code> también actualiza de forma automática todas las tablas internacionalizadas.</p></div>
+
+<div class="admonition sidebar"><p><strong class="title">Empleando el método bindAndSave()</strong> El método <code>bindAndSave()</code> asocia al formulario los datos enviados por el usuario, valida el formulario y actualiza todos los objetos relacionados, todo ello en una única operación:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">class</span> articuloActions <span class="kw2">extends</span> sfActions
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> executeCreate<span class="br0">&#40;</span>sfWebRequest <span class="re0">$request</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">form</span> <span class="sy0">=</span> <span class="kw2">new</span> ArticuloForm<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="kw1">if</span> <span class="br0">&#40;</span><span class="re0">$request</span><span class="sy0">-&gt;</span><span class="me1">isMethod</span><span class="br0">&#40;</span><span class="st_h">'post'</span><span class="br0">&#41;</span> <span class="sy0">&amp;&amp;</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">form</span><span class="sy0">-&gt;</span><span class="me1">bindAndSave</span><span class="br0">&#40;</span><span class="re0">$request</span><span class="sy0">-&gt;</span><span class="me1">getParameter</span><span class="br0">&#40;</span><span class="st_h">'articulo'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">redirect</span><span class="br0">&#40;</span><span class="st_h">'articulo/created'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p></p></div>
+
+<h3 id="trabajando_con_archivos_subidos">4.6.5 Trabajando con archivos subidos</h3>
+
+<p>El método <code>save()</code> actualiza de forma automática los objetos Propel, pero no puede encargarse de otras cosas importantes como la gestión de los archivos subidos.</p>
+
+<p>A continuación se muestra cómo adjuntar un archivo a cada artículo. Los archivos se almacenan en el directorio <code>web/uploads/</code> y en el campo <code>archivo</code> de la tabla <code>articulo</code> de la base de datos se guarda la ruta hasta el archivo, tal y como muestra el listado 4-24.</p>
+
+<p><strong>Listado 4-24 - Esquema de la tabla <code>articulo</code> con archivos adjuntos</strong></p>
+
+<div class="code yaml">
+<pre class="yaml">// config/schema.yml<span class="co4">
+propel</span>:<span class="co4">
+  articulo</span><span class="sy2">:
+</span>    // <span class="sy1">...</span><span class="co3">
+    archivo</span><span class="sy2">: </span>varchar<span class="br0">&#40;</span><span class="nu0">255</span><span class="br0">&#41;</span></pre>
+</div>
+
+<p>Después de actualizar el esquema, es necesario actualizar el modelo de objetos, la base de datos y todos los formularios relacionados:</p>
+
+<div class="code cli">
+<pre class="cli">$ ./symfony propel:build-all</pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Ten en cuenta que la tarea <code>propel:build-all</code> borra todas las tablas del esquema y las vuelve a crear. Por lo tanto, <strong>se borran todos los datos de todas las tablas</strong>. Este es el motivo por el que se crean archivos con datos de prueba (llamados <em>fixtures</em>) y que se pueden cargar en la base de datos cada vez que se modifica el modelo.</p></div>
+
+<p>El listado 4-25 muestra cómo modificar la clase <code>ArticuloForm</code> para asociar un widget y un validador al campo <code>archivo</code>.</p>
+
+<p><strong>Listado 4-25 - Modificando el campo <code>archivo</code> del formulario <code>ArticuloForm</code></strong></p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">class</span> ArticuloForm <span class="kw2">extends</span> BaseArticuloForm
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> configure<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="co1">// ...</span>
+&nbsp;
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">widgetSchema</span><span class="br0">&#91;</span><span class="st_h">'archivo'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="kw2">new</span> sfWidgetFormInputFile<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">validatorSchema</span><span class="br0">&#91;</span><span class="st_h">'archivo'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="kw2">new</span> sfValidatorFile<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Como sucede en todos los formularios que permite subir archivos, no olvides añadir el atributo <code>enctype</code> a la etiqueta <code>&lt;form&gt;</code> de la plantilla (en el capítulo 2 se explica detalladamente el trabajo con los archivos subidos).</p>
+
+<p>El listado 4-26 muestra las modificaciones necesarias en la acción que guarda los datos del formulario para guardar el archivo en el servidor y para guardar la ruta hasta el archivo en el objeto <code>articulo</code>.</p>
+
+<p><strong>Listado 4-26 - Guardando el objeto <code>articulo</code> y el archivo subido</strong></p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">public</span> <span class="kw2">function</span> executeEdit<span class="br0">&#40;</span><span class="re0">$request</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="re0">$autor</span> <span class="sy0">=</span> ArticuloPeer<span class="sy0">::</span><span class="me2">retrieveByPk</span><span class="br0">&#40;</span><span class="re0">$request</span><span class="sy0">-&gt;</span><span class="me1">getParameter</span><span class="br0">&#40;</span><span class="st_h">'id'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">form</span> <span class="sy0">=</span> <span class="kw2">new</span> ArticuloForm<span class="br0">&#40;</span><span class="re0">$autor</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+  <span class="kw1">if</span> <span class="br0">&#40;</span><span class="re0">$request</span><span class="sy0">-&gt;</span><span class="me1">isMethod</span><span class="br0">&#40;</span><span class="st_h">'post'</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">form</span><span class="sy0">-&gt;</span><span class="me1">bind</span><span class="br0">&#40;</span><span class="re0">$request</span><span class="sy0">-&gt;</span><span class="me1">getParameter</span><span class="br0">&#40;</span><span class="st_h">'articulo'</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="re0">$request</span><span class="sy0">-&gt;</span><span class="me1">getFiles</span><span class="br0">&#40;</span><span class="st_h">'articulo'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="kw1">if</span> <span class="br0">&#40;</span><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">form</span><span class="sy0">-&gt;</span><span class="me1">isValid</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="re0">$archivo</span> <span class="sy0">=</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">form</span><span class="sy0">-&gt;</span><span class="me1">getValue</span><span class="br0">&#40;</span><span class="st_h">'archivo'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+      <span class="re0">$nombreArchivo</span> <span class="sy0">=</span> <span class="kw3">sha1</span><span class="br0">&#40;</span><span class="re0">$archivo</span><span class="sy0">-&gt;</span><span class="me1">getOriginalName</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">.</span><span class="re0">$archivo</span><span class="sy0">-&gt;</span><span class="me1">getExtension</span><span class="br0">&#40;</span><span class="re0">$archivo</span><span class="sy0">-&gt;</span><span class="me1">getOriginalExtension</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+      <span class="re0">$archivo</span><span class="sy0">-&gt;</span><span class="me1">save</span><span class="br0">&#40;</span>sfConfig<span class="sy0">::</span><span class="me2">get</span><span class="br0">&#40;</span><span class="st_h">'sf_upload_dir'</span><span class="br0">&#41;</span><span class="sy0">.</span><span class="st_h">'/'</span><span class="sy0">.</span><span class="re0">$nombreArchivo</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+      <span class="re0">$articulo</span> <span class="sy0">=</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">form</span><span class="sy0">-&gt;</span><span class="me1">save</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+      <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">redirect</span><span class="br0">&#40;</span><span class="st_h">'articulo/edit?id='</span><span class="sy0">.</span><span class="re0">$articulo</span><span class="sy0">-&gt;</span><span class="me1">getId</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Después de guardar el archivo subido en el servidor, el objeto <code>sfValidatedFile</code> ya conoce la ruta hasta el archivo. En el método <code>save()</code>, se utilizan los valores de cada campo para actualizar el objeto asociado. Además, el objeto <code>sfValidatedFile</code> se convierte en una cadena de texto utilizando el método <code>__toString()</code>, que devuelve la ruta completa hasta el archivo. La columna <code>archivo</code> de la tabla <code>articulo</code> almacena esta ruta completa.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Si se quiere almacenar la ruta del archivo de forma relativa respecto al directorio <code>sfConfig::get('sf_upload_dir')</code>, se puede crear una clase que herede de <code>sfValidatedFile</code> y se puede utilizar la opción <code>validated_file_class</code> para indicar al validador <code>sfValidatorFile</code> el nombre de la nueva clase. De esta forma, el validador devuelve una instancia de esa nueva clase. En lo que queda de capítulo se muestra otra forma de conseguirlo, que consiste en modificar el valor de la columna <code>archivo</code> antes de guardar el objeto en la base de datos.</p></div>
+
+<h3 id="personalizando_el_metodo_save">4.6.6 Personalizando el método save()</h3>
+
+<p>En la sección anterior se explica cómo guardar un archivo subido en la acción <code>edit</code>. Por otra parte, uno de los principios de la programación orientada a objetos es la reutilización del código cuando se encapsula en clases. De esta forma, en vez de duplicar el código necesario para guardar los archivos subidos en todas las acciones del formulario <code>ArticuloForm</code>, se guarda ese código en la propia clase <code>ArticuloForm</code>. El listado 4-27 muestra cómo redefinir el método <code>save()</code> para que también guarde el archivo subido y para que pueda borrar un archivo existente.</p>
+
+<p><strong>Listado 4-27 - Redefiniendo el método <code>save()</code> de la clase <code>ArticuloForm</code></strong></p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">class</span> ArticuloForm <span class="kw2">extends</span> BaseFormPropel
+<span class="br0">&#123;</span>
+  <span class="co1">// ...</span>
+&nbsp;
+  <span class="kw2">public</span> <span class="kw2">function</span> save<span class="br0">&#40;</span><span class="re0">$con</span> <span class="sy0">=</span> <span class="kw4">null</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="kw1">if</span> <span class="br0">&#40;</span><span class="kw3">file_exists</span><span class="br0">&#40;</span><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getObject</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">getArchivo</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="kw3">unlink</span><span class="br0">&#40;</span><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getObject</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">getArchivo</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="re0">$archivo</span> <span class="sy0">=</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getValue</span><span class="br0">&#40;</span><span class="st_h">'archivo'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$nombreArchivo</span> <span class="sy0">=</span> <span class="kw3">sha1</span><span class="br0">&#40;</span><span class="re0">$archivo</span><span class="sy0">-&gt;</span><span class="me1">getOriginalName</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">.</span><span class="re0">$archivo</span><span class="sy0">-&gt;</span><span class="me1">getExtension</span><span class="br0">&#40;</span><span class="re0">$archivo</span><span class="sy0">-&gt;</span><span class="me1">getOriginalExtension</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$archivo</span><span class="sy0">-&gt;</span><span class="me1">save</span><span class="br0">&#40;</span>sfConfig<span class="sy0">::</span><span class="me2">get</span><span class="br0">&#40;</span><span class="st_h">'sf_upload_dir'</span><span class="br0">&#41;</span><span class="sy0">.</span><span class="st_h">'/'</span><span class="sy0">.</span><span class="re0">$nombreArchivo</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="kw1">return</span> parent<span class="sy0">::</span><span class="me2">save</span><span class="br0">&#40;</span><span class="re0">$con</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Después de incluir todo el código en el propio formulario, la nueva acción <code>edit</code> es idéntica a la que genera automáticamente la tarea <code>propel:generate-crud</code>.</p>
+
+<div class="admonition sidebar"><p><strong class="title">Refactorizando el código en el modelo del formulario</strong> Normalmente, las acciones generadas de forma automática por la tarea <code>propel:generate-crud</code> no se modifican.</p>
+
+<p>Todo el código que puede ser necesario añadir en la acción <code>edit</code>, especialmente el código relacionado con la serialización del formulario, debe ser incluido realmente en las clases del modelo o en las clases del formulario.</p>
+
+<p>En los ejemplos anteriores se muestra cómo refactorizar la clase del formulario para tener en cuenta los archivos subidos. A continuación se muestra otro ejemplo relacionado con el modelo. El formulario <code>ArticuloForm</code> dispone de un campo llamado <code>slug</code>. Como se explicó anteriormente, este campo se genera automáticamente a partir del valor del campo <code>titulo</code>, que puede ser modificado por el usuario. Esta lógica no depende del formulario sino que realmente está relacionada con el modelo, como se muestra en el siguiente código:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">class</span> Articulo <span class="kw2">extends</span> BaseArticulo
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> save<span class="br0">&#40;</span><span class="re0">$con</span> <span class="sy0">=</span> <span class="kw4">null</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="kw1">if</span> <span class="br0">&#40;</span><span class="sy0">!</span><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getSlug</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">setSlugFromTitulo</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="kw1">return</span> parent<span class="sy0">::</span><span class="me2">save</span><span class="br0">&#40;</span><span class="re0">$con</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  protection <span class="kw2">function</span> setSlugFromTitulo<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="co1">// ...</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>El objetivo final de estas refactorizaciones es la separación de la aplicación en diferentes capas y la posibilidad de reutilizar trozos de código.</p></div>
+
+<h3 id="personalizando_el_metodo_dosave">4.6.7 Personalizando el método doSave()</h3>
+
+<p>Como se ha comentado en las secciones anteriores, la actualización de los objetos se realiza mediante transacciones que aseguran que todas las operaciones relacionadas con esa actualización se realizan correctamente. Cuando se redefine el método <code>save()</code> (como por ejemplo en la sección anterior para guardar los archivos subidos) el código que se ejecuta no se incluye en esta transacción.</p>
+
+<p>El listado 4-28 muestra cómo utilizar el método <code>doSave()</code> para incluir en la transacción global el código propio que guarda los archivos subidos.</p>
+
+<p><strong>Listado 4-28 - Redefiniendo el método <code>doSave()</code> en el formulario <code>ArticuloForm</code></strong></p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">class</span> ArticuloForm <span class="kw2">extends</span> BaseFormPropel
+<span class="br0">&#123;</span>
+  <span class="co1">// ...</span>
+&nbsp;
+  <span class="kw2">public</span> <span class="kw2">function</span> doSave<span class="br0">&#40;</span><span class="re0">$con</span> <span class="sy0">=</span> <span class="kw4">null</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="kw1">if</span> <span class="br0">&#40;</span><span class="kw3">file_exists</span><span class="br0">&#40;</span><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getObject</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">getArchivo</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="kw3">unlink</span><span class="br0">&#40;</span><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getObject</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">getArchivo</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="re0">$archivo</span> <span class="sy0">=</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getValue</span><span class="br0">&#40;</span><span class="st_h">'archivo'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$nombreArchivo</span> <span class="sy0">=</span> <span class="kw3">sha1</span><span class="br0">&#40;</span><span class="re0">$archivo</span><span class="sy0">-&gt;</span><span class="me1">getOriginalName</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">.</span><span class="re0">$archivo</span><span class="sy0">-&gt;</span><span class="me1">getExtension</span><span class="br0">&#40;</span><span class="re0">$archivo</span><span class="sy0">-&gt;</span><span class="me1">getOriginalExtension</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$archivo</span><span class="sy0">-&gt;</span><span class="me1">save</span><span class="br0">&#40;</span>sfConfig<span class="sy0">::</span><span class="me2">get</span><span class="br0">&#40;</span><span class="st_h">'sf_upload_dir'</span><span class="br0">&#41;</span><span class="sy0">.</span><span class="st_h">'/'</span><span class="sy0">.</span><span class="re0">$nombreArchivo</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="kw1">return</span> parent<span class="sy0">::</span><span class="me2">doSave</span><span class="br0">&#40;</span><span class="re0">$con</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>De esta forma, si el método <code>save()</code> del objeto <code>archivo</code> produce una excepción, el objeto <code>articulo</code> tampoco se guarda porque el código propio se ha incluido dentro del método <code>doSave()</code> que realiza la transacción.</p>
+
+<h3 id="personalizando_el_metodo_updateobject">4.6.8 Personalizando el método <code>updateObject()</code></h3>
+
+<p>En ocasiones es necesario modificar el objeto asociado al formulario entre la acción de actualizar sus datos y la acción de guardarlo en la base de datos.</p>
+
+<p>En el ejemplo anterior de los archivos subidos, en vez de guardar en la columna <code>archivo</code> la ruta completa hasta el archivo subido, sólo se guarda la ruta relativa respecto al directorio <code>sfConfig::get('sf_upload_dir')</code>.</p>
+
+<p>El listado 4-29 muestra cómo redefinir el método <code>updateObject()</code> del formulario <code>ArticuloForm</code> para modificar el valor de la columna <code>archivo</code> después de actualizar automáticamente el objeto pero antes de guardarlo en la base de datos.</p>
+
+<p><strong>Listado 4-29 - Redefiniendo el método <code>updateObject()</code> y la clase <code>ArticuloForm</code></strong></p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">class</span> ArticuloForm <span class="kw2">extends</span> BaseFormPropel
+<span class="br0">&#123;</span>
+  <span class="co1">// ...</span>
+&nbsp;
+  <span class="kw2">public</span> <span class="kw2">function</span> updateObject<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$objeto</span> <span class="sy0">=</span> parent<span class="sy0">::</span><span class="me2">updateObject</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="re0">$objeto</span><span class="sy0">-&gt;</span><span class="me1">setArchivo</span><span class="br0">&#40;</span><span class="kw3">str_replace</span><span class="br0">&#40;</span>sfConfig<span class="sy0">::</span><span class="me2">get</span><span class="br0">&#40;</span><span class="st_h">'sf_upload_dir'</span><span class="br0">&#41;</span><span class="sy0">.</span><span class="st_h">'/'</span><span class="sy0">,</span> <span class="st_h">''</span><span class="sy0">,</span> <span class="re0">$objeto</span><span class="sy0">-&gt;</span><span class="me1">getArchivo</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="kw1">return</span> <span class="re0">$objeto</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>El método <code>updateObject()</code> se invoca desde el método <code>doSave()</code> antes de guardar el objeto en la base de datos.</p>
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="configurando_los_validadores_y_los_widgets.html">&larr; Anterior <span>4.5 Configurando los validadores y los widgets</span></a>
+            
+            <a class="span5 next" href="../capitulo_5.html">Siguiente &rarr; <span>Capítulo 5 Sin título</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Serializando formularios (Los formularios de Symfony 1.4%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Los formularios de Symfony 1.4 : Serializando formularios']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+                <li class="level-1">
+            <span>1.</span>
+            <a href="../capitulo_1.html">Creación de formularios</a>
+        </li>
+                                            <li class="level-1">
+            <span>2.</span>
+            <a href="../capitulo_2.html">Validación de formularios</a>
+        </li>
+                                                                            <li class="level-1">
+            <span>3.</span>
+            <a href="../capitulo_3.html">Formularios para diseñadores web</a>
+        </li>
+                                                                    <li class="level-1 ">
+            <a href="../capitulo_4.html">
+                <span>Capítulo 4.</span>
+                Integración con Propel
+            </a>
+        </li>
+                        <li class="level-2 ">
+            <a href="antes_de_comenzar.html">
+                <span>4.1.</span>
+                Antes de comenzar
+            </a>
+        </li>
+                        <li class="level-2 ">
+            <a href="generando_las_clases_del_formulario.html">
+                <span>4.2.</span>
+                Generando las clases del formulario
+            </a>
+        </li>
+                        <li class="level-2 ">
+            <a href="el_generador_crud.html">
+                <span>4.3.</span>
+                El generador CRUD
+            </a>
+        </li>
+                        <li class="level-2 ">
+            <a href="personalizando_los_formularios_generados_automaticamente.html">
+                <span>4.4.</span>
+                Personalizando los formularios generados automáticamente
+            </a>
+        </li>
+                        <li class="level-2 ">
+            <a href="configurando_los_validadores_y_los_widgets.html">
+                <span>4.5.</span>
+                Configurando los validadores y los widgets
+            </a>
+        </li>
+                        <li class="level-2 active">
+            <a href="serializando_formularios.html">
+                <span>4.6.</span>
+                Serializando formularios
+            </a>
+        </li>
+                        <li class="level-1">
+            <span>5.</span>
+            <a href="../capitulo_5.html">Sin título</a>
+        </li>
+                    <li class="level-1">
+            <span>6.</span>
+            <a href="../capitulo_6.html">Sin título</a>
+        </li>
+                    <li class="level-1">
+            <span>7.</span>
+            <a href="../capitulo_7.html">Sin título</a>
+        </li>
+                    <li class="level-1">
+            <span>8.</span>
+            <a href="../capitulo_8.html">Internacionalización y localización</a>
+        </li>
+                                                    <li class="level-1">
+            <span>9.</span>
+            <a href="../capitulo_9.html">Sin título</a>
+        </li>
+                    <li class="level-1">
+            <span>10.</span>
+            <a href="../capitulo_10.html">Sin título</a>
+        </li>
+                    <li class="level-1">
+            <span>11.</span>
+            <a href="../capitulo_11.html">Integrando Doctrine</a>
+        </li>
+                                                            <li class="level-1">
+            <span>12.</span>
+            <a href="../capitulo_12.html">Referencia de Widgets</a>
+        </li>
+                                                                                            <li class="level-1">
+            <span>13.</span>
+            <a href="../capitulo_13.html">Validadores</a>
+        </li>
+                                                                            </ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

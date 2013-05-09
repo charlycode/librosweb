@@ -1,0 +1,301 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>12.2. Los módulos de la aplicación backend (El tutorial Jobeet)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="creando_la_aplicacion_backend.html" />
+        <link rel="next" href="el_aspecto_de_la_aplicacion_backend.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="12.2. Los módulos de la aplicación backend (El tutorial Jobeet)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page jobeet_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">El tutorial Jobeet</a></li>
+  <li><a href="../capitulo_12.html">Capítulo 12. El generador de la parte de administración</a></li>
+  <li class="current"><span>12.2.. Los módulos de la aplicación backend</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="los_modulos_de_la_aplicacion_backend"><span>12.2.</span> Los módulos de la aplicación backend</h1>
+    
+
+<p>En la aplicación <code>frontend</code> utilizamos la tarea <code>propel:generate-module</code> para generar automáticamente un módulo sencillo que permite realizar las opciones básicas sobre una clase del modelo. En la aplicación <code>backend</code> vamos a utilizar la tarea <code>propel:generate-admin</code> para generar una interfaz completa de administración para una clase del modelo:</p>
+
+<div class="code cli">
+<pre class="cli">$ php symfony propel:generate-admin backend JobeetJob --module=job
+$ php symfony propel:generate-admin backend JobeetCategory --module=category</pre>
+</div>
+
+<p>Los dos comandos anteriores crean respectivamente los módulos <code>job</code> y <code>category</code> para las clases del modelo <code>JobeetJob</code> y <code>JobeetCategory</code>.</p>
+
+<p>La opción <code>--module</code> permite redefinir el nombre que la tarea genera por defecto para cada módulo (que en el caso de la clase <code>JobeetJob</code> hubiera sido <code>jobeet_job</code>).</p>
+
+<p>La tarea <code>propel:generate-admin</code> también crea automáticamente una ruta propia para cada módulo:</p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co1"># apps/backend/config/routing.yml</span><span class="co4">
+jobeet_job</span>:<span class="co3">
+  class</span><span class="sy2">: </span>sfPropelRouteCollection<span class="co4">
+  options</span>:<span class="co3">
+    model</span><span class="sy2">: </span>               JobeetJob<span class="co3">
+    module</span><span class="sy2">: </span>              job<span class="co3">
+    prefix_path</span><span class="sy2">: </span>         job<span class="co3">
+    column</span><span class="sy2">: </span>              id<span class="co3">
+    with_wildcard_routes</span><span class="sy2">: </span>true</pre>
+</div>
+
+<p>Como era de esperar, el tipo de ruta que utiliza el generador de la parte de administración es <code>sfPropelRouteCollection</code>, ya que el objetivo de la interfaz de administración es la gestión completa de los objetos del modelo.</p>
+
+<p>La definición de la ruta anterior también incluye algunas opciones que no habías visto hasta ahora:</p>
+
+<ul>
+<li><code>prefix_path</code>: define el prefijo utilizado en las rutas generadas (en este ejemplo, la página de modificación de una oferta de trabajo será algo como <code>/job/1/edit</code>).</li>
+<li><code>column</code>: define qué columna de la tabla se utiliza en las URL de los enlaces que hacen referencia a un objeto.</li>
+<li><code>with_wildcard_routes</code>: como la interfaz de administración incluye muchas más posibilidades que las operaciones básicas (crear, actualizar, obtener y borrar objetos), esta opción permite definir más acciones sobre objetos y colecciones de objetos sin necesidad de modificar la ruta.</li>
+</ul>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Como siempre, es una buena idea leer la ayuda de una tarea antes de utilizarla:</p>
+
+<div class="code cli">
+<pre class="cli">$ php symfony help propel:generate-admin</pre>
+</div>
+
+<p>La ayuda de Symfony muestra todos los argumentos y opciones de cada tarea y también muestra algunos ejemplos de uso.</p></div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="creando_la_aplicacion_backend.html">&larr; Anterior <span>12.1. Creando la aplicación backend</span></a>
+            
+            <a class="span5 next" href="el_aspecto_de_la_aplicacion_backend.html">Siguiente &rarr; <span>12.3. El aspecto de la aplicación backend</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Los módulos de la aplicación backend (El tutorial Jobeet%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'El tutorial Jobeet : Los módulos de la aplicación backend']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Comenzando el proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> El proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> El modelo de datos</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> El controlador y la vista</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> El sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Profundizando en el modelo</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Trabajando con la página de cada categoría</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Pruebas unitarias</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Pruebas funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Probando los formularios</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_12.html">
+            <span>Capítulo 12.</span> El generador de la parte de administración
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="creando_la_aplicacion_backend.html">
+            <span>12.1.</span> Creando la aplicación backend
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="los_modulos_de_la_aplicacion_backend.html">
+            <span>12.2.</span> Los módulos de la aplicación backend
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_aspecto_de_la_aplicacion_backend.html">
+            <span>12.3.</span> El aspecto de la aplicación backend
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="la_cache_de_symfony.html">
+            <span>12.4.</span> La cache de Symfony
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="la_configuracion_de_la_aplicacion_backend.html">
+            <span>12.5.</span> La configuración de la aplicación backend
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="configuracion_del_titulo.html">
+            <span>12.6.</span> Configuración del título
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="configuracion_de_los_campos.html">
+            <span>12.7.</span> Configuración de los campos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="configuracion_de_la_pagina_list.html">
+            <span>12.8.</span> Configuración de la página list
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="configuracion_de_la_pagina_de_formularios.html">
+            <span>12.9.</span> Configuración de la página de formularios
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="configuracion_de_los_filtros.html">
+            <span>12.10.</span> Configuración de los filtros
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="modificando_las_acciones.html">
+            <span>12.11.</span> Modificando las acciones
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="personalizando_las_plantillas.html">
+            <span>12.12.</span> Personalizando las plantillas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="configuracion_final.html">
+            <span>12.13.</span> Configuración final
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="nos_vemos_manana.html">
+            <span>12.14.</span> Nos vemos mañana
+        </a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> El usuario</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> El día de descanso</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Canales Atom</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Servicios web</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> El buscador</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>20</span> <a href="../capitulo_20.html"> Plugins</a>
+    </li>
+    <li class="level-1">
+        <span>21</span> <a href="../capitulo_21.html"> El día del diseño</a>
+    </li>
+    <li class="level-1">
+        <span>22</span> <a href="../capitulo_22.html"> La cache</a>
+    </li>
+    <li class="level-1">
+        <span>23</span> <a href="../capitulo_23.html"> Pasando a producción</a>
+    </li>
+    <li class="level-1">
+        <span>24</span> <a href="../capitulo_24.html"> Un repaso a Symfony</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

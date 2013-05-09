@@ -1,0 +1,170 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>visibility (Referencia de CSS 2.1)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="visibility (Referencia de CSS 2.1)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page referencia_css">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="index.html">Referencia de CSS 2.1</a></li>
+  <li class="current"><span>visibility</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="visibility">visibility</h1>
+    <div class="table" id="table_108_1">
+
+    <table class="table property css" summary="Definición de la propiedad visibility de CSS"> 
+<tr><th>Definición</th><td>Permite hacer visibles o invisibles las cajas de los elementos</td></tr><tr><th>Valores <br/> permitidos</th><td>Uno y sólo uno de los siguientes valores:<ul><li>visible</li><li>hidden</li><li>collapse</li><li><a href="el-valor-inherit.html">inherit</a></li></ul></td></tr><tr><th>Valor inicial</th><td>visible</td></tr><tr><th>Se aplica a</th><td>Todos los elementos</td></tr><tr><th>Válida en</th><td><a href="medios.html">medios visuales</a></td></tr><tr><th>Se hereda</th><td>si</td></tr><tr class="nobottom"><th>Definición en<br/>el estándar</th><td><a href="http://www.w3.org/TR/CSS21/visufx.html#propdef-visibility">http://www.w3.org/TR/CSS21/visufx.html#propdef-visibility</a></td></tr>
+</table>
+</div>
+
+
+<h2 id="ejemplos_de_uso">Ejemplos de uso</h2>
+
+<p>La propiedad <code>visibility</code> es similar a la propiedad <a href="display.html">display</a> pero mucho más limitada. Mientras que <a href="display.html">display</a> permite cambiar el tipo de caja de un elemento, la propiedad <code>visibility</code> sólo permite hacer visible o invisible una caja.</p>
+
+<p>El valor por defecto de <code>visibility</code> es <code>visible</code>, que hace que la caja del elemento se vea de forma normal. Otro de los valores definidos por <code>visibility</code> es <code>hidden</code>, que hace que la caja del elemento sea invisible.</p>
+
+<p>El efecto de hacer invisible una caja mediante <code>visibility: hidden</code> es muy diferente al efecto de ocultarla mediante <code>display: none</code>. El siguiente ejemplo muestra el resultado de hacer invisible y ocultar la caja 2:</p>
+
+<div class="example">
+<div class="box" style="width: auto; overflow: auto">
+  <strong class="clear" style="display: block">Caja 2 = visibility: visible</strong>
+  <div class="innerbox" style="width: 30%; float: left">1</div>
+  <div class="innerbox" style="visibility: visible; width: 30%; float: left">2</div>
+  <div class="innerbox" style="width: 30%; float: left">3</div>
+  <div class="clear"></div>
+</div>
+<div class="box" style="width: auto; overflow: auto">
+  <strong class="clear" style="display: block">Caja 2 = visibility: hidden</strong>
+  <div class="innerbox" style="width: 30%; float: left">1</div>
+  <div class="innerbox" style="visibility: hidden; width: 30%; float: left">2</div>
+  <div class="innerbox" style="width: 30%; float: left">3</div>
+  <div class="clear"></div>
+</div>
+<div class="box" style="width: auto; overflow: auto">
+  <strong class="clear" style="display: block">Caja 2 = display: none</strong>
+  <div class="innerbox" style="width: 30%; float: left">1</div>
+  <div class="innerbox" style="display: none; width: 30%; float: left">2</div>
+  <div class="innerbox" style="width: 30%; float: left">3</div>
+  <div class="clear"></div>
+</div>
+</div>
+
+<p>Cuando una caja es invisible (<code>visibility: hidden</code>) no se muestra pero sigue ocupando sitio, por lo que los elementos adyacentes se comportan como si fuera visible. Por su parte, una caja oculta (<code>display: none</code>) ni se ve ni ocupa sitio, por lo que es como si no existiera en la página y los elementos adyacentes se ven afectados.</p>
+
+<p>Además, cuando una caja se oculta todos sus elementos interiores se ocultan automáticamente. De la misma forma, cuando una caja se hace invisible sus elementos interiores también se hacen invisibles automáticamente. La diferencia es que los elementos interiores invisibles se pueden volver a mostrar si se utiliza la propiedad <code>visibility: visible</code></p>
+
+<p>Por último, la propiedad <code>visibility</code> define el valor <code>collapse</code>, que sólo se utiliza en las filas y columnas de las tablas. Si se emplea el valor <code>collapse</code> en cualquier elemento que no sea una fila, grupo de filas, columna o grupo de columnas, tiene el mismo efecto que el valor <code>hidden</code>.</p>
+
+<p>La propiedad <code>visibility</code> es mucho más limitada que la propiedad <a href="display.html">display</a>, pero puede resultar útil para crear efectos visuales dinámicos cuando se utiliza junto con JavaScript.</p>
+
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'visibility (Referencia de CSS 2.1%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Referencia de CSS 2.1 : visibility']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Propiedades relacionadas</span></h3>
+
+
+                                                <ul class="toc">
+                    <li class="">
+                <a href="clip.html">clip</a>
+            </li>
+                    <li class="">
+                <a href="display.html">display</a>
+            </li>
+                    <li class="">
+                <a href="overflow.html">overflow</a>
+            </li>
+                    <li class="active">
+                <a href="visibility.html">visibility</a>
+            </li>
+                    <li class="">
+                <a href="white-space.html">white-space</a>
+            </li>
+                    <li class="">
+                <a href="z-index.html">z-index</a>
+            </li>
+                </ul>
+                            
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

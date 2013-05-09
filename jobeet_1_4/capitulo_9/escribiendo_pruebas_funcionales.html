@@ -1,0 +1,395 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>9.6. Escribiendo pruebas funcionales (El tutorial Jobeet)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="datos_de_prueba.html" />
+        <link rel="next" href="aprendiendo_con_un_ejemplo.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="9.6. Escribiendo pruebas funcionales (El tutorial Jobeet)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page jobeet_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">El tutorial Jobeet</a></li>
+  <li><a href="../capitulo_9.html">Capítulo 9. Pruebas funcionales</a></li>
+  <li class="current"><span>9.6.. Escribiendo pruebas funcionales</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="escribiendo_pruebas_funcionales"><span>9.6.</span> Escribiendo pruebas funcionales</h1>
+    
+
+<p>Crear las pruebas funcionales es similar a ejecutar un determinado escenario en el navegador. En nuestro caso, las historias que escribimos para el tutorial del día 2 ya describen todos los escenarios que debemos probar.</p>
+
+<p>En primer lugar vamos a probar la página principal de Jobeet mediante el archivo de pruebas <code>jobActionsTest.php</code>. Reemplaza su contenido por el siguiente código:</p>
+
+<h3 id="las_ofertas_de_trabajo_expiradas_no_se_muestran_en_el_listado">9.6.1. Las ofertas de trabajo expiradas no se muestran en el listado</h3>
+
+<div class="code php">
+<pre class="php"><span class="co1">// test/functional/frontend/jobActionsTest.php</span>
+<span class="kw1">include</span><span class="br0">&#40;</span><span class="kw3">dirname</span><span class="br0">&#40;</span><span class="kw4">__FILE__</span><span class="br0">&#41;</span><span class="sy0">.</span><span class="st_h">'/../../bootstrap/functional.php'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="re0">$browser</span> <span class="sy0">=</span> <span class="kw2">new</span> JobeetTestFunctional<span class="br0">&#40;</span><span class="kw2">new</span> sfBrowser<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$browser</span><span class="sy0">-&gt;</span><span class="me1">loadData</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="re0">$browser</span><span class="sy0">-&gt;</span><span class="me1">info</span><span class="br0">&#40;</span><span class="st_h">'1 - The homepage'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+  <span class="me1">get</span><span class="br0">&#40;</span><span class="st_h">'/'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+  <span class="me1">with</span><span class="br0">&#40;</span><span class="st_h">'request'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">begin</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+    <span class="me1">isParameter</span><span class="br0">&#40;</span><span class="st_h">'module'</span><span class="sy0">,</span> <span class="st_h">'job'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+    <span class="me1">isParameter</span><span class="br0">&#40;</span><span class="st_h">'action'</span><span class="sy0">,</span> <span class="st_h">'index'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+  <span class="kw3">end</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+  <span class="me1">with</span><span class="br0">&#40;</span><span class="st_h">'response'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">begin</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+    <span class="me1">info</span><span class="br0">&#40;</span><span class="st_h">'  1.1 - Expired jobs are not listed'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+    <span class="me1">checkElement</span><span class="br0">&#40;</span><span class="st_h">'.jobs td.position:contains(&quot;expired&quot;)'</span><span class="sy0">,</span> <span class="kw4">false</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+  <span class="kw3">end</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="sy0">;</span></pre>
+</div>
+
+<p>Como sucede en <code>lime</code>, puedes utilizar el método <code>info()</code> para mostrar mensajes informativos y hacer que la salida del programa sea más fácil de leer. Para comprobar que no se muestran ofertas de trabajo expiradas, comprobamos que el selector CSS <code>.jobs td.position:contains("expired")</code> no encuentra ningún elemento dentro del contenido HTML de la respuesta (recuerda que en los archivos de datos que utilizamos, la única oferta de trabajo expirada contiene el valor <code>expired</code> en el campo <code>position</code>). Si el segundo argumento del método <code>checkElement()</code> es un valor booleano, el método prueba si existen nodos que cumplan con ese selector CSS.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> El método <code>checkElement()</code> es capaz de interpretar correctamente la mayoría de selectores CSS3 válidos.</p></div>
+
+<h3 id="solo_se_muestran_n_ofertas_de_trabajo_en_el_listado_de_cada_categoria">9.6.2. Sólo se muestran N ofertas de trabajo en el listado de cada categoría</h3>
+
+<p>Aañade el siguiente código al final del archivo de pruebas:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// test/functional/frontend/jobActionsTest.php</span>
+<span class="re0">$max</span> <span class="sy0">=</span> sfConfig<span class="sy0">::</span><span class="me2">get</span><span class="br0">&#40;</span><span class="st_h">'app_max_jobs_on_homepage'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="re0">$browser</span><span class="sy0">-&gt;</span><span class="me1">info</span><span class="br0">&#40;</span><span class="st_h">'1 - The homepage'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+  <span class="me1">get</span><span class="br0">&#40;</span><span class="st_h">'/'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+  <span class="me1">info</span><span class="br0">&#40;</span><span class="kw3">sprintf</span><span class="br0">&#40;</span><span class="st_h">'  1.2 - Only %s jobs are listed for a category'</span><span class="sy0">,</span> <span class="re0">$max</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+  <span class="me1">with</span><span class="br0">&#40;</span><span class="st_h">'response'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+    <span class="me1">checkElement</span><span class="br0">&#40;</span><span class="st_h">'.category_programming tr'</span><span class="sy0">,</span> <span class="re0">$max</span><span class="br0">&#41;</span>
+<span class="sy0">;</span></pre>
+</div>
+
+<p>Si el segundo argumento del método <code>checkElement()</code> es un número entero, el método prueba si existen N nodos que cumplan con ese selector CSS.</p>
+
+<h3 id="las_categorias_muestran_un_enlace_a_la_pagina_de_categoria_solo_si_tienen_demasiadas_ofertas_de_trabajo">9.6.3. Las categorías muestran un enlace a la página de categoría sólo si tienen demasiadas ofertas de trabajo</h3>
+
+<div class="code php">
+<pre class="php"><span class="co1">// test/functional/frontend/jobActionsTest.php</span>
+<span class="re0">$browser</span><span class="sy0">-&gt;</span><span class="me1">info</span><span class="br0">&#40;</span><span class="st_h">'1 - The homepage'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+  <span class="me1">get</span><span class="br0">&#40;</span><span class="st_h">'/'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+  <span class="me1">info</span><span class="br0">&#40;</span><span class="st_h">'  1.3 - A category has a link to the category page only if too many jobs'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+  <span class="me1">with</span><span class="br0">&#40;</span><span class="st_h">'response'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">begin</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+    <span class="me1">checkElement</span><span class="br0">&#40;</span><span class="st_h">'.category_design .more_jobs'</span><span class="sy0">,</span> <span class="kw4">false</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+    <span class="me1">checkElement</span><span class="br0">&#40;</span><span class="st_h">'.category_programming .more_jobs'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+  <span class="kw3">end</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="sy0">;</span></pre>
+</div>
+
+<p>En este caso comprobamos que no se muestre un enlace llamado <em>"more jobs"</em> en la categoría <code>design</code> (es decir, que no exista <code>.category_design .more_jobs</code>) y que se muestre un enlace llamado <em>"more jobs"</em> en la categoría <code>programming</code> (es decir, que exista <code>.category_programming .more_jobs</code>).</p>
+
+<h3 id="las_ofertas_de_trabajo_se_ordenan_cronologicamente">9.6.4. Las ofertas de trabajo se ordenan cronológicamente</h3>
+
+<div class="code php">
+<pre class="php"><span class="co1">// most recent job in the programming category</span>
+<span class="re0">$criteria</span> <span class="sy0">=</span> <span class="kw2">new</span> Criteria<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$criteria</span><span class="sy0">-&gt;</span><span class="me1">add</span><span class="br0">&#40;</span>JobeetCategoryPeer<span class="sy0">::</span><span class="me2">SLUG</span><span class="sy0">,</span> <span class="st_h">'programming'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$category</span> <span class="sy0">=</span> JobeetCategoryPeer<span class="sy0">::</span><span class="me2">doSelectOne</span><span class="br0">&#40;</span><span class="re0">$criteria</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="re0">$criteria</span> <span class="sy0">=</span> <span class="kw2">new</span> Criteria<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$criteria</span><span class="sy0">-&gt;</span><span class="me1">add</span><span class="br0">&#40;</span>JobeetJobPeer<span class="sy0">::</span><span class="me2">EXPIRES_AT</span><span class="sy0">,</span> <span class="kw3">time</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span> Criteria<span class="sy0">::</span><span class="me2">GREATER_THAN</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$criteria</span><span class="sy0">-&gt;</span><span class="me1">add</span><span class="br0">&#40;</span>JobeetJobPeer<span class="sy0">::</span><span class="me2">CATEGORY_ID</span><span class="sy0">,</span> <span class="re0">$category</span><span class="sy0">-&gt;</span><span class="me1">getId</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$criteria</span><span class="sy0">-&gt;</span><span class="me1">addDescendingOrderByColumn</span><span class="br0">&#40;</span>JobeetJobPeer<span class="sy0">::</span><span class="me2">CREATED_AT</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="re0">$job</span> <span class="sy0">=</span> JobeetJobPeer<span class="sy0">::</span><span class="me2">doSelectOne</span><span class="br0">&#40;</span><span class="re0">$criteria</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="re0">$browser</span><span class="sy0">-&gt;</span><span class="me1">info</span><span class="br0">&#40;</span><span class="st_h">'1 - The homepage'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+  <span class="me1">get</span><span class="br0">&#40;</span><span class="st_h">'/'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+  <span class="me1">info</span><span class="br0">&#40;</span><span class="st_h">'  1.4 - Jobs are sorted by date'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+  <span class="me1">with</span><span class="br0">&#40;</span><span class="st_h">'response'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">begin</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+    <span class="me1">checkElement</span><span class="br0">&#40;</span><span class="kw3">sprintf</span><span class="br0">&#40;</span><span class="st_h">'.category_programming tr:first a[href*=&quot;/%d/&quot;]'</span><span class="sy0">,</span> <span class="re0">$job</span><span class="sy0">-&gt;</span><span class="me1">getId</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+  <span class="kw3">end</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="sy0">;</span></pre>
+</div>
+
+<p>Para probar que las ofertas de trabajo se ordenan cronológicamente, comprobamos que la primera oferta de trabajo del listado de la portada es la oferta que esperamos. Por tanto, debemos comprobar que la URL contiene el valor que esperamos para la clave primaria. Además, como la clave primaria puede cambiar de una ejecución a otra, en primer lugar debemos obtener el objeto Propel de la base de datos.</p>
+
+<p>Aunque la prueba anterior ya funciona correctamente, vamos a refactorizar su código para poder reutilizar en otras pruebas la lógica que obtiene la primera oferta de trabajo de la categoría <code>programming</code>. Como se trata de un código específico para pruebas, en este caso no vamos a moverlo a la capa del modelo, sino que vamos a colocarlo en la clase <code>JobeetTestFunctional</code> que hemos creado anteriormente. De esta forma, esta clase actúa como una clase de pruebas funcionales específicas para el dominio de Jobeet.</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// lib/test/JobeetTestFunctional.class.php</span>
+<span class="kw2">class</span> JobeetTestFunctional <span class="kw2">extends</span> sfTestFunctional
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> getMostRecentProgrammingJob<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="co1">// most recent job in the programming category</span>
+    <span class="re0">$criteria</span> <span class="sy0">=</span> <span class="kw2">new</span> Criteria<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$criteria</span><span class="sy0">-&gt;</span><span class="me1">add</span><span class="br0">&#40;</span>JobeetCategoryPeer<span class="sy0">::</span><span class="me2">SLUG</span><span class="sy0">,</span> <span class="st_h">'programming'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$category</span> <span class="sy0">=</span> JobeetCategoryPeer<span class="sy0">::</span><span class="me2">doSelectOne</span><span class="br0">&#40;</span><span class="re0">$criteria</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="re0">$criteria</span> <span class="sy0">=</span> <span class="kw2">new</span> Criteria<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$criteria</span><span class="sy0">-&gt;</span><span class="me1">add</span><span class="br0">&#40;</span>JobeetJobPeer<span class="sy0">::</span><span class="me2">EXPIRES_AT</span><span class="sy0">,</span> <span class="kw3">time</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span> Criteria<span class="sy0">::</span><span class="me2">GREATER_THAN</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$criteria</span><span class="sy0">-&gt;</span><span class="me1">add</span><span class="br0">&#40;</span>JobeetJobPeer<span class="sy0">::</span><span class="me2">CATEGORY_ID</span><span class="sy0">,</span> <span class="re0">$category</span><span class="sy0">-&gt;</span><span class="me1">getId</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$criteria</span><span class="sy0">-&gt;</span><span class="me1">addDescendingOrderByColumn</span><span class="br0">&#40;</span>JobeetJobPeer<span class="sy0">::</span><span class="me2">CREATED_AT</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="kw1">return</span> JobeetJobPeer<span class="sy0">::</span><span class="me2">doSelectOne</span><span class="br0">&#40;</span><span class="re0">$criteria</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="co1">// ...</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Ahora puedes reemplazar el código de la prueba anterior por el siguiente código:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// test/functional/frontend/jobActionsTest.php</span>
+<span class="re0">$browser</span><span class="sy0">-&gt;</span><span class="me1">info</span><span class="br0">&#40;</span><span class="st_h">'1 - The homepage'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+  <span class="me1">get</span><span class="br0">&#40;</span><span class="st_h">'/'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+  <span class="me1">info</span><span class="br0">&#40;</span><span class="st_h">'  1.4 - Jobs are sorted by date'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+  <span class="me1">with</span><span class="br0">&#40;</span><span class="st_h">'response'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">begin</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+    <span class="me1">checkElement</span><span class="br0">&#40;</span><span class="kw3">sprintf</span><span class="br0">&#40;</span><span class="st_h">'.category_programming tr:first a[href*=&quot;/%d/&quot;]'</span><span class="sy0">,</span>
+      <span class="re0">$browser</span><span class="sy0">-&gt;</span><span class="me1">getMostRecentProgrammingJob</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">getId</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+  <span class="kw3">end</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="sy0">;</span></pre>
+</div>
+
+<h3 id="cada_oferta_de_trabajo_de_la_portada_incluye_un_enlace">9.6.5. Cada oferta de trabajo de la portada incluye un enlace</h3>
+
+<div class="code php">
+<pre class="php"><span class="re0">$browser</span><span class="sy0">-&gt;</span><span class="me1">info</span><span class="br0">&#40;</span><span class="st_h">'2 - The job page'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+  <span class="me1">get</span><span class="br0">&#40;</span><span class="st_h">'/'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+&nbsp;
+  <span class="me1">info</span><span class="br0">&#40;</span><span class="st_h">'  2.1 - Each job on the homepage is clickable and give detailed information'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+  <span class="me1">click</span><span class="br0">&#40;</span><span class="st_h">'Web Developer'</span><span class="sy0">,</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'position'</span> <span class="sy0">=&gt;</span> <span class="nu0">1</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+  <span class="me1">with</span><span class="br0">&#40;</span><span class="st_h">'request'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">begin</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+    <span class="me1">isParameter</span><span class="br0">&#40;</span><span class="st_h">'module'</span><span class="sy0">,</span> <span class="st_h">'job'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+    <span class="me1">isParameter</span><span class="br0">&#40;</span><span class="st_h">'action'</span><span class="sy0">,</span> <span class="st_h">'show'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+    <span class="me1">isParameter</span><span class="br0">&#40;</span><span class="st_h">'company_slug'</span><span class="sy0">,</span> <span class="st_h">'sensio-labs'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+    <span class="me1">isParameter</span><span class="br0">&#40;</span><span class="st_h">'location_slug'</span><span class="sy0">,</span> <span class="st_h">'paris-france'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+    <span class="me1">isParameter</span><span class="br0">&#40;</span><span class="st_h">'position_slug'</span><span class="sy0">,</span> <span class="st_h">'web-developer'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+    <span class="me1">isParameter</span><span class="br0">&#40;</span><span class="st_h">'id'</span><span class="sy0">,</span> <span class="re0">$browser</span><span class="sy0">-&gt;</span><span class="me1">getMostRecentProgrammingJob</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">getId</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span>
+  <span class="kw3">end</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="sy0">;</span></pre>
+</div>
+
+<p>Para probar el enlace que muestra cada oferta de trabajo de la portada, simulamos que hemos pinchado sobre el texto <em>"Web Developer"</em>. Como en la página existen muchos enlaces con ese texto, le pedimos al navegador de forma explícita que pinche sobre el primero que encuentre (<code>array('position' =&gt; 1)</code>).</p>
+
+<p>A continuación se prueban los parámetros de la petición para asegurarnos que el sistema de enrutamiento ha funcionado correctamente.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="datos_de_prueba.html">&larr; Anterior <span>9.5. Datos de prueba</span></a>
+            
+            <a class="span5 next" href="aprendiendo_con_un_ejemplo.html">Siguiente &rarr; <span>9.7. Aprendiendo con un ejemplo</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Escribiendo pruebas funcionales (El tutorial Jobeet%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'El tutorial Jobeet : Escribiendo pruebas funcionales']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Comenzando el proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> El proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> El modelo de datos</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> El controlador y la vista</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> El sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Profundizando en el modelo</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Trabajando con la página de cada categoría</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Pruebas unitarias</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_9.html">
+            <span>Capítulo 9.</span> Pruebas funcionales
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="pruebas_funcionales.html">
+            <span>9.1.</span> Pruebas funcionales
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="la_clase_sfbrowser.html">
+            <span>9.2.</span> La clase sfBrowser
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="la_clase_sftestfunctional.html">
+            <span>9.3.</span> La clase sfTestFunctional
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejecutando_pruebas_funcionales.html">
+            <span>9.4.</span> Ejecutando pruebas funcionales
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="datos_de_prueba.html">
+            <span>9.5.</span> Datos de prueba
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="escribiendo_pruebas_funcionales.html">
+            <span>9.6.</span> Escribiendo pruebas funcionales
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="aprendiendo_con_un_ejemplo.html">
+            <span>9.7.</span> Aprendiendo con un ejemplo
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="depurando_las_pruebas_funcionales.html">
+            <span>9.8.</span> Depurando las pruebas funcionales
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="conjuntos_de_pruebas_funcionales.html">
+            <span>9.9.</span> Conjuntos de pruebas funcionales
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="conjuntos_de_pruebas.html">
+            <span>9.10.</span> Conjuntos de pruebas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="nos_vemos_manana.html">
+            <span>9.11.</span> Nos vemos mañana
+        </a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Probando los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> El generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> El usuario</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> El día de descanso</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Canales Atom</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Servicios web</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> El buscador</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>20</span> <a href="../capitulo_20.html"> Plugins</a>
+    </li>
+    <li class="level-1">
+        <span>21</span> <a href="../capitulo_21.html"> El día del diseño</a>
+    </li>
+    <li class="level-1">
+        <span>22</span> <a href="../capitulo_22.html"> La cache</a>
+    </li>
+    <li class="level-1">
+        <span>23</span> <a href="../capitulo_23.html"> Pasando a producción</a>
+    </li>
+    <li class="level-1">
+        <span>24</span> <a href="../capitulo_24.html"> Un repaso a Symfony</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

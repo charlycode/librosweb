@@ -1,0 +1,404 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>10.2. <code>sfContext</code> y las factorías (Más con Symfony)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="el_inicio.html" />
+        <link rel="next" href="gestores_de_configuracion_o_config_handlers.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="10.2. <code>sfContext</code> y las factorías (Más con Symfony)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page mas_con_symfony">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Más con Symfony</a></li>
+  <li><a href="../capitulo_10.html">Capítulo 10. Funcionamiento interno de Symfony</a></li>
+  <li class="current"><span>10.2.. <code>sfContext</code> y las factorías</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="sfcontext_y_las_factorias"><span>10.2.</span> <code>sfContext</code> y las factorías</h1>
+    
+
+<p>Antes de adentrarnos más profundamente en este proceso, vamos a hablar de una
+de las partes más importantes del flujo de trabajo de Symfony: las factorías.</p>
+
+<p>Las factorías en Symfony son una serie de clases o componentes de los que depende
+tu aplicación, como por ejemplo <code>logger</code> o <code>i18n</code>. Cada factoría se configura
+en el archivo <code>factories.yml</code>, que después se compila mediante un gestor de
+configuración (como se explicará más adelante) para convertirlo en el código PHP
+que realmente instancia los objetos factoría (puedes ver el resultado de este
+proceso en el archivo <code>cache/frontend/dev/config/config_factories.yml.php</code> de
+tu cache).</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> La carga de las factoría se realiza durante la inicialización de <code>sfContext</code>.
+Puedes ver el código de <a href="http://www.symfony-project.org/api/1_3/sfContext#method_initialize"><code>sfContext::initialize()</code></a>
+y <a href="http://www.symfony-project.org/api/1_3/sfContext#method_loadfactories"><code>sfContext::loadFactories()</code></a>
+para obtener más información.</p></div>
+
+<p>En este punto ya puedes personalizar gran parte del comportamiento de Symfony
+simplemente editando la configuración del archivo <code>factories.yml</code>. Incluso es
+posible reemplazar algunas clases internas de Symfony por tus propias clases de
+tipo factoría.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Si quieres conocer más detalles de las factorías, lo mejor es que leas la
+<a href="http://www.symfony-project.org/reference/1_3/en/05-Factories">Referencia de Symfony</a>
+así como el contenido del propio archivo
+<a href="http://trac.symfony-project.org/browser/branches/1.3/lib/config/config/factories.yml"><code>factories.yml</code></a>.</p></div>
+
+<p>Si has echado un vistazo al archivo <code>config_factories.yml.php</code>, habrás observado
+que las factorías se instancia en un determinado orden. Este orden es muy
+importante porque algunas factorías dependen de otras (el componente <code>routing</code>
+por ejemplo requiere el componente <code>request</code> para obtener la información que
+necesita).</p>
+
+<p>Seguidamente se va a detallar el funcionamiento de la petición (<code>request</code>). Por
+defecto, las peticiones se representan mediante clases de tipo <code>sfWebRequest</code>.
+Al crear su instancia, se invoca el método
+<a href="http://www.symfony-project.org/api/1_3/sfWebRequest#method_initialize"><code>sfWebRequest::initialize()</code></a>,
+que obtiene información relevante como el método HTTP empleado y los parámetros
+GET y POST enviados. Si quieres modificar el procesamiento de las peticiones,
+puedes hacer uso del evento <code>request.filter_parameters</code>.</p>
+
+<h3 id="utilizando_el_evento_requestfilter_parameter">10.2.1. Utilizando el evento <code>request.filter_parameter</code></h3>
+
+<p>Imagina que tu sitio web dispone de una API pública accesible mediante HTTP.
+Para que la aplicación valide la petición, cada usuario de la API debe proporcionar
+una clave a través de una cabecera de la petición (llamada por ejemplo <code>X_API_KEY</code>).
+Todo esto se puede conseguir fácilmente mediante el evento <code>request.filter_parameter</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">class</span> apiConfiguration <span class="kw2">extends</span> sfApplicationConfiguration
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> configure<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="co1">// ...</span>
+&nbsp;
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">dispatcher</span><span class="sy0">-&gt;</span><span class="me1">connect</span><span class="br0">&#40;</span><span class="st_h">'request.filter_parameters'</span><span class="sy0">,</span> <span class="kw3">array</span><span class="br0">&#40;</span>
+      <span class="re0">$this</span><span class="sy0">,</span> <span class="st_h">'requestFilterParameters'</span>
+    <span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="kw2">public</span> <span class="kw2">function</span> requestFilterParameters<span class="br0">&#40;</span>sfEvent <span class="re0">$event</span><span class="sy0">,</span> <span class="re0">$parameters</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$request</span> <span class="sy0">=</span> <span class="re0">$event</span><span class="sy0">-&gt;</span><span class="me1">getSubject</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="re0">$api_key</span> <span class="sy0">=</span> <span class="re0">$request</span><span class="sy0">-&gt;</span><span class="me1">getHttpHeader</span><span class="br0">&#40;</span><span class="st_h">'X_API_KEY'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="kw1">if</span> <span class="br0">&#40;</span><span class="kw4">null</span> <span class="sy0">===</span> <span class="re0">$api_key</span> <span class="sy0">||</span> <span class="kw4">false</span> <span class="sy0">===</span> <span class="re0">$api_user</span> <span class="sy0">=</span> Doctrine_Core<span class="sy0">::</span><span class="me2">getTable</span><span class="br0">&#40;</span><span class="st_h">'ApiUser'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">findOneByToken</span><span class="br0">&#40;</span><span class="re0">$api_key</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="kw1">throw</span> <span class="kw2">new</span> RuntimeException<span class="br0">&#40;</span><span class="kw3">sprintf</span><span class="br0">&#40;</span><span class="st_h">'Invalid api key &quot;%s&quot;'</span><span class="sy0">,</span> <span class="re0">$api_key</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="re0">$request</span><span class="sy0">-&gt;</span><span class="me1">setParameter</span><span class="br0">&#40;</span><span class="st_h">'api_user'</span><span class="sy0">,</span> <span class="re0">$api_user</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="kw1">return</span> <span class="re0">$parameters</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Después de ejecutar el código anterior, se puede obtener el usuario de la API
+directamente desde la petición:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">public</span> <span class="kw2">function</span> executeFoobar<span class="br0">&#40;</span>sfWebRequest <span class="re0">$request</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="re0">$api_user</span> <span class="sy0">=</span> <span class="re0">$request</span><span class="sy0">-&gt;</span><span class="me1">getParameter</span><span class="br0">&#40;</span><span class="st_h">'api_user'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Esta técnica se puede utilizar por ejemplo para validar las llamadas a los
+servicios web de tu aplicación.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> El evento <code>request.filter_parameters</code> incluye mucha información sobre la
+petición, tal y como se puede ver en la documentación de la API sobre el
+<a href="http://www.symfony-project.org/api/1_3/sfWebRequest#method_getrequestcontext">método <code>sfWebRequest::getRequestContext()</code></a>.</p></div>
+
+<p>La siguiente factoría importante es el enrutamiento. La inicialización del
+enrutamiento es muy sencilla, ya que sólo consiste en obtener y establecer una
+serie de opciones específicas. Si quieres también puedes modificar este proceso
+aprovechando el evento <code>routing.load_configuration</code>.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> El evento <code>routing.load_configuration</code> te da acceso a la instancia del objeto
+con el enrutamiento actual (por defecto es un objeto de tipo
+<a href="http://trac.symfony-project.org/browser/branches/1.3/lib/routing/sfPatternRouting.class.php"><code>sfPatternRouting</code></a>).
+Las rutas registradas se pueden manipular mediante diferentes métodos.</p></div>
+
+<h3 id="ejemplo_de_uso_del_evento_routingload_configuration">10.2.2. Ejemplo de uso del evento <code>routing.load_configuration</code></h3>
+
+<p>Gracias a este evento es muy fácil añadir una nueva ruta en la aplicación:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">public</span> <span class="kw2">function</span> setup<span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="co1">// ...</span>
+&nbsp;
+  <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">dispatcher</span><span class="sy0">-&gt;</span><span class="me1">connect</span><span class="br0">&#40;</span><span class="st_h">'routing.load_configuration'</span><span class="sy0">,</span> <span class="kw3">array</span><span class="br0">&#40;</span>
+    <span class="re0">$this</span><span class="sy0">,</span> <span class="st_h">'listenToRoutingLoadConfiguration'</span>
+  <span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+<span class="kw2">public</span> <span class="kw2">function</span> listenToRoutingLoadConfiguration<span class="br0">&#40;</span>sfEvent <span class="re0">$event</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="re0">$routing</span> <span class="sy0">=</span> <span class="re0">$event</span><span class="sy0">-&gt;</span><span class="me1">getSubject</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+  <span class="kw1">if</span> <span class="br0">&#40;</span><span class="sy0">!</span><span class="re0">$routing</span><span class="sy0">-&gt;</span><span class="me1">hasRouteName</span><span class="br0">&#40;</span><span class="st_h">'my_route'</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$routing</span><span class="sy0">-&gt;</span><span class="me1">prependRoute</span><span class="br0">&#40;</span><span class="st_h">'my_route'</span><span class="sy0">,</span> <span class="kw2">new</span> sfRoute<span class="br0">&#40;</span>
+      <span class="st_h">'/my_route'</span><span class="sy0">,</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'module'</span> <span class="sy0">=&gt;</span> <span class="st_h">'default'</span><span class="sy0">,</span> <span class="st_h">'action'</span> <span class="sy0">=&gt;</span> <span class="st_h">'foo'</span><span class="br0">&#41;</span>
+    <span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>El procesamiento de las URL ocurre justo después de la inicialización mediante
+el método <a href="http://www.symfony-project.org/api/1_3/sfPatternRouting#method_parse"><code>sfPatternRouting::parse()</code></a>.
+Aunque durante este proceso intervienen varios métodos, lo único que hay que
+saber es que para cuando se llega al final del método <code>parse()</code>, se ha encontrado
+la ruta correcta, se ha instanciado y se le han asociado los parámetros adecuados.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Si quieres conocer más sobre el enrutamiento, puedes leer el capítulo
+<em>"Enrutamiento avanzado"</em> de este mismo libro.</p></div>
+
+<p>Una vez que se han cargado y configurado correctamente todas las factorías, se
+notifica el evento <code>context.load_factories</code>. Este evento es importante porque
+es el primer evento del framework en el que el programador tiene acceso a todos
+los objetos de las factorías de Symfony (petición, respuesta, usuario, log,
+bases de datos, etc.)</p>
+
+<p>Este es también el punto en el que puedes conectarte a otro evento muy útil
+llamado <code>template.filter_parameters</code>. Este evento se notifica cada vez que
+<a href="http://trac.symfony-project.org/browser/branches/1.3/lib/view/sfPHPView.class.php"><code>sfPHPView</code></a>
+procesa y muestra un archivo, por lo que permite al programador controlar los
+parámetros que se le pasan a la plantilla. <code>sfContext</code> utiliza este evento para
+añadir algunos parámetros útiles a cada plantilla (en concreto, <code>$sf_context</code>,
+<code>$sf_request</code>, <code>$sf_params</code>, <code>$sf_response</code> y <code>$sf_user</code>).</p>
+
+<p>Por tanto, puedes hacer uso del evento <code>template.filter_parameters</code> para añadir
+parámetros globales adicionales en todas las plantillas.</p>
+
+<h3 id="utilizando_el_evento_templatefilter_parameters">10.2.3. Utilizando el evento <code>template.filter_parameters</code></h3>
+
+<p>Imagina que todas las plantillas de tu aplicación deben tener acceso a un
+objeto determinado, por ejemplo un <em>helper</em>. En este caso, puedes añadir el
+siguiente código en <code>ProjectConfiguration</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">public</span> <span class="kw2">function</span> setup<span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="co1">// ...</span>
+&nbsp;
+  <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">dispatcher</span><span class="sy0">-&gt;</span><span class="me1">connect</span><span class="br0">&#40;</span><span class="st_h">'template.filter_parameters'</span><span class="sy0">,</span> <span class="kw3">array</span><span class="br0">&#40;</span>
+    <span class="re0">$this</span><span class="sy0">,</span> <span class="st_h">'templateFilterParameters'</span>
+  <span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+<span class="kw2">public</span> <span class="kw2">function</span> templateFilterParameters<span class="br0">&#40;</span>sfEvent <span class="re0">$event</span><span class="sy0">,</span> <span class="re0">$parameters</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="re0">$parameters</span><span class="br0">&#91;</span><span class="st_h">'my_helper_object'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="kw2">new</span> MyHelperObject<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+  <span class="kw1">return</span> <span class="re0">$parameters</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Ahora todas las plantillas tienen acceso a una instancia de <code>MyHelperObject</code>
+mediante la variable <code>$my_helper_object</code>.</p>
+
+<h3 id="resumen_de_sfcontext">10.2.4. Resumen de <code>sfContext</code></h3>
+
+<ol>
+<li>Inicialización de <code>sfContext</code></li>
+<li>Se cargan las factorías</li>
+<li>Se notifican los siguientes eventos:
+
+<ol>
+<li><a href="http://www.symfony-project.org/reference/1_3/en/15-Events#chapter_15_sub_request_filter_parameters">request.filter_parameters</a></li>
+<li><a href="http://www.symfony-project.org/reference/1_3/en/15-Events#chapter_15_sub_routing_load_configuration">routing.load_configuration</a></li>
+<li><a href="http://www.symfony-project.org/reference/1_3/en/15-Events#chapter_15_sub_context_load_factories">context.load_factories</a></li>
+</ol></li>
+<li>Se añaden los parámetros globales en las plantillas</li>
+</ol>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="el_inicio.html">&larr; Anterior <span>10.1. El inicio</span></a>
+            
+            <a class="span5 next" href="gestores_de_configuracion_o_config_handlers.html">Siguiente &rarr; <span>10.3. Gestores de configuración o <em>Config Handlers</em></span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = '<code>sfContext</code> y las factorías (Más con Symfony%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Más con Symfony : <code>sfContext</code> y las factorías']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Enrutamiento avanzado</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Mejora tu productividad</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Emails</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Widgets y validadores propios</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Formularios avanzados</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Mejorando la barra de depuración web</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Uso avanzado de Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Utilizando la herencia de tablas de Doctrine</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_10.html">
+            <span>Capítulo 10.</span> Funcionamiento interno de Symfony
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_inicio.html">
+            <span>10.1.</span> El inicio
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="sfcontext_y_las_factorias.html">
+            <span>10.2.</span> <code>sfContext</code> y las factorías
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="gestores_de_configuracion_o_config_handlers.html">
+            <span>10.3.</span> Gestores de configuración o <em>Config Handlers</em>
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="despachando_y_ejecutando_la_peticion.html">
+            <span>10.4.</span> Despachando y ejecutando la petición
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="la_cadena_de_filtros.html">
+            <span>10.5.</span> La cadena de filtros
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="resumen_general.html">
+            <span>10.6.</span> Resumen general
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="conclusion.html">
+            <span>10.7.</span> Conclusión
+        </a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Windows y Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Desarrollando aplicaciones Facebook</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Descubriendo el poder de la línea de comandos</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Jugando con la cache de configuración de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Trabajando con la comunidad Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>A</span> <a href="../apendice_a.html"> Código JavaScript de sfWidgetFormGMapAddress</a>
+    </li>
+    <li class="level-1">
+        <span>B</span> <a href="../apendice_b.html"> Ejemplo de instalador propio</a>
+    </li>
+    <li class="level-1">
+        <span>C</span> <a href="../apendice_c.html"> Licencia</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

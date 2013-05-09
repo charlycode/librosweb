@@ -1,0 +1,400 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>6.3. Variables en las hojas de estilos (CSS avanzado)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="mapas_de_imagen.html" />
+        <link rel="next" href="estilos_alternativos.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="6.3. Variables en las hojas de estilos (CSS avanzado)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page css_avanzado">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">CSS avanzado</a></li>
+  <li><a href="../capitulo_6.html">Capítulo 6. Técnicas avanzadas</a></li>
+  <li class="current"><span>6.3.. Variables en las hojas de estilos</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="variables_en_las_hojas_de_estilos"><span>6.3.</span> Variables en las hojas de estilos</h1>
+    
+
+<p>La mayoría de diseñadores web profesionales creen que CSS carece de un mecanismo fundamental para facilitar su trabajo: las variables en las hojas de estilos. Cuando se define una hoja de estilos como la siguiente:</p>
+
+<div class="code css">
+<pre class="css"><span class="re0">#cabecera</span> <span class="br0">&#123;</span>
+  <span class="kw1">background-color</span><span class="sy0">:</span> <span class="re0">#369</span><span class="sy0">;</span>
+  <span class="kw1">color</span><span class="sy0">:</span> <span class="re0">#FFF</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+<span class="re0">#contenidos</span> h1<span class="sy0">,</span> <span class="re0">#contenidos</span> h2 <span class="br0">&#123;</span>
+  <span class="kw1">color</span><span class="sy0">:</span> <span class="re0">#369</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+a <span class="br0">&#123;</span>
+  <span class="kw1">color</span><span class="sy0">:</span> <span class="re0">#557E29</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+span <span class="br0">&#123;</span>
+  <span class="kw1">background-color</span><span class="sy0">:</span> <span class="re0">#557E29</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Los buenos diseñadores utilizan en sus trabajos un número muy reducido de colores que combinan entre sí para diseñar cada elemento de la página. De esta forma, en las hojas de estilos profesionales se repiten una y otra vez los mismos valores. No obstante, CSS no permite definir variables para almacenar los valores que se utilizan constantemente.</p>
+
+<p>Si el diseñador quiere modificar el color verde <code>#557E29</code> de la hoja de estilos anterior, ¿cómo cambia todas las apariciones de ese color verde en la hoja de estilos? Modificar ese color de forma manual es un proceso tedioso y demasiado lento. Afortunadamente, los editores de texto disponen de herramientas para sustituir un valor por otro, aunque tampoco es una solución óptima.</p>
+
+<p>Por otra parte, también es común diseñar sitios web idénticos o muy similares en los que sólo cambia su aspecto definido con CSS. En este caso, es habitual que un sitio web se diferencie de otro solamente en algunos pocos valores de su hoja de estilos CSS. La solución consiste nuevamente en modificar todos los valores de colores y tipos de letra para modificar el aspecto del sitio web.</p>
+
+<p>Los problemas anteriores se podrían resolver fácilmente si CSS permitiera definir variables como en la siguiente hoja de estilos:</p>
+
+<div class="code css">
+<pre class="css">$colorAzul <span class="sy0">=</span> <span class="re0">#369</span><span class="sy0">;</span>
+$colorVerde <span class="sy0">=</span> <span class="re0">#557E29</span><span class="sy0">;</span>
+&nbsp;
+<span class="re0">#cabecera</span> <span class="br0">&#123;</span>
+  <span class="kw1">background-color</span><span class="sy0">:</span> $colorAzul<span class="sy0">;</span>
+  <span class="kw1">color</span><span class="sy0">:</span> <span class="re0">#FFF</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+<span class="re0">#contenidos</span> h1<span class="sy0">,</span> <span class="re0">#contenidos</span> h2 <span class="br0">&#123;</span>
+  <span class="kw1">color</span><span class="sy0">:</span> $colorAzul<span class="sy0">;</span>
+<span class="br0">&#125;</span>
+a <span class="br0">&#123;</span>
+  <span class="kw1">color</span><span class="sy0">:</span> $colorVerde<span class="sy0">;</span>
+<span class="br0">&#125;</span>
+span <span class="br0">&#123;</span>
+  <span class="kw1">background-color</span><span class="sy0">:</span> $colorVerde<span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>En la hoja de estilos anterior, el diseñador puede cambiar el tono de verde o de azul haciendo un solo cambio en la hoja de estilos y con la seguridad absoluta de que se modifican todos los elementos de la página y no se comete ningún error.</p>
+
+<p>No obstante, si la hoja de estilos anterior se quiere reutilizar para otros diseños con colores completamente diferentes, el nombre de las variables anteriores no sería correcto. Por ello, lo más correcto sería crear variables cuyo nombre no incluya información sobre su aspecto:</p>
+
+<div class="code css">
+<pre class="css">$colorPrincipal  <span class="sy0">=</span> <span class="re0">#369</span><span class="sy0">;</span>
+$colorSecundario <span class="sy0">=</span> <span class="re0">#557E29</span><span class="sy0">;</span>
+&nbsp;
+<span class="re0">#cabecera</span> <span class="br0">&#123;</span>
+  <span class="kw1">background-color</span><span class="sy0">:</span> $colorPrincipal<span class="sy0">;</span>
+  <span class="kw1">color</span><span class="sy0">:</span> <span class="re0">#FFF</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+<span class="re0">#contenidos</span> h1<span class="sy0">,</span> <span class="re0">#contenidos</span> h2 <span class="br0">&#123;</span>
+  <span class="kw1">color</span><span class="sy0">:</span> $colorPrincipal<span class="sy0">;</span>
+<span class="br0">&#125;</span>
+a <span class="br0">&#123;</span>
+  <span class="kw1">color</span><span class="sy0">:</span> $colorSecundario<span class="sy0">;</span>
+<span class="br0">&#125;</span>
+span <span class="br0">&#123;</span>
+  <span class="kw1">background-color</span><span class="sy0">:</span> $colorSecundario<span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Lamentablemente, CSS no permite utilizar variables en las hojas de estilos. Por este motivo se han desarrollado varias soluciones que hacen uso del servidor web y de los lenguajes de programación de servidor para incluir variables en las hojas de estilos CSS.</p>
+
+<p>La solución más sencilla consiste en utilizar el mecanismo SSI (<em>Server Side Includes</em>) de los servidores web Apache y Microsoft IIS. A continuación se muestra el proceso completo para el servidor web Apache 2.2:</p>
+
+<p>1) Modificar el archivo de configuración de Apache: dependiendo de tu instalación puede ser el archivo general de configuración <code>httpd.conf</code> o el archivo de configuración <code>.htaccess</code></p>
+
+<p>En cualquier caso, es necesario añadir las siguientes opciones de configuración:</p>
+
+<div class="code code">
+<pre class="code">Options +Includes
+AddType text/css .scss
+AddOutputFilter INCLUDES .scss</pre>
+</div>
+
+<p>La configuración anterior le indica al servidor web que los archivos cuya extensión sea <code>.scss</code> son archivos CSS de servidor y que por tanto, se deben procesar antes de enviarlos al usuario.</p>
+
+<p>Para que los cambios en la configuración sean efectivos, no olvides reiniciar el servidor web.</p>
+
+<p>2) Crear la hoja de estilos y guardar el archivo con extensión <code>.scss</code></p>
+
+<p>3) Añadir las variables a la hoja de estilos utilizando la siguiente sintaxis:</p>
+
+<p>Para definir la variable:</p>
+
+<div class="code code">
+<pre class="code">&lt;!--#set var=&quot;nombre_de_la_variable&quot; value=&quot;valor_de_la_variable&quot; --&gt;</pre>
+</div>
+
+<p>Para utilizar la variable</p>
+
+<div class="code code">
+<pre class="code">&lt;!--#echo var=&quot;nombre_de_la_variable&quot; --&gt;</pre>
+</div>
+
+<p>Siguiendo con la hoja de estilos de los ejemplos anteriores, el resultado es el que se muestra a continuación:</p>
+
+<div class="code css">
+<pre class="css">&lt;!--<span class="re0">#set</span> var<span class="sy0">=</span><span class="st0">&quot;colorPrincipal&quot;</span> value<span class="sy0">=</span><span class="st0">&quot;#369&quot;</span> --<span class="sy0">&gt;</span>
+&lt;!--<span class="re0">#set</span> var<span class="sy0">=</span><span class="st0">&quot;colorSecundario&quot;</span> value<span class="sy0">=</span><span class="st0">&quot;#557E29&quot;</span> --<span class="sy0">&gt;</span>
+&nbsp;
+<span class="re0">#cabecera</span> <span class="br0">&#123;</span>
+  <span class="kw1">background-color</span><span class="sy0">:</span> &lt;!--<span class="re0">#echo</span> var<span class="sy0">=</span><span class="st0">&quot;colorPrincipal&quot;</span> --<span class="sy0">&gt;;</span>
+  <span class="kw1">color</span><span class="sy0">:</span> <span class="re0">#FFF</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+<span class="re0">#contenidos</span> h1<span class="sy0">,</span> <span class="re0">#contenidos</span> h2 <span class="br0">&#123;</span>
+  <span class="kw1">color</span><span class="sy0">:</span> &lt;!--<span class="re0">#echo</span> var<span class="sy0">=</span><span class="st0">&quot;colorPrincipal&quot;</span> --<span class="sy0">&gt;;</span>
+<span class="br0">&#125;</span>
+a <span class="br0">&#123;</span>
+  <span class="kw1">color</span><span class="sy0">:</span> &lt;!--<span class="re0">#echo</span> var<span class="sy0">=</span><span class="st0">&quot;colorSecundario&quot;</span> --<span class="sy0">&gt;;</span>
+<span class="br0">&#125;</span>
+span <span class="br0">&#123;</span>
+  <span class="kw1">background-color</span><span class="sy0">:</span> &lt;!--<span class="re0">#echo</span> var<span class="sy0">=</span><span class="st0">&quot;colorSecundario&quot;</span> --<span class="sy0">&gt;;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Si no se quiere utilizar otra extensión para los archivos CSS procesados por el servidor, es posible hacer uso de la directiva <code>XBitHack</code>, tal y como se explica en la <a href="http://httpd.apache.org/docs/2.2/howto/ssi.html">documentación oficial de Apache 2.2 sobre SSI</a>.</p>
+
+<h3 id="lenguajes_de_programacion_de_servidor">6.3.1. Lenguajes de programación de servidor</h3>
+
+<p>La solución alternativa al uso de las directivas SSI del servidor web consiste en emplear un lenguaje de programación de servidor. Aunque se trata de una técnica diferente, también se basa en procesar las hojas de estilos en el servidor antes de enviarlas al usuario.</p>
+
+<p>Los detalles técnicos de la solución dependen del lenguaje de programación utilizado, pero el mecanismo que se utiliza es idéntico en todos los casos. A continuación se muestra un ejemplo que hace uso del lenguaje de programación PHP.</p>
+
+<p>Para incluir variables en las hojas de estilos CSS, se crea un archivo con extensión <code>.php</code> y se utiliza la sintaxis que se muestra en el siguiente ejemplo:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">&lt;?php</span>
+<span class="kw3">header</span><span class="br0">&#40;</span><span class="st_h">'content-type:text/css'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="re0">$nombre_variable1</span> <span class="sy0">=</span> <span class="st_h">'valor_variable1'</span><span class="sy0">;</span>
+<span class="re0">$nombre_variable2</span> <span class="sy0">=</span> <span class="st_h">'valor_variable2'</span><span class="sy0">;</span>
+&nbsp;
+<span class="kw1">echo</span> <span class="co3">&lt;&lt;&lt;FINCSS
+selector {
+  propiedad1: $nombre_variable1;
+  propiedad2: $nombre_variable2;
+}
+FINCSS</span><span class="sy0">;</span>
+<span class="sy1">?&gt;</span></pre>
+</div>
+
+<p>Siguiendo con la hoja de estilos de los ejemplos anteriores, el archivo PHP completo es el siguiente:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">&lt;?php</span>
+<span class="kw3">header</span><span class="br0">&#40;</span><span class="st_h">'content-type:text/css'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="re0">$colorPrincipal</span> <span class="sy0">=</span> <span class="st_h">'#369'</span><span class="sy0">;</span>
+<span class="re0">$colorSecundario</span> <span class="sy0">=</span> <span class="st_h">'#557E29'</span><span class="sy0">;</span>
+&nbsp;
+<span class="kw1">echo</span> <span class="co3">&lt;&lt;&lt;FINCSS
+#cabecera {
+  background-color: $colorPrincipal;
+  color: #FFF;
+}
+#contenidos h1, #contenidos h2 {
+  color: $colorPrincipal;
+}
+a {
+  color: $colorSecundario;
+}
+span {
+  background-color: $colorSecundario;
+}
+FINCSS</span><span class="sy0">;</span>
+<span class="sy1">?&gt;</span></pre>
+</div>
+
+<p>Por último, cuando enlaces la hoja de estilos generada con este método, no olvides utilizar la extensión <code>.php</code> en el nombre del archivo de la hoja de estilos:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">link</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text/css&quot;</span> <span class="kw3">rel</span><span class="sy0">=</span><span class="st0">&quot;stylesheet&quot;</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;/css/estilos.php&quot;</span> <span class="sy0">/</span>&gt;</span></pre>
+</div>
+
+<h3 id="css_como_lenguaje_de_programacion">6.3.2. CSS como lenguaje de programación</h3>
+
+<p>Las soluciones que permiten utilizar variables en las hojas de estilos han evolucionado de tal manera que alguna de ellas permite utilizar CSS como si fuera un lenguaje de programación. Una de estas soluciones es <em><a href="http://www.shauninman.com/archive/2008/05/30/check_out_css_cacheer">CSS Cacheer</a></em>, ideada por el diseñador Shaun Inman.</p>
+
+<p>En primer lugar, <em>CSS Cacheer</em> permite utilizar variables en las hojas de estilos, aunque en esta solución se denominan "constantes":</p>
+
+<div class="code css">
+<pre class="css"><span class="co1">@constants {</span>
+  nombre_de_la_constante<span class="sy0">:</span> valor_de_la_constante<span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+selector <span class="br0">&#123;</span>
+  propiedad<span class="sy0">:</span> const<span class="br0">&#40;</span>nombre_de_la_constante<span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p><em>CSS Cacheer</em> también permite definir unos estilos base que se reutilizan en diferentes elementos:</p>
+
+<div class="code css">
+<pre class="css"><span class="co1">@base(tipografia_basica) {</span>
+  <span class="kw1">font-family</span><span class="sy0">:</span> Arial<span class="sy0">,</span> <span class="kw2">sans-serif</span><span class="sy0">;</span>
+  <span class="kw1">line-height</span><span class="sy0">:</span> <span class="nu0">1.5</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+p <span class="br0">&#123;</span>
+  based-on<span class="sy0">:</span> base<span class="br0">&#40;</span>tipografia_basica<span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="kw1">font-size</span><span class="sy0">:</span> <span class="re3">110%</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+h1 <span class="br0">&#123;</span>
+  based-on<span class="sy0">:</span> base<span class="br0">&#40;</span>tipografia_basica<span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="kw1">font-size</span><span class="sy0">:</span> <span class="re3">200%</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p><em>CSS Cacheer</em> es tan avanzado que permite incluso anidar selectores como se muestra en el siguiente ejemplo:</p>
+
+<div class="code css">
+<pre class="css">ul <span class="br0">&#123;</span>
+  propiedad1<span class="sy0">:</span> valor1<span class="sy0">;</span>
+&nbsp;
+  li <span class="br0">&#123;</span>
+    propiedad2<span class="sy0">:</span> valor2<span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Si se procesan las reglas CSS anteriores con <em>CSS Cacheer</em>, el resultado es el siguiente:</p>
+
+<div class="code css">
+<pre class="css">ul <span class="br0">&#123;</span>
+  propiedad1<span class="sy0">:</span> valor1<span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+ul li <span class="br0">&#123;</span>
+  propiedad2<span class="sy0">:</span> valor2<span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="mapas_de_imagen.html">&larr; Anterior <span>6.2. Mapas de imagen</span></a>
+            
+            <a class="span5 next" href="estilos_alternativos.html">Siguiente &rarr; <span>6.4. Estilos alternativos</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Variables en las hojas de estilos (CSS avanzado%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'CSS avanzado : Variables en las hojas de estilos']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Técnicas imprescindibles</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Buenas prácticas</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Selectores</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Propiedades avanzadas</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Frameworks</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_6.html">
+            <span>Capítulo 6.</span> Técnicas avanzadas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="mapas_de_imagen.html">
+            <span>6.2.</span> Mapas de imagen
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="variables_en_las_hojas_de_estilos.html">
+            <span>6.3.</span> Variables en las hojas de estilos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="estilos_alternativos.html">
+            <span>6.4.</span> Estilos alternativos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="comentarios_condicionales_filtros_y_hacks.html">
+            <span>6.5.</span> Comentarios condicionales, filtros y hacks
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="selector_de_navegador.html">
+            <span>6.6.</span> Selector de navegador
+        </a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

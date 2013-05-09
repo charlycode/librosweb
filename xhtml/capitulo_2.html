@@ -1,0 +1,227 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>Capítulo 2. Características básicas (Introducción a XHTML)</title>
+        <link href="../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="capitulo_1/html_y_css.html" />
+        <link rel="next" href="capitulo_2/el_primer_documento_html.html" />
+        <link rel="start" href="index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Capítulo 2. Características básicas (Introducción a XHTML)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page xhtml">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../index.html">Inicio</a></li>
+  <li><a href="index.html">Introducción a XHTML</a></li>
+  <li class="current"><span>Capítulo 2. Características básicas</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="capitulo_2"><span>Capítulo 2.</span> Características básicas</h1>
+    <h2 id="lenguajes_de_etiquetas">2.1. Lenguajes de etiquetas</h2>
+
+
+<p>Uno de los retos iniciales a los que se tuvo que enfrentar la informática fue el de cómo almacenar la información en los archivos digitales. Como los primeros archivos sólo contenían texto sin formato, la solución utilizada era muy sencilla: se codificaban las letras del alfabeto y se transformaban en números.</p>
+
+<p>De esta forma, para almacenar un contenido de texto en un archivo electrónico, se utiliza una tabla de conversión que transforma cada carácter en un número. Una vez almacenada la secuencia de números, el contenido del archivo se puede recuperar realizando el proceso inverso.</p>
+
+<div class="figure" id="figure_2_1">
+    <img src="../img/xhtml/esquema_codificacion_caracteres.gif" alt="Ejemplo sencillo de codificación de caracteres" />
+
+    <p class="caption"><strong>Figura 2.1</strong> Ejemplo sencillo de codificación de caracteres</p>
+</div>
+
+
+<p>El proceso de transformación de caracteres en secuencias de números se denomina <strong>codificación de caracteres</strong> y cada una de las tablas que se han definido para realizar la transformación se conocen con el nombre de <strong>páginas de código</strong>. Una de las codificaciones más conocidas (y una de las primeras que se publicaron) es la codificación ASCII. La importancia de las codificaciones en HTML se verá más adelante.</p>
+
+<p>Una vez resuelto el problema de almacenar el texto simple, se presenta el reto de almacenar los contenidos de texto con formato. En otras palabras, ¿cómo se almacena un texto en negrita? ¿y un texto de color rojo? ¿y otro texto azul, en negrita y subrayado?</p>
+
+<p>Utilizar una tabla de conversión similar a las que se utilizan para textos sin formato no es posible, ya que existen infinitos posibles estilos para aplicar al texto. Una solución técnicamente viable consiste en almacenar la información sobre el formato del texto en una zona especial reservada dentro del propio archivo. En esta zona se podría indicar dónde comienza y dónde termina cada formato.</p>
+
+<p>No obstante, la solución que realmente se emplea para guardar la información con formato es mucho más sencilla: el archivo electrónico almacena tanto los contenidos como la información sobre el formato de esos contenidos. Si por ejemplo se quiere dividir el texto en párrafos y se desea dar especial importancia a algunas palabras, se podría indicar de la siguiente manera:</p>
+
+<div class="code code">
+<pre class="code">&lt;parrafo&gt;
+Contenido de texto con &lt;importante&gt;algunas palabras&lt;/importante&gt; resaltadas de forma especial.
+&lt;/parrafo&gt;</pre>
+</div>
+
+<p>El principio de un párrafo se indica mediante la palabra <code>&lt;parrafo&gt;</code> y el final de un párrafo se indica mediante la palabra <code>&lt;/parrafo&gt;</code>. De la misma manera, para asignar más importancia a ciertas palabras del texto, se encierran entre <code>&lt;importante&gt;</code> y <code>&lt;/importante&gt;</code>.</p>
+
+<p>El proceso de indicar las diferentes partes que componen la información se denomina <strong>marcar</strong> (<em>markup</em> en inglés). Cada una de las palabras que se emplean para marcar el inicio y el final de una sección se denominan <strong>etiquetas</strong>.</p>
+
+<p>Aunque existen algunas excepciones, en general las etiquetas se indican por pares y se forman de la siguiente manera:</p>
+
+<ul>
+<li>Etiqueta de apertura: carácter <code>&lt;</code>, seguido del nombre de la etiqueta (sin espacios en blanco) y terminado con el carácter <code>&gt;</code></li>
+<li>Etiqueta de cierre: carácter <code>&lt;</code>, seguido del carácter <code>/</code>, seguido del nombre de la etiqueta (sin espacios en blanco) y terminado con el carácter <code>&gt;</code></li>
+</ul>
+
+<p>Así, la estructura típica de las etiquetas HTML es:</p>
+
+<div class="code code">
+<pre class="code">&lt;nombre_etiqueta&gt; ... &lt;/nombre_etiqueta&gt;</pre>
+</div>
+
+<p>HTML es un <strong>lenguaje de etiquetas</strong> (también llamado <strong>lenguaje de marcado</strong>) y las páginas web habituales están formadas por cientos o miles de pares de etiquetas. De hecho, las letras "ML" de la sigla HTML significan <em>"markup language"</em>, que es como se denominan en inglés a los <em>lenguajes de marcado</em>. Además de HTML, existen muchos otros lenguajes de etiquetas como XML, SGML, DocBook y MathML.</p>
+
+<p>La principal ventaja de los lenguajes de etiquetas es que son muy sencillos de leer y escribir por parte de las personas y de los sistemas electrónicos. La principal desventaja es que pueden aumentar mucho el tamaño del documento, por lo que en general se utilizan etiquetas con nombres muy cortos.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="capitulo_1/html_y_css.html">&larr; Anterior <span>1.5. HTML y CSS</span></a>
+            
+            <a class="span5 next" href="capitulo_2/el_primer_documento_html.html">Siguiente &rarr; <span>2.2. El primer documento HTML</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Características básicas (Introducción a XHTML%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a XHTML : Características básicas']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1 active">
+        <a href="capitulo_2.html">
+            <span>Capítulo 2.</span> Características básicas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="capitulo_2/el_primer_documento_html.html">
+            <span>2.2.</span> El primer documento HTML
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="capitulo_2/etiquetas_y_atributos.html">
+            <span>2.3.</span> Etiquetas y atributos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="capitulo_2/elementos_html.html">
+            <span>2.4.</span> Elementos HTML
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="capitulo_2/sintaxis_de_las_etiquetas_xhtml.html">
+            <span>2.5.</span> Sintaxis de las etiquetas XHTML
+        </a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="capitulo_3.html"> Texto</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="capitulo_4.html"> Enlaces</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="capitulo_5.html"> Listas</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="capitulo_6.html"> Imágenes y objetos</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="capitulo_7.html"> Tablas</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="capitulo_8.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="capitulo_9.html"> Estructura y layout</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="capitulo_10.html"> Metainformación</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="capitulo_11.html"> Otras etiquetas importantes</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="capitulo_12.html"> Accesibilidad</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="capitulo_13.html"> Validación</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="capitulo_14.html"> Fragmentos de código</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="capitulo_15.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

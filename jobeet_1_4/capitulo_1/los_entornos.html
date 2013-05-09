@@ -1,0 +1,293 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>1.9. Los entornos (El tutorial Jobeet)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="preparar_el_proyecto.html" />
+        <link rel="next" href="configurar_mal_el_servidor_web.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="1.9. Los entornos (El tutorial Jobeet)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page jobeet_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">El tutorial Jobeet</a></li>
+  <li><a href="../capitulo_1.html">Capítulo 1. Comenzando el proyecto</a></li>
+  <li class="current"><span>1.9.. Los entornos</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="los_entornos"><span>1.9.</span> Los entornos</h1>
+    
+
+<p>Si echas un vistazo al directorio <code>web/</code>, verás dos archivos PHP llamados <code>index.php</code> y <code>frontend_dev.php</code>. Estos archivos se conocen con el nombre de <strong>controladores frontales</strong>, ya que todas las peticiones de la aplicación se realizan a través de ellos. Pero, ¿por qué tenemos dos controladores frontales si sólo tenemos una aplicación?</p>
+
+<p>Los dos archivos apuntan a la misma aplicación pero se utilizan en diferentes entornos. Cuando se desarrolla una aplicación, salvo que la desarrolles directamente sobre el servidor de producción, necesitas varios entornos:</p>
+
+<ul>
+<li>El <strong>entorno de desarrollo</strong>: este es el entorno que utilizan los programadores web cuando modifican la aplicación para añadir nuevas características y corregir errores.</li>
+<li>El <strong>entorno de pruebas</strong>: este entorno se utiliza para ejecutar automáticamente las pruebas unitarias.</li>
+<li>El <strong>entorno intermedio</strong> (o <em>entorno "staging"</em>): este entorno lo utiliza el cliente para probar la aplicación e informar sobre los errores que ha encontrado o las características que le faltan a la aplicación.</li>
+<li>El <strong>entorno de producción</strong>: este es el entorno en el que se ejecuta la aplicación que utilizan los usuarios finales.</li>
+</ul>
+
+<p>¿Qué es lo que diferencia a cada entorno? En el entorno de desarrollo es necesario por ejemplo que la aplicación guarde en el log todos los detalles de cada aplicación para simplificar la depuración, pero la cache tiene que estar deshabilitada para que cualquier cambio realizado se tenga en cuenta de forma instantánea. Por tanto, el entorno de desarrollo se debe optimizar para el programador. El ejemplo más claro es cuando se produce una excepción. Para que el programador detecte lo antes posible la causa del error, Symfony muestra directamente en el navegador toda la información disponible sobre la petición actual:</p>
+
+<div class="figure" id="figure_1_2">
+    <img src="../../img/jobeet_1_4/f0102.png" alt="Una excepción en el entorno de desarrollo" />
+
+    <p class="caption"><strong>Figura 1.2</strong> Una excepción en el entorno de desarrollo</p>
+</div>
+
+
+<p>Por otra parte, en el entorno de producción la cache debe estar habilitada y por supuesto se deben mostrar mensajes de error propios en vez de la información relacionada con la excepción producida. Por tanto, el entorno de producción debe estar optimizado para obtener el máximo rendimiento y para conseguir la mejor experiencia de usuario.</p>
+
+<div class="figure" id="figure_1_3">
+    <img src="../../img/jobeet_1_4/f0103.png" alt="Una excepción en el entorno de producción" />
+
+    <p class="caption"><strong>Figura 1.3</strong> Una excepción en el entorno de producción</p>
+</div>
+
+
+<p>Un entorno en Symfony no es más que un conjunto específico de opciones de configuración. El framework Symfony incluye por defecto tres entornos llamados <code>dev</code>, <code>test</code> y <code>prod</code>. Durante el tutorial del día 22 aprenderás a crear nuevos entornos, como por ejemplo el entorno <code>staging</code>.</p>
+
+<p>Si abres los archivos de los controladores frontales, verás que su contenido es el mismo salvo la opción que indica el entorno utilizado:</p>
+
+<div class="code php">
+<pre class="php">// Archivo web/index.php
+<span class="kw2">&lt;?php</span>
+&nbsp;
+<span class="kw1">require_once</span><span class="br0">&#40;</span><span class="kw3">dirname</span><span class="br0">&#40;</span><span class="kw4">__FILE__</span><span class="br0">&#41;</span><span class="sy0">.</span><span class="st_h">'/../config/ProjectConfiguration.class.php'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="re0">$configuration</span> <span class="sy0">=</span> ProjectConfiguration<span class="sy0">::</span><span class="me2">getApplicationConfiguration</span><span class="br0">&#40;</span><span class="st_h">'frontend'</span><span class="sy0">,</span> <span class="st_h">'prod'</span><span class="sy0">,</span> <span class="kw4">false</span><span class="br0">&#41;</span><span class="sy0">;</span>
+sfContext<span class="sy0">::</span><span class="me2">createInstance</span><span class="br0">&#40;</span><span class="re0">$configuration</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">dispatch</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Definir un nuevo entorno en Symfony es tan sencillo como crear un nuevo controlador frontal. Más adelante se muestra cómo modificar las opciones de un entorno.</p></div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="preparar_el_proyecto.html">&larr; Anterior <span>1.8. Preparar el proyecto</span></a>
+            
+            <a class="span5 next" href="configurar_mal_el_servidor_web.html">Siguiente &rarr; <span>1.10. Configurar mal el servidor web</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Los entornos (El tutorial Jobeet%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'El tutorial Jobeet : Los entornos']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1 ">
+        <a href="../capitulo_1.html">
+            <span>Capítulo 1.</span> Comenzando el proyecto
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_desafio.html">
+            <span>1.2.</span> El desafío
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="este_tutorial_es_diferente.html">
+            <span>1.3.</span> Este tutorial es diferente
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_proyecto.html">
+            <span>1.4.</span> El proyecto
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="que_haremos_hoy.html">
+            <span>1.5.</span> ¿Que haremos hoy?
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="prerrequisitos.html">
+            <span>1.6.</span> Prerrequisitos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="instalacion_de_symfony.html">
+            <span>1.7.</span> Instalación de Symfony
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="preparar_el_proyecto.html">
+            <span>1.8.</span> Preparar el proyecto
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="los_entornos.html">
+            <span>1.9.</span> Los entornos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="configurar_mal_el_servidor_web.html">
+            <span>1.10.</span> Configurar mal el servidor web
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="configurar_correctamente_el_servidor_web.html">
+            <span>1.11.</span> Configurar correctamente el servidor web
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="subversion.html">
+            <span>1.12.</span> Subversion
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="nos_vemos_manana.html">
+            <span>1.13.</span> Nos vemos mañana
+        </a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> El proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> El modelo de datos</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> El controlador y la vista</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> El sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Profundizando en el modelo</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Trabajando con la página de cada categoría</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Pruebas unitarias</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Pruebas funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Probando los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> El generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> El usuario</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> El día de descanso</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Canales Atom</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Servicios web</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> El buscador</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>20</span> <a href="../capitulo_20.html"> Plugins</a>
+    </li>
+    <li class="level-1">
+        <span>21</span> <a href="../capitulo_21.html"> El día del diseño</a>
+    </li>
+    <li class="level-1">
+        <span>22</span> <a href="../capitulo_22.html"> La cache</a>
+    </li>
+    <li class="level-1">
+        <span>23</span> <a href="../capitulo_23.html"> Pasando a producción</a>
+    </li>
+    <li class="level-1">
+        <span>24</span> <a href="../capitulo_24.html"> Un repaso a Symfony</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

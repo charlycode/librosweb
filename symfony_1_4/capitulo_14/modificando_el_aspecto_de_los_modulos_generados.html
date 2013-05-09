@@ -1,0 +1,343 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>14.4. Modificando el aspecto de los módulos generados (Symfony 1.4, la guía definitiva)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="configuracion_del_generador.html" />
+        <link rel="next" href="resumen.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="14.4. Modificando el aspecto de los módulos generados (Symfony 1.4, la guía definitiva)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page symfony_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Symfony 1.4, la guía definitiva</a></li>
+  <li><a href="../capitulo_14.html">Capítulo 14. Generador de la parte de administración</a></li>
+  <li class="current"><span>14.4.. Modificando el aspecto de los módulos generados</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="modificando_el_aspecto_de_los_modulos_generados"><span>14.4.</span> Modificando el aspecto de los módulos generados</h1>
+    
+
+<p>La presentación de los módulos generados se puede modificar completamente para integrarlo con cualquier otro estilo gráfico. Los cambios no solo se pueden realizar mediante una hoja de estilos, sino que es posible redefinir las plantillas por defecto.</p>
+
+<h3 id="utilizando_una_hoja_de_estilos_propia">14.4.1. Utilizando una hoja de estilos propia</h3>
+
+<p>Como el código HTML generado tiene un contenido bien estructurado, es posible modificar fácilmente su aspecto.</p>
+
+<p>Mediante la opción <code>css</code> de la configuración del generador es posible definir la hoja de estilos alternativa que se utiliza en el módulo de administración, como se muestra en el listado 14-32.</p>
+
+<p><strong>Listado 14-32 - Utilizando una hoja de estilos propia en vez de la de por defecto</strong></p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co4">generator</span>:<span class="co3">
+  class</span><span class="sy2">: </span>sfPropelGenerator<span class="co4">
+  param</span>:<span class="co3">
+    model_class</span><span class="sy2">: </span>          BlogArticulo<span class="co3">
+    theme</span><span class="sy2">: </span>                admin<span class="co3">
+    non_verbose_templates</span><span class="sy2">: </span>true<span class="co3">
+    with_show</span><span class="sy2">: </span>            false<span class="co3">
+    singular</span><span class="sy2">: </span>             BlogArticulo<span class="co3">
+    plural</span><span class="sy2">: </span>               BlogArticulos<span class="co3">
+    route_prefix</span><span class="sy2">: </span>         blog_articulo<span class="co3">
+    with_propel_route</span><span class="sy2">: </span>    <span class="nu0">1</span><span class="co3">
+    actions_base_class</span><span class="sy2">: </span>   sfActions<span class="co3">
+    css</span><span class="sy2">: </span>                  mihojadeestilos</pre>
+</div>
+
+<p>Además, también es posible utilizar las opciones habituales del archivo <code>view.yml</code> del módulo para redefinir los estilos utilizados en cada vista.</p>
+
+<h3 id="creando_una_cabecera_y_un_pie_propios">14.4.2. Creando una cabecera y un pie propios</h3>
+
+<p>Las vistas <code>list</code>, <code>new</code> y <code>edit</code> incluyen por defecto elementos parciales para la cabecera y el pie de página. Como no existen por defecto elementos parciales en el directorio <code>templates/</code> del módulo de administración, solamente es necesario crearlos con los siguientes nombres para que se incluyan de forma automática:</p>
+
+<div class="code code">
+<pre class="code">_list_header.php
+    _list_footer.php
+    _form_header.php
+    _form_footer.php</pre>
+</div>
+
+<p>Si se quiere añadir por ejemplo una cabecera propia en la vista <code>articulo/edit</code>, se crea un archivo llamado <code>_form_header.php</code> como el que muestra el listado 14-33. No es necesario realizar más configuraciones para que se incluya automáticamente.</p>
+
+<p><strong>Listado 14-33 - Ejemplo de elemento parcial para la cabecera de la vista <code>edit</code>, en <code>modules/articulo/templates/_form_header.php</code></strong></p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">&lt;?php</span> <span class="kw1">if</span> <span class="br0">&#40;</span><span class="re0">$blog_articulo</span><span class="sy0">-&gt;</span><span class="me1">getNumeroComentarios</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="sy0">&gt;</span> <span class="nu0">0</span><span class="br0">&#41;</span><span class="sy0">:</span> <span class="sy1">?&gt;</span>
+  &lt;h2&gt;Este artículo tiene <span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$articulo</span><span class="sy0">-&gt;</span><span class="me1">getNumeroComentarios</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span> comentarios.&lt;/h2&gt;
+<span class="kw2">&lt;?php</span> <span class="kw1">endif</span><span class="sy0">;</span> <span class="sy1">?&gt;</span></pre>
+</div>
+
+<p>Debe tenerse en cuenta que un elemento parcial de la vista <code>edit</code> siempre tiene acceso al objeto al que hace referencia mediante una variable con el mismo nombre que la clase y que un elemento parcial de la vista <code>list</code> tiene acceso al paginador actual mediante la variable <code>$pager</code>.</p>
+
+<h3 id="modificando_el_tema">14.4.3. Modificando el tema</h3>
+
+<p>Existen otros elementos parciales en el directorio <code>templates/</code> del módulo que heredan del framework y que se pueden redefinir para adaptarse a las necesidades de cada proyecto.</p>
+
+<p>Las plantillas del generador están divididas en pequeñas partes que se pueden redefinir de forma independiente, al igual que se pueden modificar las acciones una a una.</p>
+
+<p>No obstante, si se quieren redefinir todos los elementos parciales para varios módulos, lo mejor es crear un tema que se pueda reutilizar. Un tema es un subconjunto de plantillas y acciones que se pueden utilizar en un módulo de administración si así se indica en el archivo <code>generator.yml</code>. En el tema por defecto, Symfony utiliza los archivos definidos en <code>sfConfig::get('sf_symfony_lib_dir')/plugins/sfPropelPlugin/data/generator/sfPropelModule/admin/</code>.</p>
+
+<p>Los archivos de los temas tienen que guardarse en el directorio <code>data/generator/sfPropelModule/[nombre_tema]/</code> del proyecto, y la mejor forma de crear un nuevo tema consiste en copiar los archivos del tema por defecto que se quieren redefinir (que se encuentran en el directorio <code>sfConfig::get('sf_symfony_lib_dir')/plugins/sfPropelPlugin/data/generator/sfPropelModule/admin/</code>). De esta forma, es fácil asegurarse de que el tema propio contiene todos los archivos requeridos:</p>
+
+<div class="code code">
+<pre class="code">// Elementos parciales, en [nombre_tema]/template/templates/
+_assets.php
+_filters.php
+_filters_field.php
+_flashes.php
+_form.php
+_form_actions.php
+_form_field.php
+_form_fieldset.php
+_form_footer.php
+_form_header.php
+_list.php
+_list_actions.php
+_list_batch_actions.php
+_list_field_boolean.php
+_list_footer.php
+_list_header.php
+_list_td_actions.php
+_list_td_batch_actions.php
+_list_td_stacked.php
+_list_td_tabular.php
+_list_th_stacked.php
+_list_th_tabular.php
+_pagination.php
+editSuccess.php
+indexSuccess.php
+newSuccess.php
+&nbsp;
+&nbsp;
+// Acciones, en [nombre_tema]/parts
+actionsConfiguration.php
+batchAction.php
+configuration.php
+createAction.php
+deleteAction.php
+editAction.php
+fieldsConfiguration.php
+filterAction.php
+filtersAction.php
+filtersConfiguration.php
+indexAction.php
+newAction.php
+paginationAction.php
+paginationConfiguration.php
+processFormAction.php
+sortingAction.php
+sortingConfiguration.php
+updateAction.php</pre>
+</div>
+
+<p>Se debe tener en cuenta que los archivos de las plantillas son en realidad "plantillas de plantillas", es decir, archivos PHP que se procesan mediante una herramienta especial para generar las plantillas en función de las opciones del generador (este proceso se conoce como la fase de compilación). Como las plantillas generadas deben contener código PHP que se ejecuta cuando se accede a estas plantillas, los archivos que son "plantillas de plantillas" tienen que utilizar una sintaxis alternativa para que el código PHP final no se ejecute durante el proceso de compilación de las plantillas. El listado 14-34 muestra un trozo de una de las "plantillas de plantillas" de Symfony.</p>
+
+<p><strong>Listado 14-34 - Sintaxis de las plantillas de plantillas</strong></p>
+
+<div class="code php">
+<pre class="php">&lt;h1&gt;[?php echo <span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getI18NString</span><span class="br0">&#40;</span><span class="st_h">'edit.title'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span> ?]&lt;/h1&gt;
+&nbsp;
+[?php include_partial('<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getModuleName</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>/flashes') ?]</pre>
+</div>
+
+<p>En el listado anterior, el código PHP indicado mediante <code>&lt;?</code> se ejecuta durante la compilación, mientras que el código indicado mediante <code>[?</code> se ejecuta solamente durante la ejecución final de la plantilla generada. El generador de plantillas reemplaza las etiquetas <code>[?</code> en etiquetas <code>&lt;?</code>, por lo que la plantilla resultante es la siguiente:</p>
+
+<div class="code php">
+<pre class="php">&lt;h1&gt;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> __<span class="br0">&#40;</span><span class="st_h">'Listado de todos los artículos'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>&lt;/h1&gt;
+&nbsp;
+<span class="kw2">&lt;?php</span> include_partial<span class="br0">&#40;</span><span class="st_h">'articulo/flashes'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span></pre>
+</div>
+
+<p>Trabajar con las "plantillas de plantillas" es bastante complicado, por lo que el mejor consejo para crear un tema propio es comenzarlo a partir del tema <code>admin</code>, modificarlo poco a poco y probar los cambios continuamente.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> También es posible encapsular un tema completo para el generador en un plugin, con lo que el tema es más fácil de reutilizar y más fácil de instalar en diferentes aplicaciones. El Capítulo 17 incluye más información.</p></div>
+
+<div class="admonition sidebar"><p><strong class="title">Contruyendo tu propio generador</strong> El generador de la parte de administración utiliza una serie de componentes internos de Symfony que automatizan la creación de acciones y plantillas en la cache, el uso de temas y el procesamiento de las "plantillas de plantillas".</p>
+
+<p>De esta forma, Symfony proporciona todas las herramientas para crear tu propio generador, que puede ser similar a los existentes o ser completamente diferente. La generación automática de un módulo se gestiona mediante el método <code>generate()</code> de la clase <code>sfGeneratorManager</code>. Por ejemplo, para generar una administración, Symfony realiza internombrente la siguiente llamada a este método:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$manager</span> <span class="sy0">=</span> <span class="kw2">new</span> sfGeneratorManager<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$data</span> <span class="sy0">=</span> <span class="re0">$manager</span><span class="sy0">-&gt;</span><span class="me1">generate</span><span class="br0">&#40;</span><span class="st_h">'sfPropelGenerator'</span><span class="sy0">,</span> <span class="re0">$parameters</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Si se quiere construir un generador propio, es conveniente mirar la documentación de la API de las clases <code>sfGeneratorManager</code> y <code>sfGenerator</code>, y utilizar las clases <code>sfModelGenerator</code> y <code>sfPropelGenerator</code> como ejemplo.</p></div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="configuracion_del_generador.html">&larr; Anterior <span>14.3. Configuración del generador</span></a>
+            
+            <a class="span5 next" href="resumen.html">Siguiente &rarr; <span>14.5. Resumen</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Modificando el aspecto de los módulos generados (Symfony 1.4, la guía definitiva%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Symfony 1.4, la guía definitiva : Modificando el aspecto de los módulos generados']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción a Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Explorando el interior de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Ejecutar aplicaciones Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Introducción a la creación de páginas</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Configurar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> El Controlador</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> La Vista</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> El modelo (Doctrine)</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Enlaces y sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Emails</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Uso de la cache</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_14.html">
+            <span>Capítulo 14.</span> Generador de la parte de administración
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="generacion_de_codigo_en_funcion_del_modelo.html">
+            <span>14.1.</span> Generación de código en función del modelo
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="creando_la_parte_de_administracion_de_las_aplicaciones.html">
+            <span>14.2.</span> Creando la parte de administración de las aplicaciones
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="configuracion_del_generador.html">
+            <span>14.3.</span> Configuración del generador
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="modificando_el_aspecto_de_los_modulos_generados.html">
+            <span>14.4.</span> Modificando el aspecto de los módulos generados
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="resumen.html">
+            <span>14.5.</span> Resumen
+        </a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Pruebas unitarias y funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Herramientas para la administración de aplicaciones</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> Personalizar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> Rendimiento</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Configuración avanzada</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

@@ -1,0 +1,243 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>1.5. Configurando Git por primera vez (Pro Git, el libro oficial de Git)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="instalando_git.html" />
+        <link rel="next" href="obteniendo_ayuda.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="1.5. Configurando Git por primera vez (Pro Git, el libro oficial de Git)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page pro_git">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Pro Git, el libro oficial de Git</a></li>
+  <li><a href="../capitulo_1.html">Capítulo 1. Empezando</a></li>
+  <li class="current"><span>1.5.. Configurando Git por primera vez</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="configurando_git_por_primera_vez"><span>1.5.</span> Configurando Git por primera vez</h1>
+    
+
+<p>Ahora que tienes Git en tu sistema, querrás hacer algunas cosas para personalizar tu entorno de Git. Deberías tener que hacer estas cosas sólo una vez; se mantendrán entre actualizaciones. También puedes cambiarlas en cualquier momento volviendo a ejecutar los comandos correspondientes.</p>
+
+<p>Git trae una herramienta llamada <code>git config</code> que te permite obtener y establecer variables de configuración que controlan el aspecto y funcionamiento de Git. Estas variables pueden almacenarse en tres sitios distintos:</p>
+
+<ul>
+<li>Archivo <code>/etc/gitconfig</code>: Contiene valores para todos los usuarios del sistema y todos sus repositorios. Si pasas la opción <code>--system</code> a <code>git config</code>, lee y escribe específicamente en este archivo.</li>
+<li>Archivo <code>~/.gitconfig</code> file: Específico a tu usuario. Puedes hacer que Git lea y escriba específicamente en este archivo pasando la opción <code>--global</code>.</li>
+<li>Archivo config en el directorio de git (es decir, <code>.git/config</code>) del repositorio que estés utilizando actualmente: Específico a ese repositorio. Cada nivel sobrescribe los valores del nivel anterior, por lo que los valores de <code>.git/config</code> tienen preferencia sobre los de <code>/etc/gitconfig</code>.</li>
+</ul>
+
+<p>En sistemas Windows, Git busca el archivo <code>.gitconfig</code> en el directorio <code>$HOME</code> (<code>C:\Documents and Settings\$USER</code> para la mayoría de usuarios). También busca en el directorio <code>/etc/gitconfig</code>, aunque esta ruta es relativa a la raíz MSys, que es donde quiera que decidieses instalar Git en tu sistema Windows cuando ejecutaste el instalador.</p>
+
+<h3 id="tu_identidad">1.5.1. Tu identidad</h3>
+
+<p>Lo primero que deberías hacer cuando instalas Git es establecer tu nombre de usuario y dirección de correo electrónico. Esto es importante porque las confirmaciones de cambios (<em>commits</em>) en Git usan esta información, y es introducida de manera inmutable en los commits que envías:</p>
+
+<div class="code code">
+<pre class="code">$ git config --global user.name &quot;John Doe&quot;
+$ git config --global user.email johndoe@example.com</pre>
+</div>
+
+<p>De nuevo, sólo necesitas hacer esto una vez si especificas la opción <code>--global</code>, ya que Git siempre usará esta información para todo lo que hagas en ese sistema. Si quieres sobrescribir esta información con otro nombre o dirección de correo para proyectos específicos, puedes ejecutar el comando sin la opción <code>--global</code> cuando estés en ese proyecto.</p>
+
+<h3 id="tu_editor">1.5.2. Tu editor</h3>
+
+<p>Ahora que tu identidad está configurada, puedes elegir el editor de texto por defecto que se utilizará cuando Git necesite que introduzcas un mensaje. Si no indicas nada, Git usa el editor por defecto de tu sistema, que generalmente es Vi o Vim. Si quieres usar otro editor de texto, como Emacs, puedes hacer lo siguiente:</p>
+
+<div class="code code">
+<pre class="code">$ git config --global core.editor emacs</pre>
+</div>
+
+<h3 id="tu_herramienta_de_diferencias">1.5.3. Tu herramienta de diferencias</h3>
+
+<p>Otra opción útil que puede que quieras configurar es la herramienta de diferencias por defecto, usada para resolver conflictos de unión (<em>merge</em>). Digamos que quieres usar <code>vimdiff</code>:</p>
+
+<div class="code code">
+<pre class="code">$ git config --global merge.tool vimdiff</pre>
+</div>
+
+<p>Git acepta <code>kdiff3</code>, <code>tkdiff</code>, <code>meld</code>, <code>xxdiff</code>, <code>emerge</code>, <code>vimdiff</code>, <code>gvimdiff</code>, <code>ecmerge</code>, y <code>opendiff</code> como herramientas válidas. También puedes configurar la herramienta que tú quieras; véase el <a class="internal" href="../capitulo_7.html#capitulo7">Capítulo 7</a> para más información sobre cómo hacerlo.</p>
+
+<h3 id="comprobando_tu_configuracion">1.5.4. Comprobando tu configuración</h3>
+
+<p>Si quieres comprobar tu configuración, puedes usar el comando <code>git config --list</code> para listar todas las propiedades que Git ha podido encontrar en ese punto:</p>
+
+<div class="code code">
+<pre class="code">$ git config --list
+user.name=Scott Chacon
+user.email=schacon@gmail.com
+color.status=auto
+color.branch=auto
+color.interactive=auto
+color.diff=auto
+...</pre>
+</div>
+
+<p>Puede que veas claves repetidas, porque Git lee la misma clave de distintos archivos (<code>/etc/gitconfig</code> y <code>~/.gitconfig</code>, por ejemplo). En ese caso, Git usa el último valor para cada clave única que ve.</p>
+
+<p>También puedes comprobar qué valor cree Git que tiene una clave específica ejecutando <code>git config {clave}</code>:</p>
+
+<div class="code code">
+<pre class="code">$ git config user.name
+Scott Chacon</pre>
+</div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="instalando_git.html">&larr; Anterior <span>1.4. Instalando Git</span></a>
+            
+            <a class="span5 next" href="obteniendo_ayuda.html">Siguiente &rarr; <span>1.6. Obteniendo ayuda</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Configurando Git por primera vez (Pro Git, el libro oficial de Git%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Pro Git, el libro oficial de Git : Configurando Git por primera vez']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1 ">
+        <a href="../capitulo_1.html">
+            <span>Capítulo 1.</span> Empezando
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="acerca_del_control_de_versiones.html">
+            <span>1.1.</span> Acerca del control de versiones
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="una_breve_historia_de_git.html">
+            <span>1.2.</span> Una breve historia de Git
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="fundamentos_de_git.html">
+            <span>1.3.</span> Fundamentos de Git
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="instalando_git.html">
+            <span>1.4.</span> Instalando Git
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="configurando_git_por_primera_vez.html">
+            <span>1.5.</span> Configurando Git por primera vez
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="obteniendo_ayuda.html">
+            <span>1.6.</span> Obteniendo ayuda
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="resumen.html">
+            <span>1.7.</span> Resumen
+        </a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Fundamentos de Git</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Trabajando con ramas en Git</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Git en un servidor</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Git en entornos distribuidos</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Las herramientas de Git</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Personalizando Git</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Git y otros sistemas</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Funcionamiento interno de Git</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

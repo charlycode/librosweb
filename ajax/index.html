@@ -1,0 +1,380 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>Introducción a AJAX (LibrosWeb.es)</title>
+        <link href="../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Introducción a AJAX (LibrosWeb.es)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <div class="span12">
+    <h1 class="title">Introducción a AJAX</h1>
+
+    <div class="item toc">
+        <h2 class="underline"><span>Índice de contenidos</span></h2>
+        <ul>
+                    <li class="chapter level-1">
+                <span>Capítulo 1.</span> 
+                <a href="capitulo_1.html">Introducción a AJAX</a>
+            </li>
+                    <li class="chapter level-1">
+                <span>Capítulo 2.</span> 
+                <a href="capitulo_2.html">JavaScript básico</a>
+            </li>
+                    <li class=" level-2">
+                <span>2.2.</span> 
+                <a href="capitulo_2/variables.html">Variables</a>
+            </li>
+                    <li class=" level-2">
+                <span>2.3.</span> 
+                <a href="capitulo_2/palabras_reservadas.html">Palabras reservadas</a>
+            </li>
+                    <li class=" level-2">
+                <span>2.4.</span> 
+                <a href="capitulo_2/tipos_de_variables.html">Tipos de variables</a>
+            </li>
+                    <li class=" level-2">
+                <span>2.5.</span> 
+                <a href="capitulo_2/operadores.html">Operadores</a>
+            </li>
+                    <li class=" level-2">
+                <span>2.6.</span> 
+                <a href="capitulo_2/objetos_nativos_de_javascript.html">Objetos nativos de JavaScript</a>
+            </li>
+                    <li class=" level-2">
+                <span>2.7.</span> 
+                <a href="capitulo_2/funciones.html">Funciones</a>
+            </li>
+                    <li class=" level-2">
+                <span>2.8.</span> 
+                <a href="capitulo_2/funciones_y_propiedades_basicas_de_javascript.html">Funciones y propiedades básicas de JavaScript</a>
+            </li>
+                    <li class="chapter level-1">
+                <span>Capítulo 3.</span> 
+                <a href="capitulo_3.html">JavaScript avanzado</a>
+            </li>
+                    <li class=" level-2">
+                <span>3.2.</span> 
+                <a href="capitulo_3/clases.html">Clases</a>
+            </li>
+                    <li class=" level-2">
+                <span>3.3.</span> 
+                <a href="capitulo_3/otros_conceptos.html">Otros conceptos</a>
+            </li>
+                    <li class="chapter level-1">
+                <span>Capítulo 4.</span> 
+                <a href="capitulo_4.html">DOM (Document Object Model)</a>
+            </li>
+                    <li class=" level-2">
+                <span>4.2.</span> 
+                <a href="capitulo_4/tipos_de_nodos.html">Tipos de nodos</a>
+            </li>
+                    <li class=" level-2">
+                <span>4.3.</span> 
+                <a href="capitulo_4/la_interfaz_node.html">La interfaz Node</a>
+            </li>
+                    <li class=" level-2">
+                <span>4.4.</span> 
+                <a href="capitulo_4/html_y_dom.html">HTML y DOM</a>
+            </li>
+                    <li class="chapter level-1">
+                <span>Capítulo 5.</span> 
+                <a href="capitulo_5.html">BOM (Browser Object Model)</a>
+            </li>
+                    <li class=" level-2">
+                <span>5.2.</span> 
+                <a href="capitulo_5/el_objeto_window.html">El objeto window</a>
+            </li>
+                    <li class=" level-2">
+                <span>5.3.</span> 
+                <a href="capitulo_5/el_objeto_document.html">El objeto document</a>
+            </li>
+                    <li class=" level-2">
+                <span>5.4.</span> 
+                <a href="capitulo_5/el_objeto_location.html">El objeto location</a>
+            </li>
+                    <li class=" level-2">
+                <span>5.5.</span> 
+                <a href="capitulo_5/el_objeto_navigator.html">El objeto navigator</a>
+            </li>
+                    <li class=" level-2">
+                <span>5.6.</span> 
+                <a href="capitulo_5/el_objeto_screen.html">El objeto screen</a>
+            </li>
+                    <li class="chapter level-1">
+                <span>Capítulo 6.</span> 
+                <a href="capitulo_6.html">Eventos</a>
+            </li>
+                    <li class=" level-2">
+                <span>6.1.</span> 
+                <a href="capitulo_6/modelo_basico_de_eventos.html">Modelo básico de eventos</a>
+            </li>
+                    <li class=" level-2">
+                <span>6.2.</span> 
+                <a href="capitulo_6/el_flujo_de_eventos.html">El flujo de eventos</a>
+            </li>
+                    <li class=" level-2">
+                <span>6.3.</span> 
+                <a href="capitulo_6/handlers_y_listeners.html">Handlers y listeners</a>
+            </li>
+                    <li class=" level-2">
+                <span>6.4.</span> 
+                <a href="capitulo_6/el_objeto_event.html">El objeto event</a>
+            </li>
+                    <li class=" level-2">
+                <span>6.5.</span> 
+                <a href="capitulo_6/tipos_de_eventos.html">Tipos de eventos</a>
+            </li>
+                    <li class=" level-2">
+                <span>6.6.</span> 
+                <a href="capitulo_6/solucion_cross_browser.html">Solución cross browser</a>
+            </li>
+                    <li class="chapter level-1">
+                <span>Capítulo 7.</span> 
+                <a href="capitulo_7.html">Primeros pasos con AJAX</a>
+            </li>
+                    <li class=" level-2">
+                <span>7.2.</span> 
+                <a href="capitulo_7/la_primera_aplicacion.html">La primera aplicación</a>
+            </li>
+                    <li class=" level-2">
+                <span>7.3.</span> 
+                <a href="capitulo_7/metodos_y_propiedades_del_objeto_xmlhttprequest.html">Métodos y propiedades del objeto XMLHttpRequest</a>
+            </li>
+                    <li class=" level-2">
+                <span>7.4.</span> 
+                <a href="capitulo_7/utilidades_y_objetos_para_ajax.html">Utilidades y objetos para AJAX</a>
+            </li>
+                    <li class=" level-2">
+                <span>7.5.</span> 
+                <a href="capitulo_7/interaccion_con_el_servidor.html">Interacción con el servidor</a>
+            </li>
+                    <li class=" level-2">
+                <span>7.6.</span> 
+                <a href="capitulo_7/aplicaciones_complejas.html">Aplicaciones complejas</a>
+            </li>
+                    <li class=" level-2">
+                <span>7.7.</span> 
+                <a href="capitulo_7/seguridad.html">Seguridad</a>
+            </li>
+                    <li class="chapter level-1">
+                <span>Capítulo 8.</span> 
+                <a href="capitulo_8.html">Técnicas básicas con AJAX</a>
+            </li>
+                    <li class=" level-2">
+                <span>8.2.</span> 
+                <a href="capitulo_8/teclado_virtual.html">Teclado virtual</a>
+            </li>
+                    <li class=" level-2">
+                <span>8.3.</span> 
+                <a href="capitulo_8/autocompletar.html">Autocompletar</a>
+            </li>
+                    <li class="chapter level-1">
+                <span>Capítulo 9.</span> 
+                <a href="capitulo_9.html">Técnicas avanzadas con AJAX</a>
+            </li>
+                    <li class=" level-2">
+                <span>9.2.</span> 
+                <a href="capitulo_9/lector_rss.html">Lector RSS</a>
+            </li>
+                    <li class=" level-2">
+                <span>9.3.</span> 
+                <a href="capitulo_9/google_maps.html">Google Maps</a>
+            </li>
+                    <li class="chapter level-1">
+                <span>Capítulo 10.</span> 
+                <a href="capitulo_10.html">Frameworks y librerías</a>
+            </li>
+                    <li class=" level-2">
+                <span>10.1.</span> 
+                <a href="capitulo_10/el_framework_prototype.html">El framework Prototype</a>
+            </li>
+                    <li class=" level-2">
+                <span>10.2.</span> 
+                <a href="capitulo_10/la_libreria_scriptaculous.html">La librería scriptaculous</a>
+            </li>
+                    <li class=" level-2">
+                <span>10.3.</span> 
+                <a href="capitulo_10/la_libreria_jquery.html">La librería jQuery</a>
+            </li>
+                    <li class=" level-2">
+                <span>10.4.</span> 
+                <a href="capitulo_10/otros_frameworks_importantes.html">Otros frameworks importantes</a>
+            </li>
+                    <li class="chapter level-1">
+                <span>Capítulo 11.</span> 
+                <a href="capitulo_11.html">Otras utilidades</a>
+            </li>
+                    <li class=" level-2">
+                <span>11.2.</span> 
+                <a href="capitulo_11/mejorar_el_rendimiento_de_las_aplicaciones_complejas.html">Mejorar el rendimiento de las aplicaciones complejas</a>
+            </li>
+                    <li class=" level-2">
+                <span>11.3.</span> 
+                <a href="capitulo_11/ofuscar_el_codigo_javascript.html">Ofuscar el código JavaScript</a>
+            </li>
+                    <li class=" level-2">
+                <span>11.4.</span> 
+                <a href="capitulo_11/evitar_el_problema_de_los_dominios_diferentes.html">Evitar el problema de los dominios diferentes</a>
+            </li>
+                    <li class="chapter level-1">
+                <span>Capítulo 12.</span> 
+                <a href="capitulo_12.html">Recursos útiles</a>
+            </li>
+                    <li class="chapter level-1">
+                <span>Capítulo 13.</span> 
+                <a href="capitulo_13.html">Bibliografía</a>
+            </li>
+                    <li class="chapter level-1">
+                <span>Capítulo 14.</span> 
+                <a href="capitulo_14.html">Ejercicios resueltos</a>
+            </li>
+                    <li class=" level-2">
+                <span>14.2.</span> 
+                <a href="capitulo_14/ejercicio_2.html">Ejercicio 2</a>
+            </li>
+                    <li class=" level-2">
+                <span>14.3.</span> 
+                <a href="capitulo_14/ejercicio_3.html">Ejercicio 3</a>
+            </li>
+                    <li class=" level-2">
+                <span>14.4.</span> 
+                <a href="capitulo_14/ejercicio_4.html">Ejercicio 4</a>
+            </li>
+                    <li class=" level-2">
+                <span>14.5.</span> 
+                <a href="capitulo_14/ejercicio_5.html">Ejercicio 5</a>
+            </li>
+                    <li class=" level-2">
+                <span>14.6.</span> 
+                <a href="capitulo_14/ejercicio_6.html">Ejercicio 6</a>
+            </li>
+                    <li class=" level-2">
+                <span>14.7.</span> 
+                <a href="capitulo_14/ejercicio_7.html">Ejercicio 7</a>
+            </li>
+                    <li class=" level-2">
+                <span>14.8.</span> 
+                <a href="capitulo_14/ejercicio_8.html">Ejercicio 8</a>
+            </li>
+                    <li class=" level-2">
+                <span>14.9.</span> 
+                <a href="capitulo_14/ejercicio_9.html">Ejercicio 9</a>
+            </li>
+                    <li class=" level-2">
+                <span>14.10.</span> 
+                <a href="capitulo_14/ejercicio_10.html">Ejercicio 10</a>
+            </li>
+                    <li class=" level-2">
+                <span>14.11.</span> 
+                <a href="capitulo_14/ejercicio_11.html">Ejercicio 11</a>
+            </li>
+                    <li class=" level-2">
+                <span>14.12.</span> 
+                <a href="capitulo_14/ejercicio_12.html">Ejercicio 12</a>
+            </li>
+                    <li class=" level-2">
+                <span>14.13.</span> 
+                <a href="capitulo_14/ejercicio_13.html">Ejercicio 13</a>
+            </li>
+                    <li class=" level-2">
+                <span>14.14.</span> 
+                <a href="capitulo_14/ejercicio_14.html">Ejercicio 14</a>
+            </li>
+                    <li class=" level-2">
+                <span>14.15.</span> 
+                <a href="capitulo_14/ejercicio_15.html">Ejercicio 15</a>
+            </li>
+                    <li class=" level-2">
+                <span>14.16.</span> 
+                <a href="capitulo_14/ejercicio_16.html">Ejercicio 16</a>
+            </li>
+                    <li class=" level-2">
+                <span>14.17.</span> 
+                <a href="capitulo_14/ejercicio_17.html">Ejercicio 17</a>
+            </li>
+                    <li class=" level-2">
+                <span>14.18.</span> 
+                <a href="capitulo_14/ejercicio_18.html">Ejercicio 18</a>
+            </li>
+                    <li class=" level-2">
+                <span>14.19.</span> 
+                <a href="capitulo_14/ejercicio_19.html">Ejercicio 19</a>
+            </li>
+                    <li class=" level-2">
+                <span>14.20.</span> 
+                <a href="capitulo_14/ejercicio_20.html">Ejercicio 20</a>
+            </li>
+                    <li class=" level-2">
+                <span>14.21.</span> 
+                <a href="capitulo_14/ejercicio_21.html">Ejercicio 21</a>
+            </li>
+                    <li class=" level-2">
+                <span>14.22.</span> 
+                <a href="capitulo_14/ejercicio_22.html">Ejercicio 22</a>
+            </li>
+                    <li class=" level-2">
+                <span>14.23.</span> 
+                <a href="capitulo_14/ejercicio_23.html">Ejercicio 23</a>
+            </li>
+                </ul>
+    </div>
+
+    <div class="row meta">
+        <div class="span2">
+            <img class="cover" src="../img/covers/ajax.png" alt="Portada del libro Introducción a AJAX" />
+        </div>
+        <div class="span10">
+            <ul>
+                <li><strong>Título</strong>: Introducción a AJAX</li>
+                <li><strong>Autor</strong>: Javier Eguiluz</li>
+                <li><strong>Licencia</strong>: Creative Commons No comercial - Atribución - Compartir igual (CC BY-NC-SA) 3.0 (<a href="http://creativecommons.org/licenses/by-nc-sa/3.0/es/">ver detalles</a>)</li>
+            </ul>
+        </div>
+    </div>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

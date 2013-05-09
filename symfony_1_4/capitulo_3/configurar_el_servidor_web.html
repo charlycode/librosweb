@@ -1,0 +1,310 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>3.4. Configurar el servidor web (Symfony 1.4, la guía definitiva)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="preparando_el_proyecto.html" />
+        <link rel="next" href="utilizando_el_sandbox.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="3.4. Configurar el servidor web (Symfony 1.4, la guía definitiva)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page symfony_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Symfony 1.4, la guía definitiva</a></li>
+  <li><a href="../capitulo_3.html">Capítulo 3. Ejecutar aplicaciones Symfony</a></li>
+  <li class="current"><span>3.4.. Configurar el servidor web</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="configurar_el_servidor_web"><span>3.4.</span> Configurar el servidor web</h1>
+    
+
+<h3 id="el_metodo_incorrecto">3.4.1. El método incorrecto</h3>
+
+<p>En la sección anterior se creó un directorio para guardar todos los archivos del proyecto. Si has creado ese directorio bajo el directorio raíz del servidor web, ya puedes acceder a tu proyecto mediante un navegador web.</p>
+
+<p>Como no es necesario configurar nada, esta es la forma más rápida de tener un proyecto Symfony listo para ser utilizado. Sin embargo, prueba a acceder desde tu navegador a un archivo tan confidencial como <code>config/databases.yml</code> y comprenderás fácilmente el peligro que supone no configurar bien el servidor web. Si el usuario que accede a tu sitio web sabe que está desarrollado con Symfony, podrá acceder a muchos archivos con información sensible.</p>
+
+<p><strong>Nunca jamás instales tus proyectos de esta forma en un servidor de producción</strong> y lee la siguiente sección para aprender a configurar correctamente el servidor web.</p>
+
+<h3 id="el_metodo_seguro">3.4.2. El método seguro</h3>
+
+<p>Una buena práctica web consiste en colocar en el directorio raíz del servidor web solamente los archivos que necesitan los navegadores, como las hojas de estilos, los archivos JavaScript y las imágenes. Nuestra recomendación es que guardes todos estos archivos en el subdirectorio <code>web/</code> del proyecto Symfony.</p>
+
+<p>Si echas un vistazo a este directorio, verás algunos subdirectorios creados para cada tipo de archivo (<code>css/</code> y <code>images/</code>) y los archivos de los dos controladores frontales. Estos dos controladores frontales son los únicos archivos PHP que deben encontrarse bajo el directorio raíz del servidor web. El resto de archivos PHP se pueden ocultar a los navegadores, lo que es una buena idea desde el punto de vista de la seguridad.</p>
+
+<h3 id="configuracion_del_servidor_web">3.4.3. Configuración del servidor web</h3>
+
+<p>Para que el proyecto se pueda acceder públicamente, debes configurar tu servidor web Apache. Localiza el archivo de configuración <code>httpd.conf</code> y añade lo siguiente justo al final del archivo:</p>
+
+<div class="code code">
+<pre class="code"># Asegúrate de que sólo tienes esta línea una vez en todo el archivo de configuración
+NameVirtualHost 127.0.0.1:8080
+&nbsp;
+# Esta es la configuración para tu proyecto
+Listen 127.0.0.1:8080
+&nbsp;
+&lt;VirtualHost 127.0.0.1:8080&gt;
+  DocumentRoot &quot;/home/sfproject/web&quot;
+  DirectoryIndex index.php
+  &lt;Directory &quot;/home/sfproject/web&quot;&gt;
+    AllowOverride All
+    Allow from All
+  &lt;/Directory&gt;
+&nbsp;
+  Alias /sf /home/sfproject/lib/vendor/symfony/data/web/sf
+  &lt;Directory &quot;/home/sfproject/lib/vendor/symfony/data/web/sf&quot;&gt;
+    AllowOverride All
+    Allow from All
+  &lt;/Directory&gt;
+&lt;/VirtualHost&gt;</pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> El alias <code>/sf</code> se necesita para las imágenes y archivos JavaScript que utilizan las páginas por defecto de Symfony y la barra de depuración web.</p>
+
+<p>En Windows reemplaza la línea <code>Alias</code> por algo como lo siguiente:</p>
+
+<div class="code code">
+<pre class="code">Alias /sf &quot;c:\dev\sfproject\lib\vendor\symfony\data\web\sf&quot;</pre>
+</div>
+
+<p>Además, la ruta <code>/home/sfproject/web</code> se debe sustituir por algo como lo siguiente <code>c:\dev\sfproject\web</code></p></div>
+
+<p>La configuración anterior hace que Apache espere las peticiones en el puerto <code>8080</code> de tu máquina, por lo que tu proyecto se puede acceder en la siguiente URL:</p>
+
+<div class="code code">
+<pre class="code">http://localhost:8080/</pre>
+</div>
+
+<p>Puedes sustituir <code>8080</code> por cualquier otro número que prefieras, pero se recomienda utilizar un número mayor que <code>1024</code> para que no tengas que utilizar permisos de administrador.</p>
+
+<div class="admonition sidebar"><p><strong class="title">Utilizar un dominio propio para el proyecto</strong> Si eres el administrador de tu máquina, es mucho mejor crear <em>virtual hosts</em> en vez de utilizar un nuevo puerto cada vez que creas un proyecto. En vez de elegir un puerto y añadir la directiva <code>Listen</code>, escoge un nombre de dominio y añade la directiva <code>ServerName</code>:</p>
+
+<div class="code code">
+<pre class="code"># Esta es la configuración para tu proyecto
+&lt;VirtualHost 127.0.0.1:80&gt;
+  ServerName www.miproyecto.com.localhost
+  &lt;!-- aquí incluye la misma configuración que antes --&gt;
+&lt;/VirtualHost&gt;</pre>
+</div>
+
+<p>El nombre de dominio <code>www.miproyecto.com.localhost</code> que utiliza la configuración de Apache lo tienes que registrar de forma local. Si utilizas un sistema operativo tipo Linux, debes añadirlo en el archivo <code>/etc/hosts</code>. Si utilizas Windows XP, Windows Vista o Windows 7 este archivo se encuentra en el directorio <code>C:\WINDOWS\system32\drivers\etc\</code>. En cualquier caso, añade la siguiente línea:</p>
+
+<div class="code code">
+<pre class="code">127.0.0.1         www.miproyecto.com.localhost</pre>
+</div>
+
+<p></p></div>
+
+<h3 id="probar_la_nueva_configuracion">3.4.4. Probar la nueva configuración</h3>
+
+<p>Reinicia el servidor web Apache y comprueba que puedes acceder a la aplicación abriendo un navegador y accediendo a la URL http://localhost:8080/index.php/ o http://www.miproyecto.com.localhost/index.php/ dependiendo de la configuración de Apache que elegiste en la sección anterior.</p>
+
+<div class="figure" id="figure_3_1">
+    <img src="../../img/symfony_1_4/congratulations.png" alt="Página de bienvenida de Symfony" />
+
+    <p class="caption"><strong>Figura 3.1</strong> Página de bienvenida de Symfony</p>
+</div>
+
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Si tienes el módulo <code>mod_write</code> correctamente instalado en Apache, puedes eliminar la parte <code>index.php/</code> de todas las URL. El motivo es que Symfony crea el archivo <code>web/.htaccess</code> que ya incluye las reglas necesarias para reescribir las URL.</p></div>
+
+<p>También puedes probar a acceder a la aplicación en el entorno de desarrollo (los entornos se explican en la próxima sección). Para ello, accede a la siguiente URL:</p>
+
+<div class="code code">
+<pre class="code">http://www.miproyecto.com.localhost/frontend_dev.php/</pre>
+</div>
+
+<p>La principal diferencia es que ahora se muestra la barra de depuración web en la esquina superior derecha, incluyendo unos pequeños iconos si has configurado correctamente el alias para la ruta <code>sf/</code>.</p>
+
+<div class="figure" id="figure_3_2">
+    <img src="../../img/symfony_1_4/web_debug_toolbar.png" alt="La barra de depuración web del entorno de desarrollo" />
+
+    <p class="caption"><strong>Figura 3.2</strong> La barra de depuración web del entorno de desarrollo</p>
+</div>
+
+
+<div class="admonition note"><p><strong class="title">Nota</strong> La configuración es un poco diferente si quieres ejecutar Symfony en el servidor web IIS de Windows, por lo que deberías leer el <a href="http://uniwebsidad.com/libros/mas-con-symfony/capitulo11">tutorial sobre cómo configurar IIS para Symfony</a>.</p></div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="preparando_el_proyecto.html">&larr; Anterior <span>3.3. Preparando el proyecto</span></a>
+            
+            <a class="span5 next" href="utilizando_el_sandbox.html">Siguiente &rarr; <span>3.5. Utilizando el <em>sandbox</em></span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Configurar el servidor web (Symfony 1.4, la guía definitiva%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Symfony 1.4, la guía definitiva : Configurar el servidor web']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción a Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Explorando el interior de Symfony</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_3.html">
+            <span>Capítulo 3.</span> Ejecutar aplicaciones Symfony
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="pre_requisitos.html">
+            <span>3.1.</span> Pre-requisitos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="instalando_symfony.html">
+            <span>3.2.</span> Instalando Symfony
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="preparando_el_proyecto.html">
+            <span>3.3.</span> Preparando el proyecto
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="configurar_el_servidor_web.html">
+            <span>3.4.</span> Configurar el servidor web
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="utilizando_el_sandbox.html">
+            <span>3.5.</span> Utilizando el <em>sandbox</em>
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="resumen.html">
+            <span>3.6.</span> Resumen
+        </a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Introducción a la creación de páginas</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Configurar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> El Controlador</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> La Vista</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> El modelo (Doctrine)</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Enlaces y sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Emails</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Uso de la cache</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Pruebas unitarias y funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Herramientas para la administración de aplicaciones</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> Personalizar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> Rendimiento</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Configuración avanzada</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

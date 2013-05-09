@@ -1,0 +1,261 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>3.3. Marcado avanzado de texto (Introducción a XHTML)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="marcado_basico_de_texto.html" />
+        <link rel="next" href="marcado_generico_de_texto.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="3.3. Marcado avanzado de texto (Introducción a XHTML)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page xhtml">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Introducción a XHTML</a></li>
+  <li><a href="../capitulo_3.html">Capítulo 3. Texto</a></li>
+  <li class="current"><span>3.3. Marcado avanzado de texto</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="marcado_avanzado_de_texto"><span>3.3.</span> Marcado avanzado de texto</h1>
+    
+
+<p>Las páginas y documentos más avanzados suelen incluir otros elementos importantes que se deben marcar de forma adecuada. Por ello, HTML incluye muchas otras etiquetas que permiten marcar más elementos del texto.</p>
+
+<p>La etiqueta <code>&lt;abbr&gt;</code> marca las abreviaturas de un texto y la etiqueta <code>&lt;acronym&gt;</code> se emplea para marcar las siglas o acrónimos del texto. Su definición es la siguiente:</p>
+
+<table class="property" summary="Definición y propiedades de la etiqueta abbr de XHTML"><thead><tr>  <th scope="row">Etiqueta</th>  <td><strong class="title"><span>&lt;</span>abbr<span>&gt;</span></strong></td></tr></thead><tbody><tr>  <th scope="row">Atributos comunes</th>  <td><a href="../capitulo_2/etiquetas_y_atributos.html#atributos_basicos">básicos</a>, <a href="../capitulo_2/etiquetas_y_atributos.html#atributos_para_internacionalizacion">internacionalización</a> y <a href="../capitulo_2/etiquetas_y_atributos.html#atributos_de_eventos">eventos</a></td></tr><tr>  <th scope="row">Atributos propios</th>  <td><ul><li><p><code>title = "texto"</code> - Indica el significado completo de la abreviatura</p></li></ul></td></tr><tr>  <th scope="row">Tipo de elemento</th>  <td>En línea</td></tr><tr>  <th scope="row">Descripción</th>  <td>Se emplea para marcar las abreviaturas del texto y proporcionar el significado de esas abreviaturas</td></tr></tbody></table>
+
+<table class="property" summary="Definición y propiedades de la etiqueta acronym de XHTML"><thead><tr>  <th scope="row">Etiqueta</th>  <td><strong class="title"><span>&lt;</span>acronym<span>&gt;</span></strong></td></tr></thead><tbody><tr>  <th scope="row">Atributos comunes</th>  <td><a href="../capitulo_2/etiquetas_y_atributos.html#atributos_basicos">básicos</a>, <a href="../capitulo_2/etiquetas_y_atributos.html#atributos_para_internacionalizacion">internacionalización</a> y <a href="../capitulo_2/etiquetas_y_atributos.html#atributos_de_eventos">eventos</a></td></tr><tr>  <th scope="row">Atributos propios</th>  <td><ul><li><p><code>title = "texto"</code> - Indica el significado completo del acrónimo o sigla</p></li></ul></td></tr><tr>  <th scope="row">Tipo de elemento</th>  <td>En línea</td></tr><tr>  <th scope="row">Descripción</th>  <td>Se emplea para marcar las siglas o acrónimos del texto y proporcionar el significado de esas siglas</td></tr></tbody></table>
+
+<p>En ambos casos, el atributo <code>title</code> se puede utilizar para incluir el significado completo de la abreviatura o sigla. Ejemplo:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">html</span>&gt;</span>
+&nbsp;
+<span class="sc2">&lt;<span class="kw2">head</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">title</span>&gt;</span>Ejemplo de etiqueta acronym<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">title</span>&gt;</span>
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">head</span>&gt;</span>
+&nbsp;
+<span class="sc2">&lt;<span class="kw2">body</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">p</span>&gt;</span>El lenguaje <span class="sc2">&lt;acronym <span class="kw3">title</span><span class="sy0">=</span><span class="st0">&quot;HyperText Markup Language&quot;</span>&gt;</span>HTML<span class="sc2">&lt;<span class="sy0">/</span>acronym&gt;</span> es estandarizado 
+por el <span class="sc2">&lt;acronym <span class="kw3">title</span><span class="sy0">=</span><span class="st0">&quot;World Wide Web Consortium&quot;</span>&gt;</span>W3C<span class="sc2">&lt;<span class="sy0">/</span>acronym&gt;</span>.<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">p</span>&gt;</span>
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">body</span>&gt;</span>
+&nbsp;
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">html</span>&gt;</span></pre>
+</div>
+
+<p>La mayoría de navegadores muestran por defecto un borde inferior punteado para todos los elementos <code>&lt;abbr&gt;</code> y <code>&lt;acronym&gt;</code>. Al posicionar el puntero del ratón sobre la palabra subrayada, el navegador muestra un pequeño recuadro (llamado <em>tooltip</em> en inglés) con el valor del atributo <code>title</code>:</p>
+
+<div class="figure" id="figure_3_10">
+    <img src="../../img/xhtml/ejemplo_etiqueta_acronym.gif" alt="Ejemplo de uso de la etiqueta acronym" />
+
+    <p class="caption"><strong>Figura 3.10</strong> Ejemplo de uso de la etiqueta acronym</p>
+</div>
+
+
+<p>Por otra parte, en ocasiones resulta útil incluir la definición de una palabra extraña o cuyo uso está restringido a un entorno muy determinado. HTML incluye la etiqueta <code>&lt;dfn&gt;</code> para proporcionar al usuario la definición de todas las palabras para las que se considere apropiado. La definición formal de esta etiqueta se muestra a continuación:</p>
+
+<table class="property" summary="Definición y propiedades de la etiqueta dfn de XHTML"><thead><tr>  <th scope="row">Etiqueta</th>  <td><strong class="title"><span>&lt;</span>dfn<span>&gt;</span></strong></td></tr></thead><tbody><tr>  <th scope="row">Atributos comunes</th>  <td><a href="../capitulo_2/etiquetas_y_atributos.html#atributos_basicos">básicos</a>, <a href="../capitulo_2/etiquetas_y_atributos.html#atributos_para_internacionalizacion">internacionalización</a> y <a href="../capitulo_2/etiquetas_y_atributos.html#atributos_de_eventos">eventos</a></td></tr><tr>  <th scope="row">Atributos propios</th>  <td><ul><li><p><code>title = "texto"</code> - Indica el significado completo del término</p></li></ul></td></tr><tr>  <th scope="row">Tipo de elemento</th>  <td>En línea</td></tr><tr>  <th scope="row">Descripción</th>  <td>Se emplea para marcar las definiciones de ciertos términos y proporcionar el significado de esos términos</td></tr></tbody></table>
+
+<p>El siguiente ejemplo muestra cómo se utiliza la etiqueta <code>&lt;dfn&gt;</code> para incluir la definición completa de una palabra cuyo uso no es habitual fuera de los ámbitos médicos y psicológicos:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">p</span>&gt;</span>Con estos síntomas, podría tratarse de un caso de <span class="sc2">&lt;<span class="kw2">dfn</span> <span class="kw3">title</span><span class="sy0">=</span><span class="st0">&quot;Imagen o sensación subjetiva, </span>
+<span class="sc2">propia de un sentido, determinada por otra sensación que afecta a un sentido </span>
+<span class="sc2">diferente&quot;</span>&gt;</span>sinestesia<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">dfn</span>&gt;&lt;<span class="sy0">/</span><span class="kw2">p</span>&gt;</span></pre>
+</div>
+
+<p>Por último, HTML incluye una etiqueta que se puede utilizar para marcar un texto como una citación:</p>
+
+<table class="property" summary="Definición y propiedades de la etiqueta cite de XHTML"><thead><tr>  <th scope="row">Etiqueta</th>  <td><strong class="title"><span>&lt;</span>cite<span>&gt;</span></strong></td></tr></thead><tbody><tr>  <th scope="row">Atributos comunes</th>  <td><a href="../capitulo_2/etiquetas_y_atributos.html#atributos_basicos">básicos</a>, <a href="../capitulo_2/etiquetas_y_atributos.html#atributos_para_internacionalizacion">internacionalización</a> y <a href="../capitulo_2/etiquetas_y_atributos.html#atributos_de_eventos">eventos</a></td></tr><tr>  <th scope="row">Atributos propios</th>  <td>-</td></tr><tr>  <th scope="row">Tipo de elemento</th>  <td>En línea</td></tr><tr>  <th scope="row">Descripción</th>  <td>Se emplea para marcar una cita o una referencia a otras fuentes</td></tr></tbody></table>
+
+<p>En ocasiones, no está clara la diferencia entre <code>&lt;cite&gt;</code> y <code>&lt;blockquote&gt;</code>. El elemento <code>&lt;cite&gt;</code> marca el autor de la cita (persona, documento, etc.) y <code>&lt;blockquote&gt;</code> marca el contenido de la propia cita. En el siguiente ejemplo, <code>&lt;blockquote&gt;</code> encierra el contenido de una frase célebre y <code>&lt;cite&gt;</code> encierra el nombre de su autor:</p>
+
+<div class="code html">
+<pre class="html5">Como dijo <span class="sc2">&lt;<span class="kw2">cite</span>&gt;</span>Mahatma Gandhi<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">cite</span>&gt;</span>:
+<span class="sc2">&lt;<span class="kw2">blockquote</span>&gt;</span>Vive como si fueras a morir mañana y aprende como si fueras a vivir para siempre.<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">blockquote</span>&gt;</span></pre>
+</div>
+
+<p><div class="exercise"><p class="title">Ejercicio 3</p> <p>Estructurar y marcar el siguiente texto para que el navegador lo muestre con el aspecto de la siguiente imagen:</p>
+
+<div class="figure" id="figure_3_11">
+    <img src="../../img/xhtml/e0301.gif" alt="Texto HTML correctamente estructurado y marcado" />
+
+    <p class="caption"><strong>Figura 3.11</strong> Texto HTML correctamente estructurado y marcado</p>
+</div>
+
+
+<p><a href="../../ejercicios/xhtml/ejercicio3/ejercicio3.txt">Descargar texto original</a></p>
+
+<p><a href="http://librosweb.es/xhtml/capitulo_15/ejercicio_3.html">Ver solución</a></p></div></p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="marcado_basico_de_texto.html">&larr; Anterior <span>3.2. Marcado básico de texto</span></a>
+            
+            <a class="span5 next" href="marcado_generico_de_texto.html">Siguiente &rarr; <span>3.4. Marcado genérico de texto</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Marcado avanzado de texto (Introducción a XHTML%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a XHTML : Marcado avanzado de texto']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Características básicas</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_3.html">
+            <span>Capítulo 3.</span> Texto
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="estructurar.html">
+            <span>3.1.</span> Estructurar
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="marcado_basico_de_texto.html">
+            <span>3.2.</span> Marcado básico de texto
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="marcado_avanzado_de_texto.html">
+            <span>3.3.</span> Marcado avanzado de texto
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="marcado_generico_de_texto.html">
+            <span>3.4.</span> Marcado genérico de texto
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="espacios_en_blanco_y_nuevas_lineas.html">
+            <span>3.5.</span> Espacios en blanco y nuevas líneas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="codificacion_de_caracteres.html">
+            <span>3.6.</span> Codificación de caracteres
+        </a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Enlaces</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Listas</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Imágenes y objetos</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Tablas</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Estructura y layout</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Metainformación</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Otras etiquetas importantes</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Accesibilidad</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Validación</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Fragmentos de código</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

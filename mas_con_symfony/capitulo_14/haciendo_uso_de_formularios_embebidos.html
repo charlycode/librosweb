@@ -1,0 +1,418 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>14.8. Haciendo uso de formularios embebidos (Más con Symfony)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="gestores_de_configuracion_propios.html" />
+        <link rel="next" href="comparando_el_rendimiento.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="14.8. Haciendo uso de formularios embebidos (Más con Symfony)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page mas_con_symfony">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Más con Symfony</a></li>
+  <li><a href="../capitulo_14.html">Capítulo 14. Jugando con la cache de configuración de Symfony</a></li>
+  <li class="current"><span>14.8.. Haciendo uso de formularios embebidos</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="haciendo_uso_de_formularios_embebidos"><span>14.8.</span> Haciendo uso de formularios embebidos</h1>
+    
+
+<p>Todavía no hemos tenido en cuenta una de las características más importantes:
+los formularios embebidos. Si se embebe una instancia de <code>CommentForm</code> dentro
+de otro formulario, no se le aplicarán las mejoras realizadas en <code>forms.yml</code>.
+Esto es muy fácil de comprobar mediante las pruebas unitarias:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$t</span> <span class="sy0">=</span> <span class="kw2">new</span> lime_test<span class="br0">&#40;</span><span class="nu0">6</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="co1">// ...</span>
+&nbsp;
+<span class="re0">$form</span> <span class="sy0">=</span> <span class="kw2">new</span> BaseForm<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$form</span><span class="sy0">-&gt;</span><span class="me1">embedForm</span><span class="br0">&#40;</span><span class="st_h">'comment'</span><span class="sy0">,</span> <span class="kw2">new</span> CommentForm<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$form</span><span class="sy0">-&gt;</span><span class="me1">bind</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$enhancer</span><span class="sy0">-&gt;</span><span class="me1">enhance</span><span class="br0">&#40;</span><span class="re0">$form</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$t</span><span class="sy0">-&gt;</span><span class="me1">like</span><span class="br0">&#40;</span><span class="re0">$form</span><span class="br0">&#91;</span><span class="st_h">'comment'</span><span class="br0">&#93;</span><span class="br0">&#91;</span><span class="st_h">'body'</span><span class="br0">&#93;</span><span class="sy0">-&gt;</span><span class="me1">renderLabel</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+  <span class="st_h">'/Please enter your comment/'</span><span class="sy0">,</span>
+  <span class="st_h">'-&gt;enhance() enhances embedded forms'</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>La nueva comprobación demuestra que las mejoras no se están aplicando en los
+formularios embebidos:</p>
+
+<div class="figure" id="figure_14_5">
+    <img src="../../img/mas_con_symfony/config_cache_tests_6_not_ok.png" alt="Las pruebas fallan" />
+
+    <p class="caption"><strong>Figura 14.5</strong> Las pruebas fallan</p>
+</div>
+
+
+<p>Para solucionar este problema es imprescindible crear un gestor de configuración
+más avanzado. Este nuevo gestor aplica las mejoras de <code>forms.yml</code> de forma
+modular para tener en cuenta los formularios embebidos. Así que se va a generar
+un método específico para cada clase de formulario configurada. Estos nuevos
+métodos se van a generar en una nueva clase de tipo <em>worker</em> de nuestro gestor
+propio de configuración.</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">class</span> sfFormYamlEnhancementsConfigHandler <span class="kw2">extends</span> sfYamlConfigHandler
+<span class="br0">&#123;</span>
+  <span class="co1">// ...</span>
+&nbsp;
+  <span class="kw2">protected</span> <span class="kw2">function</span> getEnhancerCode<span class="br0">&#40;</span><span class="re0">$fields</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$code</span> <span class="sy0">=</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="kw1">foreach</span> <span class="br0">&#40;</span><span class="re0">$fields</span> <span class="kw1">as</span> <span class="re0">$field</span> <span class="sy0">=&gt;</span> <span class="re0">$config</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="re0">$code</span><span class="br0">&#91;</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="kw3">sprintf</span><span class="br0">&#40;</span><span class="st_h">'if (isset($fields[%s]))'</span><span class="sy0">,</span> <span class="kw3">var_export</span><span class="br0">&#40;</span><span class="re0">$field</span><span class="sy0">,</span> <span class="kw4">true</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+      <span class="re0">$code</span><span class="br0">&#91;</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="st_h">'{'</span><span class="sy0">;</span>
+&nbsp;
+      <span class="kw1">if</span> <span class="br0">&#40;</span><span class="kw3">isset</span><span class="br0">&#40;</span><span class="re0">$config</span><span class="br0">&#91;</span><span class="st_h">'label'</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+      <span class="br0">&#123;</span>
+        <span class="re0">$code</span><span class="br0">&#91;</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="kw3">sprintf</span><span class="br0">&#40;</span><span class="st_h">'  $fields[%s]-&gt;getWidget()-&gt;setLabel(%s);'</span><span class="sy0">,</span>
+          <span class="kw3">var_export</span><span class="br0">&#40;</span><span class="re0">$config</span><span class="br0">&#91;</span><span class="st_h">'label'</span><span class="br0">&#93;</span><span class="sy0">,</span> <span class="kw4">true</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+      <span class="br0">&#125;</span>
+&nbsp;
+      <span class="kw1">if</span> <span class="br0">&#40;</span><span class="kw3">isset</span><span class="br0">&#40;</span><span class="re0">$config</span><span class="br0">&#91;</span><span class="st_h">'attributes'</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+      <span class="br0">&#123;</span>
+        <span class="re0">$code</span><span class="br0">&#91;</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="st_h">'  $fields[%s]-&gt;getWidget()-&gt;setAttributes(array_merge('</span><span class="sy0">;</span>
+        <span class="re0">$code</span><span class="br0">&#91;</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="st_h">'    $fields[%s]-&gt;getWidget()-&gt;getAttributes(),'</span><span class="sy0">;</span>
+        <span class="re0">$code</span><span class="br0">&#91;</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="st_h">'    '</span><span class="sy0">.</span><span class="kw3">var_export</span><span class="br0">&#40;</span><span class="re0">$config</span><span class="br0">&#91;</span><span class="st_h">'attributes'</span><span class="br0">&#93;</span><span class="sy0">,</span> <span class="kw4">true</span><span class="br0">&#41;</span><span class="sy0">;</span>
+        <span class="re0">$code</span><span class="br0">&#91;</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="st_h">'  ));'</span><span class="sy0">;</span>
+      <span class="br0">&#125;</span>
+&nbsp;
+      <span class="kw1">if</span> <span class="br0">&#40;</span><span class="kw3">isset</span><span class="br0">&#40;</span><span class="re0">$config</span><span class="br0">&#91;</span><span class="st_h">'errors'</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+      <span class="br0">&#123;</span>
+        <span class="re0">$code</span><span class="br0">&#91;</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="kw3">sprintf</span><span class="br0">&#40;</span><span class="st_h">'  if ($error = $fields[%s]-&gt;getError())'</span><span class="sy0">,</span>
+          <span class="kw3">var_export</span><span class="br0">&#40;</span><span class="re0">$field</span><span class="sy0">,</span> <span class="kw4">true</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+        <span class="re0">$code</span><span class="br0">&#91;</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="st_h">'  {'</span><span class="sy0">;</span>
+        <span class="re0">$code</span><span class="br0">&#91;</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="st_h">'    $error-&gt;getValidator()-&gt;setMessages(array_merge('</span><span class="sy0">;</span>
+        <span class="re0">$code</span><span class="br0">&#91;</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="st_h">'      $error-&gt;getValidator()-&gt;getMessages(),'</span><span class="sy0">;</span>
+        <span class="re0">$code</span><span class="br0">&#91;</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="st_h">'      '</span><span class="sy0">.</span><span class="kw3">var_export</span><span class="br0">&#40;</span><span class="re0">$config</span><span class="br0">&#91;</span><span class="st_h">'errors'</span><span class="br0">&#93;</span><span class="sy0">,</span> <span class="kw4">true</span><span class="br0">&#41;</span><span class="sy0">;</span>
+        <span class="re0">$code</span><span class="br0">&#91;</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="st_h">'    ));'</span><span class="sy0">;</span>
+        <span class="re0">$code</span><span class="br0">&#91;</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="st_h">'  }'</span><span class="sy0">;</span>
+      <span class="br0">&#125;</span>
+&nbsp;
+      <span class="re0">$code</span><span class="br0">&#91;</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="st_h">'}'</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="kw1">return</span> <span class="kw3">implode</span><span class="br0">&#40;</span>PHP_EOL<span class="sy0">.</span><span class="st_h">'    '</span><span class="sy0">,</span> <span class="re0">$code</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Durante la generación del código se comprueba si existen determinadas claves
+en el array de configuración, en vez de realizar la comprobación en tiempo de
+ejecución. Se trata de un pequelo detalle que permite aumentar el rendimiento
+de la aplicación.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Como regla general, la lógica que comprueba las condiciones de la configuración
+se debería realizar en el propio gestor de configuración y no en el código
+generado. La lógica que comprueba las condiciones en tiempo de ejecución,
+como por ejemplo el tipo de formulario que se está mejorando, deben realizarse
+en tiempo de ejecución.</p></div>
+
+<p>Este código generado se incluye dentro de la definición de una clase y luego
+se guarda en el directorio de la cache.</p>
+
+<div class="code php">
+<pre class="php">class sfFormYamlEnhancementsConfigHandler extends sfYamlConfigHandler
+{
+  public function execute($configFiles)
+  {
+    $forms = self::getConfiguration($configFiles);
+&nbsp;
+    $code = array();
+    $code[] = '<span class="kw2">&lt;?php</span><span class="st_h">';
+    $code[] = '</span><span class="co1">// auto-generated by '.__CLASS__;</span>
+    <span class="re0">$code</span><span class="br0">&#91;</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="st_h">'// date: '</span><span class="sy0">.</span><span class="kw3">date</span><span class="br0">&#40;</span><span class="st_h">'Y/m/d H:is'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$code</span><span class="br0">&#91;</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="st_h">'class sfFormYamlEnhancementsWorker'</span><span class="sy0">;</span>
+    <span class="re0">$code</span><span class="br0">&#91;</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="st_h">'{'</span><span class="sy0">;</span>
+    <span class="re0">$code</span><span class="br0">&#91;</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="st_h">'  static public $enhancable = '</span><span class="sy0">.</span><span class="kw3">var_export</span><span class="br0">&#40;</span><span class="kw3">array_keys</span><span class="br0">&#40;</span><span class="re0">$forms</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="kw4">true</span><span class="br0">&#41;</span><span class="sy0">.</span><span class="st_h">';'</span><span class="sy0">;</span>
+&nbsp;
+    <span class="kw1">foreach</span> <span class="br0">&#40;</span><span class="re0">$forms</span> <span class="kw1">as</span> <span class="re0">$class</span> <span class="sy0">=&gt;</span> <span class="re0">$fields</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="re0">$code</span><span class="br0">&#91;</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="st_h">'  static public function enhance'</span><span class="sy0">.</span><span class="re0">$class</span><span class="sy0">.</span><span class="st_h">'(sfFormFieldSchema $fields)'</span><span class="sy0">;</span>
+      <span class="re0">$code</span><span class="br0">&#91;</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="st_h">'  {'</span><span class="sy0">;</span>
+      <span class="re0">$code</span><span class="br0">&#91;</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="st_h">'    '</span><span class="sy0">.</span><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getEnhancerCode</span><span class="br0">&#40;</span><span class="re0">$fields</span><span class="br0">&#41;</span><span class="sy0">;</span>
+      <span class="re0">$code</span><span class="br0">&#91;</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="st_h">'  }'</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="re0">$code</span><span class="br0">&#91;</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="st_h">'}'</span><span class="sy0">;</span>
+&nbsp;
+    <span class="kw1">return</span> <span class="kw3">implode</span><span class="br0">&#40;</span>PHP_EOL<span class="sy0">,</span> <span class="re0">$code</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="co1">// ...</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>La clase <code>sfFormYamlEnhancer</code> ahora deriva el trabajo de manipulación de los
+formularios a la clase de tipo <em>worker</em> generada, pero debe controlar la
+recursión de los formularios embebidos. Para ello es necesario procesar en paralelo
+el esquema de los campos del formulario (iterándolo de forma recursiva) y el objeto
+del formulario (que incluye los formularios embebidos).</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">class</span> sfFormYamlEnhancer
+<span class="br0">&#123;</span>
+  <span class="co1">// ...</span>
+&nbsp;
+  <span class="kw2">public</span> <span class="kw2">function</span> enhance<span class="br0">&#40;</span>sfForm <span class="re0">$form</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="kw1">require_once</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">configCache</span><span class="sy0">-&gt;</span><span class="me1">checkConfig</span><span class="br0">&#40;</span><span class="st_h">'config/forms.yml'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">doEnhance</span><span class="br0">&#40;</span><span class="re0">$form</span><span class="sy0">-&gt;</span><span class="me1">getFormFieldSchema</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="re0">$form</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="kw2">protected</span> <span class="kw2">function</span> doEnhance<span class="br0">&#40;</span>sfFormFieldSchema <span class="re0">$fieldSchema</span><span class="sy0">,</span> sfForm <span class="re0">$form</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="kw1">if</span> <span class="br0">&#40;</span><span class="re0">$enhancer</span> <span class="sy0">=</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getEnhancer</span><span class="br0">&#40;</span><span class="kw3">get_class</span><span class="br0">&#40;</span><span class="re0">$form</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="kw3">call_user_func</span><span class="br0">&#40;</span><span class="re0">$enhancer</span><span class="sy0">,</span> <span class="re0">$fieldSchema</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="kw1">foreach</span> <span class="br0">&#40;</span><span class="re0">$form</span><span class="sy0">-&gt;</span><span class="me1">getEmbeddedForms</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="kw1">as</span> <span class="re0">$name</span> <span class="sy0">=&gt;</span> <span class="re0">$form</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="kw1">if</span> <span class="br0">&#40;</span><span class="kw3">isset</span><span class="br0">&#40;</span><span class="re0">$fieldSchema</span><span class="br0">&#91;</span><span class="re0">$name</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+      <span class="br0">&#123;</span>
+        <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">doEnhance</span><span class="br0">&#40;</span><span class="re0">$fieldSchema</span><span class="br0">&#91;</span><span class="re0">$name</span><span class="br0">&#93;</span><span class="sy0">,</span> <span class="re0">$form</span><span class="br0">&#41;</span><span class="sy0">;</span>
+      <span class="br0">&#125;</span>
+    <span class="br0">&#125;</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="kw2">public</span> <span class="kw2">function</span> getEnhancer<span class="br0">&#40;</span><span class="re0">$class</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="kw1">if</span> <span class="br0">&#40;</span><span class="kw3">in_array</span><span class="br0">&#40;</span><span class="re0">$class</span><span class="sy0">,</span> sfFormYamlEnhancementsWorker<span class="sy0">::</span><span class="re0">$enhancable</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="kw1">return</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'sfFormYamlEnhancementsWorker'</span><span class="sy0">,</span> <span class="st_h">'enhance'</span><span class="sy0">.</span><span class="re0">$class</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+    <span class="kw1">else</span> <span class="kw1">if</span> <span class="br0">&#40;</span><span class="re0">$overlap</span> <span class="sy0">=</span> <span class="kw3">array_intersect</span><span class="br0">&#40;</span><span class="kw3">class_parents</span><span class="br0">&#40;</span><span class="re0">$class</span><span class="br0">&#41;</span><span class="sy0">,</span>
+      sfFormYamlEnhancementsWorker<span class="sy0">::</span><span class="re0">$enhancable</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="kw1">return</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'sfFormYamlEnhancementsWorker'</span><span class="sy0">,</span> <span class="st_h">'enhance'</span><span class="sy0">.</span><span class="kw3">current</span><span class="br0">&#40;</span><span class="re0">$overlap</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Los campos de los formularios embebidos no se deben modificar después de haber
+sido embebidos. Los formularios embebidos se guardan en su formulario padre
+simplemente por razones de procesamiento, ya que no afectan a la forma en la
+que se muestra el formulario padre.</p></div>
+
+<p>Ahora que ya está disponible el soporte de los formularios embebidos, las pruebas
+deberían ejecutarse correctamente. Si ejecutas las pruebas, verás el siguiente
+resultado:</p>
+
+<div class="figure" id="figure_14_6">
+    <img src="../../img/mas_con_symfony/config_cache_tests_6_ok.png" alt="Las pruebas pasan correctamente" />
+
+    <p class="caption"><strong>Figura 14.6</strong> Las pruebas pasan correctamente</p>
+</div>
+
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="gestores_de_configuracion_propios.html">&larr; Anterior <span>14.7. Gestores de configuración propios</span></a>
+            
+            <a class="span5 next" href="comparando_el_rendimiento.html">Siguiente &rarr; <span>14.9. Comparando el rendimiento</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Haciendo uso de formularios embebidos (Más con Symfony%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Más con Symfony : Haciendo uso de formularios embebidos']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Enrutamiento avanzado</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Mejora tu productividad</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Emails</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Widgets y validadores propios</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Formularios avanzados</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Mejorando la barra de depuración web</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Uso avanzado de Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Utilizando la herencia de tablas de Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Funcionamiento interno de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Windows y Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Desarrollando aplicaciones Facebook</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Descubriendo el poder de la línea de comandos</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_14.html">
+            <span>Capítulo 14.</span> Jugando con la cache de configuración de Symfony
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="cadenas_de_texto_de_los_formularios.html">
+            <span>14.1.</span> Cadenas de texto de los formularios
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="la_solucion_yaml.html">
+            <span>14.2.</span> La solución YAML
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="filtrando_las_variables_de_la_plantilla.html">
+            <span>14.3.</span> Filtrando las variables de la plantilla
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="aplicando_la_configuracion_yaml.html">
+            <span>14.4.</span> Aplicando la configuración YAML
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="la_cache_de_configuracion.html">
+            <span>14.5.</span> La cache de configuración
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="anadiendo_pruebas_unitarias.html">
+            <span>14.6.</span> Añadiendo pruebas unitarias
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="gestores_de_configuracion_propios.html">
+            <span>14.7.</span> Gestores de configuración propios
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="haciendo_uso_de_formularios_embebidos.html">
+            <span>14.8.</span> Haciendo uso de formularios embebidos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="comparando_el_rendimiento.html">
+            <span>14.9.</span> Comparando el rendimiento
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="creando_un_plugin.html">
+            <span>14.10.</span> Creando un plugin
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="conclusion.html">
+            <span>14.11.</span> Conclusión
+        </a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Trabajando con la comunidad Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>A</span> <a href="../apendice_a.html"> Código JavaScript de sfWidgetFormGMapAddress</a>
+    </li>
+    <li class="level-1">
+        <span>B</span> <a href="../apendice_b.html"> Ejemplo de instalador propio</a>
+    </li>
+    <li class="level-1">
+        <span>C</span> <a href="../apendice_c.html"> Licencia</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

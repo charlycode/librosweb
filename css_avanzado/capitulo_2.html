@@ -1,0 +1,301 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>Capítulo 2. Buenas prácticas (CSS avanzado)</title>
+        <link href="../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="capitulo_1/texto.html" />
+        <link rel="next" href="capitulo_2/comprobar_el_diseno_en_varios_navegadores.html" />
+        <link rel="start" href="index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Capítulo 2. Buenas prácticas (CSS avanzado)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page css_avanzado">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../index.html">Inicio</a></li>
+  <li><a href="index.html">CSS avanzado</a></li>
+  <li class="current"><span>Capítulo 2.. Buenas prácticas</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="capitulo_2"><span>Capítulo 2.</span> Buenas prácticas</h1>
+    <h2 id="inicializar_los_estilos">2.1. Inicializar los estilos</h2>
+
+
+<p>Cuando los navegadores muestran una página web, además de aplicar las hojas de estilo de los diseñadores, siempre aplican otras dos hojas de estilos: la del navegador y la del usuario.</p>
+
+<p>La hoja de estilos del navegador se utiliza para establecer el estilo inicial por defecto a todos los elementos HTML: tamaños de letra, decoración del texto, márgenes, etc. Esta hoja de estilos siempre se aplica a todas las páginas web, por lo que cuando una página no incluye ninguna hoja de estilos propia, el aspecto con el que se muestra en el navegador se debe a esta hoja de estilos del navegador.</p>
+
+<p>Por su parte, la hoja de estilos del usuario es la que puede aplicar el usuario mediante su navegador. Aunque la inmensa mayoría de usuarios no utiliza esta característica, en teoría es posible que los usuarios establezcan el tipo de letra, color y tamaño de los textos y cualquier otra propiedad CSS de los elementos de la página que muestra el navegador.</p>
+
+<p>El orden en el que se aplican las hojas de estilo es el siguiente:</p>
+
+<div class="figure" id="figure_2_1">
+    <img src="../img/css_avanzado/f0201.gif" alt="Orden en el que se aplican las diferentes hojas de estilos" />
+
+    <p class="caption"><strong>Figura 2.1</strong> Orden en el que se aplican las diferentes hojas de estilos</p>
+</div>
+
+
+<p>Por tanto, las reglas que menos prioridad tienen son las del CSS de los navegadores, ya que son las primeras que se aplican. A continuación se aplican las reglas definidas por los usuarios y por último se aplican las reglas CSS definidas por el diseñador, que por tanto son las que más prioridad tienen.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> CSS define la palabra reservada <code>!important</code> para controlar la prioridad de las declaraciones de las diferentes hojas de estilos. Las reglas CSS que incluyen la palabra <code>!important</code> tienen prioridad sobre el resto de las reglas CSS, independientemente del orden en el que se incluyan o definan las reglas.</p>
+
+<p>En caso de igualdad, las reglas <code>!important</code> de los usuarios son más importantes que las reglas <code>!important</code> del diseñador. Gracias a esta característica, si un usuario sufre deficiencias visuales, puede crear una hoja de estilos CSS con reglas de tipo <code>!important</code> con la seguridad de que el navegador siempre aplicará esas reglas por encima de cualquier otra regla definida por los diseñadores.</p></div>
+
+<p>El principal problema de las hojas de estilo de los navegadores es que los valores que aplican por defecto son diferentes en cada navegador. Aunque todos los navegadores coinciden en algunos valores importantes (tipo de letra <code>serif</code>, color de letra negro, etc.) presentan diferencias en valores tan importantes como los márgenes verticales (<code>margin-bottom</code> y <code>margin-top</code>) de los títulos de sección (<code>&lt;h1&gt;</code>, ... <code>&lt;h6&gt;</code>), la tabulación izquierda de los elementos de las listas (<code>margin-left</code> o <code>padding-left</code> según el navegador) y el tamaño de línea del texto (<code>line-height</code>).</p>
+
+<p>A continuación se muestra el código HTML de una página de ejemplo y seguidamente, una imagen que muestra cómo la visualizan los navegadores Internet Explorer y Firefox:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc0">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot;</span>
+<span class="sc0">  &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;</span>
+<span class="sc2">&lt;<span class="kw2">html</span> xmlns<span class="sy0">=</span><span class="st0">&quot;http://www.w3.org/1999/xhtml&quot;</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">head</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">meta</span> <span class="kw3">http-equiv</span><span class="sy0">=</span><span class="st0">&quot;Content-Type&quot;</span> <span class="kw3">content</span><span class="sy0">=</span><span class="st0">&quot;text/html; charset=utf-8&quot;</span> <span class="sy0">/</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">title</span>&gt;</span>Reset<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">title</span>&gt;</span>
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">head</span>&gt;</span>
+&nbsp;
+<span class="sc2">&lt;<span class="kw2">body</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">h1</span>&gt;</span>Lorem ipsum dolor sit amet<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">h1</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">h2</span>&gt;</span>Consectetuer adipiscing elit<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">h2</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">p</span>&gt;</span>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut consectetuer adipiscing elit<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">p</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">ul</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">li</span>&gt;</span>Elemento 1<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">li</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">li</span>&gt;</span>Elemento 2<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">li</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">li</span>&gt;</span>Elemento 3<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">li</span>&gt;</span>
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">ul</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">table</span> <span class="kw3">summary</span><span class="sy0">=</span><span class="st0">&quot;Lorem Ipsum&quot;</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">caption</span>&gt;</span>Lorem Ipsum<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">caption</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">tr</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">th</span>&gt;</span>Celda 1-1<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">th</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">th</span>&gt;</span>Celda 1-2<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">th</span>&gt;</span>
+  <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">tr</span>&gt;</span>
+  <span class="sc2">&lt;<span class="kw2">tr</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">td</span>&gt;</span>Celda 2-1<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;</span>
+    <span class="sc2">&lt;<span class="kw2">td</span>&gt;</span>Celda 2-2<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">td</span>&gt;</span>
+  <span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">tr</span>&gt;</span>
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">table</span>&gt;</span>
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">body</span>&gt;</span>
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">html</span>&gt;</span></pre>
+</div>
+
+<div class="figure" id="figure_2_2">
+    <img src="../img/css_avanzado/f0202.png" alt="Visualización de una misma página en los navegadores Internet Explorer y Firefox" />
+
+    <p class="caption"><strong>Figura 2.2</strong> Visualización de una misma página en los navegadores Internet Explorer y Firefox</p>
+</div>
+
+
+<p>Como todas las hojas de estilo de los navegadores son diferentes, cuando un diseñador prueba sus estilos sobre diferentes navegadores, es común encontrarse con diferencias visuales apreciables. La solución a este problema es muy sencilla y consiste en borrar o <em>resetear</em> los estilos que aplican por defecto los navegadores.</p>
+
+<p>Una de las formas más sencillas de neutralizar algunos de los estilos de los navegadores consiste en eliminar el margen y relleno a todos los elementos de la página para establecerlos posteriormente de forma individual:</p>
+
+<div class="code css">
+<pre class="css"><span class="sy0">*</span> <span class="br0">&#123;</span>
+  <span class="kw1">margin</span><span class="sy0">:</span>  <span class="nu0">0</span><span class="sy0">;</span>
+  <span class="kw1">padding</span><span class="sy0">:</span> <span class="nu0">0</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Aunque la regla CSS anterior se ha utilizado desde hace muchos años, se trata de una solución muy rudimentaria y limitada. La solución completa consiste en crear una hoja de estilos CSS que neutralice todos los estilos que aplican por defecto los navegadores y que pueden afectar al aspecto visual de las páginas. Este tipo de hojas de estilos se suelen llamar <em>"reset CSS"</em>.</p>
+
+<p>A continuación se muestra la hoja de estilos <code>reset.css</code> propuesta por el diseñador <a href="http://meyerweb.com/">Eric Meyer</a>:</p>
+
+<div class="code css">
+<pre class="css"><span class="coMULTI">/* v1.0 | 20080212 */</span>
+&nbsp;
+html<span class="sy0">,</span> body<span class="sy0">,</span> div<span class="sy0">,</span> span<span class="sy0">,</span> applet<span class="sy0">,</span> object<span class="sy0">,</span> iframe<span class="sy0">,</span>
+h1<span class="sy0">,</span> h2<span class="sy0">,</span> h3<span class="sy0">,</span> h4<span class="sy0">,</span> h5<span class="sy0">,</span> h6<span class="sy0">,</span> p<span class="sy0">,</span> blockquote<span class="sy0">,</span> pre<span class="sy0">,</span>
+a<span class="sy0">,</span> abbr<span class="sy0">,</span> acronym<span class="sy0">,</span> address<span class="sy0">,</span> big<span class="sy0">,</span> cite<span class="sy0">,</span> code<span class="sy0">,</span>
+del<span class="sy0">,</span> dfn<span class="sy0">,</span> em<span class="sy0">,</span> <span class="kw1">font</span><span class="sy0">,</span> img<span class="sy0">,</span> ins<span class="sy0">,</span> kbd<span class="sy0">,</span> q<span class="sy0">,</span> s<span class="sy0">,</span> samp<span class="sy0">,</span>
+small<span class="sy0">,</span> strike<span class="sy0">,</span> strong<span class="sy0">,</span> sub<span class="sy0">,</span> sup<span class="sy0">,</span> tt<span class="sy0">,</span> var<span class="sy0">,</span>
+b<span class="sy0">,</span> u<span class="sy0">,</span> i<span class="sy0">,</span> <span class="kw2">center</span><span class="sy0">,</span>
+dl<span class="sy0">,</span> dt<span class="sy0">,</span> dd<span class="sy0">,</span> ol<span class="sy0">,</span> ul<span class="sy0">,</span> li<span class="sy0">,</span>
+fieldset<span class="sy0">,</span> form<span class="sy0">,</span> label<span class="sy0">,</span> legend<span class="sy0">,</span>
+table<span class="sy0">,</span> caption<span class="sy0">,</span> tbody<span class="sy0">,</span> tfoot<span class="sy0">,</span> thead<span class="sy0">,</span> tr<span class="sy0">,</span> th<span class="sy0">,</span> td <span class="br0">&#123;</span>
+  <span class="kw1">margin</span><span class="sy0">:</span> <span class="nu0">0</span><span class="sy0">;</span>
+  <span class="kw1">padding</span><span class="sy0">:</span> <span class="nu0">0</span><span class="sy0">;</span>
+  <span class="kw1">border</span><span class="sy0">:</span> <span class="nu0">0</span><span class="sy0">;</span>
+  <span class="kw1">outline</span><span class="sy0">:</span> <span class="nu0">0</span><span class="sy0">;</span>
+  <span class="kw1">font-size</span><span class="sy0">:</span> <span class="re3">100%</span><span class="sy0">;</span>
+  <span class="kw1">vertical-align</span><span class="sy0">:</span> <span class="kw2">baseline</span><span class="sy0">;</span>
+  <span class="kw1">background</span><span class="sy0">:</span> <span class="kw2">transparent</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+body <span class="br0">&#123;</span>
+  <span class="kw1">line-height</span><span class="sy0">:</span> <span class="nu0">1</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+ol<span class="sy0">,</span> ul <span class="br0">&#123;</span>
+  <span class="kw1">list-style</span><span class="sy0">:</span> <span class="kw2">none</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+blockquote<span class="sy0">,</span> q <span class="br0">&#123;</span>
+  <span class="kw1">quotes</span><span class="sy0">:</span> <span class="kw2">none</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+blockquote<span class="re2">:before</span><span class="sy0">,</span> blockquote<span class="re2">:after</span><span class="sy0">,</span>
+q<span class="re2">:before</span><span class="sy0">,</span> q<span class="re2">:after </span><span class="br0">&#123;</span>
+  <span class="kw1">content</span><span class="sy0">:</span> <span class="st0">''</span><span class="sy0">;</span>
+  <span class="kw1">content</span><span class="sy0">:</span> <span class="kw2">none</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+<span class="coMULTI">/* No olvides definir estilos para focus */</span>
+<span class="re2">:focus </span><span class="br0">&#123;</span>
+  <span class="kw1">outline</span><span class="sy0">:</span> <span class="nu0">0</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+<span class="coMULTI">/* No olvides resaltar de alguna manera el texto insertado/borrado */</span>
+ins <span class="br0">&#123;</span>
+  <span class="kw1">text-decoration</span><span class="sy0">:</span> <span class="kw2">none</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+del <span class="br0">&#123;</span>
+  <span class="kw1">text-decoration</span><span class="sy0">:</span> <span class="kw2">line-through</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+<span class="coMULTI">/* En el código HTML es necesario añadir cellspacing=&quot;0&quot; */</span>
+table <span class="br0">&#123;</span>
+  <span class="kw1">border-collapse</span><span class="sy0">:</span> <span class="kw2">collapse</span><span class="sy0">;</span>
+  <span class="kw1">border-spacing</span><span class="sy0">:</span> <span class="nu0">0</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>El propio Eric Meyer recuerda que la hoja de estilos anterior es sólo un punto de partida que debe ser adaptado por cada diseñador hasta obtener los resultados deseados. Utilizar una hoja de estilos de tipo <em>reset</em> es una de las buenas prácticas imprescindibles para los diseñadores web profesionales.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="capitulo_1/texto.html">&larr; Anterior <span>1.11. Texto</span></a>
+            
+            <a class="span5 next" href="capitulo_2/comprobar_el_diseno_en_varios_navegadores.html">Siguiente &rarr; <span>2.2. Comprobar el diseño en varios navegadores</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Buenas prácticas (CSS avanzado%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'CSS avanzado : Buenas prácticas']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="capitulo_1.html"> Técnicas imprescindibles</a>
+    </li>
+    <li class="level-1 active">
+        <a href="capitulo_2.html">
+            <span>Capítulo 2.</span> Buenas prácticas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="capitulo_2/comprobar_el_diseno_en_varios_navegadores.html">
+            <span>2.2.</span> Comprobar el diseño en varios navegadores
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="capitulo_2/mejora_progresiva.html">
+            <span>2.3.</span> Mejora progresiva
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="capitulo_2/depuracion.html">
+            <span>2.4.</span> Depuración
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="capitulo_2/hojas_de_estilos.html">
+            <span>2.5.</span> Hojas de estilos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="capitulo_2/rendimiento.html">
+            <span>2.6.</span> Rendimiento
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="capitulo_2/recursos_imprescindibles.html">
+            <span>2.7.</span> Recursos imprescindibles
+        </a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="capitulo_3.html"> Selectores</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="capitulo_4.html"> Propiedades avanzadas</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="capitulo_5.html"> Frameworks</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="capitulo_6.html"> Técnicas avanzadas</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

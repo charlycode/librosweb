@@ -1,0 +1,313 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>14.6. Ejercicio 6 (Introducción a AJAX)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="ejercicio_5.html" />
+        <link rel="next" href="ejercicio_7.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="14.6. Ejercicio 6 (Introducción a AJAX)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page ajax">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Introducción a AJAX</a></li>
+  <li><a href="../capitulo_14.html">Capítulo 14. Ejercicios resueltos</a></li>
+  <li class="current"><span>14.6. Ejercicio 6</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="ejercicio_6"><span>14.6.</span> Ejercicio 6</h1>
+    
+
+<div class="code javascript">
+<pre class="javascript">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot;
+  &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;
+&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
+&lt;head&gt;
+&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=iso-8859-1&quot; /&gt;
+&lt;title&gt;Ejercicio 6 - Reflexión y Prototype&lt;/title&gt;
+<span class="sy0">&lt;</span>script type<span class="sy0">=</span><span class="st0">&quot;text/javascript&quot;</span><span class="sy0">&gt;</span>
+<span class="co1">// Determina si un objeto implementa un método cuyo nombre</span>
+<span class="co1">//  se pasa como parámetro</span>
+<span class="kw4">Object</span>.<span class="kw1">prototype</span>.<span class="me1">implementa</span> <span class="sy0">=</span> <span class="kw1">function</span> <span class="br0">&#40;</span>nombreMetodo<span class="br0">&#41;</span><span class="br0">&#123;</span>
+  <span class="kw1">return</span> <span class="kw1">this</span><span class="br0">&#91;</span>nombreMetodo<span class="br0">&#93;</span> <span class="sy0">&amp;&amp;</span> <span class="kw1">this</span><span class="br0">&#91;</span>nombreMetodo<span class="br0">&#93;</span> <span class="kw1">instanceof</span> <span class="kw4">Function</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+<span class="kw1">var</span> objeto1 <span class="sy0">=</span> <span class="br0">&#123;</span>
+  muestraMensaje<span class="sy0">:</span> <span class="kw1">function</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#123;</span>
+    alert<span class="br0">&#40;</span><span class="st0">&quot;hola mundo&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span><span class="sy0">;</span>
+&nbsp;
+<span class="kw1">var</span> objeto2 <span class="sy0">=</span> <span class="br0">&#123;</span>
+  a<span class="sy0">:</span> <span class="nu0">0</span><span class="sy0">,</span>
+  b<span class="sy0">:</span> <span class="nu0">0</span><span class="sy0">,</span>
+  suma<span class="sy0">:</span> <span class="kw1">function</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="kw1">return</span> <span class="kw1">this</span>.<span class="me1">a</span> <span class="sy0">+</span> <span class="kw1">this</span>.<span class="me1">b</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span><span class="sy0">;</span>
+&nbsp;
+alert<span class="br0">&#40;</span>objeto1.<span class="me1">implementa</span><span class="br0">&#40;</span><span class="st0">&quot;muestraMensaje&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+alert<span class="br0">&#40;</span>objeto1.<span class="me1">implementa</span><span class="br0">&#40;</span><span class="st0">&quot;suma&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+alert<span class="br0">&#40;</span>objeto2.<span class="me1">implementa</span><span class="br0">&#40;</span><span class="st0">&quot;muestraMensaje&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+alert<span class="br0">&#40;</span>objeto2.<span class="me1">implementa</span><span class="br0">&#40;</span><span class="st0">&quot;suma&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+alert<span class="br0">&#40;</span>objeto1.<span class="me1">implementa</span><span class="br0">&#40;</span><span class="st0">&quot;implementa&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="co1">// Un objeto vacío también debería incluir el método &quot;implementa&quot;</span>
+alert<span class="br0">&#40;</span><span class="br0">&#123;</span><span class="br0">&#125;</span>.<span class="me1">implementa</span><span class="br0">&#40;</span><span class="st0">'implementa'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&lt;/head&gt;
+&nbsp;
+&lt;body&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+</div>
+
+<p><a href="../../ejercicios/ajax/soluciones/ejercicio6/ejercicio6.zip">Descargar ZIP con la solución completa</a></p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="ejercicio_5.html">&larr; Anterior <span>14.5. Ejercicio 5</span></a>
+            
+            <a class="span5 next" href="ejercicio_7.html">Siguiente &rarr; <span>14.7. Ejercicio 7</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Ejercicio 6 (Introducción a AJAX%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a AJAX : Ejercicio 6']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción a AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> JavaScript básico</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> JavaScript avanzado</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> DOM (Document Object Model)</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> BOM (Browser Object Model)</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Eventos</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Primeros pasos con AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Técnicas básicas con AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Técnicas avanzadas con AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Frameworks y librerías</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Otras utilidades</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Recursos útiles</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Bibliografía</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_14.html">
+            <span>Capítulo 14.</span> Ejercicios resueltos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_2.html">
+            <span>14.2.</span> Ejercicio 2
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_3.html">
+            <span>14.3.</span> Ejercicio 3
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_4.html">
+            <span>14.4.</span> Ejercicio 4
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_5.html">
+            <span>14.5.</span> Ejercicio 5
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="ejercicio_6.html">
+            <span>14.6.</span> Ejercicio 6
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_7.html">
+            <span>14.7.</span> Ejercicio 7
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_8.html">
+            <span>14.8.</span> Ejercicio 8
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_9.html">
+            <span>14.9.</span> Ejercicio 9
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_10.html">
+            <span>14.10.</span> Ejercicio 10
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_11.html">
+            <span>14.11.</span> Ejercicio 11
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_12.html">
+            <span>14.12.</span> Ejercicio 12
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_13.html">
+            <span>14.13.</span> Ejercicio 13
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_14.html">
+            <span>14.14.</span> Ejercicio 14
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_15.html">
+            <span>14.15.</span> Ejercicio 15
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_16.html">
+            <span>14.16.</span> Ejercicio 16
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_17.html">
+            <span>14.17.</span> Ejercicio 17
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_18.html">
+            <span>14.18.</span> Ejercicio 18
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_19.html">
+            <span>14.19.</span> Ejercicio 19
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_20.html">
+            <span>14.20.</span> Ejercicio 20
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_21.html">
+            <span>14.21.</span> Ejercicio 21
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_22.html">
+            <span>14.22.</span> Ejercicio 22
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_23.html">
+            <span>14.23.</span> Ejercicio 23
+        </a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

@@ -1,0 +1,327 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>3.2. Programa más rápido (Más con Symfony)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="instalador-propio.html" />
+        <link rel="next" href="encuentra_la_documentacion_mas_rapido.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="3.2. Programa más rápido (Más con Symfony)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page mas_con_symfony">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Más con Symfony</a></li>
+  <li><a href="../capitulo_3.html">Capítulo 3. Mejora tu productividad</a></li>
+  <li class="current"><span>3.2.. Programa más rápido</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="programa_mas_rapido"><span>3.2.</span> Programa más rápido</h1>
+    
+
+<p>Programar aplicaciones y crear nuevas tareas obliga a teclear muchos caracteres.
+A continuación se explica cómo reducir al mínimo imprescindible los caracteres
+que se teclean.</p>
+
+<h3 id="eligiendo_el_ide">3.2.1. Eligiendo el IDE</h3>
+
+<p>Utilizar un buen IDE ayuda al programador a ser más productivo de muchas formas
+diferentes.</p>
+
+<p>En primer lugar, los IDE más modernos incluyen autocompletado de código PHP.
+Esto significa que sólo tienes que escribir las primeras letras del nombre de
+un método. Además, esto también significa que si no te acuerdas del nombre del
+método, no hace falta que busques en la API del framework, ya que el IDE muestra
+la lista de todos los métodos disponibles en ese objeto.</p>
+
+<p>En segundo lugar, algunos IDE como PHPEdit y Netbeans conocen más sobre Symfony
+y por eso ofrecen una integración mucho más específica con los proyectos
+Symfony.</p>
+
+<div class="admonition sidebar"><p><strong class="title">Editores de texto</strong> Algunos programadores prefieren los editores de texto cuando están programando,
+sobre todo porque los editores de texto son mucho más rápidos que los IDE.
+Obviamente los editores de texto no incluyen muchas de las características
+de los IDE. No obstante, los editores más populares disponen de plugins y
+extensiones que mejoran la experiencia de usuario y hacen que el trabajo con
+PHP y con los proyectos Symfony sea más eficiente.</p>
+
+<p>Muchos usuarios de Linux utilizan por ejemplo el editor VIM para todo su
+trabajo. Estos usuarios pueden hacer uso de la extensión
+<a href="http://github.com/geoffrey/vim-symfony">vim-symfony</a>, que es un conjunto de
+scripts de VIM para integrar Symfony. Utilizando vim-symfony, es posible crear
+macros y comandos de vim para simplificar tus desarrollos con Symfony. Además
+incluye varios comandos prediseñados para facilitar el acceso a los archivos
+de configuración importantes (esquema de datos, enrutamiento, etc.) y para
+alternar entre las acciones y sus plantillas asociadas.</p>
+
+<p>Algunos usuarios de MacOS X utilizan el editor TextMate. En este caso pueden
+instalar el <a href="http://github.com/denderello/symfony-tmbundle">bundle de Symfony</a>,
+que añade un montón de macros y atajos para ahorrar tiempo en las tareas más
+habituales.</p></div>
+
+<h4 id="utilizando_un_ide_que_soporte_symfony">3.2.1.1. Utilizando un IDE que soporte Symfony</h4>
+
+<p>Algunos IDE como <a href="http://www.phpedit.com/en/presentation/extensions/symfony">PHPEdit 3.4</a>
+y <a href="http://www.netbeans.org/community/releases/68/">NetBeans 6.8</a> disponen de
+soporte nativo de Symfony, por lo que ofrecen una integración muy completa
+con el framework. No te olvides repasar su documentación para aprender más
+sobre su soporte de Symfony y sobre cómo pueden ayudarte a programar más rápido.</p>
+
+<h4 id="ayudando_al_ide">3.2.1.2. Ayudando al IDE</h4>
+
+<p>El autocompletado de código PHP en los IDE sólo funciona con los métodos que
+han sido definidos explícitamente en el código. Por tanto, si tu código incluye
+métodos <em>mágicos</em> como <code>__call()</code> o <code>__get()</code> los IDE no son capaces de
+adivinar los métodos y propiedades disponibles para ese objeto. La buena noticia
+es que en esos casos puedes ayudar a los IDE definiendo los métodos y/o propiedades
+disponibles mediante un bloque de PHPDoc (utilizando las anotaciones <code>@method</code>
+y <code>@property</code> respectivamente).</p>
+
+<p>Imagina que tienes una clase <code>Message</code> con una propiedad dinámica (<code>message</code>)
+y un método dinámico (<code>getMessage()</code>). El siguiente código muestra cómo pueden
+los IDE saber lo anterior sin ninguna definición explícita en el código PHP:</p>
+
+<div class="code php">
+<pre class="php"><span class="co4">/**
+ * @property clob $message
+ *
+ * @method clob getMessage() Devuelve el valor del mensaje actual
+ */</span>
+<span class="kw2">class</span> Message
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> __get<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="co1">// ...</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="kw2">public</span> <span class="kw2">function</span> __call<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="co1">// ...</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Aunque el método <code>getMessage()</code> no existe, el IDE puede reconocerlo gracias a
+la anotación <code>@method</code>. Lo mismo sucede con la propiedad <code>message</code> debido a la
+anotación <code>@property</code>.</p>
+
+<p>Esta técnica es la que utiliza por ejemplo la tarea <code>doctrine:build-model</code>.
+Si una clase se llama <code>MailMessage</code>, tiene dos columnas (<code>message</code> y <code>priority</code>)
+y usa Doctrine, su código PHP es el siguiente:</p>
+
+<div class="code php">
+<pre class="php"><span class="co4">/**
+ * BaseMailMessage
+ *
+ * This class has been auto-generated by the Doctrine ORM Framework
+ *
+ * @property clob $message
+ * @property integer $priority
+ * 
+ * @method clob        getMessage()  Returns the current record's &quot;message&quot; value
+ * @method integer     getPriority() Returns the current record's &quot;priority&quot; value
+ * @method MailMessage setMessage()  Sets the current record's &quot;message&quot; value
+ * @method MailMessage setPriority() Sets the current record's &quot;priority&quot; value
+ * 
+ * @package    ##PACKAGE##
+ * @subpackage ##SUBPACKAGE##
+ * @author     ##NAME## &lt;##EMAIL##&gt;
+ * @version    SVN: $Id: Builder.php 6508 2009-10-14 06:28:49Z jwage $
+ */</span>
+<span class="kw2">abstract</span> <span class="kw2">class</span> BaseMailMessage <span class="kw2">extends</span> sfDoctrineRecord
+<span class="br0">&#123;</span>
+    <span class="kw2">public</span> <span class="kw2">function</span> setTableDefinition<span class="br0">&#40;</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+        <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">setTableName</span><span class="br0">&#40;</span><span class="st_h">'mail_message'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+        <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">hasColumn</span><span class="br0">&#40;</span><span class="st_h">'message'</span><span class="sy0">,</span> <span class="st_h">'clob'</span><span class="sy0">,</span> <span class="kw4">null</span><span class="sy0">,</span> <span class="kw3">array</span><span class="br0">&#40;</span>
+             <span class="st_h">'type'</span> <span class="sy0">=&gt;</span> <span class="st_h">'clob'</span><span class="sy0">,</span>
+             <span class="st_h">'notnull'</span> <span class="sy0">=&gt;</span> <span class="kw4">true</span><span class="sy0">,</span>
+             <span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+        <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">hasColumn</span><span class="br0">&#40;</span><span class="st_h">'priority'</span><span class="sy0">,</span> <span class="st_h">'integer'</span><span class="sy0">,</span> <span class="kw4">null</span><span class="sy0">,</span> <span class="kw3">array</span><span class="br0">&#40;</span>
+             <span class="st_h">'type'</span> <span class="sy0">=&gt;</span> <span class="st_h">'integer'</span><span class="sy0">,</span>
+             <span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="kw2">public</span> <span class="kw2">function</span> setUp<span class="br0">&#40;</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+        parent<span class="sy0">::</span><span class="me2">setUp</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+        <span class="re0">$timestampable0</span> <span class="sy0">=</span> <span class="kw2">new</span> Doctrine_Template_Timestampable<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+        <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">actAs</span><span class="br0">&#40;</span><span class="re0">$timestampable0</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="instalador-propio.html">&larr; Anterior <span>3.1. Empieza más rápido: personalizando la creación de proyectos</span></a>
+            
+            <a class="span5 next" href="encuentra_la_documentacion_mas_rapido.html">Siguiente &rarr; <span>3.3. Encuentra la documentación más rápido</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Programa más rápido (Más con Symfony%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Más con Symfony : Programa más rápido']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Enrutamiento avanzado</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_3.html">
+            <span>Capítulo 3.</span> Mejora tu productividad
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="instalador-propio.html">
+            <span>3.1.</span> Empieza más rápido: personalizando la creación de proyectos
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="programa_mas_rapido.html">
+            <span>3.2.</span> Programa más rápido
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="encuentra_la_documentacion_mas_rapido.html">
+            <span>3.3.</span> Encuentra la documentación más rápido
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="depura_mas_rapido.html">
+            <span>3.4.</span> Depura más rápido
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="crea_pruebas_mas_rapido.html">
+            <span>3.5.</span> Crea pruebas más rápido
+        </a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Emails</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Widgets y validadores propios</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Formularios avanzados</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Mejorando la barra de depuración web</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Uso avanzado de Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Utilizando la herencia de tablas de Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Funcionamiento interno de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Windows y Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Desarrollando aplicaciones Facebook</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Descubriendo el poder de la línea de comandos</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Jugando con la cache de configuración de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Trabajando con la comunidad Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>A</span> <a href="../apendice_a.html"> Código JavaScript de sfWidgetFormGMapAddress</a>
+    </li>
+    <li class="level-1">
+        <span>B</span> <a href="../apendice_b.html"> Ejemplo de instalador propio</a>
+    </li>
+    <li class="level-1">
+        <span>C</span> <a href="../apendice_c.html"> Licencia</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

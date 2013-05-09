@@ -1,0 +1,234 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>3.4. Flujos de trabajo ramificados (Pro Git, el libro oficial de Git)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="gestion_de_ramificaciones.html" />
+        <link rel="next" href="ramas_remotas.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="3.4. Flujos de trabajo ramificados (Pro Git, el libro oficial de Git)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page pro_git">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Pro Git, el libro oficial de Git</a></li>
+  <li><a href="../capitulo_3.html">Capítulo 3. Trabajando con ramas en Git</a></li>
+  <li class="current"><span>3.4.. Flujos de trabajo ramificados</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="flujos_de_trabajo_ramificados"><span>3.4.</span> Flujos de trabajo ramificados</h1>
+    
+
+<p>Ahora que ya has visto los procedimientos básicos de ramificación y fusión, ¿qué puedes o qué debes hacer con ellos? En este apartado vamos a ver algunos de los flujos de trabajo más comunes, de tal forma que puedas decidir si te gustaría incorporar alguno de ellos a tu ciclo de desarrollo.</p>
+
+<h3 id="ramas_de_largo_recorrido">3.4.1. Ramas de largo recorrido</h3>
+
+<p>Por la sencillez de la fusión a tres bandas de Git, el fusionar de una rama a otra multitud de veces a lo largo del tiempo es facil de hacer. Esto te posibilita tener varias ramas siempre abiertas, e irlas usando en diferentes etapas del ciclo de desarrollo; realizando frecuentes fusiones entre ellas.</p>
+
+<p>Muchos desarrolladores que usan Git llevan un flujo de trabajo de esta naturaleza, manteniendo en la rama <code>master</code> únicamente el código totalmente estable (el código que ha sido o que va a ser liberado). Teniendo otras ramas paralelas denominadas <code>desarrollo</code> o <code>siguiente</code>, en las que trabajan y realizan pruebas. Estas ramas paralelas no suele estar siempre en un estado estable; pero cada vez que sí lo están, pueden ser fusionadas con la rama <code>master</code>. También es habitual el incorporarle (<em>pull</em>) ramas puntuales (ramas temporales, como la rama <code>iss53</code> del anterior ejemplo) cuando las completamos y estamos seguros de que no van a introducir errores.</p>
+
+<p>En realidad, en todo momento estamos hablando simplemente de apuntadores moviendose por la línea temporal de confirmaciones de cambio (commit history). Las ramas estables apuntan hacia posiciones más antiguas en el registro de confirmaciones. Mientras que las ramas avanzadas, las que van abriendo camino, apuntan hacia posiciones más recientes.</p>
+
+<div class="figure" id="figure_3_18">
+    <img src="../../img/pro_git/18333fig0318.png" alt="Las ramas más estables apuntan hacia posiciones más antiguas en el registro de cambios" />
+
+    <p class="caption"><strong>Figura 3.18</strong> Las ramas más estables apuntan hacia posiciones más antiguas en el registro de cambios</p>
+</div>
+
+
+<p>Podría ser más sencillo pensar en las ramas como si fueran silos de almacenamiento. Donde grupos de confirmaciones de cambio (<em>commits</em>) van promocionando hacia silos más estables a medida que son probados y depurados (ver Figura 3-19)</p>
+
+<div class="figure" id="figure_3_19">
+    <img src="../../img/pro_git/18333fig0319.png" alt="Puede ayudar pensar en las ramas como silos de almacenamiento" />
+
+    <p class="caption"><strong>Figura 3.19</strong> Puede ayudar pensar en las ramas como silos de almacenamiento</p>
+</div>
+
+
+<p>Este sistema de trabajo se puede ampliar para diversos grados de estabilidad. Algunos proyectos muy grandes suelen tener una rama denominada <code>propuestas</code> o <code>pu</code> (<em>proposed updates</em>). Donde suele estar todo aquello integrado desde otras ramas, pero que aún no está listo para ser incorporado a las ramas <code>siguiente</code> o <code>master</code>. La idea es mantener siempre diversas ramas en diversos grados de estabilidad; pero cuando alguna alcanza un estado más estable, la fusionamos con la rama inmediatamente superior a ella.</p>
+
+<p>Aunque no es obligatorio el trabajar con ramas de larga duración, realmente es práctico y útil. Sobre todo en proyectos largos o complejos.</p>
+
+<h3 id="ramas_puntuales">3.4.2. Ramas puntuales</h3>
+
+<p>Las ramas puntuales, en cambio, son útiles en proyectos de cualquier tamaño. Una rama puntual es aquella de corta duración que abres para un tema o para una funcionalidad muy concretos. Es algo que nunca habrías hecho en otro sistema VCS, debido a los altos costos de crear y fusionar ramas que se suelen dar en esos sistemas. Pero en Git, por el contrario, es muy habitual el crear, trabajar con, fusionar y borrar ramas varias veces al día.</p>
+
+<p>Tal y como has visto con las ramas <code>iss53</code> y <code>hotfix</code> que has creado en la sección anterior. Has hecho unas pocas confirmaciones de cambio en ellas, y luego las has borrado tras fusionarlas con la rama principal. Esta técnica te posibilita realizar rápidos y completos saltos de contexto. Y, debido a que el trabajo está claramente separado en silos, con todos los cambios de cada tema en su propia rama, te será mucho más sencillo revisar el código y seguir su evolución. Puedes mantener los cambios ahí durante minutos, dias o meses; y fusionarlos cuando realmente estén listos. En lugar de verte obligado a fusionarlos en el orden en que fueron creados y comenzaste a trabajar en ellos.</p>
+
+<p>Por ejemplo, puedes realizar cierto trabajo en la rama <code>master</code>, ramificar para un problema concreto (rama <code>iss91</code>), trabajar en él un rato, ramificar a una segunda rama para probar otra manera de resolverlo (rama <code>iss92v2</code>), volver a la rama <code>master</code> y trabajar un poco más, y, por último, ramificar temporalmente para probar algo de lo que no estás seguro (rama <code>dumbidea</code>). El registro de confirmaciones (<em>commit history</em>) será algo parecido a la Figura 3-20.</p>
+
+<div class="figure" id="figure_3_20">
+    <img src="../../img/pro_git/18333fig0320.png" alt="El registro de confirmaciones con múltiples ramas puntuales" />
+
+    <p class="caption"><strong>Figura 3.20</strong> El registro de confirmaciones con múltiples ramas puntuales</p>
+</div>
+
+
+<p>En este momento, supongamos que te decides por la segunda solución al problema (rama <code>iss92v2</code>); y que, tras mostrar la rama <code>dumbidea</code> a tus compañeros, resulta que les parece una idea genial. Puedes descartar la rama <code>iss91</code> (perdiendo las confirmaciones C5 y C6), y fusionar las otras dos. El registro será algo parecido a la Figura 3-21.</p>
+
+<div class="figure" id="figure_3_21">
+    <img src="../../img/pro_git/18333fig0321.png" alt="El registro tras fusionar 'dumbidea' e 'iss91v2'" />
+
+    <p class="caption"><strong>Figura 3.21</strong> El registro tras fusionar 'dumbidea' e 'iss91v2'</p>
+</div>
+
+
+<p>Es importante recordar que, mientras estás haciendo todo esto, todas las ramas son completamente locales. Cuando ramificas y fusionas, todo se realiza en tu propio repositório Git. No hay nigún tipo de tráfico con ningún servidor.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="gestion_de_ramificaciones.html">&larr; Anterior <span>3.3. Gestión de ramificaciones</span></a>
+            
+            <a class="span5 next" href="ramas_remotas.html">Siguiente &rarr; <span>3.5. Ramas Remotas</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Flujos de trabajo ramificados (Pro Git, el libro oficial de Git%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Pro Git, el libro oficial de Git : Flujos de trabajo ramificados']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Empezando</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Fundamentos de Git</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_3.html">
+            <span>Capítulo 3.</span> Trabajando con ramas en Git
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="que_es_una_rama.html">
+            <span>3.1.</span> ¿Qué es una rama?
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="procedimientos_basicos_para_ramificar_y_fusionar.html">
+            <span>3.2.</span> Procedimientos básicos para ramificar y fusionar
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="gestion_de_ramificaciones.html">
+            <span>3.3.</span> Gestión de ramificaciones
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="flujos_de_trabajo_ramificados.html">
+            <span>3.4.</span> Flujos de trabajo ramificados
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ramas_remotas.html">
+            <span>3.5.</span> Ramas Remotas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="reorganizando_el_trabajo_realizado.html">
+            <span>3.6.</span> Reorganizando el trabajo realizado
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="resumen.html">
+            <span>3.7.</span> Resumen
+        </a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Git en un servidor</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Git en entornos distribuidos</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Las herramientas de Git</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Personalizando Git</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Git y otros sistemas</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Funcionamiento interno de Git</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

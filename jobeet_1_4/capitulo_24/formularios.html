@@ -1,0 +1,267 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>24.9. Formularios (El tutorial Jobeet)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="seguridad.html" />
+        <link rel="next" href="internacionalizacion_y_localizacion.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="24.9. Formularios (El tutorial Jobeet)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page jobeet_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">El tutorial Jobeet</a></li>
+  <li><a href="../capitulo_24.html">Capítulo 24. Un repaso a Symfony</a></li>
+  <li class="current"><span>24.9.. Formularios</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="formularios"><span>24.9.</span> Formularios</h1>
+    
+
+<p>Como trabajar con formularios es una de las tareas más tediosas para un programador web, Symfony incluye un <a href="../../jobeet/capitulo10/el_framework_de_formularios.html">subframework de formularios</a>. Este framework de formularios incluye numerosos <a href="http://www.symfony-project.org/api/1_2/widget">widgets</a> y <a href="http://www.symfony-project.org/api/1_2/validator">validadores</a>. Uno de los puntos fuertes de los formularios es que sus plantillas se pueden <a href="../../jobeet/capitulo10/formularios_de_propel.html">personalizar</a> muy fácilmente.</p>
+
+<p>Si utilizas Propel, el framework de formularios también permite <a href="../../jobeet/capitulo10/formularios_de_propel.html">generar formularios y filtros</a> de forma sencilla a partir de los modelos de datos.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="seguridad.html">&larr; Anterior <span>24.8. Seguridad</span></a>
+            
+            <a class="span5 next" href="internacionalizacion_y_localizacion.html">Siguiente &rarr; <span>24.10. Internacionalización y localización</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Formularios (El tutorial Jobeet%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'El tutorial Jobeet : Formularios']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Comenzando el proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> El proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> El modelo de datos</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> El controlador y la vista</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> El sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Profundizando en el modelo</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Trabajando con la página de cada categoría</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Pruebas unitarias</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Pruebas funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Probando los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> El generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> El usuario</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> El día de descanso</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Canales Atom</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Servicios web</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> El buscador</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>20</span> <a href="../capitulo_20.html"> Plugins</a>
+    </li>
+    <li class="level-1">
+        <span>21</span> <a href="../capitulo_21.html"> El día del diseño</a>
+    </li>
+    <li class="level-1">
+        <span>22</span> <a href="../capitulo_22.html"> La cache</a>
+    </li>
+    <li class="level-1">
+        <span>23</span> <a href="../capitulo_23.html"> Pasando a producción</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_24.html">
+            <span>Capítulo 24.</span> Un repaso a Symfony
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="que_es_symfony.html">
+            <span>24.1.</span> ¿Qué es Symfony?
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_modelo.html">
+            <span>24.2.</span> El modelo
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="la_vista.html">
+            <span>24.3.</span> La vista
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_controlador.html">
+            <span>24.4.</span> El controlador
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="configuracion.html">
+            <span>24.5.</span> Configuración
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="depuracion.html">
+            <span>24.6.</span> Depuración
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="los_principales_objetos_de_symfony.html">
+            <span>24.7.</span> Los principales objetos de Symfony
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="seguridad.html">
+            <span>24.8.</span> Seguridad
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="formularios.html">
+            <span>24.9.</span> Formularios
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="internacionalizacion_y_localizacion.html">
+            <span>24.10.</span> Internacionalización y localización
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="pruebas.html">
+            <span>24.11.</span> Pruebas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="plugins.html">
+            <span>24.12.</span> Plugins
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="tareas.html">
+            <span>24.13.</span> Tareas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="agradecimientos.html">
+            <span>24.14.</span> Agradecimientos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="nos_vemos_pronto.html">
+            <span>24.15.</span> Nos vemos pronto
+        </a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

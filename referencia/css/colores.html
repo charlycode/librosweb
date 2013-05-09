@@ -1,0 +1,358 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>Colores (Referencia de CSS 2.1)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Colores (Referencia de CSS 2.1)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page referencia_css">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="index.html">Referencia de CSS 2.1</a></li>
+  <li class="current"><span>Colores</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="colores">Colores</h1>
+    <p>CSS es un estándar muy flexible, lo que significa que algunas cosas se pueden hacer de muchas formas diferentes. Precisamente, la forma de indicar los colores es uno de los apartados más flexibles en CSS.</p>
+
+<p>Los colores en CSS se pueden indicar de cinco formas diferentes: palabras clave, colores del sistema, RGB hexadecimal, RGB numérico y RGB porcentual. Aunque el método más utilizado por los diseñadores es el RGB hexadecimal, a continuación se muestran todas las alternativas que ofrece CSS.</p>
+
+<h3 id="palabras_clave">Palabras clave</h3>
+
+<p>CSS define 17 palabras clave para referirse a los colores básicos. Las palabras se corresponden con el nombre en inglés de cada color: <code>aqua</code>, <code>black</code>, <code>blue</code>, <code>fuchsia</code>, <code>gray</code>, <code>green</code>, <code>lime</code>, <code>maroon</code>, <code>navy</code>, <code>olive</code>, <code>orange</code>, <code>purple</code>, <code>red</code>, <code>silver</code>, <code>teal</code>, <code>white</code>, <code>yellow</code></p>
+
+<p>En el siguiente ejemplo se muestran todos los colores básicos tal y como los muestra el navegador:</p>
+
+<div class="example">
+<div style="width:400px;">
+<div style="float:left;margin:6px;">
+<div style="background:#FFF;border:1px solid #CCC;padding:1px;margin:3px 3px 5px">
+  <span style="background:#6C0000;border:1px solid #4D0000;display:block;padding:1px">
+    <span style="background-color:maroon;display:block;height:50px;width:50px;">&nbsp;</span>
+  </span>
+</div>
+<span style="display:block;text-align:center"><code>maroon</code></span>
+</div>
+
+<div style="float:left;margin:6px;">
+<div style="background:#FFF;border:1px solid #CCC;padding:1px;margin:3px 3px 5px">
+  <span style="background:#EB0000;border:1px solid #CC0000;display:block;padding:1px">
+    <span style="background-color:red;display:block;height:50px;width:50px;">&nbsp;</span>
+  </span>
+</div>
+<span style="display:block;text-align:center"><code>red</code></span>
+</div>
+
+<div style="float:left;margin:6px;">
+<div style="background:#FFF;border:1px solid #CCC;padding:1px;margin:3px 3px 5px">
+  <span style="background:#EB9800;border:1px solid #CC8400;display:block;padding:1px">
+    <span style="background-color:orange;display:block;height:50px;width:50px;">&nbsp;</span>
+  </span>
+</div>
+<span style="display:block;text-align:center"><code>orange</code></span>
+</div>
+
+<div style="float:left;margin:6px;">
+<div style="background:#FFF;border:1px solid #CCC;padding:1px;margin:3px 3px 5px">
+  <span style="background:#EBEB00;border:1px solid #CCCC00;display:block;padding:1px">
+
+    <span style="background-color:yellow;display:block;height:50px;width:50px;">&nbsp;</span>
+  </span>
+</div>
+<span style="display:block;text-align:center"><code>yellow</code></span>
+</div>
+
+<div style="float:left;margin:6px;">
+<div style="background:#FFF;border:1px solid #CCC;padding:1px;margin:3px 3px 5px">
+  <span style="background:#6C6C00;border:1px solid #4D4D00;display:block;padding:1px">
+    <span style="background-color:olive;display:block;height:50px;width:50px;">&nbsp;</span>
+  </span>
+</div>
+<span style="display:block;text-align:center"><code>olive</code></span>
+</div>
+
+<br style="clear:both" />
+
+<div style="float:left;margin:6px;">
+<div style="background:#FFF;border:1px solid #CCC;padding:1px;margin:3px 3px 5px">
+  <span style="background:#6C006C;border:1px solid #4D004D;display:block;padding:1px">
+    <span style="background-color:purple;display:block;height:50px;width:50px;">&nbsp;</span>
+  </span>
+</div>
+<span style="display:block;text-align:center"><code>purple</code></span>
+</div>
+
+<div style="float:left;margin:6px;">
+<div style="background:#FFF;border:1px solid #CCC;padding:1px;margin:3px 3px 5px">
+  <span style="background:#EB00EB;border:1px solid #CC00CC;display:block;padding:1px">
+    <span style="background-color:fuchsia;display:block;height:50px;width:50px;">&nbsp;</span>
+  </span>
+</div>
+<span style="display:block;text-align:center"><code>fuchsia</code></span>
+</div>
+
+<div style="float:left;margin:6px;">
+<div style="background:#FFF;border:1px solid #CCC;padding:1px;margin:3px 3px 5px">
+  <span style="background:#EAEAEA;border:1px solid #CCCCCC;display:block;padding:1px">
+    <span style="background-color:white;display:block;height:50px;width:50px;">&nbsp;</span>
+  </span>
+</div>
+<span style="display:block;text-align:center"><code>white</code></span>
+</div>
+
+<div style="float:left;margin:6px;">
+<div style="background:#FFF;border:1px solid #CCC;padding:1px;margin:3px 3px 5px">
+  <span style="background:#00EB00;border:1px solid #00CC00;display:block;padding:1px">
+    <span style="background-color:lime;display:block;height:50px;width:50px;">&nbsp;</span>
+  </span>
+</div>
+<span style="display:block;text-align:center"><code>lime</code></span>
+</div>
+
+<div style="float:left;margin:6px;">
+<div style="background:#FFF;border:1px solid #CCC;padding:1px;margin:3px 3px 5px">
+  <span style="background:#006C00;border:1px solid #004D00;display:block;padding:1px">
+    <span style="background-color:green;display:block;height:50px;width:50px;">&nbsp;</span>
+  </span>
+</div>
+<span style="display:block;text-align:center"><code>green</code></span>
+</div>
+
+<br style="clear:both" />
+
+<div style="float:left;margin:6px;">
+<div style="background:#FFF;border:1px solid #CCC;padding:1px;margin:3px 3px 5px">
+  <span style="background:#4D608C;border:1px solid #3C4B6D;display:block;padding:1px">
+    <span style="background-color:navy;display:block;height:50px;width:50px;">&nbsp;</span>
+  </span>
+</div>
+<span style="display:block;text-align:center"><code>navy</code></span>
+</div>
+
+<div style="float:left;margin:6px;">
+<div style="background:#FFF;border:1px solid #CCC;padding:1px;margin:3px 3px 5px">
+  <span style="background:#0000EB;border:1px solid #0000CC;display:block;padding:1px">
+    <span style="background-color:blue;display:block;height:50px;width:50px;">&nbsp;</span>
+  </span>
+</div>
+<span style="display:block;text-align:center"><code>blue</code></span>
+</div>
+
+<div style="float:left;margin:6px;">
+<div style="background:#FFF;border:1px solid #CCC;padding:1px;margin:3px 3px 5px">
+  <span style="background:#00EBEB;border:1px solid #00CCCC;display:block;padding:1px">
+    <span style="background-color:aqua;display:block;height:50px;width:50px;">&nbsp;</span>
+  </span>
+</div>
+<span style="display:block;text-align:center"><code>aqua</code></span>
+</div>
+
+<div style="float:left;margin:6px;">
+<div style="background:#FFF;border:1px solid #CCC;padding:1px;margin:3px 3px 5px">
+  <span style="background:#006C6C;border:1px solid #004D4D;display:block;padding:1px">
+    <span style="background-color:teal;display:block;height:50px;width:50px;">&nbsp;</span>
+  </span>
+</div>
+<span style="display:block;text-align:center"><code>teal</code></span>
+</div>
+
+<br style="clear:both" />
+<div style="float:left;margin:6px;">
+<div style="background:#FFF;border:1px solid #CCC;padding:1px;margin:3px 3px 5px">
+  <span style="background:#777;border:1px solid #999;display:block;padding:1px">
+    <span style="background-color:black;display:block;height:50px;width:50px;">&nbsp;</span>
+  </span>
+</div>
+<span style="display:block;text-align:center"><code>black</code></span>
+</div>
+
+<div style="float:left;margin:6px;">
+<div style="background:#FFF;border:1px solid #CCC;padding:1px;margin:3px 3px 5px">
+  <span style="background:#ABABAB;border:1px solid #8D8D8D;display:block;padding:1px">
+    <span style="background-color:silver;display:block;height:50px;width:50px;">&nbsp;</span>
+  </span>
+</div>
+<span style="display:block;text-align:center"><code>silver</code></span>
+</div>
+
+<div style="float:left;margin:6px;">
+<div style="background:#FFF;border:1px solid #CCC;padding:1px;margin:3px 3px 5px">
+  <span style="background:#6B6B6B;border:1px solid #4D4D4D;display:block;padding:1px">
+    <span style="background-color:gray;display:block;height:50px;width:50px;">&nbsp;</span>
+  </span>
+</div>
+<span style="display:block;text-align:center"><code>gray</code></span>
+</div>
+
+<br style="clear:both" />
+</div>
+</div>
+
+<p>Aunque es la forma más sencilla de indicar los colores, este método prácticamente no se utiliza en las hojas de estilos reales, ya que sólo permite hacer referencia a un número muy reducido de colores.</p>
+
+<h3 id="rgb_decimal">RGB decimal</h3>
+
+<p>En el campo del diseño gráfico, se han definido varios modelos diferentes para referirse a los colores. Los dos modelos más conocidos son RGB y CMYK. Simplificando su explicación, el modelo RGB consiste en definir un color indicando la cantidad de color rojo, verde y azul que se debe <em>mezclar</em> para obtener el color. Técnicamente, el modelo RGB es un modelo de tipo "aditivo", ya que se suman colores para obtener el color deseado.</p>
+
+<p>Por lo tanto, en el modelo RGB un color se define indicando sus tres componentes R (rojo), G (verde) y B (azul). Cada una de las componentes puede tomar un valor entre cero y un valor máximo. De esta forma, el color rojo puro en RGB se crea mediante el máximo valor de la componente R y un valor de <code>0</code> para las componentes G y B.</p>
+
+<p>Si todas las componentes valen <code>0</code>, el color creado es el negro; si todas las componentes toman su valor máximo, el color obtenido es el blanco. En CSS, las componentes de los colores definidos mediante RGB decimal pueden tomar valores entre <code>0</code> y <code>255</code>. El siguiente ejemplo establece el color del texto de un párrafo:</p>
+
+<div class="code css">
+<pre class="css">p <span class="br0">&#123;</span> <span class="kw1">color</span><span class="sy0">:</span> <span class="kw2">rgb</span><span class="br0">&#40;</span><span class="nu0">71</span><span class="sy0">,</span> <span class="nu0">98</span><span class="sy0">,</span> <span class="nu0">176</span><span class="br0">&#41;</span><span class="sy0">;</span> <span class="br0">&#125;</span></pre>
+</div>
+
+<p>La sintaxis que se utiliza para indicar los colores es <code>rgb()</code> y entre paréntesis se indican las tres componentes RGB, en ese mismo orden y separadas por comas. El color del ejemplo anterior se obtendría mezclando las componentes R=<code>71</code>, G=<code>98</code>, B=<code>176</code>, que se corresponde con un color azul claro.</p>
+
+<p>Si se indica un valor menor que <code>0</code> para una componente, automáticamente se transforma su valor en <code>0</code>. Igualmente, si se indica un valor mayor que <code>255</code>, se transforma automáticamente su valor a <code>255</code>.</p>
+
+<h3 id="rgb_porcentual">RGB porcentual</h3>
+
+<p>Otra forma de indicar las componentes RGB de un color es mediante un porcentaje. El funcionamiento y la sintaxis de este método es el mismo que el del RGB decimal. La única diferencia en este caso es que el valor de las componentes RGB puede tomar valores entre <code>0%</code> y <code>100%</code>. El mismo color del ejemplo anterior se puede representar de forma porcentual:</p>
+
+<div class="code css">
+<pre class="css">p <span class="br0">&#123;</span> <span class="kw1">color</span><span class="sy0">:</span> <span class="kw2">rgb</span><span class="br0">&#40;</span><span class="re3">27%</span><span class="sy0">,</span> <span class="re3">38%</span><span class="sy0">,</span> <span class="re3">69%</span><span class="br0">&#41;</span><span class="sy0">;</span> <span class="br0">&#125;</span></pre>
+</div>
+
+<p>Al igual que sucede con el RGB decimal, si se indica un valor inferior a <code>0%</code>, se transforma automáticamente en <code>0%</code> y si se indica un valor superior a <code>100%</code>, se trunca su valor a <code>100%</code>.</p>
+
+<h3 id="rgb_hexadecimal">RGB hexadecimal</h3>
+
+<p>Aunque se trata del método más complicado de indicar los colores, es el que más se utiliza con mucha diferencia. De hecho, prácticamente todos los sitios web reales utilizan exclusivamente este método. A continuación se muestran los pasos necesarios para definir un color en RGB hexadecimal:</p>
+
+<ol>
+<li>Se toman las componentes RGB del color original, por ejemplo R = <code>71</code>, G = <code>98</code>, B = <code>176</code></li>
+<li>El valor numérico de cada componente se transforma del sistema numérico decimal al sistema numérico hexadecimal. Esta operación es exclusivamente matemática. En el sistema decimal, se utilizan 10 símbolos para representar los números: del <code>0</code> al <code>9</code>. En el sistema hexadecimal se utilizan 16 símbolos (de ahí su nombre): del <code>0</code> al <code>9</code> y de la <code>A</code> a la <code>F</code>. Así, en el sistema hexadecimal, después del <code>9</code> no va el <code>10</code>, sino la <code>A</code>. La letra <code>B</code> sería <code>11</code>, la <code>C</code> sería <code>12</code>, etc.</li>
+<li>Si se realiza la conversión hexadecimal de las componentes numéricas anteriores, se obtienen unos nuevos valores: R = <code>47</code>, G = <code>62</code>, B = <code>B0</code>.</li>
+<li>Una vez obtenidas sus componentes hexadecimales, el color se indica concatenando el valor de las componentes y añadiendo el prefijo <code>#</code>. Así, el color anterior en la notación RGB hexadecimal de CSS sería <code>#4762B0</code>.</li>
+</ol>
+
+<p>Con esta nueva notación, el color del mismo ejemplo anterior se indica de la siguiente forma:</p>
+
+<div class="code css">
+<pre class="css">p <span class="br0">&#123;</span> <span class="kw1">color</span><span class="sy0">:</span> <span class="re0">#4762B0</span><span class="sy0">;</span> <span class="br0">&#125;</span></pre>
+</div>
+
+<p>Recuerda que aunque es el método más complicado para definir un color, se trata del método que utilizan la inmensa mayoría de sitios web, por lo que es imprescindible dominarlo. Afortunadamente, todos los programas de diseño gráfico convierten de forma automática los valores RGB decimales a sus valores RGB hexadecimales, por lo que no es necesario realizar a mano estas operaciones matemáticas.</p>
+
+<p>Una de las ventajas del formato RGB hexadecimal es que se pueden comprimir sus valores cuando todas sus componentes son iguales dos a dos:</p>
+
+<div class="code code">
+<pre class="code">#AAA = #AAAAAA
+#FFF = #FFFFFF
+#A0F = #AA00FF
+#369 = #336699</pre>
+</div>
+
+<p>En el siguiente ejemplo se establece el color de fondo de la página a blanco, el color del texto a negro y el color de la letra de los titulares se define de color rojo:</p>
+
+<div class="code css">
+<pre class="css">body <span class="br0">&#123;</span> <span class="kw1">background-color</span><span class="sy0">:</span> <span class="re0">#FFF</span><span class="sy0">;</span> <span class="kw1">color</span><span class="sy0">:</span> <span class="re0">#000</span><span class="sy0">;</span> <span class="br0">&#125;</span>
+h1<span class="sy0">,</span> h2<span class="sy0">,</span> h3<span class="sy0">,</span> h4<span class="sy0">,</span> h5<span class="sy0">,</span> h6 <span class="br0">&#123;</span> <span class="kw1">color</span><span class="sy0">:</span> <span class="re0">#C00</span><span class="sy0">;</span> <span class="br0">&#125;</span></pre>
+</div>
+
+<h3 id="colores_del_sistema">Colores del sistema</h3>
+
+<p>Los colores del sistema son similares a los 17 colores básicos, pero en este caso hacen referencia al color que muestran algunos elementos del sistema operativo del usuario.</p>
+
+<p>Existen varios colores definidos, como por ejemplo <code>ActiveBorder</code>, que hace referencia al color del borde de las ventanas activas. La lista completa de colores definidos se puede ver en http://www.w3.org/TR/CSS21/ui.html#system-colors.</p>
+
+<p>Aunque es posible definir los colores en CSS utilizando estos nombres, se trata de un método que casi nunca se utiliza, por lo que se puede considerar prácticamente como una rareza de CSS.</p>
+
+<h3 id="colores_web_safe">Colores web safe</h3>
+
+<p>Como cada componente RGB de los colores puede tomar un valor entre <code>0</code> y <code>255</code>, el número total de colores que se pueden representar con este formato es de <code>256 x 256 x 256 = 16.777.216</code> colores. Sin embargo, en la década de los 90 los monitores de los usuarios no eran capaces de mostrar más de <code>256</code> colores diferentes.</p>
+
+<p>A partir de todos los colores disponibles, se eligieron <code>216</code> colores que formaron la paleta de colores <em>"web safe"</em>. Esta paleta de colores podía ser utilizada por los diseñadores con la seguridad de que se verían correctamente en cualquier navegador de cualquier sistema operativo de cualquier usuario.</p>
+
+<p>Hoy en día, su importancia ha descendido notablemente, ya que prácticamente todos los usuarios utilizan dispositivos con una profundidad de color de 16 y 32 bits. No obstante, el auge en el uso de los dispositivos móviles hace que siga siendo un tema a considerar, ya que las pantallas de muchos móviles sólo pueden representar un número reducido de colores.</p>
+
+<p>La lista completa de colores web safe y sus valores hexadecimales se pueden consultar en http://en.wikipedia.org/wiki/Web_colors#Web-safe_colors.</p>
+
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Colores (Referencia de CSS 2.1%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Referencia de CSS 2.1 : Colores']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Propiedades relacionadas</span></h3>
+
+
+                                                                
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

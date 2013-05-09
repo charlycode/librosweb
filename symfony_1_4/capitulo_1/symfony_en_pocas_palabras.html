@@ -1,0 +1,277 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>1.1. Symfony en pocas palabras (Symfony 1.4, la guía definitiva)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="../capitulo_1.html" />
+        <link rel="next" href="conceptos_basicos.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="1.1. Symfony en pocas palabras (Symfony 1.4, la guía definitiva)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page symfony_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Symfony 1.4, la guía definitiva</a></li>
+  <li><a href="../capitulo_1.html">Capítulo 1. Introducción a Symfony</a></li>
+  <li class="current"><span>1.1.. Symfony en pocas palabras</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="symfony_en_pocas_palabras"><span>1.1.</span> Symfony en pocas palabras</h1>
+    
+
+<p>Un framework simplifica el desarrollo de las aplicaciones, ya que automatiza muchos de los patrones utilizados para resolver las tareas comunes. Además, un framework proporciona estructura al código fuente, forzando al desarrollador a crear código más legible y más fácil de mantener. Por último, un framework facilita la programación de aplicaciones, ya que encapsula operaciones complejas en instrucciones sencillas.</p>
+
+<p>Symfony es un completo framework diseñado para optimizar, gracias a sus características, el desarrollo de las aplicaciones web. Para empezar, separa la lógica de negocio, la lógica de servidor y la presentación de la aplicación web. Proporciona varias herramientas y clases encaminadas a reducir el tiempo de desarrollo de una aplicación web compleja. Además, automatiza las tareas más comunes, permitiendo al desarrollador dedicarse por completo a los aspectos específicos de cada aplicación. El resultado de todas estas ventajas es que no se debe reinventar la rueda cada vez que se crea una nueva aplicación web.</p>
+
+<p>Symfony está desarrollado completamente con PHP y ha sido probado con éxito en sitios como <a href="http://answers.yahoo.com">Yahoo! Answers</a>, <a href="http://delicious.com">delicious</a>, <a href="http://dailymotion.com">DailyMotion</a> y muchos otros sitios web de primer nivel. Symfony es compatible con la mayoría de gestores de bases de datos, como MySQL, PostgreSQL, Oracle y SQL Server de Microsoft. Se puede ejecutar tanto en plataformas *nix (Unix, Linux, etc.) como en plataformas Windows. A continuación se muestran algunas de sus características.</p>
+
+<h3 id="caracteristicas_de_symfony">1.1.1. Características de Symfony</h3>
+
+<p>Symfony se diseñó para que se ajustara a los siguientes requisitos:</p>
+
+<ul>
+<li>Fácil de instalar y configurar en la mayoría de plataformas (y con la garantía de que funciona correctamente en los sistemas Windows y *nix estándares)</li>
+<li>Independiente del sistema gestor de bases de datos</li>
+<li>Sencillo de usar en la mayoría de casos, pero lo suficientemente flexible como para adaptarse a los casos más complejos</li>
+<li>Basado en la premisa de <em>"convenir en vez de configurar"</em>, en la que el desarrollador solo debe configurar aquello que no es convencional</li>
+<li>Sigue la mayoría de <em>mejores prácticas</em> y patrones de diseño para la web</li>
+<li>Preparado para aplicaciones empresariales y adaptable a las políticas y arquitecturas propias de cada empresa, además de ser lo suficientemente estable como para desarrollar aplicaciones a largo plazo</li>
+<li>Código fácil de leer que incluye comentarios de phpDocumentor y que permite un mantenimiento muy sencillo</li>
+<li>Fácil de extender, lo que permite su integración con librerías desarrolladas por terceros</li>
+</ul>
+
+<h4 id="automatizacion_de_caracteristicas_de_proyectos_web">1.1.1.1. Automatización de características de proyectos web</h4>
+
+<p>Symfony automatiza la mayoría de elementos comunes de los proyectos web, como por ejemplo:</p>
+
+<ul>
+<li>La capa de internacionalización que incluye Symfony permite la traducción de los datos y de la interfaz, así como la adaptación local de los contenidos.</li>
+<li>La capa de presentación utiliza plantillas y <em>layouts</em> que pueden ser creados por diseñadores HTML sin ningún tipo de conocimiento del framework. Los <em>helpers</em> incluidos permiten minimizar el código utilizado en la presentación, ya que encapsulan grandes bloques de código en llamadas simples a funciones.</li>
+<li>Los formularios incluyen validación automatizada y relleno automático de datos  <em>"repopulation"</em>), lo que asegura la obtención de datos correctos y mejora la experiencia de usuario.</li>
+<li>Los datos incluyen mecanismos de escape que permiten una mejor protección contra los ataques producidos por datos corruptos.</li>
+<li>La gestión de la caché reduce el ancho de banda utilizado y la carga del servidor.</li>
+<li>La autenticación y la gestión de credenciales simplifican la creación de secciones restringidas y la gestión de la seguridad de usuario.</li>
+<li>El sistema de enrutamiento y las URL <em>limpias</em> permiten considerar a las direcciones de las páginas como parte de la interfaz, además de estar optimizadas para los buscadores.</li>
+<li>El soporte de e-mail incluido y la gestión de APIs permiten a las aplicaciones web interactuar más allá de los navegadores.</li>
+<li>Los listados son más fáciles de utilizar debido a la paginación automatizada, el filtrado y la ordenación de datos.</li>
+<li>Los plugins, las factorías (patrón de diseño <em>"Factory"</em>) y los eventos otorgan al código del framework una gran flexibilidad.</li>
+</ul>
+
+<h4 id="entorno_de_desarrollo_y_herramientas">1.1.1.2. Entorno de desarrollo y herramientas</h4>
+
+<p>Symfony puede ser completamente personalizado para cumplir con los requisitos de las empresas que disponen de sus propias políticas y reglas para la gestión de proyectos y la programación de aplicaciones. Por defecto incorpora varios entornos de desarrollo diferentes e incluye varias herramientas que permiten automatizar las tareas más comunes de la ingeniería del software:</p>
+
+<ul>
+<li>Las herramientas que generan automáticamente código han sido diseñadas para hacer prototipos de aplicaciones y para crear fácilmente la parte de gestión de las aplicaciones.</li>
+<li>El framework de desarrollo de pruebas unitarias y funcionales proporciona las herramientas ideales para el desarrollo basado en pruebas  <em>"test-driven development"</em>).</li>
+<li>La barra de depuración web simplifica la depuración de las aplicaciones, ya que muestra toda la información que los programadores necesitan sobre la página en la que están trabajando.</li>
+<li>La interfaz de línea de comandos automatiza la instalación de las aplicaciones entre servidores.</li>
+<li>Es posible realizar cambios <em>"en caliente"</em> de la configuración (sin necesidad de reiniciar el servidor).</li>
+<li>El completo sistema de log permite a los administradores acceder hasta el último detalle de las actividades que realiza la aplicación.</li>
+</ul>
+
+<h3 id="quien_ha_desarrollado_symfony_y_por_que_motivo">1.1.2. ¿Quién ha desarrollado Symfony y por qué motivo?</h3>
+
+<p>La primera versión de Symfony fue publicada en Octubre de 2005 por Fabien Potencier, fundador del proyecto y coautor de este libro. Fabien es el presidente de Sensio (http://www.sensio.com/), una empresa francesa de desarrollo de aplicaciones web conocida por sus innovaciones en este campo.</p>
+
+<p>En el año 2003, Fabien realizó una investigación sobre las herramientas de software libre disponibles para el desarrollo de aplicaciones web con PHP. Fabien llegó a la conclusión de que no existía ninguna herramienta con esas características. Después del lanzamiento de la versión 5 de PHP, decidió que las herramientas disponibles habían alcanzado un grado de madurez suficiente como para integrarlas en un framework completo. Fabien empleó un año entero para desarrollar el núcleo de Symfony, basando su trabajo en el framework Mojavi (que también era un framework que seguía el funcionamiento MVC), en la herramienta Propel para el mapeo de objetos a bases de datos (conocido como ORM, de <em>"object-relational mapping"</em>) y en los <em>helpers</em> empleados por Ruby on Rails en sus plantillas.</p>
+
+<p>Fabien desarrolló originalmente Symfony para utilizarlo en los proyectos de Sensio, ya que disponer de un framework efectivo es la mejor ayuda para el desarrollo eficiente y rápido de las aplicaciones. Además, el desarrollo web se hace más intuitivo y las aplicaciones resultantes son más robustas y más fáciles de mantener. El framework se utilizó por primera vez en el desarrollo de un sitio de comercio electrónico para un vendedor de lencería y posteriormente se utilizó en otros proyectos.</p>
+
+<p>Después de utilizar Symfony en algunos proyectos, Fabien decidió publicarlo bajo una licencia de software libre. Sus razones para liberar el proyecto fueron para donar su trabajo a la comunidad, aprovechar la respuesta de los usuarios, mostrar la experiencia de Sensio y porque considera que es divertido hacerlo.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> ¿Por qué lo llamaron <em>"Symfony"</em> y no <em>"CualquierNombreFramework"</em>? Porque Fabien quería una nombre corto que tuviera una letra 's' (de Sensio) y una letra 'f' (de framework), que fuera fácil de recordar y que no estuviera asociado a otra herramienta de desarrollo. Además, no le gustan las mayúsculas. "Symfony" era muy parecido a lo que estaba buscando, aunque no es una palabra correcta en el idioma inglés (la palabra correcta es <em>"symphony"</em>), y además estaba libre como nombre de proyecto. La otra alternativa era <em>"baguette"</em>.</p></div>
+
+<p>Para que Symfony fuera un proyecto de software libre exitoso, debía tener una documentación amplia y en inglés, para aumentar la incorporación de usuarios al proyecto. Fabien pidió a su compañero de trabajo François Zaninotto, el otro coautor de este libro, que investigara el código fuente del programa y escribiera un libro sobre Symfony. Aunque el proceso fue arduo, cuando el proyecto se lanzó públicamente, la documentación era suficiente como para atraer a muchos desarrolladores. El resto es historia.</p>
+
+<h3 id="la_comunidad_symfony">1.1.3. La comunidad Symfony</h3>
+
+<p>En cuanto se abrió al público el sitio web de Symfony (http://www.symfony-project.org/) muchos desarrolladores de todo el mundo se descargaron e instalaron el framework, comenzaron a leer la documentación y construyeron sus primeras aplicaciones con Symfony, aumentando poco a poco la popularidad de Symfony.</p>
+
+<p>En ese momento, los frameworks para el desarrollo de aplicaciones web estaban en pleno apogeo, y era muy necesario disponer de un completo framework realizado con PHP. Symfony proporcionaba una solución irresistible a esa carencia, debido a la calidad de su código fuente y a la gran cantidad de documentación disponible, dos ventajas muy importantes sobre otros frameworks disponibles. Los colaboradores aparecieron en seguida proponiendo parches y mejoras, detectando los errores de la documentación y realizando otras tareas muy importantes.</p>
+
+<p>El repositorio público de código fuente y el sistema de notificación de errores y mejoras mediante tickets permite varias formas de contribuir al proyecto y todos los voluntarios son bienvenidos. Fabien continua siendo el mayor contribuidor de código al repositorio y se encarga de garantizar la calidad del código.</p>
+
+<p>Actualmente, el <a href="http://forum.symfony-project.org/">foro de Symfony</a>, las <a href="http://groups.google.com/group/symfony-es">listas de correo</a> y el <a href="irc://irc.freenode.net/symfony">canal IRC</a> ofrecen otras alternativas válidas para el soporte del framework, con el que cada pregunta suele obtener una media de cuatro respuestas. Cada día nuevos usuarios instalan Symfony y el wiki y la sección de fragmentos de código almacenan una gran cantidad de documentación generada por los usuarios. Por todo ello, Symfony se ha convertido en uno de los frameworks PHP más populares.</p>
+
+<p>La comunidad Symfony es el tercer pilar del framework y esperamos que tu también te unas a ella después de leer este libro.</p>
+
+<h3 id="es_adecuado_symfony_para_mi">1.1.4. ¿Es adecuado Symfony para mí?</h3>
+
+<p>No importa si eres un programador experto de PHP o un principiante en el desarrollo de aplicaciones web, en cualquier caso podrás utilizar Symfony de forma sencilla. El principal argumento para decidir si deberías o no utilizar Symfony es el tamaño del proyecto.</p>
+
+<p>Si tu proyecto consiste en desarrollar un sitio web sencillo con 5 o 10 páginas diferentes, acceso simple a bases de datos y no es importante asegurar un gran rendimiento o una documentación adecuada, deberías realizar tu proyecto solo con PHP. En ese caso, no vas a obtener grandes ventajas por utilizar un framework de desarrollo de aplicaciones web, además de que utilizar objetos y el modelo MVC  <em>Modelo Vista Controlador</em>) solamente va a ralentizar el desarrollo de tu proyecto. Además, Symfony no está optimizado para ejecutarse de forma eficiente en un servidor compartido en el que los scripts de PHP se ejecutan solamente mediante CGI  <em>Common Gateway Interface</em>).</p>
+
+<p>Por otra parte, si desarrollas aplicaciones web complejas con mucha lógica de negocio, no es recomendable utilizar solo PHP. Para asegurar el mantenimiento y las ampliaciones futuras de la aplicación, es necesario que el código sea ligero, legible y efectivo. Si quieres incorporar los últimos avances en interacción con usuarios (como por ejemplo Ajax), puedes acabar escribiendo cientos de líneas de JavaScript. Si quieres desarrollar aplicaciones de forma divertida y muy rápida, no es aconsejable utilizar solo PHP. En todos estos casos, deberías utilizar Symfony.</p>
+
+<p>Si eres un desarrollador web profesional, ya conoces todas las ventajas de utilizar un framework de desarrollo de aplicaciones web y solo necesitas un framework que sea maduro, bien documentado y con una gran comunidad que lo apoye. En este caso, deberías dejar de buscar porque Symfony es lo que necesitas.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Si quieres ver una demostración visual de las posibilidades de Symfony, deberías ver los vídeos o <em>screencasts</em> que están disponibles en el sitio web de Symfony. En estas demostraciones se ve lo rápido y divertido que es desarrollar aplicaciones web con Symfony.</p></div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="../capitulo_1.html">&larr; Anterior <span>Capítulo 1. Introducción a Symfony</span></a>
+            
+            <a class="span5 next" href="conceptos_basicos.html">Siguiente &rarr; <span>1.2. Conceptos básicos</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Symfony en pocas palabras (Symfony 1.4, la guía definitiva%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Symfony 1.4, la guía definitiva : Symfony en pocas palabras']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1 ">
+        <a href="../capitulo_1.html">
+            <span>Capítulo 1.</span> Introducción a Symfony
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="symfony_en_pocas_palabras.html">
+            <span>1.1.</span> Symfony en pocas palabras
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="conceptos_basicos.html">
+            <span>1.2.</span> Conceptos básicos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="resumen.html">
+            <span>1.3.</span> Resumen
+        </a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Explorando el interior de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Ejecutar aplicaciones Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Introducción a la creación de páginas</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Configurar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> El Controlador</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> La Vista</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> El modelo (Doctrine)</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Enlaces y sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Emails</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Uso de la cache</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Pruebas unitarias y funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Herramientas para la administración de aplicaciones</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> Personalizar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> Rendimiento</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Configuración avanzada</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

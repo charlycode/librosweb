@@ -1,0 +1,283 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>Medios (Referencia de CSS 2.1)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Medios (Referencia de CSS 2.1)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page referencia_css">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="index.html">Referencia de CSS 2.1</a></li>
+  <li class="current"><span>Medios</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="medios">Medios</h1>
+    <p>Una de las características más importantes de las hojas de estilos CSS es que permiten que las páginas web se adapten fácilmente a los diferentes dispositivos: pantalla, impresora, móviles, televisión, etc.</p>
+
+<p>CSS permite aplicar diferentes estilos a un mismo elemento en función del dispositivo utilizado para acceder a los contenidos. Además, algunas propiedades CSS sólo tienen sentido en determinados dispositivos, como la paginación y los saltos de página para los medios impresos o el volumen y tipo de voz para los medios de audio.</p>
+
+<p>Cada uno de los dispositivos se llaman <em>"medios"</em> en CSS y la siguiente tabla recoge todos los medios que define CSS:</p>
+
+<div class="table" id="table_d_1">
+
+    <table>
+<thead>
+<tr>
+  <th>Medio</th>
+  <th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>all</code></td>
+  <td>Todos los medios definidos</td>
+</tr>
+<tr>
+  <td><code>braille</code></td>
+  <td>Dispositivos táctiles que emplean el sistema braille</td>
+</tr>
+<tr>
+  <td><code>embosed</code></td>
+  <td>Impresoras braille</td>
+</tr>
+<tr>
+  <td><code>handheld</code></td>
+  <td>Dispositivos de mano como móviles y PDA</td>
+</tr>
+<tr>
+  <td><code>print</code></td>
+  <td>Impresoras y navegadores en el modo <em>"Vista Previa para Imprimir"</em></td>
+</tr>
+<tr>
+  <td><code>projection</code></td>
+  <td>Proyectores y dispositivos para presentaciones</td>
+</tr>
+<tr>
+  <td><code>screen</code></td>
+  <td>Pantallas de ordenador</td>
+</tr>
+<tr>
+  <td><code>speech</code></td>
+  <td>Sintetizadores para navegadores de voz utilizados por personas discapacitadas</td>
+</tr>
+<tr>
+  <td><code>tty</code></td>
+  <td>Dispositivos textuales limitados como teletipos y terminales de texto</td>
+</tr>
+<tr>
+  <td><code>tv</code></td>
+  <td>Televisores y dispositivos con resolución baja</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+<p>Los medios más utilizados actualmente son <code>screen</code> (para definir el aspecto de la página en pantalla) y <code>print</code> (para definir el aspecto de la página cuando se imprime), seguidos de <code>handheld</code> (que define el aspecto de la página cuando se visualiza mediante un dispositivo móvil).</p>
+
+<p>Además, CSS clasifica a los medios en diferentes grupos según sus características. La siguiente tabla resume todos los grupos definidos en el estándar:</p>
+
+<div class="table" id="table_d_2">
+
+    <table>
+<thead>
+<tr>
+  <th>Medio</th>
+  <th>Continuo / Paginado</th>
+  <th>Visual / Auditivo / Táctil / Vocal</th>
+  <th>Mapa de bits / Caracteres</th>
+  <th>Interactivo / Estático</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>braille</code></td>
+  <td>continuo</td>
+  <td>táctil</td>
+  <td>caracteres</td>
+  <td>ambos</td>
+</tr>
+<tr>
+  <td><code>embossed</code></td>
+  <td>paginado</td>
+  <td>táctil</td>
+  <td>caracteres</td>
+  <td>estático</td>
+</tr>
+<tr>
+  <td><code>handheld</code></td>
+  <td>ambos</td>
+  <td>visual, auditivo, vocal</td>
+  <td>ambos</td>
+  <td>ambos</td>
+</tr>
+<tr>
+  <td><code>print</code></td>
+  <td>paginado</td>
+  <td>visual</td>
+  <td>mapa de bits</td>
+  <td>estático</td>
+</tr>
+<tr>
+  <td><code>projection</code></td>
+  <td>paginado</td>
+  <td>visual</td>
+  <td>mapa de bits</td>
+  <td>interactivo</td>
+</tr>
+<tr>
+  <td><code>screen</code></td>
+  <td>continuo</td>
+  <td>visual, auditivo</td>
+  <td>mapa de bits</td>
+  <td>ambos</td>
+</tr>
+<tr>
+  <td><code>speech</code></td>
+  <td>continuo</td>
+  <td>vocal</td>
+  <td>(no tiene sentido)</td>
+  <td>ambos</td>
+</tr>
+<tr>
+  <td><code>tty</code></td>
+  <td>continuo</td>
+  <td>visual</td>
+  <td>caracteres</td>
+  <td>ambos</td>
+</tr>
+<tr>
+  <td><code>tv</code></td>
+  <td>ambos</td>
+  <td>visual, auditivo</td>
+  <td>mapa de bits</td>
+  <td>ambos</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+<p>En primer lugar, el flujo de contenidos puede ser continuo (como por ejemplo en una pantalla) o puede estar dividido en páginas (como por ejemplo en una impresora). Además, la forma de acceder a la información puede ser visual, auditiva, táctil y/o vocal. Los medios pueden mostrar la información en un mapa de bits (por ejemplo una pantalla) o mediante una serie de caracteres (por ejemplo en una impresora braille). Por último, algunos medios permiten la interacción con los usuarios y otros medios no lo permiten y se consideran estáticos.</p>
+
+<p>Extrayendo solamente la información relativa a la forma de acceso a los contenidos, la tabla anterior se puede reordenar de la siguiente manera:</p>
+
+<div class="table" id="table_d_3">
+
+    <table>
+<thead>
+<tr>
+  <th>Grupo</th>
+  <th>Medios que incluye</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>visual</td>
+  <td><code>handheld</code>, <code>print</code>, <code>projection</code>, <code>screen</code>, <code>tty</code>, <code>tv</code></td>
+</tr>
+<tr>
+  <td>auditivo</td>
+  <td><code>handheld</code>, <code>screen</code>, <code>tv</code></td>
+</tr>
+<tr>
+  <td>vocal</td>
+  <td><code>handheld</code>, <code>speech</code></td>
+</tr>
+<tr>
+  <td>táctil</td>
+  <td><code>braille</code>, <code>embossed</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Medios (Referencia de CSS 2.1%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Referencia de CSS 2.1 : Medios']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Propiedades relacionadas</span></h3>
+
+
+                                                                
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

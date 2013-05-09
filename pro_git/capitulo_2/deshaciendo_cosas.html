@@ -1,0 +1,275 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>2.4. Deshaciendo cosas (Pro Git, el libro oficial de Git)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="viendo_el_historico_de_confirmaciones.html" />
+        <link rel="next" href="trabajando_con_repositorios_remotos.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="2.4. Deshaciendo cosas (Pro Git, el libro oficial de Git)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page pro_git">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Pro Git, el libro oficial de Git</a></li>
+  <li><a href="../capitulo_2.html">Capítulo 2. Fundamentos de Git</a></li>
+  <li class="current"><span>2.4.. Deshaciendo cosas</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="deshaciendo_cosas"><span>2.4.</span> Deshaciendo cosas</h1>
+    
+
+<p>En cualquier momento puedes querer deshacer algo. En esta sección veremos algunas herramientas básicas para deshacer cambios. Ten cuidado, porque no siempre puedes volver atrás después de algunas de estas operaciones. Ésta es una de las pocas áreas de Git que pueden provocar que pierdas datos si haces las cosas incorrectamente.</p>
+
+<h3 id="modificando_tu_ultima_confirmacion">2.4.1. Modificando tu última confirmación</h3>
+
+<p>Uno de los casos más comunes en el que quieres deshacer cambios es cuando confirmas demasiado pronto y te olvidas de añadir algún archivo, o te confundes al introducir el mensaje de confirmación. Si quieres volver a hacer la confirmación, puedes ejecutar un <code>commit</code> con la opción <code>--amend</code>:</p>
+
+<div class="code code">
+<pre class="code">$ git commit --amend</pre>
+</div>
+
+<p>Este comando utiliza lo que haya en tu área de preparación para la confirmación. Si no has hecho ningún cambio desde la última confirmación (por ejemplo, si ejecutas este comando justo después de tu confirmación anterior), esta instantánea será exactamente igual, y lo único que cambiarás será el mensaje de confirmación.</p>
+
+<p>Se lanzará el editor de texto para que introduzcas tu mensaje, pero ya contendrá el mensaje de la confirmación anterior. Puedes editar el mensaje, igual que siempre, pero se sobreescribirá tu confirmación anterior.</p>
+
+<p>Por ejemplo, si confirmas y luego te das cuenta de que se te olvidó preparar los cambios en uno de los archivos que querías añadir, puedes hacer algo así:</p>
+
+<div class="code code">
+<pre class="code">$ git commit -m 'initial commit'
+$ git add forgotten_file
+$ git commit --amend</pre>
+</div>
+
+<p>Estos tres comandos acabarán convirtiéndose en una única confirmación — la segunda confirmación reemplazará los resultados de la primera —.</p>
+
+<h3 id="deshaciendo_la_preparacion_de_un_archivo">2.4.2. Deshaciendo la preparación de un archivo</h3>
+
+<p>Las dos secciones siguientes muestran como pelearse con las modificaciones del área de preparación y del directorio de trabajo. Lo bueno es que el comando que usas para determinar el estado de ambas áreas te recuerda como deshacer sus modificaciones. Por ejemplo, digamos que has modificado dos archivos, y quieres confirmarlos como cambios separados, pero tecleas accidentalmente <code>git add *</code> y preparas ambos. ¿Cómo puedes sacar uno de ellos del área de preparación? El comando <code>git status</code> te lo recuerda:</p>
+
+<div class="code code">
+<pre class="code">$ git add .
+$ git status
+# On branch master
+# Changes to be committed:
+#   (use &quot;git reset HEAD &lt;file&gt;...&quot; to unstage)
+#
+#       modified:   README.txt
+#       modified:   benchmarks.rb
+#</pre>
+</div>
+
+<p>Justo debajo de la cabecera <em>“Cambios a confirmar”</em> (<em>“Changes to be committed”</em>), dice que uses <code>git reset HEAD &lt;archivo&gt;...</code> para sacar un archivo del área de preparación. Vamos a aplicar ese consejo sobre <code>benchmarks.rb</code>:</p>
+
+<div class="code code">
+<pre class="code">$ git reset HEAD benchmarks.rb
+benchmarks.rb: locally modified
+$ git status
+# On branch master
+# Changes to be committed:
+#   (use &quot;git reset HEAD &lt;file&gt;...&quot; to unstage)
+#
+#       modified:   README.txt
+#
+# Changed but not updated:
+#   (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)
+#   (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)
+#
+#       modified:   benchmarks.rb
+#</pre>
+</div>
+
+<p>El comando es un poco extraño, pero funciona. El archivo <code>benchmarks.rb</code> ahora está modificado, no preparado.</p>
+
+<h3 id="deshaciendo_la_modificacion_de_un_archivo">2.4.3. Deshaciendo la modificación de un archivo</h3>
+
+<p>¿Qué pasa si te das cuenta de que no quieres mantener las modificaciones que has hecho sobre el archivo <code>benchmarks.rb</code>? ¿Cómo puedes deshacerlas fácilmente — revertir el archivo al mismo estado en el que estaba cuando hiciste tu última confirmación — (o cuando clonaste el repositorio, o como quiera que metieses el archivo en tu directorio de trabajo)? Afortunadamente, <code>git status</code> también te dice como hacer esto. En la salida del último ejemplo, la cosa estaba así:</p>
+
+<div class="code code">
+<pre class="code"># Changed but not updated:
+#   (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)
+#   (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)
+#
+#       modified:   benchmarks.rb
+#</pre>
+</div>
+
+<p>Te dice de forma bastante explícita cómo descartar las modificaciones que hayas hecho (al menos las versiones de Git a partir de la 1.6.1 lo hacen — si tienes una versión más antigua, te recomendamos encarecidamente que la actualices para obtener algunas de estas mejoras de usabilidad —). Vamos a hacer lo que dice:</p>
+
+<div class="code code">
+<pre class="code">$ git checkout -- benchmarks.rb
+$ git status
+# On branch master
+# Changes to be committed:
+#   (use &quot;git reset HEAD &lt;file&gt;...&quot; to unstage)
+#
+#       modified:   README.txt
+#</pre>
+</div>
+
+<p>Puedes ver que se han revertido los cambios. También deberías ser consciente del peligro de este comando: cualquier modificación hecha sobre este archivo ha desaparecido — acabas de sobreescribirlo con otro archivo —. Nunca uses este comando a no ser que estés absolutamente seguro de que no quieres el archivo. Si lo único que necesitas es olvidarte de él momentáneamente, veremos los conceptos de apilamiento (<em>stashing</em>) y ramificación (<em>branching</em>) en el próximo capítulo; en general son formas más adecuadas de trabajar.</p>
+
+<p>Recuerda, cualquier cosa que esté confirmada en Git casi siempre puede ser recuperada. Incluso confirmaciones sobre ramas que han sido eliminadas, o confirmaciones sobreescritas con la opción <code>--amend</code>, pueden recuperarse (véase el <a class="internal" href="../capitulo_9.html#capitulo9">Capítulo 9</a> para conocer más sobre recuperación de datos). Sin embargo, cualquier cosa que pierdas y que no estuviese confirmada, probablemente no vuelvas a verla nunca más.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="viendo_el_historico_de_confirmaciones.html">&larr; Anterior <span>2.3. Viendo el histórico de confirmaciones</span></a>
+            
+            <a class="span5 next" href="trabajando_con_repositorios_remotos.html">Siguiente &rarr; <span>2.5. Trabajando con repositorios remotos</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Deshaciendo cosas (Pro Git, el libro oficial de Git%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Pro Git, el libro oficial de Git : Deshaciendo cosas']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Empezando</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_2.html">
+            <span>Capítulo 2.</span> Fundamentos de Git
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="obteniendo_un_repositorio_git.html">
+            <span>2.1.</span> Obteniendo un repositorio Git
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="guardando_cambios_en_el_repositorio.html">
+            <span>2.2.</span> Guardando cambios en el repositorio
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="viendo_el_historico_de_confirmaciones.html">
+            <span>2.3.</span> Viendo el histórico de confirmaciones
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="deshaciendo_cosas.html">
+            <span>2.4.</span> Deshaciendo cosas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="trabajando_con_repositorios_remotos.html">
+            <span>2.5.</span> Trabajando con repositorios remotos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="creando_etiquetas.html">
+            <span>2.6.</span> Creando etiquetas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="consejos_y_trucos.html">
+            <span>2.7.</span> Consejos y trucos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="resumen.html">
+            <span>2.8.</span> Resumen
+        </a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Trabajando con ramas en Git</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Git en un servidor</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Git en entornos distribuidos</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Las herramientas de Git</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Personalizando Git</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Git y otros sistemas</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Funcionamiento interno de Git</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

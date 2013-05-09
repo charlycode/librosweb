@@ -1,0 +1,257 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>11.1. Antes de comenzar (Los formularios de Symfony 1.4)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="11.1. Antes de comenzar (Los formularios de Symfony 1.4)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page symfony_formularios">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Los formularios de Symfony 1.4</a></li>
+  <li><a href="../capitulo_11.html">Capítulo 11. Integrando Doctrine</a></li>
+  <li class="current"><span>11.1. Antes de comenzar</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="antes_de_comenzar"><span>11.1.</span> Antes de comenzar</h1>
+    
+
+<p>A lo largo de este capítulo se crea un gestor de artículos como ejemplo de uso de Doctrine y los formularios de Symfony. En primer lugar se define el esquema de la base de datos, compuesto por las cinco tablas mostradas en el listado 11-1: <code>article</code>, <code>author</code>, <code>category</code>, <code>tag</code> y <code>article_tag</code>.</p>
+
+<p><strong>Listado 11-1 - Esquema de la base de datos</strong></p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co1"># config/doctrine/schema.yml</span><span class="co4">
+Article</span>:<span class="co3">
+  actAs</span><span class="sy2">: </span><span class="br0">&#91;</span>Sluggable, Timestampable<span class="br0">&#93;</span><span class="co4">
+  columns</span>:<span class="co4">
+    title</span>:<span class="co3">
+      type</span><span class="sy2">: </span>string<span class="br0">&#40;</span><span class="nu0">255</span><span class="br0">&#41;</span><span class="co3">
+      notnull</span><span class="sy2">: </span>true<span class="co4">
+    content</span>:<span class="co3">
+      type</span><span class="sy2">: </span>clob<span class="co3">
+    status</span><span class="sy2">: </span>string<span class="br0">&#40;</span><span class="nu0">255</span><span class="br0">&#41;</span><span class="co3">
+    author_id</span><span class="sy2">: </span>integer<span class="co3">
+    category_id</span><span class="sy2">: </span>integer<span class="co3">
+    published_at</span><span class="sy2">: </span>timestamp<span class="co4">
+  relations</span>:<span class="co4">
+    Author</span>:<span class="co3">
+      foreignAlias</span><span class="sy2">: </span>Articles<span class="co4">
+    Category</span>:<span class="co3">
+      foreignAlias</span><span class="sy2">: </span>Articles<span class="co4">
+    Tags</span>:<span class="co3">
+      class</span><span class="sy2">: </span>Tag<span class="co3">
+      refClass</span><span class="sy2">: </span>ArticleTag<span class="co3">
+      foreignAlias</span><span class="sy2">: </span>Articles<span class="co4">
+Author</span>:<span class="co4">
+  columns</span>:<span class="co3">
+    first_name</span><span class="sy2">: </span>string<span class="br0">&#40;</span><span class="nu0">20</span><span class="br0">&#41;</span><span class="co3">
+    last_name</span><span class="sy2">: </span>string<span class="br0">&#40;</span><span class="nu0">20</span><span class="br0">&#41;</span><span class="co3">
+    email</span><span class="sy2">: </span>string<span class="br0">&#40;</span><span class="nu0">255</span><span class="br0">&#41;</span><span class="co3">
+    active</span><span class="sy2">: </span>boolean<span class="co4">
+Category</span>:<span class="co4">
+  columns</span>:<span class="co3">
+    name</span><span class="sy2">: </span>string<span class="br0">&#40;</span><span class="nu0">255</span><span class="br0">&#41;</span><span class="co4">
+Tag</span>:<span class="co4">
+  columns</span>:<span class="co3">
+    name</span><span class="sy2">: </span>string<span class="br0">&#40;</span><span class="nu0">255</span><span class="br0">&#41;</span><span class="co4">
+ArticleTag</span>:<span class="co4">
+  columns</span>:<span class="co4">
+    article_id</span>:<span class="co3">
+      type</span><span class="sy2">: </span>integer<span class="co3">
+      primary</span><span class="sy2">: </span>true<span class="co4">
+    tag_id</span>:<span class="co3">
+      type</span><span class="sy2">: </span>integer<span class="co3">
+      primary</span><span class="sy2">: </span>true<span class="co4">
+  relations</span>:<span class="co4">
+    Article</span>:<span class="co3">
+      onDelete</span><span class="sy2">: </span>CASCADE<span class="co4">
+    Tag</span>:<span class="co3">
+      onDelete</span><span class="sy2">: </span>CASCADE</pre>
+</div>
+
+<p>A continuación se muestra la relación entre las tablas:</p>
+
+<ul>
+<li>Relación 1-n entre las tablas <code>article</code> y <code>author</code>, ya que cada artículo está escrito por uno y sólo un autor.</li>
+<li>Relación 1-n entre las tablas <code>article</code> y <code>category</code>, ya que cada artículo pertenece a una o ninguna categoría.</li>
+<li>Relación n-n entre las tablas <code>article</code> y <code>tag</code>.</li>
+</ul>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="../capitulo_11.html">&larr; Anterior <span>Capítulo 11 Integrando Doctrine</span></a>
+            
+            <a class="span5 next" href="generando_las_clases_del_formulario.html">Siguiente &rarr; <span>11.2 Generando las clases del formulario</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Antes de comenzar (Los formularios de Symfony 1.4%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Los formularios de Symfony 1.4 : Antes de comenzar']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+                <li class="level-1">
+            <span>1.</span>
+            <a href="../capitulo_1.html">Creación de formularios</a>
+        </li>
+                                            <li class="level-1">
+            <span>2.</span>
+            <a href="../capitulo_2.html">Validación de formularios</a>
+        </li>
+                                                                            <li class="level-1">
+            <span>3.</span>
+            <a href="../capitulo_3.html">Formularios para diseñadores web</a>
+        </li>
+                                                                    <li class="level-1">
+            <span>4.</span>
+            <a href="../capitulo_4.html">Integración con Propel</a>
+        </li>
+                                                                    <li class="level-1">
+            <span>5.</span>
+            <a href="../capitulo_5.html">Sin título</a>
+        </li>
+                    <li class="level-1">
+            <span>6.</span>
+            <a href="../capitulo_6.html">Sin título</a>
+        </li>
+                    <li class="level-1">
+            <span>7.</span>
+            <a href="../capitulo_7.html">Sin título</a>
+        </li>
+                    <li class="level-1">
+            <span>8.</span>
+            <a href="../capitulo_8.html">Internacionalización y localización</a>
+        </li>
+                                                    <li class="level-1">
+            <span>9.</span>
+            <a href="../capitulo_9.html">Sin título</a>
+        </li>
+                    <li class="level-1">
+            <span>10.</span>
+            <a href="../capitulo_10.html">Sin título</a>
+        </li>
+                    <li class="level-1 ">
+            <a href="../capitulo_11.html">
+                <span>Capítulo 11.</span>
+                Integrando Doctrine
+            </a>
+        </li>
+                        <li class="level-2 active">
+            <a href="antes_de_comenzar.html">
+                <span>11.1.</span>
+                Antes de comenzar
+            </a>
+        </li>
+                        <li class="level-2 ">
+            <a href="generando_las_clases_del_formulario.html">
+                <span>11.2.</span>
+                Generando las clases del formulario
+            </a>
+        </li>
+                        <li class="level-2 ">
+            <a href="el_generador_crud.html">
+                <span>11.3.</span>
+                El generador CRUD
+            </a>
+        </li>
+                        <li class="level-2 ">
+            <a href="personalizando_los_formularios_generados.html">
+                <span>11.4.</span>
+                Personalizando los formularios generados
+            </a>
+        </li>
+                        <li class="level-2 ">
+            <a href="serializacion_de_formularios.html">
+                <span>11.5.</span>
+                Serialización de formularios
+            </a>
+        </li>
+                        <li class="level-1">
+            <span>12.</span>
+            <a href="../capitulo_12.html">Referencia de Widgets</a>
+        </li>
+                                                                                            <li class="level-1">
+            <span>13.</span>
+            <a href="../capitulo_13.html">Validadores</a>
+        </li>
+                                                                            </ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

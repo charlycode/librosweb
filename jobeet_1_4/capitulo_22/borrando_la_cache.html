@@ -1,0 +1,295 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>22.8. Borrando la cache (El tutorial Jobeet)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="guardando_paginas_en_la_cache.html" />
+        <link rel="next" href="guardando_acciones_en_la_cache.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="22.8. Borrando la cache (El tutorial Jobeet)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page jobeet_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">El tutorial Jobeet</a></li>
+  <li><a href="../capitulo_22.html">Capítulo 22. La cache</a></li>
+  <li class="current"><span>22.8.. Borrando la cache</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="borrando_la_cache"><span>22.8.</span> Borrando la cache</h1>
+    
+
+<p>Cuando el usuario publica una nueva oferta de trabajo o cuando activa una oferta existente, debemos refrescar la portada de Jobeet para que se muestre en el listado de ofertas de trabajo.</p>
+
+<p>Como no necesitamos que las ofertas de trabajo aparezcan en tiempo real en la portada, vamos a seguir la estrategia de reducir el tiempo de vida de la cache a un valor más aceptable:</p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co1"># plugins/sfJobeetJob/modules/sfJobeetJob/config/cache.yml</span><span class="co4">
+index</span>:<span class="co3">
+  enabled</span><span class="sy2">: </span> on<span class="co3">
+  lifetime</span><span class="sy2">: </span><span class="nu0">600</span></pre>
+</div>
+
+<p>Mientras que el valor por defecto hace que la cache se guarde durante un día completo, la configuración anterior hace que la portada de Jobeet se borre de la cache cada diez minutos.</p>
+
+<p>No obstante, si quieres actualizar la portada cada vez que un usuario activa una oferta de trabajo, modifica el método <code>executePublish()</code> del módulo <code>sfJobeetJob</code> para borrar la cache manualmente:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// plugins/sfJobeetJob/modules/sfJobeetJob/actions/actions.class.php</span>
+<span class="kw2">public</span> <span class="kw2">function</span> executePublish<span class="br0">&#40;</span>sfWebRequest <span class="re0">$request</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="re0">$request</span><span class="sy0">-&gt;</span><span class="me1">checkCSRFProtection</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+  <span class="re0">$job</span> <span class="sy0">=</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getRoute</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">getObject</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="re0">$job</span><span class="sy0">-&gt;</span><span class="me1">publish</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+  <span class="kw1">if</span> <span class="br0">&#40;</span><span class="re0">$cache</span> <span class="sy0">=</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getContext</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">getViewCacheManager</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$cache</span><span class="sy0">-&gt;</span><span class="me1">remove</span><span class="br0">&#40;</span><span class="st_h">'sfJobeetJob/index?sf_culture=*'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$cache</span><span class="sy0">-&gt;</span><span class="me1">remove</span><span class="br0">&#40;</span><span class="st_h">'sfJobeetCategory/show?id='</span><span class="sy0">.</span><span class="re0">$job</span><span class="sy0">-&gt;</span><span class="me1">getJobeetCategory</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">getId</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getUser</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">setFlash</span><span class="br0">&#40;</span><span class="st_h">'notice'</span><span class="sy0">,</span> <span class="kw3">sprintf</span><span class="br0">&#40;</span><span class="st_h">'Your job is now online for %s days.'</span><span class="sy0">,</span> sfConfig<span class="sy0">::</span><span class="me2">get</span><span class="br0">&#40;</span><span class="st_h">'app_active_days'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+  <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">redirect</span><span class="br0">&#40;</span><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">generateUrl</span><span class="br0">&#40;</span><span class="st_h">'job_show_user'</span><span class="sy0">,</span> <span class="re0">$job</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>La cache se gestiona mediante la clase <code>sfViewCacheManager</code>, cuyo método <code>remove()</code> borra la cache asociada con la URI interna indicada. Si quieres eliminar la cache para todos los posibles valores de una variable, utiliza <code>*</code> como valor. El valor <code>sf_culture=*</code> utilizado en el ejemplo anterior significa que Symfony elimina de la cache tanto la portada en inglés como la portada en francés.</p>
+
+<p>El borrado de la cache lo hemos incluido dentro de un bloque <code>if()</code> porque el gestor de la cache vale <code>null</code> cuando la cache se encuentra deshabilitada.</p>
+
+<div class="admonition sidebar"><p><strong class="title">La clase sfContext</strong> El objeto <code>sfContext</code> contiene referencias a los objetos internos de Symfony como la petición, la respuesta, el usuario, etc. El objeto <code>sfContext</code> actúa como un <em>singleton</em>, por lo que puedes utilizar la instrucción <code>sfContext::getInstance()</code> en cualquier punto de la aplicación para tener acceso directo a los objetos internos de Symfony:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$user</span> <span class="sy0">=</span> sfContext<span class="sy0">::</span><span class="me2">getInstance</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">getUser</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Te recomendamos que te lo pienses dos veces antes de utilizar <code>sfContext::getInstance()</code> en alguna de tus clases, ya que su uso impide que el código de la aplicación sea desacoplado. La mejor alternativa consiste en pasar como argumento el objeto que necesitas.</p>
+
+<p>Si lo necesitas, también puedes emplear <code>sfContext</code> como un registro en el que puedes añadir tus propios objetos mediante el método <code>set()</code> indicando como parámetros el nombre del objeto y el propio objeto. Para obtener de nuevo los objetos, utiliza el método <code>get()</code> pasando como argumento el nombre con el que guardaste el objeto:</p>
+
+<div class="code php">
+<pre class="php">sfContext<span class="sy0">::</span><span class="me2">getInstance</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">set</span><span class="br0">&#40;</span><span class="st_h">'job'</span><span class="sy0">,</span> <span class="re0">$job</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$job</span> <span class="sy0">=</span> sfContext<span class="sy0">::</span><span class="me2">getInstance</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">get</span><span class="br0">&#40;</span><span class="st_h">'job'</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p></p></div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="guardando_paginas_en_la_cache.html">&larr; Anterior <span>22.3. Guardando páginas en la cache</span></a>
+            
+            <a class="span5 next" href="guardando_acciones_en_la_cache.html">Siguiente &rarr; <span>22.5. Guardando acciones en la cache</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Borrando la cache (El tutorial Jobeet%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'El tutorial Jobeet : Borrando la cache']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Comenzando el proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> El proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> El modelo de datos</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> El controlador y la vista</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> El sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Profundizando en el modelo</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Trabajando con la página de cada categoría</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Pruebas unitarias</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Pruebas funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Probando los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> El generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> El usuario</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> El día de descanso</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Canales Atom</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Servicios web</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> El buscador</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>20</span> <a href="../capitulo_20.html"> Plugins</a>
+    </li>
+    <li class="level-1">
+        <span>21</span> <a href="../capitulo_21.html"> El día del diseño</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_22.html">
+            <span>Capítulo 22.</span> La cache
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="creando_un_nuevo_entorno.html">
+            <span>22.1.</span> Creando un nuevo entorno
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="configurando_la_cache.html">
+            <span>22.2.</span> Configurando la cache
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="guardando_paginas_en_la_cache.html">
+            <span>22.3.</span> Guardando páginas en la cache
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="borrando_la_cache.html">
+            <span>22.4.</span> Borrando la cache
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="guardando_acciones_en_la_cache.html">
+            <span>22.5.</span> Guardando acciones en la cache
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="guardando_elementos_parciales_y_componentes_en_la_cache.html">
+            <span>22.6.</span> Guardando elementos parciales y componentes en la cache
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="guardando_formularios_en_la_cache.html">
+            <span>22.7.</span> Guardando formularios en la cache
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="borrando_la_cache.html">
+            <span>22.8.</span> Borrando la cache
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="probando_la_cache.html">
+            <span>22.9.</span> Probando la cache
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="nos_vemos_manana.html">
+            <span>22.10.</span> Nos vemos mañana
+        </a>
+    </li>
+    <li class="level-1">
+        <span>23</span> <a href="../capitulo_23.html"> Pasando a producción</a>
+    </li>
+    <li class="level-1">
+        <span>24</span> <a href="../capitulo_24.html"> Un repaso a Symfony</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

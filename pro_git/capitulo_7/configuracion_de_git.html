@@ -1,0 +1,519 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>7.1. Configuración de Git (Pro Git, el libro oficial de Git)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="../capitulo_7.html" />
+        <link rel="next" href="atributos_de_git.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="7.1. Configuración de Git (Pro Git, el libro oficial de Git)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page pro_git">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Pro Git, el libro oficial de Git</a></li>
+  <li><a href="../capitulo_7.html">Capítulo 7. Personalizando Git</a></li>
+  <li class="current"><span>7.1.. Configuración de Git</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="configuracion_de_git"><span>7.1.</span> Configuración de Git</h1>
+    
+
+<p>Como se ha visto brevemente en el capítulo 1, podemos acceder a los ajustes de configuración de Git a través del comando <code>git config</code>. Una de las primeras acciones que has realizado con Git ha sido el configurar tu nombre y tu dirección de correo-e.</p>
+
+<div class="code code">
+<pre class="code">$ git config --global user.name &quot;John Doe&quot;
+$ git config --global user.email johndoe@example.com</pre>
+</div>
+
+<p>Ahora vas a aprender un puñado de nuevas e interesantes opciones que puedes utilizar para personalizar el uso de Git.</p>
+
+<p>Primeramente, vamos a repasar brevemente los detalles de configuración de Git que ya has visto en el primer capítulo. Para determinar su comportamiento no estandar, Git emplea una serie de archivos de configuración. El primero de ellos es el archivo <code>/etc/gitconfig</code>, que contiene valores para todos y cada uno de los usuarios en el sistema y para todos sus repositorios. Con la opción <code>--system</code> del comando <code>git config</code>, puedes leer y escribir de/a este archivo.</p>
+
+<p>El segundo es el archivo <code>~/.gitconfig</code>, específico para cada usuario. Con la opción <code>--global</code>, <code>git config</code> lee y escribe en este archivo.</p>
+
+<p>Y por último, Git también puede considerar valores de configuración presentes en el archivo <code>.git/config</code> de cada repositorio que estés utilizando. Estos valores se aplicarán únicamente a dicho repositorio. Cada nivel sobreescribe los valores del nivel anterior; es decir lo configurado en <code>.git/config</code> tiene primacia con respecto a lo configurado en <code>/etc/gitconfig</code>, por ejemplo. También puedes ajustar estas configuraciones manualmente, editando directamente los archivos correspondientes y escribiendo en ellos con la sintaxis correspondiente; pero suele ser más sencillo hacerlo siempre a través del comando <code>git config</code>.</p>
+
+<h3 id="configuracion_basica_del_cliente_git">7.1.1. Configuración básica del cliente Git</h3>
+
+<p>Las opciones de configuración reconocidas por Git pueden distribuirse en dos grandes categorias: las del lado cliente y las del lado servidor. La mayoria de las opciones están en el lado cliente, — configurando tus preferencias personales de trabajo —. Aunque hay multitud de ellas, aquí vamos a ver solamente unas pocas. Las mas comunmente utilizadas o las que afectan significativamente a tu forma de trabajar. No vamos a revisar aquellas opciones utilizadas solo en casos muy especiales. Si quieres consultar una lista completa, con todas las opciones contempladas en tu versión de Git, puedes lanzar el comando:</p>
+
+<div class="code code">
+<pre class="code">$ git config --help</pre>
+</div>
+
+<p>La página de manual sobre <code>git config</code> contiene una lista bastante detallada de todas las opciones disponibles.</p>
+
+<h4 id="coreeditor">7.1.1.1. core.editor</h4>
+
+<p>Por defecto, Git utiliza cualquier editor que hayas configurado como editor de texto por defecto de tu sistema. O, si no lo has configurado, utilizará <code>Vi</code> como editor para crear y editar las etiquetas y mensajes de tus confirmaciones de cambio (<em>commit</em>). Para cambiar ese comportamiento, puedes utilizar el ajuste <code>core.editor</code>:</p>
+
+<div class="code code">
+<pre class="code">$ git config --global core.editor emacs</pre>
+</div>
+
+<p>A partir de ese comando, por ejemplo, git lanzará <code>Emacs</code> cada vez que vaya a editar mensajes; indistintamente del editor configurado en la línea de comandos (<em>shell</em>) del sistema.</p>
+
+<h4 id="committemplate">7.1.1.2. commit.template</h4>
+
+<p>Si preparas este ajuste para apuntar a un archivo concreto de tu sistema, Git lo utilizará como mensaje por defecto cuando hagas confirmaciones de cambio. Por ejemplo, imagina que creas una plantilla en <code>$HOME/.gitmessage.txt</code>; con un contenido tal como:</p>
+
+<div class="code code">
+<pre class="code">subject line</pre>
+</div>
+
+<div class="code code">
+<pre class="code">what happened</pre>
+</div>
+
+<div class="code code">
+<pre class="code">[ticket: X]</pre>
+</div>
+
+<p>Para indicar a Git que lo utilice como mensaje por defecto y que aparezca en tu editor cuando lances el comando <code>git commit</code>, tan solo has de ajustar <code>commit.template</code>:</p>
+
+<div class="code code">
+<pre class="code">$ git config --global commit.template $HOME/.gitmessage.txt
+$ git commit</pre>
+</div>
+
+<p>A partir de entonces, cada vez que confirmes cambios (<em>commit</em>), tu editor se abrirá con algo como esto:</p>
+
+<div class="code code">
+<pre class="code">subject line</pre>
+</div>
+
+<div class="code code">
+<pre class="code">what happened</pre>
+</div>
+
+<div class="code ticket: X">
+<pre class="ticketx"># Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# Changes to be committed:
+#   (use &quot;git reset HEAD &lt;file&gt;...&quot; to unstage)
+#
+# modified:   lib/test.rb
+#
+~
+~
+&quot;.git/COMMIT_EDITMSG&quot; 14L, 297C</pre>
+</div>
+
+<p>Si tienes una política concreta con respecto a los mensajes de confirmación de cambios, puedes aumentar las posibilidades de que sea respetada si creas una plantilla acorde a dicha política y la pones como plantilla por defecto de Git.</p>
+
+<h4 id="corepager">7.1.1.3. core.pager</h4>
+
+<p>El parámetro <code>core.pager</code> selecciona el paginador utilizado por Git cuando muestra resultados de comandos tales como <code>log</code> o <code>diff</code>. Puedes ajustarlo para que utilice <code>more</code> o tu paginador favorito, (por defecto, se utiliza <code>less</code>); o puedes anular la paginación si le asignas una cadena vacia.</p>
+
+<div class="code code">
+<pre class="code">$ git config --global core.pager ''</pre>
+</div>
+
+<p>Si lanzas esto, Git mostrará siempre el resultado completo de todos los comandos, independientemente de lo largo que sea este.</p>
+
+<h4 id="usersigningkey">7.1.1.4. user.signingkey</h4>
+
+<p>Si tienes costumbre de firmar tus etiquetas (tal y como se ha visto en el capítulo 2), configurar tu clave de firma GPG puede facilitarte la labor. Configurando tu clave ID de esta forma:</p>
+
+<div class="code code">
+<pre class="code">$ git config --global user.signingkey &lt;gpg-key-id&gt;</pre>
+</div>
+
+<p>Puedes firmar etiquetas sin necesidad de indicar tu clave cada vez en el comando <code>git tag</code>.</p>
+
+<div class="code code">
+<pre class="code">$ git tag -s &lt;tag-name&gt;</pre>
+</div>
+
+<h4 id="coreexcludesfile">7.1.1.5. core.excludesfile</h4>
+
+<p>Se pueden indicar expresiones en el archivo <code>.gitignore</code> de tu proyecto para indicar a Git lo que debe considerar o no como archivos sin seguimiento, o lo que interará o no seleccionar cuando lances el comando <code>git add</code>, tal y como se indicó en el <a class="internal" href="../capitulo_2.html#capitulo2">capítulo 2</a>.  Sin embargo, si quieres disponer de otro archivo fuera de tus proyectos o tener expresiones extra, puedes indicarselo a Git con el parámetro <code>core.excludesfile</code>. Simplemente, configuralo para que apunte a un archivo con contenido similar al que tendría cualquier archivo <code>.gitignore</code>.</p>
+
+<h4 id="helpautocorrect">7.1.1.6. help.autocorrect</h4>
+
+<p>Este parámetro solo está disponible a partir de la versión 1.6.1 de Git. Cada vez que tienes un error de tecleo en un comando, Git 1.6 te muestra algo como:</p>
+
+<div class="code code">
+<pre class="code">$ git com
+git: 'com' is not a git-command. See 'git --help'.</pre>
+</div>
+
+<div class="code code">
+<pre class="code">Did you mean this?
+     commit</pre>
+</div>
+
+<p>Si ajustas <code>help.autocorrect</code> a 1, Git lanzará automáticamente el comando corregido, (pero solo cuando haya únicamente uno que pueda encajar).</p>
+
+<h3 id="colores_en_git">7.1.2. Colores en Git</h3>
+
+<p>Git puede marcar con colores los resultados que muestra en tu terminal, ayudandote así a leerlos más facilmente. Hay unos cuantos parámetros que te pueden ayudar a configurar tus colores favoritos.</p>
+
+<h4 id="colorui">7.1.2.1. color.ui</h4>
+
+<p>Si se lo pides, Git coloreará automáticamente la mayor parte de los resultados que muestre. Puedes ajustar con precisión cada una de las partes a colorear; pero si deseas activar de un golpe todos los colores por defecto, no tienes más que poner a <code>true</code> el parámetro <code>color.ui</code>.</p>
+
+<div class="code code">
+<pre class="code">$ git config --global color.ui true</pre>
+</div>
+
+<p>Ajustando así este parámetro, Git colorea sus resultados cuando estos se muestran en un terminal. Otros ajustes posibles son <code>false</code>, para indicar a Git no colorear nunca ninguno de sus resultados; y <code>always</code>, para indicar colorear siempre, incluso cuando se redirija la salida a un archivo o a otro comando. Este parámetro se añadió en la versión 1.5.5 de Git. Si tienes una versión más antigua, tendrás que indicar especificamente todos y cada uno de los colores individualmente.</p>
+
+<p>Será muy raro ajustar <code>color.ui = always</code>. En la mayor parte de las ocasiones, cuando necesites códigos de color en los resultados, es mejor indicar puntualmente la opción <code>--color</code> en el comando concreto, para obligarle a utilizar códigos de color. Habitualmente, se trabajará con el ajuste <code>color.ui = true</code>.</p>
+
+<h4 id="color">7.1.2.2. <code>color.*</code></h4>
+
+<p>Cuando quieras ajustar específicamente, comando a comando, donde colorear y cómo colorear, (o cuando tengas una versión antigua de Git), puedes emplear los ajustes particulares de color. Cada uno de ellos puede fijarse a <code>true</code> (verdadero), <code>false</code> (falso) o <code>always</code> (siempre):</p>
+
+<div class="code code">
+<pre class="code">color.branch
+color.diff
+color.interactive
+color.status</pre>
+</div>
+
+<p>Además, cada uno de ellos tiene parámetros adiccionales para asignar colores a partes específicas, por si quieres precisar aún más. Por ejemplo, para mostrar la meta-información del comando <code>diff</code> con letra azul sobre fondo negro y con caracteres en negrita, puedes indicar:</p>
+
+<div class="code code">
+<pre class="code">$ git config --global color.diff.meta “blue black bold”</pre>
+</div>
+
+<p>Puedes ajustar un color a cualquiera de los siguientes valores: <code>normal</code> (normal), <code>black</code> (negro), <code>green</code> (verde), <code>yellow</code> (amarillo), <code>blue</code> (azul oscuro), <code>magenta</code> (rojo oscuro), <code>cyan</code> (azul claro) o <code>white</code> (blanco). También puedes aplicar atributos tales como <code>bold</code> (negrita), <code>dim</code> (tenue), <code>ul</code>, <code>blink</code> (parpadeante) y <code>reverse</code> (vídeo inverso).</p>
+
+<p>Mira en la página man de <code>git config</code> si deseas tener explicaciones más detalladas.</p>
+
+<h3 id="herramientas_externas_para_fusionar_y_para_comparar">7.1.3. Herramientas externas para fusionar y para comparar</h3>
+
+<p>Aunque Git lleva una implementación interna de diff, la que se utiliza habitualmente, se puede sustituir por una herramienta externa. Puedes incluso configurar una herramienta gráfica para la resolución de conflictos, en lugar de resolverlos manualmente. Lo voy a demostrar configurando Perforce Visual Merge como herramienta para realizar las comparaciones y resolver conflictos; ya que es una buena herramienta gráfica y es libre.</p>
+
+<p>Si lo quieres probar, P4Merge funciona en todas las principales plataformas. Los nombres de carpetas que utilizaré en los ejemplos funcionan en sistemas Mac y Linux; para Windows, tendrás que sustituir <code>/usr/local/bin</code> por el correspondiente camino al ejecutable en tu sistema.</p>
+
+<p>P4Merge se puede descargar desde:</p>
+
+<div class="code code">
+<pre class="code">http://www.perforce.com/perforce/downloads/component.html</pre>
+</div>
+
+<p>Para empezar, tienes que preparar los correspondientes scripts para lanzar tus comandos. En estos ejemplos, voy a utilizar caminos y nombres Mac para los ejecutables; en otros sistemas, tendrás que sustituirlos por los correspondientes donde tengas instalado <code>p4merge</code>. El primer script a preparar es uno al que denominaremos <code>extMerge</code>, para llamar al ejecutable con los correspodientes argumentos:</p>
+
+<div class="code code">
+<pre class="code">$ cat /usr/local/bin/extMerge
+#!/bin/sh
+/Applications/p4merge.app/Contents/MacOS/p4merge $*</pre>
+</div>
+
+<p>El script para el comparador, ha de asegurarse de recibir siete argumentos y de pasar dos de ellos al script de fusion (<em>merge</em>). Por defecto, Git pasa los siguientes argumentos al programa diff (comparador):</p>
+
+<div class="code code">
+<pre class="code">path old-file old-hex old-mode new-file new-hex new-mode</pre>
+</div>
+
+<p>Ya que solo necesitarás <code>old-file</code> y <code>new-file</code>, puedes utilizar el siguiente script para extraerlos:</p>
+
+<div class="code code">
+<pre class="code">$ cat /usr/local/bin/extDiff 
+#!/bin/sh
+[ $# -eq 7 ] &amp;&amp; /usr/local/bin/extMerge &quot;$2&quot; &quot;$5&quot;</pre>
+</div>
+
+<p>Además has de asegurarte de que estas herramientas son ejecutables:</p>
+
+<div class="code code">
+<pre class="code">$ sudo chmod +x /usr/local/bin/extMerge 
+$ sudo chmod +x /usr/local/bin/extDiff</pre>
+</div>
+
+<p>Una vez preparado todo esto, puedes ajustar el archivo de configuración para utilizar tus herramientas personalizadas de comparación y resolución de conflictos. Tenemos varios parámetros a ajustar: <code>merge.tool</code> para indicar a Git la estrategia que ha de usar, <code>mergetool.*.cmd</code> para especificar como lanzar el comando, <code>mergetool.trustExitCode</code> para decir a Git si el código de salida del programa indica una fusión con éxito o no, y <code>diff.external</code> para decir a Git qué comando lanzar para realizar comparaciones.  Es decir, has de ejecutar cuatro comandos de configuración:</p>
+
+<div class="code code">
+<pre class="code">$ git config --global merge.tool extMerge
+$ git config --global mergetool.extMerge.cmd \
+    'extMerge &quot;$BASE&quot; &quot;$LOCAL&quot; &quot;$REMOTE&quot; &quot;$MERGED&quot;'
+$ git config --global mergetool.trustExitCode false
+$ git config --global diff.external extDiff</pre>
+</div>
+
+<p>o puedes editar tu archivo <code>~/.gitconfig</code> para añadirle las siguientes lineas:</p>
+
+<div class="code merge">
+<pre class="merge">  tool = extMerge
+[mergetool &quot;extMerge&quot;]
+  cmd = extMerge &quot;$BASE&quot; &quot;$LOCAL&quot; &quot;$REMOTE&quot; &quot;$MERGED&quot;
+  trustExitCode = false
+[diff]
+  external = extDiff</pre>
+</div>
+
+<p>Tras ajustar todo esto, si lanzas comandos tales como:  <code>$ git diff 32d1776b1 ^ 32d1776b1</code></p>
+
+<p>En lugar de mostrar las diferencias por línea de comandos, Git lanzará P4Merge, que tiene una pinta como la de la Figura 7-1.</p>
+
+<div class="figure" id="figure_7_1">
+    <img src="../../img/pro_git/18333fig0701.png" alt="P4Merge" />
+
+    <p class="caption"><strong>Figura 7.1</strong> P4Merge</p>
+</div>
+
+
+<p>Si intentas fusionar (<em>merge</em>) dos ramas y tienes los consabidos conflictos de integración, puedes lanzar el comando <code>git mergetool</code>; lanzará P4Merge para ayudarte a resolver los conflictos por medio de su interfaz gráfica.</p>
+
+<p>Lo bonito de estos ajustes con scripts, es que puedes cambiar facilmente tus herramientas de comparación (<em>diff</em>) y de fusión (<em>merge</em>). Por ejemplo, para cambiar tus scripts <code>extDiff</code> y <code>extMerge</code> para utilizar KDiff3, tan solo has de editar el archivo <code>extMerge</code>:</p>
+
+<div class="code code">
+<pre class="code">$ cat /usr/local/bin/extMerge
+#!/bin/sh   
+/Applications/kdiff3.app/Contents/MacOS/kdiff3 $*</pre>
+</div>
+
+<p>A partir de ahora, Git utilizará la herramienta KDiff3 para mostrar y resolver conflictos de integración.</p>
+
+<p>Git viene preparado para utilizar bastantes otras herramientas de resolución de conflictos, sin necesidad de andar ajustando la configuración de cdm. Puedes utilizar <code>kdiff3</code>, <code>opendiff</code>, <code>tkdiff</code>, <code>meld</code>, <code>xxdiff</code>, <code>emerge</code>, <code>vimdiff</code>, o <code>gvimdiff</code> como herramientas de fusionado. Por ejemplo, si no te interesa utilizar KDiff3 para comparaciones, sino que tan solo te interesa utilizarlo para resolver conflictos de integración; teniendo kdiff3 en el path de ejecución, solo has de lanzar el comando:</p>
+
+<div class="code code">
+<pre class="code">$ git config --global merge.tool kdiff3</pre>
+</div>
+
+<p>Si utilizas este comando en lugar de preparar los archivos <code>extMerge</code> y <code>extDiff</code> antes comentados, Git utilizará KDiff3 para resolución de conflictos de integración y la herramienta estandar diff para las comparaciones.</p>
+
+<h3 id="formato_y_espacios_en_blanco">7.1.4. Formato y espacios en blanco</h3>
+
+<p>El formato y los espacios en blanco son la fuente de los problemas más sutiles y frustrantes que muchos desarrolladores se pueden encontrar en entornos colaborativos, especialmente si son multi-plataforma. Es muy facil que algunos parches u otro trabajo recibido introduzcan sutiles cambios de espaciado, porque los editores suelen hacerlo inadvertidamente o, trabajando en entornos multi-plataforma, porque programadores Windows suelen añadir retornos de carro al final de las lineas que tocan. Git dispone de algunas opciones de configuración para ayudarnos con estos problemas.</p>
+
+<h4 id="coreautocrlf">7.1.4.1. core.autocrlf</h4>
+
+<p>Si estás programando en Windows o utilizando algún otro sistema, pero colaborando con gente que programa en Windows. Es muy posible que alguna vez te topes con problemas de finales de línea. Esto se debe a que Windows utiliza retorno-de-carro y salto-de-linea para marcar los finales de línea de sus archivos. Mientras que Mac y Linux utilizan solamente el caracter de salto-de-linea. Esta es una sutil, pero molesta, diferencia cuando se trabaja en entornos multi-plataforma.</p>
+
+<p>Git la maneja autoconvirtiendo los finales <code>CRLF</code> en <code>LF</code> al hacer confirmaciones de cambios (<em>commit</em>); y, viceversa, al extraer código (<em>checkout</em>) a la carpeta de trabajo. Puedes activar esta funcionalidad con el parámetro <code>core.autocrlf</code>. Si estás trabajando en una máquina Windows, ajustalo a <code>true</code>, para convertir finales <code>LF</code> en <code>CRLF</code> cuando extraigas código (<em>checkout</em>).</p>
+
+<div class="code code">
+<pre class="code">$ git config --global core.autocrlf true</pre>
+</div>
+
+<p>Si estás trabajando en una máquina Linux o Mac, entonces no te interesa convertir automáticamente los finales de línea al extraer código. Sino que te interesa arreglar los posibles <code>CRLF</code> que pudieran aparecer accidentalmente. Puedes indicar a Git que convierta <code>CRLF</code> en <code>LF</code> al confirmar cambios (<em>commit</em>), pero no en el otro sentido; utilizando también el parámetro <code>core.autocrlf</code>:</p>
+
+<div class="code code">
+<pre class="code">$ git config --global core.autocrlf input</pre>
+</div>
+
+<p>Este ajuste dejará los finales de línea <code>CRLF</code> en las extraciones de código (<em>checkout</em>), pero los finales <code>LF</code> en sistemas Mac o Linux y en el repositorio.</p>
+
+<p>Si eres un programador Windows, trabajando en un entorno donde solo haya máquinas Windows, puedes desconectar esta funcionalidad. Para almacenar <code>CRLF</code> en el repositorio, ajusta el parámero a 'false':</p>
+
+<div class="code code">
+<pre class="code">$ git config --global core.autocrlf false</pre>
+</div>
+
+<h4 id="corewhitespace">7.1.4.2. core.whitespace</h4>
+
+<p>Git viene preajustado para detectar y resolver algunos de los problemas más tipicos relacionados con los espacios en blanco. Puede vigilar acerca de cuatro tipos de problemas de espaciado — dos los tiene activados por defecto, pero se pueden desactivar; y dos vienen desactivados por defecto, pero se pueden activar —.</p>
+
+<p>Los dos activos por defecto son <code>trailing-space</code> (espaciado de relleno), que vigila por si hay espacios al final de las líneas, y <code>space-before-tab</code> (espaciado delante de un tabulador), que mira por si hay espacios al principio de las lineas o por delante de los tabuladores.</p>
+
+<p>Los dos inactivos por defecto son <code>indent-with-non-tab</code> (indentado sin tabuladores), que vigila por si alguna línea empieza con ocho o mas espacios en lugar de con tabuladores; y <code>cr-at-eol</code> (retorno de carro al final de línea), que vigila para que haya retornos de carro en todas las líneas.</p>
+
+<p>Puedes decir a Git cuales de ellos deseas activar o desactivar, ajustando el parámetro <code>core.whitespace</code> con los valores on/off separados por comas. Puedes desactivarlos tanto dejandolos fuera de la cadena de ajustes, como añadiendo el prefijo <code>-</code> delante del valor. Por ejemplo, si deseas activar todos menos <code>cr-at-eol</code> puedes lanzar:</p>
+
+<div class="code code">
+<pre class="code">$ git config --global core.whitespace \
+    trailing-space,space-before-tab,indent-with-non-tab</pre>
+</div>
+
+<p>Git detectará posibles problemas cuando lance un comando <code>git diff</code>, e intentará destacarlos en otro color para que puedas corregirlos antes de confirmar cambios (<em>commit</em>). También pueden ser útiles estos ajustes cuando estás incorporando parches con <code>git apply</code>. Al incorporar parches, puedes pedirle a Git que te avise específicamente sobre determinados problemas de espaciado:</p>
+
+<div class="code code">
+<pre class="code">$ git apply --whitespace=warn &lt;patch&gt;</pre>
+</div>
+
+<p>O puedes pedirle que intente corregir automáticamente los problemas antes de aplicar el parche:</p>
+
+<div class="code code">
+<pre class="code">$ git apply --whitespace=fix &lt;patch&gt;</pre>
+</div>
+
+<p>Estas opciones se pueden aplicar también al comando <code>git rebase</code>. Si has confirmado cambios con problemas de espaciado, pero no los has enviado (<em>push</em>) aún "aguas arriba". Puedes realizar una reorganización (<em>rebase</em>) con la opción <code>--whitespace=fix</code> para que Git corrija automáticamente los problemas según va reescribiendo los parches.</p>
+
+<h3 id="configuracion_de_servidor">7.1.5. Configuración de Servidor</h3>
+
+<p>No hay tantas opciones de configuración en el lado servidor de Git. Pero hay unas pocas interesantes que merecen ser tenidas en cuenta.</p>
+
+<h4 id="receivefsckobjects">7.1.5.1. receive.fsckObjects</h4>
+
+<p>Por defecto, Git no suele comprobar la consistencia de todos los objetos que recibe durante un envio (<em>push</em>). Aunque Git tiene la capacidad para asegurarse de que cada objeto sigue casando con su suma de control SHA-1 y sigue apuntando a objetos válidos. No lo suele hacer en todos y cada uno de los envios (<em>push</em>). Es una operación costosa, que, dependiendo del tamaño del repositorio, puede llegar a añadir mucho tiempo a cada operación de envio (<em>push</em>). De todas formas, si deseas que Git compruebe la consistencia de todos los objetos en todos los envíos, puedes forzarle a hacerlo ajustando a <code>true</code> el parámetro <code>receive.fsckObjects</code>:</p>
+
+<div class="code code">
+<pre class="code">$ git config --system receive.fsckObjects true</pre>
+</div>
+
+<p>A partir de ese momento, Git comprobará la integridad del repositorio antes de aceptar ningún envio (<em>push</em>), para asegurarse de que no está introduciendo datos corruptos.</p>
+
+<h4 id="receivedenynonfastforwards">7.1.5.2. receive.denyNonFastForwards</h4>
+
+<p>Si reorganizas (<em>rebase</em>) confirmaciones de cambio (<em>commit</em>) que ya habias enviado y tratas de enviarlas (<em>push</em>) de nuevo. O si intentas enviar una confirmación a una rama remota que no contiene la confirmación actualmente apuntada por la rama. Normalmente, la operación te será denegada por la rama remota sobre la que pretendias realizarla. Habitualmente, este es el comportamiento más adecuado. Pero, en el caso de las reorganizaciones, cuando estás totalmente seguro de lo que haces, puedes forzar el envio, utilizando la opción <code>-f</code> en el comando <code>git push</code> a la rama remota.</p>
+
+<p>Para impedir estos envios forzados de referencias de avance no directo (<em>no fast-forward</em>) a ramas remotas, es para lo que se emplea el parámetro <code>receive.denyNonFastForwards</code>:</p>
+
+<div class="code code">
+<pre class="code">$ git config --system receive.denyNonFastForwards true</pre>
+</div>
+
+<p>Otra manera de obtener el mismo resultado, es a través de los enganches (<em>hooks</em>) en el lado servidor. Enganches de los que hablaremos en breve. Esta otra vía te permite realizar ajustes más finos, tales como denegar refencias de avance no directo, (<em>non-fast-forwards</em>), unicamente a un grupo de usuarios.</p>
+
+<h4 id="receivedenydeletes">7.1.5.3. receive.denyDeletes</h4>
+
+<p>Uno de los cortocircuitos que suelen utilizar los usuarios para saltarse la politica de <code>denyNonFastForwards</code>, suele ser el borrar la rama y luego volver a enviarla de vuelta con la nueva referencia. En las últimas versiones de Git (a partir de la 1.6.1), se puede evitar poniendo a <code>true</code> el parámetro <code>receive.denyDeletes</code>:</p>
+
+<div class="code code">
+<pre class="code">$ git config --system receive.denyDeletes true</pre>
+</div>
+
+<p>Esto impide el borrado de ramas o de etiquetas por medio de un envio a través de la mesa (<em>push across the board</em>), — ningún usuario lo podrá hacer —. Para borrar ramas remotas, tendrás que borrar los archivos de referencia manualmente sobre el propio servidor. Existen también algunas otras maneras más interesantes de hacer esto mismo, pero para usuarios concretos, a través de permisos (ACLs); tal y como veremos al final de este capítulo.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="../capitulo_7.html">&larr; Anterior <span>Capítulo 7. Personalizando Git</span></a>
+            
+            <a class="span5 next" href="atributos_de_git.html">Siguiente &rarr; <span>7.2. Atributos de Git</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Configuración de Git (Pro Git, el libro oficial de Git%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Pro Git, el libro oficial de Git : Configuración de Git']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Empezando</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Fundamentos de Git</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Trabajando con ramas en Git</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Git en un servidor</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Git en entornos distribuidos</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Las herramientas de Git</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_7.html">
+            <span>Capítulo 7.</span> Personalizando Git
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="configuracion_de_git.html">
+            <span>7.1.</span> Configuración de Git
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="atributos_de_git.html">
+            <span>7.2.</span> Atributos de Git
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="puntos_de_enganche_git.html">
+            <span>7.3.</span> Puntos de enganche Git
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="un_ejemplo_de_implantacion_de_una_determinada_politica_en_git.html">
+            <span>7.4.</span> Un ejemplo de implantación de una determinada política en Git
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="resumen.html">
+            <span>7.5.</span> Resumen
+        </a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Git y otros sistemas</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Funcionamiento interno de Git</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

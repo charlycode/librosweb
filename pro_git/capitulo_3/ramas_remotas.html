@@ -1,0 +1,303 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>3.5. Ramas Remotas (Pro Git, el libro oficial de Git)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="flujos_de_trabajo_ramificados.html" />
+        <link rel="next" href="reorganizando_el_trabajo_realizado.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="3.5. Ramas Remotas (Pro Git, el libro oficial de Git)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page pro_git">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Pro Git, el libro oficial de Git</a></li>
+  <li><a href="../capitulo_3.html">Capítulo 3. Trabajando con ramas en Git</a></li>
+  <li class="current"><span>3.5.. Ramas Remotas</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="ramas_remotas"><span>3.5.</span> Ramas Remotas</h1>
+    
+
+<p>Las ramas remotas son referencias al estado de ramas en tus repositorios remotos. Son ramas locales que no puedes mover; se mueven automáticamente cuando estableces comunicaciones en la red. Las ramas remotas funcionan como marcadores, para recordarte en qué estado se encontraban tus repositorios remotos la última vez que conectaste con ellos.</p>
+
+<p>Suelen referenciarse como <code>(remoto)/(rama)</code>. Por ejemplo, si quieres saber cómo estaba la rama <code>master</code> en el remoto <code>origin</code>. Puedes revisar la rama <code>origin/master</code>. O si estás trabajando en un problema con un compañero y este envia (<em>push</em>) una rama <code>iss53</code>, tu tendrás tu propia rama de trabajo local <code>iss53</code>; pero la rama en el servidor apuntará a la última confirmación (<em>commit</em>) en la rama <code>origin/iss53</code>.</p>
+
+<p>Esto puede ser un tanto confuso, pero intentemos aclararlo con un ejemplo.  Supongamos que tienes un sevidor Git en tu red, en <code>git.ourcompany.com</code>. Si haces un clon desde ahí, Git automáticamente lo denominará <code>origin</code>, traerá (<em>pull</em>) sus datos, creará un apuntador hacia donde esté en ese momento su rama <code>master</code>, denominará la copia local <code>origin/master</code>; y será inamovible para tí.  Git te proporcionará también tu propia rama <code>master</code>, apuntando al mismo lugar que la rama <code>master</code> de <code>origin</code>; siendo en esta última donde podrás trabajar.</p>
+
+<div class="figure" id="figure_3_22">
+    <img src="../../img/pro_git/18333fig0322.png" alt="Un clon Git te proporciona tu propia rama <code>master</code> y otra rama 'origin/master' apuntando a la rama <code>master</code> original" />
+
+    <p class="caption"><strong>Figura 3.22</strong> Un clon Git te proporciona tu propia rama <code>master</code> y otra rama 'origin/master' apuntando a la rama <code>master</code> original</p>
+</div>
+
+
+<p>Si haces algún trabajo en tu rama <code>master</code> local. Y, al mismo tiempo, alguna otra persona lleva (<em>push</em>) su trabajo al servidor <code>git.ourcompany.com</code>, actualizando la rama <code>master</code> de allí. Te encontrarás con que ambos registros avanzan de forma diferente. Además, mientras no tengas contacto con el servidor, tu apuntador a tu rama <code>origin/master</code> no se moverá (ver Figura 3/23).</p>
+
+<div class="figure" id="figure_3_23">
+    <img src="../../img/pro_git/18333fig0323.png" alt="Trabajando localmente y que otra persona esté llevando (*push*) algo al servidor remoto, hace que cada registro avance de forma distinta" />
+
+    <p class="caption"><strong>Figura 3.23</strong> Trabajando localmente y que otra persona esté llevando (*push*) algo al servidor remoto, hace que cada registro avance de forma distinta</p>
+</div>
+
+
+<p>Para sincronizarte, puedes utilizar el comando <code>git fetch origin</code>. Este comando localiza en qué servidor está el origen (en este caso <code>git.ourcompany.com</code>), recupera cualquier dato presente allí que tu no tengas, y actualiza tu base de datos local, moviendo tu rama <code>origin/master</code> para que apunte a esta nueva y más reciente posición (ver Figura 3-24).</p>
+
+<div class="figure" id="figure_3_24">
+    <img src="../../img/pro_git/18333fig0324.png" alt="El comando 'git fetch' actualiza tus referencias remotas" />
+
+    <p class="caption"><strong>Figura 3.24</strong> El comando 'git fetch' actualiza tus referencias remotas</p>
+</div>
+
+
+<p>Para ilustrar mejor el caso de tener múltiples servidores y cómo van las ramas remotas para esos proyectos remotos. Supongamos que tienes otro servidor Git; utilizado solamente para desarrollo, por uno de tus equipos sprint. Un servidor en <code>git.team1.ourcompany.com</code>. Puedes incluirlo como una nueva referencia remota a tu proyecto actual, mediante el comando <code>git remote add</code>, tal y como vimos en el capítulo 2. Puedes denominar <code>teamone</code> a este remoto, poniendo este nombre abreviado para la URL (ver Figura 3-25)</p>
+
+<div class="figure" id="figure_3_25">
+    <img src="../../img/pro_git/18333fig0325.png" alt="Añadiendo otro servidor como remoto" />
+
+    <p class="caption"><strong>Figura 3.25</strong> Añadiendo otro servidor como remoto</p>
+</div>
+
+
+<p>Ahora, puedes usar el comando <code>git fetch teamone</code> para recuperar todo el contenido del servidor que tu no tenias. Debido a que dicho servidor es un subconjunto de de los datos del servidor <code>origin</code> que tienes actualmente, Git no recupera (<em>fetch</em>) ningún  dato; simplemente prepara una rama remota llamada <code>teamone/master</code> para apuntar a la confirmación (<em>commit</em>) que <code>teamone</code> tiene en su rama <code>master</code>.</p>
+
+<div class="figure" id="figure_3_26">
+    <img src="../../img/pro_git/18333fig0326.png" alt="Obtienes una referencia local a la posición en la rama <code>master</code> de 'teamone'" />
+
+    <p class="caption"><strong>Figura 3.26</strong> Obtienes una referencia local a la posición en la rama <code>master</code> de 'teamone'</p>
+</div>
+
+
+<h3 id="publicando">3.5.1. Publicando</h3>
+
+<p>Cuando quieres compartir una rama con el resto del mundo, has de llevarla (<em>push</em>) a un remoto donde tengas permisos de escritura. Tus ramas locales no se sincronizan automáticamente con los remotos en los que escribes. Sino que tienes que llevar (<em>push</em>) expresamente, cada vez, al remoto las ramas que desees compartir. De esta forma, puedes usar ramas privadas para el trabajo que no deseas compartir. Llevando a un remoto tan solo aquellas partes que deseas aportar a los demás.</p>
+
+<p>Si tienes una rama llamada <code>serverfix</code>, con la que vas a trabajar en colaboración; puedes llevarla al remoto de la misma forma que llevaste tu primera rama. Con el comando <code>git push (remoto) (rama)</code>:</p>
+
+<div class="code code">
+<pre class="code">$ git push origin serverfix
+Counting objects: 20, done.
+Compressing objects: 100% (14/14), done.
+Writing objects: 100% (15/15), 1.74 KiB, done.
+Total 15 (delta 5), reused 0 (delta 0)
+To git@github.com:schacon/simplegit.git
+ * [new branch]      serverfix -&gt; serverfix</pre>
+</div>
+
+<p>Esto es un poco como un atajo. Git expande automáticamente el nombre de rama <code>serverfix</code> a <code>refs/heads/serverfix:refs/heads/serverfix</code>, que significa: "coge mi rama local <code>serverfix</code> y actualiza con ella la rama <code>serverfix</code> del remoto". Volveremos más tarde sobre el tema de <code>refs/heads/</code>, viendolo en detalle en el capítulo 9; aunque puedes ignorarlo por ahora. También puedes hacer <code>git push origin serverfix:serverfix</code>, que hace lo mismo; es decir: "coge mi <code>serverfix</code> y hazlo el <code>serverfix</code> remoto". Puedes utilizar este último formato para llevar una rama local a una rama remota con otro nombre distinto. Si no quieres que se llame <code>serverfix</code> en el remoto, puedes lanzar, por ejemplo, <code>git push origin serverfix:awesomebranch</code>; para llevar tu rama <code>serverfix</code> local a la rama <code>awesomebranch</code> en el proyecto remoto.</p>
+
+<p>La próxima vez que tus colaboradores recuperen desde el servidor, obtendrán una referencia a donde la versión de <code>serverfix</code> en el servidor esté bajo la rama remota <code>origin/serverfix</code>:</p>
+
+<div class="code code">
+<pre class="code">$ git fetch origin
+remote: Counting objects: 20, done.
+remote: Compressing objects: 100% (14/14), done.
+remote: Total 15 (delta 5), reused 0 (delta 0)
+Unpacking objects: 100% (15/15), done.
+From git@github.com:schacon/simplegit
+ * [new branch]      serverfix    -&gt; origin/serverfix</pre>
+</div>
+
+<p>Es importante destacar que cuando recuperas (<em>fetch</em>) nuevas ramas remotas, no obtienes automáticamente una copia editable local de las mismas. En otras palabras, en este caso, no tienes una nueva rama <code>serverfix</code>. Sino que únicamente tienes un puntero no editable a <code>origin/serverfix</code>.</p>
+
+<p>Para integrar (<em>merge</em>) esto en tu actual rama de trabajo, puedes usar el comando <code>git merge origin/serverfix</code>. Y si quieres tener tu propia rama <code>serverfix</code>, donde puedas trabajar, puedes crearla directamente basandote en rama remota:</p>
+
+<div class="code code">
+<pre class="code">$ git checkout -b serverfix origin/serverfix
+Branch serverfix set up to track remote branch refs/remotes/origin/serverfix.
+Switched to a new branch &quot;serverfix&quot;Switched to a new branch &quot;serverfix&quot;</pre>
+</div>
+
+<p>Esto sí te da una rama local donde puedes trabajar, comenzando donde <code>origin/serverfix</code> estaba en ese momento.</p>
+
+<h3 id="haciendo_seguimiento_a_las_ramas">3.5.2. Haciendo seguimiento a las ramas</h3>
+
+<p>Activando (<em>checkout</em>) una rama local a partir de una rama remota, se crea automáticamente lo que podríamos denominar "una rama de seguimiento" (<em>tracking branch</em>). Las ramas de seguimiento son ramas locales que tienen una relación directa con alguna rama remota. Si estás en una rama de seguimiento y tecleas el comando <code>git push</code>, Git sabe automáticamente a qué servidor y a qué rama ha de llevar los contenidos. Igualmente, tecleando <code>git pull</code> mientras estamos en una de esas ramas, recupera (<em>fetch</em>) todas las referencias remotas y las consolida (<em>merge</em>) automáticamente en la correspondiente rama remota.</p>
+
+<p>Cuando clonas un repositorio, este suele crear automáticamente una rama <code>master</code> que hace seguimiento de <code>origin/master</code>. Y es por eso que <code>git push</code> y <code>git pull</code> trabajan directamente, sin necesidad de más argumentos. Sin embargo, puedes preparar otras ramas de seguimiento si deseas tener unas que no hagan seguimiento de ramas en <code>origin</code> y que no sigan a la rama <code>master</code>. El ejemplo más simple, es el que acabas de ver al lanzar el comando <code>git checkout -b [rama] [nombreremoto]/[rama]</code>. Si tienes la versión 1.6.2 de Git, o superior, puedes utilizar también el parámetro <code>--track</code>:</p>
+
+<div class="code code">
+<pre class="code">$ git checkout --track origin/serverfix
+Branch serverfix set up to track remote branch refs/remotes/origin/serverfix.
+Switched to a new branch &quot;serverfix&quot;Switched to a new branch &quot;serverfix&quot;</pre>
+</div>
+
+<p>Para preparar una rama local con un nombre distinto a la del remoto, puedes utilizar:</p>
+
+<div class="code code">
+<pre class="code">$ git checkout -b sf origin/serverfix
+Branch sf set up to track remote branch refs/remotes/origin/serverfix.
+Switched to a new branch &quot;sf&quot;</pre>
+</div>
+
+<p>Así, tu rama local <code>sf</code> va a llevar (<em>push</em>) y traer (<em>pull</em>) hacia o desde <code>origin/serverfix</code>.</p>
+
+<h3 id="borrando_ramas_remotas">3.5.3. Borrando ramas remotas</h3>
+
+<p>Imagina que ya has terminado con una rama remota. Es decir, tanto tu como tus colaboradores habeis completado una determinada funcionalidad y la habeis incorporado (<em>merge</em>) a la rama <code>master</code> en el remoto (o donde quiera que tengais la rama de código estable). Puedes borrar la rama remota utilizando la un tanto confusa sintaxis:  <code>git push [nombreremoto] :[rama]</code>. Por ejemplo, si quieres borrar la rama <code>serverfix</code> del servidor, puedes utilizar:</p>
+
+<div class="code code">
+<pre class="code">$ git push origin :serverfix
+To git@github.com:schacon/simplegit.git
+ - [deleted]         serverfix</pre>
+</div>
+
+<p>Y....Boom!. La rama en el servidor ha desaparecido. Puedes grabarte a fuego esta página, porque necesitarás ese comando y, lo más probable es que hayas olvidado su sintaxis. Una manera de recordar este comando es dándonos cuenta de que proviene de la sintaxis <code>git push [nombreremoto] [ramalocal]:[ramaremota]</code>. Si omites la parte <code>[ramalocal]</code>, lo que estás diciendo es: <em>"no cojas nada de mi lado y haz con ello [ramaremota]"</em>.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="flujos_de_trabajo_ramificados.html">&larr; Anterior <span>3.4. Flujos de trabajo ramificados</span></a>
+            
+            <a class="span5 next" href="reorganizando_el_trabajo_realizado.html">Siguiente &rarr; <span>3.6. Reorganizando el trabajo realizado</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Ramas Remotas (Pro Git, el libro oficial de Git%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Pro Git, el libro oficial de Git : Ramas Remotas']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Empezando</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Fundamentos de Git</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_3.html">
+            <span>Capítulo 3.</span> Trabajando con ramas en Git
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="que_es_una_rama.html">
+            <span>3.1.</span> ¿Qué es una rama?
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="procedimientos_basicos_para_ramificar_y_fusionar.html">
+            <span>3.2.</span> Procedimientos básicos para ramificar y fusionar
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="gestion_de_ramificaciones.html">
+            <span>3.3.</span> Gestión de ramificaciones
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="flujos_de_trabajo_ramificados.html">
+            <span>3.4.</span> Flujos de trabajo ramificados
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="ramas_remotas.html">
+            <span>3.5.</span> Ramas Remotas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="reorganizando_el_trabajo_realizado.html">
+            <span>3.6.</span> Reorganizando el trabajo realizado
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="resumen.html">
+            <span>3.7.</span> Resumen
+        </a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Git en un servidor</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Git en entornos distribuidos</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Las herramientas de Git</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Personalizando Git</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Git y otros sistemas</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Funcionamiento interno de Git</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

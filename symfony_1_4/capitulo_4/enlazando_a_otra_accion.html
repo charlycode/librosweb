@@ -1,0 +1,255 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>4.2. Enlazando a otra acción (Symfony 1.4, la guía definitiva)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="crear_el_esqueleto_del_modulo.html" />
+        <link rel="next" href="obteniendo_informacion_de_la_peticion.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="4.2. Enlazando a otra acción (Symfony 1.4, la guía definitiva)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page symfony_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Symfony 1.4, la guía definitiva</a></li>
+  <li><a href="../capitulo_4.html">Capítulo 4. Introducción a la creación de páginas</a></li>
+  <li class="current"><span>4.2.. Enlazando a otra acción</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="enlazando_a_otra_accion"><span>4.2.</span> Enlazando a otra acción</h1>
+    
+
+<p>Ya se ha comentado que existe una independencia total entre el nombre de la acción y la URL utilizada para llamarla, por lo que si se crea un enlace a <code>actualizar</code> en una plantilla como en el Listado 4-8, sólo funcionará con el enrutamiento establecido por defecto. Si más tarde se decide modificar la manera de mostrar las URL, entonces será necesario verificar todas las plantillas para modificar los enlaces o hipervínculos.</p>
+
+<p><strong>Listado 4-8 - Forma clásica de incluir los enlaces</strong></p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">a</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;/frontend_dev.php/contenido/actualizar?nombre=anonimo&quot;</span>&gt;</span>
+  Nunca digo mi nombre
+<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">a</span>&gt;</span></pre>
+</div>
+
+<p>Para evitar este inconveniente, es necesario siempre utilizar el <em>helper</em> <code>link_to()</code> para crear enlaces a las acciones de la aplicación. Si lo único que quieres es obtener la URL del enlace, entonces debes utilizar el <em>helper</em> <code>url_for()</code>.</p>
+
+<p>Un <em>helper</em> es una función PHP definida por Symfony y que está pensada para ser utilizada en las plantillas. Los <em>helpers</em> generan código HTML y normalmente resultan más eficientes que escribir a mano ese mismo código HTML. El Listado 4-9 muestra el uso de los <em>helpers</em> para enlaces.</p>
+
+<p><strong>Listado 4-9 - Los <em>helpers</em> <code>link_to()</code> y <code>url_for()</code></strong></p>
+
+<div class="code php">
+<pre class="php">&lt;p&gt;¡Hola, Mundo!&lt;/p&gt;
+<span class="kw2">&lt;?php</span> <span class="kw1">if</span> <span class="br0">&#40;</span><span class="re0">$hora</span> <span class="sy0">&gt;=</span> <span class="nu0">18</span><span class="br0">&#41;</span><span class="sy0">:</span> <span class="sy1">?&gt;</span>
+  &lt;p&gt;Quizás debería decir buenas tardes. Ya son las <span class="kw2">&lt;?php</span> <span class="kw1">echo</span> <span class="re0">$hora</span> <span class="sy1">?&gt;</span>.&lt;/p&gt;
+<span class="kw2">&lt;?php</span> <span class="kw1">endif</span><span class="sy0">;</span> <span class="sy1">?&gt;</span>
+&lt;form method=&quot;post&quot; action=&quot;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> url_for<span class="br0">&#40;</span><span class="st_h">'contenido/actualizar'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>&quot;&gt;
+  &lt;label for=&quot;nombre&quot;&gt;¿Cómo te llamas?&lt;/label&gt;
+  &lt;input type=&quot;text&quot; name=&quot;nombre&quot; id=&quot;nombre&quot; value=&quot;&quot; /&gt;
+  &lt;input type=&quot;submit&quot; value=&quot;Ok&quot; /&gt;
+  <span class="kw2">&lt;?php</span> <span class="kw1">echo</span> link_to<span class="br0">&#40;</span><span class="st_h">'Nunca digo mi nombre'</span><span class="sy0">,</span> <span class="st_h">'contenido/actualizar?nombre=anonymous'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+&lt;/form&gt;</pre>
+</div>
+
+<p>El código HTML resultante es el mismo que el anterior, pero en este caso, si se modifican las reglas de enrutamiento, todas las plantillas siguen funcionando correctamente ya que se actualizan las URL de forma automática.</p>
+
+<p>Los formularios merecen un capítulo completo para ellos, ya que Symfony provee muchas herramientas, sobre todo <em>helpers</em>, para facilitar tu trabajo. En el capítulo 10 aprenderás todo sobre estos <em>helpers</em>.</p>
+
+<p>El helper <code>link_to()</code>, al igual que muchos otros, acepta un argumento para opciones especiales y atributos de etiqueta adicionales. El Listado 4-10 muestra un ejemplo de un argumento <code>option</code> y su código HTML resultante. El argumento <code>option</code> puede ser tanto un array asociativo como una simple cadena de texto mostrando pares de <code>clave=valor</code> separados por espacios.</p>
+
+<p><strong>Listado 4-10 - La mayoría de los helpers aceptan un argumento <code>option</code></strong></p>
+
+<div class="code php">
+<pre class="php">// Argumento &quot;option&quot; como un array asociativo
+<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> link_to<span class="br0">&#40;</span><span class="st_h">'Nunca digo mi nombre'</span><span class="sy0">,</span> <span class="st_h">'contenido/actualizar?nombre=anonimo'</span><span class="sy0">,</span>
+  <span class="kw3">array</span><span class="br0">&#40;</span>
+    <span class="st_h">'class'</span>    <span class="sy0">=&gt;</span> <span class="st_h">'enlace_especial'</span><span class="sy0">,</span>
+    <span class="st_h">'confirm'</span>  <span class="sy0">=&gt;</span> <span class="st_h">'¿Estás seguro?'</span><span class="sy0">,</span>
+    <span class="st_h">'absolute'</span> <span class="sy0">=&gt;</span> <span class="kw4">true</span>
+<span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+&nbsp;
+// Argumento &quot;option&quot; como una cadena de texto
+<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> link_to<span class="br0">&#40;</span><span class="st_h">'Nunca digo mi nombre'</span><span class="sy0">,</span> <span class="st_h">'contenido/actualizar?nombre=anonimo'</span><span class="sy0">,</span>
+  <span class="st_h">'class=enlace_especial confirm=¿Estás seguro? absolute=true'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>
+&nbsp;
+// Las dos funciones generan el mismo resultado
+ =&gt; &lt;a class=&quot;enlace_especial&quot; onclick=&quot;return confirm('¿Estás seguro?');&quot;
+    href=&quot;http://localhost/frontend_dev.php/contenido/actualizar/nombre/anonimo&quot;&gt;
+    Nunca digo mi nombre&lt;/a&gt;</pre>
+</div>
+
+<p>Siempre que se utiliza un <em>helper</em> de Symfony que devuelve una etiqueta HTML, es posible insertar atributos de etiqueta adicionales (como el atributo <code>class</code> en el ejemplo del Listado 4-10) en el argumento <code>option</code>. Incluso es posible escribir estos atributos a la vieja usanza que utiliza HTML 4.0 (sin comillas dobles), y Symfony se encargará de mostrarlos correctamente formateados en XHTML. Esta es otra razón por la que los <em>helpers</em> son más rápidos de escribir que el HTML puro.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Dado que requiere un procesado y transformación adicional, la sintaxis de cadena de texto es un poco más lenta que la sintaxis en forma de array.</p></div>
+
+<p>Al igual que el resto de <em>helpers</em> de Symfony, los <em>helpers</em> de enlaces son muy numerosos y tienen muchas opciones. En el capítulo 9 se explican todos estos <em>helpers</em> con más detalle.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="crear_el_esqueleto_del_modulo.html">&larr; Anterior <span>4.1. Crear el esqueleto del módulo</span></a>
+            
+            <a class="span5 next" href="obteniendo_informacion_de_la_peticion.html">Siguiente &rarr; <span>4.3. Obteniendo información de la petición</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Enlazando a otra acción (Symfony 1.4, la guía definitiva%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Symfony 1.4, la guía definitiva : Enlazando a otra acción']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción a Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Explorando el interior de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Ejecutar aplicaciones Symfony</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_4.html">
+            <span>Capítulo 4.</span> Introducción a la creación de páginas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="crear_el_esqueleto_del_modulo.html">
+            <span>4.1.</span> Crear el esqueleto del módulo
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="enlazando_a_otra_accion.html">
+            <span>4.2.</span> Enlazando a otra acción
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="obteniendo_informacion_de_la_peticion.html">
+            <span>4.3.</span> Obteniendo información de la petición
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="resumen.html">
+            <span>4.4.</span> Resumen
+        </a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Configurar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> El Controlador</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> La Vista</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> El modelo (Doctrine)</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Enlaces y sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Emails</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Uso de la cache</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Pruebas unitarias y funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Herramientas para la administración de aplicaciones</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> Personalizar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> Rendimiento</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Configuración avanzada</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

@@ -1,0 +1,284 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>2.7. Opciones de las colecciones de rutas (Más con Symfony)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="personalizando_una_coleccion_de_rutas_de_objeto.html" />
+        <link rel="next" href="conclusion.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="2.7. Opciones de las colecciones de rutas (Más con Symfony)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page mas_con_symfony">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Más con Symfony</a></li>
+  <li><a href="../capitulo_2.html">Capítulo 2. Enrutamiento avanzado</a></li>
+  <li class="current"><span>2.7.. Opciones de las colecciones de rutas</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="opciones_de_las_colecciones_de_rutas"><span>2.7.</span> Opciones de las colecciones de rutas</h1>
+    
+
+<p>Las colecciones de rutas de objetos incluyen varias opciones para personalizar
+completamente su funcionamiento. En muchos casos estas opciones son suficientes
+para configurar la colección sin necesidad de crear una nueva colección propia.
+El libro <em><a href="http://www.symfony-project.org/reference/1_3/en/10-Routing#chapter_10_sfobjectroutecollection">The symfony Reference Book</a></em>
+contiene la lista completa de todas las opciones de las colecciones de rutas.</p>
+
+<h3 id="rutas_de_la_accion">2.7.1. Rutas de la acción</h3>
+
+<p>Cada colección de rutas admite tres opciones diferentes que determinan exactamente
+las rutas que se generan en la colección. Sin entrar en muchos detalles, la
+siguiente colección generaría las siete rutas por defecto junto con una
+colección de rutas adicional y una ruta de objeto:</p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co4">pageAdmin</span>:<span class="co3">
+  class</span><span class="sy2">: </span>  acClientObjectRouteCollection<span class="co4">
+  options</span><span class="sy2">:
+</span>    <span class="co1"># ...</span><span class="co3">
+    actions</span><span class="sy2">: </span>     <span class="br0">&#91;</span>list, new, create, edit, update, delete, show<span class="br0">&#93;</span><span class="co4">
+    collection_actions</span>:<span class="co3">
+      indexAlt</span><span class="sy2">: </span>  <span class="br0">&#91;</span>get<span class="br0">&#93;</span><span class="co4">
+    object_actions</span>:<span class="co3">
+      toggle</span><span class="sy2">: </span>    <span class="br0">&#91;</span>put<span class="br0">&#93;</span></pre>
+</div>
+
+<h3 id="columna">2.7.2. Columna</h3>
+
+<p>Por defecto todas las URL generadas emplean la clave primaria del modelo, que
+también se utiliza para buscar los objetos. Obviamente este comportamiento se
+puede modificar con facilidad. El siguiente ejemplo utiliza la columna <code>slug</code>
+en vez de la clave primaria:</p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co4">pageAdmin</span>:<span class="co3">
+  class</span><span class="sy2">: </span>  acClientObjectRouteCollection<span class="co4">
+  options</span><span class="sy2">:
+</span>    <span class="co1"># ...</span><span class="co3">
+    column</span><span class="sy2">: </span>slug</pre>
+</div>
+
+<h3 id="metodos_del_modelo">2.7.3. Métodos del modelo</h3>
+
+<p>Por defecto la ruta obtiene todos los objetos relacionados con la colección
+y utiliza la columna especificada en <code>column</code> para las rutas de los objetos.
+Si necesitas redefinir ese comportamiento, añade la opción <code>model_methods</code> en
+la ruta. En este ejemplo se deben añadir los métodos <code>fetchAll()</code> y <code>findForRoute()</code>
+a la clase <code>PageTable</code>. A los dos métodos se les pasa como argumento un array
+con los parámetros de la petición:</p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co4">pageAdmin</span>:<span class="co3">
+  class</span><span class="sy2">: </span>  acClientObjectRouteCollection<span class="co4">
+  options</span><span class="sy2">:
+</span>    <span class="co1"># ...</span><span class="co4">
+    model_methods</span>:<span class="co3">
+      list</span><span class="sy2">: </span>      fetchAll<span class="co3">
+      object</span><span class="sy2">: </span>    findForRoute</pre>
+</div>
+
+<h3 id="parametros_por_defecto">2.7.4. Parámetros por defecto</h3>
+
+<p>Por último, imagina que todas las rutas de la colección necesitan un determinado
+parámetro en la petición. Esto se puede conseguir fácilmente con la opción
+<code>default_params</code>:</p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co4">pageAdmin</span>:<span class="co3">
+  class</span><span class="sy2">: </span>  acClientObjectRouteCollection<span class="co4">
+  options</span><span class="sy2">:
+</span>    <span class="co1"># ...</span><span class="co4">
+    default_params</span>:<span class="co3">
+      foo</span><span class="sy2">: </span>  bar</pre>
+</div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="personalizando_una_coleccion_de_rutas_de_objeto.html">&larr; Anterior <span>2.6. Personalizando una colección de rutas de objeto</span></a>
+            
+            <a class="span5 next" href="conclusion.html">Siguiente &rarr; <span>2.8. Conclusión</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Opciones de las colecciones de rutas (Más con Symfony%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Más con Symfony : Opciones de las colecciones de rutas']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_2.html">
+            <span>Capítulo 2.</span> Enrutamiento avanzado
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="preparacion_del_proyecto_un_cms_para_muchos_clientes.html">
+            <span>2.1.</span> Preparación del proyecto: un CMS para muchos clientes
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="como_funciona_el_sistema_de_enrutamiento.html">
+            <span>2.2.</span> Cómo funciona el sistema de enrutamiento
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="creando_una_clase_de_ruta_personalizada.html">
+            <span>2.3.</span> Creando una clase de ruta personalizada
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="colecciones_de_rutas.html">
+            <span>2.4.</span> Colecciones de rutas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="creando_una_coleccion_de_rutas_propia.html">
+            <span>2.5.</span> Creando una colección de rutas propia
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="personalizando_una_coleccion_de_rutas_de_objeto.html">
+            <span>2.6.</span> Personalizando una colección de rutas de objeto
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="opciones_de_las_colecciones_de_rutas.html">
+            <span>2.7.</span> Opciones de las colecciones de rutas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="conclusion.html">
+            <span>2.8.</span> Conclusión
+        </a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Mejora tu productividad</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Emails</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Widgets y validadores propios</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Formularios avanzados</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Mejorando la barra de depuración web</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Uso avanzado de Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Utilizando la herencia de tablas de Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Funcionamiento interno de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Windows y Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Desarrollando aplicaciones Facebook</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Descubriendo el poder de la línea de comandos</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Jugando con la cache de configuración de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Trabajando con la comunidad Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>A</span> <a href="../apendice_a.html"> Código JavaScript de sfWidgetFormGMapAddress</a>
+    </li>
+    <li class="level-1">
+        <span>B</span> <a href="../apendice_b.html"> Ejemplo de instalador propio</a>
+    </li>
+    <li class="level-1">
+        <span>C</span> <a href="../apendice_c.html"> Licencia</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

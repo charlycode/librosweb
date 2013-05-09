@@ -1,0 +1,291 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>13.16. Utilizando las tareas con un Crontab (Más con Symfony)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="metodos_utiles_para_interactuar_con_el_usuario.html" />
+        <link rel="next" href="utilizando_stdin.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="13.16. Utilizando las tareas con un Crontab (Más con Symfony)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page mas_con_symfony">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Más con Symfony</a></li>
+  <li><a href="../capitulo_13.html">Capítulo 13. Descubriendo el poder de la línea de comandos</a></li>
+  <li class="current"><span>13.16.. Utilizando las tareas con un Crontab</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="utilizando_las_tareas_con_un_crontab"><span>13.16.</span> Utilizando las tareas con un Crontab</h1>
+    
+
+<p>La mayoría de sistemas UNIX y GNU/Linux permiten planificar tareas mediante un
+mecanismo denominado <em>cron</em>. El <em>cron</em> dispone de un archivo de configuración
+(un <em>crontab</em>) en el que busca los comandos que se deben ejecutar en cada
+momento. Las tareas de Symfony se pueden integrar fácilmente en un <em>crontab</em>
+y la tarea <code>project:send-emails</code> es un candidato perfecto para un ejemplo de
+este tipo:</p>
+
+<div class="code code">
+<pre class="code">MAILTO=&quot;you@example.org&quot;
+0 3 * * *       /usr/bin/php /var/www/yourproject/symfony project:send-emails</pre>
+</div>
+
+<p>La configuración anterior le indica a <em>cron</em> que debe ejecutar la tarea
+<code>project:send-emails</code> todos los días a las 3 de la mañana y que envíe cualquier
+mensaje que se produzca (avisos, errores, etc.) a la dirección <em>you@example.org</em>.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Si quieres más información sobre el formato del archivo de configuración de
+<em>crontab</em>, ejecuta el comando <code>man 5 crontab</code> es una consola de comandos.</p></div>
+
+<p>También es posible pasar opciones y argumentos a la tarea programada:</p>
+
+<div class="code code">
+<pre class="code">MAILTO=&quot;you@example.org&quot;
+0 3 * * *       /usr/bin/php /var/www/yourproject/symfony project:send-emails --env=prod --application=frontend</pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Debes reemplazar <code>/usr/bin/php</code> por la localización del archivo binario de PHP
+ejecutable desde la línea de comandos. Si desconoces su localización, puedes
+ejecutar <code>which php</code> en los sistemas Linux y <code>whereis php</code> en la mayoría de
+sistemas UNIX.</p></div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="metodos_utiles_para_interactuar_con_el_usuario.html">&larr; Anterior <span>13.15. Métodos útiles para interactuar con el usuario</span></a>
+            
+            <a class="span5 next" href="utilizando_stdin.html">Siguiente &rarr; <span>13.17. Utilizando STDIN</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Utilizando las tareas con un Crontab (Más con Symfony%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Más con Symfony : Utilizando las tareas con un Crontab']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Enrutamiento avanzado</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Mejora tu productividad</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Emails</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Widgets y validadores propios</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Formularios avanzados</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Mejorando la barra de depuración web</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Uso avanzado de Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Utilizando la herencia de tablas de Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Funcionamiento interno de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Windows y Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Desarrollando aplicaciones Facebook</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_13.html">
+            <span>Capítulo 13.</span> Descubriendo el poder de la línea de comandos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="las_tareas_en_pocas_palabras.html">
+            <span>13.1.</span> Las tareas en pocas palabras
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="creando_tus_propias_tareas.html">
+            <span>13.2.</span> Creando tus propias tareas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_sistema_de_opciones.html">
+            <span>13.3.</span> El sistema de opciones
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="accediendo_a_la_base_de_datos.html">
+            <span>13.4.</span> Accediendo a la base de datos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="enviando_emails.html">
+            <span>13.5.</span> Enviando emails
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="generando_url.html">
+            <span>13.6.</span> Generando URL
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="accediendo_al_sistema_de_internacionalizacion.html">
+            <span>13.7.</span> Accediendo al sistema de internacionalización
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="refactorizando_las_tareas.html">
+            <span>13.8.</span> Refactorizando las tareas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejecutando_una_tarea_dentro_de_otra_tarea.html">
+            <span>13.9.</span> Ejecutando una tarea dentro de otra tarea
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="manipulando_el_sistema_de_archivos.html">
+            <span>13.10.</span> Manipulando el sistema de archivos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="generando_archivos_mediante_esqueletos.html">
+            <span>13.11.</span> Generando archivos mediante <em>esqueletos</em>
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="utilizando_la_opcion_dry_run.html">
+            <span>13.12.</span> Utilizando la opción dry-run
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="creando_pruebas_unitarias.html">
+            <span>13.13.</span> Creando pruebas unitarias
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="metodos_utiles_para_mostrar_mensajes.html">
+            <span>13.14.</span> Métodos útiles para mostrar mensajes
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="metodos_utiles_para_interactuar_con_el_usuario.html">
+            <span>13.15.</span> Métodos útiles para interactuar con el usuario
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="utilizando_las_tareas_con_un_crontab.html">
+            <span>13.16.</span> Utilizando las tareas con un Crontab
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="utilizando_stdin.html">
+            <span>13.17.</span> Utilizando STDIN
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="conclusion.html">
+            <span>13.18.</span> Conclusión
+        </a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Jugando con la cache de configuración de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Trabajando con la comunidad Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>A</span> <a href="../apendice_a.html"> Código JavaScript de sfWidgetFormGMapAddress</a>
+    </li>
+    <li class="level-1">
+        <span>B</span> <a href="../apendice_b.html"> Ejemplo de instalador propio</a>
+    </li>
+    <li class="level-1">
+        <span>C</span> <a href="../apendice_c.html"> Licencia</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

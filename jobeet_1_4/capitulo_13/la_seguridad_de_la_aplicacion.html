@@ -1,0 +1,344 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>13.3. La seguridad de la aplicación (El tutorial Jobeet)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="atributos_del_usuario.html" />
+        <link rel="next" href="plugins.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="13.3. La seguridad de la aplicación (El tutorial Jobeet)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page jobeet_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">El tutorial Jobeet</a></li>
+  <li><a href="../capitulo_13.html">Capítulo 13. El usuario</a></li>
+  <li class="current"><span>13.3.. La seguridad de la aplicación</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="la_seguridad_de_la_aplicacion"><span>13.3.</span> La seguridad de la aplicación</h1>
+    
+
+<h3 id="autenticacion">13.3.1. Autenticación</h3>
+
+<p>La seguridad de las aplicaciones Symfony se controla mediante un archivo en formato YAML llamado <code>security.yml</code>. Si quieres ver la configuración por defecto de la seguridad de la aplicación <code>backend</code>, puedes acceder al archivo <code>config/security.yml</code> de la aplicación:</p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co1"># apps/backend/config/security.yml</span><span class="co4">
+default</span>:<span class="co3">
+  is_secure</span><span class="sy2">: </span>off</pre>
+</div>
+
+<p>Si cambias el valor de la opción <code>is_secure</code> a <code>on</code>, la aplicación <code>backend</code> requerirá a partir de ese momento que los usuarios estén autenticados.</p>
+
+<div class="figure" id="figure_13_3">
+    <img src="../../img/jobeet_1_4/f1303.png" alt="Pantalla que muestra que el usuario debe estar autenticado" />
+
+    <p class="caption"><strong>Figura 13.3</strong> Pantalla que muestra que el usuario debe estar autenticado</p>
+</div>
+
+
+<div class="admonition note"><p><strong class="title">Nota</strong> En los archivos YAML, los valores <em>booleanos</em> se pueden indicar con las cadenas de texto <code>true</code> y <code>false</code> o con los valores <code>on</code> y <code>off</code>.</p></div>
+
+<p>Si echas un vistazo a los mensajes de log de la barra de depuración web, verás que cada vez que intentas acceder a una página de la aplicación <code>backend</code> se ejecuta el método <code>executeLogin()</code> de la clase <code>defaultActions</code>.</p>
+
+<div class="figure" id="figure_13_4">
+    <img src="../../img/jobeet_1_4/f1304.png" alt="Mensajes de la barra de depuración web relacionados con el login" />
+
+    <p class="caption"><strong>Figura 13.4</strong> Mensajes de la barra de depuración web relacionados con el login</p>
+</div>
+
+
+<p>Cuando un usuario que no ha sido autenticado intenta acceder a una acción restringida, Symfony reenvía la petición a la acción de <code>login</code> configurada en el archivo <code>settings.yml</code>:</p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co4">all</span>:<span class="co4">
+  .actions</span>:<span class="co3">
+    login_module</span><span class="sy2">: </span>default<span class="co3">
+    login_action</span><span class="sy2">: </span>login</pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> No es posible restrigir la seguridad de la acción <code>login</code> para evitar recursiones infinitas.</p></div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Como vimos en el tutorial del día 4, un mismo archivo de configuración se puede definir en diferentes directorios. Este también es el caso del archivo <code>security.yml</code>. Si sólo quieres restringir o permitir el acceso a una acción o a un módulo, crea un archivo llamado <code>security.yml</code> en el directorio <code>config/</code> de ese módulo:</p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co4">index</span>:<span class="co3">
+  is_secure</span><span class="sy2">: </span>off
+ <span class="co4">
+all</span>:<span class="co3">
+  is_secure</span><span class="sy2">: </span>on</pre>
+</div>
+
+<p></p></div>
+
+<p>La clase <code>myUser</code> hereda por defecto de <a href="http://www.symfony-project.org/api/1_2/sfBasicSecurityUser">sfBasicSecurityUser</a> y no de <code>sfUser</code>. La clase <code>sfBasicSecurityUser</code> incluye métodos adicionales para gestionar la autenticación y autorización de usuarios.</p>
+
+<p>Si quieres controlar la autenticación de los usuarios, puedes utilizar los métodos <code>isAuthenticated()</code> y <code>setAuthenticated()</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw1">if</span> <span class="br0">&#40;</span><span class="sy0">!</span><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getUser</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">isAuthenticated</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getUser</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">setAuthenticated</span><span class="br0">&#40;</span><span class="kw4">true</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<h3 id="autorizacion">13.3.2. Autorización</h3>
+
+<p>Además de la autenticación de los usuarios, se puede restringir todavía más el acceso a algunas acciones mediante la definición de <strong>credenciales</strong>. Para acceder a una página determinada, el usuario debe contar con ciertas credenciales:</p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co4">default</span>:<span class="co3">
+  is_secure</span><span class="sy2">: </span>  off<span class="co3">
+  credentials</span><span class="sy2">: </span>admin</pre>
+</div>
+
+<p>El sistema de credenciales de Symfony es bastante sencillo pero muy poderoso. Cada credencial puede representar cualquier cosa que requiera el modelo de seguridad de tu aplicación (como por ejemplo grupos o permisos).</p>
+
+<div class="admonition sidebar"><p><strong class="title">Credenciales avanzadas</strong> La opción <code>credentials</code> del archivo de configuración <code>security.yml</code> permite el uso de operaciones <em>booleanas</em> para describir los requerimientos de un sistema avanzado de credenciales.</p>
+
+<p>Si un usuario debe disponer de dos credenciales, se indican entre corchetes. En el siguiente ejemplo, el usuario debe disponer tanto de la credencial <code>A</code> como de la credencial <code>B</code>:</p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co4">index</span>:<span class="co3">
+  credentials</span><span class="sy2">: </span><span class="br0">&#91;</span>A, B<span class="br0">&#93;</span></pre>
+</div>
+
+<p>Si un usuario debe disponer de al menos una de las dos credenciales, se indican con dos pares de corchetes. En el siguiente ejemplo, el usuario debe disponer o de la credencial <code>A</code> o de la credencial <code>B</code>:</p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co4">index</span>:<span class="co3">
+  credentials</span><span class="sy2">: </span><span class="br0">&#91;</span><span class="br0">&#91;</span>A, B<span class="br0">&#93;</span><span class="br0">&#93;</span></pre>
+</div>
+
+<p>También puedes combinar varios corchetes entre sí para describir cualquier tipo de expresión <em>booleana</em> compleja que utilice cualquier número de credenciales.</p></div>
+
+<p>La clase <code>sfBasicSecurityUser</code> incluye varios métodos para gestionar las credenciales de los usuarios:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// Add one or more credentials</span>
+<span class="re0">$user</span><span class="sy0">-&gt;</span><span class="me1">addCredential</span><span class="br0">&#40;</span><span class="st_h">'foo'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$user</span><span class="sy0">-&gt;</span><span class="me1">addCredentials</span><span class="br0">&#40;</span><span class="st_h">'foo'</span><span class="sy0">,</span> <span class="st_h">'bar'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="co1">// Check if the user has a credential</span>
+<span class="kw1">echo</span> <span class="re0">$user</span><span class="sy0">-&gt;</span><span class="me1">hasCredential</span><span class="br0">&#40;</span><span class="st_h">'foo'</span><span class="br0">&#41;</span><span class="sy0">;</span>                      <span class="sy0">=&gt;</span>   <span class="kw4">true</span>
+&nbsp;
+<span class="co1">// Check if the user has both credentials</span>
+<span class="kw1">echo</span> <span class="re0">$user</span><span class="sy0">-&gt;</span><span class="me1">hasCredential</span><span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'foo'</span><span class="sy0">,</span> <span class="st_h">'bar'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>        <span class="sy0">=&gt;</span>   <span class="kw4">true</span>
+&nbsp;
+<span class="co1">// Check if the user has one of the credentials</span>
+<span class="kw1">echo</span> <span class="re0">$user</span><span class="sy0">-&gt;</span><span class="me1">hasCredential</span><span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'foo'</span><span class="sy0">,</span> <span class="st_h">'bar'</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="kw4">false</span><span class="br0">&#41;</span><span class="sy0">;</span> <span class="sy0">=&gt;</span>   <span class="kw4">true</span>
+&nbsp;
+<span class="co1">// Remove a credential</span>
+<span class="re0">$user</span><span class="sy0">-&gt;</span><span class="me1">removeCredential</span><span class="br0">&#40;</span><span class="st_h">'foo'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="kw1">echo</span> <span class="re0">$user</span><span class="sy0">-&gt;</span><span class="me1">hasCredential</span><span class="br0">&#40;</span><span class="st_h">'foo'</span><span class="br0">&#41;</span><span class="sy0">;</span>                      <span class="sy0">=&gt;</span>   <span class="kw4">false</span>
+&nbsp;
+<span class="co1">// Remove all credentials (useful in the logout process)</span>
+<span class="re0">$user</span><span class="sy0">-&gt;</span><span class="me1">clearCredentials</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="kw1">echo</span> <span class="re0">$user</span><span class="sy0">-&gt;</span><span class="me1">hasCredential</span><span class="br0">&#40;</span><span class="st_h">'bar'</span><span class="br0">&#41;</span><span class="sy0">;</span>                      <span class="sy0">=&gt;</span>   <span class="kw4">false</span></pre>
+</div>
+
+<p>En la parte de administración de Jobeet no vamos a utilizar credenciales porque sólo tenemos un perfil de usuario: el administrador.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="atributos_del_usuario.html">&larr; Anterior <span>13.2. Atributos del usuario</span></a>
+            
+            <a class="span5 next" href="plugins.html">Siguiente &rarr; <span>13.4. Plugins</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'La seguridad de la aplicación (El tutorial Jobeet%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'El tutorial Jobeet : La seguridad de la aplicación']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Comenzando el proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> El proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> El modelo de datos</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> El controlador y la vista</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> El sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Profundizando en el modelo</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Trabajando con la página de cada categoría</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Pruebas unitarias</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Pruebas funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Probando los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> El generador de la parte de administración</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_13.html">
+            <span>Capítulo 13.</span> El usuario
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="mensajes_flash.html">
+            <span>13.1.</span> Mensajes flash
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="atributos_del_usuario.html">
+            <span>13.2.</span> Atributos del usuario
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="la_seguridad_de_la_aplicacion.html">
+            <span>13.3.</span> La seguridad de la aplicación
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="plugins.html">
+            <span>13.4.</span> Plugins
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="la_seguridad_de_la_aplicacion_backend.html">
+            <span>13.5.</span> La seguridad de la aplicación backend
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="probando_a_los_usuarios.html">
+            <span>13.6.</span> Probando a los usuarios
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="nos_vemos_manana.html">
+            <span>13.7.</span> Nos vemos mañana
+        </a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> El día de descanso</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Canales Atom</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Servicios web</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> El buscador</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>20</span> <a href="../capitulo_20.html"> Plugins</a>
+    </li>
+    <li class="level-1">
+        <span>21</span> <a href="../capitulo_21.html"> El día del diseño</a>
+    </li>
+    <li class="level-1">
+        <span>22</span> <a href="../capitulo_22.html"> La cache</a>
+    </li>
+    <li class="level-1">
+        <span>23</span> <a href="../capitulo_23.html"> Pasando a producción</a>
+    </li>
+    <li class="level-1">
+        <span>24</span> <a href="../capitulo_24.html"> Un repaso a Symfony</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

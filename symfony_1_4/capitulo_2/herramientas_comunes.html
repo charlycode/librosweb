@@ -1,0 +1,318 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>2.3. Herramientas comunes (Symfony 1.4, la guía definitiva)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="organizacion_del_codigo.html" />
+        <link rel="next" href="resumen.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="2.3. Herramientas comunes (Symfony 1.4, la guía definitiva)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page symfony_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Symfony 1.4, la guía definitiva</a></li>
+  <li><a href="../capitulo_2.html">Capítulo 2. Explorando el interior de Symfony</a></li>
+  <li class="current"><span>2.3.. Herramientas comunes</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="herramientas_comunes"><span>2.3.</span> Herramientas comunes</h1>
+    
+
+<p>Algunas técnicas se utilizan una y otra vez en Symfony, por lo que es fácil encontrarse con ellas a lo largo de este libro y en el desarrollo de tus proyectos. Entre estas técnicas se encuentran los contenedores de parámetros  <em>parameter holders</em>), las constantes y la carga automática de clases.</p>
+
+<h3 id="contenedores_de_parametros">2.3.1. Contenedores de parámetros</h3>
+
+<p>Muchas de las clases de Symfony contienen algún contenedor de parámetros. Se trata de una forma eficiente de encapsular los atributos y así poder utilizar métodos <em>getter</em> y <em>setter</em> sencillos. La clase <code>sfRequest</code> por ejemplo incluye un contenedor de parámetros que se puede obtener mediante el método <code>getParameterHolder()</code>. Todos los contenedores de parámetros almacenan sus datos de la misma forma, como se muestra en el listado 2-14.</p>
+
+<p><strong>Listado 2-14 - Uso del contenedor de parámetros de <code>sfRequest</code></strong></p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$peticion</span><span class="sy0">-&gt;</span><span class="me1">getParameterHolder</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">set</span><span class="br0">&#40;</span><span class="st_h">'parametro'</span><span class="sy0">,</span> <span class="st_h">'valor'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="kw1">echo</span> <span class="re0">$peticion</span><span class="sy0">-&gt;</span><span class="me1">getParameterHolder</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">get</span><span class="br0">&#40;</span><span class="st_h">'parametro'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+ <span class="sy0">=&gt;</span> <span class="st_h">'valor'</span></pre>
+</div>
+
+<p>La mayoría de clases que contienen contenedores de parámetros proporcionan métodos abreviados para las operaciones de tipo get/set. La clase <code>sfRequest</code> es una de esas clases, ya que el código abreviado del listado 2-15 obtiene el mismo resultado que el código original del listado 2-14.</p>
+
+<p><strong>Listado 2-15 - Uso de los métodos abreviados del contenedor de parámetros de <code>sfResponse</code></strong></p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$peticion</span><span class="sy0">-&gt;</span><span class="me1">setParameter</span><span class="br0">&#40;</span><span class="st_h">'parametro'</span><span class="sy0">,</span> <span class="st_h">'valor'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="kw1">echo</span> <span class="re0">$peticion</span><span class="sy0">-&gt;</span><span class="me1">getParameter</span><span class="br0">&#40;</span><span class="st_h">'parametro'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+ <span class="sy0">=&gt;</span> <span class="st_h">'valor'</span></pre>
+</div>
+
+<p>El método <em>getter</em> del contenedor de parámetros permite la definición de un segundo parámetro que actua de valor por defecto. De esta manera, se obtiene una protección efectiva y sencilla frente a los errores. El listado 2-16 contiene un ejemplo de su uso.</p>
+
+<p><strong>Listado 2-16 - Uso de valores por defecto en las funciones de tipo <em>getter</em></strong></p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// El parámetro llamado 'parametro' no está definido, por lo que el getter devuelve un valor vacío</span>
+<span class="kw1">echo</span> <span class="re0">$peticion</span><span class="sy0">-&gt;</span><span class="me1">getParameter</span><span class="br0">&#40;</span><span class="st_h">'parametro'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+ <span class="sy0">=&gt;</span> <span class="kw4">null</span>
+&nbsp;
+<span class="co1">// El valor por defecto se puede obtener con sentencias condicionales</span>
+<span class="kw1">if</span> <span class="br0">&#40;</span><span class="re0">$peticion</span><span class="sy0">-&gt;</span><span class="me1">hasParameter</span><span class="br0">&#40;</span><span class="st_h">'parametro'</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="kw1">echo</span> <span class="re0">$peticion</span><span class="sy0">-&gt;</span><span class="me1">getParameter</span><span class="br0">&#40;</span><span class="st_h">'parametro'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+<span class="kw1">else</span>
+<span class="br0">&#123;</span>
+  <span class="kw1">echo</span> <span class="st_h">'valor_por_defecto'</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+ <span class="sy0">=&gt;</span> <span class="st_h">'valor_por_defecto'</span>
+&nbsp;
+<span class="co1">// El siguiente método es mucho más rápido</span>
+<span class="kw1">echo</span> <span class="re0">$peticion</span><span class="sy0">-&gt;</span><span class="me1">getParameter</span><span class="br0">&#40;</span><span class="st_h">'parametro'</span><span class="sy0">,</span> <span class="st_h">'valor_por_defecto'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+ <span class="sy0">=&gt;</span> <span class="st_h">'valor_por_defecto'</span></pre>
+</div>
+
+<p>Algunas clases del núcleo de Symfony utilizan un contenedor de parámetros que permite el uso de <em>namespaces</em> (gracias a la clase <code>sfNamespacedParameterHolder</code>). Si se utiliza un tercer parámetro en un <em>getter</em> o en un <em>setter</em>, ese parámetro se utiliza como <em>namespace</em> del parámetro y por tanto, el parámetro sólo estará definido dentro de ese <em>namespace</em>. El listado 2-17 muestra un ejemplo.</p>
+
+<p><strong>Listado 2-17 - Uso de un <em>namespace</em> en el contenedor de parámetros de <code>sfUser</code></strong></p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$usuario</span><span class="sy0">-&gt;</span><span class="me1">setAttribute</span><span class="br0">&#40;</span><span class="st_h">'parametro'</span><span class="sy0">,</span> <span class="st_h">'valor1'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$usuario</span><span class="sy0">-&gt;</span><span class="me1">setAttribute</span><span class="br0">&#40;</span><span class="st_h">'parametro'</span><span class="sy0">,</span> <span class="st_h">'valor2'</span><span class="sy0">,</span> <span class="st_h">'mi/namespace'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="kw1">echo</span> <span class="re0">$usuario</span><span class="sy0">-&gt;</span><span class="me1">getAttribute</span><span class="br0">&#40;</span><span class="st_h">'parametro'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+ <span class="sy0">=&gt;</span> <span class="st_h">'valor1'</span>
+<span class="kw1">echo</span> <span class="re0">$usuario</span><span class="sy0">-&gt;</span><span class="me1">getAttribute</span><span class="br0">&#40;</span><span class="st_h">'parametro'</span><span class="sy0">,</span> <span class="kw4">null</span><span class="sy0">,</span> <span class="st_h">'mi/namespace'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+ <span class="sy0">=&gt;</span> <span class="st_h">'valor2'</span></pre>
+</div>
+
+<p>También es posible añadir contenedores de parámetros a tus propias clases, para aprovechar las ventajas de su sintaxis. El listado 2-18 muestra un ejemplo de cómo definir una clase con un contenedor de parámetros.</p>
+
+<p><strong>Listado 2-18 - Añadir un contenedor de parámetros a una clase</strong></p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">class</span> MiClase
+<span class="br0">&#123;</span>
+  <span class="kw2">protected</span> <span class="re0">$contenedorParametros</span> <span class="sy0">=</span> <span class="kw4">null</span><span class="sy0">;</span>
+&nbsp;
+  <span class="kw2">public</span> <span class="kw2">function</span> initialize<span class="br0">&#40;</span><span class="re0">$parametros</span> <span class="sy0">=</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">contenedorParametros</span> <span class="sy0">=</span> <span class="kw2">new</span> sfParameterHolder<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">contenedorParametros</span><span class="sy0">-&gt;</span><span class="me1">add</span><span class="br0">&#40;</span><span class="re0">$parametros</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="kw2">public</span> <span class="kw2">function</span> getContenedorParametros<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="kw1">return</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">contenedorParametros</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<h3 id="constantes">2.3.2. Constantes</h3>
+
+<p>Aunque pueda parecer sorprendente, el código de Symfony no incluye ninguna constante. La razón es que las constantes de PHP tienen un inconveniente: no se puede modificar su valor una vez definidas. Por este motivo, Symfony utiliza su propio objeto para almacenar la configuración, llamado <code>sfConfig</code>, y que reemplaza a las constantes. Este objeto proporciona métodos estáticos para poder acceder a los parámetros desde cualquier punto de la aplicación. El listado 2-19 muestra el uso de los métodos de la clase <code>sfConfig</code>.</p>
+
+<p><strong>Listado 2-19 - Uso de los métodos de la clase <code>sfConfig</code> en vez de constantes</strong></p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// En vez de constantes de PHP...</span>
+<span class="kw3">define</span><span class="br0">&#40;</span><span class="st_h">'MI_CONSTANTE'</span><span class="sy0">,</span> <span class="st_h">'valor'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="kw1">echo</span> MI_CONSTANTE<span class="sy0">;</span>
+&nbsp;
+<span class="co1">// ...Symfony utiliza el objeto sfConfig</span>
+sfConfig<span class="sy0">::</span><span class="me2">set</span><span class="br0">&#40;</span><span class="st_h">'mi_constante'</span><span class="sy0">,</span> <span class="st_h">'valor'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="kw1">echo</span> sfConfig<span class="sy0">::</span><span class="me2">get</span><span class="br0">&#40;</span><span class="st_h">'mi_constante'</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Los métodos de <code>sfConfig</code> permiten definir valores por defecto y se puede invocar el método <code>sfConfig::set()</code> más de una vez sobre el mismo parámetro para modificar su valor. El capítulo 5 detalla el uso de los métodos de <code>sfConfig</code>.</p>
+
+<h3 id="carga_automatica_de_clases">2.3.3. Carga automática de clases</h3>
+
+<p>Normalmente, cuando se utiliza un método de una clase o cuando se crea un objeto en PHP, se debe incluir antes la definición de esa clase.</p>
+
+<div class="code php">
+<pre class="php"><span class="kw1">include_once</span> <span class="st_h">'clases/MiClase.php'</span><span class="sy0">;</span>
+<span class="re0">$miObjeto</span> <span class="sy0">=</span> <span class="kw2">new</span> MiClase<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Sin embargo, en los proyectos complejos con muchas clases y una estructura de directorios con muchos niveles, requiere mucho trabajo incluir todas las clases necesarias indicando correctamente la ruta de cada clase. Symfony incluye una función <code>spl_autoload_register()</code> para evitar la necesidad de los <code>include_once</code> y así poder escribir directamente:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$miObjeto</span> <span class="sy0">=</span> <span class="kw2">new</span> MiClase<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>En este caso, Symfony busca la definición de la clase <code>MiClase</code> en todos los archivos con extensión <code>class.php</code> que se encuentran en alguno de los directorios <code>lib/</code> del proyecto. Si se encuentra la definición de la clase, se incluye de forma automática.</p>
+
+<p>De esta forma, si guardas todas tus clases en los directorios <code>lib/</code>, no es necesario que las incluyas de forma explícita. Por este motivo, los proyectos de Symfony no suelen incluir ninguna instrucción de tipo <code>include_once</code> o <code>require_once</code>.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Para mejorar el rendimiento, la carga automática de clases de Symfony busca durante la primera petición en una serie de directorios (que se definen en un archivo interno de configuración). Una vez realizada la búsqueda en los directorios, se guarda el nombre de todas las clases encontradas y su ruta de acceso en un array asociativo de PHP. Así, las siguientes peticiones no tienen que volver a mirar todos los directorios en busca de las clases. Este comportamiento implica que se debe borrar la cache de Symfony cada vez que se añade o se mueve una clase del proyecto (salvo en el entorno de desarrollo, donde no es necesario). El comando utilizado para borrar la cache es <code>symfony cache:clear</code>, salvo en el entorno de desarrollo, donde Symfony borra automáticamente la caché una vez cuando no encuentra una clase. El Capítulo 12 explica con detalle el mecanismo de cache y la configuración de la carga automática de clases se muestra en el capítulo 19.</p></div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="organizacion_del_codigo.html">&larr; Anterior <span>2.2. Organización del código</span></a>
+            
+            <a class="span5 next" href="resumen.html">Siguiente &rarr; <span>2.4. Resumen</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Herramientas comunes (Symfony 1.4, la guía definitiva%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Symfony 1.4, la guía definitiva : Herramientas comunes']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción a Symfony</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_2.html">
+            <span>Capítulo 2.</span> Explorando el interior de Symfony
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_patron_mvc.html">
+            <span>2.1.</span> El patrón MVC
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="organizacion_del_codigo.html">
+            <span>2.2.</span> Organización del código
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="herramientas_comunes.html">
+            <span>2.3.</span> Herramientas comunes
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="resumen.html">
+            <span>2.4.</span> Resumen
+        </a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Ejecutar aplicaciones Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Introducción a la creación de páginas</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Configurar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> El Controlador</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> La Vista</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> El modelo (Doctrine)</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Enlaces y sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Emails</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Uso de la cache</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Pruebas unitarias y funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Herramientas para la administración de aplicaciones</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> Personalizar Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> Rendimiento</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Configuración avanzada</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

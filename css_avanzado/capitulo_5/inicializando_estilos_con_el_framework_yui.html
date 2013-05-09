@@ -1,0 +1,282 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>5.3. Inicializando estilos con el framework YUI (CSS avanzado)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="primeros_pasos_con_el_framework_yui.html" />
+        <link rel="next" href="texto_con_el_framework_yui.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="5.3. Inicializando estilos con el framework YUI (CSS avanzado)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page css_avanzado">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">CSS avanzado</a></li>
+  <li><a href="../capitulo_5.html">Capítulo 5. Frameworks</a></li>
+  <li class="current"><span>5.3.. Inicializando estilos con el framework YUI</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="inicializando_estilos_con_el_framework_yui"><span>5.3.</span> Inicializando estilos con el framework YUI</h1>
+    
+
+<p>El primer componente CSS de YUI es <code>reset.css</code>, una hoja de estilos utilizada para neutralizar los estilos que aplican por defecto los navegadores a todos los elementos HTML.</p>
+
+<p>A continuación se muestra el contenido completo de <code>reset.css</code>:</p>
+
+<div class="code css">
+<pre class="css"><span class="coMULTI">/*
+Copyright (c) 2008, Yahoo! Inc. All rights reserved.
+Code licensed under the BSD License:
+http://developer.yahoo.net/yui/license.txt
+version: 2.5.2
+*/</span>
+html<span class="br0">&#123;</span><span class="kw1">color</span><span class="sy0">:</span><span class="re0">#000</span><span class="sy0">;</span><span class="kw1">background</span><span class="sy0">:</span><span class="re0">#FFF</span><span class="sy0">;</span><span class="br0">&#125;</span>
+body<span class="sy0">,</span>div<span class="sy0">,</span>dl<span class="sy0">,</span>dt<span class="sy0">,</span>dd<span class="sy0">,</span>ul<span class="sy0">,</span>ol<span class="sy0">,</span>li<span class="sy0">,</span>h1<span class="sy0">,</span>h2<span class="sy0">,</span>h3<span class="sy0">,</span>h4<span class="sy0">,</span>h5<span class="sy0">,</span>h6<span class="sy0">,</span>pre<span class="sy0">,</span>code<span class="sy0">,</span>form<span class="sy0">,</span>fieldset<span class="sy0">,</span>legend<span class="sy0">,</span>input<span class="sy0">,</span>textarea<span class="sy0">,</span>p<span class="sy0">,</span>blockquote<span class="sy0">,</span>th<span class="sy0">,</span>td<span class="br0">&#123;</span><span class="kw1">margin</span><span class="sy0">:</span><span class="nu0">0</span><span class="sy0">;</span><span class="kw1">padding</span><span class="sy0">:</span><span class="nu0">0</span><span class="sy0">;</span><span class="br0">&#125;</span>
+table<span class="br0">&#123;</span><span class="kw1">border-collapse</span><span class="sy0">:</span><span class="kw2">collapse</span><span class="sy0">;</span><span class="kw1">border-spacing</span><span class="sy0">:</span><span class="nu0">0</span><span class="sy0">;</span><span class="br0">&#125;</span>
+fieldset<span class="sy0">,</span>img<span class="br0">&#123;</span><span class="kw1">border</span><span class="sy0">:</span><span class="nu0">0</span><span class="sy0">;</span><span class="br0">&#125;</span>
+address<span class="sy0">,</span>caption<span class="sy0">,</span>cite<span class="sy0">,</span>code<span class="sy0">,</span>dfn<span class="sy0">,</span>em<span class="sy0">,</span>strong<span class="sy0">,</span>th<span class="sy0">,</span>var<span class="br0">&#123;</span><span class="kw1">font-style</span><span class="sy0">:</span><span class="kw2">normal</span><span class="sy0">;</span><span class="kw1">font-weight</span><span class="sy0">:</span><span class="kw2">normal</span><span class="sy0">;</span><span class="br0">&#125;</span>
+li<span class="br0">&#123;</span><span class="kw1">list-style</span><span class="sy0">:</span><span class="kw2">none</span><span class="sy0">;</span><span class="br0">&#125;</span>
+caption<span class="sy0">,</span>th<span class="br0">&#123;</span><span class="kw1">text-align</span><span class="sy0">:</span><span class="kw1">left</span><span class="sy0">;</span><span class="br0">&#125;</span>
+h1<span class="sy0">,</span>h2<span class="sy0">,</span>h3<span class="sy0">,</span>h4<span class="sy0">,</span>h5<span class="sy0">,</span>h6<span class="br0">&#123;</span><span class="kw1">font-size</span><span class="sy0">:</span><span class="re3">100%</span><span class="sy0">;</span><span class="kw1">font-weight</span><span class="sy0">:</span><span class="kw2">normal</span><span class="sy0">;</span><span class="br0">&#125;</span>
+q<span class="re2">:before</span><span class="sy0">,</span>q<span class="re2">:after</span><span class="br0">&#123;</span><span class="kw1">content</span><span class="sy0">:</span><span class="st0">''</span><span class="sy0">;</span><span class="br0">&#125;</span>
+abbr<span class="sy0">,</span>acronym <span class="br0">&#123;</span><span class="kw1">border</span><span class="sy0">:</span><span class="nu0">0</span><span class="sy0">;</span><span class="kw1">font-variant</span><span class="sy0">:</span><span class="kw2">normal</span><span class="sy0">;</span><span class="br0">&#125;</span>
+<span class="coMULTI">/* to preserve line-height and selector appearance */</span>
+sup <span class="br0">&#123;</span><span class="kw1">vertical-align</span><span class="sy0">:</span><span class="kw2">text-top</span><span class="sy0">;</span><span class="br0">&#125;</span>
+sub <span class="br0">&#123;</span><span class="kw1">vertical-align</span><span class="sy0">:</span><span class="kw2">text-bottom</span><span class="sy0">;</span><span class="br0">&#125;</span>
+input<span class="sy0">,</span>textarea<span class="sy0">,</span>select<span class="br0">&#123;</span><span class="kw1">font-family</span><span class="sy0">:</span><span class="kw2">inherit</span><span class="sy0">;</span><span class="kw1">font-size</span><span class="sy0">:</span><span class="kw2">inherit</span><span class="sy0">;</span><span class="kw1">font-weight</span><span class="sy0">:</span><span class="kw2">inherit</span><span class="sy0">;</span><span class="br0">&#125;</span>
+<span class="coMULTI">/*to enable resizing for IE*/</span>
+input<span class="sy0">,</span>textarea<span class="sy0">,</span>select<span class="br0">&#123;</span><span class="sy0">*</span><span class="kw1">font-size</span><span class="sy0">:</span><span class="re3">100%</span><span class="sy0">;</span><span class="br0">&#125;</span>
+<span class="coMULTI">/*because legend doesn't inherit in IE */</span>
+legend<span class="br0">&#123;</span><span class="kw1">color</span><span class="sy0">:</span><span class="re0">#000</span><span class="sy0">;</span><span class="br0">&#125;</span></pre>
+</div>
+
+<p>Al contrario que las hojas de estilo de tipo <em>reset</em> de otras librerías y frameworks, el archivo <code>reset.css</code> solamente neutraliza los estilos que aplica por defecto el navegador. El cambio más evidente que provoca el <code>reset.css</code> de YUI es que el texto de todos los elementos se muestra con el mismo aspecto. No importa si se trata de un párrafo <code>&lt;p&gt;</code>, una etiqueta <code>&lt;strong&gt;</code> o un título de sección <code>&lt;h1&gt;</code>, ya que el <code>reset.css</code> anterior hace que todos se vean igual. Por tanto, las páginas a las que sólo se aplica la hoja de estilos <code>reset.css</code> no están preparadas para mostrarlas a los usuarios.</p>
+
+<p>Las hojas de estilo <code>reset.css</code> de otros frameworks neutralizan los estilos por defecto y depués aplican unos estilos adecuados para poder mostrar correctamente las páginas: cada título de sección tiene un tamaño mayor que el siguiente, los elementos <code>&lt;strong&gt;</code> se ven en negrita, los márgenes son adecuados para separar los contenidos de texto, etc.</p>
+
+<p>YUI dispone de otro componente CSS llamado <code>base.css</code> para aplicar unos estilos adecuados a las páginas que han sido neutralizadas mediante <code>reset.css</code>. Por lo tanto, una página a la que se le aplican las hojas de estilos <code>reset.css</code> y <code>base.css</code> ya están listas para mostrarse a los usuarios, a falta de la personalización del aspecto que realice posteriormente el diseñador.</p>
+
+<p>El contenido de la hoja de estilos <code>base.css</code> de YUI se muestra a continuación:</p>
+
+<div class="code css">
+<pre class="css"><span class="coMULTI">/*
+Copyright (c) 2008, Yahoo! Inc. All rights reserved.
+Code licensed under the BSD License:
+http://developer.yahoo.net/yui/license.txt
+version: 2.5.2
+*/</span>
+<span class="coMULTI">/* base.css, part of YUI's CSS Foundation */</span>
+h1 <span class="br0">&#123;</span>
+  <span class="kw1">font-size</span><span class="sy0">:</span><span class="re3">138.5%</span><span class="sy0">;</span>  
+<span class="br0">&#125;</span>
+h2 <span class="br0">&#123;</span>
+  <span class="kw1">font-size</span><span class="sy0">:</span><span class="re3">123.1%</span><span class="sy0">;</span> 
+<span class="br0">&#125;</span>
+h3 <span class="br0">&#123;</span>
+  <span class="kw1">font-size</span><span class="sy0">:</span><span class="re3">108%</span><span class="sy0">;</span>  
+<span class="br0">&#125;</span>
+h1<span class="sy0">,</span>h2<span class="sy0">,</span>h3 <span class="br0">&#123;</span>
+  <span class="kw1">margin</span><span class="sy0">:</span><span class="re3">1em</span> <span class="nu0">0</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+h1<span class="sy0">,</span>h2<span class="sy0">,</span>h3<span class="sy0">,</span>h4<span class="sy0">,</span>h5<span class="sy0">,</span>h6<span class="sy0">,</span>strong <span class="br0">&#123;</span>
+  <span class="kw1">font-weight</span><span class="sy0">:</span><span class="kw2">bold</span><span class="sy0">;</span> 
+<span class="br0">&#125;</span>
+abbr<span class="sy0">,</span>acronym <span class="br0">&#123;</span>
+  <span class="kw1">border-bottom</span><span class="sy0">:</span><span class="re3">1px</span> <span class="kw2">dotted</span> <span class="re0">#000</span><span class="sy0">;</span>
+  <span class="kw1">cursor</span><span class="sy0">:</span><span class="kw2">help</span><span class="sy0">;</span>
+<span class="br0">&#125;</span> 
+em <span class="br0">&#123;</span>
+  <span class="kw1">font-style</span><span class="sy0">:</span><span class="kw2">italic</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+blockquote<span class="sy0">,</span>ul<span class="sy0">,</span>ol<span class="sy0">,</span>dl <span class="br0">&#123;</span>
+  <span class="kw1">margin</span><span class="sy0">:</span><span class="re3">1em</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+ol<span class="sy0">,</span>ul<span class="sy0">,</span>dl <span class="br0">&#123;</span>
+  <span class="kw1">margin-left</span><span class="sy0">:</span><span class="re3">2em</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+ol li <span class="br0">&#123;</span>
+  <span class="kw1">list-style</span><span class="sy0">:</span> <span class="kw2">decimal</span> <span class="kw2">outside</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+ul li <span class="br0">&#123;</span>
+  <span class="kw1">list-style</span><span class="sy0">:</span> <span class="kw2">disc</span> <span class="kw2">outside</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+dl dd <span class="br0">&#123;</span>
+  <span class="kw1">margin-left</span><span class="sy0">:</span><span class="re3">1em</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+th<span class="sy0">,</span>td <span class="br0">&#123;</span>
+  <span class="kw1">border</span><span class="sy0">:</span><span class="re3">1px</span> <span class="kw2">solid</span> <span class="re0">#000</span><span class="sy0">;</span>
+  <span class="kw1">padding</span><span class="sy0">:</span><span class="re3">.5em</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+th <span class="br0">&#123;</span>
+  <span class="kw1">font-weight</span><span class="sy0">:</span><span class="kw2">bold</span><span class="sy0">;</span>
+  <span class="kw1">text-align</span><span class="sy0">:</span><span class="kw2">center</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+caption <span class="br0">&#123;</span>
+  <span class="kw1">margin-bottom</span><span class="sy0">:</span><span class="re3">.5em</span><span class="sy0">;</span>
+  <span class="kw1">text-align</span><span class="sy0">:</span><span class="kw2">center</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+p<span class="sy0">,</span>fieldset<span class="sy0">,</span>table<span class="sy0">,</span>pre <span class="br0">&#123;</span>
+  <span class="kw1">margin-bottom</span><span class="sy0">:</span><span class="re3">1em</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+input<span class="br0">&#91;</span>type<span class="sy0">=</span><span class="kw2">text</span><span class="br0">&#93;</span><span class="sy0">,</span>input<span class="br0">&#91;</span>type<span class="sy0">=</span>password<span class="br0">&#93;</span><span class="sy0">,</span>textarea<span class="br0">&#123;</span><span class="kw1">width</span><span class="sy0">:</span><span class="re3">12.25em</span><span class="sy0">;*</span><span class="kw1">width</span><span class="sy0">:</span><span class="re3">11.9em</span><span class="sy0">;</span><span class="br0">&#125;</span></pre>
+</div>
+
+<p>Después de aplicar <code>reset.css</code> todos los contenidos de texto de la página se muestran con un tamaño de letra de <code>16px</code>. La hoja de estilos <code>base.css</code> hace que los títulos de sección <code>&lt;h1&gt;</code>, <code>&lt;h2&gt;</code> y <code>&lt;h3&gt;</code> se muestren más grandes que el resto de texto y también hace que se muestren en negrita. Otros de los estilos comunes que establece <code>base.css</code> son los marcadores que muestran los elementos de las listas, los bordes de las celdas de tabla y los márgenes verticales y laterales de los elementos.</p>
+
+<p>La mayoría de páginas creadas con los componentes CSS de YUI utilizan <code>reset.css</code> y <code>base.css</code>, por lo que es común que incluyan las siguientes etiquetas <code>&lt;link&gt;</code>:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">link</span> <span class="kw3">rel</span><span class="sy0">=</span><span class="st0">&quot;stylesheet&quot;</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text/css&quot;</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;css/reset-min.css&quot;</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">link</span> <span class="kw3">rel</span><span class="sy0">=</span><span class="st0">&quot;stylesheet&quot;</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text/css&quot;</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;css/base-min.css&quot;</span>&gt;</span></pre>
+</div>
+
+<p>Recuerda que también puedes enlazar estas mismas hojas de estilos directamente desde los servidores de Yahoo!:</p>
+
+<div class="code html">
+<pre class="html5"><span class="sc2">&lt;<span class="kw2">link</span> <span class="kw3">rel</span><span class="sy0">=</span><span class="st0">&quot;stylesheet&quot;</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text/css&quot;</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;http://yui.yahooapis.com/2.5.2/build/reset/reset-min.css&quot;</span>&gt;</span>
+<span class="sc2">&lt;<span class="kw2">link</span> <span class="kw3">rel</span><span class="sy0">=</span><span class="st0">&quot;stylesheet&quot;</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text/css&quot;</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;http://yui.yahooapis.com/2.5.2/build/base/base-min.css&quot;</span>&gt;</span></pre>
+</div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="primeros_pasos_con_el_framework_yui.html">&larr; Anterior <span>5.2. Primeros pasos con el framework YUI</span></a>
+            
+            <a class="span5 next" href="texto_con_el_framework_yui.html">Siguiente &rarr; <span>5.4. Texto con el framework YUI</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Inicializando estilos con el framework YUI (CSS avanzado%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'CSS avanzado : Inicializando estilos con el framework YUI']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Técnicas imprescindibles</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Buenas prácticas</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Selectores</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Propiedades avanzadas</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_5.html">
+            <span>Capítulo 5.</span> Frameworks
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_framework_yui.html">
+            <span>5.1.</span> El framework YUI
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="primeros_pasos_con_el_framework_yui.html">
+            <span>5.2.</span> Primeros pasos con el framework YUI
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="inicializando_estilos_con_el_framework_yui.html">
+            <span>5.3.</span> Inicializando estilos con el framework YUI
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="texto_con_el_framework_yui.html">
+            <span>5.4.</span> Texto con el framework YUI
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="layouts_con_el_framework_yui.html">
+            <span>5.5.</span> Layouts con el framework YUI
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="otros_frameworks.html">
+            <span>5.6.</span> Otros frameworks
+        </a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Técnicas avanzadas</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

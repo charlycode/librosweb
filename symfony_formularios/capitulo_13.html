@@ -1,0 +1,326 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>Capítulo 13. Validadores (Los formularios de Symfony 1.4)</title>
+        <link href="../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="capitulo_12/sfwidgetformschema.html" />
+        <link rel="next" href="capitulo_13/validadores.html" />
+        <link rel="start" href="index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Capítulo 13. Validadores (Los formularios de Symfony 1.4)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page symfony_formularios">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../index.html">Inicio</a></li>
+  <li><a href="index.html">Los formularios de Symfony 1.4</a></li>
+  <li class="current"><span>Capítulo 13.. Validadores</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="capitulo_13"><span>Capítulo 13.</span> Validadores</h1>
+    <h2 id="introduccion">13.1. Introducción</h2>
+
+
+<p>El framework de formularios de Symfony incluye muchos validadores útiles que cubren las necesidades comunes de la mayoría de proyectos. En este capítulo se describen detalladamente todos los validadores que incluye por defecto Symfony. También se explican los validadores incluidos en los plugins <code>sfPropelPlugin</code> y <code>sfDoctrinePlugin</code>, ya que estos plugins los desarrollan los creadores de Symfony e incluyen muchos validadores útiles.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Aunque no utilices el framework Symfony, puedes hacer uso de los validadores incluidos en <a href="http://svn.symfony-project.com/plugins/sfFormExtraPlugin">sfFormExtraPlugin</a>, <code>sfPropelPlugin</code> y <code>sfDoctrinePlugin</code> simplemente copiando el directorio <code>validator/</code> de cada plugin en algún lugar de tu proyecto.</p></div>
+
+<p>Antes de profundizar en los detalles de cada validador, veamos las características comunes de todos los validadores.</p>
+
+<h3 id="la_clase_base_sfvalidatorbase">13.1.1. La clase base sfValidatorBase</h3>
+
+<p>Todos los validadores de Symfony heredan de la clase base <code>sfValidator</code>, que proporciona las características comunes de todos los validadores.</p>
+
+<p>La finalidad de los validadores consiste en limpiar y validar los valores originales.</p>
+
+<p>Cuando se crea un validador, se le pueden pasar como argumentos opcionales diferentes opciones y mensajes de error:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$v</span> <span class="sy0">=</span> <span class="kw2">new</span> sfValidatorString<span class="br0">&#40;</span>
+  <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'required'</span> <span class="sy0">=&gt;</span> <span class="kw4">true</span><span class="br0">&#41;</span><span class="sy0">,</span>
+  <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'required'</span> <span class="sy0">=&gt;</span> <span class="st_h">'Este valor es obligatorio.'</span><span class="br0">&#41;</span>
+<span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Las opciones y los mensajes de error también se pueden establecer con los métodos <code>setOptions()</code> y
+<code>setMessages()</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$v</span> <span class="sy0">=</span> <span class="kw2">new</span> sfValidatorString<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$v</span><span class="sy0">-&gt;</span><span class="me1">setOptions</span><span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'required'</span> <span class="sy0">=&gt;</span> <span class="kw4">true</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$v</span><span class="sy0">-&gt;</span><span class="me1">setMessages</span><span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'required'</span> <span class="sy0">=&gt;</span> <span class="st_h">'Este valor es obligatorio.'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Si se quiere establecer una opción o mensaje de error individual, se pueden utilizar los métodos <code>setOption()</code> y <code>setMessage()</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$v</span> <span class="sy0">=</span> <span class="kw2">new</span> sfValidatorString<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$v</span><span class="sy0">-&gt;</span><span class="me1">setOption</span><span class="br0">&#40;</span><span class="st_h">'required'</span><span class="sy0">,</span> <span class="kw4">true</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="re0">$v</span><span class="sy0">-&gt;</span><span class="me1">setMessage</span><span class="br0">&#40;</span><span class="st_h">'required'</span><span class="sy0">,</span> <span class="st_h">'Este valor es obligatorio.'</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Los valores originales se pueden validar con el método <code>clean()</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$valorLimpio</span> <span class="sy0">=</span> <span class="re0">$v</span><span class="sy0">-&gt;</span><span class="me1">clean</span><span class="br0">&#40;</span><span class="st_h">'nombre'</span><span class="sy0">,</span> <span class="st_h">'valor'</span><span class="sy0">,</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'class'</span> <span class="sy0">=&gt;</span> <span class="st_h">'foo'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>El método <code>clean()</code> toma como argumento el valor original y devuelve el valor <em>limpio</em>. Si se produce un error de valiación, se lanza una excepción de tipo <code>sfValidatorError</code>.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Los validadores no almacenan información sobre su estado, lo que significa que una sola instancia de un validador puede validar tantos valores como necesites.</p></div>
+
+<p><code>sfValidatorBase</code> define las siguientes opciones por defecto:</p>
+
+<div class="table" id="table_13_1">
+
+    <table>
+<thead>
+<tr>
+  <th>Opción</th>
+  <th>Error</th>
+  <th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>required</code></td>
+  <td><code>required</code></td>
+  <td>Vale <code>true</code> si el valor es obligatorio y <code>false</code> en cualquier otro caso (su valor por defecto es <code>true</code>)</td>
+</tr>
+<tr>
+  <td><code>trim</code></td>
+  <td>-</td>
+  <td>Vale <code>true</code> si se deben eliminar los espacios en blanco del principio y del final del valor y <code>false</code> en cualquier otro caso (su valor por defecto es <code>false</code>)</td>
+</tr>
+<tr>
+  <td><code>empty_value</code></td>
+  <td>-</td>
+  <td>Valor vacío que se devuelve cuando el valor no es obligatorio</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+<p><code>sfValidatorBase</code> también define los siguientes mensajes de error por defecto:</p>
+
+<div class="table" id="table_13_2">
+
+    <table>
+<thead>
+<tr>
+  <th>Error</th>
+  <th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>required</code></td>
+  <td>Mensaje de error que se muestra cuando el valor original está vacío pero es obligatorio (por defecto el mensaje que se muestra es <code>Required</code>)</td>
+</tr>
+<tr>
+  <td><code>invalid</code></td>
+  <td>Mensaje de error genérico que se muestra cuando se produce un error (por defecto el mensaje que se muestra es <code>Invalid</code>)</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+<p>Para modificar los mensajes por defecto de los errores <code>required</code> y <code>invalid</code>, puedes utilizar los métodos <code>setRequiredMessage()</code> y <code>setInvalidMessage()</code>:</p>
+
+<div class="code php">
+<pre class="php">sfValidatorBase<span class="sy0">::</span><span class="me2">setRequiredMessage</span><span class="br0">&#40;</span><span class="st_h">'Este valor es obligatorio.'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+sfValidatorBase<span class="sy0">::</span><span class="me2">setInvalidMessage</span><span class="br0">&#40;</span><span class="st_h">'Este valor no es válido.'</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Los mensajes de error pueden contener variables en forma de cadenas de texto encerradas por <code>%</code>. Las variables se sustituyen por sus valores durante la ejecución de la aplicación. Todos los mensajes de error tienen acceso directo al valor original mediante una variable llamada <code>%value%</code>. Además, los mensajes de error pueden definir sus propias variables.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> En la siguiente sección no se menciona la variable <code>%value%</code> porque siempre está disponible.</p></div>
+
+<p>Algunos validadores necesitan conocer la codificación que utiliza el valor original. Por defecto la codificación utilizada es <code>UTF-8</code>, pero se puede configurar cualquier otra codificación mediante el método <code>setCharset()</code>:</p>
+
+<div class="code php">
+<pre class="php">sfValidatorBase<span class="sy0">::</span><span class="me2">setCharset</span><span class="br0">&#40;</span><span class="st_h">'ISO-8859-1'</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Si utilizas los validadores de Symfony dentro de un proyecto Symfony, la codificación se obtiene directamente del archivo de configuración <code>settings.yml</code>.</p></div>
+
+<h3 id="esquema_de_validadores">13.1.2. Esquema de validadores</h3>
+
+<p>Un esquema de validadores es un validador especial que agrupa uno o varios validadores.</p>
+
+<p>Si se produce un error, el esquema de validadores lanza una excepción de tipo <code>sfValidatorErrorSchema</code>.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="capitulo_12/sfwidgetformschema.html">&larr; Anterior <span>12.9. sfWidgetFormSchema</span></a>
+            
+            <a class="span5 next" href="capitulo_13/validadores.html">Siguiente &rarr; <span>13.2. Validadores</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Validadores (Los formularios de Symfony 1.4%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Los formularios de Symfony 1.4 : Validadores']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="capitulo_1.html"> Creación de formularios</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="capitulo_2.html"> Validación de formularios</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="capitulo_3.html"> Formularios para diseñadores web</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="capitulo_4.html"> Integración con Propel</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="capitulo_5.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="capitulo_6.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="capitulo_7.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="capitulo_8.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="capitulo_9.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="capitulo_10.html"> Sin título</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="capitulo_11.html"> Integrando Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="capitulo_12.html"> Referencia de Widgets</a>
+    </li>
+    <li class="level-1 active">
+        <a href="capitulo_13.html">
+            <span>Capítulo 13.</span> Validadores
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="capitulo_13/validadores.html">
+            <span>13.2.</span> Validadores
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="capitulo_13/validadores_simples.html">
+            <span>13.3.</span> Validadores simples
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="capitulo_13/validadores_de_fechas.html">
+            <span>13.4.</span> Validadores de fechas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="capitulo_13/validador_de_archivos.html">
+            <span>13.5.</span> Validador de archivos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="capitulo_13/validadores_logicos.html">
+            <span>13.6.</span> Validadores lógicos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="capitulo_13/validadores_de_internacionalizacion.html">
+            <span>13.7.</span> Validadores de internacionalización
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="capitulo_13/validadores_de_propel.html">
+            <span>13.8.</span> Validadores de Propel
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="capitulo_13/validadores_de_doctrine.html">
+            <span>13.9.</span> Validadores de Doctrine
+        </a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

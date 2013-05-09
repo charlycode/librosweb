@@ -1,0 +1,204 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>11.2. Mejorar el rendimiento de las aplicaciones complejas (Introducción a AJAX)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="../capitulo_11.html" />
+        <link rel="next" href="ofuscar_el_codigo_javascript.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="11.2. Mejorar el rendimiento de las aplicaciones complejas (Introducción a AJAX)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page ajax">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Introducción a AJAX</a></li>
+  <li><a href="../capitulo_11.html">Capítulo 11. Otras utilidades</a></li>
+  <li class="current"><span>11.2. Mejorar el rendimiento de las aplicaciones complejas</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="mejorar_el_rendimiento_de_las_aplicaciones_complejas"><span>11.2.</span> Mejorar el rendimiento de las aplicaciones complejas</h1>
+    
+
+<p>Cuando se desarrollan aplicaciones complejas, es habitual encontrarse con decenas de archivos JavaScript de miles de líneas de código. Estructurar las aplicaciones de esta forma es correcto y facilita el desarrollo de la aplicación, pero penaliza en exceso el rendimiento de la aplicación.</p>
+
+<p>La primera recomendación para mejorar el rendimiento de la aplicación consiste en unir en un único archivo JavaScript el contenido de todos los diferentes archivos JavaScript. En Windows, se puede crear un pequeño programa ejecutable que copia el contenido de varios archivos JavaScript en uno solo:</p>
+
+<div class="code cli">
+<pre class="cli">more archivo1.js &gt; archivoUnico.js
+more archivo2.js &gt;&gt; archivoUnico.js
+more archivo3.js &gt;&gt; archivoUnico.js
+...</pre>
+</div>
+
+<p>La primera instrucción tiene un solo símbolo <code>&gt;</code> para borrar el contenido del <code>archivoUnico.js</code> cada vez que se ejecuta el comando. El resto de instrucciones tienen un símbolo <code>&gt;&gt;</code> para añadir el contenido de los demás archivos al final del <code>archivoUnico.js</code></p>
+
+<p>En sistemas operativos de tipo Linux es todavía más sencillo unir varios archivos en uno solo:</p>
+
+<div class="code cli">
+<pre class="cli">cat archivo1.js archivo2.js archivo3.js &gt; archivoUnico.js</pre>
+</div>
+
+<p>La única consideración que se debe tener en cuenta con este método es el de las dependencias entre archivos. Si por ejemplo el <code>archivo1.js</code> contiene funciones que dependen de otras funciones definidas en el <code>archivo3.js</code>, los archivos deberían unirse en este otro orden:</p>
+
+<div class="code cli">
+<pre class="cli">cat archivo3.js archivo1.js archivo2.js &gt; archivoUnico.js</pre>
+</div>
+
+<p>Otra recomendación muy útil para mejorar el rendimiento de la aplicación es la de comprimir el código de JavaScript. Este tipo de herramientas compresoras de código no modifican el comportamiento de la aplicación, pero pueden reducir mucho su tamaño.</p>
+
+<p>El proceso de compresión consiste en eliminar todos los espacios en blanco sobrantes, eliminar todos los comentarios del código y convertir toda la aplicación en una única línea de código JavaScript muy larga. Algunos compresores van más allá y sustituyen el nombre de las variables y funciones por nombres más cortos.</p>
+
+<p><a href="http://dojotoolkit.org/shrinksafe/">ShrinkSafe</a> es una de las herramientas que proporciona <a href="http://dojotoolkit.org/">el framework Dojo</a> y que puede ser utilizada incluso de forma online. Los creadores de la aplicación aseguran de que es la herramienta más segura para reducir el tamaño del código, ya que no modifica ningún elemento que pueda provocar errores en la aplicación.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="../capitulo_11.html">&larr; Anterior <span>Capítulo 11. Otras utilidades</span></a>
+            
+            <a class="span5 next" href="ofuscar_el_codigo_javascript.html">Siguiente &rarr; <span>11.3. Ofuscar el código JavaScript</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Mejorar el rendimiento de las aplicaciones complejas (Introducción a AJAX%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a AJAX : Mejorar el rendimiento de las aplicaciones complejas']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción a AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> JavaScript básico</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> JavaScript avanzado</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> DOM (Document Object Model)</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> BOM (Browser Object Model)</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Eventos</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Primeros pasos con AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Técnicas básicas con AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Técnicas avanzadas con AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Frameworks y librerías</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_11.html">
+            <span>Capítulo 11.</span> Otras utilidades
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="mejorar_el_rendimiento_de_las_aplicaciones_complejas.html">
+            <span>11.2.</span> Mejorar el rendimiento de las aplicaciones complejas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ofuscar_el_codigo_javascript.html">
+            <span>11.3.</span> Ofuscar el código JavaScript
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="evitar_el_problema_de_los_dominios_diferentes.html">
+            <span>11.4.</span> Evitar el problema de los dominios diferentes
+        </a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Recursos útiles</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Bibliografía</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

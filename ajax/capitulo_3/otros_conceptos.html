@@ -1,0 +1,319 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>3.3. Otros conceptos (Introducción a AJAX)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="clases.html" />
+        <link rel="next" href="../capitulo_4.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="3.3. Otros conceptos (Introducción a AJAX)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page ajax">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Introducción a AJAX</a></li>
+  <li><a href="../capitulo_3.html">Capítulo 3. JavaScript avanzado</a></li>
+  <li class="current"><span>3.3. Otros conceptos</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="otros_conceptos"><span>3.3.</span> Otros conceptos</h1>
+    
+
+<h3 id="excepciones">3.3.1. Excepciones</h3>
+
+<p>JavaScript dispone de un mecanismo de tratamiento de excepciones muy similar al de otros lenguajes de programación como Java. Para ello, define las palabras reservadas <code>try</code>, <code>catch</code> y <code>finally</code>.</p>
+
+<p>La palabra reservada <code>try</code> se utiliza para encerrar el bloque de código JavaScript en el que se van a controlar las excepciones. Normalmente, el bloque definido por <code>try</code> va seguido de otro bloque de código definido por <code>catch</code>.</p>
+
+<p>Cuando se produce una excepción en el bloque <code>try</code>, se ejecutan las instrucciones contenidas dentro del bloque <code>catch</code> asociado. Después del bloque <code>catch</code>, es posible definir un bloque con la palabra reservada <code>finally</code>. Todo el código contenido en el bloque <code>finally</code> se ejecuta independientemente de la excepción ocurrida en el bloque <code>try</code>.</p>
+
+<p>Un bloque <code>try</code> debe ir seguido obligatoriamente de un bloque <code>catch</code> o de un bloque <code>finally</code>. También es posible que vaya seguido de los dos bloques.</p>
+
+<p>A continuación se muestra un ejemplo de excepción y uso de los bloques <code>try</code> y <code>catch</code>:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">try</span> <span class="br0">&#123;</span>
+  <span class="kw1">var</span> resultado <span class="sy0">=</span> <span class="nu0">5</span><span class="sy0">/</span>a<span class="sy0">;</span>
+<span class="br0">&#125;</span> <span class="kw1">catch</span><span class="br0">&#40;</span>excepcion<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  alert<span class="br0">&#40;</span>excepcion<span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>El bloque <code>catch</code> permite indicar el nombre del parámetro que se crea automáticamente al producirse una excepción. Este identificador de la variable sólo está definido dentro del bloque <code>catch</code> y se puede utilizar para obtener más información sobre la excepción producida.</p>
+
+<p>En este caso, al intentar dividir el número <code>5</code> por la variable <code>a</code> que no está definida, se produce una excepción que muestra el siguiente mensaje dentro del bloque <code>catch</code>:</p>
+
+<div class="figure" id="figure_3_1">
+    <img src="../../img/ajax/f0301.gif" alt="Excepción JavaScript provocada por una variable no definida" />
+
+    <p class="caption"><strong>Figura 3.1</strong> Excepción JavaScript provocada por una variable no definida</p>
+</div>
+
+
+<p>El funcionamiento del bloque <code>finally</code> no es tan sencillo como el bloque <code>catch</code>. Si se ejecuta cualquier parte del código que se encuentra dentro del bloque <code>try</code>, siempre se ejecuta el bloque <code>finally</code>, independientemente del resultado de la ejecución del bloque <code>try</code>.</p>
+
+<p>Si dentro del bloque <code>try</code> se ejecuta una instrucción de tipo <code>return</code>, <code>continue</code> o <code>break</code>, también se ejecuta el bloque <code>finally</code> antes de ejecutar cualquiera de esas instrucciones. Si se produce una excepción en el bloque <code>try</code> y están definidos los bloques <code>catch</code> y <code>finally</code>, en primer lugar se ejecuta el bloque <code>catch</code> y a continuación el bloque <code>finally</code>.</p>
+
+<p>JavaScript también permite lanzar excepciones manualmente mediante la palabra reservada <code>throw</code>:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">try</span> <span class="br0">&#123;</span>
+  <span class="kw1">if</span><span class="br0">&#40;</span><span class="kw1">typeof</span> a <span class="sy0">==</span> <span class="st0">&quot;undefined&quot;</span> <span class="sy0">||</span> isNaN<span class="br0">&#40;</span>a<span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span> 
+    <span class="kw1">throw</span> <span class="kw1">new</span> Error<span class="br0">&#40;</span><span class="st0">'La variable &quot;a&quot; no es un número'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+  <span class="kw1">var</span> resultado <span class="sy0">=</span> <span class="nu0">5</span><span class="sy0">/</span>a<span class="sy0">;</span>
+<span class="br0">&#125;</span> <span class="kw1">catch</span><span class="br0">&#40;</span>excepcion<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  alert<span class="br0">&#40;</span>excepcion<span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span> <span class="kw1">finally</span> <span class="br0">&#123;</span>
+  alert<span class="br0">&#40;</span><span class="st0">&quot;Se ejecuta&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>En este caso, al ejecutar el script se muestran los dos siguientes mensajes de forma consecutiva:</p>
+
+<div class="figure" id="figure_3_2">
+    <img src="../../img/ajax/f0302.gif" alt="Manejando las excepciones en JavaScript para mostrar mensajes al usuario" />
+
+    <p class="caption"><strong>Figura 3.2</strong> Manejando las excepciones en JavaScript para mostrar mensajes al usuario</p>
+</div>
+
+
+<div class="figure" id="figure_3_3">
+    <img src="../../img/ajax/f0303.gif" alt="El bloque &quot;finally&quot; siempre se ejecuta cuando se produce una excepción en JavaScript" />
+
+    <p class="caption"><strong>Figura 3.3</strong> El bloque &quot;finally&quot; siempre se ejecuta cuando se produce una excepción en JavaScript</p>
+</div>
+
+
+<h3 id="clausura_closure">3.3.2. Clausura (closure)</h3>
+
+<p>El concepto de <em>clausura</em>  <em>closure</em> en inglés) es conocido y utilizado en varios lenguajes de programación desde hace décadas. JavaScript también permite utilizar <em>clausuras</em> en el código de las aplicaciones. En este caso, las <em>clausuras</em> se crean de forma implícita, ya que no existe ninguna forma de declararlas explícitamente.</p>
+
+<p>A continuación se muestra un ejemplo sencillo de <em>clausura</em> en JavaScript:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> x <span class="sy0">=</span> <span class="st0">&quot;estoy fuera&quot;</span><span class="sy0">;</span>
+&nbsp;
+<span class="kw1">function</span> funcionExterna<span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="kw1">var</span> x <span class="sy0">=</span> <span class="st0">&quot;estoy dentro&quot;</span><span class="sy0">;</span>
+  <span class="kw1">function</span> funcionAnidada<span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span> alert<span class="br0">&#40;</span>x<span class="br0">&#41;</span><span class="sy0">;</span> <span class="br0">&#125;</span>
+  funcionAnidada<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+funcionExterna<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Al ejecutar el código anterior, se muestra el mensaje <em>"estoy dentro"</em>. Cuando se define una función dentro de otra, todas las variables de la primera función están disponibles de forma directa en la función anidada.</p>
+
+<p>Técnicamente, una <em>clausura</em> es una porción de código (normalmente una función) que se evalúa en un entorno de ejecución que contiene variables de otro entorno de ejecución. JavaScript crea <em>clausuras</em> para todas las funciones definidas dentro de otra función. Sin embargo, el uso expreso de <em>clausuras</em> es muy limitado y se reserva sólo para las técnicas más avanzadas y complejas de JavaScript. Utilizando <em>clausuras</em> es posible por ejemplo simular el funcionamiento de las propiedades privadas en los objetos de JavaScript.</p>
+
+<p>Existen recursos online con una explicación detallada del funcionamiento y aplicaciones de las <em>clausuras</em> en JavaScript, como por ejemplo http://www.jibbering.com/faq/faq_notes/closures.html</p>
+
+<h3 id="reflexion">3.3.3. Reflexión</h3>
+
+<p>Al igual que la mayor parte de los lenguajes de programación más utilizados, JavaScript define mecanismos que permiten la <em>reflexión</em> sobre los objetos. La reflexión es un proceso mediante el cual un programa es capaz de obtener información sobre si mismo y por tanto es capaz de auto modificarse en tiempo de ejecución.</p>
+
+<p>JavaScript emplea el concepto de reflexión para permitir descubrir propiedades y métodos de objetos externos. El ejemplo más sencillo es el de averiguar si un objeto posee un determinado método y así poder ejecutarlo. Si se dispone de un objeto llamado <code>elObjeto</code>, el código necesario para descubrir si posee una determinada propiedad llamada <code>laPropiedad</code> sería el siguiente:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">if</span><span class="br0">&#40;</span>elObjeto.<span class="me1">laPropiedad</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="co1">// el objeto posee la propiedad buscada</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Si el objeto no dispone de la propiedad buscada, la respuesta será <code>undefined</code>, que se transformará en un valor <code>false</code> que hace que no se ejecute el interior del bloque <code>if</code>.</p>
+
+<p>Sin embargo, el código anterior no es del todo correcto, ya que si la propiedad buscada tiene un valor de <code>false</code>, <code>null</code> o el número <code>0</code>, el anterior código no se ejecutará correctamente. En tal caso, el código necesario es el siguiente:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">if</span><span class="br0">&#40;</span><span class="kw1">typeof</span><span class="br0">&#40;</span>elObjeto.<span class="me1">laPropiedad</span><span class="br0">&#41;</span> <span class="sy0">!=</span> <span class="st0">'undefined'</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="co1">// el objeto posee la propiedad buscada</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>El ejemplo anterior hace uso del operador <code>typeof</code>, que devuelve el tipo del objeto o variable que se le pasa como parámetro. Los valores que devuelve este operador son: <code>undefined</code>, <code>number</code>, <code>object</code>, <code>boolean</code>, <code>string</code> o <code>function</code>.</p>
+
+<p>El otro operador que ya se comentó anteriormente es <code>instanceof</code>, que comprueba si un objeto es una instancia de otro objeto:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">if</span><span class="br0">&#40;</span>elObjeto <span class="kw1">instanceof</span> Factura<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  alert<span class="br0">&#40;</span><span class="st0">&quot;Se trata de un objeto de tipo Factura&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Este operador también se puede emplear con objetos nativos de JavaScript:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> elObjeto <span class="sy0">=</span> <span class="br0">&#91;</span><span class="br0">&#93;</span><span class="sy0">;</span>
+<span class="kw1">if</span><span class="br0">&#40;</span>elObjeto <span class="kw1">instanceof</span> <span class="kw4">Array</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  alert<span class="br0">&#40;</span><span class="st0">&quot;Es un array&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+<span class="kw1">else</span> <span class="kw1">if</span><span class="br0">&#40;</span>elObjeto <span class="kw1">instanceof</span> <span class="kw4">Object</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  alert<span class="br0">&#40;</span><span class="st0">&quot;Es un objeto&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>En el ejemplo anterior, el programa muestra por pantalla el mensaje <code>"Es un array"</code> ya que se cumple la primera comprobación por ser la variable <code>elObjeto</code> un array. Sin embargo, si se cambia de orden las comprobaciones:</p>
+
+<div class="code javascript">
+<pre class="javascript"><span class="kw1">var</span> elObjeto <span class="sy0">=</span> <span class="br0">&#91;</span><span class="br0">&#93;</span><span class="sy0">;</span>
+<span class="kw1">if</span><span class="br0">&#40;</span>elObjeto <span class="kw1">instanceof</span> <span class="kw4">Object</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  alert<span class="br0">&#40;</span><span class="st0">&quot;Es un objeto&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+<span class="kw1">else</span> <span class="kw1">if</span><span class="br0">&#40;</span>elObjeto <span class="kw1">instanceof</span> <span class="kw4">Array</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  alert<span class="br0">&#40;</span><span class="st0">&quot;Es un array&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>En este caso, la salida del programa es el mensaje <code>"Es un objeto"</code>. El motivo es que, a pesar de que JavaScript no soporta el concepto de herencia en los objetos definidos a medida, los objetos nativos <code>Function</code> y <code>Array</code> sí que heredan del objeto <code>Object</code>. Así, la comprobación <code>elObjeto instanceof Object</code> devuelve un valor <code>true</code>, por ser <code>Array</code> una clase que hereda de <code>Object</code>.</p>
+
+<p><div class="exercise"><p class="title">Ejercicio 6</p> <p>Sobrescribir el objeto <code>Object</code> para que incluya un método llamado <code>implementa()</code> y que indique si el objeto posee el método cuyo nombre se le pasa como parámetro.</p>
+
+<p><a href="http://librosweb.es/ajax/capitulo_14/ejercicio_6.html">Ver solución</a></p></div></p>
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="clases.html">&larr; Anterior <span>3.2. Clases</span></a>
+            
+            <a class="span5 next" href="../capitulo_4.html">Siguiente &rarr; <span>Capítulo 4. DOM (Document Object Model)</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Otros conceptos (Introducción a AJAX%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a AJAX : Otros conceptos']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción a AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> JavaScript básico</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_3.html">
+            <span>Capítulo 3.</span> JavaScript avanzado
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="clases.html">
+            <span>3.2.</span> Clases
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="otros_conceptos.html">
+            <span>3.3.</span> Otros conceptos
+        </a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> DOM (Document Object Model)</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> BOM (Browser Object Model)</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Eventos</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Primeros pasos con AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Técnicas básicas con AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Técnicas avanzadas con AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Frameworks y librerías</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Otras utilidades</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Recursos útiles</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Bibliografía</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

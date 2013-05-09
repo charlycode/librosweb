@@ -1,0 +1,266 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>3.5. Crea pruebas más rápido (Más con Symfony)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="depura_mas_rapido.html" />
+        <link rel="next" href="../capitulo_4.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="3.5. Crea pruebas más rápido (Más con Symfony)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page mas_con_symfony">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Más con Symfony</a></li>
+  <li><a href="../capitulo_3.html">Capítulo 3. Mejora tu productividad</a></li>
+  <li class="current"><span>3.5.. Crea pruebas más rápido</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="crea_pruebas_mas_rapido"><span>3.5.</span> Crea pruebas más rápido</h1>
+    
+
+<h3 id="graba_tus_pruebas_funcionales">3.5.1. Graba tus pruebas funcionales</h3>
+
+<p>Las pruebas funcionales simulan las interacciones que realizan los usuarios
+para poder probar la integración de todas las partes que forman tu aplicación.
+Escribir las pruebas funcionales es bastante sencillo pero requiere mucho tiempo.
+Sin embargo, como cada prueba funcional consiste en un escenario que simula la
+navegación realizada por un usuario y como navegar por el sitio web es mucho
+más rápido que escribir código PHP, sería genial poder grabar una sesión de
+navegación y que se convierta automáticamente en código PHP.</p>
+
+<p>Afortunadamente Symfony dispone de un plugin llamado <a href="http://www.symfony-project.org/plugins/swFunctionalTestGenerationPlugin">swFunctionalTestGenerationPlugin</a>
+y que permite generar en pocos minutos esqueletos de pruebas listos para ser
+personalizados. Obviamente para hacer estas pruebas completamente funcionales
+es necesario añadir las llamadas apropiadas a los <em>testers</em>, pero en cualquier
+caso proporciona un gran ahorro de tiempo.</p>
+
+<p>Este plugin funciona registrando un filtro de Symfony que intercepta todas las
+peticiones y las convierte en el código de la prueba funcional. Tras realizar
+la instalación del plugin, es necesario habilitarlo. Abre el archivo <code>filters.yml</code>
+de la aplicación y añade las siguientes líneas después de la línea de comentario:</p>
+
+<div class="code php">
+<pre class="php">functional_test<span class="sy0">:</span>
+  <span class="kw2">class</span><span class="sy0">:</span> swFilterFunctionalTest</pre>
+</div>
+
+<p>Después, activa el plugin en la clase <code>ProjectConfiguration</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// config/ProjectConfiguration.class.php</span>
+<span class="kw2">class</span> ProjectConfiguration <span class="kw2">extends</span> sfProjectConfiguration
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> setup<span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="co1">// ...</span>
+&nbsp;
+    <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">enablePlugin</span><span class="br0">&#40;</span><span class="st_h">'swFunctionalTestGenerationPlugin'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Como el plugin utiliza la barra de depuración web como su interfaz principal,
+asegúrate de que esté activada (que es lo habitual en el entorno de desarrollo).
+Cuando se activa el plugin, la barra de depuración web muestra un nuevo elemento
+de menú llamado <em>"Functional Test"</em>. Con este nuevo panel se puede empezar a
+grabar una sesión pinchando el enlace <em>"Activate"</em> y se puede resetear la
+sesión actual pinchando sobre el enlace <em>"Reset"</em>. Cuando hayas terminado de
+navegar, copia y pega el código del textarea en un archivo de pruebas y
+modificalo a tu gusto.</p>
+
+<h3 id="ejecuta_el_conjunto_de_pruebas_mas_rapido">3.5.2. Ejecuta el conjunto de pruebas más rápido</h3>
+
+<p>Si dispones de una gran cantidad de pruebas, resulta muy lento ejecutar todas
+ellas cada vez que haces un cambio en la aplicación, sobre todo cuando fallan
+algunas pruebas. El motivo es que cada vez que arregles una prueba que había
+fallado, tienes que volver a ejecutar todas las pruebas para asegurarte de que
+no has roto nada nuevo. No obstante, mientras no se arreglen las pruebas que
+fallan, no tiene sentido volver a ejecutar todas las demás pruebas. Por ello,
+la tarea <code>test:all</code> dispone de una opción llamada <code>--only-failed</code> (<code>-f</code> es el
+atajo) que obliga a ejecutar solamente las pruebas que fallaron la última vez:</p>
+
+<div class="code cli">
+<pre class="cli">$ php symfony test:all --only-failed</pre>
+</div>
+
+<p>La primera vez se ejecutan todas las pruebas, pero en las siguientes veces sólo
+se ejecutan las pruebas que fallaron la última vez. A medida que arregles el
+código de la aplicación, algunas pruebas se corregirán y por tanto ya no se
+volverán a ejecutar. Cuando se ejecuten correctamente todas las pruebas que
+fallaban, ya puedes volver a ejecutar de nuevo todo el conjunto de pruebas
+unitarias y funcionales.</p>
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="depura_mas_rapido.html">&larr; Anterior <span>3.4. Depura más rápido</span></a>
+            
+            <a class="span5 next" href="../capitulo_4.html">Siguiente &rarr; <span>Capítulo 4. Emails</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Crea pruebas más rápido (Más con Symfony%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Más con Symfony : Crea pruebas más rápido']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Enrutamiento avanzado</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_3.html">
+            <span>Capítulo 3.</span> Mejora tu productividad
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="instalador-propio.html">
+            <span>3.1.</span> Empieza más rápido: personalizando la creación de proyectos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="programa_mas_rapido.html">
+            <span>3.2.</span> Programa más rápido
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="encuentra_la_documentacion_mas_rapido.html">
+            <span>3.3.</span> Encuentra la documentación más rápido
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="depura_mas_rapido.html">
+            <span>3.4.</span> Depura más rápido
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="crea_pruebas_mas_rapido.html">
+            <span>3.5.</span> Crea pruebas más rápido
+        </a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Emails</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Widgets y validadores propios</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Formularios avanzados</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Mejorando la barra de depuración web</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Uso avanzado de Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Utilizando la herencia de tablas de Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Funcionamiento interno de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Windows y Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Desarrollando aplicaciones Facebook</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Descubriendo el poder de la línea de comandos</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Jugando con la cache de configuración de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Trabajando con la comunidad Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>A</span> <a href="../apendice_a.html"> Código JavaScript de sfWidgetFormGMapAddress</a>
+    </li>
+    <li class="level-1">
+        <span>B</span> <a href="../apendice_b.html"> Ejemplo de instalador propio</a>
+    </li>
+    <li class="level-1">
+        <span>C</span> <a href="../apendice_c.html"> Licencia</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

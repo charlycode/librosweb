@@ -1,0 +1,405 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>1.8. Preparar el proyecto (El tutorial Jobeet)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="instalacion_de_symfony.html" />
+        <link rel="next" href="los_entornos.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="1.8. Preparar el proyecto (El tutorial Jobeet)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page jobeet_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">El tutorial Jobeet</a></li>
+  <li><a href="../capitulo_1.html">Capítulo 1. Comenzando el proyecto</a></li>
+  <li class="current"><span>1.8.. Preparar el proyecto</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="preparar_el_proyecto"><span>1.8.</span> Preparar el proyecto</h1>
+    
+
+<p>En Symfony, las <strong>aplicaciones</strong> que comparten el mismo modelo de datos se agrupan en <strong>proyectos</strong>. El proyecto Jobeet dispone de dos aplicaciones diferentes: un frontend y un backend.</p>
+
+<h3 id="crear_el_proyecto">1.8.1. Crear el proyecto</h3>
+
+<p>Dentro del directorio <code>jobeet</code>, ejecuta la tarea <code>generate:project</code> para crear la estructura de directorios del proyecto:</p>
+
+<div class="code cli">
+<pre class="cli">$ php lib/vendor/symfony/data/bin/symfony generate:project jobeet</pre>
+</div>
+
+<p>En Windows:</p>
+
+<div class="code cli">
+<pre class="cli">c:\&gt; php lib\vendor\symfony\data\bin\symfony generate:project jobeet</pre>
+</div>
+
+<p>La tarea <code>generate:project</code> genera la estructura de directorios y archivos por defecto necesarios para un proyecto Symfony:</p>
+
+<div class="table" id="table_1_1">
+
+    <table>
+<thead>
+<tr>
+  <th>Directorio</th>
+  <th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>apps/</code></td>
+  <td>Se encuentran los archivos y directorios de las aplicaciones</td>
+</tr>
+<tr>
+  <td><code>cache/</code></td>
+  <td>Los archivos que el framework guarda en la cache</td>
+</tr>
+<tr>
+  <td><code>config/</code></td>
+  <td>Los archivos de configuración del proyecto</td>
+</tr>
+<tr>
+  <td><code>lib/</code></td>
+  <td>Las librerías y clases del proyecto</td>
+</tr>
+<tr>
+  <td><code>log/</code></td>
+  <td>Los archivos de log del framework</td>
+</tr>
+<tr>
+  <td><code>plugins/</code></td>
+  <td>Los plugins instalados</td>
+</tr>
+<tr>
+  <td><code>test/</code></td>
+  <td>Los archivos de las pruebas unitarias y funcionales</td>
+</tr>
+<tr>
+  <td><code>web/</code></td>
+  <td>El directorio web raíz</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+<div class="admonition note"><p><strong class="title">Nota</strong> ¿Por qué Symfony genera tantos archivos? Una de las principales ventajas de utilizar un framework completo es que puedes estandarizar tus desarrollos. Gracias a la estructura de archivos y directorios por defecto de Symfony, cualquier programador con ciertos conocimientos de Symfony es capaz de continuar el desarrollo de cualquier proyecto Symfony. En cuestión de minutos será capaz de profundizar en el código, solucionar errores y añadir nuevas características.</p></div>
+
+<p>La tarea <code>generate:project</code> también genera un atajo para el comando <code>symfony</code> dentro del directorio raíz del proyecto Jobeet para reducir la longitud de los comandos que tienes que escribir al ejecutar una tarea de Symfony.</p>
+
+<p>Por tanto, a partir de este momento ya no vamos a utilizar la ruta completa hasta el comando <code>symfony</code>, sino que se utilizará directamente el atajo <code>symfony</code>.</p>
+
+<h3 id="crear_la_aplicacion">1.8.2. Crear la aplicación</h3>
+
+<p>Ahora ya puedes crear la aplicación <code>frontend</code> ejecutando la tarea <code>generate:app</code>:</p>
+
+<div class="code cli">
+<pre class="cli">$ php symfony generate:app --escaping-strategy=on --csrf-secret=UniqueSecret frontend</pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Como el archivo <code>symfony</code> es ejecutable, los usuarios de Unix pueden utilizar <code>./symfony</code> en vez de <code>php symfony</code>. Si utilizas Windows, copia el archivo <code>symfony.bat</code> en tu proyecto y utiliza el comando <code>symfony</code> en vez de <code>php symfony</code>:</p>
+
+<div class="code cli">
+<pre class="cli">c:\&gt; copy lib\vendor\symfony\data\bin\symfony.bat .</pre>
+</div>
+
+<p></p></div>
+
+<p>En función del nombre de la aplicación indicado como argumento, la tarea <code>generate:app</code> crea en el directorio <code>apps/frontend</code> la estructura de directorios por defecto que necesita la aplicación:</p>
+
+<div class="table" id="table_1_2">
+
+    <table>
+<thead>
+<tr>
+  <th>Directorio</th>
+  <th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>config/</code></td>
+  <td>Los archivos de configuración de la aplicación</td>
+</tr>
+<tr>
+  <td><code>lib/</code></td>
+  <td>Las librerías y clases de la aplicación</td>
+</tr>
+<tr>
+  <td><code>modules/</code></td>
+  <td>El código de la aplicación (MVC)</td>
+</tr>
+<tr>
+  <td><code>templates/</code></td>
+  <td>Los archivos de las plantillas globales</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Todos los comandos de <code>symfony</code> se deben ejecutar en el directorio raíz del proyecto salvo que se indique lo contrario de forma explícita.</p></div>
+
+<p>Cuando se ejecuta la tarea <code>generate:app</code>, se han incluido dos opciones relacionadas con la seguridad:</p>
+
+<ul>
+<li><code>--escaping-strategy</code>: activa el mecanismo de escape para evitar ataques de tipo XSS  <em>Cross Site Scripting</em>).</li>
+<li><code>--csrf-secret</code>: activa los tokens de sesión en los formularios para evitar ataques de tipo CSRF  <em>Cross Site Request Forgery</em>).</li>
+</ul>
+
+<p>Utilizando estos dos argumentos opcionales en la tarea <code>generate:app</code>, hemos añadido la seguridad necesaria para contrarrestar las dos vulnerabilidades más extendidas en la web. En efecto, Symfony se encarga de proteger automáticamente nuestra aplicación frente a estos tipos de ataque.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Si desconoces los ataques de tipo <a href="http://es.wikipedia.org/wiki/XSS">XSS</a> o <a href="http://en.wikipedia.org/wiki/CSRF">CSRF</a>, puede ser interesante que dediques un tiempo a estudiar el funcionamiento de estas vulnerabilidades.</p></div>
+
+<h3 id="la_ruta_de_symfony">1.8.3. La ruta de Symfony</h3>
+
+<p>Para obtener la versión de Symfony que utiliza tu proyecto, puedes utilizar el siguiente comando:</p>
+
+<div class="code cli">
+<pre class="cli">$ php symfony -V</pre>
+</div>
+
+<p>La opción <code>-V</code> también muestra la ruta completa hasta el directorio de instalación de Symfony, que se encuentra en el archivo de configuración <code>config/ProjectConfiguration.class.php</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// config/ProjectConfiguration.class.php</span>
+<span class="kw1">require_once</span> <span class="st_h">'/Users/fabien/work/symfony/dev/1.2/lib/autoload/sfCoreAutoload.class.php'</span><span class="sy0">;</span></pre>
+</div>
+
+<p>Para que el proyecto sea más portable, es recomendable cambiar la ruta absoluta por una ruta relativa:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// config/ProjectConfiguration.class.php</span>
+<span class="kw1">require_once</span> <span class="kw3">dirname</span><span class="br0">&#40;</span><span class="kw4">__FILE__</span><span class="br0">&#41;</span><span class="sy0">.</span><span class="st_h">'/../lib/vendor/symfony/lib/autoload/sfCoreAutoload.class.php'</span><span class="sy0">;</span></pre>
+</div>
+
+<p>De esta forma, ahora puedes colocar el directorio del proyecto Jobeet en cualquier otro directorio del servidor y todo seguirá funcionando correctamente.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="instalacion_de_symfony.html">&larr; Anterior <span>1.7. Instalación de Symfony</span></a>
+            
+            <a class="span5 next" href="los_entornos.html">Siguiente &rarr; <span>1.9. Los entornos</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Preparar el proyecto (El tutorial Jobeet%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'El tutorial Jobeet : Preparar el proyecto']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1 ">
+        <a href="../capitulo_1.html">
+            <span>Capítulo 1.</span> Comenzando el proyecto
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_desafio.html">
+            <span>1.2.</span> El desafío
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="este_tutorial_es_diferente.html">
+            <span>1.3.</span> Este tutorial es diferente
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_proyecto.html">
+            <span>1.4.</span> El proyecto
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="que_haremos_hoy.html">
+            <span>1.5.</span> ¿Que haremos hoy?
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="prerrequisitos.html">
+            <span>1.6.</span> Prerrequisitos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="instalacion_de_symfony.html">
+            <span>1.7.</span> Instalación de Symfony
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="preparar_el_proyecto.html">
+            <span>1.8.</span> Preparar el proyecto
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="los_entornos.html">
+            <span>1.9.</span> Los entornos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="configurar_mal_el_servidor_web.html">
+            <span>1.10.</span> Configurar mal el servidor web
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="configurar_correctamente_el_servidor_web.html">
+            <span>1.11.</span> Configurar correctamente el servidor web
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="subversion.html">
+            <span>1.12.</span> Subversion
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="nos_vemos_manana.html">
+            <span>1.13.</span> Nos vemos mañana
+        </a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> El proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> El modelo de datos</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> El controlador y la vista</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> El sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Profundizando en el modelo</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Trabajando con la página de cada categoría</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Pruebas unitarias</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Pruebas funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Probando los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> El generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> El usuario</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> El día de descanso</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Canales Atom</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Servicios web</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> El buscador</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>20</span> <a href="../capitulo_20.html"> Plugins</a>
+    </li>
+    <li class="level-1">
+        <span>21</span> <a href="../capitulo_21.html"> El día del diseño</a>
+    </li>
+    <li class="level-1">
+        <span>22</span> <a href="../capitulo_22.html"> La cache</a>
+    </li>
+    <li class="level-1">
+        <span>23</span> <a href="../capitulo_23.html"> Pasando a producción</a>
+    </li>
+    <li class="level-1">
+        <span>24</span> <a href="../capitulo_24.html"> Un repaso a Symfony</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

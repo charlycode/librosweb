@@ -1,0 +1,337 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>13.5. La seguridad de la aplicación backend (El tutorial Jobeet)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="plugins.html" />
+        <link rel="next" href="probando_a_los_usuarios.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="13.5. La seguridad de la aplicación backend (El tutorial Jobeet)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page jobeet_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">El tutorial Jobeet</a></li>
+  <li><a href="../capitulo_13.html">Capítulo 13. El usuario</a></li>
+  <li class="current"><span>13.5.. La seguridad de la aplicación backend</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="la_seguridad_de_la_aplicacion_backend"><span>13.5.</span> La seguridad de la aplicación backend</h1>
+    
+
+<p>Cada plugin dispone de su propio <a href="http://www.symfony-project.org/plugins/sfGuardPlugin?tab=plugin_readme">archivo README</a> donde se explica cómo se configura. A continuación se muestra cómo configurar el plugin <code>sfGuardPlugin</code>. Como se trata de un plugin que incluye varias clases de su propio modelo de datos para gestionar usuarios, grupos y permisos, lo primero que debemos hacer es volver a generar todas las clases del modelo:</p>
+
+<div class="code cli">
+<pre class="cli">$ php symfony propel:build-all-load --no-confirmation</pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Recuerda que la tarea <code>propel:build-all-load</code> borra todas las tablas de la base de datos antes de volver a crearlas. Si no quieres borrar las tablas, puedes generar los modelos, formularios y filtros y después, puedes crear las nuevas tablas ejecutando las sentencias SQL generadas en el directorio <code>data/sql</code>.</p></div>
+
+<p>Como siempre que se crean nuevas clases, no te olvides de borrar la cache de Symfony:</p>
+
+<div class="code cli">
+<pre class="cli">$ php symfony cc</pre>
+</div>
+
+<p>Como el plugin <code>sfGuardPlugin</code> añade varios métodos a la clase del usuario, tienes que modificar la clase de la que hereda <code>myUser</code> a <code>sfGuardSecurityUser</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// apps/backend/lib/myUser.class.php</span>
+<span class="kw2">class</span> myUser <span class="kw2">extends</span> sfGuardSecurityUser
+<span class="br0">&#123;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>El plugin <code>sfGuardPlugin</code> incluye una acción llamada <code>signin</code> en el módulo <code>sfGuardAuth</code> para autenticar a los usuarios:</p>
+
+<p>Modifica el archivo <code>settings.yml</code> para cambiar la acción utilizada por defecto en la página de login:</p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co1"># apps/backend/config/settings.yml</span><span class="co4">
+all</span>:<span class="co4">
+  .settings</span>:<span class="co3">
+    enabled_modules</span><span class="sy2">: </span><span class="br0">&#91;</span>default, sfGuardAuth<span class="br0">&#93;</span>
+&nbsp;
+    <span class="co1"># ...</span>
+<span class="co4">
+  .actions</span>:<span class="co3">
+    login_module</span><span class="sy2">: </span>   sfGuardAuth<span class="co3">
+    login_action</span><span class="sy2">: </span>   signin
+&nbsp;
+    <span class="co1"># ...</span></pre>
+</div>
+
+<p>Como los plugins están disponibles en todas las aplicaciones del proyecto, tienes que activar de forma explícita los módulos que quieres utilizar mediante la opción <code>enabled_modules</code>.</p>
+
+<div class="figure" id="figure_13_5">
+    <img src="../../img/jobeet_1_4/f1305.png" alt="Pantalla de login del plugin sfGuardPlugin" />
+
+    <p class="caption"><strong>Figura 13.5</strong> Pantalla de login del plugin sfGuardPlugin</p>
+</div>
+
+
+<p>Por último, crea el usuario de tipo administrador:</p>
+
+<div class="code cli">
+<pre class="cli">$ php symfony guard:create-user fabien ConTraSenA
+$ php symfony guard:promote fabien</pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> El plugin <code>sfGuardPlugin</code> incluye tareas para gestionar usuarios, grupos y permisos directamente desde la línea de comandos. Si quieres ver todas las tareas disponibles para el <em>namespace</em> <code>guard</code>, puedes utilizar la tarea <code>list</code>:</p>
+
+<div class="code cli">
+<pre class="cli">$ php symfony list guard</pre>
+</div>
+
+<p></p></div>
+
+<p>El siguiente paso consiste en no mostrar la barra del menú si el usuario no está autenticado:</p>
+
+<div class="code php">
+<pre class="php">// apps/backend/templates/layout.php
+<span class="kw2">&lt;?php</span> <span class="kw1">if</span> <span class="br0">&#40;</span><span class="re0">$sf_user</span><span class="sy0">-&gt;</span><span class="me1">isAuthenticated</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">:</span> <span class="sy1">?&gt;</span>
+  &lt;div id=&quot;menu&quot;&gt;
+    &lt;ul&gt;
+      &lt;li&gt;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> link_to<span class="br0">&#40;</span><span class="st_h">'Jobs'</span><span class="sy0">,</span> <span class="st_h">'@jobeet_job'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>&lt;/li&gt;
+      &lt;li&gt;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> link_to<span class="br0">&#40;</span><span class="st_h">'Categories'</span><span class="sy0">,</span> <span class="st_h">'@jobeet_category'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+<span class="kw2">&lt;?php</span> <span class="kw1">endif</span><span class="sy0">;</span> <span class="sy1">?&gt;</span></pre>
+</div>
+
+<p>Por otra parte, cuando el usuario está autenticado, tenemos que mostrar un enlace para la acción de desconectar que incluye el plugin <code>sfGuardPlugin</code>:</p>
+
+<div class="code php">
+<pre class="php">// apps/backend/templates/layout.php
+&lt;li&gt;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> link_to<span class="br0">&#40;</span><span class="st_h">'Logout'</span><span class="sy0">,</span> <span class="st_h">'@sf_guard_signout'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>&lt;/li&gt;</pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Si quieres ver todas las rutas que define <code>sfGuardPlugin</code>, utiliza la tarea <code>app:routes</code>.</p></div>
+
+<p>Para completar la parte de administración de Jobeet, vamos a añadir un módulo para gestionar los usuarios de tipo administrador. Afortunadamente, el plugin <code>sfGuardPlugin</code> ya incluye un módulo de este tipo. Para utilizarlo, debes activar el módulo llamado <code>sfGuardAuth</code> en el archivo de configuración <code>settings.yml</code>:</p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co1"># apps/backend/config/settings.yml</span><span class="co4">
+all</span>:<span class="co4">
+  .settings</span>:<span class="co3">
+    enabled_modules</span><span class="sy2">: </span><span class="br0">&#91;</span>default, sfGuardAuth, sfGuardUser<span class="br0">&#93;</span></pre>
+</div>
+
+<p>Y por último, añade un enlace en el menú:</p>
+
+<div class="code php">
+<pre class="php">// apps/backend/templates/layout.php
+&lt;li&gt;<span class="kw2">&lt;?php</span> <span class="kw1">echo</span> link_to<span class="br0">&#40;</span><span class="st_h">'Users'</span><span class="sy0">,</span> <span class="st_h">'@sf_guard_user'</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span>&lt;/li&gt;</pre>
+</div>
+
+<div class="figure" id="figure_13_6">
+    <img src="../../img/jobeet_1_4/f1306.png" alt="Menú de la parte de administración" />
+
+    <p class="caption"><strong>Figura 13.6</strong> Menú de la parte de administración</p>
+</div>
+
+
+<p>Y eso es todo lo que tenemos que hacer para disponer de una completa gestión de usuarios, grupos y permisos.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="plugins.html">&larr; Anterior <span>13.4. Plugins</span></a>
+            
+            <a class="span5 next" href="probando_a_los_usuarios.html">Siguiente &rarr; <span>13.6. Probando a los usuarios</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'La seguridad de la aplicación backend (El tutorial Jobeet%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'El tutorial Jobeet : La seguridad de la aplicación backend']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Comenzando el proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> El proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> El modelo de datos</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> El controlador y la vista</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> El sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Profundizando en el modelo</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Trabajando con la página de cada categoría</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Pruebas unitarias</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Pruebas funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Probando los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> El generador de la parte de administración</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_13.html">
+            <span>Capítulo 13.</span> El usuario
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="mensajes_flash.html">
+            <span>13.1.</span> Mensajes flash
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="atributos_del_usuario.html">
+            <span>13.2.</span> Atributos del usuario
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="la_seguridad_de_la_aplicacion.html">
+            <span>13.3.</span> La seguridad de la aplicación
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="plugins.html">
+            <span>13.4.</span> Plugins
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="la_seguridad_de_la_aplicacion_backend.html">
+            <span>13.5.</span> La seguridad de la aplicación backend
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="probando_a_los_usuarios.html">
+            <span>13.6.</span> Probando a los usuarios
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="nos_vemos_manana.html">
+            <span>13.7.</span> Nos vemos mañana
+        </a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> El día de descanso</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Canales Atom</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Servicios web</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> El buscador</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>20</span> <a href="../capitulo_20.html"> Plugins</a>
+    </li>
+    <li class="level-1">
+        <span>21</span> <a href="../capitulo_21.html"> El día del diseño</a>
+    </li>
+    <li class="level-1">
+        <span>22</span> <a href="../capitulo_22.html"> La cache</a>
+    </li>
+    <li class="level-1">
+        <span>23</span> <a href="../capitulo_23.html"> Pasando a producción</a>
+    </li>
+    <li class="level-1">
+        <span>24</span> <a href="../capitulo_24.html"> Un repaso a Symfony</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

@@ -1,0 +1,329 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>8.7. Añadir pruebas al corregir un error (El tutorial Jobeet)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="anadiendo_pruebas_para_las_nuevas_caracteristicas.html" />
+        <link rel="next" href="pruebas_unitarias_para_propel.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="8.7. Añadir pruebas al corregir un error (El tutorial Jobeet)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page jobeet_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">El tutorial Jobeet</a></li>
+  <li><a href="../capitulo_8.html">Capítulo 8. Pruebas unitarias</a></li>
+  <li class="current"><span>8.7.. Añadir pruebas al corregir un error</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="anadir_pruebas_al_corregir_un_error"><span>8.7.</span> Añadir pruebas al corregir un error</h1>
+    
+
+<p>Imagina que ya has publicado la aplicación web y uno de tus usuarios te informa de un error bastante extraño: al pinchar los enlaces de algunas ofertas de trabajo se muestra una página de error 404. Después de investigar el error, descubres que esas ofertas de trabajo que están fallando tienen vacíos los campos de la empresa, el puesto de trabajo y/o la localidad. ¿Cómo puede suceder esto? Sigues investigando y ves que las columnas de la base de datos no están vacías.</p>
+
+<p>Después de pensar un poco más, por fin descubres la causa del error. Si una cadena de texto sólo contiene caracteres que no son ASCII, el método <code>slugify()</code> la convierte en una cadena de texto vacía. Como estás tan contento de haber descubierto el error, editas la clase <code>Jobeet</code> y corriges el error directamente. Lo que acabas de hacer no es una buena idea, ya que en primer lugar deberías añadir una prueba unitaria:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$t</span><span class="sy0">-&gt;</span><span class="me1">is</span><span class="br0">&#40;</span>Jobeet<span class="sy0">::</span><span class="me2">slugify</span><span class="br0">&#40;</span><span class="st_h">' - '</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="st_h">'n-a'</span><span class="sy0">,</span> <span class="st_h">'::slugify() converts a string that only contains non-ASCII characters to n-a'</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<div class="figure" id="figure_8_4">
+    <img src="../../img/jobeet_1_4/f0804.png" alt="Fallo descubierto en el método slugify()" />
+
+    <p class="caption"><strong>Figura 8.4</strong> Fallo descubierto en el método slugify()</p>
+</div>
+
+
+<p>Después de comprobar que se produce un error al ejecutar la prueba unitaria, edita la clase <code>Jobeet</code> y mueve la comprobación de si una cadena es vacía al final del método:</p>
+
+<div class="code php">
+<pre class="php">static <span class="kw2">public</span> <span class="kw2">function</span> slugify<span class="br0">&#40;</span><span class="re0">$text</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="co1">// ...</span>
+&nbsp;
+  <span class="kw1">if</span> <span class="br0">&#40;</span><span class="kw3">empty</span><span class="br0">&#40;</span><span class="re0">$text</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="kw1">return</span> <span class="st_h">'n-a'</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="kw1">return</span> <span class="re0">$text</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>La nueva prueba unitaria ahora sí que pasa, al igual que siguen pasando todas las anteriores. Aunque el código tenía un 100% de <em>code coverage</em>, el método <code>slugify()</code> tenía un error.</p>
+
+<p>Obviamente no puedes pensar en todos los posibles casos extremos cuando creas pruebas unitarias. Sin embargo, cuando descubres un nuevo caso extremo, debes escribir una prueba unitaria antes de intentar solucionarlo. Además, trabajar de esta manera hace que el código de tu aplicación sea cada vez mejor, lo que es una buena consecuencia de las pruebas unitarias.</p>
+
+<div class="admonition sidebar"><p><strong class="title">Mejorando el método slugify</strong> Seguramente ya sabes que Symfony ha sido creado por una empresa francesa, por lo que vamos a añadir una prueba para una palabra en francés que contiene un acento:</p>
+
+<div class="code php">
+<pre class="php"><span class="re0">$t</span><span class="sy0">-&gt;</span><span class="me1">is</span><span class="br0">&#40;</span>Jobeet<span class="sy0">::</span><span class="me2">slugify</span><span class="br0">&#40;</span><span class="st_h">'Développeur Web'</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="st_h">'developpeur-web'</span><span class="sy0">,</span> <span class="st_h">'::slugify() removes accents'</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</div>
+
+<p>La prueba va a fallar, ya que el método <code>slugify()</code> en vez de reemplazar la letra <code>é</code> por <code>e</code>, la ha reemplazado por un guión medio (<code>-</code>). Para solucionar este problema tenemos que usar un proceso conocido como <em>transliteración</em>. Si tu instalación de PHP cuenta con <code>iconv</code>, esta función se encarga de todo. Reemplaza el código del método <code>slugify()</code> por lo siguiente:</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// code derived from http://php.vrana.cz/vytvoreni-pratelskeho-url.php</span>
+static <span class="kw2">public</span> <span class="kw2">function</span> slugify<span class="br0">&#40;</span><span class="re0">$text</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="co1">// replace non letter or digits by -</span>
+  <span class="re0">$text</span> <span class="sy0">=</span> <span class="kw3">preg_replace</span><span class="br0">&#40;</span><span class="st_h">'~[^\\pL\d]+~u'</span><span class="sy0">,</span> <span class="st_h">'-'</span><span class="sy0">,</span> <span class="re0">$text</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+  <span class="co1">// trim</span>
+  <span class="re0">$text</span> <span class="sy0">=</span> <span class="kw3">trim</span><span class="br0">&#40;</span><span class="re0">$text</span><span class="sy0">,</span> <span class="st_h">'-'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+  <span class="co1">// transliterate</span>
+  <span class="kw1">if</span> <span class="br0">&#40;</span><span class="kw3">function_exists</span><span class="br0">&#40;</span><span class="st_h">'iconv'</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="re0">$text</span> <span class="sy0">=</span> <span class="kw3">iconv</span><span class="br0">&#40;</span><span class="st_h">'utf-8'</span><span class="sy0">,</span> <span class="st_h">'us-ascii//TRANSLIT'</span><span class="sy0">,</span> <span class="re0">$text</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="co1">// lowercase</span>
+  <span class="re0">$text</span> <span class="sy0">=</span> <span class="kw3">strtolower</span><span class="br0">&#40;</span><span class="re0">$text</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+  <span class="co1">// remove unwanted characters</span>
+  <span class="re0">$text</span> <span class="sy0">=</span> <span class="kw3">preg_replace</span><span class="br0">&#40;</span><span class="st_h">'~[^-\w]+~'</span><span class="sy0">,</span> <span class="st_h">''</span><span class="sy0">,</span> <span class="re0">$text</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+  <span class="kw1">if</span> <span class="br0">&#40;</span><span class="kw3">empty</span><span class="br0">&#40;</span><span class="re0">$text</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="kw1">return</span> <span class="st_h">'n-a'</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="kw1">return</span> <span class="re0">$text</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>No te olvides de guardar todos tus archivos de PHP con la codificación <code>UTF-8</code>, ya que esta es la codificación por defecto de Symfony y también es la codificación que utiliza <code>iconv</code> para realizar la transliteración de las cadenas de texto.</p>
+
+<p>Por último, modifica la prueba para que sólo se realice si la función <code>iconv</code> está disponible:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw1">if</span> <span class="br0">&#40;</span><span class="kw3">function_exists</span><span class="br0">&#40;</span><span class="st_h">'iconv'</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="re0">$t</span><span class="sy0">-&gt;</span><span class="me1">is</span><span class="br0">&#40;</span>Jobeet<span class="sy0">::</span><span class="me2">slugify</span><span class="br0">&#40;</span><span class="st_h">'Développeur Web'</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="st_h">'developpeur-web'</span><span class="sy0">,</span> <span class="st_h">'::slugify() removes accents'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+<span class="kw1">else</span>
+<span class="br0">&#123;</span>
+  <span class="re0">$t</span><span class="sy0">-&gt;</span><span class="me1">skip</span><span class="br0">&#40;</span><span class="st_h">'::slugify() removes accents - iconv not installed'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p></p></div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="anadiendo_pruebas_para_las_nuevas_caracteristicas.html">&larr; Anterior <span>8.6. Añadiendo pruebas para las nuevas características</span></a>
+            
+            <a class="span5 next" href="pruebas_unitarias_para_propel.html">Siguiente &rarr; <span>8.8. Pruebas unitarias para Propel</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Añadir pruebas al corregir un error (El tutorial Jobeet%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'El tutorial Jobeet : Añadir pruebas al corregir un error']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Comenzando el proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> El proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> El modelo de datos</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> El controlador y la vista</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> El sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Profundizando en el modelo</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Trabajando con la página de cada categoría</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_8.html">
+            <span>Capítulo 8.</span> Pruebas unitarias
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="pruebas_en_symfony.html">
+            <span>8.1.</span> Pruebas en Symfony
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="pruebas_unitarias.html">
+            <span>8.2.</span> Pruebas unitarias
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_framework_de_pruebas_lime.html">
+            <span>8.3.</span> El framework de pruebas lime
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejecutando_pruebas_unitarias.html">
+            <span>8.4.</span> Ejecutando pruebas unitarias
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="probando_el_metodo_slugify.html">
+            <span>8.5.</span> Probando el método slugify
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="anadiendo_pruebas_para_las_nuevas_caracteristicas.html">
+            <span>8.6.</span> Añadiendo pruebas para las nuevas características
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="anadir_pruebas_al_corregir_un_error.html">
+            <span>8.7.</span> Añadir pruebas al corregir un error
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="pruebas_unitarias_para_propel.html">
+            <span>8.8.</span> Pruebas unitarias para Propel
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="conjuntos_de_pruebas_unitarias.html">
+            <span>8.9.</span> Conjuntos de pruebas unitarias
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="nos_vemos_manana.html">
+            <span>8.10.</span> Nos vemos mañana
+        </a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Pruebas funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Probando los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> El generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> El usuario</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> El día de descanso</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Canales Atom</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Servicios web</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> El buscador</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>20</span> <a href="../capitulo_20.html"> Plugins</a>
+    </li>
+    <li class="level-1">
+        <span>21</span> <a href="../capitulo_21.html"> El día del diseño</a>
+    </li>
+    <li class="level-1">
+        <span>22</span> <a href="../capitulo_22.html"> La cache</a>
+    </li>
+    <li class="level-1">
+        <span>23</span> <a href="../capitulo_23.html"> Pasando a producción</a>
+    </li>
+    <li class="level-1">
+        <span>24</span> <a href="../capitulo_24.html"> Un repaso a Symfony</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

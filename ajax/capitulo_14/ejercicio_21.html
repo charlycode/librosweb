@@ -1,0 +1,436 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>14.21. Ejercicio 21 (Introducción a AJAX)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="ejercicio_20.html" />
+        <link rel="next" href="ejercicio_22.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="14.21. Ejercicio 21 (Introducción a AJAX)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page ajax">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Introducción a AJAX</a></li>
+  <li><a href="../capitulo_14.html">Capítulo 14. Ejercicios resueltos</a></li>
+  <li class="current"><span>14.21. Ejercicio 21</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="ejercicio_21"><span>14.21.</span> Ejercicio 21</h1>
+    
+
+<div class="code javascript">
+<pre class="javascript">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01//EN&quot; 
+  &quot;http://www.w3.org/TR/html4/strict.dtd&quot;&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=iso-8859-1&quot; /&gt;
+&lt;title&gt;Ejercicio 21 - RSS&lt;/title&gt;
+<span class="sy0">&lt;</span>script type<span class="sy0">=</span><span class="st0">&quot;text/javascript&quot;</span><span class="sy0">&gt;</span>
+<span class="kw4">Object</span>.<span class="kw1">prototype</span>.<span class="kw1">get</span> <span class="sy0">=</span> <span class="kw1">function</span><span class="br0">&#40;</span>etiqueta<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="kw1">return</span> <span class="kw1">this</span>.<span class="me1">getElementsByTagName</span><span class="br0">&#40;</span>etiqueta<span class="br0">&#41;</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>.<span class="me1">textContent</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+<span class="kw1">var</span> rss <span class="sy0">=</span> <span class="br0">&#123;</span>
+  canal<span class="sy0">:</span> <span class="br0">&#123;</span><span class="br0">&#125;</span><span class="sy0">,</span>
+  items<span class="sy0">:</span> <span class="br0">&#91;</span><span class="br0">&#93;</span>
+<span class="br0">&#125;</span><span class="sy0">;</span>
+&nbsp;
+window.<span class="me1">onload</span> <span class="sy0">=</span> <span class="kw1">function</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#123;</span>
+  document.<span class="me1">getElementById</span><span class="br0">&#40;</span><span class="st0">'mostrar'</span><span class="br0">&#41;</span>.<span class="me1">onclick</span> <span class="sy0">=</span> cargaRss<span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+<span class="kw1">function</span> cargaRss<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#123;</span>
+  <span class="co1">// Obtener URL de RSS</span>
+  borrarLog<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  log<span class="br0">&#40;</span><span class="st0">'Averiguar la URL del canal RSS'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+  <span class="kw1">var</span> url_original <span class="sy0">=</span> document.<span class="me1">getElementById</span><span class="br0">&#40;</span><span class="st0">'url'</span><span class="br0">&#41;</span>.<span class="me1">value</span><span class="sy0">;</span>
+  log<span class="br0">&#40;</span><span class="st0">'URL original es '</span> <span class="sy0">+</span> url_original<span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+  <span class="kw1">var</span> url_rss <span class="sy0">=</span> descubreRss<span class="br0">&#40;</span>url_original<span class="br0">&#41;</span><span class="sy0">;</span>
+  log<span class="br0">&#40;</span><span class="st0">'La URL descubierta es '</span> <span class="sy0">+</span> url_rss<span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+  <span class="co1">// Descargar canal RSS</span>
+  log<span class="br0">&#40;</span><span class="st0">'Descargando canal RSS'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  descargaRss<span class="br0">&#40;</span>url_rss<span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+<span class="kw1">function</span> descubreRss<span class="br0">&#40;</span>url<span class="br0">&#41;</span><span class="br0">&#123;</span>
+  <span class="kw1">var</span> peticion <span class="sy0">=</span> <span class="kw1">new</span> XMLHttpRequest<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  peticion.<span class="me1">onreadystatechange</span> <span class="sy0">=</span> <span class="kw1">function</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#123;</span><span class="br0">&#125;</span><span class="sy0">;</span>
+  peticion.<span class="me1">open</span><span class="br0">&#40;</span><span class="st0">'GET'</span><span class="sy0">,</span> <span class="st0">'http://localhost/RUTA_HASTA_ARCHIVO/descubreRss.php?url='</span> <span class="sy0">+</span> encodeURIComponent<span class="br0">&#40;</span>url<span class="br0">&#41;</span><span class="sy0">,</span> <span class="kw2">false</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  peticion.<span class="me1">send</span><span class="br0">&#40;</span><span class="kw2">null</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+  <span class="kw1">return</span> peticion.<span class="me1">responseText</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+<span class="kw1">function</span> descargaRss<span class="br0">&#40;</span>url<span class="br0">&#41;</span><span class="br0">&#123;</span>
+  <span class="kw1">var</span> peticion <span class="sy0">=</span> <span class="kw1">new</span> XMLHttpRequest<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  peticion.<span class="me1">onreadystatechange</span> <span class="sy0">=</span> procesaRss<span class="sy0">;</span>
+  peticion.<span class="me1">open</span><span class="br0">&#40;</span><span class="st0">'GET'</span><span class="sy0">,</span> <span class="st0">'http://localhost/RUTA_HASTA_ARCHIVO/proxy.php?url='</span> <span class="sy0">+</span> encodeURIComponent<span class="br0">&#40;</span>url<span class="br0">&#41;</span> <span class="sy0">+</span> <span class="st0">'&amp;ct=text/xml'</span><span class="sy0">,</span> <span class="kw2">true</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  peticion.<span class="me1">send</span><span class="br0">&#40;</span><span class="kw2">null</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+  <span class="kw1">function</span> procesaRss<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#123;</span>
+    <span class="kw1">if</span> <span class="br0">&#40;</span>peticion.<span class="me1">readyState</span> <span class="sy0">==</span> <span class="nu0">4</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+      <span class="kw1">if</span> <span class="br0">&#40;</span>peticion.<span class="me1">status</span> <span class="sy0">==</span> <span class="nu0">200</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+        <span class="kw1">var</span> xml <span class="sy0">=</span> peticion.<span class="me1">responseXML</span><span class="sy0">;</span>
+&nbsp;
+        <span class="kw1">var</span> canal <span class="sy0">=</span> xml.<span class="me1">getElementsByTagName</span><span class="br0">&#40;</span><span class="st0">'channel'</span><span class="br0">&#41;</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="sy0">;</span>
+        <span class="kw1">var</span> titulo <span class="sy0">=</span> canal.<span class="me1">getElementsByTagName</span><span class="br0">&#40;</span><span class="st0">'title'</span><span class="br0">&#41;</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>.<span class="me1">textContent</span><span class="sy0">;</span>
+        rss.<span class="me1">canal</span>.<span class="me1">titulo</span> <span class="sy0">=</span> titulo<span class="sy0">;</span>
+&nbsp;
+        <span class="kw1">if</span><span class="br0">&#40;</span>canal.<span class="me1">getElementsByTagName</span><span class="br0">&#40;</span><span class="st0">'image'</span><span class="br0">&#41;</span>.<span class="me1">length</span> <span class="sy0">&gt;</span> <span class="nu0">0</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+          <span class="kw1">var</span> url_imagen <span class="sy0">=</span> canal.<span class="me1">getElementsByTagName</span><span class="br0">&#40;</span><span class="st0">'image'</span><span class="br0">&#41;</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>.<span class="me1">getElementsByTagName</span><span class="br0">&#40;</span><span class="st0">'url'</span><span class="br0">&#41;</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>.<span class="me1">textContent</span><span class="sy0">;</span>
+          rss.<span class="me1">canal</span>.<span class="me1">titulo</span> <span class="sy0">=</span> <span class="st0">'&lt;img src=&quot;'</span><span class="sy0">+</span>url_imagen<span class="sy0">+</span><span class="st0">'&quot; /&gt;'</span><span class="sy0">+</span>rss.<span class="me1">canal</span>.<span class="me1">titulo</span><span class="sy0">;</span>
+        <span class="br0">&#125;</span>
+&nbsp;
+        <span class="kw1">var</span> enlace <span class="sy0">=</span> canal.<span class="me1">getElementsByTagName</span><span class="br0">&#40;</span><span class="st0">'link'</span><span class="br0">&#41;</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>.<span class="me1">textContent</span><span class="sy0">;</span>
+        rss.<span class="me1">canal</span>.<span class="me1">enlace</span> <span class="sy0">=</span> enlace<span class="sy0">;</span>
+&nbsp;
+        <span class="kw1">var</span> items <span class="sy0">=</span> xml.<span class="me1">getElementsByTagName</span><span class="br0">&#40;</span><span class="st0">'item'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+        <span class="kw1">for</span> <span class="br0">&#40;</span><span class="kw1">var</span> i <span class="sy0">=</span> <span class="nu0">0</span><span class="sy0">;</span> i <span class="sy0">&lt;</span> items.<span class="me1">length</span><span class="sy0">;</span> i<span class="sy0">++</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+          <span class="kw1">var</span> item <span class="sy0">=</span> items<span class="br0">&#91;</span>i<span class="br0">&#93;</span><span class="sy0">;</span>
+          <span class="kw1">var</span> titulo <span class="sy0">=</span> item.<span class="kw1">get</span><span class="br0">&#40;</span><span class="st0">'title'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+          <span class="kw1">var</span> enlace <span class="sy0">=</span> item.<span class="me1">getElementsByTagName</span><span class="br0">&#40;</span><span class="st0">'link'</span><span class="br0">&#41;</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>.<span class="me1">textContent</span><span class="sy0">;</span>
+          <span class="kw1">var</span> descripcion <span class="sy0">=</span> item.<span class="me1">getElementsByTagName</span><span class="br0">&#40;</span><span class="st0">'description'</span><span class="br0">&#41;</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>.<span class="me1">textContent</span><span class="sy0">;</span>
+          <span class="kw1">var</span> fecha <span class="sy0">=</span> item.<span class="me1">getElementsByTagName</span><span class="br0">&#40;</span><span class="st0">'pubDate'</span><span class="br0">&#41;</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>.<span class="me1">textContent</span><span class="sy0">;</span>
+&nbsp;
+          rss.<span class="me1">items</span><span class="br0">&#91;</span>i<span class="br0">&#93;</span> <span class="sy0">=</span> <span class="br0">&#123;</span>
+            titulo<span class="sy0">:</span> titulo<span class="sy0">,</span>
+            enlace<span class="sy0">:</span> enlace<span class="sy0">,</span>
+            descripcion<span class="sy0">:</span> descripcion<span class="sy0">,</span>
+            fecha<span class="sy0">:</span> fecha
+          <span class="br0">&#125;</span><span class="sy0">;</span>
+        <span class="br0">&#125;</span>
+&nbsp;
+        muestraRss<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+      <span class="br0">&#125;</span>
+    <span class="br0">&#125;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+<span class="kw1">function</span> muestraRss<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#123;</span>
+  document.<span class="me1">getElementById</span><span class="br0">&#40;</span><span class="st0">'noticias'</span><span class="br0">&#41;</span>.<span class="me1">style</span>.<span class="me1">display</span> <span class="sy0">=</span> <span class="st0">'block'</span><span class="sy0">;</span>
+  document.<span class="me1">getElementById</span><span class="br0">&#40;</span><span class="st0">'titulares'</span><span class="br0">&#41;</span>.<span class="me1">innerHTML</span> <span class="sy0">=</span> <span class="st0">''</span><span class="sy0">;</span>
+  document.<span class="me1">getElementById</span><span class="br0">&#40;</span><span class="st0">'contenidos'</span><span class="br0">&#41;</span>.<span class="me1">innerHTML</span> <span class="sy0">=</span> <span class="st0">''</span><span class="sy0">;</span>
+&nbsp;
+  document.<span class="me1">getElementById</span><span class="br0">&#40;</span><span class="st0">'titulo'</span><span class="br0">&#41;</span>.<span class="me1">innerHTML</span> <span class="sy0">=</span> <span class="st0">'&lt;a href=&quot;'</span> <span class="sy0">+</span> rss.<span class="me1">canal</span>.<span class="me1">enlace</span> <span class="sy0">+</span> <span class="st0">'&quot;&gt;'</span> <span class="sy0">+</span> rss.<span class="me1">canal</span>.<span class="me1">titulo</span> <span class="sy0">+</span> <span class="st0">'&lt;/a&gt;'</span><span class="sy0">;</span>
+&nbsp;
+  <span class="kw1">var</span> titulares <span class="sy0">=</span> document.<span class="me1">getElementById</span><span class="br0">&#40;</span><span class="st0">'titulares'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+  <span class="kw1">for</span> <span class="br0">&#40;</span><span class="kw1">var</span> i <span class="sy0">=</span> <span class="nu0">0</span><span class="sy0">;</span> i <span class="sy0">&lt;</span> rss.<span class="me1">items</span>.<span class="me1">length</span><span class="sy0">;</span> i<span class="sy0">++</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    titulares.<span class="me1">innerHTML</span> <span class="sy0">+=</span> <span class="st0">'&lt;a href=&quot;#&quot; onclick=&quot;muestraElemento('</span> <span class="sy0">+</span> i <span class="sy0">+</span> <span class="st0">')&quot;&gt;'</span> <span class="sy0">+</span> rss.<span class="me1">items</span><span class="br0">&#91;</span>i<span class="br0">&#93;</span>.<span class="me1">titulo</span> <span class="sy0">+</span> <span class="st0">'&lt;/a&gt; &lt;br/&gt;'</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+<span class="kw1">function</span> muestraElemento<span class="br0">&#40;</span>indice<span class="br0">&#41;</span><span class="br0">&#123;</span>
+  <span class="kw1">var</span> item <span class="sy0">=</span> rss.<span class="me1">items</span><span class="br0">&#91;</span>indice<span class="br0">&#93;</span><span class="sy0">;</span>
+  <span class="kw1">var</span> html <span class="sy0">=</span> <span class="st0">&quot;&quot;</span><span class="sy0">;</span>
+  html <span class="sy0">+=</span> <span class="st0">&quot;&lt;h1&gt;&lt;a href=<span class="es0">\&quot;</span>&quot;</span> <span class="sy0">+</span> item.<span class="me1">enlace</span> <span class="sy0">+</span> <span class="st0">&quot;<span class="es0">\&quot;</span>&gt;&quot;</span> <span class="sy0">+</span> item.<span class="me1">titulo</span> <span class="sy0">+</span> <span class="st0">&quot;&lt;/a&gt;&lt;/h1&gt;&quot;</span><span class="sy0">;</span>
+  <span class="kw1">if</span> <span class="br0">&#40;</span>item.<span class="me1">fecha</span> <span class="sy0">!=</span> <span class="kw2">undefined</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    html <span class="sy0">+=</span> <span class="st0">&quot;&lt;h2&gt;&quot;</span> <span class="sy0">+</span> item.<span class="me1">fecha</span> <span class="sy0">+</span> <span class="st0">&quot;&lt;/h2&gt;&quot;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+  html <span class="sy0">+=</span> <span class="st0">&quot;&lt;p&gt;&quot;</span> <span class="sy0">+</span> item.<span class="me1">descripcion</span> <span class="sy0">+</span> <span class="st0">&quot;&lt;/p&gt;&quot;</span><span class="sy0">;</span>
+&nbsp;
+  document.<span class="me1">getElementById</span><span class="br0">&#40;</span><span class="st0">&quot;contenidos&quot;</span><span class="br0">&#41;</span>.<span class="me1">innerHTML</span> <span class="sy0">=</span> html<span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+<span class="kw1">function</span> log<span class="br0">&#40;</span>mensaje<span class="br0">&#41;</span><span class="br0">&#123;</span>
+  document.<span class="me1">getElementById</span><span class="br0">&#40;</span><span class="st0">'info'</span><span class="br0">&#41;</span>.<span class="me1">innerHTML</span> <span class="sy0">+=</span> mensaje <span class="sy0">+</span> <span class="st0">&quot;&lt;br/&gt;&quot;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+<span class="kw1">function</span> borrarLog<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#123;</span>
+  document.<span class="me1">getElementById</span><span class="br0">&#40;</span><span class="st0">'info'</span><span class="br0">&#41;</span>.<span class="me1">innerHTML</span> <span class="sy0">=</span> <span class="st0">&quot;&quot;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+<span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&lt;style type=&quot;text/css&quot;&gt;
+body { font-family: Arial, Helvetica, sans-serif; }
+form { margin: 0; }
+#info { margin: 0; font-size: .7em; color: #777; }
+#noticias { 
+  position: absolute;
+  width: 80%;
+  margin-top: 1em;
+  border: 2px solid #369;
+  padding: 0;
+  display: none;
+}
+#titulo { background-color: #DDE8F3; padding: .3em; border-bottom: 1px solid #369; }
+#titulares { width: 20%; float: left; border: none; border-right: 1px solid #D9E5F2; }
+#contenidos { margin-left: 22%; padding: 0px 20px; vertical-align: top; }
+#titulo h2 { font-weight: bold; color: #00368F; font-size: 1.4em; margin: 0; }
+#titulares ul { list-style: none; margin: 0; padding: 0; }
+#titulares ul li { border-bottom: 1px solid #EDEDED; padding: 6px; line-height: 1.4em; }
+#titulares a { display: block; font-size: 12px; color: #369; }
+#titulares a:hover { text-decoration: none; color: #C00; }
+#contenidos h1 { font-weight: bold; color: #00368F; font-size: 1.4em; padding: .2em; margin: .3em 0 0 0; }
+#contenidos h2 { font-weight: bold; color: #888; font-size: .9em; padding: .2em; margin: .3em 0 0 0; }
+#contenidos p { color: #222; font-size: 1.1em; padding: 4px; line-height: 1.5em; }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;form action=&quot;#&quot;&gt;
+  &lt;input type=&quot;text&quot; size=&quot;40&quot; id=&quot;url&quot; value=&quot;http://www.microsiervos.com&quot; /&gt;
+  &lt;input type=&quot;button&quot; value=&quot;Mostrar RSS&quot; id=&quot;mostrar&quot; /&gt;
+  &lt;div id=&quot;info&quot;&gt;&lt;/div&gt;
+&lt;/form&gt;
+&nbsp;
+&lt;div id=&quot;noticias&quot;&gt;
+  &lt;div id=&quot;titulo&quot;&gt;&lt;/div&gt;
+  &lt;div id=&quot;titulares&quot;&gt;&lt;/div&gt;
+  &lt;div id=&quot;contenidos&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+</div>
+
+<p><a href="../../ejercicios/ajax/soluciones/ejercicio21/ejercicio21.zip">Descargar ZIP con la solución completa</a></p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="ejercicio_20.html">&larr; Anterior <span>14.20. Ejercicio 20</span></a>
+            
+            <a class="span5 next" href="ejercicio_22.html">Siguiente &rarr; <span>14.22. Ejercicio 22</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Ejercicio 21 (Introducción a AJAX%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a AJAX : Ejercicio 21']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción a AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> JavaScript básico</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> JavaScript avanzado</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> DOM (Document Object Model)</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> BOM (Browser Object Model)</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Eventos</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Primeros pasos con AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Técnicas básicas con AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Técnicas avanzadas con AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Frameworks y librerías</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Otras utilidades</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Recursos útiles</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Bibliografía</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_14.html">
+            <span>Capítulo 14.</span> Ejercicios resueltos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_2.html">
+            <span>14.2.</span> Ejercicio 2
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_3.html">
+            <span>14.3.</span> Ejercicio 3
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_4.html">
+            <span>14.4.</span> Ejercicio 4
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_5.html">
+            <span>14.5.</span> Ejercicio 5
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_6.html">
+            <span>14.6.</span> Ejercicio 6
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_7.html">
+            <span>14.7.</span> Ejercicio 7
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_8.html">
+            <span>14.8.</span> Ejercicio 8
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_9.html">
+            <span>14.9.</span> Ejercicio 9
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_10.html">
+            <span>14.10.</span> Ejercicio 10
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_11.html">
+            <span>14.11.</span> Ejercicio 11
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_12.html">
+            <span>14.12.</span> Ejercicio 12
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_13.html">
+            <span>14.13.</span> Ejercicio 13
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_14.html">
+            <span>14.14.</span> Ejercicio 14
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_15.html">
+            <span>14.15.</span> Ejercicio 15
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_16.html">
+            <span>14.16.</span> Ejercicio 16
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_17.html">
+            <span>14.17.</span> Ejercicio 17
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_18.html">
+            <span>14.18.</span> Ejercicio 18
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_19.html">
+            <span>14.19.</span> Ejercicio 19
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_20.html">
+            <span>14.20.</span> Ejercicio 20
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="ejercicio_21.html">
+            <span>14.21.</span> Ejercicio 21
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_22.html">
+            <span>14.22.</span> Ejercicio 22
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ejercicio_23.html">
+            <span>14.23.</span> Ejercicio 23
+        </a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

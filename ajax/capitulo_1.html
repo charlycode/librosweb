@@ -1,0 +1,222 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>Capítulo 1. Introducción a AJAX (Introducción a AJAX)</title>
+        <link href="../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="index.html" />
+        <link rel="next" href="capitulo_2.html" />
+        <link rel="start" href="index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Capítulo 1. Introducción a AJAX (Introducción a AJAX)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page ajax">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../index.html">Inicio</a></li>
+  <li><a href="index.html">Introducción a AJAX</a></li>
+  <li class="current"><span>Capítulo 1. Introducción a AJAX</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="capitulo_1"><span>Capítulo 1.</span> Introducción a AJAX</h1>
+    <p>El término AJAX se presentó por primera vez en el artículo "<a href="http://www.adaptivepath.com/publications/essays/archives/000385.php">Ajax: A New Approach to Web Applications</a>" publicado por Jesse James Garrett el 18 de Febrero de 2005. Hasta ese momento, no existía un término normalizado que hiciera referencia a un nuevo tipo de aplicación web que estaba apareciendo.</p>
+
+<p>En realidad, el término AJAX es un acrónimo de <em>Asynchronous JavaScript + XML</em>, que se puede traducir como "JavaScript asíncrono + XML".</p>
+
+<p>El artículo define AJAX de la siguiente forma:</p>
+
+<blockquote>
+  <p>Ajax no es una tecnología en sí mismo. En realidad, se trata de varias tecnologías independientes que se unen de formas nuevas y sorprendentes.</p>
+</blockquote>
+
+<p>Las tecnologías que forman AJAX son:</p>
+
+<ul>
+<li>XHTML y CSS, para crear una presentación basada en estándares.</li>
+<li>DOM, para la interacción y manipulación dinámica de la presentación.</li>
+<li>XML, XSLT y JSON, para el intercambio y la manipulación de información.</li>
+<li>XMLHttpRequest, para el intercambio asíncrono de información.</li>
+<li>JavaScript, para unir todas las demás tecnologías.</li>
+</ul>
+
+<div class="figure left" id="figure_1_1">
+    <img src="../img/ajax/f0101.gif" alt="Tecnologías agrupadas bajo el concepto de AJAX" />
+
+    <p class="caption"><strong>Figura 1.1</strong> Tecnologías agrupadas bajo el concepto de AJAX</p>
+</div>
+
+
+<p>Desarrollar aplicaciones AJAX requiere un conocimiento avanzado de todas y cada una de las tecnologías anteriores.</p>
+
+<p>En las aplicaciones web tradicionales, las acciones del usuario en la página (pinchar en un botón, seleccionar un valor de una lista, etc.) desencadenan llamadas al servidor. Una vez procesada la petición del usuario, el servidor devuelve una nueva página HTML al navegador del usuario.</p>
+
+<p>En el siguiente esquema, la imagen de la izquierda muestra el modelo tradicional de las aplicaciones web. La imagen de la derecha muestra el nuevo modelo propuesto por AJAX:</p>
+
+<div class="figure center" id="figure_1_2">
+    <img src="../img/ajax/f0102.gif" alt="Comparación gráfica del modelo tradicional de aplicación web y del nuevo modelo propuesto por AJAX. (Imagen original creada por Adaptive Path y utilizada con su permiso)" />
+
+    <p class="caption"><strong>Figura 1.2</strong> Comparación gráfica del modelo tradicional de aplicación web y del nuevo modelo propuesto por AJAX. (Imagen original creada por Adaptive Path y utilizada con su permiso)</p>
+</div>
+
+
+<p>Esta técnica tradicional para crear aplicaciones web funciona correctamente, pero no crea una buena sensación al usuario. Al realizar peticiones continuas al servidor, el usuario debe esperar a que se recargue la página con los cambios solicitados. Si la aplicación debe realizar peticiones continuas, su uso se convierte en algo molesto</p>
+
+<p>AJAX permite mejorar completamente la interacción del usuario con la aplicación, evitando las recargas constantes de la página, ya que el intercambio de información con el servidor se produce en un segundo plano.</p>
+
+<p>Las aplicaciones construidas con AJAX eliminan la recarga constante de páginas mediante la creación de un elemento intermedio entre el usuario y el servidor. La nueva capa intermedia de AJAX mejora la respuesta de la aplicación, ya que el usuario nunca se encuentra con una ventana del navegador vacía esperando la respuesta del servidor.</p>
+
+<p>El siguiente esquema muestra la diferencia más importante entre una aplicación web tradicional y una aplicación web creada con AJAX. La imagen superior muestra la interación síncrona propia de las aplicaciones web tradicionales. La imagen inferior muestra la comunicación asíncrona de las aplicaciones creadas con AJAX.</p>
+
+<div class="figure left" id="figure_1_3">
+    <img src="../img/ajax/f0103.gif" alt="Comparación entre las comunicaciones síncronas de las aplicaciones web tradicionales y las comunicaciones asíncronas de las aplicaciones AJAX (Imagen original creada por Adaptive Path y utilizada con su permiso)" />
+
+    <p class="caption"><strong>Figura 1.3</strong> Comparación entre las comunicaciones síncronas de las aplicaciones web tradicionales y las comunicaciones asíncronas de las aplicaciones AJAX (Imagen original creada por Adaptive Path y utilizada con su permiso)</p>
+</div>
+
+
+<p>Las peticiones HTTP al servidor se sustituyen por peticiones JavaScript que se realizan al elemento encargado de AJAX. Las peticiones más simples no requieren intervención del servidor, por lo que la respuesta es inmediata. Si la interacción requiere una respuesta del servidor, la petición se realiza de forma asíncrona mediante AJAX. En este caso, la interacción del usuario tampoco se ve interrumpida por recargas de página o largas esperas por la respuesta del servidor.</p>
+
+<p>Desde su aparición, se han creado cientos de aplicaciones web basadas en AJAX. En la mayoría de casos, AJAX puede sustituir completamente a otras técnicas como Flash. Además, en el caso de las aplicaciones web más avanzadas, pueden llegar a sustituir a las aplicaciones de escritorio.</p>
+
+<p>A continuación se muestra una lista de algunas de las aplicaciones más conocidas basadas en AJAX:</p>
+
+<ul>
+<li>Gestores de correo electrónico: <a href="http://www.gmail.com">Gmail</a>, <a href="http://mail.yahoo.com">Yahoo Mail</a>, <a href="http://www.hotmail.com">Windows Live Mail</a>.</li>
+<li>Cartografía: <a href="http://maps.google.com">Google Maps</a>, <a href="http://maps.yahoo.com">Yahoo Maps</a>, <a href="http://maps.live.com">Windows Live Local</a>.</li>
+<li>Aplicaciones web y productividad: <a href="http://docs.google.com">Google Docs</a>, <a href="http://www.zimbra.com/">Zimbra</a>, <a href="http://www.zoho.com/">Zoho</a>.</li>
+<li>Otras: <a href="http://www.netvibes.com">Netvibes</a> [metapágina], <a href="http://www.digg.com">Digg</a> [noticias], <a href="http://www.meebo.com">Meebo</a> [mensajería], <a href="http://www.30boxes.com">30 Boxes</a> [calendario], <a href="http://www.flickr.com">Flickr</a> [fotografía].</li>
+</ul>
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="index.html">&larr; Anterior <span> </span></a>
+            
+            <a class="span5 next" href="capitulo_2.html">Siguiente &rarr; <span>Capítulo 2. JavaScript básico</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Introducción a AJAX (Introducción a AJAX%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a AJAX : Introducción a AJAX']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1 active">
+        <a href="capitulo_1.html">
+            <span>Capítulo 1.</span> Introducción a AJAX
+        </a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="capitulo_2.html"> JavaScript básico</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="capitulo_3.html"> JavaScript avanzado</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="capitulo_4.html"> DOM (Document Object Model)</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="capitulo_5.html"> BOM (Browser Object Model)</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="capitulo_6.html"> Eventos</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="capitulo_7.html"> Primeros pasos con AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="capitulo_8.html"> Técnicas básicas con AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="capitulo_9.html"> Técnicas avanzadas con AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="capitulo_10.html"> Frameworks y librerías</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="capitulo_11.html"> Otras utilidades</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="capitulo_12.html"> Recursos útiles</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="capitulo_13.html"> Bibliografía</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="capitulo_14.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

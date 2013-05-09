@@ -1,0 +1,343 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>2.5. Trabajando con repositorios remotos (Pro Git, el libro oficial de Git)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="deshaciendo_cosas.html" />
+        <link rel="next" href="creando_etiquetas.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="2.5. Trabajando con repositorios remotos (Pro Git, el libro oficial de Git)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page pro_git">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Pro Git, el libro oficial de Git</a></li>
+  <li><a href="../capitulo_2.html">Capítulo 2. Fundamentos de Git</a></li>
+  <li class="current"><span>2.5.. Trabajando con repositorios remotos</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="trabajando_con_repositorios_remotos"><span>2.5.</span> Trabajando con repositorios remotos</h1>
+    
+
+<p>Para poder colaborar en cualquier proyecto Git, necesitas saber cómo gestionar tus repositorios remotos. Los repositorios remotos son versiones de tu proyecto que se encuentran alojados en Internet o en algún punto de la red. Puedes tener varios, cada uno de los cuales puede ser de sólo lectura, o de lectura/escritura, según los permisos que tengas. Colaborar con otros implica gestionar estos repositorios remotos, y mandar (<em>push</em>) y recibir (<em>pull</em>) datos de ellos cuando necesites compartir cosas.</p>
+
+<p>Gestionar repositorios remotos implica conocer cómo añadir repositorios nuevos, eliminar aquellos que ya no son válidos, gestionar ramas remotas e indicar si están bajo seguimiento o no, y más cosas. En esta sección veremos todos estos conceptos.</p>
+
+<h3 id="mostrando_tus_repositorios_remotos">2.5.1. Mostrando tus repositorios remotos</h3>
+
+<p>Para ver qué repositorios remotos tienes configurados, puedes ejecutar el comando <code>git remote</code>. Mostrará una lista con los nombres de los remotos que hayas especificado. Si has clonado tu repositorio, deberías ver por lo menos <em>"origin"</em> — es el nombre predeterminado que le da Git al servidor del que clonaste —:</p>
+
+<div class="code code">
+<pre class="code">$ git clone git://github.com/schacon/ticgit.git
+Initialized empty Git repository in /private/tmp/ticgit/.git/
+remote: Counting objects: 595, done.
+remote: Compressing objects: 100% (269/269), done.
+remote: Total 595 (delta 255), reused 589 (delta 253)
+Receiving objects: 100% (595/595), 73.31 KiB | 1 KiB/s, done.
+Resolving deltas: 100% (255/255), done.
+$ cd ticgit
+$ git remote
+origin</pre>
+</div>
+
+<p>También puedes añadir la opción <code>-v</code>, que muestra la URL asociada a cada repositorio remoto:</p>
+
+<div class="code code">
+<pre class="code">$ git remote -v
+origin  git://github.com/schacon/ticgit.git</pre>
+</div>
+
+<p>Si tienes más de un remoto, este comando los lista todos. Por ejemplo, mi repositorio Grit tiene esta pinta:</p>
+
+<div class="code code">
+<pre class="code">$ cd grit
+$ git remote -v
+bakkdoor  git://github.com/bakkdoor/grit.git
+cho45     git://github.com/cho45/grit.git
+defunkt   git://github.com/defunkt/grit.git
+koke      git://github.com/koke/grit.git
+origin    git@github.com:mojombo/grit.git</pre>
+</div>
+
+<p>Esto significa que podemos recibir contribuciones de cualquiera de estos usuarios de manera bastante fácil. Pero fíjate en que sólo el remoto origen tiene una URL SSH, por lo que es el único al que podemos enviar (veremos el por qué en el <a class="internal" href="../capitulo_4.html#capitulo4">Capítulo 4</a>).</p>
+
+<h3 id="anadiendo_repositorios_remotos">2.5.2. Añadiendo repositorios remotos</h3>
+
+<p>Ya he mencionado y he dado ejemplos de repositorios remotos en secciones anteriores, pero a continuación veremos cómo añadirlos explícitamente. Para añadir un nuevo repositorio Git remoto, asignándole un nombre con el que referenciarlo fácilmente, ejecuta <code>git remote add [nombre] [url]</code>:</p>
+
+<div class="code code">
+<pre class="code">$ git remote
+origin
+$ git remote add pb git://github.com/paulboone/ticgit.git
+$ git remote -v
+origin  git://github.com/schacon/ticgit.git
+pb  git://github.com/paulboone/ticgit.git</pre>
+</div>
+
+<p>Ahora puedes usar la cadena "pb" en la línea de comandos, en lugar de toda la URL. Por ejemplo, si quieres recuperar toda la información de Paul que todavía no tienes en tu repositorio, puedes ejecutar <code>git fetch pb</code>:</p>
+
+<div class="code code">
+<pre class="code">$ git fetch pb
+remote: Counting objects: 58, done.
+remote: Compressing objects: 100% (41/41), done.
+remote: Total 44 (delta 24), reused 1 (delta 0)
+Unpacking objects: 100% (44/44), done.
+From git://github.com/paulboone/ticgit
+ * [new branch]      master     -&gt; pb/master
+ * [new branch]      ticgit     -&gt; pb/ticgit</pre>
+</div>
+
+<p>La rama maestra de Paul es accesible localmente como <code>pb/master</code> — puedes unirla a una de tus ramas, o copiarla localmente para inspeccionarla —.</p>
+
+<h3 id="recibiendo_de_tus_repositorios_remotos">2.5.3. Recibiendo de tus repositorios remotos</h3>
+
+<p>Como acabas de ver, para recuperar datos de tus repositorios remotos puedes ejecutar:</p>
+
+<div class="code code">
+<pre class="code">$ git fetch [remote-name]</pre>
+</div>
+
+<p>Este comando recupera todos los datos del proyecto remoto que no tengas todavía. Después de hacer esto, deberías tener referencias a todas las ramas del repositorio remoto, que puedes unir o inspeccionar en cualquier momento. (Veremos qué son las ramas y cómo utilizarlas en más detalle en el <a class="internal" href="../capitulo_3.html#capitulo3">Capítulo 3</a>).</p>
+
+<p>Si clonas un repositorio, el comando añade automáticamente ese repositorio remoto con el nombre de "origin". Por tanto, <code>git fetch origin</code> recupera toda la información enviada a ese servidor desde que lo clonaste (o desde la última vez que ejecutaste <code>fetch</code>). Es importante tener en cuenta que el comando <code>fetch</code> sólo recupera la información y la pone en tu repositorio local — no la une automáticamente con tu trabajo ni modifica aquello en lo que estás trabajando. Tendrás que unir ambos manualmente a posteriori —.</p>
+
+<p>Si has configurado una rama para seguir otra rama remota (véase la siguiente sección y el <a class="internal" href="../capitulo_3.html#capitulo3">Capítulo 3</a> para más información), puedes usar el comando <code>git pull</code> para recuperar y unir automáticamente la rama remota con tu rama actual. Éste puede resultarte un flujo de trabajo más sencillo y más cómodo; y por defecto, el comando <code>git clone</code> automáticamente configura tu rama local maestra para que siga la rama remota maestra del servidor del cual clonaste (asumiendo que el repositorio remoto tiene una rama maestra). Al ejecutar <code>git pull</code>, por lo general se recupera la información del servidor del que clonaste, y automáticamente se intenta unir con el código con el que estás trabajando actualmente.</p>
+
+<h3 id="enviando_a_tus_repositorios_remotos">2.5.4. Enviando a tus repositorios remotos</h3>
+
+<p>Cuando tu proyecto se encuentra en un estado que quieres compartir, tienes que enviarlo a un repositorio remoto. El comando que te permite hacer esto es sencillo: <code>git push [nombre-remoto][nombre-rama]</code>. Si quieres enviar tu rama maestra (<code>master</code>) a tu servidor origen (<code>origin</code>), ejecutarías esto para enviar tu trabajo al servidor:</p>
+
+<div class="code code">
+<pre class="code">$ git push origin master</pre>
+</div>
+
+<p>Este comando funciona únicamente si has clonado de un servidor en el que tienes permiso de escritura, y nadie ha enviado información mientras tanto. Si tú y otra persona clonais a la vez, y él envía su información y luego envías tú la tuya, tu envío será rechazado. Tendrás que bajarte primero su trabajo e incorporarlo en el tuyo para que se te permita hacer un envío. Véase el <a class="internal" href="../capitulo_3.html#capitulo3">Capítulo 3</a> para ver en detalle cómo enviar a servidores remotos.</p>
+
+<h3 id="inspeccionando_un_repositorio_remoto">2.5.5. Inspeccionando un repositorio remoto</h3>
+
+<p>Si quieres ver más información acerca de un repositorio remoto en particular, puedes usar el comando <code>git remote show [nombre]</code>. Si ejecutas este comando pasándole el nombre de un repositorio, como <code>origin</code>, obtienes algo así:</p>
+
+<div class="code code">
+<pre class="code">$ git remote show origin
+* remote origin
+  URL: git://github.com/schacon/ticgit.git
+  Remote branch merged with 'git pull' while on branch master
+    master
+  Tracked remote branches
+    master
+    ticgit</pre>
+</div>
+
+<p>Esto lista la URL del repositorio remoto, así como información sobre las ramas bajo seguimiento. Este comando te recuerda que si estás en la rama maestra y ejecutas <code>git pull</code>, automáticamente unirá los cambios a la rama maestra del remoto después de haber recuperado todas las referencias remotas. También lista todas las referencias remotas que ha recibido.</p>
+
+<p>El anterior es un sencillo ejemplo que te encontrarás con frecuencia. Sin embargo, cuando uses Git de forma más avanzada, puede que <code>git remote show</code> muestre mucha más información:</p>
+
+<div class="code code">
+<pre class="code">$ git remote show origin
+* remote origin
+  URL: git@github.com:defunkt/github.git
+  Remote branch merged with 'git pull' while on branch issues
+    issues
+  Remote branch merged with 'git pull' while on branch master
+    master
+  New remote branches (next fetch will store in remotes/origin)
+    caching
+  Stale tracking branches (use 'git remote prune')
+    libwalker
+    walker2
+  Tracked remote branches
+    acl
+    apiv2
+    dashboard2
+    issues
+    master
+    postgres
+  Local branch pushed with 'git push'
+    master:master</pre>
+</div>
+
+<p>Este comando muestra qué rama se envía automáticamente cuando ejecutas <code>git push</code> en determinadas ramas. También te muestra qué ramas remotas no tienes todavía, qué ramas remotas tienes y han sido eliminadas del servidor, y múltiples ramas que serán unidas automáticamente cuando ejecutes <code>git pull</code>.</p>
+
+<h3 id="eliminando_y_renombrando_repositorios_remotos">2.5.6. Eliminando y renombrando repositorios remotos</h3>
+
+<p>Si quieres renombrar una referencia a un repositorio remoto, en versiones recientes de Git puedes ejecutar <code>git remote rename</code>. Por ejemplo, si quieres renombrar <code>pb</code> a <code>paul</code>, puedes hacerlo de la siguiente manera:</p>
+
+<div class="code code">
+<pre class="code">$ git remote rename pb paul
+$ git remote
+origin
+paul</pre>
+</div>
+
+<p>Conviene mencionar que esto también cambia el nombre de tus ramas remotas. Lo que antes era referenciado en <code>pb/master</code> ahora está en <code>paul/master</code>.</p>
+
+<p>Si por algún motivo quieres eliminar una referencia — has movido el servidor o ya no estás usando un determinado mirror, o quizás un contribuidor ha dejado de contribuir — puedes usar el comando <code>git remote rm</code>:</p>
+
+<div class="code code">
+<pre class="code">$ git remote rm paul
+$ git remote
+origin</pre>
+</div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="deshaciendo_cosas.html">&larr; Anterior <span>2.4. Deshaciendo cosas</span></a>
+            
+            <a class="span5 next" href="creando_etiquetas.html">Siguiente &rarr; <span>2.6. Creando etiquetas</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Trabajando con repositorios remotos (Pro Git, el libro oficial de Git%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Pro Git, el libro oficial de Git : Trabajando con repositorios remotos']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Empezando</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_2.html">
+            <span>Capítulo 2.</span> Fundamentos de Git
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="obteniendo_un_repositorio_git.html">
+            <span>2.1.</span> Obteniendo un repositorio Git
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="guardando_cambios_en_el_repositorio.html">
+            <span>2.2.</span> Guardando cambios en el repositorio
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="viendo_el_historico_de_confirmaciones.html">
+            <span>2.3.</span> Viendo el histórico de confirmaciones
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="deshaciendo_cosas.html">
+            <span>2.4.</span> Deshaciendo cosas
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="trabajando_con_repositorios_remotos.html">
+            <span>2.5.</span> Trabajando con repositorios remotos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="creando_etiquetas.html">
+            <span>2.6.</span> Creando etiquetas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="consejos_y_trucos.html">
+            <span>2.7.</span> Consejos y trucos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="resumen.html">
+            <span>2.8.</span> Resumen
+        </a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Trabajando con ramas en Git</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Git en un servidor</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Git en entornos distribuidos</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Las herramientas de Git</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Personalizando Git</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Git y otros sistemas</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Funcionamiento interno de Git</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

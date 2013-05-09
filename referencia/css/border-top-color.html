@@ -1,0 +1,193 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>border-top-color (Referencia de CSS 2.1)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="border-top-color (Referencia de CSS 2.1)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page referencia_css">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="index.html">Referencia de CSS 2.1</a></li>
+  <li class="current"><span>border-top-color</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="border_top_color">border-top-color</h1>
+    <div class="table" id="table_26_1">
+
+    <table class="table property css" summary="Definición de la propiedad border-top-color de CSS"> 
+<tr><th>Definición</th><td>Establece el color del borde superior de los elementos</td></tr><tr><th>Valores <br/> permitidos</th><td>Uno y sólo uno de los siguientes valores:<ul><li><a href="colores.html">color</a></li><li>transparent</li><li><a href="el-valor-inherit.html">inherit</a></li></ul></td></tr><tr><th>Valor inicial</th><td>Color negro</td></tr><tr><th>Se aplica a</th><td>Todos los elementos</td></tr><tr><th>Válida en</th><td><a href="medios.html">medios visuales</a></td></tr><tr><th>Se hereda</th><td>no</td></tr><tr class="nobottom"><th>Definición en<br/>el estándar</th><td><a href="http://www.w3.org/TR/CSS21/box.html#propdef-border-top-color">http://www.w3.org/TR/CSS21/box.html#propdef-border-top-color</a></td></tr>
+</table>
+</div>
+
+
+<h2 id="ejemplos_de_uso">Ejemplos de uso</h2>
+
+<p>En primer lugar, la propiedad <code>border-top-color</code> permite establecer el color del borde superior de un elemento mediante cualquiera de las <a href="colores.html">diferentes formas de indicar un color en CSS</a>:</p>
+
+<div class="example">
+<div class="box" style="border-top-color: red;">div { border-top-color: red; }</div>
+<div class="box" style="border-top-color: #F00;">div { border-top-color: #F00; }</div>
+<div class="box" style="border-top-color: rgb(255, 0, 0);">div { border-top-color: rgb(255, 0, 0); }</div>
+</div>
+
+<p>Además de utilizar colores <em>normales</em>, también es posible establecer el borde de color transparente. Un borde transparente es muy diferente a no tener borde, ya que el borde transparente no se ve pero sí que ocupa sitio.</p>
+
+<p>En el siguiente ejemplo, la primera caja tiene establecido un borde superior transparente que, gracias a JavaScript, cambia de color cuando se pasa el ratón por encima de la caja. Como el borde transparente no se ve pero sí que ocupa sitio, al mostrar el nuevo borde la caja no se mueve, ya que el navegador había reservado el sitio necesario para el borde transparente.</p>
+
+<p>Sin embargo, la segunda caja no tiene establecido ningún borde superior y al pasar el ratón por encima suyo, gracias a JavaScript, se muestra un borde. En este caso, como antes no existía un borde y ahora sí, el navegador desplaza la caja ya que debe hacer sitio para mostrar el borde.</p>
+
+<div class="example">
+<div class="box" style="border-top-color: transparent;" onmouseover="this.style.borderTopColor='#000'" onmouseout="this.style.borderTopColor='transparent'">div { border-top-color: transparent; }</div>
+<div class="box" style="border-top: none;" onmouseover="this.style.borderTop='solid 2px #000'" onmouseout="this.style.borderTop='none'">div { border-top: none; }</div>
+</div>
+
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'border-top-color (Referencia de CSS 2.1%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Referencia de CSS 2.1 : border-top-color']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Propiedades relacionadas</span></h3>
+
+
+                        <ul class="toc">
+                    <li class="">
+                <a href="border-color.html">border-color</a>
+            </li>
+                    <li class="">
+                <a href="border-style.html">border-style</a>
+            </li>
+                    <li class="">
+                <a href="border-top.html">border-top</a>
+            </li>
+                    <li class="">
+                <a href="border-right.html">border-right</a>
+            </li>
+                    <li class="">
+                <a href="border-bottom.html">border-bottom</a>
+            </li>
+                    <li class="">
+                <a href="border-left.html">border-left</a>
+            </li>
+                    <li class="active">
+                <a href="border-top-color.html">border-top-color</a>
+            </li>
+                    <li class="">
+                <a href="border-right-color.html">border-right-color</a>
+            </li>
+                    <li class="">
+                <a href="border-bottom-color.html">border-bottom-color</a>
+            </li>
+                    <li class="">
+                <a href="border-left-color.html">border-left-color</a>
+            </li>
+                    <li class="">
+                <a href="border-top-style.html">border-top-style</a>
+            </li>
+                    <li class="">
+                <a href="border-right-style.html">border-right-style</a>
+            </li>
+                    <li class="">
+                <a href="border-bottom-style.html">border-bottom-style</a>
+            </li>
+                    <li class="">
+                <a href="border-left-style.html">border-left-style</a>
+            </li>
+                    <li class="">
+                <a href="border-top-width.html">border-top-width</a>
+            </li>
+                    <li class="">
+                <a href="border-right-width.html">border-right-width</a>
+            </li>
+                    <li class="">
+                <a href="border-bottom-width.html">border-bottom-width</a>
+            </li>
+                    <li class="">
+                <a href="border-left-width.html">border-left-width</a>
+            </li>
+                    <li class="">
+                <a href="border-width.html">border-width</a>
+            </li>
+                    <li class="">
+                <a href="border.html">border</a>
+            </li>
+                </ul>
+                                                    
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

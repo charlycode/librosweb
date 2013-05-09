@@ -1,0 +1,568 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>4.5. Fondos (Introducción a CSS)</title>
+        <link href="../main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="margen_relleno_bordes_y_modelo_de_cajas.html" />
+        <link rel="next" href="../capitulo_5.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="4.5. Fondos (Introducción a CSS)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page css">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Introducción a CSS</a></li>
+  <li><a href="../capitulo_4.html">Capítulo 4. Modelo de cajas</a></li>
+  <li class="current"><span>4.5.. Fondos</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="fondos"><span>4.5.</span> Fondos</h1>
+    
+
+<p>El último elemento que forma el <em>box model</em> es el fondo de la caja del elemento. El fondo puede ser un color simple o una imagen. El fondo solamente se visualiza en el área ocupada por el contenido y su relleno, ya que el color de los bordes se controla directamente desde los bordes y las zonas de los márgenes siempre son transparentes.</p>
+
+<p>Para establecer un color o imagen de fondo en la página entera, se debe establecer un fondo al elemento <code>&lt;body&gt;</code>. Si se establece un fondo a la página, como el valor inicial del fondo de los elementos es transparente, todos los elementos de la página se visualizan con el mismo fondo a menos que algún elemento especifique su propio fondo.</p>
+
+<p>CSS define cinco propiedades para establecer el fondo de cada elemento (<code>background-color</code>, <code>background-image</code>, <code>background-repeat</code>, <code>background-attachment</code>, <code>background-position</code>) y otra propiedad de tipo <em>"shorthand"</em> (<code>background</code>).</p>
+
+<p>La propiedad <code>background-color</code> permite mostrar un color de fondo sólido en la caja de un elemento. Esta propiedad no permite crear degradados ni ningún otro efecto avanzado.</p>
+
+<div class="table" id="table_4_15">
+
+    <table class="table property css" summary="Definición de la propiedad background-color de CSS">
+    <thead>
+        <tr>
+            <th scope="row">Propiedad</th>
+            <td><strong class="title"><strong>background-color</strong></strong></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">Valores</th>
+            <td><a href="../../referencia/css/colores.html">color</a> | transparent | <a href="../../referencia/css/el_valor_inherit.html">inherit</a></td>
+        </tr>
+        <tr>
+            <th scope="row">Se aplica a</th>
+            <td>Todos los elementos</td>
+        </tr>
+        <tr>
+            <th scope="row">Valor inicial</th>
+            <td>transparent</td>
+        </tr>
+        <tr>
+            <th scope="row">Descripción</th>
+            <td>Establece un color de fondo para los elementos</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+
+<p>El siguiente ejemplo muestra una página web con un color gris claro de fondo:</p>
+
+<div class="code css">
+<pre class="css">body <span class="br0">&#123;</span>
+  <span class="kw1">background-color</span><span class="sy0">:</span> <span class="re0">#F5F5F5</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Para crear efectos gráficos avanzados, es necesario utilizar la propiedad <code>background-image</code>, que permite mostrar una imagen como fondo de la caja de cualquier elemento:</p>
+
+<div class="table" id="table_4_16">
+
+    <table class="table property css" summary="Definición de la propiedad background-image de CSS">
+    <thead>
+        <tr>
+            <th scope="row">Propiedad</th>
+            <td><strong class="title"><strong>background-image</strong></strong></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">Valores</th>
+            <td>url | none | <a href="../../referencia/css/el_valor_inherit.html">inherit</a></td>
+        </tr>
+        <tr>
+            <th scope="row">Se aplica a</th>
+            <td>Todos los elementos</td>
+        </tr>
+        <tr>
+            <th scope="row">Valor inicial</th>
+            <td>none</td>
+        </tr>
+        <tr>
+            <th scope="row">Descripción</th>
+            <td>Establece una imagen como fondo para los elementos</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+
+<p>CSS permite establecer de forma simultánea un color y una imagen de fondo. En este caso, la imagen se muestra delante del color, por lo que solamente si la imagen contiene zonas transparentes es posible ver el color de fondo.</p>
+
+<p>El siguiente ejemplo muestra una imagen como fondo de toda la página:</p>
+
+<div class="code css">
+<pre class="css">body <span class="br0">&#123;</span> <span class="kw1">background-image</span><span class="sy0">:</span> <span class="kw2">url</span><span class="br0">&#40;</span><span class="st0">&quot;imagenes/fondo.png&quot;</span><span class="br0">&#41;</span> <span class="br0">&#125;</span></pre>
+</div>
+
+<p>Las imágenes de fondo se indican a través de su URL, que puede ser absoluta o relativa. Suele ser recomendable crear una carpeta de imágenes que se encuentre en el mismo directorio que los archivos CSS y que almacene todas las imágenes utilizadas en el diseño de las páginas.</p>
+
+<p>Así, las imágenes correspondientes al diseño de la página se mantienen separadas del resto de imágenes del sitio y el código CSS es más sencillo (por utilizar URL relativas) y más fácil de mantener (por no tener que actualizar URL absolutas en caso de que se cambie la estructura del sitio web).</p>
+
+<p>Por otra parte, suele ser habitual indicar un color de fondo siempre que se muestra una imagen de fondo. En caso de que la imagen no se pueda mostrar o contenga errores, el navegador mostrará el color indicado (que debería ser, en lo posible, similar a la imagen) y la página no parecerá que contiene errores.</p>
+
+<p>Si la imagen que se quiere mostrar es demasiado grande para el fondo del elemento, solamente se muestra la parte de imagen comprendida en el tamaño del elemento. Si la imagen es más pequeña que el elemento, CSS la repite horizontal y verticalmente hasta llenar el fondo del elemento.</p>
+
+<p>Este comportamiento es útil para establecer un fondo complejo a una página web entera. El siguiente ejemplo utiliza una imagen muy pequeña para establecer un fondo complejo a toda una página:</p>
+
+<p>Imagen original</p>
+
+<div class="figure" id="figure_4_18">
+    <img src="../../img/css/f0421.gif" alt="Imagen original utilizada para el fondo de la página" />
+
+    <p class="caption"><strong>Figura 4.18</strong> Imagen original utilizada para el fondo de la página</p>
+</div>
+
+
+<p>Reglas CSS</p>
+
+<div class="code css">
+<pre class="css">body <span class="br0">&#123;</span>
+  <span class="kw1">background-image</span><span class="sy0">:</span><span class="kw2">url</span><span class="br0">&#40;</span><span class="co2">imagenes/fondo.gif</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Resultado</p>
+
+<div class="figure" id="figure_4_19">
+    <img src="../../img/css/f0417.gif" alt="Página con una imagen de fondo" />
+
+    <p class="caption"><strong>Figura 4.19</strong> Página con una imagen de fondo</p>
+</div>
+
+
+<p>Con una imagen muy pequeña (y que por tanto, se puede descargar en muy poco tiempo) se consigue cubrir completamente el fondo de la página, con lo que se consigue un gran ahorro de ancho de banda.</p>
+
+<p>En ocasiones, no es conveniente que la imagen de fondo se repita horizontal y verticalmente. Para ello, CSS introduce la propiedad <code>background-repeat</code> que permite controlar la forma de repetición de las imágenes de fondo.</p>
+
+<div class="table" id="table_4_17">
+
+    <table class="table property css" summary="Definición de la propiedad background-repeat de CSS">
+    <thead>
+        <tr>
+            <th scope="row">Propiedad</th>
+            <td><strong class="title"><strong>background-repeat</strong></strong></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">Valores</th>
+            <td>repeat | repeat-x | repeat-y | no-repeat | <a href="../../referencia/css/el_valor_inherit.html">inherit</a></td>
+        </tr>
+        <tr>
+            <th scope="row">Se aplica a</th>
+            <td>Todos los elementos</td>
+        </tr>
+        <tr>
+            <th scope="row">Valor inicial</th>
+            <td>repeat</td>
+        </tr>
+        <tr>
+            <th scope="row">Descripción</th>
+            <td>Controla la forma en la que se repiten las imágenes de fondo</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+
+<p>El valor <code>repeat</code> indica que la imagen se debe repetir en todas direcciones y por tanto, es el comportamiento por defecto. El valor <code>no-repeat</code> muestra una sola vez la imagen y no se repite en ninguna dirección. El valor <code>repeat-x</code> repite la imagen sólo horizontalmente y el valor <code>repeat-y</code> repite la imagen solamente de forma vertical.</p>
+
+<p>El sitio web http://www.kottke.org/ utiliza el valor <code>repeat-x</code> para mostrar una imagen de fondo en la cabecera de la página:</p>
+
+<div class="figure" id="figure_4_20">
+    <img src="../../img/css/f0418.gif" alt="Uso de repeat-x en la página de Kottke.org" />
+
+    <p class="caption"><strong>Figura 4.20</strong> Uso de repeat-x en la página de Kottke.org</p>
+</div>
+
+
+<p>Las reglas CSS definidas para la cabecera son:</p>
+
+<div class="code css">
+<pre class="css"><span class="re0">#hdr</span> <span class="br0">&#123;</span>
+  <span class="kw1">background</span><span class="sy0">:</span> <span class="kw2">url</span><span class="br0">&#40;</span><span class="st0">&quot;/images/ds.gif&quot;</span><span class="br0">&#41;</span> <span class="kw2">repeat-x</span><span class="sy0">;</span>
+  <span class="kw1">width</span><span class="sy0">:</span> <span class="re3">100%</span><span class="sy0">;</span>
+  <span class="kw1">text-align</span><span class="sy0">:</span> <span class="kw2">center</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Por otra parte, el sitio web http://veerle.duoh.com/ utiliza el valor <code>repeat-y</code> para mostrar el fondo de una columna de contenidos:</p>
+
+<div class="figure" id="figure_4_21">
+    <img src="../../img/css/f0419.gif" alt="Uso de repeat-y en la página de Veerle.duoh.com" />
+
+    <p class="caption"><strong>Figura 4.21</strong> Uso de repeat-y en la página de Veerle.duoh.com</p>
+</div>
+
+
+<p>Las reglas CSS definidas para esa columna de contenidos son:</p>
+
+<div class="code css">
+<pre class="css"><span class="re1">.wide</span> <span class="re0">#content-secondary</span> <span class="br0">&#123;</span>
+  <span class="kw1">width</span><span class="sy0">:</span> <span class="re3">272px</span><span class="sy0">;</span>
+  <span class="kw1">margin</span><span class="sy0">:</span> <span class="re3">13px</span> <span class="nu0">0</span> <span class="nu0">0</span> <span class="nu0">0</span><span class="sy0">;</span>
+  <span class="kw1">position</span><span class="sy0">:</span> <span class="kw2">relative</span><span class="sy0">;</span>
+  <span class="kw1">margin-left</span><span class="sy0">:</span> <span class="re3">-8px</span><span class="sy0">;</span>
+  <span class="kw1">background</span><span class="sy0">:</span> <span class="kw2">url</span><span class="br0">&#40;</span><span class="st0">&quot;./graphics/wide/bg-content-secondary.gif&quot;</span><span class="br0">&#41;</span> <span class="kw2">repeat-y</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Además de seleccionar el tipo de repetición de las imágenes de fondo, CSS permite controlar la posición de la imagen dentro del fondo del elemento mediante la propiedad <code>background-position</code>.</p>
+
+<div class="table" id="table_4_18">
+
+    <table class="table property css" summary="Definición de la propiedad background-position de CSS">
+    <thead>
+        <tr>
+            <th scope="row">Propiedad</th>
+            <td><strong class="title"><strong>background-position</strong></strong></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">Valores</th>
+            <td>( ( <a href="../../referencia/css/porcentajes.html">porcentaje</a> | <a href="../../referencia/css/unidades_de_medida.html">unidad de medida</a> | left | center | right ) ( <a href="../../referencia/css/porcentajes.html">porcentaje</a> | <a href="../../referencia/css/unidades_de_medida.html">unidad de medida</a> | top | center | bottom )? ) | ( ( left | center | right ) || ( top | center | bottom ) ) | <a href="../../referencia/css/el_valor_inherit.html">inherit</a></td>
+        </tr>
+        <tr>
+            <th scope="row">Se aplica a</th>
+            <td>Todos los elementos</td>
+        </tr>
+        <tr>
+            <th scope="row">Valor inicial</th>
+            <td>0% 0%</td>
+        </tr>
+        <tr>
+            <th scope="row">Descripción</th>
+            <td>Controla la posición en la que se muestra la imagen en el fondo del elemento</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+
+<p>La propiedad <code>background-position</code> permite indicar la distancia que se desplaza la imagen de fondo respecto de su posición original situada en la esquina superior izquierda.</p>
+
+<p>Si se indican dos porcentajes o dos medidas, el primero indica el desplazamiento horizontal y el segundo el desplazamiento vertical respecto del origen (situado en la esquina superior izquierda). Si solamente se indica un porcentaje o una medida, se considera que es el desplazamiento horizontal y al desplazamiento vertical se le asigna automáticamente el valor de 50%.</p>
+
+<p>Cuando se utilizan porcentajes, su interpretación no es intuitiva. Si el valor de la propiedad <code>background-position</code> se indica mediante dos porcentajes <code>x% y%</code>, el navegador coloca el punto <code>(x%, y%)</code> de la imagen de fondo en el punto <code>(x%, y%)</code> del elemento.</p>
+
+<p>Las palabras clave permitidas son equivalentes a algunos porcentajes significativos: <code>top</code> = 0%, <code>left</code> = 0%, <code>center</code> = 50%, <code>bottom</code> = 100%, <code>right</code> = 100%.</p>
+
+<p>CSS permite mezclar porcentajes y palabras clave, como por ejemplo <code>50% 2cm</code>, <code>center 2cm</code>, <code>center 10%</code>.</p>
+
+<p>Si se utilizan solamente palabras clave, el orden es indiferente y por tanto, es equivalente indicar <code>top left</code> y <code>left top</code>.</p>
+
+<p>El siguiente ejemplo muestra una misma imagen de fondo posicionada de tres formas diferentes:</p>
+
+<div class="figure" id="figure_4_22">
+    <img src="../../img/css/f0420.gif" alt="Ejemplo de propiedad background-position" />
+
+    <p class="caption"><strong>Figura 4.22</strong> Ejemplo de propiedad background-position</p>
+</div>
+
+
+<p>Las reglas CSS del ejemplo anterior se muestran a continuación:</p>
+
+<div class="code css">
+<pre class="css"><span class="re0">#caja1</span> <span class="br0">&#123;</span>
+  <span class="kw1">background-image</span><span class="sy0">:</span> <span class="kw2">url</span><span class="br0">&#40;</span><span class="st0">&quot;images/help.png&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="kw1">background-repeat</span><span class="sy0">:</span> <span class="kw2">no-repeat</span><span class="sy0">;</span>
+  <span class="kw1">background-position</span><span class="sy0">:</span> <span class="kw1">bottom</span> <span class="kw1">left</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+<span class="re0">#caja2</span> <span class="br0">&#123;</span>
+  <span class="kw1">background-image</span><span class="sy0">:</span> <span class="kw2">url</span><span class="br0">&#40;</span><span class="st0">&quot;images/help.png&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="kw1">background-repeat</span><span class="sy0">:</span> <span class="kw2">no-repeat</span><span class="sy0">;</span>
+  <span class="kw1">background-position</span><span class="sy0">:</span> <span class="kw1">right</span> <span class="kw1">top</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+<span class="re0">#caja3</span> <span class="br0">&#123;</span>
+  <span class="kw1">background-image</span><span class="sy0">:</span> <span class="kw2">url</span><span class="br0">&#40;</span><span class="st0">&quot;images/help.png&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="kw1">background-repeat</span><span class="sy0">:</span> <span class="kw2">no-repeat</span><span class="sy0">;</span>
+  <span class="kw1">background-position</span><span class="sy0">:</span> <span class="re3">50%</span> <span class="re3">50%</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+&lt;div id<span class="sy0">=</span><span class="st0">&quot;caja1&quot;</span><span class="sy0">&gt;</span>&lt;h1<span class="sy0">&gt;</span><span class="kw1">bottom</span> left&lt;/h1<span class="sy0">&gt;</span>&lt;/div<span class="sy0">&gt;</span>
+&lt;div id<span class="sy0">=</span><span class="st0">&quot;caja2&quot;</span><span class="sy0">&gt;</span>&lt;h1<span class="sy0">&gt;</span><span class="kw1">right</span> top&lt;/h1<span class="sy0">&gt;</span>&lt;/div<span class="sy0">&gt;</span>
+&lt;div id<span class="sy0">=</span><span class="st0">&quot;caja3&quot;</span><span class="sy0">&gt;</span>&lt;h1<span class="sy0">&gt;</span><span class="re3">50%</span> <span class="re3">50%</span>&lt;/h1<span class="sy0">&gt;</span>&lt;/div<span class="sy0">&gt;</span></pre>
+</div>
+
+<p>Opcionalmente, se puede indicar que el fondo permanezca fijo cuando la ventana del navegador se desplaza mediante las barras de <em>scroll</em>. Se trata de un comportamiento que en general no es deseable y que algunos navegadores no soportan correctamente. La propiedad que controla este comportamiento es <code>background-attachment</code>.</p>
+
+<div class="table" id="table_4_19">
+
+    <table class="table property css" summary="Definición de la propiedad background-attachment de CSS">
+    <thead>
+        <tr>
+            <th scope="row">Propiedad</th>
+            <td><strong class="title"><strong>background-attachment</strong></strong></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">Valores</th>
+            <td>scroll | fixed | <a href="../../referencia/css/el_valor_inherit.html">inherit</a></td>
+        </tr>
+        <tr>
+            <th scope="row">Se aplica a</th>
+            <td>Todos los elementos</td>
+        </tr>
+        <tr>
+            <th scope="row">Valor inicial</th>
+            <td>scroll</td>
+        </tr>
+        <tr>
+            <th scope="row">Descripción</th>
+            <td>Controla la forma en la que se visualiza la imagen de fondo: permanece fija cuando se hace scroll en la ventana del navegador o se desplaza junto con la ventana</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+
+<p>Para hacer que una imagen de fondo se muestre fija al desplazar la ventana del navegador, se debe añadir la propiedad <code>background-attachment: fixed</code>.</p>
+
+<p>Por último, CSS define una propiedad de tipo <em>"shorthand"</em> para indicar todas las propiedades de los colores e imágenes de fondo de forma directa. La propiedad se denomina <code>background</code> y es la que generalmente se utiliza para establecer las propiedades del fondo de los elementos.</p>
+
+<div class="table" id="table_4_20">
+
+    <table class="table property css" summary="Definición de la propiedad background de CSS">
+    <thead>
+        <tr>
+            <th scope="row">Propiedad</th>
+            <td><strong class="title"><strong>background</strong></strong></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">Valores</th>
+            <td>( background-<a href="../../referencia/css/colores.html">color</a> || background-image || background-repeat || background-attachment || background-position ) | <a href="../../referencia/css/el_valor_inherit.html">inherit</a></td>
+        </tr>
+        <tr>
+            <th scope="row">Se aplica a</th>
+            <td>Todos los elementos</td>
+        </tr>
+        <tr>
+            <th scope="row">Valor inicial</th>
+            <td>-</td>
+        </tr>
+        <tr>
+            <th scope="row">Descripción</th>
+            <td>Establece todas las propiedades del fondo de un elemento</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+
+<p>El orden en el que se indican las propiedades es indiferente, aunque en general se sigue el formato indicado de color, url de imagen, repetición y posición.</p>
+
+<p>El siguiente ejemplo muestra la ventaja de utilizar la propiedad <code>background</code>:</p>
+
+<div class="code css">
+<pre class="css"><span class="coMULTI">/* Color e imagen de fondo de la página mediante una propiedad shorthand */</span>
+body <span class="br0">&#123;</span> <span class="kw1">background</span><span class="sy0">:</span> <span class="re0">#222d2d</span> <span class="kw2">url</span><span class="br0">&#40;</span><span class="co2">./graphics/colorstrip.gif</span><span class="br0">&#41;</span> <span class="kw2">repeat-x</span> <span class="nu0">0</span> <span class="nu0">0</span><span class="sy0">;</span> <span class="br0">&#125;</span>
+&nbsp;
+<span class="coMULTI">/* La propiedad shorthand anterior es equivalente a las siguientes propiedades */</span>
+body <span class="br0">&#123;</span>
+  <span class="kw1">background-color</span><span class="sy0">:</span> <span class="re0">#222d2d</span><span class="sy0">;</span>
+  <span class="kw1">background-image</span><span class="sy0">:</span> <span class="kw2">url</span><span class="br0">&#40;</span><span class="st0">&quot;./graphics/colorstrip.gif&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="kw1">background-repeat</span><span class="sy0">:</span> <span class="kw2">repeat-x</span><span class="sy0">;</span>
+  <span class="kw1">background-position</span><span class="sy0">:</span> <span class="nu0">0</span> <span class="nu0">0</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>La propiedad <code>background</code> permite asignar todos o sólo algunos de todos los valores que se pueden definir para los fondos de los elementos:</p>
+
+<div class="code css">
+<pre class="css"><span class="kw1">background</span><span class="sy0">:</span> <span class="kw2">url</span><span class="br0">&#40;</span><span class="st0">&quot;./graphics/wide/bg-content-secondary.gif&quot;</span><span class="br0">&#41;</span> <span class="kw2">repeat-y</span><span class="sy0">;</span>
+&nbsp;
+<span class="kw1">background</span><span class="sy0">:</span> <span class="kw2">url</span><span class="br0">&#40;</span><span class="st0">&quot;./graphics/wide/footer-content-secondary.gif&quot;</span><span class="br0">&#41;</span> <span class="kw2">no-repeat</span> <span class="kw1">bottom</span> <span class="kw1">left</span><span class="sy0">;</span>
+&nbsp;
+<span class="kw1">background</span><span class="sy0">:</span> <span class="kw2">transparent</span> <span class="kw2">url</span><span class="br0">&#40;</span><span class="st0">&quot;./graphics/navigation.gif&quot;</span><span class="br0">&#41;</span> <span class="kw2">no-repeat</span> <span class="nu0">0</span> <span class="re3">-27px</span><span class="sy0">;</span>
+&nbsp;
+<span class="kw1">background</span><span class="sy0">:</span> <span class="kw2">none</span><span class="sy0">;</span>
+&nbsp;
+<span class="kw1">background</span><span class="sy0">:</span> <span class="re0">#293838</span> <span class="kw2">url</span><span class="br0">&#40;</span><span class="st0">&quot;./graphics/icons/icon-permalink-big.gif&quot;</span><span class="br0">&#41;</span> <span class="kw2">no-repeat</span> <span class="kw2">center</span> <span class="kw1">left</span><span class="sy0">;</span></pre>
+</div>
+
+<p><div class="exercise"><p class="title">Ejercicio 5</p> <a href="http://librosweb.es/css/capitulo_15/ejercicio_5.html">Ver enunciado</a></div></p>
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="margen_relleno_bordes_y_modelo_de_cajas.html">&larr; Anterior <span>4.4. Margen, relleno, bordes y modelo de cajas</span></a>
+            
+            <a class="span5 next" href="../capitulo_5.html">Siguiente &rarr; <span>Capítulo 5. Posicionamiento y visualización</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Fondos (Introducción a CSS%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a CSS : Fondos']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Selectores</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Unidades de medida y colores</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_4.html">
+            <span>Capítulo 4.</span> Modelo de cajas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="anchura_y_altura.html">
+            <span>4.1.</span> Anchura y altura
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="margen_y_relleno.html">
+            <span>4.2.</span> Margen y relleno
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="bordes.html">
+            <span>4.3.</span> Bordes
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="margen_relleno_bordes_y_modelo_de_cajas.html">
+            <span>4.4.</span> Margen, relleno, bordes y modelo de cajas
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="fondos.html">
+            <span>4.5.</span> Fondos
+        </a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Posicionamiento y visualización</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Texto</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Enlaces</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Imágenes</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Listas</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Tablas</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Layout</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Otros</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Recursos útiles</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Ejercicios</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

@@ -1,0 +1,316 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>3.5. Los datos iniciales (El tutorial Jobeet)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="el_orm.html" />
+        <link rel="next" href="probando_la_aplicacion_en_el_navegador.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="3.5. Los datos iniciales (El tutorial Jobeet)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page jobeet_1_4">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">El tutorial Jobeet</a></li>
+  <li><a href="../capitulo_3.html">Capítulo 3. El modelo de datos</a></li>
+  <li class="current"><span>3.5.. Los datos iniciales</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="los_datos_iniciales"><span>3.5.</span> Los datos iniciales</h1>
+    
+
+<p>Aunque ya hemos creado la base de datos, todas sus tablas están vacías. En cualquier aplicación web siempre existen tres tipos de datos:</p>
+
+<ul>
+<li><strong>Datos iniciales</strong>: son los datos que necesita la aplicación para funcionar. Jobeet por ejemplo necesita el nombre de algunas categorías y también es necesario al menos un usuario de tipo <code>admin</code> para poder acceder a la aplicación <code>backend</code>.</li>
+<li><strong>Datos de prueba</strong>: son los datos necesarios para probar la aplicación. Los buenos programadores crean pruebas unitarias para asegurar que la aplicación se comporta tal y como se describe en los escenarios. La mejor forma de probar la aplicación consiste en realizar pruebas unitarias automáticas. Cada vez que se ejecutan las pruebas unitarias es necesario disponer de datos de prueba en la base de datos.</li>
+<li><strong>Datos de usuarios</strong>: son los datos reales creados por los usuarios que utilizan la aplicación.</li>
+</ul>
+
+<p>Cada vez que Symfony genera las tablas de la base de datos, se elimina toda la información existente. Para insertar de nuevo los datos iniciales podríamos utilizar un script de PHP o podríamos ejecutar directamente unas sentencias SQL con el comando <code>mysql</code>. No obstante, como se trata de una necesidad bastante habitual, Symfony ofrece una alternativa mucho mejor: crear archivos en formato YAML, guardarlos en el directorio <code>data/fixtures/</code> y utilizar la tarea <code>propel:data-load</code> para cargarlos automáticamente en la base de datos:</p>
+
+<p>En primer lugar, crea los siguientes archivos de datos en formato YAML:</p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co1"># data/fixtures/010_categories.yml</span><span class="co4">
+JobeetCategory</span>:<span class="co3">
+  design</span><span class="sy2">: </span>       <span class="br0">&#123;</span> name<span class="sy2">: </span>Design <span class="br0">&#125;</span><span class="co3">
+  programming</span><span class="sy2">: </span>  <span class="br0">&#123;</span> name<span class="sy2">: </span>Programming <span class="br0">&#125;</span><span class="co3">
+  manager</span><span class="sy2">: </span>      <span class="br0">&#123;</span> name<span class="sy2">: </span>Manager <span class="br0">&#125;</span><span class="co3">
+  administrator</span><span class="sy2">: </span><span class="br0">&#123;</span> name<span class="sy2">: </span>Administrator <span class="br0">&#125;</span></pre>
+</div>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co1"># data/fixtures/020_jobs.yml</span><span class="co4">
+JobeetJob</span>:<span class="co4">
+  job_sensio_labs</span>:<span class="co3">
+    category_id</span><span class="sy2">: </span> programming<span class="co3">
+    type</span><span class="sy2">: </span>        full-time<span class="co3">
+    company</span><span class="sy2">: </span>     Sensio Labs<span class="co3">
+    logo</span><span class="sy2">: </span>        sensio-labs.gif<span class="co3">
+    url</span><span class="sy2">: </span>         http://www.sensiolabs.com/<span class="co3">
+    position</span><span class="sy2">: </span>    Web Developer<span class="co3">
+    location</span><span class="sy2">: </span>    Paris, France<span class="co3">
+    description</span><span class="sy2">: </span> <span class="sy2">|
+</span><span class="co0">      You have already developed websites with symfony and you want
+      to work with Open-Source technologies. You have a minimum of 
+      3 years experience in web development with PHP or Java and 
+      you wish to participate to development of Web 2.0 sites using
+      the best frameworks available.</span><span class="co3">
+    how_to_apply</span><span class="sy2">: |
+</span><span class="co0">      Send your resume to fabien.potencier [at] sensio.com</span><span class="co3">
+    is_public</span><span class="sy2">: </span>   true<span class="co3">
+    is_activated</span><span class="sy2">: </span>true<span class="co3">
+    token</span><span class="sy2">: </span>       job_sensio_labs<span class="co3">
+    email</span><span class="sy2">: </span>       job@example.com<span class="co3">
+    expires_at</span><span class="sy2">: </span>  <span class="nu0">2010</span>-<span class="nu0">10</span>-<span class="nu0">10</span>
+<span class="co4">
+  job_extreme_sensio</span>:<span class="co3">
+    category_id</span><span class="sy2">: </span> design<span class="co3">
+    type</span><span class="sy2">: </span>        part-time<span class="co3">
+    company</span><span class="sy2">: </span>     Extreme Sensio<span class="co3">
+    logo</span><span class="sy2">: </span>        extreme-sensio.gif<span class="co3">
+    url</span><span class="sy2">: </span>         http://www.extreme-sensio.com/<span class="co3">
+    position</span><span class="sy2">: </span>    Web Designer<span class="co3">
+    location</span><span class="sy2">: </span>    Paris, France<span class="co3">
+    description</span><span class="sy2">: </span> <span class="sy2">|
+</span><span class="co0">      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+      eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+      enim ad minim veniam, quis nostrud exercitation ullamco laboris
+      nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+      in reprehenderit in.
+&nbsp;
+      Voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+      Excepteur sint occaecat cupidatat non proident, sunt in culpa
+      qui officia deserunt mollit anim id est laborum.</span><span class="co3">
+    how_to_apply</span><span class="sy2">: |
+</span><span class="co0">      Send your resume to fabien.potencier [at] sensio.com</span><span class="co3">
+    is_public</span><span class="sy2">: </span>   true<span class="co3">
+    is_activated</span><span class="sy2">: </span>true<span class="co3">
+    token</span><span class="sy2">: </span>       job_extreme_sensio<span class="co3">
+    email</span><span class="sy2">: </span>       job@example.com<span class="co3">
+    expires_at</span><span class="sy2">: </span>  <span class="nu0">2010</span>-<span class="nu0">10</span>-<span class="nu0">10</span></pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> El archivo de datos de las ofertas de trabajo hace referencia a dos imágenes. Puedes descargarlas desde el sitio web de Symfony y colocarlas en el directorio <code>web/uploads/jobs/</code>: http://www.symfony-project.org/get/jobeet/sensio-labs.gif y http://www.symfony-project.org/get/jobeet/extreme-sensio.gif</p></div>
+
+<p>Un archivo de datos  <em>fixtures file</em>) es un archivo escrito en formato YAML que define los objetos del modelo y los etiqueta con un nombre único (en el ejemplo anterior hemos creado dos ofertas de trabajo etiquetadas <code>job_sensio_labs</code> y <code>job_extreme_sensio</code>). Este nombre es imprescindible para relacionar objetos entre sí sin tener que definir claves primarias (que normalmente son valores que se auto-incrementan y por tanto, no se pueden establecer). En los archivos anteriores, la categoría de la oferta de trabajo <code>job_sensio_labs</code> es <code>programming</code>, que es el nombre único que le hemos dado a la categoría <code>Programming</code>.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> En los archivos YAML, cuando una cadena de texto contiene saltos de línea (como por ejemplo la columna <code>description</code> del archivo de datos de las ofertas de trabajo) puedes utilizar el símbolo <code>|</code> para indicar que la cadena de texto ocupa varias líneas.</p></div>
+
+<p>Aunque los archivos de datos pueden contener objetos de uno o varios modelos diferentes, en los archivos de datos de Jobeet hemos decidido crear un archivo para cada modelo.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Si te has fijado atentamente, habrás visto que los nombres de los archivos de datos incluyen un prefijo numérico. Aunque puedes utilizar los nombres que quieras, prefijar cada archivo con un número es una de las formas más sencillas de controlar el orden en el que se cargan los archivos de datos. Además, es una buena idea no utilizar números consecutivos por si más adelante tenemos que crear nuevos archivos de datos que se tienen que cargar entre medio de dos archivos ya existentes.</p></div>
+
+<p>En los archivos de datos no es obligatorio establecer el valor de todas las columnas. Si no se indica el valor de una columna, Symfony le asigna el valor por defecto establecido en el esquema de la base de datos. Además, como Symfony utiliza Propel para cargar los datos, funcionan todas las características avanzadas (como establecer automáticamente el valor de las columnas <code>created_at</code> y <code>updated_at</code>) y todos los comportamientos que hayas definido en las clases del modelo.</p>
+
+<p>Una vez creados los archivos de datos, cargarlos en la base de datos es tan sencillo como ejecutar la tarea <code>propel:data-load</code>:</p>
+
+<div class="code cli">
+<pre class="cli">$ php symfony propel:data-load</pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> La tarea <code>propel:build-all-load</code> es equivalente a ejecutar la tarea <code>propel:build-all</code> seguida de la tarea <code>propel:data-load</code></p></div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="el_orm.html">&larr; Anterior <span>3.4. El ORM</span></a>
+            
+            <a class="span5 next" href="probando_la_aplicacion_en_el_navegador.html">Siguiente &rarr; <span>3.6. Probando la aplicación en el navegador</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Los datos iniciales (El tutorial Jobeet%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'El tutorial Jobeet : Los datos iniciales']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Comenzando el proyecto</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> El proyecto</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_3.html">
+            <span>Capítulo 3.</span> El modelo de datos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_modelo_relacional.html">
+            <span>3.1.</span> El modelo relacional
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_esquema.html">
+            <span>3.2.</span> El esquema
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="la_base_de_datos.html">
+            <span>3.3.</span> La base de datos
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="el_orm.html">
+            <span>3.4.</span> El ORM
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="los_datos_iniciales.html">
+            <span>3.5.</span> Los datos iniciales
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="probando_la_aplicacion_en_el_navegador.html">
+            <span>3.6.</span> Probando la aplicación en el navegador
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="nos_vemos_manana.html">
+            <span>3.7.</span> Nos vemos mañana
+        </a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> El controlador y la vista</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> El sistema de enrutamiento</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Profundizando en el modelo</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Trabajando con la página de cada categoría</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Pruebas unitarias</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Pruebas funcionales</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Probando los formularios</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> El generador de la parte de administración</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> El usuario</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> El día de descanso</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Canales Atom</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Servicios web</a>
+    </li>
+    <li class="level-1">
+        <span>17</span> <a href="../capitulo_17.html"> El buscador</a>
+    </li>
+    <li class="level-1">
+        <span>18</span> <a href="../capitulo_18.html"> AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>19</span> <a href="../capitulo_19.html"> Internacionalización y localización</a>
+    </li>
+    <li class="level-1">
+        <span>20</span> <a href="../capitulo_20.html"> Plugins</a>
+    </li>
+    <li class="level-1">
+        <span>21</span> <a href="../capitulo_21.html"> El día del diseño</a>
+    </li>
+    <li class="level-1">
+        <span>22</span> <a href="../capitulo_22.html"> La cache</a>
+    </li>
+    <li class="level-1">
+        <span>23</span> <a href="../capitulo_23.html"> Pasando a producción</a>
+    </li>
+    <li class="level-1">
+        <span>24</span> <a href="../capitulo_24.html"> Un repaso a Symfony</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

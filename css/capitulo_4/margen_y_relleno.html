@@ -1,0 +1,468 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>4.2. Margen y relleno (Introducción a CSS)</title>
+        <link href="../main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="anchura_y_altura.html" />
+        <link rel="next" href="bordes.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="4.2. Margen y relleno (Introducción a CSS)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page css">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Introducción a CSS</a></li>
+  <li><a href="../capitulo_4.html">Capítulo 4. Modelo de cajas</a></li>
+  <li class="current"><span>4.2.. Margen y relleno</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="margen_y_relleno"><span>4.2.</span> Margen y relleno</h1>
+    
+
+<h3 id="margen">4.2.1. Margen</h3>
+
+<p>CSS define cuatro propiedades para controlar cada uno de los márgenes horizontales y verticales de un elemento.</p>
+
+<div class="table" id="table_4_3">
+
+    <table class="table property css" summary="Definición de la propiedad margin-top, margin-right, margin-bottom, margin-left de CSS">
+    <thead>
+        <tr>
+            <th scope="row">Propiedades</th>
+            <td><strong class="title"><strong>margin-top</strong>, <strong>margin-right</strong>, <strong>margin-bottom</strong>, <strong>margin-left</strong></strong></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">Valores</th>
+            <td><a href="../../referencia/css/unidades_de_medida.html">unidad de medida</a> | <a href="../../referencia/css/porcentajes.html">porcentaje</a> | auto | <a href="../../referencia/css/el_valor_inherit.html">inherit</a></td>
+        </tr>
+        <tr>
+            <th scope="row">Se aplica a</th>
+            <td>Todos los elementos, salvo margin-top y margin-bottom que sólo se aplican a los elementos de bloque y a las imágenes</td>
+        </tr>
+        <tr>
+            <th scope="row">Valor inicial</th>
+            <td>0</td>
+        </tr>
+        <tr>
+            <th scope="row">Descripción</th>
+            <td>Establece cada uno de los márgenes horizontales y verticales de un elemento</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+
+<p>Cada una de las propiedades establece la separación entre el borde lateral de la caja y el resto de cajas adyacentes:</p>
+
+<div class="figure" id="figure_4_4">
+    <img src="../../img/css/f0428.gif" alt="Las cuatro propiedades relacionadas con los márgenes" />
+
+    <p class="caption"><strong>Figura 4.4</strong> Las cuatro propiedades relacionadas con los márgenes</p>
+</div>
+
+
+<p>Las unidades más utilizadas para indicar los márgenes de un elemento son los píxeles (cuando se requiere una precisión total), los <code>em</code> (para hacer diseños que mantengan las proporciones) y los porcentajes (para hacer diseños líquidos o fluidos).</p>
+
+<p>El siguiente ejemplo añade un margen izquierdo al segundo párrafo:</p>
+
+<div class="code html">
+<pre class="html5">.destacado {
+  margin-left: 2em;
+}
+&nbsp;
+<span class="sc2">&lt;<span class="kw2">p</span>&gt;</span>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nam et elit.
+Vivamus placerat lorem. Maecenas sapien. Integer ut massa. Cras diam ipsum,
+laoreet non, tincidunt a, viverra sed, tortor.<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">p</span>&gt;</span>
+&nbsp;
+<span class="sc2">&lt;<span class="kw2">p</span> <span class="kw3">class</span><span class="sy0">=</span><span class="st0">&quot;destacado&quot;</span>&gt;</span>Vestibulum lectus diam, luctus vel, venenatis ultrices,
+cursus vel, tellus. Etiam placerat erat non sem. Nulla molestie odio non
+nisl tincidunt faucibus.<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">p</span>&gt;</span>
+&nbsp;
+<span class="sc2">&lt;<span class="kw2">p</span>&gt;</span>Aliquam euismod sapien eu libero. Ut tempor orci at nulla. Nam in eros
+egestas massa vehicula nonummy. Morbi posuere, nibh ultricies consectetuer tincidunt,
+risus turpis laoreet elit, ut tincidunt risus sem et nunc.<span class="sc2">&lt;<span class="sy0">/</span><span class="kw2">p</span>&gt;</span></pre>
+</div>
+
+<p>A continuación se muestra el aspecto del ejemplo anterior en cualquier navegador:</p>
+
+<div class="figure" id="figure_4_5">
+    <img src="../../img/css/f0404.gif" alt="Ejemplo de propiedad margin-left" />
+
+    <p class="caption"><strong>Figura 4.5</strong> Ejemplo de propiedad margin-left</p>
+</div>
+
+
+<p>Algunos diseñadores web utilizan la etiqueta <code>&lt;blockquote&gt;</code> para tabular los contenidos de los párrafos. Se trata de un error grave porque HTML no debe utilizarse para controlar el aspecto de los elementos. CSS es el único responsable de establecer el estilo de los elementos, por lo que en vez de utilizar la etiqueta <code>&lt;blockquote&gt;</code> de HTML, debería utilizarse la propiedad <code>margin-left</code> de CSS.</p>
+
+<p>Los márgenes verticales (<code>margin-top</code> y <code>margin-bottom</code>) sólo se pueden aplicar a los elementos de bloque y las imágenes, mientras que los márgenes laterales (<code>margin-left</code> y <code>margin-right</code>) se pueden aplicar a cualquier elemento, tal y como muestra la siguiente imagen:</p>
+
+<div class="figure" id="figure_4_6">
+    <img src="../../img/css/f0429.gif" alt="Los márgenes verticales sólo se aplican a los elementos de bloque e imágenes" />
+
+    <p class="caption"><strong>Figura 4.6</strong> Los márgenes verticales sólo se aplican a los elementos de bloque e imágenes</p>
+</div>
+
+
+<p>La imagen anterior muestra el resultado de aplicar los mismos márgenes a varios enlaces (elementos en línea) y varios párrafos (elementos de bloque). En los elementos en línea los márgenes verticales no tienen ningún efecto, por lo que los enlaces no muestran ninguna separación vertical, al contrario de lo que sucede con los párrafos. Sin embargo, los márgenes laterales funcionan sobre cualquier tipo de elemento, por lo que los enlaces se muestran separados entre sí y los párrafos aumentan su separación con los bordes laterales de su elemento contenedor.</p>
+
+<p>Además de las cuatro propiedades que controlan cada uno de los márgenes del elemento, CSS define una propiedad especial que permite establecer los cuatro márgenes de forma simultánea. Estas propiedades especiales se denominan <em>"propiedades shorthand"</em> y CSS define varias propiedades de este tipo, como se verá más adelante.</p>
+
+<p>La propiedad que permite definir de forma simultanea los cuatro márgenes se denomina <code>margin</code>.</p>
+
+<div class="table" id="table_4_4">
+
+    <table class="table property css" summary="Definición de la propiedad margin de CSS">
+    <thead>
+        <tr>
+            <th scope="row">Propiedad</th>
+            <td><strong class="title"><strong>margin</strong></strong></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">Valores</th>
+            <td>( <a href="../../referencia/css/unidades_de_medida.html">unidad de medida</a> | <a href="../../referencia/css/porcentajes.html">porcentaje</a> | auto ) {1, 4} | <a href="../../referencia/css/el_valor_inherit.html">inherit</a></td>
+        </tr>
+        <tr>
+            <th scope="row">Se aplica a</th>
+            <td>Todos los elementos salvo algunos casos especiales de elementos mostrados como tablas</td>
+        </tr>
+        <tr>
+            <th scope="row">Valor inicial</th>
+            <td>-</td>
+        </tr>
+        <tr>
+            <th scope="row">Descripción</th>
+            <td>Establece de forma directa todos los márgenes de un elemento</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+
+<p>La notación <code>{1, 4}</code> de la definición anterior significa que la propiedad <code>margin</code> admite entre uno y cuatro valores, con el siguiente significado:</p>
+
+<ul>
+<li>Si solo se indica un valor, todos los márgenes tienen ese valor.</li>
+<li>Si se indican dos valores, el primero se asigna al margen superior e inferior y el segundo se asigna a los márgenes izquierdo y derecho.</li>
+<li>Si se indican tres valores, el primero se asigna al margen superior, el tercero se asigna al margen inferior y el segundo valor se asigna los márgenes izquierdo y derecho.</li>
+<li>Si se indican los cuatro valores, el orden de asignación es: margen superior, margen derecho, margen inferior y margen izquierdo.</li>
+</ul>
+
+<p>El ejemplo anterior de márgenes se puede reescribir utilizando la propiedad <code>margin</code>:</p>
+
+<p>Código CSS original:</p>
+
+<div class="code css">
+<pre class="css">div img <span class="br0">&#123;</span>
+  <span class="kw1">margin-top</span><span class="sy0">:</span> <span class="re3">.5em</span><span class="sy0">;</span>
+  <span class="kw1">margin-bottom</span><span class="sy0">:</span> <span class="re3">.5em</span><span class="sy0">;</span>
+  <span class="kw1">margin-left</span><span class="sy0">:</span> <span class="re3">1em</span><span class="sy0">;</span>
+  <span class="kw1">margin-right</span><span class="sy0">:</span> <span class="re3">.5em</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Alternativa directa:</p>
+
+<div class="code css">
+<pre class="css">div img <span class="br0">&#123;</span>
+  <span class="kw1">margin</span><span class="sy0">:</span> <span class="re3">.5em</span> <span class="re3">.5em</span> .5m <span class="re3">1em</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Otra alternativa:</p>
+
+<div class="code css">
+<pre class="css">div img <span class="br0">&#123;</span>
+  <span class="kw1">margin</span><span class="sy0">:</span> <span class="re3">.5em</span><span class="sy0">;</span>
+  <span class="kw1">margin-left</span><span class="sy0">:</span> <span class="re3">1em</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>El comportamiento de los márgenes verticales es más complejo de lo que se puede imaginar. Cuando se juntan dos o más márgenes verticales, se fusionan de forma automática y la altura del nuevo margen será igual a la altura del margen más alto de los que se han fusionado.</p>
+
+<div class="figure" id="figure_4_7">
+    <img src="../../img/css/f0406.gif" alt="Fusión automática de los márgenes verticales" />
+
+    <p class="caption"><strong>Figura 4.7</strong> Fusión automática de los márgenes verticales</p>
+</div>
+
+
+<p>De la misma forma, si un elemento está contenido dentro de otro elemento, sus márgenes verticales se fusionan y resultan en un nuevo margen de la misma altura que el mayor margen de los que se han fusionado:</p>
+
+<div class="figure" id="figure_4_8">
+    <img src="../../img/css/f0407.gif" alt="Fusión de los márgenes de los elementos interiores" />
+
+    <p class="caption"><strong>Figura 4.8</strong> Fusión de los márgenes de los elementos interiores</p>
+</div>
+
+
+<p>Aunque en principio puede parecer un comportamiento extraño, la razón por la que se propuso este mecanismo de fusión automática de márgenes verticales es el de dar uniformidad a las páginas web habituales. En una página con varios párrafos, si no se diera este comportamiento y se estableciera un determinado margen a todos los párrafos, el primer párrafo no mostraría un aspecto homogéneo respecto de los demás.</p>
+
+<div class="figure" id="figure_4_9">
+    <img src="../../img/css/f0408.gif" alt="Motivo por el que se fusionan automáticamente los márgenes verticales" />
+
+    <p class="caption"><strong>Figura 4.9</strong> Motivo por el que se fusionan automáticamente los márgenes verticales</p>
+</div>
+
+
+<p>En el caso de un elemento que se encuentra en el interior de otro y sus márgenes se fusionan de forma automática, se puede evitar este comportamiento añadiendo un pequeño relleno (<code>padding: 1px</code>) o un borde (<code>border: 1px solid transparent</code>) al elemento contenedor.</p>
+
+<h3 id="relleno">4.2.2. Relleno</h3>
+
+<p>CSS define cuatro propiedades para controlar cada uno de los espacios de relleno horizontales y verticales de un elemento.</p>
+
+<div class="table" id="table_4_5">
+
+    <table class="table property css" summary="Definición de la propiedad padding-top, padding-right, padding-bottom, padding-left de CSS">
+    <thead>
+        <tr>
+            <th scope="row">Propiedades</th>
+            <td><strong class="title"><strong>padding-top</strong>, <strong>padding-right</strong>, <strong>padding-bottom</strong>, <strong>padding-left</strong></strong></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">Valores</th>
+            <td><a href="../../referencia/css/unidades_de_medida.html">unidad de medida</a> | <a href="../../referencia/css/porcentajes.html">porcentaje</a> | <a href="../../referencia/css/el_valor_inherit.html">inherit</a></td>
+        </tr>
+        <tr>
+            <th scope="row">Se aplica a</th>
+            <td>Todos los elementos excepto algunos elementos de tablas como grupos de cabeceras y grupos de pies de tabla</td>
+        </tr>
+        <tr>
+            <th scope="row">Valor inicial</th>
+            <td>0</td>
+        </tr>
+        <tr>
+            <th scope="row">Descripción</th>
+            <td>Establece cada uno de los rellenos horizontales y verticales de un elemento</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+
+<p>Cada una de estas propiedades establece la separación entre el contenido y los bordes laterales de la caja del elemento:</p>
+
+<div class="figure" id="figure_4_10">
+    <img src="../../img/css/f0430.gif" alt="Las cuatro propiedades relacionadas con los rellenos" />
+
+    <p class="caption"><strong>Figura 4.10</strong> Las cuatro propiedades relacionadas con los rellenos</p>
+</div>
+
+
+<p>Como sucede con los márgenes, CSS también define una propiedad de tipo <em>"shorthand"</em> llamada <code>padding</code> para establecer los cuatro rellenos de un elemento de forma simultánea.</p>
+
+<div class="table" id="table_4_6">
+
+    <table class="table property css" summary="Definición de la propiedad padding de CSS">
+    <thead>
+        <tr>
+            <th scope="row">Propiedad</th>
+            <td><strong class="title"><strong>padding</strong></strong></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">Valores</th>
+            <td>( <a href="../../referencia/css/unidades_de_medida.html">unidad de medida</a> | <a href="../../referencia/css/porcentajes.html">porcentaje</a> ) {1, 4} | <a href="../../referencia/css/el_valor_inherit.html">inherit</a></td>
+        </tr>
+        <tr>
+            <th scope="row">Se aplica a</th>
+            <td>Todos los elementos excepto algunos elementos de tablas como grupos de cabeceras y grupos de pies de tabla</td>
+        </tr>
+        <tr>
+            <th scope="row">Valor inicial</th>
+            <td>-</td>
+        </tr>
+        <tr>
+            <th scope="row">Descripción</th>
+            <td>Establece de forma directa todos los rellenos de los elementos</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+
+<p>La notación <code>{1, 4}</code> de la definición anterior significa que la propiedad <code>padding</code> admite entre uno y cuatro valores, con el mismo significado que el de la propiedad <code>margin</code>. Ejemplo:</p>
+
+<div class="code css">
+<pre class="css">body <span class="br0">&#123;</span><span class="kw1">padding</span><span class="sy0">:</span> <span class="re3">2em</span><span class="br0">&#125;</span>     <span class="coMULTI">/* Todos los rellenos valen 2em */</span>
+body <span class="br0">&#123;</span><span class="kw1">padding</span><span class="sy0">:</span> <span class="re3">1em</span> <span class="re3">2em</span><span class="br0">&#125;</span> <span class="coMULTI">/* Superior e inferior = 1em, Izquierdo y derecho = 2em */</span>
+body <span class="br0">&#123;</span><span class="kw1">padding</span><span class="sy0">:</span> <span class="re3">1em</span> <span class="re3">2em</span> <span class="re3">3em</span><span class="br0">&#125;</span> <span class="coMULTI">/* Superior = 1em, derecho = 2em, inferior = 3em, izquierdo = 2em */</span>
+body <span class="br0">&#123;</span><span class="kw1">padding</span><span class="sy0">:</span> <span class="re3">1em</span> <span class="re3">2em</span> <span class="re3">3em</span> <span class="re3">4em</span><span class="br0">&#125;</span> <span class="coMULTI">/* Superior = 1em, derecho = 2em, inferior = 3em, izquierdo = 4em */</span></pre>
+</div>
+
+<p><div class="exercise"><p class="title">Ejercicio 3</p> <a href="http://librosweb.es/css/capitulo_15/ejercicio_3.html">Ver enunciado</a></div></p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="anchura_y_altura.html">&larr; Anterior <span>4.1. Anchura y altura</span></a>
+            
+            <a class="span5 next" href="bordes.html">Siguiente &rarr; <span>4.3. Bordes</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Margen y relleno (Introducción a CSS%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a CSS : Margen y relleno']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Selectores</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Unidades de medida y colores</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_4.html">
+            <span>Capítulo 4.</span> Modelo de cajas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="anchura_y_altura.html">
+            <span>4.1.</span> Anchura y altura
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="margen_y_relleno.html">
+            <span>4.2.</span> Margen y relleno
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="bordes.html">
+            <span>4.3.</span> Bordes
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="margen_relleno_bordes_y_modelo_de_cajas.html">
+            <span>4.4.</span> Margen, relleno, bordes y modelo de cajas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="fondos.html">
+            <span>4.5.</span> Fondos
+        </a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Posicionamiento y visualización</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Texto</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Enlaces</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Imágenes</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Listas</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Tablas</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Layout</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Otros</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Recursos útiles</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Ejercicios</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

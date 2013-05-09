@@ -1,0 +1,215 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>11.4. Evitar el problema de los dominios diferentes (Introducción a AJAX)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="ofuscar_el_codigo_javascript.html" />
+        <link rel="next" href="../capitulo_12.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="11.4. Evitar el problema de los dominios diferentes (Introducción a AJAX)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page ajax">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Introducción a AJAX</a></li>
+  <li><a href="../capitulo_11.html">Capítulo 11. Otras utilidades</a></li>
+  <li class="current"><span>11.4. Evitar el problema de los dominios diferentes</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="evitar_el_problema_de_los_dominios_diferentes"><span>11.4.</span> Evitar el problema de los dominios diferentes</h1>
+    
+
+<p>Como ya se ha explicado y se ha podido comprobar en algunos de los ejercicios, los navegadores imponen restricciones muy severas a las conexiones de red que se pueden realizar mediante AJAX. Esta característica se conoce como <em>"el problema de los dominios diferentes"</em> (en inglés, <em>"cross-domain problem"</em>).</p>
+
+<p>El código JavaScript alojado en un servidor, no puede realizar conexiones con otros dominios externos. También existen problemas entre subdominios de un mismo sitio web, que se pueden evitar con el uso de la propiedad <code>document.domain</code>.</p>
+
+<p>Afortunadamente, existen opciones para poder realizar conexiones con cualquier dominio externo al servidor que aloja el código JavaScript. Todas las soluciones que son viables técnicamente y que funcionan de la misma forma en cualquier navegador hacen uso de recursos en el servidor que aloja el código JavaScript original.</p>
+
+<p>La solución más sencilla es la de habilitar el módulo <code>mod_rewrite</code> en los servidores web de tipo Apache. Con este módulo activado, Apache se puede convertir en un proxy transparente que realice las peticiones externas en nombre del script y le devuelva los resultados.</p>
+
+<p>En el siguiente ejemplo, el navegador descarga el script desde el <code>servidor1</code>. Por este motivo, el código del script puede solicitar recursos del <code>servidor1</code>, pero no puede establecer conexiones con el <code>servidor2</code>:</p>
+
+<div class="figure" id="figure_11_1">
+    <img src="../../img/ajax/f1101.gif" alt="El script descargado desde el servidor1 no puede establecer conexiones de red con el servidor2" />
+
+    <p class="caption"><strong>Figura 11.1</strong> El script descargado desde el servidor1 no puede establecer conexiones de red con el servidor2</p>
+</div>
+
+
+<p>La solución más sencilla para resolver este problema consiste en configurar el servidor web del <code>servidor1</code>. Si se utiliza el servidor web Apache, para configurar el proxy transparente, se habilita el módulo <code>mod_rewrite</code> y se añaden las siguientes directivas a la configuración de Apache:</p>
+
+<div class="code code">
+<pre class="code">RewriteEngine on
+RewriteRule ^/ruta/al/recurso$ http://www.servidor2.com/ruta/al/recurso [P]</pre>
+</div>
+
+<p>Ahora, el código de la aplicación puede acceder a cualquier recurso del <code>servidor2</code> ya que:</p>
+
+<ul>
+<li>El script realiza peticiones a: http://www.servidor1.com/ruta/al/recurso</li>
+<li>En el <code>servidor1</code> se transforma automáticamente a: http://www.servidor2.com/ruta/al/recurso</li>
+<li>El <code>servidor1</code> obtiene la respuesta del <code>servidor2</code> y la envía de nuevo al script</li>
+</ul>
+
+<div class="figure" id="figure_11_2">
+    <img src="../../img/ajax/f1102.gif" alt="Utilizando un proxy transparente, los scripts pueden acceder a los recursos que se encuentren en cualquier servidor" />
+
+    <p class="caption"><strong>Figura 11.2</strong> Utilizando un proxy transparente, los scripts pueden acceder a los recursos que se encuentren en cualquier servidor</p>
+</div>
+
+
+<p>Además de utilizar el servidor web como proxy transparente, también es posible diseñar un proxy a medida mediante software. Yahoo por ejemplo ofrece una extensa documentación para los desarrolladores de aplicaciones web. Entre esta documentación, se encuentra un artículo sobre el uso de proxys para evitar el problema de las peticiones externas de AJAX: http://developer.yahoo.com/javascript/howto-proxy.html</p>
+
+<p>Además, Yahoo ofrece un proxy de ejemplo realizado con PHP y que puede ser utilizado para conectar aplicaciones JavaScript con sus servicios web.</p>
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="ofuscar_el_codigo_javascript.html">&larr; Anterior <span>11.3. Ofuscar el código JavaScript</span></a>
+            
+            <a class="span5 next" href="../capitulo_12.html">Siguiente &rarr; <span>Capítulo 12. Recursos útiles</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Evitar el problema de los dominios diferentes (Introducción a AJAX%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a AJAX : Evitar el problema de los dominios diferentes']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción a AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> JavaScript básico</a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> JavaScript avanzado</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> DOM (Document Object Model)</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> BOM (Browser Object Model)</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Eventos</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Primeros pasos con AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Técnicas básicas con AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Técnicas avanzadas con AJAX</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Frameworks y librerías</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_11.html">
+            <span>Capítulo 11.</span> Otras utilidades
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="mejorar_el_rendimiento_de_las_aplicaciones_complejas.html">
+            <span>11.2.</span> Mejorar el rendimiento de las aplicaciones complejas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="ofuscar_el_codigo_javascript.html">
+            <span>11.3.</span> Ofuscar el código JavaScript
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="evitar_el_problema_de_los_dominios_diferentes.html">
+            <span>11.4.</span> Evitar el problema de los dominios diferentes
+        </a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Recursos útiles</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Bibliografía</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

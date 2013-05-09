@@ -1,0 +1,329 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>3.1. Unidades de medida (Introducción a CSS)</title>
+        <link href="../main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="../capitulo_3.html" />
+        <link rel="next" href="colores.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="3.1. Unidades de medida (Introducción a CSS)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page css">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Introducción a CSS</a></li>
+  <li><a href="../capitulo_3.html">Capítulo 3. Unidades de medida y colores</a></li>
+  <li class="current"><span>3.1.. Unidades de medida</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="unidades_de_medida"><span>3.1.</span> Unidades de medida</h1>
+    
+
+<p>Las medidas en CSS se emplean, entre otras, para definir la altura, anchura y márgenes de los elementos y para establecer el tamaño de letra del texto. Todas las medidas se indican como un valor numérico entero o decimal seguido de una unidad de medida (sin ningún espacio en blanco entre el número y la unidad de medida).</p>
+
+<p>CSS divide las unidades de medida en dos grupos: absolutas y relativas. Las medidas relativas definen su valor en relación con otra medida, por lo que para obtener su valor real, se debe realizar alguna operación con el valor indicado. Las unidades absolutas establecen de forma completa el valor de una medida, por lo que su valor real es directamente el valor indicado.</p>
+
+<p>Si el valor es <code>0</code>, la unidad de medida es opcional. Si el valor es distinto a <code>0</code> y no se indica ninguna unidad, la medida se ignora completamente, lo que suele ser uno de los errores más habituales de los diseñadores que empiezan con CSS. Algunas propiedades permiten indicar medidas negativas, aunque habitualmente sus valores son positivos. Si el valor decimal de una medida es inferior a <code>1</code>, se puede omitir el <code>0</code> de la izquierda (<code>0.5em</code> es equivalente a <code>.5em</code>).</p>
+
+<h3 id="unidades_absolutas">3.1.1. Unidades absolutas</h3>
+
+<p>Una medida indicada mediante unidades absolutas está completamente definida, ya que su valor no depende de otro valor de referencia. A continuación se muestra la lista completa de unidades absolutas definidas por CSS y su significado:</p>
+
+<ul>
+<li><code>in</code>, pulgadas (<em>"inches"</em>, en inglés). Una pulgada equivale a <code>2.54</code> centímetros.</li>
+<li><code>cm</code>, centímetros.</li>
+<li><code>mm</code>, milímetros.</li>
+<li><code>pt</code>, puntos. Un punto equivale a <code>1 pulgada/72</code>, es decir, unos <code>0.35</code> milímetros.</li>
+<li><code>pc</code>, picas. Una pica equivale a <code>12</code> puntos, es decir, unos <code>4.23</code> milímetros.</li>
+</ul>
+
+<p>A continuación se muestran ejemplos de utilización de unidades absolutas:</p>
+
+<div class="code css">
+<pre class="css"><span class="coMULTI">/* El cuerpo de la página debe mostrar un margen de media pulgada */</span>
+body <span class="br0">&#123;</span> <span class="kw1">margin</span><span class="sy0">:</span> <span class="re3">0.5in</span><span class="sy0">;</span> <span class="br0">&#125;</span>
+&nbsp;
+<span class="coMULTI">/* Los elementos &lt;h1&gt; deben mostrar un interlineado de 2 centímetros */</span>
+h1 <span class="br0">&#123;</span> <span class="kw1">line-height</span><span class="sy0">:</span> <span class="re3">2cm</span><span class="sy0">;</span> <span class="br0">&#125;</span>
+&nbsp;
+<span class="coMULTI">/* Las palabras de todos los párrafos deben estar separadas 4 milímetros entre si */</span>
+p <span class="br0">&#123;</span> <span class="kw1">word-spacing</span><span class="sy0">:</span> 4mm<span class="sy0">;</span> <span class="br0">&#125;</span>
+&nbsp;
+<span class="coMULTI">/* Los enlaces se deben mostrar con un tamaño de letra de 12 puntos */</span>
+a <span class="br0">&#123;</span> <span class="kw1">font-size</span><span class="sy0">:</span> <span class="re3">12pt</span> <span class="br0">&#125;</span>
+&nbsp;
+<span class="coMULTI">/* Los elementos &lt;span&gt; deben tener un tamaño de letra de 1 pica */</span>
+span <span class="br0">&#123;</span> <span class="kw1">font-size</span><span class="sy0">:</span> 1pc <span class="br0">&#125;</span></pre>
+</div>
+
+<p>La principal ventaja de las unidades absolutas es que su valor es directamente el valor que se debe utilizar, sin necesidad de realizar cálculos intermedios. Su principal desventaja es que son muy poco flexibles y no se adaptan fácilmente a los diferentes medios.</p>
+
+<p>De todas las unidades absolutas, la única que suele utilizarse es el punto (<code>pt</code>). Se trata de la unidad de medida preferida para establecer el tamaño del texto en los documentos que se van a imprimir, es decir, para el medio <code>print</code> de CSS, tal y como se verá más adelante.</p>
+
+<h3 id="unidades_relativas">3.1.2. Unidades relativas</h3>
+
+<p>La unidades relativas, a diferencia de las absolutas, no están completamente definidas, ya que su valor siempre está referenciado respecto a otro valor. A pesar de su aparente dificultad, son las más utilizadas en el diseño web por la flexibilidad con la que se adaptan a los diferentes medios.</p>
+
+<p>A continuación se muestran las tres unidades de medida relativas definidas por CSS y la referencia que toma cada una para determinar su valor real:</p>
+
+<ul>
+<li><code>em</code>, (no confundir con la etiqueta <code>&lt;em&gt;</code> de HTML) relativa respecto del tamaño de letra del elemento. </li>
+<li><code>ex</code>, relativa respecto de la altura de la letra <code>x</code> (<em>"equis minúscula"</em>) del tipo y tamaño de letra del elemento.</li>
+<li><code>px</code>, (píxel) relativa respecto de la resolución de la pantalla del dispositivo en el que se visualiza la página HTML.</li>
+</ul>
+
+<p>Las unidades <code>em</code> y <code>ex</code> no han sido creadas por CSS, sino que llevan décadas utilizándose en el campo de la tipografía. Aunque no es una definición exacta, la unidad <code>1em</code> equivale a la anchura de la letra <code>M</code> (<em>"eme mayúscula"</em>) del tipo y tamaño de letra del elemento.</p>
+
+<p>La unidad <code>em</code> hace referencia al tamaño en puntos de la letra que se está utilizando. Si se utiliza una tipografía de 12 puntos, <code>1em</code> equivale a <code>12 puntos</code>. El valor de <code>1ex</code> se puede aproximar por <code>0.5 em</code>.</p>
+
+<p>Si se considera el siguiente ejemplo:</p>
+
+<div class="code css">
+<pre class="css">p <span class="br0">&#123;</span> <span class="kw1">margin</span><span class="sy0">:</span> <span class="re3">1em</span><span class="sy0">;</span> <span class="br0">&#125;</span></pre>
+</div>
+
+<p>La regla CSS anterior indica que los párrafos deben mostrar un margen de anchura igual a <code>1em</code>. Como se trata de una unidad de medida relativa, es necesario realizar un cálculo matemático para determinar la anchura real de ese margen.</p>
+
+<p>La unidad de medida <code>em</code> siempre hace referencia al tamaño de letra del elemento. Por otra parte, todos los navegadores muestran por defecto el texto de los párrafos con un tamaño de letra de 16 píxel. Por tanto, en este caso el margen de <code>1em</code> equivale a un margen de anchura <code>16px</code>.</p>
+
+<p>A continuación se modifica el ejemplo anterior para cambiar el tamaño de letra de los párrafos:</p>
+
+<div class="code css">
+<pre class="css">p <span class="br0">&#123;</span> <span class="kw1">font-size</span><span class="sy0">:</span> <span class="re3">32px</span><span class="sy0">;</span> <span class="kw1">margin</span><span class="sy0">:</span> <span class="re3">1em</span><span class="sy0">;</span> <span class="br0">&#125;</span></pre>
+</div>
+
+<p>El valor del margen sigue siendo el mismo en unidades relativas (<code>1em</code>) pero su valor real ha variado porque el tamaño de letra de los párrafos ha variado. En este caso, el margen tendrá una anchura de <code>32px</code>, ya que <code>1em</code> siempre equivale al tamaño de letra del elemento.</p>
+
+<p>Si se quiere reducir la anchura del margen a <code>16px</code> pero manteniendo el tamaño de letra de los párrafos en <code>32px</code>, se debe utilizar la siguiente regla CSS:</p>
+
+<div class="code css">
+<pre class="css">p <span class="br0">&#123;</span> <span class="kw1">font-size</span><span class="sy0">:</span> <span class="re3">32px</span><span class="sy0">;</span> <span class="kw1">margin</span><span class="sy0">:</span> <span class="re3">0.5em</span><span class="sy0">;</span> <span class="br0">&#125;</span></pre>
+</div>
+
+<p>El valor <code>0.5em</code> se interpreta como <em>"la mitad del tamaño de letra del elemento"</em>, ya que se debe multiplicar por <code>0.5</code> su tamaño de letra (<code>32px x 0.5 = 16px</code>). De la misma forma, si se quiere mostrar un margen de <code>8px</code> de anchura, se debería utilizar el valor <code>0.25em</code>, ya que <code>32px x 0.25 = 8px</code>.</p>
+
+<p>La gran ventaja de las unidades relativas es que siempre mantienen las proporciones del diseño de la página. Establecer el margen de un elemento con el valor <code>1em</code> equivale a indicar que <em>"el margen del elemento debe ser del mismo tamaño que su letra y debe cambiar proporcionalmente"</em>.</p>
+
+<p>En efecto, si el tamaño de letra de un elemento aumenta hasta un valor enorme, su margen de <code>1em</code> también será enorme. Si su tamaño de letra se reduce hasta un valor diminuto, el margen de <code>1em</code> también será diminuto. El uso de unidades relativas permite mantener las proporciones del diseño cuando se modifica el tamaño de letra de la página.</p>
+
+<p>El funcionamiento de la unidad <code>ex</code> es idéntico a <code>em</code>, salvo que en este caso, la referencia es la altura de la letra <code>x</code> minúscula, por lo que su valor es aproximadamente la mitad que el de la unidad <code>em</code>.</p>
+
+<p>Por último, las medidas indicadas en píxel también se consideran relativas, ya que el aspecto de los elementos dependerá de la resolución del dispositivo en el que se visualiza la página HTML. Si un elemento tiene una anchura de <code>400px</code>, ocupará la mitad de una pantalla con una resolución de <code>800x600</code>, pero ocupará menos de la tercera parte en una pantalla con resolución de <code>1440x900</code>.</p>
+
+<p>Las unidades de medida se pueden mezclar en los diferentes elementos de una misma página, como en el siguiente ejemplo:</p>
+
+<div class="code css">
+<pre class="css">body <span class="br0">&#123;</span> <span class="kw1">font-size</span><span class="sy0">:</span> <span class="re3">10px</span><span class="sy0">;</span> <span class="br0">&#125;</span>
+h1 <span class="br0">&#123;</span> <span class="kw1">font-size</span><span class="sy0">:</span> <span class="re3">2.5em</span><span class="sy0">;</span> <span class="br0">&#125;</span></pre>
+</div>
+
+<p>En primer lugar, se establece un tamaño de letra base de <code>10</code> píxel para toda la página. A continuación, se asigna un tamaño de <code>2.5em</code> al elemento <code>&lt;h1&gt;</code>, por lo que su tamaño de letra real será de <code>2.5 x 10px = 25px</code>.</p>
+
+<p>Como se vio en los capítulos anteriores, el valor de la mayoría de propiedades CSS se hereda de padres a hijos. Así por ejemplo, si se establece el tamaño de letra al elemento <code>&lt;body&gt;</code>, todos los elementos de la página tendrán el mismo tamaño de letra, salvo que indiquen otro valor.</p>
+
+<p>Sin embargo, el valor de las medidas relativas no se hereda directamente, sino que se hereda su valor real una vez calculado. El siguiente ejemplo muestra este comportamiento:</p>
+
+<div class="code css">
+<pre class="css">body <span class="br0">&#123;</span>
+  <span class="kw1">font-size</span><span class="sy0">:</span> <span class="re3">12px</span><span class="sy0">;</span>
+  <span class="kw1">text-indent</span><span class="sy0">:</span> <span class="re3">3em</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+h1 <span class="br0">&#123;</span> <span class="kw1">font-size</span><span class="sy0">:</span> <span class="re3">15px</span> <span class="br0">&#125;</span></pre>
+</div>
+
+<p>La propiedad <code>text-indent</code>, como se verá en los próximos capítulos, se utiliza para tabular la primera línea de un texto. El elemento <code>&lt;body&gt;</code> define un valor para esta propiedad, pero el elemento <code>&lt;h1&gt;</code> no lo hace, por lo que heredará el valor de su elemento padre. Sin embargo, el valor heredado no es <code>3em</code>, sino <code>36px</code>.</p>
+
+<p>Si se heredara el valor <code>3em</code>, al multiplicarlo por el valor de <code>font-size</code> del elemento <code>&lt;h1&gt;</code> (que vale <code>15px</code>) el resultado sería <code>3em x 15px = 45px</code>. No obstante, como se ha comentado, los valores que se heredan no son los relativos, sino los valores ya calculados.</p>
+
+<p>Por lo tanto, en primer lugar se calcula el valor real de <code>3em</code> para el elemento <code>&lt;body&gt;</code>: <code>3em x 12px = 36px</code>. Una vez calculado el valor real, este es el valor que se hereda para el resto de elementos.</p>
+
+<h3 id="porcentajes">3.1.3. Porcentajes</h3>
+
+<p>El porcentaje también es una unidad de medida relativa, aunque por su importancia CSS la trata de forma separada a <code>em</code>, <code>ex</code> y <code>px</code>. Un porcentaje está formado por un valor numérico seguido del símbolo <code>%</code> y siempre está referenciado a otra medida. Cada una de las propiedades de CSS que permiten indicar como valor un porcentaje, define el valor al que hace referencia ese porcentaje.</p>
+
+<p>Los porcentajes se pueden utilizar por ejemplo para establecer el valor del tamaño de letra de los elementos:</p>
+
+<div class="code css">
+<pre class="css">body <span class="br0">&#123;</span> <span class="kw1">font-size</span><span class="sy0">:</span> <span class="re3">1em</span><span class="sy0">;</span> <span class="br0">&#125;</span>
+h1 <span class="br0">&#123;</span> <span class="kw1">font-size</span><span class="sy0">:</span> <span class="re3">200%</span><span class="sy0">;</span> <span class="br0">&#125;</span>
+h2 <span class="br0">&#123;</span> <span class="kw1">font-size</span><span class="sy0">:</span> <span class="re3">150%</span><span class="sy0">;</span> <span class="br0">&#125;</span></pre>
+</div>
+
+<p>Los tamaños establecidos para los elementos <code>&lt;h1&gt;</code> y <code>&lt;h2&gt;</code> mediante las reglas anteriores, son equivalentes a <code>2em</code> y <code>1.5em</code> respectivamente, por lo que es más habitual definirlos mediante <code>em</code>.</p>
+
+<p>Los porcentajes también se utilizan para establecer la anchura de los elementos:</p>
+
+<div class="code css">
+<pre class="css">div<span class="re0">#contenido</span> <span class="br0">&#123;</span> <span class="kw1">width</span><span class="sy0">:</span> <span class="re3">600px</span><span class="sy0">;</span> <span class="br0">&#125;</span>
+div<span class="re1">.principal</span> <span class="br0">&#123;</span> <span class="kw1">width</span><span class="sy0">:</span> <span class="re3">80%</span><span class="sy0">;</span> <span class="br0">&#125;</span>
+&nbsp;
+&lt;div id<span class="sy0">=</span><span class="st0">&quot;contenido&quot;</span><span class="sy0">&gt;</span>
+  &lt;div class<span class="sy0">=</span><span class="st0">&quot;principal&quot;</span><span class="sy0">&gt;</span>
+    ...
+  &lt;/div<span class="sy0">&gt;</span>
+&lt;/div<span class="sy0">&gt;</span></pre>
+</div>
+
+<p>En el ejemplo anterior, la referencia del valor <code>80%</code> es la anchura de su elemento padre. Por tanto, el elemento <code>&lt;div&gt;</code> cuyo atributo <code>class</code> vale <code>principal</code> tiene una anchura de <code>80% x 600px = 480px</code>.</p>
+
+<h3 id="recomendaciones">3.1.4. Recomendaciones</h3>
+
+<p>En general, se recomienda el uso de unidades relativas siempre que sea posible, ya que mejora la accesibilidad de la página y permite que los documentos se adapten fácilmente a cualquier medio y dispositivo.</p>
+
+<p>El documento <a href="http://www.w3.org/TR/WCAG10-CSS-TECHS/">Recomendaciones sobre técnicas CSS para la mejora de la accesibilidad de los contenidos HTML</a>, elaborado por el organismo W3C, recomienda el uso de la unidad <code>em</code> para indicar el tamaño del texto y para todas las medidas que sean posibles.</p>
+
+<p>Normalmente se utilizan píxel y porcentajes para definir el layout del documento (básicamente, la anchura de las columnas y de los elementos de las páginas) y <code>em</code> y porcentajes para el tamaño de letra de los textos.</p>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="../capitulo_3.html">&larr; Anterior <span>Capítulo 3. Unidades de medida y colores</span></a>
+            
+            <a class="span5 next" href="colores.html">Siguiente &rarr; <span>3.2. Colores</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Unidades de medida (Introducción a CSS%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Introducción a CSS : Unidades de medida']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1">
+        <span>2</span> <a href="../capitulo_2.html"> Selectores</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_3.html">
+            <span>Capítulo 3.</span> Unidades de medida y colores
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="unidades_de_medida.html">
+            <span>3.1.</span> Unidades de medida
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="colores.html">
+            <span>3.2.</span> Colores
+        </a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Modelo de cajas</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Posicionamiento y visualización</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Texto</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Enlaces</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Imágenes</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Listas</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Tablas</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Formularios</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Layout</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Otros</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Recursos útiles</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Ejercicios</a>
+    </li>
+    <li class="level-1">
+        <span>16</span> <a href="../capitulo_16.html"> Ejercicios resueltos</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->

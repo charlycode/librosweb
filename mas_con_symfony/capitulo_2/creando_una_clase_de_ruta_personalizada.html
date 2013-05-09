@@ -1,0 +1,461 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>2.3. Creando una clase de ruta personalizada (Más con Symfony)</title>
+        <link href="../../css/main-fa23fb7.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-82842-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <link rel="apple-touch-icon" type="image/png" href="../../apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" type="image/png" href="../../apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LibrosWeb" />
+
+        <link rel="shortcut icon" type="image/png" href="../../favicon.png" />
+        <meta name="site:version" content="fa23fb7" />
+        <link rel="author" href="https://plus.google.com/u/0/107307901774377088868" />
+        <link rel="prev" href="como_funciona_el_sistema_de_enrutamiento.html" />
+        <link rel="next" href="colecciones_de_rutas.html" />
+        <link rel="start" href="../index.html" />
+        <meta name="twitter:site" content="@librosweb" />
+        <link rel="search" type="application/opensearchdescription+xml" href="http://librosweb.es/opensearch/documentation.xml" title="Libros y tutoriales de LibrosWeb.es" />
+        <meta property="fb:page_id" content="437758756273955" />
+        <meta property="fb:app_id" content="437758756273955" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="2.3. Creando una clase de ruta personalizada (Más con Symfony)" />
+        <meta property="og:image" content="http://www.gravatar.com/avatar/9f219b4dfaa677bfd0f47753c02d5126.png?s=200" />
+        <meta name="msapplication-TileColor" content="#CC1414" />
+        <meta name="application-name" content="LibrosWeb" />
+        <meta name="msapplication-tooltip" content="Libros y tutoriales sobre HTML, CSS, JavaScript, PHP y otras tecnologías web." />
+    </head>
+    <body class="book_page mas_con_symfony">
+    <div id="container" class="container">
+        <div id="header">
+            <h1><a href="../../index.html" title="LibrosWeb.es">LibrosWeb</a></h1>
+            <form action="/buscar"><input type="text" placeholder="buscar..." name="q"/></form>
+        </div>
+        <div id="content"><div class="row">
+        <ul class="breadcrumbs span12">
+  <li><a href="../../index.html">Inicio</a></li>
+  <li><a href="../index.html">Más con Symfony</a></li>
+  <li><a href="../capitulo_2.html">Capítulo 2. Enrutamiento avanzado</a></li>
+  <li class="current"><span>2.3.. Creando una clase de ruta personalizada</span></li>
+</ul>
+
+<div class="span9">
+    <h1 id="creando_una_clase_de_ruta_personalizada"><span>2.3.</span> Creando una clase de ruta personalizada</h1>
+    
+
+<p>A continuación se crea una nueva clase de ruta para extender la ruta <code>page_show</code>
+de forma que tenga en cuenta el subdominio de los objetos <code>Client</code>. Para ello,
+crea un archivo llamado <code>acClientObjectRoute.class.php</code> en el directorio
+<code>lib/routing</code> del proyecto (debes crear este directorio manualmente):</p>
+
+<div class="code php">
+<pre class="php"><span class="co1">// lib/routing/acClientObjectRoute.class.php</span>
+<span class="kw2">class</span> acClientObjectRoute <span class="kw2">extends</span> sfDoctrineRoute
+<span class="br0">&#123;</span>
+  <span class="kw2">public</span> <span class="kw2">function</span> matchesUrl<span class="br0">&#40;</span><span class="re0">$url</span><span class="sy0">,</span> <span class="re0">$context</span> <span class="sy0">=</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="kw1">if</span> <span class="br0">&#40;</span><span class="kw4">false</span> <span class="sy0">===</span> <span class="re0">$parameters</span> <span class="sy0">=</span> parent<span class="sy0">::</span><span class="me2">matchesUrl</span><span class="br0">&#40;</span><span class="re0">$url</span><span class="sy0">,</span> <span class="re0">$context</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="kw1">return</span> <span class="kw4">false</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="kw1">return</span> <span class="re0">$parameters</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>El único paso que falta es indicar a la ruta <code>page_show</code> que utilice esta nueva
+clase de ruta. Actualiza el valor de la clave <code>class</code> de la ruta en el archivo
+<code>routing.yml</code>:</p>
+
+<div class="code yaml">
+<pre class="yaml"><span class="co1"># apps/fo/config/routing.yml</span><span class="co4">
+page_show</span>:<span class="co3">
+  url</span><span class="sy2">: </span>       /:slug<span class="co3">
+  class</span><span class="sy2">: </span>     acClientObjectRoute<span class="co4">
+  options</span>:<span class="co3">
+    model</span><span class="sy2">: </span>   Page<span class="co3">
+    type</span><span class="sy2">: </span>    object<span class="co4">
+  params</span>:<span class="co3">
+    module</span><span class="sy2">: </span>  page<span class="co3">
+    action</span><span class="sy2">: </span>  show</pre>
+</div>
+
+<p>Aunque el uso de la clase <code>acClientObjectRoute</code> todavía no añade ninguna
+funcionalidad, la aplicación ya está preparada para funcionar como se espera.
+El método <code>matchesUrl()</code> se encarga principalmente de dos tareas.</p>
+
+<h3 id="anadiendo_la_logica_en_la_ruta_personalizada">2.3.1. Añadiendo la lógica en la ruta personalizada</h3>
+
+<p>Para que la ruta propia incluya la funcionalidad requerida, reemplaza los
+contenidos del archivo <code>acClientObjectRoute.class.php</code> por lo siguiente.</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">class</span> acClientObjectRoute <span class="kw2">extends</span> sfDoctrineRoute
+<span class="br0">&#123;</span>
+  <span class="kw2">protected</span> <span class="re0">$baseHost</span> <span class="sy0">=</span> <span class="st_h">'.sympalbuilder.com'</span><span class="sy0">;</span>
+&nbsp;
+  <span class="kw2">public</span> <span class="kw2">function</span> matchesUrl<span class="br0">&#40;</span><span class="re0">$url</span><span class="sy0">,</span> <span class="re0">$context</span> <span class="sy0">=</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="kw1">if</span> <span class="br0">&#40;</span><span class="kw4">false</span> <span class="sy0">===</span> <span class="re0">$parameters</span> <span class="sy0">=</span> parent<span class="sy0">::</span><span class="me2">matchesUrl</span><span class="br0">&#40;</span><span class="re0">$url</span><span class="sy0">,</span> <span class="re0">$context</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="kw1">return</span> <span class="kw4">false</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="co1">// devuelve false si no se encuentra el valor de &quot;baseHost&quot;</span>
+    <span class="kw1">if</span> <span class="br0">&#40;</span><span class="kw3">strpos</span><span class="br0">&#40;</span><span class="re0">$context</span><span class="br0">&#91;</span><span class="st_h">'host'</span><span class="br0">&#93;</span><span class="sy0">,</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">baseHost</span><span class="br0">&#41;</span> <span class="sy0">===</span> <span class="kw4">false</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="kw1">return</span> <span class="kw4">false</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="re0">$subdomain</span> <span class="sy0">=</span> <span class="kw3">str_replace</span><span class="br0">&#40;</span><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">baseHost</span><span class="sy0">,</span> <span class="st_h">''</span><span class="sy0">,</span> <span class="re0">$context</span><span class="br0">&#91;</span><span class="st_h">'host'</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="re0">$client</span> <span class="sy0">=</span> Doctrine_Core<span class="sy0">::</span><span class="me2">getTable</span><span class="br0">&#40;</span><span class="st_h">'Client'</span><span class="br0">&#41;</span>
+      <span class="sy0">-&gt;</span><span class="me1">findOneBySubdomain</span><span class="br0">&#40;</span><span class="re0">$subdomain</span><span class="br0">&#41;</span>
+    <span class="sy0">;</span>
+&nbsp;
+    <span class="kw1">if</span> <span class="br0">&#40;</span><span class="sy0">!</span><span class="re0">$client</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="kw1">return</span> <span class="kw4">false</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="kw1">return</span> <span class="kw3">array_merge</span><span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'client_id'</span> <span class="sy0">=&gt;</span> <span class="re0">$client</span><span class="sy0">-&gt;</span><span class="me1">id</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="re0">$parameters</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>La llamada inicial al método <code>parent::matchesUrl()</code> es importante porque ejecuta
+el proceso normal de comprobación de las rutas. En este ejemplo, como la URL
+<code>/location</code> cumple con el patrón de la ruta <code>page_show</code>, el método
+<code>parent::matchesUrl()</code> devolvería un array que contiene el parámetro <code>slug</code>.</p>
+
+<div class="code php">
+<pre class="php"><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'slug'</span> <span class="sy0">=&gt;</span> <span class="st_h">'location'</span><span class="br0">&#41;</span></pre>
+</div>
+
+<p>En otras palabras, el trabajo duro del enrutamiento se realiza de forma
+automática, por lo que el resto del método se puede dedicar a obtener el objeto
+<code>Client</code> correcto para ese subdominio.</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">public</span> <span class="kw2">function</span> matchesUrl<span class="br0">&#40;</span><span class="re0">$url</span><span class="sy0">,</span> <span class="re0">$context</span> <span class="sy0">=</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="co1">// ...</span>
+&nbsp;
+  <span class="re0">$subdomain</span> <span class="sy0">=</span> <span class="kw3">str_replace</span><span class="br0">&#40;</span><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">baseHost</span><span class="sy0">,</span> <span class="st_h">''</span><span class="sy0">,</span> <span class="re0">$context</span><span class="br0">&#91;</span><span class="st_h">'host'</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+  <span class="re0">$client</span> <span class="sy0">=</span> Doctrine_Core<span class="sy0">::</span><span class="me2">getTable</span><span class="br0">&#40;</span><span class="st_h">'Client'</span><span class="br0">&#41;</span>
+    <span class="sy0">-&gt;</span><span class="me1">findOneBySubdomain</span><span class="br0">&#40;</span><span class="re0">$subdomain</span><span class="br0">&#41;</span>
+  <span class="sy0">;</span>
+&nbsp;
+  <span class="kw1">if</span> <span class="br0">&#40;</span><span class="sy0">!</span><span class="re0">$client</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="kw1">return</span> <span class="kw4">false</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="kw1">return</span> <span class="kw3">array_merge</span><span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'client_id'</span> <span class="sy0">=&gt;</span> <span class="re0">$client</span><span class="sy0">-&gt;</span><span class="me1">id</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="re0">$parameters</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Realizando una sustitución en la cadena de texto se puede obtener la parte del
+subdominio del host y después realizar una consulta en la base de datos para
+determinar si algún objeto <code>Client</code> tiene este subdominio. Si no existen objetos
+<code>Client</code> con ese subdominio, se devuelve el valor <code>false</code> para indicar que la
+petición entrante no cumple con el patrón de esta ruta. Si por el contrario
+existe un objeto <code>Client</code> con ese subdominio, se añade un nuevo parámetro
+llamado <code>client_id</code> en el array que se devuelve.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> El array <code>$context</code> que se pasa a <code>matchesUrl()</code> incluye mucha información
+útil sobre la petición actual, incluyendo el <code>host</code>, un valor booleano que
+indica si la petición es segura (<code>is_secure</code>), la URI de la petición (<code>request_uri</code>),
+el método de HTTP (<code>method</code>) y mucho más.</p></div>
+
+<p>¿Qué es lo que se ha conseguido con esta ruta personalizada? Básicamente la
+clase <code>acClientObjectRoute</code> ahora realiza lo siguiente:</p>
+
+<ul>
+<li>La <code>$url</code> entrante sólo cumplirá el patrón de la ruta si el <code>host</code> contiene
+un subdominio que pertenezca a alguno de los objetos <code>Client</code>.</li>
+<li>Si se cumple el patrón de la ruta, se devuelve un parámetro adicional llamado
+<code>client_id</code>, obtenido del objeto <code>Client</code> y que se añade al resto de
+parámetros de la petición.</li>
+</ul>
+
+<h3 id="haciendo_uso_de_la_ruta_propia">2.3.2. Haciendo uso de la ruta propia</h3>
+
+<p>Una vez que <code>acClientObjectRoute</code> devuelve el parámetro <code>client_id</code> correcto,
+la acción puede obtenerlo a través del objeto de la petición. La acción
+<code>page/show</code> podría utilizar por ejemplo el parámetro <code>client_id</code> para encontrar
+el objeto <code>Page</code> correcto:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">public</span> <span class="kw2">function</span> executeShow<span class="br0">&#40;</span>sfWebRequest <span class="re0">$request</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">page</span> <span class="sy0">=</span> Doctrine_Core<span class="sy0">::</span><span class="me2">getTable</span><span class="br0">&#40;</span><span class="st_h">'Page'</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">findOneBySlugAndClientId</span><span class="br0">&#40;</span>
+    <span class="re0">$request</span><span class="sy0">-&gt;</span><span class="me1">getParameter</span><span class="br0">&#40;</span><span class="st_h">'slug'</span><span class="br0">&#41;</span><span class="sy0">,</span>
+    <span class="re0">$request</span><span class="sy0">-&gt;</span><span class="me1">getParameter</span><span class="br0">&#40;</span><span class="st_h">'client_id'</span><span class="br0">&#41;</span>
+  <span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+  <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">forward404Unless</span><span class="br0">&#40;</span><span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">page</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> El método <code>findOneBySlugAndClientId()</code> es un nuevo tipo de
+<em><a href="http://www.doctrine-project.org/upgrade/1_2#Expanded%20Magic%20Finders%20to%20Multiple%20Fields">buscador mágico</a></em>
+de Doctrine 1.2 que busca objetos en función de varios campos.</p></div>
+
+<p>El framework de enrutamiento permite aplicar una solución todavía más elegante.
+En primer lugar, añade el siguiente método a la clase <code>acClientObjectRoute</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">protected</span> <span class="kw2">function</span> getRealVariables<span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="kw1">return</span> <span class="kw3">array_merge</span><span class="br0">&#40;</span><span class="kw3">array</span><span class="br0">&#40;</span><span class="st_h">'client_id'</span><span class="br0">&#41;</span><span class="sy0">,</span> parent<span class="sy0">::</span><span class="me2">getRealVariables</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Gracias a este último método, la acción puede obtener el objeto <code>Page</code> correcto
+directamente desde la ruta. Por tanto, la acción <code>page/show</code> se puede reducir
+a una única línea de código.</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">public</span> <span class="kw2">function</span> executeShow<span class="br0">&#40;</span>sfWebRequest <span class="re0">$request</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">page</span> <span class="sy0">=</span> <span class="re0">$this</span><span class="sy0">-&gt;</span><span class="me1">getRoute</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><span class="me1">getObject</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Sin necesidad de añadir más código, la instrucción anterior busca un objeto de
+tipo <code>Page</code> en función de las columnas <code>slug</code> <em>y</em> <code>client_id</code>. Además, al igual
+que el resto de rutas de objetos, la acción redirige de forma automática a la
+página del error 404 si no se encuentra ningún objeto.</p>
+
+<p>¿Cómo funciona? Las rutas de objetos, como <code>sfDoctrineRoute</code>, utilizada por la
+clase <code>acClientObjectRoute</code>, busca automáticamente el objeto relacionado en
+función de las variables de la clave <code>url</code> de la ruta. La ruta <code>page_show</code> por
+ejemplo contiene la variable <code>:slug</code> en su <code>url</code>, por lo que busca el objeto
+<code>Page</code> mediante el valor de la columna <code>slug</code>.</p>
+
+<p>No obstante, en esta aplicación la ruta <code>page_show</code> también debe buscar los
+objetos <code>Page</code> en función de la columna <code>client_id</code>. Para ello, se ha redefinido
+el método <code>sfObjectRoute::getRealVariables()</code>, que se invoca internamente
+para obtener las columnas con las que se realiza la consulta. Añadiendo el campo
+<code>client_id</code> en este array, <code>acClientObjectRoute</code> buscará los objetos haciendo
+uso de las columnas <code>slug</code> y <code>client_id</code>.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Las rutas de objetos ignoran automáticamente cualquier variable que no se
+corresponda a una columna real. Si por ejemplo la URL contiene una variable
+llamada <code>:page</code> pero la tabla no contiene una columna <code>page</code>, esta variable se
+ignora.</p></div>
+
+<p>A estas alturas, ya hemos conseguido que la clase de ruta propia realice todo
+lo necesario. En las próximas secciones se reutiliza esta nueva ruta para crear
+un área de administración específico para cada cliente.</p>
+
+<h3 id="generando_la_ruta_correcta">2.3.3. Generando la ruta correcta</h3>
+
+<p>Aún existe un pequeño problema sobre cómo se genera la ruta. Imagina que se
+crea un enlace a una página utilizando el siguiente código:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">&lt;?php</span> <span class="kw1">echo</span> link_to<span class="br0">&#40;</span><span class="st_h">'Locations'</span><span class="sy0">,</span> <span class="st_h">'page_show'</span><span class="sy0">,</span> <span class="re0">$page</span><span class="br0">&#41;</span> <span class="sy1">?&gt;</span></pre>
+</div>
+
+<div class="code code">
+<pre class="code">URL generada: /location?client_id=1</pre>
+</div>
+
+<p>Como puedes observar, el valor de <code>client_id</code> se ha añadido automáticamente al
+final de la URL. Esto sucede porque la ruta trata de utilizar todas sus variables
+para generar la URL. Como la ruta dispone de un parámetro llamado <code>slug</code> y de
+otro parámetro llamado <code>client_id</code>, hace uso de los dos al generar la ruta.</p>
+
+<p>Para solucionarlo, añade el siguiente método a la clase <code>acClientObjectRoute</code>:</p>
+
+<div class="code php">
+<pre class="php"><span class="kw2">protected</span> <span class="kw2">function</span> doConvertObjectToArray<span class="br0">&#40;</span><span class="re0">$object</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="re0">$parameters</span> <span class="sy0">=</span> parent<span class="sy0">::</span><span class="me2">doConvertObjectToArray</span><span class="br0">&#40;</span><span class="re0">$object</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+  <span class="kw3">unset</span><span class="br0">&#40;</span><span class="re0">$parameters</span><span class="br0">&#91;</span><span class="st_h">'client_id'</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+  <span class="kw1">return</span> <span class="re0">$parameters</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</div>
+
+<p>Cuando se genera una ruta de objetos, se obtiene toda la información necesaria
+invocando el método <code>doConvertObjectToArray()</code>. Por defecto se devuelve <code>client_id</code>
+en el array <code>$parameters</code>. Al eliminar esa variable, se evita que se incluya
+en la URL generada. Recuerda que esto es posible porque la información del
+objeto <code>Client</code> se guarda en el propio subdominio.</p>
+
+<div class="admonition note"><p><strong class="title">Nota</strong> Puedes redefinir completamente el proceso de <code>doConvertObjectToArray()</code> y
+gestionarlo tu mismo añadiendo un método llamado <code>toParams()</code> en la clase del
+modelo. Este método debe devolver un array con los parámetros que quieres que
+se utilicen al generar la ruta.</p></div>
+
+
+
+    <div class="navigation row">
+            <a class="span4 prev" href="como_funciona_el_sistema_de_enrutamiento.html">&larr; Anterior <span>2.2. Cómo funciona el sistema de enrutamiento</span></a>
+            
+            <a class="span5 next" href="colecciones_de_rutas.html">Siguiente &rarr; <span>2.4. Colecciones de rutas</span></a>
+        </div>
+</div>
+
+<div class="span3 side">
+<h3 class="underline"><span>Compartir</span></h3>
+<ul class="share">
+    <li><a class="twitter" id="share_twitter" href="#" title="Compartir este artículo en Twitter">tw</a></li>
+    <li><a class="facebook" id="share_facebook" href="#" title="Compartir este artículo en Facebook">fb</a></li>
+    <li><a class="google" id="share_google" href="#" title="Compartir este artículo en Google+">g+</a></li>
+</ul>
+
+<script type="text/javascript">
+var title    = 'Creando una clase de ruta personalizada (Más con Symfony%29';
+var page_url = encodeURIComponent(window.location);
+var options  = 'menubar=no,toolbar=no,resizable=yes,scrollbars=no,width=640,height=350';
+var services = {
+    share_twitter:  'https://twitter.com/share?text=' + title + '&lang=es&hashtags=librosweb',
+    share_facebook: 'http://www.facebook.com/sharer.php?u=' + page_url + '&t=' + title,
+    share_google:   'https://plus.google.com/share?url=' + page_url + '&hl=es'
+};
+
+for (var id in services) { // don't use services.keys() for compatibility reasons
+    if (services.hasOwnProperty(id)) {
+        document.getElementById(id).href = services[id];
+        document.getElementById(id).onclick = function(a) {
+            a = a || window.event;
+            a = a.target || a.srcElement;
+            _gaq.push(['_trackEvent', 'share', a.id.substr(6), 'Más con Symfony : Creando una clase de ruta personalizada']);
+            window.open(services[a.id], a.title, options);
+
+            return false;
+        };
+    }
+}
+</script>
+
+<h3 class="underline"><span>Indice de contenidos</span></h3>
+<ul class="toc">
+    <li class="level-1">
+        <span>1</span> <a href="../capitulo_1.html"> Introducción</a>
+    </li>
+    <li class="level-1 ">
+        <a href="../capitulo_2.html">
+            <span>Capítulo 2.</span> Enrutamiento avanzado
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="preparacion_del_proyecto_un_cms_para_muchos_clientes.html">
+            <span>2.1.</span> Preparación del proyecto: un CMS para muchos clientes
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="como_funciona_el_sistema_de_enrutamiento.html">
+            <span>2.2.</span> Cómo funciona el sistema de enrutamiento
+        </a>
+    </li>
+    <li class="level-2 active">
+        <a href="creando_una_clase_de_ruta_personalizada.html">
+            <span>2.3.</span> Creando una clase de ruta personalizada
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="colecciones_de_rutas.html">
+            <span>2.4.</span> Colecciones de rutas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="creando_una_coleccion_de_rutas_propia.html">
+            <span>2.5.</span> Creando una colección de rutas propia
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="personalizando_una_coleccion_de_rutas_de_objeto.html">
+            <span>2.6.</span> Personalizando una colección de rutas de objeto
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="opciones_de_las_colecciones_de_rutas.html">
+            <span>2.7.</span> Opciones de las colecciones de rutas
+        </a>
+    </li>
+    <li class="level-2 ">
+        <a href="conclusion.html">
+            <span>2.8.</span> Conclusión
+        </a>
+    </li>
+    <li class="level-1">
+        <span>3</span> <a href="../capitulo_3.html"> Mejora tu productividad</a>
+    </li>
+    <li class="level-1">
+        <span>4</span> <a href="../capitulo_4.html"> Emails</a>
+    </li>
+    <li class="level-1">
+        <span>5</span> <a href="../capitulo_5.html"> Widgets y validadores propios</a>
+    </li>
+    <li class="level-1">
+        <span>6</span> <a href="../capitulo_6.html"> Formularios avanzados</a>
+    </li>
+    <li class="level-1">
+        <span>7</span> <a href="../capitulo_7.html"> Mejorando la barra de depuración web</a>
+    </li>
+    <li class="level-1">
+        <span>8</span> <a href="../capitulo_8.html"> Uso avanzado de Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>9</span> <a href="../capitulo_9.html"> Utilizando la herencia de tablas de Doctrine</a>
+    </li>
+    <li class="level-1">
+        <span>10</span> <a href="../capitulo_10.html"> Funcionamiento interno de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>11</span> <a href="../capitulo_11.html"> Windows y Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>12</span> <a href="../capitulo_12.html"> Desarrollando aplicaciones Facebook</a>
+    </li>
+    <li class="level-1">
+        <span>13</span> <a href="../capitulo_13.html"> Descubriendo el poder de la línea de comandos</a>
+    </li>
+    <li class="level-1">
+        <span>14</span> <a href="../capitulo_14.html"> Jugando con la cache de configuración de Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>15</span> <a href="../capitulo_15.html"> Trabajando con la comunidad Symfony</a>
+    </li>
+    <li class="level-1">
+        <span>A</span> <a href="../apendice_a.html"> Código JavaScript de sfWidgetFormGMapAddress</a>
+    </li>
+    <li class="level-1">
+        <span>B</span> <a href="../apendice_b.html"> Ejemplo de instalador propio</a>
+    </li>
+    <li class="level-1">
+        <span>C</span> <a href="../apendice_c.html"> Licencia</a>
+    </li>
+</ul>
+</div>
+        </div></div>
+        <div id="footer" class="row">
+            <span class="span6">&copy; 2013 LibrosWeb.es 
+            <a href="../../contacto/index.html">Contacto</a></span>
+            <span class="span6 version">2.340 días online</span>
+        </div>
+    </div>
+    </body>
+</html>
+
+<!-- Localized -->
